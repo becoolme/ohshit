@@ -35,6 +35,9 @@ timeline:
     title: 微软拦截；Go 发布修复；NSS 移除根证书
   - date: 2026年10月21日
     title: Node.js 安全更新拒绝这些密钥
+  - date: 2026年10月21日
+    title: Docker 使用更新后的 CA 证书重建 Sandboxes 模板
+    body: 现有沙箱必须用新镜像重建；只更新 sbx 不够。
   - date: 2026年10月27日前后
     title: Chrome Root Store v43 移除 emSign ECC Root CA - G3
 checklist:
@@ -50,12 +53,16 @@ checklist:
     hint: 找别的 CA 重新签发。这八张中间证书已经验证不过了，Chrome 也会在 10月27日前后移除该根证书
   - title: 在 CT 监控里搜 emSign 签发的证书
     hint: 你的域名下只要出现不是你申请的证书，就是危险信号
+  - title: 刷新 Docker Sandboxes 模板并重建现有沙箱
+    hint: 先保存文件和未推送提交；创建时使用 --pull always。只更新 sbx 不会刷新现有沙箱
 sources:
   - says: 私钥是小于 256 的整数；报告时间、OneCRL 条目，以及 10月18日的吊销
   - name: eMudhra 声明
     says: 归因于密钥封装/解封装缺陷；称其中 7 张从未用于生产，第 8 张没签发过任何证书
   - says: 援引 Scott Helme 的说法，其中一个私钥就是数字 4；各厂商的拦截时间线
   - says: 浏览器和操作系统厂商的应对
+  - name: Docker 安全公告
+    says: 内置 Sandboxes 模板已重建；保存本地工作后，用 --pull always 重建现有沙箱
 ---
 CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eMudhra 有八张中间证书，P-384 私钥都是**小于 256 的整数**。据研究人员 Scott Helme 说，其中一个就是数字 4。谁要是注意到了，就能给任意域名签证书，而所有信任这条链的客户端都会照单全收。
 
@@ -71,3 +78,5 @@ CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eM
 真正的风险在长尾：各语言运行时、Java `cacerts`、各类设备，以及还带着旧证书包的老容器。
 
 还有一个问题没有定论。Mozilla 的 bug 里提到大约 3 万张订户证书需要迁移，这和 eMudhra 声明中“这些密钥没签发过任何终端实体证书”的说法对不上。
+
+**10月22日更新：** Docker 已记录使用更新后的 CA 证书重建 Sandboxes 模板。更新 CLI 或缓存模板不会更新现有沙箱。重建前先保存本地文件和未推送的提交，再拉取新镜像重新创建。这次更新改变处置步骤，L4 评级不变。
