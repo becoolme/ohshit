@@ -3,6 +3,7 @@ title: "ConnectWise Cloud Backup's app secret got stolen, and attackers walked i
 headline: "ConnectWise: steal one app secret, inherit 170 tenants"
 level: 4
 date: 2026-10-16
+updated: 2026-10-22
 tags: [SaaS, OAuth, Microsoft 365]
 ecosystems: [microsoft-365, entra-id]
 summary: >-
@@ -10,7 +11,7 @@ summary: >-
   tenant that had consented to the app was suddenly reachable with the permissions customers had granted it.
   ConnectWise suspended several cloud services.
 splash: "Microsoft 365 tenants using ConnectWise Cloud Backup or Cloud Management: 173 confirmed, ~1,000 touched"
-wipe: "Remove or re-consent the ConnectWise apps, review Entra sign-ins from 144.172.64.x, check for new Global Admins and app secrets"
+wipe: "Disable affected app connections, preserve Entra evidence, inspect app credentials and roles; re-consent only on vendor instructions"
 inTheWild: "yes"
 inTheWildNote: Huntress confirmed post-compromise activity in 2 tenants
 oneLiner: >-
@@ -32,11 +33,14 @@ timeline:
     body: SaaS Security and Cloud Management are suspended as a precaution the next day.
   - date: Oct 21, 2026
     title: Phased restoration begins
+  - date: Oct 21, 2026
+    title: Microsoft attributes the compromise to Storm-0940
+    body: ARTEX accelerated attempts against over 2,250 tenants; targeting does not establish data theft.
 checklist:
   - title: Find the ConnectWise / SkyKick apps in Entra ID
-    hint: Enterprise applications → filter by publisher
-  - title: Review sign-in and audit logs since Oct 13
-    hint: IOCs 144.172.64.128, 144.172.64.99, 144.172.64.60
+    hint: Inventory application IDs and service-principal Object IDs, including integrations no longer in use
+  - title: Review sign-in and audit logs, extending to Oct 1 where available
+    hint: Preserve evidence before deleting apps; review service-principal sign-ins from Oct 1 where available, beyond known IPs
   - title: Check for new Global Admins
     hint: Role assignments made by service principals are the big tell
   - title: Check every app for new secrets or certificates
@@ -58,6 +62,10 @@ sources:
   - name: SecurityWeek
     url: https://www.securityweek.com/connectwise-suspends-cloud-services-in-response-to-cyberattack/
     says: Service suspension timeline
+  - name: Microsoft Threat Intelligence
+    url: https://www.microsoft.com/en-us/security/blog/2026/10/21/storm-0940-uses-artex-agentic-ai-connectwise-supply-chain-compromise/
+    says: Attributes the compromise to Storm-0940; over 2,250 tenants targeted with ARTEX; preserve evidence and inspect downstream persistence
+    primary: true
 ---
 
 Backup apps need wide access to your tenant: they read every mailbox, every OneDrive and every Team. In
@@ -72,3 +80,5 @@ Administrator** in a customer tenant and added secrets to other apps.
 Huntress saw activity in about 1,000 Entra tenants, more than 300 of them successful, and confirmed
 hands-on-keyboard activity in two. Whether data was stolen is unknown. Graph directory reads leave no audit
 trail, so "no evidence" here does not mean "nothing happened".
+
+**Update, October 22:** Microsoft attributes the compromise to the China-aligned Storm-0940 actor and describes ARTEX-assisted targeting of more than 2,250 tenants. This is an attempted-access count, not a revised confirmed-victim total. Microsoft observed follow-on credential and role changes in some environments but says authentication alone does not prove data theft. Preserve evidence, disable affected connections, and inspect other application credentials for persistence before re-consenting. L4 remains appropriate.
