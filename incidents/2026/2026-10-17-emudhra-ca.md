@@ -3,6 +3,7 @@ title: "eMudhra CA intermediate private keys were so weak that every one was a n
 headline: "eMudhra: eight CA keys you could guess on a pocket calculator"
 level: 4
 date: 2026-10-17
+updated: 2026-10-22
 tags: [PKI, CA, TLS]
 ecosystems: [go, python, node, browsers]
 summary: >-
@@ -45,6 +46,9 @@ timeline:
     title: Microsoft blocks them; Go releases fixes; NSS removes the root
   - date: Oct 21, 2026
     title: Node.js security release rejects the keys
+  - date: Oct 21, 2026
+    title: Docker rebuilds Sandboxes templates with updated CA certificates
+    body: Existing sandboxes must be recreated from fresh images; updating sbx alone is insufficient.
   - date: ~Oct 27, 2026
     title: Chrome Root Store v43 removes the emSign ECC Root CA - G3
 checklist:
@@ -60,6 +64,8 @@ checklist:
     hint: Reissue from another CA. The eight intermediates already fail, and Chrome drops the root around Oct 27
   - title: Search your CT monitor for emSign-issued certs
     hint: Anything on your domains you didn't request is a red flag
+  - title: Refresh Docker Sandboxes templates and recreate existing sandboxes
+    hint: Save files and unpushed commits first; create with --pull always. Updating sbx alone does not refresh existing sandboxes
 sources:
   - name: Mozilla Bugzilla 2083449
     url: https://bugzilla.mozilla.org/show_bug.cgi?id=2083449
@@ -75,6 +81,10 @@ sources:
   - name: BleepingComputer
     url: https://www.bleepingcomputer.com/news/security/mozilla-google-apple-block-compromised-emudhra-ca-certificates/
     says: Browser and OS vendor response
+  - name: Docker security announcements
+    url: https://docs.docker.com/security/security-announcements/
+    says: Rebuilt built-in Sandboxes templates; recreate existing sandboxes with --pull always after saving local work
+    primary: true
 ---
 
 A certificate authority's private key is the thing that makes "this is really your bank" true. For eight
@@ -99,3 +109,5 @@ still carry the old bundle.
 
 There is one open question. The Mozilla bug mentions roughly 30,000 subscriber certificates to migrate,
 which conflicts with eMudhra's statement that no end-entity certificates were issued from these keys.
+
+**Update, October 22:** Docker now documents rebuilt Sandboxes templates with refreshed CA certificates. Updating the CLI or cached templates does not update existing sandboxes. Save local files and unpushed commits before recreating them from newly pulled images. This changes the cleanup guidance, not the L4 assessment.
