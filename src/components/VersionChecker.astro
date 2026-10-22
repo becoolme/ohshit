@@ -1,0 +1,272 @@
+---
+import Poop from './Poop.astro';
+interface Row {
+  product: string;
+  branch?: string;
+  version: string;
+  status?: string;
+}
+interface Props {
+  runtime: string;
+  command: string;
+  examples: string[];
+  fixed: Row[];
+  date: string;
+}
+const { runtime, command, examples, fixed, date } = Astro.props;
+const branches = fixed.filter((r) => r.branch).map((r) => ({ branch: r.branch!, version: r.version }));
+---
+
+<section id="check" class="checker" data-branches={JSON.stringify(branches)} data-runtime={runtime}>
+  <h2 class="disp">Are you standing in it?</h2>
+  <p class="how">
+    Run <code>{command}</code> on each box, then type the version or pick the closest match.
+  </p>
+  <form class="row" data-form>
+    <label for="ver" class="sr-only">Your {runtime} version</label>
+    <input id="ver" name="ver" inputmode="decimal" autocomplete="off" placeholder={`e.g. ${examples[0]}`} />
+    <button type="submit">Sniff it</button>
+  </form>
+  <div role="group" aria-label={`Example ${runtime} versions`} class="chips">
+    {
+      examples.map((v) => (
+        <button type="button" data-v={v} aria-pressed="false">
+          {runtime} {v}
+        </button>
+      ))
+    }
+  </div>
+  <div class="verdict" role="status" data-verdict hidden>
+    <Poop size={40} fill="currentColor" stroke="#1A120B" class="ico" />
+    <div>
+      <p class="disp vt" data-title></p>
+      <p class="vb" data-body></p>
+    </div>
+  </div>
+  <div class="tbl">
+    <table>
+      <caption>Fixed versions ({date})</caption>
+      <thead>
+        <tr><th scope="col">Branch</th><th scope="col">Safe from</th><th scope="col">Status</th></tr>
+      </thead>
+      <tbody>
+        {
+          fixed.map((r) => (
+            <tr>
+              <td>{r.product}</td>
+              <td><code>{r.version}</code></td>
+              <td>{r.status}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<script>
+  type B = { branch: string; version: string };
+  const cmp = (a: number[], b: number[]) => {
+    for (let i = 0; i < Math.max(a.length, b.length); i++) {
+      const d = (a[i] ?? 0) - (b[i] ?? 0);
+      if (d) return d;
+    }
+    return 0;
+  };
+  const nums = (v: string) => v.split('.').map((n) => parseInt(n, 10));
+
+  for (const root of document.querySelectorAll<HTMLElement>('.checker[data-branches]')) {
+    const branches: B[] = JSON.parse(root.dataset.branches!);
+    const rt = root.dataset.runtime!;
+    const out = root.querySelector<HTMLElement>('[data-verdict]')!;
+    const input = root.querySelector<HTMLInputElement>('input')!;
+    const chips = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-v]'));
+
+    const judge = (raw: string) => {
+      // Keep the leading version only: "v8.4.27-RC1" -> "8.4.27", not "8.4.271".
+      const clean = raw.trim().replace(/^v/i, '');
+      const v = clean.match(/^[\d.x]+/i)?.[0].replace(/\.$/, '') ?? '';
+      // A pre-release of the fixed version ("8.4.27-RC1") ships before the fix.
+      const pre = clean.slice(v.length).startsWith('-');
+      if (!v) return;
+      chips.forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.v === raw)));
+      const match = branches
+        .filter((b) => v === b.branch || v.startsWith(b.branch + '.'))
+        .sort((a, b) => b.branch.length - a.branch.length)[0] ?? branches.find((b) => b.branch === '*');
+      let kind: 'ok' | 'bad' | 'eol', title: string, body: string;
+      if (!match || match.version === 'none') {
+        kind = 'eol';
+        title = 'Ancient plumbing. No fix is coming.';
+        body = `${rt} ${v} is not on a supported branch and gets no official patch. Apply the interim mitigation now and plan an upgrade.`;
+      } else if (!/x/i.test(v) && v.split('.').length >= match.version.split('.').length && cmp(nums(v), nums(match.version)) > (pre ? 0 : -1)) {
+        kind = 'ok';
+        title = 'Clean seat. You’re patched.';
+        body = `${rt} ${v} includes the fix. Still check every server, container image and CI runner, not just this one.`;
+      } else {
+        kind = 'bad';
+        title = 'You’re standing in it.';
+        body = `${rt} ${v} is vulnerable. Upgrade to ${match.version} or later.`;
+      }
+      out.dataset.kind = kind;
+      out.querySelector('[data-title]')!.textContent = title;
+      out.querySelector('[data-body]')!.textContent = body;
+      out.hidden = false;
+    };
+    chips.forEach((c) =>
+      c.addEventListener('click', () => {
+        input.value = c.dataset.v!;
+        judge(c.dataset.v!);
+      }),
+    );
+    root.querySelector('[data-form]')!.addEventListener('submit', (e) => {
+      e.preventDefault();
+      judge(input.value);
+    });
+  }
+</script>
+
+<style>
+  .checker {
+    background: var(--paper);
+    color: var(--bg);
+    border: 4px solid var(--bg);
+    box-shadow: 10px 10px 0 var(--yellow);
+    padding: 32px;
+  }
+  h2 {
+    margin: 0;
+    font-size: 34px;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+  }
+  .how {
+    margin: 8px 0 20px;
+    font-size: 17px;
+    color: var(--paper-ink);
+  }
+  code {
+    font-weight: 700;
+    background: #ede0c8;
+    padding: 1px 6px;
+  }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  input {
+    flex: 1 1 200px;
+    min-width: 0;
+    min-height: 48px;
+    border: 3px solid var(--bg);
+    padding: 0 14px;
+    font: inherit;
+    font-family: var(--mono);
+    font-size: 17px;
+    background: var(--white-ish);
+    color: var(--bg);
+  }
+  button {
+    min-height: 44px;
+    padding: 0 16px;
+    font: inherit;
+    font-weight: 700;
+    font-size: 16px;
+    border: 3px solid var(--bg);
+    background: var(--white-ish);
+    color: var(--bg);
+    cursor: pointer;
+    transition: transform 0.12s ease;
+  }
+  button:hover {
+    transform: translateY(-2px);
+  }
+  .row button,
+  button[aria-pressed='true'] {
+    background: var(--bg);
+    color: var(--yellow);
+  }
+  .row button {
+    min-height: 48px;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .verdict {
+    margin-top: 20px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 18px 20px;
+    border: 3px solid var(--bg);
+    animation: pop 0.35s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+  }
+  .verdict[hidden] {
+    display: none;
+  }
+  @keyframes pop {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: none; }
+  }
+  .verdict[data-kind='ok'] { background: #ddf2c9; color: #4f8a26; }
+  .verdict[data-kind='bad'] { background: #ffd9c7; color: var(--orange); }
+  .verdict[data-kind='eol'] { background: #ffe9a8; color: #c98a1c; }
+  .verdict :global(.ico) {
+    flex: 0 0 auto;
+  }
+  .vt {
+    margin: 0;
+    font-size: 24px;
+    line-height: 1.2;
+    color: var(--bg);
+  }
+  .vb {
+    margin: 6px 0 0;
+    font-size: 17px;
+    color: var(--bg);
+  }
+  .tbl {
+    margin-top: 24px;
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+  }
+  caption {
+    text-align: left;
+    font-weight: 700;
+    padding-bottom: 8px;
+  }
+  th {
+    text-align: left;
+    padding: 8px 10px 8px 0;
+    border-bottom: 3px solid var(--bg);
+  }
+  td {
+    padding: 10px 10px 10px 0;
+    border-bottom: 1px solid var(--paper-line);
+    color: var(--paper-ink);
+    vertical-align: top;
+  }
+  td:first-child {
+    font-weight: 700;
+    color: var(--bg);
+  }
+  td code {
+    white-space: nowrap;
+  }
+  @media (max-width: 640px) {
+    .checker {
+      padding: 22px 18px;
+      box-shadow: 6px 6px 0 var(--yellow);
+    }
+    h2 {
+      font-size: 28px;
+    }
+  }
+</style>

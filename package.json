@@ -1,0 +1,33 @@
+{
+  "name": "ohshit",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Every security incident on the internet, graded by stench. Open data, MCP, API and RSS.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.23"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "deploy": "npm run build && wrangler deploy"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.19",
+    "@fontsource/archivo-black": "^5.3.0",
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@resvg/resvg-js": "^2.6.2",
+    "astro": "^7.4.2",
+    "satori": "^0.63.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@types/node": "^24.19.2",
+    "typescript": "^6.0.3",
+    "wrangler": "^4.151.3"
+  }
+}

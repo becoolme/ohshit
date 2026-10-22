@@ -1,0 +1,25 @@
+name: Correction
+description: Something on an incident page is wrong or outdated
+title: '[correction] '
+labels: [correction]
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Incident URL or id
+      placeholder: https://ohshit.app/incidents/php2shell/
+    validations:
+      required: true
+  - type: textarea
+    id: wrong
+    attributes:
+      label: What's wrong, and what should it say?
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source for the correction
+      placeholder: https://
+    validations:
+      required: true

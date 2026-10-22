@@ -1,0 +1,74 @@
+---
+import { SITE } from '../lib/site';
+interface Props {
+  updated?: string;
+}
+const { updated } = Astro.props;
+---
+
+<footer class="footer">
+  <div class="wrap inner">
+    <div>
+      <p class="disp big">Shit happens.</p>
+      <p class="sub">
+        We’re just the first ones to yell about it. Compiled from public advisories and research.
+        Spotted an error? <a href={SITE.correctionUrl}>Tell us</a>.
+      </p>
+      {updated && <p class="sub">Last updated {updated}</p>}
+    </div>
+    <nav aria-label="Footer" class="links">
+      <a href="/api/v1/incidents.json">JSON API</a>
+      <a href="/#dev">MCP Server</a>
+      <a href="/rss.xml">RSS</a>
+      <a href={SITE.repo}>GitHub</a>
+      <a href={`${SITE.repo}/blob/main/CONTRIBUTING.md`}>Contribute</a>
+    </nav>
+  </div>
+  <p class="wrap legal">MIT licensed, code and data. Not affiliated with any vendor mentioned.</p>
+</footer>
+
+<style>
+  .footer {
+    border-top: 3px solid var(--line);
+  }
+  .inner {
+    padding-top: 44px;
+    padding-bottom: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 24px;
+    align-items: flex-end;
+  }
+  .big {
+    margin: 0;
+    font-size: clamp(44px, 8vw, 64px);
+    line-height: 1;
+    letter-spacing: -1.5px;
+    color: var(--yellow);
+  }
+  .sub {
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 17px;
+    max-width: 34em;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 24px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .links a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .legal {
+    margin: 0;
+    padding-bottom: 40px;
+    font-size: 14px;
+    color: var(--faint);
+  }
+</style>

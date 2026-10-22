@@ -1,0 +1,554 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import IncidentCard from '../components/IncidentCard.astro';
+import Marquee from '../components/Marquee.astro';
+import DevTabs from '../components/DevTabs.astro';
+import CopyButtons from '../components/CopyButtons.astro';
+import Poop from '../components/Poop.astro';
+import { getIncidents, smellIndex, daysSinceLast, isoDate, formatDate } from '../lib/incidents';
+import { LEVELS, levelList } from '../lib/levels';
+import { SITE } from '../lib/site';
+
+const incidents = await getIncidents();
+const latest = incidents[0];
+const level = smellIndex(incidents);
+const info = LEVELS[level];
+const days = daysSinceLast(incidents);
+const digits = String(Math.min(days, 99)).padStart(2, '0').split('');
+const filters = [
+  { v: 0, label: 'All' },
+  { v: 3, label: 'L3+ Sharted' },
+  { v: 4, label: 'L4+ Septic' },
+  { v: 5, label: 'Shitstorms only' },
+];
+---
+
+<Base>
+  <div class="hazard" aria-hidden="true"></div>
+  {
+    latest && (
+      <div class="banner">
+        <span class="live dot" aria-hidden="true" />
+        <span>
+          <strong>Fresh stink:</strong> {latest.data.headline ?? latest.data.title}
+        </span>
+        <a href={`/incidents/${latest.id}/`}>Grab the toilet paper →</a>
+      </div>
+    )
+  }
+  <Header />
+
+  <main id="main">
+    <section class="wrap hero">
+      <div class="copy">
+        <p class="pill rise"><span class="live" aria-hidden="true"></span>Every security incident on the internet, collected in the open</p>
+        <h1 class="disp rise">Oh <span>Shit.</span></h1>
+        <p class="big rise">Someone left their database naked on the internet again. We sniff out every turd before it splashes on you.</p>
+        <p class="small rise">
+          Supply-chain poisonings, data leaks, zero-days and cloud misconfigs, graded by stench, each with a clean-up guide.
+          Open data on GitHub, piped to your agents and feed readers through MCP, JSON and RSS.
+        </p>
+        <div class="ctas rise">
+          <a href="#feed" class="btn btn--primary btn--lg">See who shat today</a>
+          <a href="#dev" class="btn btn--ghost btn--lg mono">npx @ohshit/mcp</a>
+        </div>
+      </div>
+
+      <aside class="sign" aria-label="Days since last security incident" data-latest={latest && isoDate(latest.data.date)}>
+        <div class="hazard" aria-hidden="true" style="height:14px"></div>
+        <div class="sign-body">
+          <p class="sl">This internet has gone</p>
+          <div class="digits" data-days>
+            {digits.map((d) => <span class="disp">{d}</span>)}
+          </div>
+          <p class="sl">days without an incident</p>
+          <p class="note">Counted from the newest entry in our feed. It rarely gets past 01.</p>
+          <div class="meter">
+            <p class="ml">Today’s global Shit Index</p>
+            <div class="poops">
+              {
+                [1, 2, 3, 4, 5].map((n) => (
+                  <Poop
+                    size={44}
+                    fill={n <= level ? info.color : '#E3D5BC'}
+                    stroke="#1A120B"
+                    class={n <= level ? 'bounce' : ''}
+                    style={`animation-delay:${n * 0.12}s`}
+                  />
+                ))
+              }
+            </div>
+            <p class="disp mlevel">L{level} · {info.name}</p>
+            <p class="madvice">{info.advice} <span class="mwhy">Worst incident in the last 7 days.</span></p>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <Marquee />
+
+    <section id="feed" class="wrap feed">
+      <div class="feed-head">
+        <div>
+          <p class="kicker">GET /api/v1/incidents.json</p>
+          <h2 class="disp section-title">Fresh out of the oven</h2>
+          <p class="lede">Newest first. Each one tells you what happened, who got splashed, and exactly how to wipe.</p>
+        </div>
+        <div role="group" aria-label="Filter by Shit Level" class="filters">
+          {
+            filters.map((f, i) => (
+              <button type="button" class="chip" data-min={f.v} aria-pressed={i === 0 ? 'true' : 'false'}>
+                {f.label}
+              </button>
+            ))
+          }
+        </div>
+      </div>
+      <div class="cards" data-cards>
+        {incidents.map((i) => <IncidentCard incident={i} />)}
+      </div>
+      <p class="empty" data-empty hidden>Nothing that stinky right now. Enjoy the fresh air while it lasts.</p>
+      <p class="count">
+        {incidents.length} incidents on file since {incidents.length ? formatDate(incidents.at(-1)!.data.date) : '—'}.
+        {' '}<a href={`${SITE.repo}/tree/main/incidents`}>Browse the raw data on GitHub →</a>
+      </p>
+    </section>
+
+    <section id="levels" class="wrap levels">
+      <p class="kicker">The OhShit Scale™</p>
+      <h2 class="disp section-title">Graded by nose, not by CVSS</h2>
+      <p class="lede">We weigh blast radius, exploit difficulty, in-the-wild activity, and the odds your boss calls you at 3 a.m.</p>
+      <div class="scale">
+        {
+          levelList.map((l) => (
+            <div class={`lvl${l.n === level ? ' now' : ''}`} style={`background:${l.color}`}>
+              <div class="lt">
+                <span class="disp ln">L{l.n}</span>
+                <Poop size={40} class="bounce" style={`animation-delay:${l.n * 0.15}s;animation-duration:${2.2 - l.n * 0.3}s`} />
+              </div>
+              <span class="lname">{l.name}</span>
+              <span class="ldesc">{l.desc}</span>
+              <span class="lwhen">{l.when}</span>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <DevTabs exampleId={latest?.id ?? 'php2shell'} site={String(Astro.site)} />
+
+    <section id="submit" class="wrap submit">
+      <div class="box yellow">
+        <h2 class="disp">One fresh turd,<br />straight to your reader</h2>
+        <p>Subscribe to the RSS feed, or watch the GitHub repo for new incident pull requests. No diarrhea, no filler, no tracking.</p>
+        <div class="ctas">
+          <a class="btn dark" href="/rss.xml">Make me smell it (RSS)</a>
+          <a class="btn outline" href={SITE.repo}>Watch on GitHub</a>
+        </div>
+      </div>
+      <div class="box dashed">
+        <h2 class="disp">Smell something new?</h2>
+        <p>
+          Every incident is one Markdown file. Open an issue with an advisory link, or send a pull request with the file.
+          Once it is merged it hits the feed, the API, the RSS feed and the MCP server.
+        </p>
+        <div class="ctas">
+          <a class="btn btn--primary btn--lg" href={SITE.reportUrl}>Report a turd →</a>
+          <a class="btn btn--ghost btn--lg" href={`${SITE.repo}/blob/main/CONTRIBUTING.md`}>How to contribute</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+  <CopyButtons />
+</Base>
+
+<script>
+  // Keep the counter honest between builds.
+  const sign = document.querySelector<HTMLElement>('[data-latest]');
+  if (sign?.dataset.latest) {
+    // Count calendar days in the viewer's time zone, so an incident dated today reads 00 everywhere.
+    const [y, m, d] = sign.dataset.latest.slice(0, 10).split('-').map(Number);
+    const now = new Date();
+    const today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+    const days = Math.max(0, Math.round((today - Date.UTC(y, m - 1, d)) / 864e5));
+    const el = sign.querySelector('[data-days]')!;
+    const ds = String(Math.min(days, 99)).padStart(2, '0').split('');
+    el.querySelectorAll('span').forEach((s, i) => (s.textContent = ds[i]));
+  }
+
+  const chips = Array.from(document.querySelectorAll<HTMLButtonElement>('.filters .chip'));
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-cards] > [data-level]'));
+  const empty = document.querySelector<HTMLElement>('[data-empty]')!;
+  chips.forEach((c) =>
+    c.addEventListener('click', () => {
+      const min = Number(c.dataset.min);
+      chips.forEach((x) => x.setAttribute('aria-pressed', String(x === c)));
+      let shown = 0;
+      cards.forEach((card) => {
+        const on = Number(card.dataset.level) >= min;
+        card.hidden = !on;
+        if (on) shown++;
+      });
+      empty.hidden = shown > 0;
+    }),
+  );
+</script>
+
+<style>
+  .banner {
+    background: var(--yellow);
+    color: var(--bg);
+    font-weight: 600;
+    font-size: 16px;
+    padding: 10px 16px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px 10px;
+    flex-wrap: wrap;
+    line-height: 1.45;
+  }
+  .banner a {
+    color: var(--bg);
+    font-weight: 700;
+  }
+  .banner .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #b3290a;
+    display: inline-block;
+  }
+  .hero {
+    padding-top: 56px;
+    padding-bottom: 88px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 56px;
+    align-items: center;
+  }
+  .copy {
+    flex: 999 1 560px;
+    min-width: 0;
+  }
+  .pill {
+    margin: 0 0 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--yellow);
+    background: #2e2015;
+    border: 1px solid var(--line);
+    padding: 6px 14px;
+    border-radius: 999px;
+    line-height: 1.4;
+  }
+  .pill .live {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--orange);
+    flex: 0 0 auto;
+  }
+  h1 {
+    margin: 0;
+    font-size: clamp(64px, 10vw, 152px);
+    line-height: 0.9;
+    letter-spacing: -2px;
+    animation-delay: 0.08s;
+  }
+  h1 span {
+    color: var(--yellow);
+  }
+  .big {
+    margin: 28px 0 0;
+    font-size: clamp(22px, 3vw, 28px);
+    font-weight: 700;
+    max-width: 22em;
+    line-height: 1.3;
+    letter-spacing: -0.3px;
+    animation-delay: 0.16s;
+  }
+  .small {
+    margin: 18px 0 0;
+    font-size: 19px;
+    color: var(--muted);
+    max-width: 34em;
+    animation-delay: 0.24s;
+  }
+  .ctas {
+    margin-top: 36px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    animation-delay: 0.32s;
+  }
+  .hero .btn--primary {
+    border: 3px solid var(--text);
+    box-shadow: 6px 6px 0 var(--orange);
+  }
+  .mono {
+    font-family: var(--mono);
+    font-size: 17px;
+  }
+  .sign {
+    flex: 1 1 340px;
+    max-width: 400px;
+    background: var(--paper);
+    color: var(--bg);
+    border: 4px solid var(--bg);
+    box-shadow: 10px 10px 0 var(--yellow);
+    transform: rotate(1.5deg);
+  }
+  .sign-body {
+    padding: 24px 28px 28px;
+    text-align: center;
+  }
+  .sl {
+    margin: 0;
+    font-weight: 700;
+    font-size: 18px;
+  }
+  .digits {
+    margin: 12px auto;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
+  .digits span {
+    background: var(--bg);
+    color: var(--yellow);
+    font-size: 92px;
+    line-height: 1;
+    padding: 8px 18px;
+  }
+  .note {
+    margin: 10px 0 0;
+    font-size: 15px;
+    color: #5a4330;
+  }
+  .meter {
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 3px dashed var(--bg);
+    text-align: left;
+  }
+  .ml {
+    margin: 0 0 8px;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .poops {
+    display: flex;
+    gap: 6px;
+    align-items: flex-end;
+  }
+  .mlevel {
+    margin: 10px 0 0;
+    font-size: 24px;
+    line-height: 1.2;
+  }
+  .madvice {
+    margin: 4px 0 0;
+    font-size: 16px;
+    color: var(--paper-ink);
+  }
+  .mwhy {
+    display: block;
+    font-size: 14px;
+    color: #5a4330;
+  }
+
+  .feed {
+    padding-top: 104px;
+    padding-bottom: 48px;
+  }
+  .feed-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    margin-bottom: 36px;
+  }
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .cards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .empty,
+  .count {
+    margin: 32px 0 0;
+    text-align: center;
+    color: var(--muted);
+  }
+  .count a {
+    font-weight: 700;
+  }
+
+  .levels {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+  .scale {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+    gap: 16px;
+  }
+  .lvl {
+    color: var(--bg);
+    border: 3px solid var(--text);
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 270px;
+  }
+  .lvl.now {
+    outline: 4px solid var(--yellow);
+    outline-offset: 4px;
+  }
+  .lt {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .ln {
+    font-size: 44px;
+    line-height: 1;
+  }
+  .lname {
+    font-weight: 800;
+    font-size: 22px;
+    line-height: 1.2;
+  }
+  .ldesc {
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  .lwhen {
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 2px solid var(--bg);
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .submit {
+    padding-top: 96px;
+    padding-bottom: 96px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+  .box {
+    flex: 1 1 460px;
+    min-width: 0;
+    padding: 36px;
+  }
+  .box h2 {
+    margin: 0;
+    font-size: clamp(30px, 5vw, 40px);
+    line-height: 1.1;
+  }
+  .box p {
+    margin: 12px 0 0;
+  }
+  .box .ctas {
+    margin-top: 24px;
+  }
+  .yellow {
+    background: var(--yellow);
+    color: var(--bg);
+    border: 4px solid var(--text);
+  }
+  .yellow .btn {
+    min-height: 56px;
+    font-size: 18px;
+    border: 3px solid var(--bg);
+  }
+  .yellow .dark {
+    background: var(--bg);
+    color: var(--yellow);
+  }
+  .yellow .outline {
+    background: transparent;
+    color: var(--bg);
+  }
+  .yellow .btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--bg);
+  }
+  .dashed {
+    border: 4px dashed var(--yellow);
+  }
+  .dashed h2 {
+    color: var(--yellow);
+  }
+  .dashed p {
+    color: var(--muted);
+  }
+
+  @media (max-width: 640px) {
+    .hero {
+      padding-top: 32px;
+      padding-bottom: 64px;
+      gap: 40px;
+    }
+    .pill {
+      font-size: 14px;
+      border-radius: 16px;
+    }
+    .small {
+      font-size: 17px;
+    }
+    .ctas .btn {
+      flex: 1 1 100%;
+    }
+    .sign {
+      transform: none;
+      max-width: none;
+      box-shadow: 6px 6px 0 var(--yellow);
+    }
+    .digits span {
+      font-size: 72px;
+    }
+    .feed {
+      padding-top: 64px;
+    }
+    .filters {
+      gap: 6px;
+    }
+    .filters .chip {
+      font-size: 15px;
+      padding: 0 12px;
+    }
+    .levels {
+      padding-top: 48px;
+      padding-bottom: 48px;
+    }
+    .lvl {
+      min-height: 0;
+    }
+    .submit {
+      padding-top: 56px;
+      padding-bottom: 56px;
+    }
+    .box {
+      padding: 24px 20px;
+    }
+  }
+</style>

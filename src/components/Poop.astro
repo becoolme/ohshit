@@ -1,0 +1,20 @@
+---
+/** The stacked-poop glyph used for meters, levels and verdicts. */
+interface Props {
+  size?: number;
+  fill?: string;
+  stroke?: string;
+  class?: string;
+  style?: string;
+}
+const { size = 40, fill = '#1A120B', stroke, class: cls, style } = Astro.props;
+---
+
+<svg class={cls} style={style} width={size} height={size} viewBox="0 0 32 32" aria-hidden="true">
+  <g fill={fill} stroke={stroke} stroke-width={stroke ? 1.2 : undefined}>
+    <rect x="3" y="22" width="26" height="7" rx="3.5"></rect>
+    <rect x="6" y="15.5" width="20" height="7" rx="3.5"></rect>
+    <rect x="9.5" y="9" width="13" height="7" rx="3.5"></rect>
+    <path d="M13.5 9.5c0-3 2-5.2 5.5-6.5-.8 2 .3 3.6 1.5 4.6.9.8.6 1.9-.6 1.9z"></path>
+  </g>
+</svg>

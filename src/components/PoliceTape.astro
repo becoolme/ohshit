@@ -1,0 +1,64 @@
+---
+const words = Array.from({ length: 12 }, (_, i) => (i % 2 ? 'DO NOT FLUSH' : 'CRIME SCENE'));
+---
+
+<div class="tape-wrap" aria-hidden="true">
+  <div class="tape">
+    {
+      words.map((w) => (
+        <span class="seg">
+          <span class="disp">{w}</span>
+          <span class="diamond" />
+        </span>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .tape-wrap {
+    overflow: hidden;
+    padding: 14px 0;
+  }
+  .tape {
+    width: calc(100% + 80px);
+    margin-left: -40px;
+    transform: rotate(-1.2deg);
+    background: var(--yellow);
+    border-top: 4px solid var(--bg);
+    border-bottom: 4px solid var(--bg);
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.35);
+    height: 50px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .seg {
+    display: inline-flex;
+    align-items: center;
+    gap: 22px;
+    padding-left: 22px;
+    flex: 0 0 auto;
+    color: var(--bg);
+    font-size: 20px;
+    letter-spacing: 1.5px;
+  }
+  .diamond {
+    width: 10px;
+    height: 10px;
+    background: var(--bg);
+    transform: rotate(45deg);
+    display: inline-block;
+  }
+  @media (max-width: 640px) {
+    .tape {
+      height: 40px;
+    }
+    .seg {
+      font-size: 16px;
+      gap: 16px;
+      padding-left: 16px;
+    }
+  }
+</style>

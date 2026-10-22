@@ -1,0 +1,639 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PoliceTape from '../../components/PoliceTape.astro';
+import LevelBadge from '../../components/LevelBadge.astro';
+import Checklist from '../../components/Checklist.astro';
+import VersionChecker from '../../components/VersionChecker.astro';
+import CopyButtons from '../../components/CopyButtons.astro';
+import { getIncidents, formatDate, isoDate, type Incident } from '../../lib/incidents';
+import { LEVELS, type Level } from '../../lib/levels';
+import { SITE } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const all = await getIncidents();
+  return all.map((incident) => {
+    const t = incident.data.date.getTime();
+    const related = all
+      .filter((x) => x.id !== incident.id)
+      .sort((a, b) => Math.abs(a.data.date.getTime() - t) - Math.abs(b.data.date.getTime() - t))
+      .slice(0, 3);
+    return { params: { slug: incident.id }, props: { incident, related } };
+  });
+}
+
+interface Props {
+  incident: Incident;
+  related: Incident[];
+}
+const { incident, related } = Astro.props;
+const d = incident.data;
+const { Content } = await render(incident);
+const lvl = LEVELS[d.level as Level];
+const when = formatDate(d.date, d.dateIsApproximate);
+const updated = formatDate(d.updated ?? d.date);
+const topScore = d.cves.reduce((m, c) => Math.max(m, c.score ?? 0), 0);
+const scored = d.cves.filter((c) => c.score);
+const WILD = { yes: 'Yes', no: 'Not seen', disputed: 'Disputed', unknown: 'Unknown', 'n/a': 'Not applicable' } as const;
+
+const facts = [
+  { k: 'Disclosed', v: when, note: d.updated ? `Updated ${updated}` : 'Public disclosure date' },
+  {
+    k: 'Severity',
+    v: topScore ? `CVSS ${topScore}${scored.length > 1 ? ` × ${scored.filter((c) => c.score === topScore).length}` : ''}` : lvl.name,
+    note: d.cves.length ? `${d.cves.length} CVE${d.cves.length > 1 ? 's' : ''} tracked here` : 'No CVE: a breach, not a bug',
+  },
+  { k: 'Splash zone', v: d.splash, note: d.ecosystems.join(' · ') || d.tags.join(' · ') },
+  { k: 'In the wild', v: WILD[d.inTheWild], note: d.inTheWildNote ?? '' },
+];
+const editUrl = SITE.editUrl(incident.filePath ?? '');
+const tlColors = ['#FFC93C', '#FF9A3C', '#FF6B2C'];
+---
+
+<Base title={d.title} description={d.summary} type="article" image={`/og/${incident.id}.png`}>
+  <div class="hazard hazard--orange" aria-hidden="true"></div>
+  <Header variant="inner" />
+  <PoliceTape />
+
+  <main id="main">
+    <section class="wrap top">
+      <div class="meta rise">
+        <LevelBadge level={d.level} />
+        <span>{d.tags.join(' · ')}</span>
+        <span class="sep" aria-hidden="true">·</span>
+        <code>{incident.id}</code>
+      </div>
+      <h1 class="disp rise">{d.headline ?? d.title}</h1>
+      {d.headline && <p class="full rise">{d.title}</p>}
+      <p class="sum rise">{d.summary}</p>
+
+      <dl class="facts rise">
+        {
+          facts.map((f) => (
+            <div>
+              <dt>{f.k}</dt>
+              <dd class="fv">{f.v}</dd>
+              {f.note && <dd class="fn">{f.note}</dd>}
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    <div class="wrap layout">
+      <div class="main">
+        {
+          d.oneLiner && (
+            <section>
+              <h2 class="disp h">The one-sentence version</h2>
+              <p class="oneliner">{d.oneLiner}</p>
+            </section>
+          )
+        }
+
+        <section>
+          <h2 class="disp h">What happened</h2>
+          <div class="prose">
+            <Content />
+          </div>
+        </section>
+
+        {
+          d.cves.length > 0 && (
+            <section>
+              <h2 class="disp h">What’s in the bowl</h2>
+              <div class="cves">
+                {d.cves.map((c) => (
+                  <article>
+                    <div class="ch">
+                      <code>{c.id}</code>
+                      {c.score && <span class="score">CVSS {c.score}</span>}
+                    </div>
+                    <h3>{c.name}</h3>
+                    <p class="cd">{c.description}</p>
+                    {c.plain && (
+                      <p class="cp">
+                        <b>In plain poop:</b> {c.plain}
+                      </p>
+                    )}
+                  </article>
+                ))}
+              </div>
+            </section>
+          )
+        }
+
+        {
+          d.checker ? (
+            <VersionChecker {...d.checker} fixed={d.fixed} date={when} />
+          ) : (
+            d.fixed.length > 0 && (
+              <section>
+                <h2 class="disp h">Fixed versions</h2>
+                <div class="plain-table">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col">Safe from</th>
+                        <th scope="col">Note</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {d.fixed.map((r) => (
+                        <tr>
+                          <td>{r.product}</td>
+                          <td>
+                            <code>{r.version}</code>
+                          </td>
+                          <td>{r.status}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+            )
+          )
+        }
+
+        {
+          d.mitigation && (
+            <section>
+              <h2 class="disp h">Can’t patch tonight? Plug the hole</h2>
+              <div class="term">
+                <div class="bar">
+                  <code>{d.mitigation.file}</code>
+                  <button type="button" class="copy" data-copy={d.mitigation.code}>
+                    Copy
+                  </button>
+                </div>
+                <pre tabindex="0">{d.mitigation.code}</pre>
+              </div>
+              {d.mitigation.note && <p class="mnote">{d.mitigation.note}</p>}
+            </section>
+          )
+        }
+
+        {
+          d.timeline.length > 0 && (
+            <section>
+              <h2 class="disp h">Crime-scene timeline</h2>
+              <ol class="tl">
+                {d.timeline.map((e, i) => (
+                  <li>
+                    <span class="tdot" style={`background:${tlColors[Math.min(i, tlColors.length - 1)]}`} aria-hidden="true" />
+                    <p class="tw">{e.date}</p>
+                    <p class="tt">{e.title}</p>
+                    {e.body && <p class="tb">{e.body}</p>}
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )
+        }
+
+        <section>
+          <h2 class="disp h">Who said what</h2>
+          <p class="lede intro">
+            We list each claim and who made it. Primary sources (the vendor, the researcher, the registry) are marked.
+            Where reports disagree, we grade by the worst credible case.
+          </p>
+          <ul class="sources">
+            {
+              d.sources.map((s) => (
+                <li>
+                  <a href={s.url} rel="noopener">
+                    {s.name}
+                  </a>
+                  {s.primary && <span class="prim">Primary</span>}
+                  {s.says && <span class="says">{s.says}</span>}
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+      </div>
+
+      <div class="side">
+        <Checklist id={incident.id} items={d.checklist} editUrl={editUrl} />
+      </div>
+    </div>
+
+    {
+      related.length > 0 && (
+        <section class="related">
+          <div class="wrap">
+            <h2 class="disp h">Other turds from around the same time</h2>
+            <div class="rel">
+              {related.map((r) => {
+                const c = LEVELS[r.data.level as Level].color;
+                return (
+                  <a href={`/incidents/${r.id}/`} style={`border-top-color:${c}`}>
+                    <span class="badge" style={`background:${c}`}>
+                      L{r.data.level} · {formatDate(r.data.date, r.data.dateIsApproximate)}
+                    </span>
+                    <span class="rt">{r.data.headline ?? r.data.title}</span>
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )
+    }
+  </main>
+
+  <Footer updated={updated} />
+  <CopyButtons />
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: d.title,
+    datePublished: isoDate(d.date),
+    dateModified: isoDate(d.updated ?? d.date),
+    description: d.summary,
+  }).replace(/</g, '\\u003c')} />
+</Base>
+
+<style>
+  .top {
+    padding-top: 48px;
+    padding-bottom: 40px;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 14px;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: var(--muted);
+  }
+  .meta :global(.badge) {
+    border-color: var(--text);
+    font-size: 16px;
+  }
+  .meta code {
+    font-size: 15px;
+  }
+  .sep {
+    color: var(--faint);
+  }
+  h1 {
+    margin: 0;
+    font-size: clamp(38px, 6.4vw, 84px);
+    line-height: 1.04;
+    letter-spacing: -1.5px;
+    max-width: 16em;
+    overflow-wrap: break-word;
+    animation-delay: 0.06s;
+  }
+  .full {
+    margin: 18px 0 0;
+    font-size: 20px;
+    font-weight: 700;
+    max-width: 40em;
+    line-height: 1.4;
+  }
+  .sum {
+    margin: 16px 0 0;
+    font-size: 20px;
+    color: var(--muted);
+    max-width: 40em;
+    animation-delay: 0.12s;
+  }
+  .facts {
+    margin: 40px 0 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+    border: 3px solid var(--text);
+    animation-delay: 0.18s;
+  }
+  .facts > div {
+    padding: 20px 22px;
+    margin: 0;
+    border-right: 3px solid var(--text);
+    border-bottom: 3px solid var(--text);
+    margin-right: -3px;
+    margin-bottom: -3px;
+  }
+  dt {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--yellow);
+  }
+  dd {
+    margin: 4px 0 0;
+  }
+  .fv {
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.3;
+  }
+  .fn {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .layout {
+    padding-top: 24px;
+    padding-bottom: 96px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    align-items: flex-start;
+  }
+  .main {
+    flex: 999 1 620px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+  }
+  .side {
+    flex: 1 1 360px;
+    min-width: 0;
+    position: sticky;
+    top: 24px;
+  }
+  .h {
+    margin: 0 0 16px;
+    font-size: clamp(28px, 4vw, 36px);
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+  }
+  .oneliner {
+    margin: 0;
+    font-size: 19px;
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-left: 10px solid var(--orange);
+    padding: 24px 28px;
+    max-width: 42em;
+  }
+  .cves {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 16px;
+  }
+  .cves article {
+    background: var(--card);
+    border: 2px solid var(--line);
+    padding: 24px;
+  }
+  .ch {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .ch code {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--yellow);
+  }
+  .score {
+    background: var(--orange);
+    color: var(--bg);
+    font-weight: 800;
+    font-size: 14px;
+    padding: 4px 10px;
+  }
+  .cves h3 {
+    margin: 12px 0 6px;
+    font-size: 21px;
+    line-height: 1.35;
+  }
+  .cd {
+    margin: 0;
+    font-size: 17px;
+    color: var(--muted);
+  }
+  .cp {
+    margin: 14px 0 0;
+    padding-top: 12px;
+    border-top: 1px dashed var(--line);
+    font-size: 16px;
+  }
+  .cp b {
+    color: var(--yellow);
+  }
+  .plain-table {
+    overflow-x: auto;
+    border: 2px solid var(--line);
+    background: var(--card);
+  }
+  .plain-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+  }
+  .plain-table th,
+  .plain-table td {
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .plain-table th {
+    color: var(--yellow);
+  }
+  .plain-table code {
+    white-space: nowrap;
+  }
+  .term {
+    background: var(--bg-deep);
+    border: 3px solid var(--line);
+  }
+  .bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 8px 8px 16px;
+    border-bottom: 2px solid var(--line);
+  }
+  .bar code {
+    font-size: 14px;
+    color: var(--muted);
+  }
+  pre {
+    margin: 0;
+    padding: 20px 22px;
+    font-size: 15px;
+    line-height: 1.75;
+    overflow-x: auto;
+  }
+  .mnote {
+    margin: 12px 0 0;
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 42em;
+  }
+  .tl {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-left: 4px solid var(--line);
+  }
+  .tl li {
+    position: relative;
+    padding: 0 0 28px 32px;
+  }
+  .tl li:last-child {
+    padding-bottom: 0;
+  }
+  .tdot {
+    position: absolute;
+    left: -12px;
+    top: 4px;
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--bg);
+  }
+  .tw {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--yellow);
+  }
+  .tt {
+    margin: 2px 0 0;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .tb {
+    margin: 4px 0 0;
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 40em;
+  }
+  .intro {
+    margin: 0 0 16px;
+    max-width: 40em;
+  }
+  .sources {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .sources li {
+    background: var(--card);
+    border: 1px solid var(--line);
+    padding: 14px 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    align-items: baseline;
+  }
+  .sources a {
+    font-weight: 700;
+    font-size: 17px;
+  }
+  .prim {
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: var(--yellow);
+    color: var(--bg);
+    padding: 2px 6px;
+  }
+  .says {
+    flex-basis: 100%;
+    font-size: 16px;
+    color: var(--muted);
+  }
+  .related {
+    border-top: 3px solid var(--line);
+  }
+  .related .wrap {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+  .rel {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: 16px;
+  }
+  .rel a {
+    display: block;
+    text-decoration: none;
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-top: 8px solid;
+    padding: 20px 22px;
+    transition:
+      transform 0.14s ease,
+      box-shadow 0.14s ease;
+  }
+  .rel a:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 7px 7px 0 var(--orange);
+  }
+  .rel .badge {
+    font-size: 14px;
+    padding: 4px 10px;
+    border: 0;
+  }
+  .rt {
+    display: block;
+    margin-top: 12px;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--text);
+  }
+
+  @media (max-width: 1023px) {
+    .side {
+      position: static;
+    }
+  }
+  @media (max-width: 640px) {
+    .top {
+      padding-top: 28px;
+    }
+    h1 {
+      letter-spacing: -0.8px;
+    }
+    .full,
+    .sum {
+      font-size: 17px;
+    }
+    .facts > div {
+      padding: 14px 16px;
+    }
+    .fv {
+      font-size: 18px;
+    }
+    .layout {
+      padding-bottom: 64px;
+    }
+    .main {
+      gap: 48px;
+    }
+    .oneliner {
+      font-size: 17px;
+      padding: 18px 18px;
+      border-left-width: 6px;
+    }
+    .cves article {
+      padding: 18px;
+    }
+    pre {
+      font-size: 13px;
+      padding: 16px;
+    }
+  }
+</style>

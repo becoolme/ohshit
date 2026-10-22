@@ -1,0 +1,110 @@
+---
+title: "GitLab patches its second CVSS 10.0 regex-compiler RCE in nine days, and this one reaches back to GitLab 7.0"
+headline: "GitLab: two perfect 10s, one regex engine, nine days apart"
+level: 4
+date: 2026-10-21
+tags: [GitLab, RCE, self-managed]
+ecosystems: [gitlab, ruby]
+summary: >-
+  CVE-2026-110264 (CVSS 10.0) is an integer overflow in the Onigmo regex compiler that lets an unauthenticated user
+  run code on self-managed GitLab, from 7.0 onwards. It lands nine days after CVE-2026-97229, a sibling bug that
+  already has a public PoC. Servers patched on Oct 12 are still exposed.
+splash: "Every self-managed GitLab CE/EE from 7.0 up; GitLab.com and Dedicated are already patched"
+wipe: "Upgrade to 19.5.1 / 19.4.3 / 19.3.6 / 19.2.9 / 19.1.9 / 19.0.10 / 18.11.13. There is no workaround"
+inTheWild: "no"
+inTheWildNote: No exploitation reported; the Oct 12 sibling has a public PoC
+oneLiner: >-
+  Feed GitLab a regular expression shaped just wrong and the engine's size maths wraps around, so it builds
+  instructions that run the attacker's commands as the git user.
+cves:
+  - id: CVE-2026-110264
+    score: 10.0
+    name: Integer overflow in regex compilation
+    description: >-
+      Fixed Oct 21. An unauthenticated user can run code on the server "under certain conditions" that GitLab
+      has not described. Affects 7.0 onwards. Reported by joaxcar via HackerOne.
+    plain: the plumbing counted the pipes wrong, and now there's a pipe straight into the server room.
+  - id: CVE-2026-97229
+    score: 10.0
+    name: Integer overflow in the CI/CD regex compiler
+    description: >-
+      Fixed Oct 12 in 19.2.8 / 19.3.5 / 19.4.2. A crafted regex in .gitlab-ci.yml passes validation as US-ASCII,
+      then overflows when Onigmo recompiles it for UTF-8. Rapid7 reproduced it and published a PoC; it needs
+      commit access to a public project, which open sign-up gives anyone.
+fixed:
+  - { product: GitLab 19.5, branch: "19.5", version: 19.5.1 }
+  - { product: GitLab 19.4, branch: "19.4", version: 19.4.3, status: Includes DB migrations }
+  - { product: GitLab 19.3, branch: "19.3", version: 19.3.6, status: Includes DB migrations }
+  - { product: GitLab 19.2, branch: "19.2", version: 19.2.9, status: Backport (critical fix only) }
+  - { product: GitLab 19.1, branch: "19.1", version: 19.1.9, status: Backport (critical fix only) }
+  - { product: GitLab 19.0, branch: "19.0", version: 19.0.10, status: Backport (critical fix only) }
+  - { product: GitLab 7.0 – 18.11, branch: "*", version: 18.11.13, status: "Backport. Anything older: upgrade to 18.11.13 or later" }
+checker:
+  runtime: GitLab
+  command: sudo gitlab-rake gitlab:env:info | grep -i version
+  examples: ["19.5.0", "19.5.1", "19.4.2", "19.3.6", "19.2.8", "18.11.12", "17.5.2"]
+timeline:
+  - date: Sep 23, 2026
+    title: GitLab fixes two 9.9 code-execution bugs that need a login
+    body: CVE-2026-93577 and CVE-2026-89078.
+  - date: Oct 2, 2026
+    title: Self-hosted AI Gateway gets a 9.9 template-sandbox escape
+    body: CVE-2026-90970, fixed in gateway 19.2.4 / 19.3.2 / 19.4.1. Same month, different component.
+  - date: Oct 12, 2026
+    title: CVE-2026-97229 fixed in 19.2.8, 19.3.5 and 19.4.2
+  - date: Oct 13, 2026
+    title: Rapid7 reproduces CVE-2026-97229 and publishes a PoC
+  - date: Oct 21, 2026
+    title: CVE-2026-110264 fixed in seven release lines, plus 11 other security fixes
+    body: >-
+      GitLab says 12 issues in total; some press says 11. Also fixed: CVE-2026-15723 (8.2, SAML/LDAP
+      auto-link account takeover) and CVE-2026-112212 (7.5, OAuth/OIDC discovery cache poisoning).
+checklist:
+  - title: Find every self-managed GitLab
+    hint: Including forgotten Omnibus VMs and Docker images
+  - title: Upgrade to the fixed version for your line
+    hint: The Oct 12 patch is not enough. Plan downtime for 19.4.3 / 19.3.6 on single-node setups
+  - title: Close self-registration if you don't need it
+    hint: Open sign-up turned the Oct 12 bug from "needs an account" into "anyone"
+  - title: Turn on GitLab's two detection rules
+    hint: “Onigmo native worker crash” and “Org mode render error burst”
+  - title: Rotate CI/CD variables and runner tokens if you were exposed
+    hint: Code runs as the git user, which can read them
+  - title: Update a self-hosted AI Gateway too
+    hint: CVE-2026-90970 needs gateway 19.2.4 / 19.3.2 / 19.4.1
+sources:
+  - name: GitLab patch release 19.5.1
+    url: https://docs.gitlab.com/releases/patches/patch-release-gitlab-19-5-1-released/
+    says: CVE-2026-110264 critical 10.0 on CE and EE, affects 7.0 onwards, 12 fixes in total, no workaround
+    primary: true
+  - name: GitLab patch release 19.4.2
+    url: https://docs.gitlab.com/releases/patches/patch-release-gitlab-19-4-2-released/
+    says: CVE-2026-97229 fixed Oct 12
+    primary: true
+  - name: Rapid7
+    url: https://www.rapid7.com/blog/post/etr-cve-2026-97229-critical-unauthenticated-remote-code-execution-in-gitlab/
+    says: Reproduced 97229 on 19.4.1 CE and published a PoC. "Unauthenticated" needs commit access to a public project
+    primary: true
+  - name: The Hacker News
+    url: https://thehackernews.com/2026/10/critical-gitlab-flaw-cvss-100-could.html
+    says: Says 11 fixes; joaxcar's fourth regex-engine RCE in a month; not in CISA KEV as of Oct 22
+---
+
+GitLab runs user-supplied regular expressions in many places: CI rules, code owners, push rules, markup
+rendering. It compiles them with **Onigmo**, the regex engine behind Ruby, which GitLab ships and patches in
+its own packages. Twice this month, researchers found a spot where Onigmo's size calculation **overflows**,
+so the compiler emits broken bytecode that an attacker can turn into code execution as the `git` user.
+
+- **Oct 12, CVE-2026-97229:** reached through a crafted `.gitlab-ci.yml` on GitLab 19.2–19.4. Rapid7
+  published a working PoC the next day. The vendor calls it unauthenticated. In practice the attacker needs
+  to commit to a public project, which is trivial if your instance allows open sign-up.
+- **Oct 21, CVE-2026-110264:** a different overflow in the same compiler that reaches back to **GitLab 7.0
+  (2014)**. GitLab has not said which conditions an attacker needs, so you can't configure your way out.
+  **If you patched on Oct 12, you still need this upgrade.**
+
+### Why L4
+
+Both bugs are CVSS 10.0, unauthenticated, in a core developer platform, and one sibling has a public PoC.
+That is close to L5. We held at L4 because GitLab.com and Dedicated were patched before disclosure, nobody
+has reported exploitation of either bug, and CISA had not added them to KEV as of Oct 22. If exploitation
+shows up, this goes to L5. Send a PR.

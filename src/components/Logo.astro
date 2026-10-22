@@ -1,0 +1,89 @@
+---
+interface Props {
+  size?: number;
+  href?: string;
+}
+const { size = 48, href = '/' } = Astro.props;
+---
+
+<a href={href} class="logo" aria-label="OhShit! home">
+  <svg width={size} height={size} viewBox="0 0 40 40" aria-hidden="true">
+    <g class="stink" stroke="#CDB894" stroke-width="1.6" fill="none" stroke-linecap="round">
+      <path d="M12 6c-2-2 2-3 0-5"></path><path d="M20 4c-2-2 2-3 0-5"></path><path d="M28 6c-2-2 2-3 0-5"></path>
+    </g>
+    <g class="wobble">
+      <rect x="5" y="29" width="30" height="8" rx="4" fill="#8A5A2B"></rect>
+      <rect x="8.5" y="21.5" width="23" height="8" rx="4" fill="#9C6833"></rect>
+      <rect x="12.5" y="14" width="15" height="8" rx="4" fill="#AE773C"></rect>
+      <path d="M17 14.5c0-3.4 2.3-6 6.3-7.4-.9 2.3.3 4.1 1.7 5.3 1 .9.7 2.1-.7 2.1z" fill="#AE773C"></path>
+      <circle cx="16" cy="25.5" r="1.9" fill="#FBF3E4"></circle><circle cx="24" cy="25.5" r="1.9" fill="#FBF3E4"></circle>
+      <circle cx="16.5" cy="25.9" r=".85" fill="#1A120B"></circle><circle cx="24.5" cy="25.9" r=".85" fill="#1A120B"></circle>
+    </g>
+    <g class="fly"><circle cx="20" cy="22" r="1.6" fill="#FBF3E4"></circle><ellipse class="buzz" cx="20" cy="20.2" rx="1.8" ry="1" fill="#CDB894"></ellipse></g>
+  </svg>
+  <span class="disp word">Oh<span>Shit</span>!</span>
+</a>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--text);
+    min-height: 44px;
+  }
+  .logo:hover {
+    color: var(--text);
+  }
+  svg {
+    overflow: visible;
+    flex: 0 0 auto;
+  }
+  .word {
+    font-size: 28px;
+    letter-spacing: -0.5px;
+    line-height: 1;
+  }
+  .word span {
+    color: var(--yellow);
+  }
+  .wobble {
+    animation: wob 2.4s ease-in-out infinite;
+    transform-origin: 50% 100%;
+    transform-box: fill-box;
+  }
+  @keyframes wob {
+    0%, 100% { transform: rotate(0) scaleY(1); }
+    25% { transform: rotate(-6deg) scaleY(0.96); }
+    50% { transform: rotate(0) scaleY(1.04); }
+    75% { transform: rotate(6deg) scaleY(0.96); }
+  }
+  .fly {
+    animation: orbit 3.2s linear infinite;
+    transform-origin: 20px 22px;
+  }
+  @keyframes orbit {
+    from { transform: rotate(0) translateX(24px) rotate(0); }
+    to { transform: rotate(360deg) translateX(24px) rotate(-360deg); }
+  }
+  .buzz {
+    animation: buzz 0.08s linear infinite alternate;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  @keyframes buzz {
+    to { transform: scaleY(0.4); }
+  }
+  .stink path {
+    animation: stink 2.2s ease-out infinite;
+    opacity: 0;
+  }
+  .stink path:nth-child(2) { animation-delay: 0.7s; }
+  .stink path:nth-child(3) { animation-delay: 1.4s; }
+  @keyframes stink {
+    0% { opacity: 0; transform: translateY(10px); }
+    30% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-22px); }
+  }
+</style>

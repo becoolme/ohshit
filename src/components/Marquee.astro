@@ -1,0 +1,53 @@
+---
+import { PUNS } from '../lib/site';
+const items = [...PUNS, ...PUNS];
+---
+
+<div class="band" aria-hidden="true">
+  <div class="track">
+    {
+      items.map((p) => (
+        <span class="disp item">
+          {p}
+          <span class="diamond" />
+        </span>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .band {
+    background: var(--orange);
+    color: var(--bg);
+    border-top: 3px solid var(--bg);
+    border-bottom: 3px solid var(--bg);
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 14px 0;
+  }
+  .track {
+    display: inline-flex;
+    animation: mq 60s linear infinite;
+  }
+  @keyframes mq {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  .item {
+    font-size: 22px;
+    letter-spacing: 0.5px;
+    padding: 0 22px;
+    display: inline-flex;
+    align-items: center;
+    gap: 22px;
+  }
+  .diamond {
+    width: 10px;
+    height: 10px;
+    background: var(--bg);
+    transform: rotate(45deg);
+    display: inline-block;
+  }
+</style>

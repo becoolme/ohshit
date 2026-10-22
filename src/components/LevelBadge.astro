@@ -1,0 +1,14 @@
+---
+import { LEVELS, type Level } from '../lib/levels';
+interface Props {
+  level: number;
+  short?: boolean;
+  suffix?: string;
+}
+const { level, short = false, suffix } = Astro.props;
+const info = LEVELS[level as Level];
+---
+
+<span class="badge" style={`background:${info.color}`}>
+  L{level}{!short && ` · ${info.name}`}{suffix && ` · ${suffix}`}
+</span>

@@ -1,0 +1,36 @@
+---
+/** Wires every `button.copy[data-copy]` on the page to the clipboard. Include once per page. */
+---
+
+<script>
+  document.addEventListener('click', async (e) => {
+    const btn = (e.target as Element).closest<HTMLButtonElement>('button.copy[data-copy]');
+    if (!btn) return;
+    try {
+      await navigator.clipboard.writeText(btn.dataset.copy!);
+      btn.textContent = 'Copied';
+    } catch {
+      btn.textContent = 'Select & copy';
+    }
+    setTimeout(() => (btn.textContent = 'Copy'), 1600);
+  });
+</script>
+
+<style is:global>
+  button.copy {
+    background: var(--yellow);
+    color: var(--bg);
+    border: 0;
+    font: inherit;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 0 16px;
+    min-height: 44px;
+    min-width: 88px;
+    cursor: pointer;
+    flex: 0 0 auto;
+  }
+  button.copy:hover {
+    background: var(--yellow-soft);
+  }
+</style>

@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Base title="Flushed">
+  <div class="hazard" aria-hidden="true"></div>
+  <Header />
+  <main id="main" class="wrap nf">
+    <p class="kicker">404</p>
+    <h1 class="disp">Already flushed.</h1>
+    <p class="lede">This page went down the pipes. It might have been renamed, or it never existed.</p>
+    <a class="btn btn--primary btn--lg" href="/#feed">Back to the feed</a>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .nf {
+    padding-top: 80px;
+    padding-bottom: 120px;
+  }
+  h1 {
+    margin: 8px 0 0;
+    font-size: clamp(48px, 9vw, 120px);
+    line-height: 1;
+  }
+  .btn {
+    margin-top: 32px;
+  }
+</style>

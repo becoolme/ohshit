@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ohshit",
+  "compatibility_date": "2026-10-01",
+  // Static site only: Cloudflare serves dist/ directly, no Worker script runs.
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  },
+  "routes": [
+    { "pattern": "ohshit.app", "custom_domain": true },
+    { "pattern": "www.ohshit.app", "custom_domain": true }
+  ],
+  "workers_dev": false,
+  "preview_urls": false
+}

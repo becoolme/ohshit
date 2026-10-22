@@ -1,0 +1,42 @@
+name: Report an incident
+description: Something stinks and it isn't on OhShit! yet
+title: '[incident] '
+labels: [new-incident]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks! Fastest path: open a PR that adds `incidents/<year>/<date>-<slug>.md` (copy `incidents/_template.md`).
+        No time for that? Fill this in and a maintainer will write it up.
+  - type: input
+    id: what
+    attributes:
+      label: What happened, in one line
+    validations:
+      required: true
+  - type: input
+    id: primary
+    attributes:
+      label: Primary source (vendor advisory, researcher post)
+      placeholder: https://
+    validations:
+      required: true
+  - type: textarea
+    id: more
+    attributes:
+      label: Other sources, CVEs, fixed versions
+  - type: dropdown
+    id: level
+    attributes:
+      label: How bad does it smell?
+      options:
+        - L1 Silent Fart (theoretical)
+        - L2 Bit of a Leak (narrow impact)
+        - L3 Sharted (mainstream component or public PoC)
+        - L4 Septic Tank Blew (mass leak or exploited)
+        - L5 Shitstorm (internet-scale)
+  - type: dropdown
+    id: wild
+    attributes:
+      label: Exploited in the wild?
+      options: ['yes', 'no', 'disputed', 'unknown']

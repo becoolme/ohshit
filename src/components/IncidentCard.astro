@@ -1,0 +1,155 @@
+---
+import type { Incident } from '../lib/incidents';
+import { formatDate, isoDate } from '../lib/incidents';
+import { LEVELS, type Level } from '../lib/levels';
+import LevelBadge from './LevelBadge.astro';
+
+interface Props {
+  incident: Incident;
+}
+const { incident } = Astro.props;
+const d = incident.data;
+const color = LEVELS[d.level as Level].color;
+const href = `/incidents/${incident.id}/`;
+---
+
+<article class="card" data-level={d.level} style={`--lc:${color}`}>
+  <div class="stripe" aria-hidden="true"></div>
+  <div class="body">
+    <div class="meta">
+      <LevelBadge level={d.level} />
+      <time datetime={isoDate(d.date)}>{formatDate(d.date, d.dateIsApproximate)}</time>
+      <span aria-hidden="true" class="dot">·</span>
+      <span>{d.tags.join(' · ')}</span>
+    </div>
+    <h3><a href={href}>{d.title}</a></h3>
+    <p class="summary">{d.summary}</p>
+    <div class="boxes">
+      <div>
+        <p class="k">Splash zone</p>
+        <p class="v">{d.splash}</p>
+      </div>
+      <div>
+        <p class="k">How to wipe</p>
+        <p class="v">{d.wipe}</p>
+      </div>
+    </div>
+    <a href={href} class="more" aria-hidden="true" tabindex="-1">Visit the crime scene →</a>
+  </div>
+</article>
+
+<style>
+  .card {
+    background: var(--card);
+    border: 2px solid var(--line);
+    display: flex;
+    position: relative;
+    transition:
+      transform 0.16s ease,
+      border-color 0.16s ease;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: var(--yellow);
+  }
+  .card[hidden] {
+    display: none;
+  }
+  .stripe {
+    flex: 0 0 10px;
+    background: var(--lc);
+  }
+  .body {
+    padding: 28px 32px 24px 28px;
+    flex: 1;
+    min-width: 0;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 14px;
+    margin-bottom: 14px;
+    font-size: 15px;
+    color: var(--muted);
+  }
+  time {
+    font-weight: 500;
+  }
+  .dot {
+    color: var(--faint);
+  }
+  h3 {
+    margin: 0;
+    font-size: 25px;
+    line-height: 1.3;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    max-width: 40em;
+  }
+  h3 a {
+    color: var(--text);
+    text-decoration: none;
+  }
+  /* Whole card is clickable via the title link. */
+  h3 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+  h3 a:focus-visible {
+    outline: none;
+  }
+  .card:has(h3 a:focus-visible) {
+    outline: 3px solid var(--yellow);
+    outline-offset: 3px;
+  }
+  .summary {
+    margin: 10px 0 0;
+    color: var(--muted);
+    max-width: 46em;
+  }
+  .boxes {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: 12px;
+  }
+  .boxes > div {
+    background: var(--card-inner);
+    border: 1px solid var(--line);
+    padding: 12px 16px;
+  }
+  .k {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--yellow);
+  }
+  .v {
+    margin: 2px 0 0;
+    font-size: 17px;
+  }
+  .more {
+    margin-top: 14px;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-weight: 700;
+    font-size: 17px;
+  }
+  @media (max-width: 640px) {
+    .stripe {
+      flex-basis: 6px;
+    }
+    .body {
+      padding: 20px 18px 16px;
+    }
+    h3 {
+      font-size: 21px;
+    }
+    .summary {
+      font-size: 16px;
+    }
+  }
+</style>
