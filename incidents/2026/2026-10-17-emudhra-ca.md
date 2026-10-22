@@ -11,7 +11,7 @@ summary: >-
   Sectigo, had P-384 private keys that were integers below 256. Anyone could recover them instantly and mint
   certificates for any domain.
 splash: "Anything trusting emSign ECC Root CA - G3 or the Sectigo cross-signs: browsers, OSes, Go, Python, Node"
-wipe: "Update browsers and OSes, certifi 2026.10.19, Go 1.27.3 / 1.26.10, Node 22.23.4+; block the 8 intermediates in custom trust stores"
+wipe: "Replace certificates under emSign ECC Root CA - G3 before Chrome’s expected Oct 27 removal; update browsers, OSes and runtime trust stores"
 inTheWild: "no"
 inTheWildNote: No end-entity certs found in CT logs; blocked within hours
 oneLiner: >-
@@ -51,6 +51,9 @@ timeline:
     body: Existing sandboxes must be recreated from fresh images; updating sbx alone is insufficient.
   - date: ~Oct 27, 2026
     title: Chrome Root Store v43 removes the emSign ECC Root CA - G3
+  - date: Oct 22, 2026
+    title: eMudhra announces withdrawal from global SSL/TLS issuance
+    body: Partner replacements are free; revocation and status services continue until all issued certificates expire or are replaced. No exit date is given.
 checklist:
   - title: Update browsers and operating systems
     hint: Chrome, Firefox, Safari, Edge, Android and Windows have all shipped blocks
@@ -85,6 +88,14 @@ sources:
     url: https://docs.docker.com/security/security-announcements/
     says: Rebuilt built-in Sandboxes templates; recreate existing sandboxes with --pull always after saving local work
     primary: true
+  - name: eMudhra SSL/TLS business exit announcement
+    url: https://emudhra.com/en/press-release/emudhra-to-exit-global-ssl-tls-certificate-business
+    says: Board approves withdrawal; partner replacements and continued revocation/status services; no completion date specified
+    primary: true
+  - name: Chrome and Android Security Teams
+    url: https://blog.google/security/protecting-chrome-and-android-users-from-compromised-emudhra-intermediate-ca-certificates/
+    says: Removing the root also breaks legitimate chains; replacement certificates must use another trusted hierarchy; rollout expected October 27 PDT
+    primary: true
 ---
 
 A certificate authority's private key is the thing that makes "this is really your bank" true. For eight
@@ -107,7 +118,8 @@ A broken trust anchor is normally a Shitstorm. We graded it down after the revie
 The long tail is the real risk: language runtimes, Java `cacerts`, appliances and old containers that
 still carry the old bundle.
 
-There is one open question. The Mozilla bug mentions roughly 30,000 subscriber certificates to migrate,
-which conflicts with eMudhra's statement that no end-entity certificates were issued from these keys.
+**Correction, October 22:** Our earlier text treated roughly 30,000 certificates needing migration as conflicting with the claim that the eight weak intermediates issued no end-entity certificates. Google explains that removing the parent root also breaks legitimate certificates under other intermediates. These are different populations; the migration count does not establish issuance from the compromised keys.
 
 **Update, October 22:** Docker now documents rebuilt Sandboxes templates with refreshed CA certificates. Updating the CLI or cached templates does not update existing sandboxes. Save local files and unpushed commits before recreating them from newly pulled images. This changes the cleanup guidance, not the L4 assessment.
+
+**Further update, October 22:** eMudhra’s board has decided to exit the global SSL/TLS certificate business. It promises free replacement certificates through partners and continued revocation/status services until every issued certificate expires or is replaced. The exit date and partners are unspecified. Its remaining RSA hierarchy is under Chrome review, so do not treat the vendor’s transition plan as a guarantee of future browser trust. Replace affected site certificates promptly; Chrome expects root removal on October 27 PDT.
