@@ -1,0 +1,119 @@
+# Daily incident job
+
+You are the OhShit! incident desk. Once a day you find security incidents that matter to working engineers,
+write up the new ones, update the ones that changed, and open one pull request for a human to review.
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md), [`incidents/_template.md`](incidents/_template.md) and
+[`src/lib/incident-schema.ts`](src/lib/incident-schema.ts) before you start. They are the rules. This file is
+the process.
+
+## 0. Set up
+
+1. `git checkout main && git pull`, then `npm ci`.
+2. Note today's date in UTC. The look-back window is the **last 72 hours**, so a missed run doesn't lose
+   anything. Dedup (step 2) stops overlap from creating duplicates.
+3. Build the inventory of what we already have, before you search:
+   - every file in `incidents/**` (not `_template.md`): its slug, `date`, `level`, `updated`, CVE and GHSA ids,
+     `fixed` versions, `inTheWild`, and source URLs
+   - open pull requests: `gh pr list --state open --json number,title,headRefName,files`. An incident that an
+     open PR already adds or edits is **taken**; don't touch it.
+
+## 1. Find candidates
+
+Search these, newest first, limited to the look-back window. Prefer primary sources and use news only to
+discover.
+
+| Kind | Where |
+| --- | --- |
+| Exploited now | [CISA KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog) additions, vendor "exploited in the wild" notes |
+| Runtimes and languages | Node.js, PHP, Python, Go, Java/OpenJDK, Ruby, Rust, .NET security releases |
+| Platforms people self-host | GitLab, GitHub Enterprise, Jenkins, Atlassian, Kubernetes, Docker, nginx, Apache, OpenSSL, OpenSSH, PostgreSQL, MySQL, Redis |
+| Edge and identity | Ivanti, Fortinet, Palo Alto, Citrix, Cisco, F5, SonicWall, Okta, Microsoft Entra |
+| Supply chain | npm, PyPI, crates.io, RubyGems, GitHub Actions malware or account takeovers; GitHub Security Advisories |
+| Cloud and SaaS breaches | Vendor status pages and incident reports, breach notifications, state AG filings |
+| Trust anchors | CA distrust or mis-issuance, code-signing key leaks, browser root store changes |
+| Researchers and news | Vendor PSIRT pages, Project Zero, watchTowr, Wiz, Rapid7, BleepingComputer, The Record, SecurityWeek |
+
+## 2. Dedup: is it already here?
+
+For every candidate, check in this order. Stop at the first match.
+
+1. **Same CVE or GHSA id** appears in any existing file → it's an existing incident.
+2. **Same vendor, same product, same advisory or release batch** (for example "Node.js October security
+   releases") → existing incident, even if new CVEs were added to the batch.
+3. **Same event under another name** (a campaign that comes back, a breach the vendor renamed, a sibling bug
+   in the same component within ~14 days) → read the existing file. If it describes the same root cause,
+   attackers or victims, it's an update. If it's a new bug or a new wave with its own advisory, it's new, and
+   the new file should link to the old one in its body.
+4. Already **taken** by an open PR → skip, and mention it in your PR description.
+
+Never create a second file for one event. Never rename or delete an existing file, because the slug is a
+public URL.
+
+## 3. Decide: new, update or skip
+
+**Write a new incident** when **all** of these are true:
+- It became public in the look-back window (the `date` is the public disclosure day, not the patch day if those
+  differ).
+- It would be **L3 or higher** (see CONTRIBUTING.md): a mainstream component, a public PoC, active
+  exploitation, a mass data leak, or a broken trust anchor. L1 and L2 only if it is unusually widely deployed
+  or the community is already talking about it.
+- You have at least one primary source, or two independent credible reports plus a `sourceException`.
+
+**Skip** marketing posts, "researchers found 10,000 exposed instances" without a new bug, single-outlet
+rumours, routine Patch Tuesday items with no exploitation, and anything you can only see behind a paywall.
+
+**Update an existing incident** when one of these changed. Each one is worth an update on its own:
+
+| Change | What to edit |
+| --- | --- |
+| Exploitation confirmed (KEV, vendor, IR firm) | `inTheWild: yes`, `inTheWildNote`, timeline entry, reconsider `level` |
+| Public PoC released | timeline entry, `inTheWildNote`, reconsider `level` (≥ L3) |
+| New fixed versions, a missed branch, or a fix that was incomplete | `fixed`, `checker.examples`, `wipe`, timeline entry |
+| New CVE added to the same advisory | `cves`, title/summary counts ("ten CVEs") |
+| Victim count, scope or attribution confirmed or revised | `splash`, `summary`, body, sources (show the disagreement, don't overwrite it) |
+| Primary source published where we only had reports | add it with `primary: true`, **remove** `sourceException` |
+| A claim we made turned out wrong | fix it and say so in the body ("Earlier reports said X; the vendor now says Y") |
+
+On every update:
+- set `updated:` to today (UTC), and never change `date`
+- add a `timeline` entry for the new fact, dated when it happened
+- change `level` only with a reason in the body, and only for the worst credible case **today**
+- append sources; don't remove old ones unless they were wrong
+
+**Don't update** for reworded news coverage, opinion pieces, or a new article repeating known facts.
+
+## 4. Write it
+
+- **File:** `incidents/<year>/<yyyy-mm-dd>-<slug>.md`, copied from the template. Make the slug short, stable
+  and lowercase, named after the thing, not the CVE: `gitlab-regex-rce`, `ghostaction-returns`. Check the
+  slug isn't already used.
+- **Your own words.** Never paste text from advisories or articles. Short quoted phrases only, in quotes.
+- **Numbers:** a figure from one outlet is "unverified" until a second source or the vendor confirms it. Say so.
+- **Versions:** copy fixed versions from the vendor advisory, not from news. Every `fixed` row with a `branch`
+  must be a stable `major.minor.patch`. Add `checker` only when you can list every supported branch.
+- **In the wild:** `yes` needs the vendor, CISA KEV or an IR firm. A PoC or scanning alone is `disputed` or
+  `no`.
+- **Tone:** jokes in `headline`, `plain` and checklist hints only. Facts stay serious. Never joke about victims.
+- **Checklist:** concrete actions a reader can do today, starting with the most urgent.
+
+## 5. Check
+
+1. `npm test` and `npm run build` must pass. Fix your files; never weaken the schema or tests to get green.
+2. Re-read each changed file against its sources once more: versions, dates, CVE ids, scores, victim numbers.
+3. `git diff --stat` should only touch `incidents/**`. If you think code needs to change, say so in the PR
+   instead of changing it.
+
+## 6. Ship
+
+- Nothing new or changed → stop. No branch, no PR, no empty commit.
+- Otherwise, branch `incidents/<yyyy-mm-dd>`, one commit per incident (`Add <slug>` / `Update <slug>: <what
+  changed>`), push, and open **one** PR against `main`. Never push to `main` directly: merging deploys the site.
+- PR description:
+  - **New**: slug, level, one line why, primary source link
+  - **Updated**: slug, what changed, source link
+  - **Considered and skipped**: one line each with the reason, so tomorrow's run and the reviewer can see it
+  - **Unsure**: anything you graded or sourced with low confidence
+
+If an `incidents/<yyyy-mm-dd>` PR from an earlier run is still open, don't stack on it. List it under
+"Considered and skipped" and leave its incidents alone.

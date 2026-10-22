@@ -65,49 +65,41 @@ const branches = fixed.filter((r) => r.branch).map((r) => ({ branch: r.branch!, 
 </section>
 
 <script>
-  type B = { branch: string; version: string };
-  const cmp = (a: number[], b: number[]) => {
-    for (let i = 0; i < Math.max(a.length, b.length); i++) {
-      const d = (a[i] ?? 0) - (b[i] ?? 0);
-      if (d) return d;
-    }
-    return 0;
-  };
-  const nums = (v: string) => v.split('.').map((n) => parseInt(n, 10));
+  import { checkVersion, type FixedBranch } from '../lib/versions';
 
   for (const root of document.querySelectorAll<HTMLElement>('.checker[data-branches]')) {
-    const branches: B[] = JSON.parse(root.dataset.branches!);
+    const branches: FixedBranch[] = JSON.parse(root.dataset.branches!);
     const rt = root.dataset.runtime!;
     const out = root.querySelector<HTMLElement>('[data-verdict]')!;
     const input = root.querySelector<HTMLInputElement>('input')!;
     const chips = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-v]'));
 
     const judge = (raw: string) => {
-      // Keep the leading version only: "v8.4.27-RC1" -> "8.4.27", not "8.4.271".
-      const clean = raw.trim().replace(/^v/i, '');
-      const v = clean.match(/^[\d.x]+/i)?.[0].replace(/\.$/, '') ?? '';
-      // A pre-release of the fixed version ("8.4.27-RC1") ships before the fix.
-      const pre = clean.slice(v.length).startsWith('-');
-      if (!v) return;
+      const result = checkVersion(raw, branches, rt);
       chips.forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.v === raw)));
-      const match = branches
-        .filter((b) => v === b.branch || v.startsWith(b.branch + '.'))
-        .sort((a, b) => b.branch.length - a.branch.length)[0] ?? branches.find((b) => b.branch === '*');
-      let kind: 'ok' | 'bad' | 'eol', title: string, body: string;
-      if (!match || match.version === 'none') {
-        kind = 'eol';
-        title = 'Ancient plumbing. No fix is coming.';
-        body = `${rt} ${v} is not on a supported branch and gets no official patch. Apply the interim mitigation now and plan an upgrade.`;
-      } else if (!/x/i.test(v) && v.split('.').length >= match.version.split('.').length && cmp(nums(v), nums(match.version)) > (pre ? 0 : -1)) {
-        kind = 'ok';
+      let title: string, body: string;
+      if (result.kind === 'invalid' || result.kind === 'incomplete') {
+        title = 'Enter a full version.';
+        body = input.placeholder;
+      } else if (result.kind === 'unknown') {
+        title = 'Not covered by this advisory.';
+        body = /[a-z]/i.test(raw.replace(/^\s*v/i, ''))
+          ? 'Pre-release builds aren’t covered. Check the vendor advisory, or move to a stable release.'
+          : 'Check the vendor advisory for this version.';
+      } else if (result.kind === 'eol') {
+        title = 'No official patch for this branch.';
+        body = 'Upgrade to a patched branch or check your support vendor’s backport.';
+      } else if (result.kind === 'ok') {
         title = 'Clean seat. You’re patched.';
-        body = `${rt} ${v} includes the fix. Still check every server, container image and CI runner, not just this one.`;
+        body = `${rt} ${result.version} meets this advisory’s fixed-version threshold. Still check every server, container image and CI runner, not just this one.`;
       } else {
-        kind = 'bad';
         title = 'You’re standing in it.';
-        body = `${rt} ${v} is vulnerable. Upgrade to ${match.version} or later.`;
+        body = `Upgrade to ${result.fixed} or later.`;
       }
-      out.dataset.kind = kind;
+      out.dataset.kind =
+        result.kind === 'invalid' || result.kind === 'incomplete' ? 'hint'
+          : result.kind === 'ok' || result.kind === 'bad' ? result.kind : 'eol';
+      input.setAttribute('aria-invalid', String(result.kind === 'invalid' || result.kind === 'incomplete'));
       out.querySelector('[data-title]')!.textContent = title;
       out.querySelector('[data-body]')!.textContent = body;
       out.hidden = false;
@@ -214,6 +206,7 @@ const branches = fixed.filter((r) => r.branch).map((r) => ({ branch: r.branch!, 
   .verdict[data-kind='ok'] { background: #ddf2c9; color: #4f8a26; }
   .verdict[data-kind='bad'] { background: #ffd9c7; color: var(--orange); }
   .verdict[data-kind='eol'] { background: #ffe9a8; color: #c98a1c; }
+  .verdict[data-kind='hint'] { background: #fff; color: var(--paper-ink); }
   .verdict :global(.ico) {
     flex: 0 0 auto;
   }

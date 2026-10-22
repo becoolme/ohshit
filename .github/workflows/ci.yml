@@ -3,6 +3,12 @@ on:
   pull_request:
   push:
     branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,7 +20,15 @@ jobs:
           cache: npm
       # astro check + build validates every incident's frontmatter against src/content.config.ts
       - run: npm ci
+      - run: npm test
       - run: npm run build
+        env:
+          PUBLIC_ANALYTICS_SRC: ${{ vars.PUBLIC_ANALYTICS_SRC }}
+          PUBLIC_ANALYTICS_DOMAIN: ${{ vars.PUBLIC_ANALYTICS_DOMAIN }}
+      - run: npm ci
+        working-directory: packages/mcp
+      - run: npm test
+        working-directory: packages/mcp
       - uses: actions/upload-artifact@v4
         with:
           name: dist

@@ -7,26 +7,32 @@ import { z } from 'zod';
 const BASE = (process.env.OHSHIT_API ?? 'https://ohshit.app/api/v1').replace(/\/$/, '');
 
 async function get(path) {
-  const res = await fetch(`${BASE}${path}`, { headers: { accept: 'application/json' } });
+  const res = await fetch(`${BASE}${path}`, { headers: { accept: 'application/json' }, signal: AbortSignal.timeout(15000) });
   if (!res.ok) throw new Error(`GET ${path} -> ${res.status}`);
   return res.json();
 }
 const text = (value) => ({ content: [{ type: 'text', text: JSON.stringify(value, null, 2) }] });
 
-const server = new McpServer({ name: 'ohshit', version: '0.1.0' });
+const server = new McpServer({ name: 'ohshit', version: '0.1.1' });
 
 server.tool(
   'list_incidents',
-  'List recent security incidents, newest first. Filter by minimum level (1-5), ecosystem or tag.',
+  'List recent security incidents, newest first. Filter by minimum level (1-5), ecosystem, tag or days (rolling UTC window).',
   {
     min_level: z.number().int().min(1).max(5).optional(),
     ecosystem: z.string().optional().describe('e.g. php, node, gitlab'),
     tag: z.string().optional(),
+    days: z.number().int().min(1).max(36500).optional().describe('Only incidents within this many days, inclusive; excludes future dates.'),
     limit: z.number().int().min(1).max(100).default(20),
   },
-  async ({ min_level, ecosystem, tag, limit }) => {
+  async ({ min_level, ecosystem, tag, days, limit }) => {
     const { data } = await get('/incidents.json');
+    const now = Date.now();
     const hits = data
+      .filter((i) => {
+        const age = now - Date.parse(i.date);
+        return Number.isFinite(age) && age >= 0 && (days === undefined || age <= days * 864e5);
+      })
       .filter((i) => !min_level || i.level >= min_level)
       .filter((i) => !ecosystem || i.ecosystems.includes(ecosystem.toLowerCase()))
       .filter((i) => !tag || i.tags.some((t) => t.toLowerCase() === tag.toLowerCase()))

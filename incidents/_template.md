@@ -1,7 +1,7 @@
 ---
 # Copy this file to incidents/<year>/<yyyy-mm-dd>-<slug>.md and fill it in.
 # The part after the date becomes the URL: /incidents/<slug>/
-# Every field is validated on build (src/content.config.ts). Run `npm run check` locally.
+# Every field is validated on build (src/lib/incident-schema.ts). Run `npm run build` locally.
 title: "One sentence that says what broke and how bad it is (10–160 chars)"
 headline: "Optional punchline for the detail page (≤90 chars)"
 level: 3 # 1 Silent Fart · 2 Bit of a Leak · 3 Sharted · 4 Septic Tank Blew · 5 Shitstorm
@@ -42,7 +42,8 @@ timeline:
 checklist:
   - title: Something the reader should do
     hint: Where to look or how
-sources: # at least one; mark vendor / researcher posts as primary
+# sourceException: "Explain the evidence gap if no primary source is available (at least 20 characters)."
+sources: # at least one primary source, or a documented exception with multiple reports
   - name: Vendor advisory
     url: https://example.com/advisory
     says: What this source claims, especially where sources disagree

@@ -15,11 +15,14 @@ Then ask your agent: "Any L4+ incidents in the last 7 days?" or "Is PHP 8.4.26 h
 
 | Tool | Does |
 | --- | --- |
-| `list_incidents` | Recent incidents, newest first. Filter by `min_level` (1–5), `ecosystem`, `tag`; `limit` defaults to 20 |
+| `list_incidents` | Recent incidents, newest first. Filter by `min_level` (1–5), `ecosystem`, `tag`, `days` (1–36500); `limit` defaults to 20 |
 | `get_incident` | One incident by id: CVEs, fixed versions, timeline, checklist and sources |
 | `smell_index` | Highest level in the last 7 days, and days since the last incident |
 
 Set `OHSHIT_API` to use a mirror. Requires Node.js 20+.
+
+`days` uses an inclusive rolling window of `days × 24` hours against UTC incident dates.
+Future-dated incidents are excluded. Filtering happens before `limit` is applied.
 
 ## License
 

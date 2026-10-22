@@ -41,7 +41,7 @@ The `v1` shape is stable. Breaking changes go to `/api/v2/`.
 
 | Tool | Does |
 | --- | --- |
-| `list_incidents` | Recent incidents, filtered by `min_level`, `ecosystem` or `tag` |
+| `list_incidents` | Recent incidents, filtered by `min_level`, `ecosystem`, `tag` or `days` |
 | `get_incident` | Everything about one incident |
 | `smell_index` | The current Shit Index |
 
@@ -73,7 +73,7 @@ incidents/
     2026-10-21-php2shell.md    ← becomes /incidents/php2shell/
 ```
 
-Every file is validated against [`src/content.config.ts`](src/content.config.ts), so CI catches a typo before it
+Every file is validated against [`src/lib/incident-schema.ts`](src/lib/incident-schema.ts), so CI catches a typo before it
 reaches the site. Read [CONTRIBUTING.md](CONTRIBUTING.md) for the sourcing rules and how to pick a level.
 
 ## Development
@@ -87,15 +87,19 @@ npm run build    # type-checks, validates every incident, renders share images, 
 ```
 
 Built with [Astro](https://astro.build). The output is fully static, so `dist/` deploys to any static host.
-ohshit.app runs on Cloudflare Workers static assets ([`wrangler.jsonc`](wrangler.jsonc)); every push to `main` deploys.
-Rebuild on every merge to `main`, and once a day so the Shit Index ages out old incidents.
+ohshit.app runs on Cloudflare Workers static assets ([`wrangler.jsonc`](wrangler.jsonc)). Cloudflare Workers Builds
+deploys every push to `main`; GitHub Actions only runs tests and builds. The Shit Index is a build-time snapshot
+(`generated_at` records its freshness), so rebuild regularly to age out old incidents.
+
+Run `npm test` for version, date-window, content-schema and configuration regression tests.
+Run `npm ci && npm test` inside `packages/mcp` for the MCP protocol smoke tests.
 
 ```
 src/
-  content.config.ts   incident schema
+  content.config.ts   incident collection
   pages/              site, JSON API (api/v1), RSS, share images (og)
   components/         UI
-  lib/                levels, data helpers, share-image renderer
+  lib/                content schema, version checks, date metrics, share-image renderer
 incidents/            the data
 packages/mcp/         MCP server
 ```

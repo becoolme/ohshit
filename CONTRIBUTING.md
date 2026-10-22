@@ -7,7 +7,7 @@ The most useful contributions are **new incidents** and **corrections**. You don
 1. Copy `incidents/_template.md` to `incidents/<year>/<yyyy-mm-dd>-<slug>.md`.
    - `date` is the day it became **public** (advisory, disclosure or first credible report).
    - The slug becomes the URL. Keep it short and stable: `gitlab-regex-rce`, not `gitlab-cve-2026-110264-critical`.
-2. Fill in the frontmatter. Every field is documented in [`src/content.config.ts`](src/content.config.ts).
+2. Fill in the frontmatter. Every field is documented in [`src/lib/incident-schema.ts`](src/lib/incident-schema.ts).
 3. Write the body in plain Markdown: what happened, who is affected, what's still unclear.
 4. Run `npm run build`, or open the PR and let CI check it.
 
@@ -16,6 +16,8 @@ Prefer an issue? Use the **Report an incident** template and a maintainer will w
 ## Sourcing rules
 
 - **At least one primary source**: the vendor's advisory, or the researchers' own write-up. Mark it `primary: true`.
+  If unavailable, document the evidence gap in `sourceException` (at least 20 characters), retain multiple
+  credible reports, and state the uncertainty in the article. Remove the exception when a primary source is added.
 - **A number one outlet reports is unverified until a second source or the vendor confirms it.** Say so in the text.
 - **When sources disagree, show both.** Use the `says:` field and "who said what" so readers can judge for themselves.
 - In-the-wild status: `yes` needs a credible report of real exploitation (vendor, CISA KEV or an IR firm).

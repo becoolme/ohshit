@@ -41,6 +41,7 @@ checklist:
     hint: Retire or isolate anything not migrated
   - title: "Providers: enforce MFA everywhere"
     hint: This started with a stolen password
+sourceException: "The national total is reported by multiple outlets, but the underlying Texas AG filing is not linked here and remains unverified."
 sources:
   - name: HIPAA Journal
     url: https://www.hipaajournal.com/oracle-health-data-breach/

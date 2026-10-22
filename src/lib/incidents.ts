@@ -1,5 +1,6 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { LEVELS, type Level } from './levels';
+export { smellIndex, daysSinceLast, SMELL_WINDOW_DAYS } from './metrics';
 
 export type Incident = CollectionEntry<'incidents'>;
 
@@ -17,19 +18,6 @@ export function formatDate(d: Date, approximate = false): string {
 
 export function isoDate(d: Date): string {
   return d.toISOString().slice(0, 10);
-}
-
-export const SMELL_WINDOW_DAYS = 7;
-
-/** Highest level among incidents from the last `days` days (L1 if it has been quiet). */
-export function smellIndex(list: Incident[], now = new Date(), days = SMELL_WINDOW_DAYS): Level {
-  const recent = list.filter((i) => now.getTime() - i.data.date.getTime() <= days * 864e5);
-  return recent.length ? (Math.max(...recent.map((i) => i.data.level)) as Level) : 1;
-}
-
-export function daysSinceLast(list: Incident[], now = new Date()): number {
-  if (!list.length) return 0;
-  return Math.max(0, Math.floor((now.getTime() - list[0].data.date.getTime()) / 864e5));
 }
 
 /** The public JSON shape. Keep this stable: it is the API contract. */
@@ -50,6 +38,7 @@ export function toApi(i: Incident, site?: URL) {
     splash: d.splash,
     wipe: d.wipe,
     in_the_wild: d.inTheWild,
+    source_exception: d.sourceException ?? null,
     cves: d.cves.map((c) => ({ id: c.id, score: c.score ?? null, name: c.name })),
     fixed: d.fixed,
     checklist: d.checklist,
