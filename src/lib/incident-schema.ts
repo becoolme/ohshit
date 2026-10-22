@@ -117,3 +117,27 @@ export const incidentSchema = z.object({
     });
   }
 });
+
+/**
+ * A Chinese translation lives next to the English file as <file>.zh.md. It only carries the fields a
+ * reader sees as prose; dates, levels, versions, URLs and CVE ids always come from the English file.
+ * Arrays must line up with the English ones item for item. See src/lib/localize.ts.
+ */
+export const incidentZhSchema = z.object({
+  title: z.string().min(4).max(160),
+  headline: z.string().max(90).optional(),
+  /** Optional: replaces the English tags when present. */
+  tags: z.array(z.string()).min(1).max(5).optional(),
+  summary: z.string().max(360),
+  splash: z.string().max(140),
+  wipe: z.string().max(160),
+  inTheWildNote: z.string().max(90).optional(),
+  oneLiner: z.string().max(400).optional(),
+  sourceException: z.string().trim().min(10).optional(),
+  cves: z.array(z.object({ name: z.string(), description: z.string(), plain: z.string().optional() })).default([]),
+  fixed: z.array(z.object({ product: z.string().optional(), status: z.string().optional() })).default([]),
+  mitigation: z.object({ note: z.string().optional(), code: z.string().optional() }).optional(),
+  timeline: z.array(z.object({ date: z.string(), title: z.string(), body: z.string().optional() })).default([]),
+  checklist: z.array(z.object({ title: z.string(), hint: z.string().optional() })).min(1),
+  sources: z.array(z.object({ name: z.string().optional(), says: z.string().optional() })).min(1),
+});

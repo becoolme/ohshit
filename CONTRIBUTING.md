@@ -9,7 +9,10 @@ The most useful contributions are **new incidents** and **corrections**. You don
    - The slug becomes the URL. Keep it short and stable: `gitlab-regex-rce`, not `gitlab-cve-2026-110264-critical`.
 2. Fill in the frontmatter. Every field is documented in [`src/lib/incident-schema.ts`](src/lib/incident-schema.ts).
 3. Write the body in plain Markdown: what happened, who is affected, what's still unclear.
-4. Run `npm run build`, or open the PR and let CI check it.
+4. Add a Simplified Chinese translation next to it: `<yyyy-mm-dd>-<slug>.zh.md`. It holds only the prose
+   fields and body; see [`docs/translation-zh.md`](docs/translation-zh.md). Can't write Chinese? Skip it and
+   say so in the PR. The Chinese page falls back to English until someone translates it.
+5. Run `npm run build`, or open the PR and let CI check it.
 
 Prefer an issue? Use the **Report an incident** template and a maintainer will write it up.
 

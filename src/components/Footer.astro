@@ -1,30 +1,33 @@
 ---
 import { SITE } from '../lib/site';
+import { UI, localePath, type Lang } from '../lib/i18n';
 interface Props {
   updated?: string;
+  lang?: Lang;
 }
-const { updated } = Astro.props;
+const { updated, lang = 'en' } = Astro.props;
+const t = UI[lang].footer;
 ---
 
 <footer class="footer">
   <div class="wrap inner">
     <div>
-      <p class="disp big">Shit happens.</p>
+      <p class="disp big">{t.big}</p>
       <p class="sub">
-        We’re just the first ones to yell about it. Compiled from public advisories and research.
-        Spotted an error? <a href={SITE.correctionUrl}>Tell us</a>.
+        {t.sub}
+        {' '}{t.error} <a href={SITE.correctionUrl}>{t.tell}</a>{lang === 'zh' ? '。' : '.'}
       </p>
-      {updated && <p class="sub">Last updated {updated}</p>}
+      {updated && <p class="sub">{t.updated(updated)}</p>}
     </div>
-    <nav aria-label="Footer" class="links">
+    <nav aria-label={t.nav} class="links">
       <a href="/api/v1/incidents.json">JSON API</a>
-      <a href="/#dev">MCP Server</a>
-      <a href="/rss.xml">RSS</a>
+      <a href={localePath(lang, '/#dev')}>{t.mcp}</a>
+      <a href={localePath(lang, '/rss.xml')}>RSS</a>
       <a href={SITE.repo}>GitHub</a>
-      <a href={`${SITE.repo}/blob/main/CONTRIBUTING.md`}>Contribute</a>
+      <a href={`${SITE.repo}/blob/main/CONTRIBUTING.md`}>{t.contribute}</a>
     </nav>
   </div>
-  <p class="wrap legal">MIT licensed, code and data. Not affiliated with any vendor mentioned.</p>
+  <p class="wrap legal">{t.legal}</p>
 </footer>
 
 <style>

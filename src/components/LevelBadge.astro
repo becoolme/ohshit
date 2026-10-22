@@ -1,12 +1,14 @@
 ---
 import { LEVELS, type Level } from '../lib/levels';
+import { UI, type Lang } from '../lib/i18n';
 interface Props {
   level: number;
   short?: boolean;
   suffix?: string;
+  lang?: Lang;
 }
-const { level, short = false, suffix } = Astro.props;
-const info = LEVELS[level as Level];
+const { level, short = false, suffix, lang = 'en' } = Astro.props;
+const info = { ...LEVELS[level as Level], ...UI[lang].levels[level as Level] };
 ---
 
 <span class="badge" style={`background:${info.color}`}>

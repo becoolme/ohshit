@@ -96,6 +96,9 @@ On every update:
   `no`.
 - **Tone:** jokes in `headline`, `plain` and checklist hints only. Facts stay serious. Never joke about victims.
 - **Checklist:** concrete actions a reader can do today, starting with the most urgent.
+- **Chinese:** write `<yyyy-mm-dd>-<slug>.zh.md` next to every new incident, following
+  [`docs/translation-zh.md`](docs/translation-zh.md). On every update, change the `.zh.md` in the same commit
+  so the item counts still match the English file (the build fails otherwise).
 
 ## 5. Check
 

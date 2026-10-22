@@ -1,6 +1,10 @@
 ---
-import { PUNS } from '../lib/site';
-const items = [...PUNS, ...PUNS];
+import { UI, type Lang } from '../lib/i18n';
+interface Props {
+  lang?: Lang;
+}
+const puns = UI[Astro.props.lang ?? 'en'].puns;
+const items = [...puns, ...puns];
 ---
 
 <div class="band" aria-hidden="true">

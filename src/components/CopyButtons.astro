@@ -1,18 +1,27 @@
 ---
 /** Wires every `button.copy[data-copy]` on the page to the clipboard. Include once per page. */
+import { UI, type Lang } from '../lib/i18n';
+interface Props {
+  lang?: Lang;
+}
+const t = UI[Astro.props.lang ?? 'en'].copy;
 ---
+
+<copy-labels hidden data-copied={t.copied} data-failed={t.failed}></copy-labels>
 
 <script>
   document.addEventListener('click', async (e) => {
     const btn = (e.target as Element).closest<HTMLButtonElement>('button.copy[data-copy]');
     if (!btn) return;
+    const labels = document.querySelector<HTMLElement>('copy-labels')?.dataset ?? {};
+    const label = (btn.dataset.label ??= btn.textContent!.trim());
     try {
       await navigator.clipboard.writeText(btn.dataset.copy!);
-      btn.textContent = 'Copied';
+      btn.textContent = labels.copied ?? 'Copied';
     } catch {
-      btn.textContent = 'Select & copy';
+      btn.textContent = labels.failed ?? 'Select & copy';
     }
-    setTimeout(() => (btn.textContent = 'Copy'), 1600);
+    setTimeout(() => (btn.textContent = label), 1600);
   });
 </script>
 

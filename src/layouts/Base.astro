@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { SITE } from '../lib/site';
+import { UI, HTML_LANG, OG_LOCALE, LANGS, localePath, stripLang, type Lang } from '../lib/i18n';
 
 interface Props {
   title?: string;
@@ -8,10 +8,17 @@ interface Props {
   type?: 'website' | 'article';
   /** Path of the Open Graph image, e.g. /og/php2shell.png */
   image?: string;
+  lang?: Lang;
+  /** False on a Chinese page that has no translation yet: keep search engines on the English one. */
+  translated?: boolean;
 }
-const { title, description = SITE.description, type = 'website', image = '/og/index.png' } = Astro.props;
-const fullTitle = title ? `${title} · OhShit!` : SITE.title;
+const { title, lang = 'en', translated = true, type = 'website', image = '/og/index.png' } = Astro.props;
+const t = UI[lang];
+const description = Astro.props.description ?? t.site.description;
+const fullTitle = title ? `${title} · OhShit!` : t.site.title;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const basePath = stripLang(Astro.url.pathname);
+const alternates = translated ? LANGS.map((l) => ({ hreflang: HTML_LANG[l], href: new URL(localePath(l, basePath), Astro.site) })) : [];
 const ogImage = new URL(image, Astro.site);
 // Optional Plausible-compatible analytics. Off unless both env vars are set at build time (see .env.example).
 const analyticsSrc = import.meta.env.PUBLIC_ANALYTICS_SRC;
@@ -19,16 +26,18 @@ const analyticsDomain = import.meta.env.PUBLIC_ANALYTICS_DOMAIN;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={HTML_LANG[lang]}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    <link rel="canonical" href={translated ? canonical : new URL(basePath, Astro.site)} />
+    {alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
+    {alternates.length > 0 && <link rel="alternate" hreflang="x-default" href={alternates[0].href} />}
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="alternate" type="application/rss+xml" title="OhShit! incidents" href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title={t.site.rssLink} href={localePath(lang, '/rss.xml')} />
     <link rel="alternate" type="application/json" title="OhShit! JSON API" href="/api/v1/incidents.json" />
     <meta name="theme-color" content="#1A120B" />
     <meta property="og:type" content={type} />
@@ -36,10 +45,11 @@ const analyticsDomain = import.meta.env.PUBLIC_ANALYTICS_DOMAIN;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="OhShit!" />
+    <meta property="og:locale" content={OG_LOCALE[lang]} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={title ?? SITE.title} />
+    <meta property="og:image:alt" content={title ?? t.site.title} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
@@ -47,7 +57,7 @@ const analyticsDomain = import.meta.env.PUBLIC_ANALYTICS_DOMAIN;
     {analyticsSrc && analyticsDomain && <script is:inline defer data-domain={analyticsDomain} src={analyticsSrc} />}
   </head>
   <body>
-    <a href="#main" class="skip">Skip to content</a>
+    <a href="#main" class="skip">{t.site.skip}</a>
     <slot />
   </body>
 </html>

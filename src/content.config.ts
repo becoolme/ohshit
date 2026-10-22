@@ -1,6 +1,6 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
-import { incidentSchema } from './lib/incident-schema';
+import { incidentSchema, incidentZhSchema } from './lib/incident-schema';
 
 /**
  * One Markdown file per incident lives in /incidents/<year>/<yyyy-mm-dd>-<slug>.md.
@@ -9,7 +9,7 @@ import { incidentSchema } from './lib/incident-schema';
  */
 const incidents = defineCollection({
   loader: glob({
-    pattern: ['**/*.md', '!**/_*.md'],
+    pattern: ['**/*.md', '!**/_*.md', '!**/*.zh.md'],
     base: './incidents',
     // "2026/2026-10-21-php2shell.md" -> "php2shell"
     generateId: ({ entry }) =>
@@ -22,4 +22,19 @@ const incidents = defineCollection({
   schema: incidentSchema,
 });
 
-export const collections = { incidents };
+/** Simplified Chinese translations: <yyyy-mm-dd>-<slug>.zh.md next to the English file. */
+const incidentsZh = defineCollection({
+  loader: glob({
+    pattern: ['**/*.zh.md', '!**/_*.md'],
+    base: './incidents',
+    generateId: ({ entry }) =>
+      entry
+        .split('/')
+        .pop()!
+        .replace(/\.zh\.md$/, '')
+        .replace(/^\d{4}-\d{2}-\d{2}-/, ''),
+  }),
+  schema: incidentZhSchema,
+});
+
+export const collections = { incidents, incidentsZh };

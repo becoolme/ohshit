@@ -1,12 +1,25 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { LEVELS, type Level } from './levels';
+import { localizeIncident } from './localize';
+import type { Lang } from './i18n';
 export { smellIndex, daysSinceLast, SMELL_WINDOW_DAYS } from './metrics';
 
-export type Incident = CollectionEntry<'incidents'>;
+export type Incident = CollectionEntry<'incidents'> & {
+  /** The Chinese entry whose body to render, when the page is Chinese and a translation exists. */
+  translation?: CollectionEntry<'incidentsZh'>;
+};
 
-export async function getIncidents(): Promise<Incident[]> {
-  const all = await getCollection('incidents');
-  return all.sort((a, b) => b.data.date.getTime() - a.data.date.getTime() || b.data.level - a.data.level);
+/** Newest first. For "zh", prose fields are swapped for the translation where one exists. */
+export async function getIncidents(lang: Lang = 'en'): Promise<Incident[]> {
+  const all: Incident[] = await getCollection('incidents');
+  all.sort((a, b) => b.data.date.getTime() - a.data.date.getTime() || b.data.level - a.data.level);
+  if (lang === 'en') return all;
+  const zh = new Map((await getCollection('incidentsZh')).map((e) => [e.id, e]));
+  for (const id of zh.keys()) if (!all.some((i) => i.id === id)) throw new Error(`zh translation ${id}: no English incident`);
+  return all.map((i) => {
+    const t = zh.get(i.id);
+    return t ? { ...i, data: localizeIncident(i.data, t.data, i.id), translation: t } : i;
+  });
 }
 
 const fmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });

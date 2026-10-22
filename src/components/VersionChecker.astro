@@ -1,5 +1,6 @@
 ---
 import Poop from './Poop.astro';
+import { UI, type Lang } from '../lib/i18n';
 interface Row {
   product: string;
   branch?: string;
@@ -12,22 +13,22 @@ interface Props {
   examples: string[];
   fixed: Row[];
   date: string;
+  lang?: Lang;
 }
-const { runtime, command, examples, fixed, date } = Astro.props;
+const { runtime, command, examples, fixed, date, lang = 'en' } = Astro.props;
+const t = UI[lang].checker;
 const branches = fixed.filter((r) => r.branch).map((r) => ({ branch: r.branch!, version: r.version }));
 ---
 
-<section id="check" class="checker" data-branches={JSON.stringify(branches)} data-runtime={runtime}>
-  <h2 class="disp">Are you standing in it?</h2>
-  <p class="how">
-    Run <code>{command}</code> on each box, then type the version or pick the closest match.
-  </p>
+<section id="check" class="checker" data-branches={JSON.stringify(branches)} data-runtime={runtime} data-verdicts={JSON.stringify(t.verdict)}>
+  <h2 class="disp">{t.title}</h2>
+  <p class="how" set:html={t.how(command.replace(/&/g, '&amp;').replace(/</g, '&lt;'))} />
   <form class="row" data-form>
-    <label for="ver" class="sr-only">Your {runtime} version</label>
-    <input id="ver" name="ver" inputmode="decimal" autocomplete="off" placeholder={`e.g. ${examples[0]}`} />
-    <button type="submit">Sniff it</button>
+    <label for="ver" class="sr-only">{t.label(runtime)}</label>
+    <input id="ver" name="ver" inputmode="decimal" autocomplete="off" placeholder={t.placeholder(examples[0])} />
+    <button type="submit">{t.submit}</button>
   </form>
-  <div role="group" aria-label={`Example ${runtime} versions`} class="chips">
+  <div role="group" aria-label={t.examples(runtime)} class="chips">
     {
       examples.map((v) => (
         <button type="button" data-v={v} aria-pressed="false">
@@ -45,9 +46,9 @@ const branches = fixed.filter((r) => r.branch).map((r) => ({ branch: r.branch!, 
   </div>
   <div class="tbl">
     <table>
-      <caption>Fixed versions ({date})</caption>
+      <caption>{t.caption(date)}</caption>
       <thead>
-        <tr><th scope="col">Branch</th><th scope="col">Safe from</th><th scope="col">Status</th></tr>
+        <tr><th scope="col">{t.branch}</th><th scope="col">{t.safeFrom}</th><th scope="col">{t.status}</th></tr>
       </thead>
       <tbody>
         {
@@ -70,6 +71,8 @@ const branches = fixed.filter((r) => r.branch).map((r) => ({ branch: r.branch!, 
   for (const root of document.querySelectorAll<HTMLElement>('.checker[data-branches]')) {
     const branches: FixedBranch[] = JSON.parse(root.dataset.branches!);
     const rt = root.dataset.runtime!;
+    const v: Record<string, string> = JSON.parse(root.dataset.verdicts!);
+    const fill = (s: string, vars: Record<string, string>) => s.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? '');
     const out = root.querySelector<HTMLElement>('[data-verdict]')!;
     const input = root.querySelector<HTMLInputElement>('input')!;
     const chips = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-v]'));
@@ -79,22 +82,20 @@ const branches = fixed.filter((r) => r.branch).map((r) => ({ branch: r.branch!, 
       chips.forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.v === raw)));
       let title: string, body: string;
       if (result.kind === 'invalid' || result.kind === 'incomplete') {
-        title = 'Enter a full version.';
+        title = v.fullTitle;
         body = input.placeholder;
       } else if (result.kind === 'unknown') {
-        title = 'Not covered by this advisory.';
-        body = /[a-z]/i.test(raw.replace(/^\s*v/i, ''))
-          ? 'Pre-release builds aren’t covered. Check the vendor advisory, or move to a stable release.'
-          : 'Check the vendor advisory for this version.';
+        title = v.unknownTitle;
+        body = /[a-z]/i.test(raw.replace(/^\s*v/i, '')) ? v.unknownPre : v.unknownBody;
       } else if (result.kind === 'eol') {
-        title = 'No official patch for this branch.';
-        body = 'Upgrade to a patched branch or check your support vendor’s backport.';
+        title = v.eolTitle;
+        body = v.eolBody;
       } else if (result.kind === 'ok') {
-        title = 'Clean seat. You’re patched.';
-        body = `${rt} ${result.version} meets this advisory’s fixed-version threshold. Still check every server, container image and CI runner, not just this one.`;
+        title = v.okTitle;
+        body = fill(v.okBody, { rt, v: result.version ?? raw });
       } else {
-        title = 'You’re standing in it.';
-        body = `Upgrade to ${result.fixed} or later.`;
+        title = v.badTitle;
+        body = fill(v.badBody, { fixed: result.fixed ?? "" });
       }
       out.dataset.kind =
         result.kind === 'invalid' || result.kind === 'incomplete' ? 'hint'

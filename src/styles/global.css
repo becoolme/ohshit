@@ -7,6 +7,24 @@
 @import '@fontsource/jetbrains-mono/400.css';
 @import '@fontsource/jetbrains-mono/700.css';
 
+/*
+ * None of the bundled fonts has Chinese glyphs. For headings, borrow a heavy CJK face already on the
+ * reader's machine so Chinese matches Archivo Black's weight without faux-bolding the Latin letters.
+ */
+@font-face {
+  font-family: 'OhShit CJK Display';
+  font-weight: 400;
+  src:
+    local('PingFangSC-Semibold'),
+    local('PingFang SC Semibold'),
+    local('NotoSansSC-Black'),
+    local('Noto Sans SC Black'),
+    local('SourceHanSansSC-Heavy'),
+    local('Microsoft YaHei Bold'),
+    local('MicrosoftYaHei-Bold');
+  unicode-range: U+2E80-2FDF, U+3000-303F, U+3040-30FF, U+3100-312F, U+3190-31FF, U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF;
+}
+
 :root {
   --bg: #1a120b;
   --bg-deep: #120c07;
@@ -31,8 +49,9 @@
 
   --wrap: 1200px;
   --gutter: 24px;
-  --font: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --display: 'Archivo Black', 'Inter', system-ui, sans-serif;
+  --cjk: 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Source Han Sans SC', 'Microsoft YaHei';
+  --font: 'Inter', var(--cjk), system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --display: 'Archivo Black', 'OhShit CJK Display', 'Inter', var(--cjk), system-ui, sans-serif;
   --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   color-scheme: dark;
 }
@@ -90,6 +109,13 @@ h3 {
 .disp {
   font-family: var(--display);
   font-weight: 400;
+}
+
+/* Negative tracking that suits Archivo Black crushes Chinese characters together. */
+:lang(zh) .disp,
+:lang(zh) .prose h2,
+:lang(zh) .prose h3 {
+  letter-spacing: 0 !important;
 }
 
 .wrap {

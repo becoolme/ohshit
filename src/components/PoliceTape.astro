@@ -1,5 +1,10 @@
 ---
-const words = Array.from({ length: 12 }, (_, i) => (i % 2 ? 'DO NOT FLUSH' : 'CRIME SCENE'));
+import { UI, type Lang } from '../lib/i18n';
+interface Props {
+  lang?: Lang;
+}
+const [scene, flush] = UI[Astro.props.lang ?? 'en'].tape;
+const words = Array.from({ length: 12 }, (_, i) => (i % 2 ? flush : scene));
 ---
 
 <div class="tape-wrap" aria-hidden="true">

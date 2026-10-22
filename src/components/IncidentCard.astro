@@ -1,24 +1,27 @@
 ---
 import type { Incident } from '../lib/incidents';
-import { formatDate, isoDate } from '../lib/incidents';
+import { isoDate } from '../lib/incidents';
 import { LEVELS, type Level } from '../lib/levels';
+import { UI, formatDateIn, localePath, type Lang } from '../lib/i18n';
 import LevelBadge from './LevelBadge.astro';
 
 interface Props {
   incident: Incident;
+  lang?: Lang;
 }
-const { incident } = Astro.props;
+const { incident, lang = 'en' } = Astro.props;
+const t = UI[lang].card;
 const d = incident.data;
 const color = LEVELS[d.level as Level].color;
-const href = `/incidents/${incident.id}/`;
+const href = localePath(lang, `/incidents/${incident.id}/`);
 ---
 
 <article class="card" data-level={d.level} style={`--lc:${color}`}>
   <div class="stripe" aria-hidden="true"></div>
   <div class="body">
     <div class="meta">
-      <LevelBadge level={d.level} />
-      <time datetime={isoDate(d.date)}>{formatDate(d.date, d.dateIsApproximate)}</time>
+      <LevelBadge level={d.level} lang={lang} />
+      <time datetime={isoDate(d.date)}>{formatDateIn(lang, d.date, d.dateIsApproximate)}</time>
       <span aria-hidden="true" class="dot">·</span>
       <span>{d.tags.join(' · ')}</span>
     </div>
@@ -26,15 +29,15 @@ const href = `/incidents/${incident.id}/`;
     <p class="summary">{d.summary}</p>
     <div class="boxes">
       <div>
-        <p class="k">Splash zone</p>
+        <p class="k">{t.splash}</p>
         <p class="v">{d.splash}</p>
       </div>
       <div>
-        <p class="k">How to wipe</p>
+        <p class="k">{t.wipe}</p>
         <p class="v">{d.wipe}</p>
       </div>
     </div>
-    <a href={href} class="more" aria-hidden="true" tabindex="-1">Visit the crime scene →</a>
+    <a href={href} class="more" aria-hidden="true" tabindex="-1">{t.more}</a>
   </div>
 </article>
 

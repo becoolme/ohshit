@@ -2,6 +2,9 @@
 import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { UI } from '../lib/i18n';
+const t = UI.en.notFound;
+const zh = UI.zh.notFound;
 ---
 
 <Base title="Flushed">
@@ -9,9 +12,10 @@ import Footer from '../components/Footer.astro';
   <Header />
   <main id="main" class="wrap nf">
     <p class="kicker">404</p>
-    <h1 class="disp">Already flushed.</h1>
-    <p class="lede">This page went down the pipes. It might have been renamed, or it never existed.</p>
-    <a class="btn btn--primary btn--lg" href="/#feed">Back to the feed</a>
+    <h1 class="disp">{t.heading}</h1>
+    <p class="lede">{t.lede}</p>
+    <a class="btn btn--primary btn--lg" href="/#feed">{t.back}</a>
+    <p class="zh" lang="zh-CN">{zh.heading}{zh.lede} <a href="/zh/#feed">{zh.back} →</a></p>
   </main>
   <Footer />
 </Base>
@@ -25,6 +29,11 @@ import Footer from '../components/Footer.astro';
     margin: 8px 0 0;
     font-size: clamp(48px, 9vw, 120px);
     line-height: 1;
+  }
+  .zh {
+    margin-top: 40px;
+    color: var(--muted);
+    font-size: 17px;
   }
   .btn {
     margin-top: 32px;

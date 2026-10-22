@@ -1,17 +1,20 @@
 ---
+import { UI, localePath, type Lang } from '../lib/i18n';
 interface Props {
   id: string;
   items: { title: string; hint?: string }[];
   editUrl: string;
+  lang?: Lang;
 }
-const { id, items, editUrl } = Astro.props;
+const { id, items, editUrl, lang = 'en' } = Astro.props;
+const t = UI[lang].checklist;
 ---
 
 <aside class="list" aria-labelledby="wipe-title" data-checklist={id}>
-  <p class="eyebrow">Wipe guide</p>
-  <h2 id="wipe-title" class="disp">The wipe checklist</h2>
-  <p class="count" aria-live="polite"><span data-done>0</span> of {items.length} sheets used</p>
-  <div class="track" role="progressbar" aria-label="Checklist progress" aria-valuemin="0" aria-valuemax={items.length} aria-valuenow="0">
+  <p class="eyebrow">{t.eyebrow}</p>
+  <h2 id="wipe-title" class="disp">{t.title}</h2>
+  <p class="count" aria-live="polite"><span data-done>0</span> {t.used(items.length)}</p>
+  <div class="track" role="progressbar" aria-label={t.progress} aria-valuemin="0" aria-valuemax={items.length} aria-valuenow="0">
     <div class="fill" data-bar></div>
   </div>
   <ul>
@@ -29,13 +32,13 @@ const { id, items, editUrl } = Astro.props;
       ))
     }
   </ul>
-  <p class="clean" data-clean hidden>Squeaky clean. Wash your hands, then go watch for the next one.</p>
+  <p class="clean" data-clean hidden>{t.clean}</p>
   <div class="share">
-    <p>Pass this turd to your team</p>
+    <p>{t.share}</p>
     <div class="btns">
-      <a class="b dark" href="/#dev">Alert me next time</a>
-      <a class="b" href={`/api/v1/incidents/${id}.json`}>Get JSON</a>
-      <a class="b" href={editUrl}>Fix this page</a>
+      <a class="b dark" href={localePath(lang, '/#dev')}>{t.alert}</a>
+      <a class="b" href={`/api/v1/incidents/${id}.json`}>{t.json}</a>
+      <a class="b" href={editUrl}>{t.fix}</a>
     </div>
   </div>
 </aside>

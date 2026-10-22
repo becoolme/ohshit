@@ -1,29 +1,38 @@
 ---
 import Logo from './Logo.astro';
 import { SITE } from '../lib/site';
+import { UI, HTML_LANG, localePath, stripLang, type Lang } from '../lib/i18n';
 interface Props {
   variant?: 'home' | 'inner';
+  lang?: Lang;
 }
-const { variant = 'home' } = Astro.props;
+const { variant = 'home', lang = 'en' } = Astro.props;
+const t = UI[lang].header;
+const other: Lang = lang === 'en' ? 'zh' : 'en';
+const switchHref = localePath(other, stripLang(Astro.url.pathname));
+const p = (path: string) => localePath(lang, path);
 ---
 
 <header class="wrap header">
-  <Logo />
-  {variant === 'home' && <a href="/rss.xml" class="btn btn--primary rss-m">RSS</a>}
+  <Logo href={p('/')} label={t.home} />
+  <div class="end">
+    {variant === 'home' && <a href={p('/rss.xml')} class="btn btn--primary rss-m">RSS</a>}
+    <a href={switchHref} hreflang={HTML_LANG[other]} lang={HTML_LANG[other]} aria-label={t.switchLabel} class="lang">{t.switchTo}</a>
+  </div>
   {
     variant === 'home' ? (
-      <nav aria-label="Main" class="nav">
-        <a href="/#feed">Feed</a>
-        <a href="/#levels">The Scale</a>
-        <a href="/#dev">MCP / API / RSS</a>
-        <a href={SITE.reportUrl}>Report a Turd</a>
-        <a href="/rss.xml" class="btn btn--primary rss-d">Subscribe to the Smell</a>
+      <nav aria-label={t.nav} class="nav">
+        <a href={p('/#feed')}>{t.feed}</a>
+        <a href={p('/#levels')}>{t.scale}</a>
+        <a href={p('/#dev')}>{t.dev}</a>
+        <a href={SITE.reportUrl}>{t.report}</a>
+        <a href={p('/rss.xml')} class="btn btn--primary rss-d">{t.subscribe}</a>
       </nav>
     ) : (
-      <nav aria-label="Breadcrumb" class="crumbs">
-        <a href="/#feed">← Back to the feed</a>
+      <nav aria-label={t.crumbs} class="crumbs">
+        <a href={p('/#feed')}>{t.back}</a>
         <span aria-hidden="true">/</span>
-        <span>Crime scene</span>
+        <span>{t.here}</span>
       </nav>
     )
   }
@@ -38,6 +47,10 @@ const { variant = 'home' } = Astro.props;
     align-items: center;
     justify-content: space-between;
     gap: 12px 16px;
+  }
+  .nav,
+  .crumbs {
+    order: 2;
   }
   .nav {
     display: flex;
@@ -59,12 +72,38 @@ const { variant = 'home' } = Astro.props;
   .crumbs a:hover {
     color: var(--yellow);
   }
+  .end {
+    order: 3;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .lang {
+    min-height: 40px;
+    min-width: 44px;
+    padding: 0 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--line);
+    color: var(--text);
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+  }
+  .lang:hover {
+    border-color: var(--yellow);
+    color: var(--yellow);
+  }
   .rss-m {
     display: none;
   }
   @media (max-width: 760px) {
     .rss-d {
       display: none;
+    }
+    .end {
+      order: 1;
     }
     .rss-m {
       display: inline-flex;

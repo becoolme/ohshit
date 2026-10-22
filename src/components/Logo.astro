@@ -2,11 +2,12 @@
 interface Props {
   size?: number;
   href?: string;
+  label?: string;
 }
-const { size = 48, href = '/' } = Astro.props;
+const { size = 48, href = '/', label = 'OhShit! home' } = Astro.props;
 ---
 
-<a href={href} class="logo" aria-label="OhShit! home">
+<a href={href} class="logo" aria-label={label}>
   <svg width={size} height={size} viewBox="0 0 40 40" aria-hidden="true">
     <g class="stink" stroke="#CDB894" stroke-width="1.6" fill="none" stroke-linecap="round">
       <path d="M12 6c-2-2 2-3 0-5"></path><path d="M20 4c-2-2 2-3 0-5"></path><path d="M28 6c-2-2 2-3 0-5"></path>

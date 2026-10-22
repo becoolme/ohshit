@@ -15,12 +15,3 @@ export const SITE = {
     return `${this.repo}/edit/main/${filePath.replace(/^\.\//, '')}`;
   },
 };
-
-export const PUNS = [
-  'Shit happens',
-  'Just not to you',
-  'Rotate your tokens',
-  'Pin your lockfile',
-  'Stop echoing secrets in CI',
-  'Enable 2FA, coward',
-];

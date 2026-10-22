@@ -1,17 +1,21 @@
 ---
 import { SITE } from '../lib/site';
+import { UI, localePath, type Lang } from '../lib/i18n';
 interface Props {
   exampleId: string;
   site: string;
+  lang?: Lang;
 }
-const { exampleId, site } = Astro.props;
+const { exampleId, site, lang = 'en' } = Astro.props;
+const T = UI[lang].dev;
 const origin = site.replace(/\/$/, '');
+const feed = `${origin}${localePath(lang, '/rss.xml')}`;
 
 const TABS = [
   {
     key: 'mcp',
-    name: 'MCP Server',
-    blurb: 'Let Claude and other agents just ask: “are we hit?”',
+    name: T.tabNames[0],
+    blurb: T.mcpBlurb,
     file: 'claude_desktop_config.json',
     code: `{
   "mcpServers": {
@@ -22,15 +26,15 @@ const TABS = [
   }
 }`,
     points: [
-      { k: 'list_incidents', v: 'Filter by minimum level, ecosystem, tag and age' },
-      { k: 'get_incident', v: 'Full write-up, fixed versions and the wipe checklist' },
-      { k: 'smell_index', v: 'The current Shit Index and days since the last turd' },
+      { k: 'list_incidents', v: T.mcpPoints[0] },
+      { k: 'get_incident', v: T.mcpPoints[1] },
+      { k: 'smell_index', v: T.mcpPoints[2] },
     ],
   },
   {
     key: 'api',
-    name: 'JSON API',
-    blurb: 'Static JSON, no key, no rate limit. Cache it, mirror it, chart it.',
+    name: T.tabNames[1],
+    blurb: T.apiBlurb,
     file: 'terminal',
     code: `$ curl -s ${origin}/api/v1/incidents.json \\
     | jq '.data[] | select(.level >= 4) | {id, level, title}'
@@ -44,29 +48,18 @@ const TABS = [
 $ curl -s ${origin}/api/v1/smell-index.json
 { "level": 5, "level_name": "shitstorm", "days_since_last": 0 }`,
     points: [
-      { k: 'GET /api/v1/incidents.json', v: 'Every incident, newest first' },
-      { k: 'GET /api/v1/incidents/{id}.json', v: 'One incident with checklist and sources' },
-      { k: 'GET /api/v1/smell-index.json', v: 'Today’s global Shit Index, for your wallboard' },
+      { k: 'GET /api/v1/incidents.json', v: T.apiPoints[0] },
+      { k: 'GET /api/v1/incidents/{id}.json', v: T.apiPoints[1] },
+      { k: 'GET /api/v1/smell-index.json', v: T.apiPoints[2] },
     ],
   },
   {
     key: 'rss',
-    name: 'RSS',
-    blurb: 'A new turd drops? Your feed reader, Slack or Discord already knows how to listen.',
+    name: T.tabNames[2],
+    blurb: T.rssBlurb,
     file: 'Slack',
-    code: `# Slack: pipe the feed into #security
-/feed subscribe ${origin}/rss.xml
-
-# Discord, Teams, email: any RSS bot or
-# Zapier / IFTTT "new RSS item" trigger works.
-
-# Or just add it to your reader:
-${origin}/rss.xml`,
-    points: [
-      { k: '/rss.xml', v: 'Every incident, newest first, with level in the title' },
-      { k: 'No signup', v: 'No account, no key, no email list' },
-      { k: 'Works anywhere', v: 'Feedly, Slack, Discord bots, a Raspberry Pi in the toilet' },
-    ],
+    code: T.rssCode(feed),
+    points: T.rssPoints,
   },
 ];
 ---
@@ -75,13 +68,12 @@ ${origin}/rss.xml`,
   <div class="hazard" aria-hidden="true" style="height:14px"></div>
   <div class="wrap grid">
     <div class="left">
-      <p class="kick">For developers &amp; agents</p>
-      <h2 class="disp title">Let the smell<br />come to you</h2>
+      <p class="kick">{T.kick}</p>
+      <h2 class="disp title" set:html={T.title} />
       <p class="intro">
-        Stop finding out you got hit by doomscrolling. Three ways to plug in — pick your plunger. All of it is
-        {' '}<a href={SITE.repo}>open source</a>.
+        {T.intro}{lang === 'en' && ' '}<a href={SITE.repo}>{T.openSource}</a>{lang === 'zh' ? '。' : '.'}
       </p>
-      <div role="tablist" aria-label="Integration" class="tabs">
+      <div role="tablist" aria-label={T.tablist} class="tabs">
         {
           TABS.map((t, i) => (
             <button
@@ -108,7 +100,7 @@ ${origin}/rss.xml`,
               <div class="bar">
                 <span class="file">{t.file}</span>
                 <button type="button" class="copy" data-copy={t.code}>
-                  Copy
+                  {UI[lang].copy.copy}
                 </button>
               </div>
               <pre tabindex="0">{t.code}</pre>

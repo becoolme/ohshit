@@ -78,3 +78,42 @@ test('MCP copy payload is directly parseable JSON', () => {
   const payload = source.match(/code: `([\s\S]*?)`/)[1];
   assert.deepEqual(JSON.parse(payload), { mcpServers: { ohshit: { command: 'npx', args: ['-y', '@ohshit/mcp'] } } });
 });
+
+import { localizeIncident } from '../src/lib/localize.ts';
+const en = {
+  title: 'English title', headline: 'Short', tags: ['PHP'], summary: 's', splash: 'p', wipe: 'w', level: 5,
+  cves: [{ id: 'CVE-2026-1', name: 'n', description: 'd', plain: 'pl' }],
+  fixed: [{ product: 'PHP 8.4', branch: '8.4', version: '8.4.27', status: 'ok' }],
+  mitigation: { file: 'php.ini', code: 'x = 1', note: 'n' },
+  timeline: [{ date: 'Oct 20', title: 't' }],
+  checklist: [{ title: 'c', hint: 'h' }],
+  sources: [{ name: 'php.net', url: 'https://php.net/', says: 's', primary: true }],
+};
+const zh = {
+  title: '中文标题', headline: '短', summary: '摘要', splash: '范围', wipe: '修复',
+  cves: [{ name: '名', description: '描述', plain: '人话' }],
+  fixed: [{ status: '已修复' }],
+  mitigation: { note: '说明' },
+  timeline: [{ date: '10月20日', title: '标题' }],
+  checklist: [{ title: '清单', hint: '提示' }],
+  sources: [{ says: '说法' }],
+};
+test('zh overlay swaps prose and keeps facts from English', () => {
+  const out = localizeIncident(en, zh, 'x');
+  assert.equal(out.title, '中文标题');
+  assert.equal(out.level, 5);
+  assert.deepEqual(out.tags, ['PHP']);
+  assert.equal(out.cves[0].id, 'CVE-2026-1');
+  assert.equal(out.cves[0].plain, '人话');
+  assert.deepEqual(out.fixed[0], { product: 'PHP 8.4', branch: '8.4', version: '8.4.27', status: '已修复' });
+  assert.deepEqual(out.mitigation, { file: 'php.ini', code: 'x = 1', note: '说明' });
+  assert.equal(out.sources[0].url, 'https://php.net/');
+  assert.equal(out.sources[0].says, '说法');
+});
+
+test('zh overlay rejects stale or incomplete translations', () => {
+  assert.throws(() => localizeIncident(en, { ...zh, checklist: [] }, 'x'), /x\.checklist: has 0 items/);
+  assert.throws(() => localizeIncident(en, { ...zh, headline: undefined }, 'x'), /x\.headline: missing/);
+  assert.throws(() => localizeIncident(en, { ...zh, cves: [{ name: '名', description: '描述' }] }, 'x'), /cves\[0\]\.plain/);
+  assert.throws(() => localizeIncident(en, { ...zh, mitigation: undefined }, 'x'), /mitigation\.note/);
+});
