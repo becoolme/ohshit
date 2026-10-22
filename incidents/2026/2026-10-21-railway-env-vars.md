@@ -70,6 +70,10 @@ sources:
     url: https://blog.railway.com/p/security-disclosure-recommendation-redeploy-buckets-and-reconnect-github-after-the-credential-reset
     says: Railway reset all bucket S3 keys and the GitHub tokens it held; stored GitHub registry tokens still work until the user revokes them
     primary: true
+  - name: Railway on X
+    url: https://x.com/Railway/status/2113025284148715845
+    says: Official account posts the urgent security notice
+    primary: true
   - name: Cybersecurity News
     url: https://cybersecuritynews.com/railway-security-incident/amp/
     says: No affected-account count, attacker or access method disclosed; no confirmed misuse
