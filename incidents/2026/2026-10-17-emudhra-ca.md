@@ -56,6 +56,8 @@ checklist:
     hint: Java cacerts, internal CA bundles, appliances, distroless images
   - title: Check code-signing trust
     hint: Two of the eight were code-signing CAs that Microsoft trusted
+  - title: Replace any certificate of yours that chains to emSign ECC Root CA - G3
+    hint: Reissue from another CA. The eight intermediates already fail, and Chrome drops the root around Oct 27
   - title: Search your CT monitor for emSign-issued certs
     hint: Anything on your domains you didn't request is a red flag
 sources:
