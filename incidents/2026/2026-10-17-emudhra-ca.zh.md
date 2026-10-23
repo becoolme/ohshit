@@ -38,11 +38,11 @@ timeline:
   - date: 2026年10月21日
     title: Docker 使用更新后的 CA 证书重建 Sandboxes 模板
     body: 现有沙箱必须用新镜像重建；只更新 sbx 不够。
-  - date: 2026年10月27日前后
-    title: Chrome Root Store v43 移除 emSign ECC Root CA - G3
   - date: 2026年10月22日
     title: eMudhra 宣布退出全球 SSL/TLS 证书签发业务
     body: 合作伙伴免费提供替换证书；吊销与状态服务持续到所有已签发证书过期或被替换。未给出退出日期。
+  - date: 2026年10月27日前后
+    title: Chrome Root Store v43 移除 emSign ECC Root CA - G3
 checklist:
   - title: 更新浏览器和操作系统
     hint: Chrome、Firefox、Safari、Edge、Android 和 Windows 都已发布拦截
