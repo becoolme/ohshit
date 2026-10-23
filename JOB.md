@@ -114,11 +114,19 @@ On every update:
   non-default setting, guest shares, special hardware) and put it in `splash` and the body. "Who is actually
   exposed" is the most useful thing we can tell a reader.
 - **Timeline:** oldest first. Approximate or future entries (`~Oct 27, 2026`, `Oct 22, 2026 (scheduled)`) go
-  after every dated past entry. Use `Oct 21, 21:16 UTC` when the source gives a time.
+  after every dated past entry. Use `Oct 21, 21:16 UTC` only when the source states both the time and its
+  timezone (or a UTC offset you can convert). A page or forum post that shows a time without a timezone gets
+  the date only (`Oct 20, 2026`); never guess the timezone.
+- **Prose:** the body, `summary` and notes are for readers. Never mention frontmatter field names or values
+  (`inTheWild: yes`, `level`, `fixed`) there. Say "exploitation is still confirmed" or "still rated L5".
 - **Tone:** jokes in `headline`, `plain` and checklist hints only. Facts stay serious. Never joke about victims.
 - **Checklist:** concrete actions a reader can do today, starting with the most urgent. Give **every** item a
   `hint` saying where to look or how: take it from the advisory's mitigations, IoCs, log locations and upgrade
   notes. A title with no hint is a to-do with no instructions.
+- **IoCs:** when a source publishes indicators, copy **all** of them into the hunting item's hint: source
+  and C2 IPs, domains, hashes, file paths, User-Agents. Then add that a match alone doesn't prove compromise.
+  A partial list makes readers think they're clean when they aren't. If there are more than about ten,
+  say how many there are, list the network ones and point to the source that has the full list.
 - **Chinese:** write `<yyyy-mm-dd>-<slug>.zh.md` next to every new incident, following
   [`docs/translation-zh.md`](docs/translation-zh.md). On every update, change the `.zh.md` in the same commit
   so the item counts still match the English file (the build fails otherwise).
