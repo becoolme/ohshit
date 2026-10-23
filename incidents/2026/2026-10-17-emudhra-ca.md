@@ -49,11 +49,11 @@ timeline:
   - date: Oct 21, 2026
     title: Docker rebuilds Sandboxes templates with updated CA certificates
     body: Existing sandboxes must be recreated from fresh images; updating sbx alone is insufficient.
-  - date: ~Oct 27, 2026
-    title: Chrome Root Store v43 removes the emSign ECC Root CA - G3
   - date: Oct 22, 2026
     title: eMudhra announces withdrawal from global SSL/TLS issuance
     body: Partner replacements are free; revocation and status services continue until all issued certificates expire or are replaced. No exit date is given.
+  - date: ~Oct 27, 2026
+    title: Chrome Root Store v43 removes the emSign ECC Root CA - G3
 checklist:
   - title: Update browsers and operating systems
     hint: Chrome, Firefox, Safari, Edge, Android and Windows have all shipped blocks
