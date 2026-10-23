@@ -23,9 +23,11 @@ timeline:
     title: Arista discloses exploitation and fixes
 checklist:
   - title: Restrict access and upgrade on-premises VCO
+    hint: Hosted and Dedicated VCO are already patched. On-prem web access is exposed by default; allow trusted admin networks only
   - title: Investigate suspicious access before discarding evidence
     hint: Preserve web, application, system and database logs; check 74.82.197.86 and 38.54.50.151
   - title: Review administrator changes and unexpected outbound connections
+    hint: Also hunt for webshells and backdoor daemons; block outbound ports VCO doesn't need
 sources:
   - name: Arista security advisory 0199
     url: https://www.arista.com/en/support/advisories-notices/security-advisory/24838-security-advisory-0199
