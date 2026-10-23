@@ -3,14 +3,15 @@ title: "GitLab patches its second CVSS 10.0 regex-compiler RCE in nine days, and
 headline: "GitLab: two perfect 10s, one regex engine, nine days apart"
 level: 4
 date: 2026-10-21
+updated: 2026-10-23
 tags: [GitLab, RCE, self-managed]
 ecosystems: [gitlab, ruby]
 summary: >-
   CVE-2026-110264 (CVSS 10.0) is an integer overflow in the Onigmo regex compiler that lets an unauthenticated user
   run code on self-managed GitLab, from 7.0 onwards. It lands nine days after CVE-2026-97229, a sibling bug that
   already has a public PoC. Servers patched on Oct 12 are still exposed.
-splash: "Every self-managed GitLab CE/EE from 7.0 up; GitLab.com and Dedicated are already patched"
-wipe: "Upgrade to 19.5.1 / 19.4.3 / 19.3.6 / 19.2.9 / 19.1.9 / 19.0.10 / 18.11.13. There is no workaround"
+splash: "Self-managed GitLab CE/EE 7.0+; other Ruby apps only when compiling attacker-controlled patterns"
+wipe: "Upgrade to 19.5.1 / 19.4.3 / 19.3.6 / 19.2.9 / 19.1.9 / 19.0.10 / 18.11.13. Ruby apps: 4.0.9 / 3.4.12 / 3.3.13"
 inTheWild: "no"
 inTheWildNote: No exploitation reported; the Oct 12 sibling has a public PoC
 oneLiner: >-
@@ -59,6 +60,9 @@ timeline:
     body: >-
       GitLab says 12 issues in total; some press says 11. Also fixed: CVE-2026-15723 (8.2, SAML/LDAP
       auto-link account takeover) and CVE-2026-112212 (7.5, OAuth/OIDC discovery cache poisoning).
+  - date: Oct 23, 03:11 UTC
+    title: Ruby publishes upstream fixes and exposure guidance
+    body: Ruby 4.0.9, 3.4.12 and 3.3.13 contain all three underlying fixes; 4.0.8 misses the newest overflow.
 checklist:
   - title: Find every self-managed GitLab
     hint: Including forgotten Omnibus VMs and Docker images
@@ -72,6 +76,8 @@ checklist:
     hint: Code runs as the git user, which can read them
   - title: Update a self-hosted AI Gateway too
     hint: CVE-2026-90970 needs gateway 19.2.4 / 19.3.2 / 19.4.1
+  - title: Update other Ruby applications that compile untrusted patterns
+    hint: Upgrade to Ruby 4.0.9 / 3.4.12 / 3.3.13; otherwise stop compiling attacker-controlled strings via Regexp.new, union, compile or interpolation. Regexp.timeout and pattern-length limits do not reliably protect these paths
 sources:
   - name: GitLab patch release 19.5.1
     url: https://docs.gitlab.com/releases/patches/patch-release-gitlab-19-5-1-released/
@@ -88,6 +94,10 @@ sources:
   - name: The Hacker News
     url: https://thehackernews.com/2026/10/critical-gitlab-flaw-cvss-100-could.html
     says: Says 11 fixes; joaxcar's fourth regex-engine RCE in a month; not in CISA KEV as of Oct 22
+  - name: Ruby upstream regexp fixes
+    url: https://www.ruby-lang.org/en/news/2026/10/23/regexp-fixes-for-gitlab-cves/
+    says: Three Onigmo fixes address four GitLab CVEs; other Ruby apps compiling attacker-controlled patterns also need the upstream releases
+    primary: true
 ---
 
 GitLab runs user-supplied regular expressions in many places: CI rules, code owners, push rules, markup
@@ -108,3 +118,7 @@ Both bugs are CVSS 10.0, unauthenticated, in a core developer platform, and one 
 That is close to L5. We held at L4 because GitLab.com and Dedicated were patched before disclosure, nobody
 has reported exploitation of either bug, and CISA had not added them to KEV as of Oct 22. If exploitation
 shows up, this goes to L5. Send a PR.
+
+**October 23 — upstream Ruby:** The same bugs also affect applications that compile attacker-controlled strings into patterns. Ruby 4.0.9, 3.4.12 and 3.3.13 contain all three fixes behind GitLab's four regex CVEs, including the two September issues already noted above. Ruby 4.0.8 lacks the CVE-2026-110264 fix. Developer-written static patterns are outside this exposure. Neither regex timeouts nor pattern-length caps reliably prevent it; stop accepting untrusted patterns until upgraded.
+
+The table and checker cover GitLab packages, which ship their own patched Ruby. Upgrading an unrelated system Ruby does not replace the GitLab package upgrade. Ruby has not requested separate CVE identifiers for these fixes and asks users to track the GitLab identifiers instead.
