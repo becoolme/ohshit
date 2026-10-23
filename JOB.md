@@ -17,6 +17,10 @@ the process.
      `fixed` versions, `inTheWild`, and source URLs
    - open pull requests: `gh pr list --state open --json number,title,headRefName,files`. An incident that an
      open PR already adds or edits is **taken**; don't touch it.
+   - the **contents** of those PRs, not just their file names: run `gh pr diff <number>` for each and add
+     every incident it adds or edits to the inventory with the same fields (CVE and GHSA ids, vendor and
+     product, advisory, source URLs), tagged with the PR number. Those files aren't on `main`, so without this
+     step the same event can come back under a different slug.
 
 ## 1. Find candidates
 
@@ -36,7 +40,8 @@ discover.
 
 ## 2. Dedup: is it already here?
 
-For every candidate, check in this order. Stop at the first match.
+For every candidate, check in this order against the whole inventory, including incidents in open PRs. Stop
+at the first match.
 
 1. **Same CVE or GHSA id** appears in any existing file → it's an existing incident.
 2. **Same vendor, same product, same advisory or release batch** (for example "Node.js October security
@@ -45,7 +50,9 @@ For every candidate, check in this order. Stop at the first match.
    in the same component within ~14 days) → read the existing file. If it describes the same root cause,
    attackers or victims, it's an update. If it's a new bug or a new wave with its own advisory, it's new, and
    the new file should link to the old one in its body.
-4. Already **taken** by an open PR → skip, and mention it in your PR description.
+4. Any of the above matched an incident in an open PR → it's **taken**: skip it, even if you have new facts,
+   and list it in your PR description with the PR number (and the new facts, so the reviewer can add them
+   there).
 
 Never create a second file for one event. Never rename or delete an existing file, because the slug is a
 public URL.
