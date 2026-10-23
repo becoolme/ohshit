@@ -3,7 +3,7 @@ title: "eMudhra CA intermediate private keys were so weak that every one was a n
 headline: "eMudhra: eight CA keys you could guess on a pocket calculator"
 level: 4
 date: 2026-10-17
-updated: 2026-10-22
+updated: 2026-10-23
 tags: [PKI, CA, TLS]
 ecosystems: [go, python, node, browsers]
 summary: >-
@@ -24,6 +24,12 @@ cves:
   - id: CVE-2026-113470
     name: Firefox trusts the compromised intermediates
     description: Firefox fix that distrusts the eight intermediates and removes the root.
+  - id: GHSA-6q48-6c7w-9gw2
+    name: certifi bundled root removal
+    description: Advisory lists 2026.10.18; Python security guidance recommends 2026.10.19 for compatibility with unaffected roots.
+  - id: GHSA-hq85-5cpj-mr62
+    name: uv bundled root removal
+    description: uv before 0.13.4 trusts the affected root by default; system or custom stores require separate verification.
 fixed:
   - { product: Go, version: 1.27.3 / 1.26.10, status: "CVE-2026-111943. Go 1.25 and older get no fix" }
   - { product: Python certifi, version: 2026.10.19 }
@@ -31,6 +37,11 @@ fixed:
   - { product: Mozilla NSS, version: 3.131.1, status: Root removed Oct 20 }
   - { product: Cloudflare WARP / 1.1.1.1 / cloudflared, version: 2026.10.2 }
   - { product: Java (cacerts), version: unknown, status: Not covered by sources we reviewed. Check your vendor }
+  - { product: pip, version: 26.2.2, status: Requires Python 3.10+; update pip separately in each environment }
+  - { product: uv, version: 0.13.4, status: Refreshes bundled CA roots }
+  - { product: sigstore-python, version: 4.5.1, status: Python security team’s recommended minimum }
+  - { product: conda, version: 26.9.4, status: Also update CA packages in other environments }
+  - { product: Pixi, version: 0.82.1, status: Updates bundled CA dependencies }
 timeline:
   - date: Apr 30, 2025
     title: The keys are generated, in a batch of 24 intermediates
@@ -44,6 +55,11 @@ timeline:
     title: Apple and Android block the certificates; certifi ships a fix
   - date: Oct 20, 2026
     title: Microsoft blocks them; Go releases fixes; NSS removes the root
+  - date: Oct 20, 16:57 UTC
+    title: Python security guidance lists packaging-tool updates
+    body: Update pip in each environment; system distrust alone does not replace its bundled CA roots.
+  - date: Oct 21, 2026
+    title: Conda publishes package-manager and CA-bundle instructions
   - date: Oct 21, 2026
     title: Node.js security release rejects the keys
   - date: Oct 21, 2026
@@ -59,6 +75,12 @@ checklist:
     hint: Chrome, Firefox, Safari, Edge, Android and Windows have all shipped blocks
   - title: Update language trust stores
     hint: certifi 2026.10.19, Go 1.27.3 / 1.26.10, Node 22.23.4 / 24.22.1 / 26.12.1
+  - title: Upgrade pip in every virtual environment
+    hint: Use the hash-pinned wheel linked in the Python security announcement; confirm pip 26.2.2+ before upgrading other packages
+  - title: Update the other Python package and verification tools you use
+    hint: uv 0.13.4, sigstore-python 4.5.1, conda 26.9.4, Pixi 0.82.1; check CI tools and separately installed copies
+  - title: Refresh conda and Mamba CA packages and rebuild images
+    hint: Update certifi and ca-certificates in each relevant environment; update mamba/libmamba together and rebuild containers without layer caching
   - title: Patch custom trust stores
     hint: Java cacerts, internal CA bundles, appliances, distroless images
   - title: Check code-signing trust
@@ -96,6 +118,38 @@ sources:
     url: https://blog.google/security/protecting-chrome-and-android-users-from-compromised-emudhra-intermediate-ca-certificates/
     says: Removing the root also breaks legitimate chains; replacement certificates must use another trusted hierarchy; rollout expected October 27 PDT
     primary: true
+  - name: Python security guidance
+    url: https://discuss.python.org/t/information-for-python-users-regarding-emudhra-emsign-ca-certificate-security-incident/109576
+    says: Tool minimums, hash-pinned pip bootstrap, per-environment updates and container rebuilds; pip also uses bundled roots
+    primary: true
+  - name: uv security advisory
+    url: https://github.com/astral-sh/uv/security/advisories/GHSA-hq85-5cpj-mr62
+    says: uv 0.13.4 removes the root; verify system/custom stores if overriding bundled defaults
+    primary: true
+  - name: certifi security advisory
+    url: https://github.com/certifi/python-certifi/security/advisories/GHSA-6q48-6c7w-9gw2
+    says: Root removal in 2026.10.18; Python guidance recommends the compatibility follow-up 2026.10.19
+    primary: true
+  - name: Conda security update instructions
+    url: https://conda.org/blog/2026-10-21-emudhra-security-updates/
+    says: Conda 26.9.4 and Pixi 0.82.1; separate CA-package updates, channel-specific minimums and Mamba build checks
+    primary: true
+  - name: pip 26.2.2 release
+    url: https://github.com/pypa/pip/releases/tag/26.2.2
+    says: Official release tag dated October 20
+    primary: true
+  - name: sigstore-python 4.5.1 release
+    url: https://github.com/sigstore/sigstore-python/releases/tag/v4.5.1
+    says: Release referenced by the Python security team
+    primary: true
+  - name: Pixi 0.82.1 release
+    url: https://github.com/prefix-dev/pixi/releases/tag/v0.82.1
+    says: Updates webpki-root-certs to 1.0.10 and rustls-webpki to 0.103.16 for this incident
+    primary: true
+  - name: pip 26.2.2 package metadata
+    url: https://pypi.org/pypi/pip/26.2.2/json
+    says: Requires Python 3.10 or newer
+    primary: true
 ---
 
 A certificate authority's private key is the thing that makes "this is really your bank" true. For eight
@@ -123,3 +177,5 @@ still carry the old bundle.
 **Update, October 22:** Docker now documents rebuilt Sandboxes templates with refreshed CA certificates. Updating the CLI or cached templates does not update existing sandboxes. Save local files and unpushed commits before recreating them from newly pulled images. This changes the cleanup guidance, not the L4 assessment.
 
 **Further update, October 22:** eMudhra’s board has decided to exit the global SSL/TLS certificate business. It promises free replacement certificates through partners and continued revocation/status services until every issued certificate expires or is replaced. The exit date and partners are unspecified. Its remaining RSA hierarchy is under Chrome review, so do not treat the vendor’s transition plan as a guarantee of future browser trust. Replace affected site certificates promptly; Chrome expects root removal on October 27 PDT.
+
+**Update, October 23:** Earlier guidance omitted package managers that bundle their own roots. Update pip separately in every environment, even after updating system certificates or standalone certifi. Use the hash-pinned bootstrap in the Python security announcement. pip 26.2.2 requires Python 3.10 or newer; older interpreters need a compatible remediation plan, not an assumption that their CA bundle is safe. The additional minimums above come from Python and tool maintainers; they do not replace the runtime updates or October 27 certificate-migration deadline. For conda, update CA packages outside the base environment too. Mamba rebuilds may retain the same version, so inspect package builds as well.
