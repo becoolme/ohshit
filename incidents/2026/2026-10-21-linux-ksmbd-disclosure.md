@@ -2,6 +2,7 @@
 title: "Two Linux KSMBD remote-code-execution reports land on a public mailing list before released fixes"
 level: 3
 date: 2026-10-21
+updated: 2026-10-22
 tags: [Linux, KSMBD, SMB, disclosure]
 ecosystems: [linux]
 summary: "ZDI posted ZDI-CAN-33774, a KSMBD dispatch race, and ZDI-CAN-33549, an SMB Direct integer underflow, to public LKML with technical details. Both are rated CVSS 9.0. Fixes exist only in development trees; no released kernel fix is verified."
