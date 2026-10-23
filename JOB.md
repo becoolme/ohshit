@@ -60,6 +60,12 @@ public URL.
   or the community is already talking about it.
 - You have at least one primary source, or two independent credible reports plus a `sourceException`.
 
+**Chase the primary source before settling for news.** Open the links inside the articles: mailing-list posts,
+advisories, commits, the vendor's page in its own language. If a primary page is blocked (403, a bot check),
+try an archive or mirror of the same document (for kernel lists: [MARC](https://marc.info/?l=linux-kernel),
+mail-archive.com) and cite the original URL plus the copy you actually read. Never solve or bypass a bot check.
+Use `sourceException` only after that fails, and say in the PR what you tried.
+
 **Skip** marketing posts, "researchers found 10,000 exposed instances" without a new bug, single-outlet
 rumours, routine Patch Tuesday items with no exploitation, and anything you can only see behind a paywall.
 
@@ -77,7 +83,10 @@ rumours, routine Patch Tuesday items with no exploitation, and anything you can 
 
 On every update:
 - set `updated:` to today (UTC), and never change `date`
-- add a `timeline` entry for the new fact, dated when it happened
+- add a `timeline` entry for the new fact, dated when it happened, and insert it in date order (see Timeline
+  below); don't just append it
+- when you rewrite `summary`, `wipe` or a checklist item, keep the facts that are still true (fixed versions,
+  deadlines) unless the new source replaces them. A one-liner that drops the runtime versions is a regression
 - change `level` only with a reason in the body, and only for the worst credible case **today**
 - append sources; don't remove old ones unless they were wrong
 
@@ -94,8 +103,15 @@ On every update:
   must be a stable `major.minor.patch`. Add `checker` only when you can list every supported branch.
 - **In the wild:** `yes` needs the vendor, CISA KEV or an IR firm. A PoC or scanning alone is `disputed` or
   `no`.
+- **Prerequisites:** read the original report or advisory for what an attack needs (authentication, role, a
+  non-default setting, guest shares, special hardware) and put it in `splash` and the body. "Who is actually
+  exposed" is the most useful thing we can tell a reader.
+- **Timeline:** oldest first. Approximate or future entries (`~Oct 27, 2026`, `Oct 22, 2026 (scheduled)`) go
+  after every dated past entry. Use `Oct 21, 21:16 UTC` when the source gives a time.
 - **Tone:** jokes in `headline`, `plain` and checklist hints only. Facts stay serious. Never joke about victims.
-- **Checklist:** concrete actions a reader can do today, starting with the most urgent.
+- **Checklist:** concrete actions a reader can do today, starting with the most urgent. Give **every** item a
+  `hint` saying where to look or how: take it from the advisory's mitigations, IoCs, log locations and upgrade
+  notes. A title with no hint is a to-do with no instructions.
 - **Chinese:** write `<yyyy-mm-dd>-<slug>.zh.md` next to every new incident, following
   [`docs/translation-zh.md`](docs/translation-zh.md). On every update, change the `.zh.md` in the same commit
   so the item counts still match the English file (the build fails otherwise).
@@ -112,6 +128,9 @@ On every update:
 - Nothing new or changed → stop. No branch, no PR, no empty commit.
 - Otherwise, branch `incidents/<yyyy-mm-dd>`, one commit per incident (`Add <slug>` / `Update <slug>: <what
   changed>`), push, and open **one** PR against `main`. Never push to `main` directly: merging deploys the site.
+- If that branch name is already taken by an earlier run today, use `incidents/<yyyy-mm-dd>-<hhmm>` (UTC). No
+  tool or agent prefixes (`codex/`, `claude/`) in branch names.
+- No `Co-Authored-By` lines or other AI attribution in commit messages or the PR description.
 - PR description:
   - **New**: slug, level, one line why, primary source link
   - **Updated**: slug, what changed, source link
