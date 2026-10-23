@@ -35,8 +35,11 @@ timeline:
     title: Coordinated firmware rollout
 checklist:
   - title: Back up and upgrade
+    hint: Save the config first, internet-facing boxes go first. FortiMail 7.2 gets no fix; move to 7.4
   - title: Restrict administrative interfaces to trusted addresses
+    hint: HTTPS and SSH admin from trusted IPs only, or off on external interfaces. FortiManager should never face the internet
   - title: Review administrative access and configuration changes
+    hint: Enforce MFA on admin accounts; look for odd logins and changes nobody approved
 sources:
   - name: Fortinet CISO announcement
     url: https://www.fortinet.com/blog/ciso-collective/fortinet-releases-security-hardening-release-for-multiple-products
