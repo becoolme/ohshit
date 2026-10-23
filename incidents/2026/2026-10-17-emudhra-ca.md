@@ -55,7 +55,7 @@ timeline:
     title: Apple and Android block the certificates; certifi ships a fix
   - date: Oct 20, 2026
     title: Microsoft blocks them; Go releases fixes; NSS removes the root
-  - date: Oct 20, 16:57 UTC
+  - date: Oct 20, 2026
     title: Python security guidance lists packaging-tool updates
     body: Update pip in each environment; system distrust alone does not replace its bundled CA roots.
   - date: Oct 21, 2026

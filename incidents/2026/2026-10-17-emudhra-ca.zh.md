@@ -42,7 +42,7 @@ timeline:
     title: Apple 和 Android 拦截这些证书；certifi 发布修复
   - date: 2026年10月20日
     title: 微软拦截；Go 发布修复；NSS 移除根证书
-  - date: 10月20日 16:57 UTC
+  - date: 2026年10月20日
     title: Python 安全指南列出打包工具更新
     body: 每个环境都要更新 pip；只在系统层取消信任，不能替换 pip 内置的 CA 根证书。
   - date: 2026年10月21日
