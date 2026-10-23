@@ -17,9 +17,11 @@ timeline:
     title: Arista 披露在野利用及修复版本
 checklist:
   - title: 限制访问并升级本地 VCO
+    hint: Hosted 和 Dedicated VCO 已修复。本地部署的 Web 界面默认对外开放，只放行可信的管理网络
   - title: 丢弃证据前先排查可疑访问
     hint: 保存 Web、应用、系统及数据库日志；检查 74.82.197.86 和 38.54.50.151
   - title: 审查管理员变更及异常出站连接
+    hint: 顺便排查 Webshell 和后门进程；封掉 VCO 用不到的出站端口
 sources:
   - name: Arista 第 0199 号安全公告
 ---
