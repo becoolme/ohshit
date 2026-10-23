@@ -31,8 +31,11 @@ timeline:
     title: 集中推出固件更新
 checklist:
   - title: 备份并升级
+    hint: 先存配置，面向公网的设备优先。FortiMail 7.2 没有修复，迁到 7.4
   - title: 将管理界面访问限制到可信地址
+    hint: HTTPS 和 SSH 管理只放行可信 IP，或在外网接口上直接关掉。FortiManager 绝不该暴露在公网
   - title: 审查管理访问与配置变更
+    hint: 管理员账号强制 MFA；查找异常登录和没人批准过的配置变更
 sources:
   - name: Fortinet CISO 公告
 ---
