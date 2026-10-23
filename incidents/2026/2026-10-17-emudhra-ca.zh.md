@@ -13,6 +13,10 @@ cves:
     description: Go 的根证书和中间证书处理逻辑接受了这条弱密钥的 eMudhra 证书链。Go 1.27.3 和 1.26.10 已修复；1.25 及更早版本不会修复。
   - name: Firefox 信任了被攻破的中间证书
     description: Firefox 的修复：不再信任这八张中间证书，并移除该根证书。
+  - name: certifi 内置根证书移除
+    description: 公告列出 2026.10.18；Python 安全指南建议使用 2026.10.19，以兼容未受影响的根证书。
+  - name: uv 内置根证书移除
+    description: 0.13.4 之前的 uv 默认信任受影响的根证书；系统或自定义证书库需要单独核验。
 fixed:
   - { status: "CVE-2026-111943。Go 1.25 及更早版本不会修复" }
   - {}
@@ -20,6 +24,11 @@ fixed:
   - { status: 10月20日移除根证书 }
   - {}
   - { status: 我们查阅的来源均未提及，请向厂商确认 }
+  - { status: 需要 Python 3.10 或更新版本；逐个环境单独更新 pip }
+  - { status: 刷新内置 CA 根证书 }
+  - { status: Python 安全团队建议的最低版本 }
+  - { status: 其他环境中的 CA 软件包也需更新 }
+  - { status: 更新内置 CA 依赖 }
 timeline:
   - date: 2025年4月30日
     title: 私钥生成，同一批共 24 张中间证书
@@ -33,6 +42,11 @@ timeline:
     title: Apple 和 Android 拦截这些证书；certifi 发布修复
   - date: 2026年10月20日
     title: 微软拦截；Go 发布修复；NSS 移除根证书
+  - date: 10月20日 16:57 UTC
+    title: Python 安全指南列出打包工具更新
+    body: 每个环境都要更新 pip；只在系统层取消信任，不能替换 pip 内置的 CA 根证书。
+  - date: 2026年10月21日
+    title: Conda 发布包管理工具及 CA 证书包更新说明
   - date: 2026年10月21日
     title: Node.js 安全更新拒绝这些密钥
   - date: 2026年10月21日
@@ -48,6 +62,12 @@ checklist:
     hint: Chrome、Firefox、Safari、Edge、Android 和 Windows 都已发布拦截
   - title: 更新各语言的信任库
     hint: certifi 2026.10.19、Go 1.27.3 / 1.26.10、Node 22.23.4 / 24.22.1 / 26.12.1
+  - title: 更新每个虚拟环境中的 pip
+    hint: 使用 Python 安全公告中带固定哈希的 wheel；确认 pip 达到 26.2.2 或更新版本后，再升级其他软件包
+  - title: 更新所用的其他 Python 包管理及验证工具
+    hint: uv 0.13.4、sigstore-python 4.5.1、conda 26.9.4、Pixi 0.82.1；检查 CI 工具和单独安装的副本
+  - title: 刷新 conda、Mamba 的 CA 软件包并重建镜像
+    hint: 更新每个相关环境的 certifi 和 ca-certificates；同步更新 mamba/libmamba，重建容器时禁用层缓存
   - title: 修补自定义信任库
     hint: Java cacerts、内部 CA 证书包、各类设备、distroless 镜像
   - title: 检查代码签名信任
@@ -70,6 +90,22 @@ sources:
     says: 董事会批准退出；通过合作伙伴替换证书，继续提供吊销及状态服务；未指定完成日期
   - name: Chrome 与 Android 安全团队
     says: 移除根证书也会影响合法证书链；替换证书须使用另一受信任层级；预计 10月27日 PDT 推出
+  - name: Python 安全指南
+    says: 工具最低版本、带固定哈希的 pip 引导升级、逐环境更新及容器重建；pip 同时使用内置根证书
+  - name: uv 安全公告
+    says: uv 0.13.4 移除根证书；覆盖内置默认值时须核验系统或自定义证书库
+  - name: certifi 安全公告
+    says: 2026.10.18 移除根证书；Python 指南建议使用兼容性后续版本 2026.10.19
+  - name: Conda 安全更新说明
+    says: Conda 26.9.4、Pixi 0.82.1；单独更新 CA 软件包，注意渠道最低版本及 Mamba 构建号
+  - name: pip 26.2.2 发布
+    says: 日期为 10月20日的官方发布标签
+  - name: sigstore-python 4.5.1 发布
+    says: Python 安全团队引用的版本
+  - name: Pixi 0.82.1 发布
+    says: 为此事件将 webpki-root-certs 升至 1.0.10，rustls-webpki 升至 0.103.16
+  - name: pip 26.2.2 软件包元数据
+    says: 需要 Python 3.10 或更新版本
 ---
 CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eMudhra 有八张中间证书，P-384 私钥都是**小于 256 的整数**。据研究人员 Scott Helme 说，其中一个就是数字 4。谁要是注意到了，就能给任意域名签证书，而所有信任这条链的客户端都会照单全收。
 
@@ -89,3 +125,5 @@ CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eM
 **10月22日更新：** Docker 已记录使用更新后的 CA 证书重建 Sandboxes 模板。更新 CLI 或缓存模板不会更新现有沙箱。重建前先保存本地文件和未推送的提交，再拉取新镜像重新创建。这次更新改变处置步骤，L4 评级不变。
 
 **10月22日进一步更新：** eMudhra 董事会决定退出全球 SSL/TLS 证书业务。公司承诺通过合作伙伴免费提供替换证书，并持续提供吊销及状态服务，直到所有已签发证书过期或被替换。退出日期和合作伙伴未明确。Chrome 仍在审查其余 RSA 层级，不能把厂商的过渡计划当作未来浏览器信任的保证。请及时更换受影响的网站证书；Chrome 预计于 10月27日 PDT 移除根证书。
+
+**10月23日更新：** 此前的指南漏列了自带根证书的包管理工具。即使系统证书或独立 certifi 已更新，也要逐个环境更新 pip，使用 Python 安全公告中带固定哈希的引导升级方式。pip 26.2.2 需要 Python 3.10 或更新版本；旧解释器需要兼容的处置方案，不能假定其 CA 证书包安全。上表新增最低版本来自 Python 及工具维护者，不能替代运行时更新或 10月27日的证书迁移期限。使用 conda 时，base 之外环境的 CA 软件包也要更新。Mamba 重建可能沿用相同版本号，因此还要检查软件包构建号。
