@@ -4,7 +4,7 @@ headline: "eMudhra：八个 CA 私钥，计算器按几下就猜出来了"
 summary: >-
   emSign ECC Root CA - G3 下的八张中间证书（六张 TLS，两张代码签名）由 Sectigo 交叉签名，它们的 P-384 私钥都是小于 256 的整数。任何人都能瞬间还原出私钥，给任意域名签发证书。
 splash: "所有信任 emSign ECC Root CA - G3 或 Sectigo 交叉签名的东西：浏览器、操作系统、Go、Python、Node"
-wipe: "在 Chrome 预计于 10月27日移除根证书前，更换 emSign ECC Root CA - G3 下的证书；更新浏览器、系统及运行时信任库"
+wipe: "更新浏览器、系统和信任库（certifi 2026.10.19、Go 1.27.3 / 1.26.10、Node 22.23.4+）；赶在 Chrome 约 10月27日移除根证书前，更换 emSign ECC G3 下的证书"
 inTheWildNote: CT 日志里没发现终端实体证书；几小时内就被拦截
 oneLiner: >-
   CA 的私钥本该是一个 384 位的秘密；这几个却小到掰着手指脚趾就能数过来，谁都能给任意网站签出“受信任”的证书。

@@ -11,7 +11,7 @@ summary: >-
   Sectigo, had P-384 private keys that were integers below 256. Anyone could recover them instantly and mint
   certificates for any domain.
 splash: "Anything trusting emSign ECC Root CA - G3 or the Sectigo cross-signs: browsers, OSes, Go, Python, Node"
-wipe: "Replace certificates under emSign ECC Root CA - G3 before Chrome’s expected Oct 27 removal; update browsers, OSes and runtime trust stores"
+wipe: "Update browsers, OSes and trust stores (certifi 2026.10.19, Go 1.27.3 / 1.26.10, Node 22.23.4+); replace certs under emSign ECC G3 before ~Oct 27"
 inTheWild: "no"
 inTheWildNote: No end-entity certs found in CT logs; blocked within hours
 oneLiner: >-
