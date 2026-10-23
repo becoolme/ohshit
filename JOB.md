@@ -5,7 +5,7 @@ write up the new ones, update the ones that changed, and open one pull request f
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md), [`incidents/_template.md`](incidents/_template.md) and
 [`src/lib/incident-schema.ts`](src/lib/incident-schema.ts) before you start. They are the rules. This file is
-the process.
+the process. The human side, reviewing and merging the PR, is in [REVIEW.md](REVIEW.md).
 
 ## 0. Set up
 
