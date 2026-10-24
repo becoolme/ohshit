@@ -2,8 +2,8 @@
 title: "eMudhra CA 中间证书私钥弱到离谱：每一个都是小于 256 的数"
 headline: "eMudhra：八个 CA 私钥，计算器按几下就猜出来了"
 summary: >-
-  emSign ECC Root CA - G3 下的八张中间证书（六张 TLS，两张代码签名）由 Sectigo 交叉签名，它们的 P-384 私钥都是小于 256 的整数。任何人都能瞬间还原出私钥，给任意域名签发证书。
-splash: "所有信任 emSign ECC Root CA - G3 或 Sectigo 交叉签名的东西：浏览器、操作系统、Go、Python、Node"
+  emSign ECC Root CA - G3 下的八张中间证书（六张 TLS，两张代码签名）由 Sectigo 交叉签名，它们的 P-384 私钥都是小于 256 的整数。任何人都能瞬间还原出私钥，给任意域名签发证书。Dart、Flutter 和 Firestore 客户端也需要更新。
+splash: "信任 emSign ECC G3 或 Sectigo 交叉签名的客户端；网络路径上的攻击者可针对未修补的运行时及内嵌 SDK"
 wipe: "更新浏览器、系统和信任库（certifi 2026.10.19、Go 1.27.3 / 1.26.10、Node 22.23.4+）；赶在 Chrome 约 10月27日移除根证书前，更换 emSign ECC G3 下的证书"
 inTheWildNote: CT 日志里没发现终端实体证书；几小时内就被拦截
 oneLiner: >-
@@ -17,18 +17,27 @@ cves:
     description: 公告列出 2026.10.18；Python 安全指南建议使用 2026.10.19，以兼容未受影响的根证书。
   - name: uv 内置根证书移除
     description: 0.13.4 之前的 uv 默认信任受影响的根证书；系统或自定义证书库需要单独核验。
+  - name: Dart 和 Flutter 信任被攻破的中间证书
+    description: 网络路径上的攻击者可拦截 Android、Windows，以及 CA 证书包未修补的 Linux 上的 dart:io HTTPS；须使用修补后的 SDK 重建。
 fixed:
   - { status: "CVE-2026-111943。Go 1.25 及更早版本不会修复" }
   - {}
   - { status: 内置 NSS 3.131.1 的 CA 证书包 }
   - { status: 10月20日移除根证书 }
   - {}
-  - { status: 我们查阅的来源均未提及，请向厂商确认 }
+  - { status: 未核实统一修复版本；Sonatype 在所测配置中复现指纹阻止列表绕过 }
   - { status: 需要 Python 3.10 或更新版本；逐个环境单独更新 pip }
   - { status: 刷新内置 CA 根证书 }
   - { status: Python 安全团队建议的最低版本 }
   - { status: 其他环境中的 CA 软件包也需更新 }
   - { status: 更新内置 CA 依赖 }
+  - { status: 重建并重新分发受影响的应用 }
+  - { status: 使用修补后的 Dart SDK 重建 }
+  - { status: CocoaPods 使用 12.19.3；重新发布应用 }
+  - { status: 重建并重新发布应用 }
+  - { status: Apple 及桌面平台上的 Firestore；重建并重新发布 }
+  - { status: Apple 及桌面平台上的 Firestore；重建并重新发布 }
+  - { status: 刷新 CI 依赖；无需重新发布应用 }
 timeline:
   - date: 2025年4月30日
     title: 私钥生成，同一批共 24 张中间证书
@@ -52,9 +61,15 @@ timeline:
   - date: 2026年10月21日
     title: Docker 使用更新后的 CA 证书重建 Sandboxes 模板
     body: 现有沙箱必须用新镜像重建；只更新 sbx 不够。
+  - date: 2026年10月21日
+    title: Sonatype 报告 Java 指纹阻止列表绕过
+    body: 重新编码的中间证书通过所测配置的验证；移除相关根证书后，两条测试证书链均被拒绝。
   - date: 2026年10月22日
     title: eMudhra 宣布退出全球 SSL/TLS 证书签发业务
     body: 合作伙伴免费提供替换证书；吊销与状态服务持续到所有已签发证书过期或被替换。未给出退出日期。
+  - date: 2026年10月23日
+    title: Dart 公告和 Firebase 指南列出应用层修复
+    body: SDK 更新后须重建并重新分发客户端；Gradle 插件只需在构建流水线中更新。
   - date: 2026年10月27日前后
     title: Chrome Root Store v43 移除 emSign ECC Root CA - G3
 checklist:
@@ -68,8 +83,10 @@ checklist:
     hint: uv 0.13.4、sigstore-python 4.5.1、conda 26.9.4、Pixi 0.82.1；检查 CI 工具和单独安装的副本
   - title: 刷新 conda、Mamba 的 CA 软件包并重建镜像
     hint: 更新每个相关环境的 certifi 和 ca-certificates；同步更新 mamba/libmamba，重建容器时禁用层缓存
+  - title: 核验 Java 信任路径，不要只依赖指纹阻止列表
+    hint: 针对每个已部署 JDK 和自定义信任库遵循厂商指南。Sonatype 在测试中用重新编码的中间证书绕过 blocked.certs。移除相关根证书前先测试依赖服务，部署后监控 TLS 失败并重启受影响应用
   - title: 修补自定义信任库
-    hint: Java cacerts、内部 CA 证书包、各类设备、distroless 镜像
+    hint: 内部 CA 证书包、各类设备和 distroless 镜像需要单独更新；系统更新不会刷新所有应用证书包
   - title: 检查代码签名信任
     hint: 八张里有两张是受微软信任的代码签名 CA
   - title: 你自己的证书如果链到 emSign ECC Root CA - G3，赶紧换掉
@@ -78,6 +95,10 @@ checklist:
     hint: 你的域名下只要出现不是你申请的证书，就是危险信号
   - title: 刷新 Docker Sandboxes 模板并重建现有沙箱
     hint: 先保存文件和未推送提交；创建时使用 --pull always。只更新 sbx 不会刷新现有沙箱
+  - title: 重建 Dart 和 Flutter 客户端
+    hint: 使用 Dart 3.13.7，或搭配已修补 Dart 的 Flutter 3.47.8；beta 最低版本分别为 3.14.0-315.3.beta 和 3.50.0-0.2.pre。重建并分发二进制文件。Android 和 Windows 不读取系统中间证书阻止列表；Linux 是否暴露取决于 CA 证书包
+  - title: 发布更新后的 Firestore 客户端并刷新 App Distribution CI
+    hint: 使用上表中对应平台的 SDK 版本。重建、重新发布 Firestore 应用并提示用户升级；浏览器或系统修复不能替换内嵌证书包。将 App Distribution Gradle 插件升级到 5.3.1 或更新版本并刷新 CI 依赖；此插件无需重新发布应用
 sources:
   - says: 私钥是小于 256 的整数；报告时间、OneCRL 条目，以及 10月18日的吊销
   - name: eMudhra 声明
@@ -106,6 +127,12 @@ sources:
     says: 为此事件将 webpki-root-certs 升至 1.0.10，rustls-webpki 升至 0.103.16
   - name: pip 26.2.2 软件包元数据
     says: 需要 Python 3.10 或更新版本
+  - name: Dart SDK 安全公告
+    says: 10月23日公告；Android 和 Windows 不读取系统中间证书阻止列表，Linux 取决于 CA 证书包；列出稳定版及 beta 修复版本
+  - name: Firebase eMudhra 处置指南
+    says: 各平台 SDK 和 Gradle 插件更新；已安装应用需要重新分发二进制文件；Firebase 后端不受影响
+  - name: Sonatype Java 阻止列表研究
+    says: 测试中重新编码可绕过精确指纹阻止，移除根证书后两条测试链均被拒绝；结论限于所测配置
 ---
 CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eMudhra 有八张中间证书，P-384 私钥都是**小于 256 的整数**。据研究人员 Scott Helme 说，其中一个就是数字 4。谁要是注意到了，就能给任意域名签证书，而所有信任这条链的客户端都会照单全收。
 
@@ -127,3 +154,12 @@ CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eM
 **10月22日进一步更新：** eMudhra 董事会决定退出全球 SSL/TLS 证书业务。公司承诺通过合作伙伴免费提供替换证书，并持续提供吊销及状态服务，直到所有已签发证书过期或被替换。退出日期和合作伙伴未明确。Chrome 仍在审查其余 RSA 层级，不能把厂商的过渡计划当作未来浏览器信任的保证。请及时更换受影响的网站证书；Chrome 预计于 10月27日 PDT 移除根证书。
 
 **10月23日更新：** 此前的指南漏列了自带根证书的包管理工具。即使系统证书或独立 certifi 已更新，也要逐个环境更新 pip，使用 Python 安全公告中带固定哈希的引导升级方式。pip 26.2.2 需要 Python 3.10 或更新版本；旧解释器需要兼容的处置方案，不能假定其 CA 证书包安全。上表新增最低版本来自 Python 及工具维护者，不能替代运行时更新或 10月27日的证书迁移期限。使用 conda 时，base 之外环境的 CA 软件包也要更新。Mamba 重建可能沿用相同版本号，因此还要检查软件包构建号。
+
+
+### 应用内嵌证书包与 Java 缓解缺口
+
+**10月24日更新：** [Dart 公告](https://github.com/dart-lang/sdk/security/advisories/GHSA-frr6-h895-5pxp) 涉及网络路径上的攻击者拦截 Android、Windows，以及保留受影响根证书的 Linux 环境中的 `dart:io` HTTPS。公告排除 Web 和 Apple 验证路径，不代表使用独立内嵌 TLS 库的 Firestore 也不受影响。
+
+[Firebase](https://firebase.google.com/support/guides/compromised-emudhra-intermediate-ca) 列出 Apple 及桌面平台上受影响的 Firestore 客户端。须发布重建后的应用并让用户安装。Cloud Firestore 和 App Distribution 后端不受影响。
+
+[Sonatype](https://www.sonatype.com/blog/the-limits-of-fingerprint-blocklists-a-reproducible-java-certificate-bypass) 发现，使用 ECDSA 或 RSA 签名的中间证书经替代编码后，可在其测试中绕过 Java 指纹阻止。移除相关根证书可拒绝这两条证书链，但可能中断合法连接。请按厂商指南核验每个已部署运行时及信任库；这是实验室复现的缓解绕过，并非在野攻击证据，也不能推广到所有 JDK。
