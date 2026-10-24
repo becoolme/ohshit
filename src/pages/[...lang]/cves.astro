@@ -12,7 +12,7 @@ export function getStaticPaths() { return [{ params: { lang: undefined } }, { pa
 const lang: Lang = Astro.params.lang === 'zh' ? 'zh' : 'en';
 const zh = lang === 'zh';
 const t = zh ? {
-  title: 'CVE 索引', kicker: '漏洞雷达', subtitle: `最近 ${days} 天公开的 CVE · 每日同步`, total: `近 ${days} 天 CVE`, critical: '严重（CVSS 9+）', kev: '列入 CISA KEV',
+  title: 'CVE 索引', kicker: '漏洞雷达', subtitle: `最近 ${days} 天公开的 CVE · 每 6 小时同步`, total: `近 ${days} 天 CVE`, critical: '严重（CVSS 9+）', kev: '列入 CISA KEV',
   search: '搜索 CVE、产品或关键词', searchButton: '搜索', severity: '严重程度', all: '全部级别',
   criticalLabel: '严重', high: '高危', medium: '中危', low: '低危', none: '无', unknown: '未评分',
   sort: '排序', published: '最新公开', modified: '最近更新', score: '最高评分', onlyKev: '仅 CISA KEV',
@@ -22,7 +22,7 @@ const t = zh ? {
   pubDate: '公开日期', modDate: '更新日期', scoring: '评分来源', status: '记录状态', english: '原始描述（英文）',
   fullPage: '完整页面', results: (n: string) => `${n} 条结果`,
 } : {
-  title: 'CVE Index', kicker: 'VULNERABILITY RADAR', subtitle: `CVEs published in the last ${days} days · Synced daily`, total: `CVEs, last ${days} days`, critical: 'Critical (CVSS 9+)', kev: 'In CISA KEV',
+  title: 'CVE Index', kicker: 'VULNERABILITY RADAR', subtitle: `CVEs published in the last ${days} days · Synced every 6 hours`, total: `CVEs, last ${days} days`, critical: 'Critical (CVSS 9+)', kev: 'In CISA KEV',
   search: 'Search CVE, product or keyword', searchButton: 'Search', severity: 'Severity', all: 'All severities',
   criticalLabel: 'Critical', high: 'High', medium: 'Medium', low: 'Low', none: 'None', unknown: 'Unscored',
   sort: 'Sort', published: 'Newest published', modified: 'Recently updated', score: 'Highest score', onlyKev: 'CISA KEV only',
@@ -46,8 +46,8 @@ const num = (n: number) => n.toLocaleString(locale);
 const synced = `${t.updated} ${new Date(manifest.syncedAt).toLocaleString(locale, { timeZone: 'UTC', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false })} UTC`;
 const pageTitle = zh ? `最新 CVE 漏洞查询（近 ${days} 天）：按产品、CVSS、CISA KEV 筛选` : `Latest CVEs, last ${days} days: search by product, CVSS and CISA KEV`;
 const description = zh
-  ? `搜索近 ${days} 天公开的 ${num(manifest.stats.total)} 个 CVE，每日从 NVD 同步。按产品、CVSS 严重程度和 CISA 已知被利用漏洞（KEV）筛选。`
-  : `Search ${num(manifest.stats.total)} CVEs published in the last ${days} days, synced daily from NVD. Filter by product, CVSS severity and CISA Known Exploited Vulnerabilities.`;
+  ? `搜索近 ${days} 天公开的 ${num(manifest.stats.total)} 个 CVE，每 6 小时从 NVD 同步。按产品、CVSS 严重程度和 CISA 已知被利用漏洞（KEV）筛选。`
+  : `Search ${num(manifest.stats.total)} CVEs published in the last ${days} days, synced every 6 hours from NVD. Filter by product, CVSS severity and CISA Known Exploited Vulnerabilities.`;
 const pageUrl = new URL(indexPath, Astro.site).href;
 const jsonLd = [
   {
@@ -130,7 +130,7 @@ const json = (value: unknown) => JSON.stringify(value).replaceAll('<', '\\u003c'
   function link(text: string, url: string, external = true) { const a = document.createElement('a'); a.textContent = text; a.href = url; if (external) { a.target = '_blank'; a.rel = 'noopener noreferrer'; } return a; }
   const date = (s: string) => new Date(s).toISOString().slice(0, 10);
   const scoreText = (r: { score: number | null }) => r.score === null ? t.unknown : r.score.toFixed(1);
-  el('[data-stale]').hidden = Date.now() - Date.parse(root.dataset.syncedAt!) < 48 * 864e5;
+  el('[data-stale]').hidden = Date.now() - Date.parse(root.dataset.syncedAt!) < 24 * 36e5;
 
   // Detail buckets live next to the build's index, so the dialog works before the search worker has loaded.
   let assetBase: string = context.base, detailId = 0;
