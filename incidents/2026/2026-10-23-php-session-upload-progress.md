@@ -44,4 +44,6 @@ sources:
 
 This is a separate advisory from the two [PHP2Shell vulnerabilities](/incidents/php2shell/) patched on October 21. PHP calls the required configuration unlikely in practice, so the narrower exposure is rated L3.
 
+This path requires session upload progress to be enabled, `session.serialize_handler` configured as `php_binary` or `php_serialize`, and application code switching it to `php` with `ini_set()` before `session_start()`.
+
 Applications that never change their session serializer at runtime can keep upload progress enabled. The full affected-version range, severity score and first patched release remain unpublished. Do not interpret an older PHP2Shell version check as clearance for this issue.
