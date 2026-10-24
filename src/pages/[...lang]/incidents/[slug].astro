@@ -9,6 +9,7 @@ import Checklist from '../../../components/Checklist.astro';
 import VersionChecker from '../../../components/VersionChecker.astro';
 import CopyButtons from '../../../components/CopyButtons.astro';
 import { getIncidents, isoDate, type Incident } from '../../../lib/incidents';
+import { getCveSite } from '../../../lib/cve/site';
 import { LEVELS, type Level } from '../../../lib/levels';
 import { SITE } from '../../../lib/site';
 import { UI, HTML_LANG, LANGS, formatDateIn, localePath, type Lang } from '../../../lib/i18n';
@@ -58,6 +59,10 @@ const facts = [
 ];
 const editUrl = SITE.editUrl((incident.translation ?? incident).filePath ?? '');
 const tlColors = ['#FFC93C', '#FF9A3C', '#FF6B2C'];
+// CVEs in the 90-day index link to their static page, or to the index dialog when they have none.
+const cveSite = await getCveSite();
+const cveHref = (id: string) =>
+  cveSite.pages.has(id) ? `/cves/${id}/` : cveSite.byId.has(id) ? `${localePath(lang, '/cves/')}?id=${id}` : undefined;
 ---
 
 <Base title={d.title} description={d.summary} type="article" image={`/og/${incident.id}.png`} lang={lang} translated={!untranslated}>
@@ -117,7 +122,7 @@ const tlColors = ['#FFC93C', '#FF9A3C', '#FF6B2C'];
                 {d.cves.map((c) => (
                   <article>
                     <div class="ch">
-                      <code>{c.id}</code>
+                      {cveHref(c.id) ? <a href={cveHref(c.id)}><code>{c.id}</code></a> : <code>{c.id}</code>}
                       {c.score && <span class="score">CVSS {c.score}</span>}
                     </div>
                     <h3>{c.name}</h3>
@@ -407,6 +412,9 @@ const tlColors = ['#FFC93C', '#FF9A3C', '#FF6B2C'];
     font-size: 17px;
     font-weight: 700;
     color: var(--yellow);
+  }
+  .ch a {
+    text-decoration-color: color-mix(in srgb, var(--yellow) 45%, transparent);
   }
   .score {
     background: var(--orange);

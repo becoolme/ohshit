@@ -54,6 +54,7 @@ const analyticsDomain = import.meta.env.PUBLIC_ANALYTICS_DOMAIN;
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <slot name="head" />
     {analyticsSrc && analyticsDomain && <script is:inline defer data-domain={analyticsDomain} src={analyticsSrc} />}
   </head>
   <body>

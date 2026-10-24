@@ -1,0 +1,317 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getIncidents } from '../../lib/incidents';
+import { localePath, type Lang } from '../../lib/i18n';
+import { getCveSite } from '../../lib/cve/site';
+import { searchIndex } from '../../lib/cve/search';
+import { WINDOW_DAYS as days } from '../../lib/cve/data';
+import { rowHtml } from '../../lib/cve/row';
+export function getStaticPaths() { return [{ params: { lang: undefined } }, { params: { lang: 'zh' } }]; }
+const lang: Lang = Astro.params.lang === 'zh' ? 'zh' : 'en';
+const zh = lang === 'zh';
+const t = zh ? {
+  title: 'CVE 索引', kicker: '漏洞雷达', subtitle: `最近 ${days} 天公开的 CVE · 每日同步`, total: `近 ${days} 天 CVE`, critical: '严重（CVSS 9+）', kev: '列入 CISA KEV',
+  search: '搜索 CVE、产品或关键词', searchButton: '搜索', severity: '严重程度', all: '全部级别',
+  criticalLabel: '严重', high: '高危', medium: '中危', low: '低危', none: '无', unknown: '未评分',
+  sort: '排序', published: '最新公开', modified: '最近更新', score: '最高评分', onlyKev: '仅 CISA KEV',
+  reset: '重置', loading: '正在加载…', empty: '没有匹配的 CVE', error: '数据暂时不可用', retry: '重试',
+  previous: '上一页', next: '下一页', close: '关闭', references: '参考资料', incident: '相关事件', incidentTag: '事件',
+  details: '漏洞详情', updated: '同步于', stale: '同步延迟', source: '数据来源', affected: '产品',
+  pubDate: '公开日期', modDate: '更新日期', scoring: '评分来源', status: '记录状态', english: '原始描述（英文）',
+  fullPage: '完整页面', results: (n: string) => `${n} 条结果`,
+} : {
+  title: 'CVE Index', kicker: 'VULNERABILITY RADAR', subtitle: `CVEs published in the last ${days} days · Synced daily`, total: `CVEs, last ${days} days`, critical: 'Critical (CVSS 9+)', kev: 'In CISA KEV',
+  search: 'Search CVE, product or keyword', searchButton: 'Search', severity: 'Severity', all: 'All severities',
+  criticalLabel: 'Critical', high: 'High', medium: 'Medium', low: 'Low', none: 'None', unknown: 'Unscored',
+  sort: 'Sort', published: 'Newest published', modified: 'Recently updated', score: 'Highest score', onlyKev: 'CISA KEV only',
+  reset: 'Reset', loading: 'Loading…', empty: 'No matching CVEs', error: 'Data temporarily unavailable', retry: 'Retry',
+  previous: 'Previous', next: 'Next', close: 'Close', references: 'References', incident: 'Related incident', incidentTag: 'INCIDENT',
+  details: 'Vulnerability details', updated: 'Synced', stale: 'Sync delayed', source: 'Sources', affected: 'Products',
+  pubDate: 'Published', modDate: 'Modified', scoring: 'Score source', status: 'Record status', english: 'Original description',
+  fullPage: 'Full page', results: (n: string) => `${n} results`,
+};
+const site = await getCveSite();
+const { manifest } = site;
+const indexPath = localePath(lang, '/cves/');
+const related: Record<string, { title: string; url: string }[]> = {};
+for (const i of await getIncidents(lang)) for (const c of i.data.cves) if (c.id.startsWith('CVE-')) (related[c.id] ??= []).push({ title: i.data.title, url: localePath(lang, `/incidents/${i.id}/`) });
+// The first page is in the HTML so crawlers and first paint see real records; the search index loads on demand.
+const first = searchIndex(site.records, {}, []);
+const rowContext = { indexPath, unscored: t.unknown, incident: t.incidentTag };
+const rowsHtml = first.records.map((r) => rowHtml(r, related[r.id] ?? [], rowContext)).join('');
+const locale = zh ? 'zh-CN' : 'en-GB';
+const num = (n: number) => n.toLocaleString(locale);
+const synced = `${t.updated} ${new Date(manifest.syncedAt).toLocaleString(locale, { timeZone: 'UTC', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false })} UTC`;
+const pageTitle = zh ? `最新 CVE 漏洞查询（近 ${days} 天）：按产品、CVSS、CISA KEV 筛选` : `Latest CVEs, last ${days} days: search by product, CVSS and CISA KEV`;
+const description = zh
+  ? `搜索近 ${days} 天公开的 ${num(manifest.stats.total)} 个 CVE，每日从 NVD 同步。按产品、CVSS 严重程度和 CISA 已知被利用漏洞（KEV）筛选。`
+  : `Search ${num(manifest.stats.total)} CVEs published in the last ${days} days, synced daily from NVD. Filter by product, CVSS severity and CISA Known Exploited Vulnerabilities.`;
+const pageUrl = new URL(indexPath, Astro.site).href;
+const jsonLd = [
+  {
+    '@context': 'https://schema.org', '@type': 'Dataset', name: zh ? `CVE 索引（近 ${days} 天）` : `CVE Index (last ${days} days)`, description, url: pageUrl,
+    inLanguage: zh ? 'zh-CN' : 'en', isAccessibleForFree: true, dateModified: manifest.syncedAt,
+    temporalCoverage: `${manifest.windowStart.slice(0, 10)}/${manifest.syncedAt.slice(0, 10)}`,
+    keywords: ['CVE', 'CVSS', 'CISA KEV', 'vulnerability', 'NVD'],
+    isBasedOn: ['https://nvd.nist.gov/', 'https://www.cisa.gov/known-exploited-vulnerabilities-catalog'],
+    creator: { '@type': 'Organization', name: 'OhShit', url: new URL('/', Astro.site).href },
+  },
+  {
+    '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'OhShit!', item: new URL(localePath(lang, '/'), Astro.site).href },
+      { '@type': 'ListItem', position: 2, name: t.title, item: pageUrl },
+    ],
+  },
+];
+const json = (value: unknown) => JSON.stringify(value).replaceAll('<', '\\u003c');
+---
+<Base lang={lang} title={pageTitle} description={description} image="/og/cves.png">
+  <script slot="head" type="application/ld+json" set:html={json(jsonLd)} />
+  <div class="hazard" aria-hidden="true"></div>
+  <Header variant="inner" lang={lang} currentLabel={t.title} />
+  <main id="main" class="wrap cve-index" data-cve-index data-synced-at={manifest.syncedAt}>
+    <section class="intro">
+      <div><p class="kicker">{t.kicker}</p><h1 class="disp">{t.title}<span>.</span></h1><p class="subtitle">{t.subtitle}</p></div>
+      <div class="freshness"><span class="fresh-dot" aria-hidden="true"></span><time datetime={manifest.syncedAt}>{synced}</time><span class="stale" data-stale hidden>{t.stale}</span></div>
+    </section>
+    <section class="stats" aria-label={zh ? `近 ${days} 天漏洞统计（不随筛选变化）` : `Counts for the last ${days} days (not affected by filters)`}>
+      <div><strong class="disp">{num(manifest.stats.total)}</strong><span>{t.total}</span></div>
+      <div><strong class="disp">{num(manifest.stats.critical)}</strong><span><i class="stat-dot critical" aria-hidden="true"></i>{t.critical}</span></div>
+      <div><strong class="disp">{num(manifest.stats.kev)}</strong><span><i class="stat-dot kev" aria-hidden="true"></i>{t.kev}</span></div>
+    </section>
+    <form class="tools" data-filters role="search">
+      <div class="search"><label class="sr-only" for="cve-search">{t.search}</label><input id="cve-search" name="q" type="search" placeholder={t.search} maxlength="200" autocomplete="off" /><button class="btn btn--primary" type="submit">{t.searchButton}</button></div>
+      <div class="filter-row">
+        <label><span class="sr-only">{t.severity}</span><select name="severity" aria-label={t.severity}><option value="">{t.all}</option>{['critical','high','medium','low','none','unknown'].map(v => <option value={v}>{v === 'critical' ? t.criticalLabel : t[v as 'high']}</option>)}</select></label>
+        <label><span class="sr-only">{t.sort}</span><select name="sort" aria-label={t.sort}><option value="published">{t.published}</option><option value="modified">{t.modified}</option><option value="score">{t.score}</option></select></label>
+        <label class="kev-filter"><input type="checkbox" name="kev" value="1" /><span>{t.onlyKev}</span></label>
+        <button type="reset" class="reset">{t.reset}</button>
+      </div>
+    </form>
+    <div class="list-top"><p data-count aria-live="polite">{t.results(num(first.total))}</p><span class="mono">CVSS / CISA KEV</span></div>
+    <section class="results" data-results aria-label={t.details} aria-busy="false">
+      <div class="row-head" aria-hidden="true"><span>CVE / {zh ? '描述' : 'DESCRIPTION'}</span><span>CVSS</span><span>{zh ? '公开日期' : 'PUBLISHED'}</span><span></span></div>
+      <div data-rows set:html={rowsHtml}></div>
+      <p class="state" data-state hidden>{t.empty}</p>
+      <button class="btn btn--ghost retry" data-retry hidden>{t.retry}</button>
+    </section>
+    <nav class="pagination" aria-label={zh ? '分页' : 'Pagination'}><button class="btn btn--ghost" data-prev disabled>{t.previous}</button><span class="mono" data-page>{first.page} / {first.pages}</span><button class="btn btn--ghost" data-next disabled={first.pages <= 1}>{t.next}</button></nav>
+    <div class="sources"><span>{t.source}:</span> <a href="https://nvd.nist.gov/" target="_blank" rel="noopener noreferrer">NVD ↗</a><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener noreferrer">CISA KEV ↗</a><span>{zh ? 'CVSS 分数不代表在野利用。' : 'CVSS scores do not establish exploitation.'}</span></div>
+    <p class="attribution">This product uses the NVD API but is not endorsed or certified by the NVD.</p>
+    <noscript><p>{zh ? '搜索和翻页需要启用 JavaScript。' : 'Enable JavaScript to search and page through this index.'} <a href="https://nvd.nist.gov/vuln/search">NVD ↗</a></p></noscript>
+  </main>
+  <dialog data-detail aria-labelledby="detail-title"><div class="detail-head"><p class="kicker">{t.details}</p><button class="close" data-close aria-label={t.close}>×</button></div><div data-detail-body></div></dialog>
+  <script id="cve-context" type="application/json" set:html={json({ t: { ...t, results: undefined }, lang, related, base: manifest.base, indexPath })} />
+  <Footer lang={lang} legal={zh ? '代码以 MIT 许可证开源；漏洞数据来自 NVD 与 CVE Program。' : 'Code is MIT licensed. Vulnerability data is provided by NVD and the CVE Program.'} />
+</Base>
+<script>
+  import { severity, type CveRecord } from '../../lib/cve/data';
+  import { detailBucket, hasCvePage, productLine, scoreSourceLabel, type IndexRecord } from '../../lib/cve/search';
+  import { rowHtml } from '../../lib/cve/row';
+  type FullRow = CveRecord & { kev: boolean };
+  const context = JSON.parse(document.getElementById('cve-context')!.textContent!);
+  const { t, lang, related, indexPath } = context;
+  const root = document.querySelector<HTMLElement>('[data-cve-index]')!;
+  const el = <T extends HTMLElement = HTMLElement>(selector: string) => root.querySelector<T>(selector)!;
+  const form = el<HTMLFormElement>('[data-filters]');
+  const search = form.elements.namedItem('q') as HTMLInputElement;
+  const level = form.elements.namedItem('severity') as HTMLSelectElement;
+  const sort = form.elements.namedItem('sort') as HTMLSelectElement;
+  const onlyKev = form.elements.namedItem('kev') as HTMLInputElement;
+  const dialog = document.querySelector<HTMLDialogElement>('[data-detail]')!;
+  const detail = dialog.querySelector<HTMLElement>('[data-detail-body]')!;
+  const rowContext = { indexPath, unscored: t.unknown, incident: t.incidentTag };
+  const results = (n: number) => lang === 'zh' ? `${n.toLocaleString('zh-CN')} 条结果` : `${n.toLocaleString('en-GB')} results`;
+  let page = 1, pages = 1, request: AbortController | undefined, timer: ReturnType<typeof setTimeout>;
+  let openId: string | undefined;
+  function node(tag: string, text: string, className = '') { const n = document.createElement(tag); n.textContent = text; n.className = className; return n; }
+  function link(text: string, url: string, external = true) { const a = document.createElement('a'); a.textContent = text; a.href = url; if (external) { a.target = '_blank'; a.rel = 'noopener noreferrer'; } return a; }
+  const date = (s: string) => new Date(s).toISOString().slice(0, 10);
+  const scoreText = (r: { score: number | null }) => r.score === null ? t.unknown : r.score.toFixed(1);
+  el('[data-stale]').hidden = Date.now() - Date.parse(root.dataset.syncedAt!) < 48 * 864e5;
+
+  // Detail buckets live next to the build's index, so the dialog works before the search worker has loaded.
+  let assetBase: string = context.base, detailId = 0;
+  const detailCache = new Map<string, Record<string, FullRow>>();
+  async function fetchDetail(id: string): Promise<FullRow> {
+    let url = `${assetBase}details-${detailBucket(id)}.json`;
+    let bucket = detailCache.get(url);
+    if (!bucket) {
+      let response = await fetch(url);
+      if (!response.ok) {
+        // A newer deployment replaced this build's assets: follow the current manifest.
+        const metadataResponse = await fetch('/data/cves/manifest.json', { cache: 'no-cache' });
+        if (!metadataResponse.ok) throw new Error('Unavailable');
+        const metadata = await metadataResponse.json();
+        if (!/^\/data\/cves\/[a-f0-9]{16}\/$/.test(metadata.base)) throw new Error('Unavailable');
+        assetBase = metadata.base;
+        url = `${assetBase}details-${detailBucket(id)}.json`;
+        response = await fetch(url);
+      }
+      if (!response.ok) throw new Error('Unavailable');
+      bucket = await response.json();
+      detailCache.set(url, bucket!);
+      if (detailCache.size > 6) detailCache.delete(detailCache.keys().next().value!);
+    }
+    const r = bucket![id];
+    if (!r || r.id !== id) throw new Error('Unavailable');
+    return r;
+  }
+  async function openDetail(cveId: string) {
+    const id = ++detailId;
+    openId = cveId; syncUrl();
+    detail.replaceChildren();
+    const loadingTitle = node('h2', cveId, 'disp'); loadingTitle.id = 'detail-title';
+    detail.append(loadingTitle, node('p', t.loading));
+    if (!dialog.open) dialog.showModal();
+    let r: FullRow;
+    try { r = await fetchDetail(cveId); } catch {
+      if (id !== detailId) return;
+      detail.replaceChildren(loadingTitle, node('p', t.error));
+      const retry = document.createElement('button'); retry.className = 'btn btn--ghost'; retry.textContent = t.retry;
+      retry.addEventListener('click', () => { void openDetail(cveId); }); detail.append(retry, link('NVD ↗', `https://nvd.nist.gov/vuln/detail/${encodeURIComponent(cveId)}`));
+      return;
+    }
+    if (id !== detailId) return;
+    const incidents: { title: string; url: string }[] = related[r.id] ?? [];
+    detail.replaceChildren();
+    const h = node('h2', r.id, 'disp'); h.id = 'detail-title'; detail.append(h);
+    const badges = node('div', '', 'detail-badges'); badges.append(node('span', `${scoreText(r)}${r.cvssVersion ? ` · CVSS ${r.cvssVersion}` : ''}`, `cve-badge score sev-${severity(r.score)}`));
+    if (r.kev) badges.append(node('span', 'CISA KEV', 'cve-badge kev'));
+    if (hasCvePage(r, incidents.length > 0)) badges.append(link(`${t.fullPage} →`, `/cves/${r.id}/`, false));
+    detail.append(badges);
+    detail.append(node('p', t.english, 'detail-label'), node('p', r.description, 'description'));
+    const meta = document.createElement('dl');
+    for (const [label, value] of [[t.affected, productLine(r.products, 30) || '—'], [t.pubDate, date(r.published)], [t.modDate, date(r.modified)], [t.scoring, scoreSourceLabel(r.scoreSource)], [t.status, r.status], ['CWE', r.weaknesses.join(', ') || '—']]) meta.append(node('dt', label), node('dd', value));
+    detail.append(meta); if (r.vector) detail.append(node('p', r.vector, 'vector mono'));
+    if (incidents.length) { detail.append(node('h3', t.incident)); for (const i of incidents) detail.append(link(`${i.title} →`, i.url, false)); }
+    detail.append(node('h3', t.references)); const refs = document.createElement('ul');
+    for (const url of [`https://www.cve.org/CVERecord?id=${r.id}`, `https://nvd.nist.gov/vuln/detail/${r.id}`, ...r.references]) {
+      try { const parsed = new URL(url); if (!['https:', 'http:'].includes(parsed.protocol)) continue; const li = document.createElement('li'); li.append(link(`${parsed.hostname}${parsed.pathname} ↗`, parsed.href)); refs.append(li); } catch { /* Ignore malformed upstream URLs. */ }
+    }
+    detail.append(refs);
+  }
+  // Clean up directly as well as on the close event, which some embedded browsers don't fire.
+  function closeDetail() { if (dialog.open) dialog.close(); if (!openId) return; openId = undefined; detailId++; syncUrl(); }
+  dialog.querySelector('[data-close]')!.addEventListener('click', closeDetail);
+  dialog.addEventListener('close', closeDetail);
+  dialog.addEventListener('click', event => { if (event.target === dialog) { const r = dialog.getBoundingClientRect(); const e = event as MouseEvent; if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) closeDetail(); } });
+  // A plain click opens the dialog; modified clicks (new tab, copy link) keep the real href.
+  el('[data-rows]').addEventListener('click', event => {
+    const a = (event.target as Element).closest<HTMLAnchorElement>('a.row-link');
+    const e = event as MouseEvent;
+    if (!a || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    event.preventDefault(); void openDetail(a.closest<HTMLElement>('.cve-row')!.dataset.id!);
+  });
+
+  const hasQuery = (p: URLSearchParams) => ['q', 'severity', 'sort', 'kev', 'page'].some(k => p.has(k));
+  function stateFromUrl() { const p = new URLSearchParams(location.search); search.value = p.get('q') ?? ''; level.value = p.get('severity') ?? ''; sort.value = p.get('sort') ?? 'published'; onlyKev.checked = p.get('kev') === '1'; page = Math.max(1, Number(p.get('page')) || 1); return p; }
+  function params() { const p = new URLSearchParams(); if (search.value.trim()) p.set('q', search.value.trim()); if (level.value) p.set('severity', level.value); if (sort.value !== 'published') p.set('sort', sort.value); if (onlyKev.checked) p.set('kev', '1'); if (page > 1) p.set('page', String(page)); return p; }
+  function syncUrl() {
+    const p = params(); if (openId) p.set('id', openId);
+    history.replaceState(null, '', `${location.pathname}${p.size ? `?${p}` : ''}`);
+    const switcher = document.querySelector<HTMLAnchorElement>('a.lang');
+    if (switcher) { const target = new URL(switcher.href); target.search = p.toString(); switcher.href = target.href; }
+  }
+
+  // The 6.7 MB search index loads only when someone searches, filters or pages; focusing the box warms it.
+  let searchWorker: Worker | undefined, queryId = 0, cancelPending: (() => void) | undefined;
+  const worker = () => (searchWorker ??= new Worker(new URL('../../lib/cve/search.worker.ts', import.meta.url), { type: 'module' }));
+  search.addEventListener('focus', () => { if (!searchWorker) worker().postMessage({ id: 0, query: {} }); }, { once: true });
+  function runQuery(): Promise<any> {
+    cancelPending?.();
+    const w = worker(), id = ++queryId;
+    return new Promise((resolve, reject) => {
+      cancelPending = () => reject(new DOMException('Superseded', 'AbortError'));
+      w.onmessage = event => {
+        if (event.data.id !== id) return;
+        cancelPending = undefined;
+        if (event.data.error) reject(new Error(event.data.error)); else resolve(event.data.data);
+      };
+      w.onerror = () => { searchWorker?.terminate(); searchWorker = undefined; reject(new Error('Search unavailable')); };
+      w.postMessage({ id, query: { q: search.value, severity: level.value, sort: sort.value, kev: onlyKev.checked, page } });
+    });
+  }
+  async function load() {
+    request?.abort(); request = new AbortController(); const controller = request;
+    el('[data-results]').setAttribute('aria-busy', 'true'); el('[data-count]').textContent = t.loading; el('[data-retry]').hidden = true;
+    el<HTMLButtonElement>('[data-prev]').disabled = true; el<HTMLButtonElement>('[data-next]').disabled = true;
+    try {
+      const data = await runQuery();
+      if (!Array.isArray(data.records)) throw new Error('Unavailable');
+      if (controller.signal.aborted) return;
+      assetBase = data.base; page = data.page; pages = data.pages;
+      el('[data-rows]').innerHTML = (data.records as IndexRecord[]).map(r => rowHtml(r, related[r.id] ?? [], rowContext)).join('');
+      el('[data-state]').hidden = data.total > 0; el('[data-state]').textContent = t.empty;
+      el('[data-count]').textContent = results(data.total);
+      el('[data-page]').textContent = `${page} / ${pages}`; el<HTMLButtonElement>('[data-prev]').disabled = page <= 1; el<HTMLButtonElement>('[data-next]').disabled = page >= pages;
+      syncUrl();
+    } catch (error: any) {
+      if (error.name === 'AbortError') return;
+      el('[data-rows]').replaceChildren(); el('[data-state]').textContent = t.error; el('[data-state]').hidden = false; el('[data-retry]').hidden = false; el('[data-count]').textContent = t.error; el('[data-page]').textContent = '—';
+    } finally { if (!controller.signal.aborted) el('[data-results]').setAttribute('aria-busy', 'false'); }
+  }
+  const apply = () => { clearTimeout(timer); page = 1; void load(); };
+  form.addEventListener('submit', e => { e.preventDefault(); apply(); });
+  form.addEventListener('change', e => { if (e.target !== search) apply(); });
+  search.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(apply, 300); });
+  form.addEventListener('reset', () => { setTimeout(apply, 0); });
+  const turnPage = (delta: number) => { page += delta; void load().then(() => el('[data-results]').scrollIntoView({ block: 'start' })); };
+  el('[data-prev]').addEventListener('click', () => turnPage(-1)); el('[data-next]').addEventListener('click', () => turnPage(1)); el('[data-retry]').addEventListener('click', () => void load());
+  window.addEventListener('popstate', () => { stateFromUrl(); void load(); });
+  const initial = stateFromUrl();
+  if (hasQuery(initial)) void load();
+  const deepLink = initial.get('id');
+  if (deepLink && /^CVE-\d{4}-\d{4,}$/.test(deepLink)) void openDetail(deepLink);
+</script>
+<style is:global>
+  .cve-index { padding-top: 44px; padding-bottom: 80px; }
+  .intro { display:flex; justify-content:space-between; align-items:flex-end; gap:24px; margin-bottom:36px; }
+  .intro h1 { margin:10px 0 6px; font-size:clamp(46px,7vw,80px); line-height:1.1; letter-spacing:-3px; }
+  .intro h1 span { color:var(--yellow); }
+  .subtitle { margin:0; color:var(--muted); font-size:16px; }
+  .freshness { display:flex; gap:8px; align-items:center; flex-wrap:wrap; font:12px var(--mono); color:var(--muted); padding-bottom:4px; }
+  .fresh-dot { width:7px; height:7px; border-radius:50%; background:var(--yellow); }
+  .stale { color:var(--orange); }
+  .stats { display:grid; grid-template-columns:repeat(3,1fr); border:1px solid var(--line); background:var(--card-inner); margin-bottom:28px; }
+  .stats>div { padding:24px 28px; display:flex; flex-direction:column; gap:6px; }
+  .stats>div+div { border-left:1px solid var(--line); }
+  .stats strong { font-size:42px; line-height:1.2; }
+  .stats span { color:var(--muted); font-size:14px; display:flex; align-items:center; gap:8px; }
+  .stat-dot { display:inline-block; flex:none; width:8px; height:8px; border-radius:50%; }
+  .stat-dot.critical { background:var(--sev-critical); }
+  .stat-dot.kev { background:var(--orange); border-radius:0; }
+  .tools input[type=search],.tools select { min-height:48px; background:var(--card-inner); color:var(--text); border:1px solid var(--line); padding:10px 14px; font:inherit; font-size:15px; border-radius:0; }
+  .search { display:flex; gap:12px; }.search input { flex:1; min-width:0; }.search input::placeholder { color:var(--muted); opacity:.8; }
+  .filter-row { display:flex; align-items:center; flex-wrap:wrap; gap:12px; margin-top:14px; }
+  .kev-filter { display:flex; align-items:center; gap:8px; font-size:14px; cursor:pointer; min-height:44px; }.kev-filter input { width:18px; height:18px; accent-color:var(--yellow); }
+  .reset { margin-left:auto; color:var(--muted); background:none; border:none; cursor:pointer; font:inherit; font-size:14px; min-height:44px; padding:8px 12px; }
+  .list-top { display:flex; justify-content:space-between; align-items:center; margin:24px 0 12px; color:var(--muted); font-size:13px; }.list-top p { margin:0; }.list-top .mono { font-size:11px; letter-spacing:1px; }
+  .results { border:1px solid var(--line); background:var(--card-inner); }.results[aria-busy=true] { opacity:.65; }
+  .row-head,.cve-row { display:grid; grid-template-columns:minmax(0,1fr) 100px 120px 20px; gap:20px; align-items:center; padding:16px 24px; text-align:left; }
+  .row-head { font:11px var(--mono); letter-spacing:1px; color:var(--muted); background:var(--card); padding-top:14px; padding-bottom:14px; }
+  /* The CVE link stretches over the whole row; the incident tag sits above it. */
+  .cve-row { position:relative; border-top:1px solid var(--line); color:var(--text); }.cve-row:hover { background:var(--card); }
+  .row-copy > p { margin:0 0 4px; }.row-copy > p:last-child { margin:0; }
+  .row-copy { min-width:0; }.row-title { display:flex; flex-wrap:wrap; align-items:center; gap:10px; }
+  .row-link { color:var(--yellow); font-size:15px; font-weight:700; text-decoration:none; }.row-link::after { content:''; position:absolute; inset:0; }.row-link:focus-visible { outline:none; }.row-link:focus-visible::after { outline:3px solid var(--yellow); outline-offset:-3px; }
+  .incident-tag { position:relative; z-index:1; font:10px var(--mono); color:var(--muted); letter-spacing:.5px; text-decoration:none; border-bottom:1px dotted currentColor; }.incident-tag:hover { color:var(--yellow); }
+  .row-products { font-size:12px; color:var(--text); opacity:.85; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .row-description { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; color:var(--muted); font-size:14px; line-height:1.55; }
+  .score { font-size:17px; padding:5px 10px; }.row-date { font-size:12px; color:var(--muted); }.row-arrow { color:var(--yellow); }
+  .state { text-align:center; padding:52px 20px; color:var(--muted); }.retry { margin:0 auto 28px; display:flex; }.retry[hidden],.state[hidden],.stale[hidden] { display:none; }
+  .pagination { display:flex; justify-content:center; align-items:center; gap:24px; margin:26px 0 38px; }.pagination span { font-size:13px; }.pagination button { min-width:105px; }.pagination button:disabled { opacity:.35; cursor:not-allowed; }
+  .sources { display:flex; flex-wrap:wrap; gap:8px 16px; font-size:13px; color:var(--muted); }.sources a { text-decoration:none; }.sources span:last-child { margin-left:auto; }.attribution { font-size:11px; color:var(--muted); margin-top:12px; }
+  dialog[data-detail] { color:var(--text); background:var(--bg); border:1px solid var(--line); padding:28px; width:min(760px,calc(100vw - 32px)); max-height:85dvh; overflow:auto; }dialog::backdrop { background:var(--backdrop); backdrop-filter:blur(3px); }.detail-head { display:flex; justify-content:space-between; align-items:center; }.close { font-size:30px; width:44px; height:44px; cursor:pointer; border:1px solid var(--line); color:var(--text); background:var(--card); }[data-detail-body] h2 { font-size:clamp(24px,4vw,36px); margin:18px 0; overflow-wrap:anywhere; }.detail-badges { display:flex; flex-wrap:wrap; align-items:center; gap:12px; }.detail-badges a { margin-left:auto; font-weight:600; }.detail-label { margin-top:28px; color:var(--muted); font-size:12px; }.description { font-size:16px; }[data-detail-body] dl { display:grid; grid-template-columns:130px minmax(0,1fr); font-size:14px; border-top:1px solid var(--line); padding-top:20px; gap:10px; }[data-detail-body] dt { color:var(--muted); }[data-detail-body] dd { margin:0; overflow-wrap:anywhere; }.vector { overflow-wrap:anywhere; font-size:12px; padding:12px; background:var(--card); }[data-detail-body] h3 { font-size:17px; margin-top:24px; }[data-detail-body] > a { display:block; }[data-detail-body] a { overflow-wrap:anywhere; font-size:14px; }[data-detail-body] ul { padding-left:20px; }[data-detail-body] li { padding-bottom:8px; }
+  @media(max-width:760px) {
+    .cve-index { padding-top:24px; }.intro { flex-direction:column; align-items:flex-start; gap:20px; margin-bottom:24px; }.intro h1 { letter-spacing:-1px; }
+    .stats>div { padding:16px 12px; }.stats strong { font-size:28px; }.stats span { font-size:11px; align-items:flex-start; }.stat-dot { margin-top:4px; }
+    .search { gap:8px; }.search .btn { padding:10px 14px; }
+    .filter-row { display:grid; grid-template-columns:1fr 1fr; gap:8px; }.filter-row select { width:100%; }.tools select { font-size:13px; padding:10px; }.reset { margin-left:0; justify-self:end; }
+    .row-head { display:none; }.cve-row { grid-template-columns:minmax(0,1fr) 60px; gap:12px; padding:14px; }.row-date,.row-arrow { display:none; }.score { justify-self:end; font-size:14px; }
+    .row-title { gap:6px; }.row-link { font-size:13px; }.row-products { font-size:11px; }.row-description { font-size:13px; }.list-top .mono { display:none; }
+    .sources span:last-child { margin-left:0; }.pagination { gap:16px; }.pagination button { min-width:90px; }dialog[data-detail] { padding:20px; }[data-detail-body] dl { grid-template-columns:100px minmax(0,1fr); }
+  }
+</style>

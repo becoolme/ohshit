@@ -46,6 +46,13 @@
   --l3: #ffc93c;
   --l4: #ff9a3c;
   --l5: #ff6b2c;
+  /* CVSS severity bands for the CVE index. KEV uses --orange as a filled badge. */
+  --sev-critical: #ff6b2c;
+  --sev-high: #ff9a3c;
+  --sev-medium: #ffc93c;
+  --sev-low: #e9dcc2;
+  --sev-none: #6e5640;
+  --backdrop: rgba(9, 6, 4, 0.8);
 
   --wrap: 1200px;
   --gutter: 24px;
@@ -365,3 +372,14 @@ h3 {
     scroll-behavior: auto !important;
   }
 }
+
+/* CVE badges: CVSS bands use the --sev-* tokens; unscored is dashed; KEV is a filled orange badge. */
+.cve-badge { display:inline-block; padding:3px 8px; font:700 12px var(--mono); border:1px solid var(--line); color:var(--muted); width:fit-content; white-space:nowrap; }
+.cve-badge.sev-critical { --sev:var(--sev-critical); }
+.cve-badge.sev-high { --sev:var(--sev-high); }
+.cve-badge.sev-medium { --sev:var(--sev-medium); }
+.cve-badge.sev-low { --sev:var(--sev-low); }
+.cve-badge.sev-none { --sev:var(--sev-none); }
+.cve-badge[class*=sev-] { color:var(--sev, var(--muted)); border-color:color-mix(in srgb, var(--sev, var(--line)) 55%, transparent); background:color-mix(in srgb, var(--sev, transparent) 14%, transparent); }
+.cve-badge.sev-unknown { border-style:dashed; border-color:var(--line); background:none; font-weight:400; }
+.cve-badge.kev { color:var(--bg); background:var(--orange); border-color:var(--orange); font-size:10px; }

@@ -86,10 +86,15 @@ npm run dev      # http://localhost:4321
 npm run build    # type-checks, validates every incident, renders share images, outputs dist/
 ```
 
-Built with [Astro](https://astro.build). The output is fully static, so `dist/` deploys to any static host.
-ohshit.app runs on Cloudflare Workers static assets ([`wrangler.jsonc`](wrangler.jsonc)). Cloudflare Workers Builds
-deploys every push to `main`; GitHub Actions only runs tests and builds. The Shit Index is a build-time snapshot
-(`generated_at` records its freshness), so rebuild regularly to age out old incidents.
+Built with [Astro](https://astro.build). Pages, feeds and the CVE index are fully static. The CVE index at
+`/cves/` and `/zh/cves/` searches the last 30 days using compressed index chunks in a browser Web Worker.
+A daily GitHub Actions job syncs NVD and CISA KEV data and commits it to `main`. See
+[CVE data, daily sync and local preview](docs/cve-index.md).
+
+ohshit.app runs on Cloudflare Workers static assets ([`wrangler.jsonc`](wrangler.jsonc)). Cloudflare Workers
+Builds deploys pushes to `main`; GitHub Actions validates the site and commits the daily CVE data,
+which that push then deploys. The Shit Index is also a build-time
+snapshot (`generated_at` records its freshness), so rebuild regularly to age out old incidents.
 
 Run `npm test` for version, date-window, content-schema and configuration regression tests.
 Run `npm ci && npm test` inside `packages/mcp` for the MCP protocol smoke tests.

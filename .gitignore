@@ -5,3 +5,9 @@ dist/
 packages/*/node_modules/
 .env
 .claude/
+
+.cve-cache/
+.wrangler/
+public/data/cves/
+data/cves.staging-*
+data/cves.backup-*

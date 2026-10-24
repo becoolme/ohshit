@@ -5,24 +5,33 @@ import { UI, HTML_LANG, localePath, stripLang, type Lang } from '../lib/i18n';
 interface Props {
   variant?: 'home' | 'inner';
   lang?: Lang;
+  currentLabel?: string;
+  /** Crumbs between "Back to the feed" and the current page. */
+  parents?: { label: string; href: string }[];
+  /** Where the language switch goes when this page has no counterpart in the other language. */
+  switchHref?: string;
 }
-const { variant = 'home', lang = 'en' } = Astro.props;
+const { variant = 'home', lang = 'en', currentLabel, parents = [] } = Astro.props;
 const t = UI[lang].header;
 const other: Lang = lang === 'en' ? 'zh' : 'en';
-const switchHref = localePath(other, stripLang(Astro.url.pathname));
+const switchHref = Astro.props.switchHref ?? localePath(other, stripLang(Astro.url.pathname));
 const p = (path: string) => localePath(lang, path);
+const cvesLabel = lang === 'zh' ? 'CVE 索引' : 'CVE Index';
+const onCves = stripLang(Astro.url.pathname).startsWith('/cves/');
 ---
 
 <header class="wrap header">
   <Logo href={p('/')} label={t.home} />
   <div class="end">
     {variant === 'home' && <a href={p('/rss.xml')} class="btn btn--primary rss-m">RSS</a>}
+    {variant === 'inner' && !onCves && <a href={p('/cves/')} class="end-link">{cvesLabel}</a>}
     <a href={switchHref} hreflang={HTML_LANG[other]} lang={HTML_LANG[other]} aria-label={t.switchLabel} class="lang">{t.switchTo}</a>
   </div>
   {
     variant === 'home' ? (
       <nav aria-label={t.nav} class="nav">
         <a href={p('/#feed')}>{t.feed}</a>
+        <a href={p('/cves/')}>{cvesLabel}</a>
         <a href={p('/#levels')}>{t.scale}</a>
         <a href={p('/#dev')}>{t.dev}</a>
         <a href={SITE.reportUrl}>{t.report}</a>
@@ -32,7 +41,13 @@ const p = (path: string) => localePath(lang, path);
       <nav aria-label={t.crumbs} class="crumbs">
         <a href={p('/#feed')}>{t.back}</a>
         <span aria-hidden="true">/</span>
-        <span>{t.here}</span>
+        {parents.map((c) => (
+          <>
+            <a href={c.href}>{c.label}</a>
+            <span aria-hidden="true">/</span>
+          </>
+        ))}
+        <span aria-current="page">{currentLabel ?? t.here}</span>
       </nav>
     )
   }
@@ -91,6 +106,19 @@ const p = (path: string) => localePath(lang, path);
     font-size: 15px;
     text-decoration: none;
   }
+  .end-link {
+    color: var(--text);
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 6px;
+  }
+  .end-link:hover {
+    color: var(--yellow);
+  }
   .lang:hover {
     border-color: var(--yellow);
     color: var(--yellow);
@@ -121,7 +149,7 @@ const p = (path: string) => localePath(lang, path);
     font-size: 16px;
     font-weight: 600;
   }
-  .crumbs span:first-of-type {
+  .crumbs span[aria-hidden] {
     color: var(--faint);
   }
   .crumbs span:last-child {

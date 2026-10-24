@@ -11,10 +11,12 @@
   "scripts": {
     "test": "node --experimental-strip-types --test tests/*.test.mjs",
     "dev": "astro dev",
-    "build": "astro check && astro build",
+    "build": "npm run cve:build && astro check && astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "deploy": "npm run build && wrangler deploy"
+    "cve:sync": "node --experimental-strip-types scripts/sync-cves.ts",
+    "deploy": "npm run build && wrangler deploy",
+    "cve:build": "node --experimental-strip-types scripts/build-cves.ts"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",

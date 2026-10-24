@@ -4,8 +4,9 @@ import { UI, localePath, type Lang } from '../lib/i18n';
 interface Props {
   updated?: string;
   lang?: Lang;
+  legal?: string;
 }
-const { updated, lang = 'en' } = Astro.props;
+const { updated, lang = 'en', legal } = Astro.props;
 const t = UI[lang].footer;
 ---
 
@@ -27,7 +28,7 @@ const t = UI[lang].footer;
       <a href={`${SITE.repo}/blob/main/CONTRIBUTING.md`}>{t.contribute}</a>
     </nav>
   </div>
-  <p class="wrap legal">{t.legal}</p>
+  <p class="wrap legal">{legal ?? t.legal}</p>
 </footer>
 
 <style>
