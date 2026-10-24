@@ -3,11 +3,12 @@ title: "LiteLLM 1.107.0 on PyPI and Docker was a credential stealer with a remot
 headline: "LiteLLM, round two: your LLM gateway now proxies your keys to someone else"
 level: 4
 date: 2026-10-21
+updated: 2026-10-24
 tags: [supply chain, PyPI, Docker, AI, secrets]
 ecosystems: [pypi, docker]
 summary: >-
-  Attackers used stolen GitHub CLI tokens from three LiteLLM engineers to publish litellm 1.107.0 to PyPI and
-  Docker from a lookalike repo. It steals cloud, AI and LiteLLM proxy keys on every Python start. Live ~2 hours.
+  LiteLLM confirms an unrevoked Agent Platform key exposed in May led to GitHub owner-token theft on October 10.
+  Stolen maintainer tokens then published malicious 1.107.0 wheels and images on October 21. Rebuild on pinned 1.106.2 and rotate exposed credentials.
 splash: "Anyone who installed litellm 1.107.0 or pulled latest / main-latest / main-stable / v1.107.0 images on Oct 21"
 wipe: "Rebuild affected hosts from scratch on litellm 1.106.2 pinned by hash/digest, then rotate every credential the host could read"
 inTheWild: "yes"
@@ -16,39 +17,57 @@ oneLiner: >-
   A hijacked release workflow built LiteLLM from an attacker's copy of the repo. The wheel drops a .pth file, so
   every Python process on the box, even pip, runs a stealer that ships your secrets to a fake litellm.dev and
   starts a daemon that can fetch and run more code.
+cves:
+  - id: GHSA-92x9-889m-jgmw
+    name: Malware advisory includes LiteLLM 1.107.0
+    description: The tracker includes 1.107.0 and older March malware versions; sharing a tracker does not establish a shared attacker.
 fixed:
   - { product: LiteLLM (PyPI), version: 1.106.2, status: "Last clean release; 1.107.0 removed" }
   - { product: LiteLLM Docker images, version: v1.106.2 (pin by digest), status: "Floating tags were repointed" }
   - { product: LiteLLM Enterprise (private registry), version: not affected, status: Per LiteLLM }
 timeline:
-  - date: Oct 13, 2026
-    title: Lookalike domain litellm.dev registered
-    body: Per JFrog's WHOIS data.
-  - date: Oct 21, 2026, 08:56–10:46 UTC
-    title: Payload committed to the lookalike repo Berri-AI/litellm
-    body: Wiz counts 10 commits; the first three add cook.pth, cook.py and sitecustomize.py.
-  - date: Oct 21, 2026, 10:08 UTC
-    title: Branch protection overridden on the private release workflow
-    body: An org-owner's stolen GitHub CLI token disables protection and points the workflow at the lookalike repo.
-  - date: Oct 21, 2026, 11:11 UTC
-    title: A second stolen credential approves the production release
-  - date: Oct 21, 2026, 11:39–11:40 UTC
-    title: Seven malicious litellm 1.107.0 wheels uploaded to PyPI
-    body: Socket's scanner flags them about seven minutes later.
-  - date: Oct 21, 2026, 11:46 UTC
-    title: Malicious images published to GHCR and Docker Hub
-    body: v1.107.0, latest, main-latest and main-stable all point at the same bad image index.
-  - date: Oct 21, 2026, 11:53 UTC
-    title: A third stolen credential deletes the workflow run records
-  - date: Oct 21, 2026, ~13:20 UTC
-    title: PyPI removes 1.107.0
-    body: Wiz and Datadog say 13:20; LiteLLM's report says 13:23.
-  - date: Oct 21, 2026, 13:51–14:20 UTC
-    title: Docker tags pulled or repointed to clean images
-    body: GHCR first, Docker Hub by 14:20 per LiteLLM. Wiz and Datadog put removal at ~13:53.
-  - date: Oct 21, 2026, ~16:20–17:01 UTC
-    title: Stolen AWS instance-role credentials used from attacker IPs
-    body: Observed by Wiz in customer environments, about 4.5 hours after exfiltration.
+- date: May 27, 2026
+  title: Agent Platform master key exposed in a public commit
+  body: The commit was replaced, but the key was not revoked.
+- date: Oct 10, 2026
+  title: Agent Platform API returns the GitHub owner token
+  body: Repository CI then leaks two additional maintainer tokens.
+- date: Oct 12, 2026
+  title: More repository secrets exfiltrated through CI
+- date: Oct 13, 2026
+  title: Lookalike domain litellm.dev registered
+  body: Per JFrog's WHOIS data.
+- date: Oct 21, 2026, 08:56–10:46 UTC
+  title: Payload committed to the lookalike repo Berri-AI/litellm
+  body: Wiz counts 10 commits; the first three add cook.pth, cook.py and sitecustomize.py.
+- date: Oct 21, 2026, 10:08 UTC
+  title: Branch protection overridden on the private release workflow
+  body: An org-owner's stolen GitHub CLI token disables protection and points the workflow at the lookalike repo.
+- date: Oct 21, 2026, 11:11 UTC
+  title: A second stolen credential approves the production release
+- date: Oct 21, 2026, 11:39–11:40 UTC
+  title: Seven malicious litellm 1.107.0 wheels uploaded to PyPI
+  body: Socket's scanner flags them about seven minutes later.
+- date: Oct 21, 2026, 11:46 UTC
+  title: Malicious images published to GHCR and Docker Hub
+  body: v1.107.0, latest, main-latest and main-stable all point at the same bad image index.
+- date: Oct 21, 2026, 11:53 UTC
+  title: A third stolen credential deletes the workflow run records
+- date: Oct 21, 2026, 13:51–14:20 UTC
+  title: Docker tags pulled or repointed to clean images
+  body: GHCR first, Docker Hub by 14:20 per LiteLLM. Wiz and Datadog put removal at ~13:53.
+- date: Oct 22, 2026
+  title: GitHub malware tracker includes 1.107.0
+  body: GHSA-92x9-889m-jgmw also covers the older March versions; that does not establish common attribution.
+- date: Oct 23, 2026
+  title: LiteLLM publishes its canonical attack-chain findings
+  body: The vendor replaces the earlier internal-deployment-log theory with a confirmed exposed-key and Agent Platform API path.
+- date: Oct 21, 2026, ~13:20 UTC
+  title: PyPI removes 1.107.0
+  body: Wiz and Datadog say 13:20; LiteLLM's report says 13:23.
+- date: Oct 21, 2026, ~16:20–17:01 UTC
+  title: Stolen AWS instance-role credentials used from attacker IPs
+  body: Observed by Wiz in customer environments, about 4.5 hours after exfiltration.
 checklist:
   - title: Find every 1.107.0 install
     hint: "requirements, uv.lock, poetry.lock, Pipfile.lock, CI caches, wheelhouses, and any container started from latest/main-* on Oct 21. Grep for litellm-1.107.0.dist-info"
@@ -64,10 +83,12 @@ checklist:
     hint: CloudTrail GetCallerIdentity from your instance role near install time, and any use from 168.100.8.57 or 165.227.201.8
   - title: Pin to 1.106.2 by hash and stop using floating tags
     hint: Hash-pinned lockfiles and image digests would have made this a non-event. The proxy was supposed to be the only middleman
+  - title: Audit the confirmed upstream credential path
+    hint: 'Review Agent Platform API and GitHub audit records from October 10. 15 investigation artifacts: 69.48.229.143, 199.91.221.39, webhook.site, Berri-AI/litellm, ci-tmp-a351cc, ci-tmp-be33e9 and commits 20535d8f, 9cf97e9, 285fbdc5, b69bc36, 78d968b, 1a6e3c1, d687b69. Check opencode.json history and /api/v1/managed_agents/agents?limit=100 access; compare the full canonical timeline. Revoke exposed keys even after history is rewritten. A match alone does not prove compromise; webhook.site is a legitimate shared service'
 sources:
   - name: LiteLLM incident report
     url: https://docs.litellm.ai/blog/security-incident-oct-21-2026
-    says: Three engineers' GitHub CLI OAuth tokens used to bypass branch protection, approve and publish from Berri-AI/litellm; initial access suspected via an internet-exposed internal deployment (unconfirmed); 1.106.2 safe; enterprise unaffected
+    says: Early initial-access theory superseded by the October 23 canonical report; affected artifacts, 1.106.2 recovery pin and enterprise exclusion remain unchanged
     primary: true
   - name: GitHub issue BerriAI/litellm#47826
     url: https://github.com/BerriAI/litellm/issues/47826
@@ -85,6 +106,14 @@ sources:
   - name: Datadog Security Labs
     url: https://securitylabs.datadoghq.com/articles/litellm-compromised-pypi-docker/
     says: Live roughly two hours; no second-stage payload observed in the wild
+  - name: LiteLLM canonical attack-chain report
+    url: https://docs.litellm.ai/blog/security-incident-oct-21-2026-attack-chain
+    says: Confirmed master-key exposure and owner-token access on October 10; supersedes the earlier initial-access theory
+    primary: true
+  - name: GitHub malware advisory
+    url: https://github.com/advisories/GHSA-92x9-889m-jgmw
+    says: October 22 update includes 1.107.0; GHSA-5mg7-485q-xm76 still covers only the March versions
+    primary: true
 ---
 
 LiteLLM is the Python SDK and proxy that sits between apps and dozens of LLM providers, so it tends to run with
@@ -100,9 +129,7 @@ held GitHub CLI OAuth tokens belonging to three engineers. One belonged to an or
 override branch protection on the private release workflow and point it at `Berri-AI/litellm`, a lookalike repo
 one hyphen away from the real `BerriAI/litellm`. A second token passed the production approval gate, and a third
 deleted the workflow run records afterwards. The real `v1.107.0` git tag is clean. The artifacts were built
-from the attacker's copy and signed by the real pipeline. LiteLLM suspects the tokens leaked through an
-internet-exposed internal deployment, possibly via a recently patched bug, but **has not confirmed** the initial
-access.
+from the attacker's copy and signed by the real pipeline. **Correction, October 24:** LiteLLM's October 23 canonical report supersedes its earlier theory that tokens leaked through an internal deployment's logs. An unrevoked Agent Platform master key exposed in May let the attacker retrieve the owner token through that service's API on October 10; malicious CI workflows then extracted two maintainer tokens.
 
 ### What the payload does
 
@@ -141,7 +168,7 @@ no core runtime or trust anchor broke.
 - **Exact windows.** LiteLLM says PyPI removal at 13:23 and Docker Hub cleaned by 14:20 UTC; Wiz and Datadog say
   13:20 and ~13:53; the GitHub issue reported Docker tags still bad at 13:23 and yanked by 17:13. If you pulled a
   floating tag anywhere in that afternoon, check the digest.
-- **Initial access** to the engineers' tokens is suspected, not confirmed.
-- **No GHSA or CVE** has been issued yet. Wiz tracks it as `wiz-adv-2026-188`, JFrog as `XRAY-955589`.
+- **Initial access is now confirmed by the vendor:** exposed master key → Agent Platform API → GitHub owner token → CI secret exfiltration. This revises the earlier unconfirmed theory.
+- **Tracker correction:** GHSA-92x9-889m-jgmw now includes 1.107.0. Its older publication date and March entries do not establish a relationship between the attacks. Wiz and JFrog also track this incident as `wiz-adv-2026-188` and `XRAY-955589`.
 - LiteLLM mentions an embargoed enterprise fix due for disclosure on October 27; it is not clear whether it is
   related.
