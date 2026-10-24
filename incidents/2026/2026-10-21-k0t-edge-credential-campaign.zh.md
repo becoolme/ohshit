@@ -20,7 +20,7 @@ checklist:
 - title: 排查边缘设备访问及凭据泄露
   hint: 检查意外出现的管理员、配置导出、可信主机变更和异常 VPN 登录；控制入侵后轮换设备及目录密钥
 - title: 排查攻击基础设施及持久化
-  hint: 报告列出 15 行网络指标和 21 个文件哈希，正文另有 alknene.shop。网络主机及端点：mesh.buttruyen.com, 62.60.131.43, Meshcentral.girydsfsggvb.com, 62.60.135.64, agent.afahimsa.top, 193.149.187.81:1287, 64.94.85.14, 168.100.11.99, 162.33.178.213:8888, sthyjk.com:8443, alknene.shop, 162.33.179.249, 193.24.123.162, 193.149.176.50, radesashar.com, 193.169.194.21。完整哈希、URL、/meshagents 查询及 clear-thinking_61.92.4_INSTALL.exe 路径见其完整 IoC 表格。关联未经授权的 RMM、AdaptixC2 和 Rclone 活动；仅命中指标不能证明入侵
+  hint: 报告列出 15 行网络指标和 21 个文件哈希，正文另有 alknene.shop。网络主机及端点：mesh.buttruyen.com, 62.60.131.43, Meshcentral.girydsfsggvb.com, 62.60.135.64, https://agent.afahimsa.top/meshagents?id=4&meshid=DSZSDHzU1YSP83eNnHzSUfPPt5MFUC3UadztK7UJWbWttVfTo$auq8StiVu0p6ND&installflags=0, http://193.149.187.81:1287/1.exe, 64.94.85.14, 168.100.11.99, http://162.33.178.213:8888/clear-thinking_61.92.4_INSTALL.exe, https://sthyjk.com:8443/clear-thinking_61.92.4_INSTALL.exe, alknene.shop, 162.33.179.249, 193.24.123.162, 193.149.176.50, radesashar.com, 193.169.194.21。完整哈希、URL、/meshagents 查询及 clear-thinking_61.92.4_INSTALL.exe 路径见其完整 IoC 表格。关联未经授权的 RMM、AdaptixC2 和 Rclone 活动；仅命中指标不能证明入侵
 sources:
 - name: Group-IB 和 NyxLab 联合调查
   says: 观察到漏洞利用、不同的凭据数据集、持久化、数据外传，并提供防御指标
