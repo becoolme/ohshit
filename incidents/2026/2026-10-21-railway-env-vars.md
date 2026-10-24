@@ -3,14 +3,14 @@ title: "Railway says an intruder reached the store holding customer environment 
 headline: "Railway: your .env went for a ride without you"
 level: 4
 date: 2026-10-21
+updated: 2026-10-24
 tags: [PaaS, secrets, credentials, supply chain]
 ecosystems: [railway]
 summary: >-
-  Railway detected unusual activity in the systems that store customer environment variables. An unauthorized
-  party may have read encrypted variables and, for some, the decrypted values. Railway paused all deploys,
-  reset bucket and GitHub credentials, and tells every user to rotate every secret.
-splash: "Every Railway user with secrets in environment variables; Railway says a subset was hit but won't say who yet"
-wipe: "Rotate and revoke every secret stored in Railway variables, check provider logs since Oct 21, redeploy once builds return"
+  Railway's preliminary report says variables were potentially compromised in at most 1.85% of workspaces (about 100,000).
+  Precautionary provider resets affected more users. Builds are restored; rotate stored secrets and recreate revoked deployment credentials.
+splash: "Secrets stored before Oct 21; vendor upper bound is 1.85% of workspaces (~100,000), with broader precautionary resets"
+wipe: "Rotate/revoke stored secrets, audit logs from Oct 20, recreate deploy tokens, reconnect GitHub and redeploy"
 inTheWild: "n/a"
 inTheWildNote: An intrusion, not a bug; no misuse of stolen secrets confirmed publicly yet
 oneLiner: >-
@@ -18,14 +18,14 @@ oneLiner: >-
   the room with the box, and for some customers they got it open.
 cves: []
 timeline:
+  - date: Oct 20, 13:58 UTC
+    title: Preliminary report dates the first abnormal activity
+    body: This revises the initial notice's October 21 discovery account.
   - date: Oct 21, 07:24 UTC
     title: Railway starts investigating a platform outage
     body: >-
       Dashboard, API and CLI go down and builds are paused in all regions. The status page later folds the
-      security notice into this same incident; Railway has not said how the two are connected.
-  - date: Oct 21, 2026 (morning)
-    title: Anomalous activity detected in the env-var storage systems
-    body: Railway's notice says it detected the activity "earlier this morning". No start time for the intrusion has been published.
+      security notice into this same incident. The preliminary report now links build pauses to security triage.
   - date: Oct 21, 20:19 UTC
     title: OAuth sessions invalidated
     body: Railway cites impact on "adjacent cache systems"; users are signed out.
@@ -40,6 +40,12 @@ timeline:
   - date: Oct 22, 03:32 UTC
     title: Builds return for Enterprise workspaces
     body: Pro, Hobby, then Free and Trial follow in stages.
+  - date: Oct 22, 2026
+    title: Railway publishes preliminary scope and containment findings
+    body: At most 1.85% of workspaces, about 100,000, potentially affected; attacker access ended by 03:32 UTC. The report says all plan tiers resumed builds by 22:49 UTC.
+  - date: Oct 23, 2026
+    title: Login and deployment recovery guides published
+    body: Missed commits were not queued; revoked CLI and CI credentials must be replaced before retrying deployments.
 checklist:
   - title: Rotate every secret stored in Railway variables, starting with the expensive ones
     hint: AI provider keys, cloud (AWS/GCP) keys, Stripe, DB passwords, OAuth client secrets, webhook signing secrets. If it's in Variables, assume it's gone
@@ -49,10 +55,10 @@ checklist:
     hint: Railway has guides for PostgreSQL, MySQL, MongoDB and Redis; update every service that references them
   - title: Revoke GitHub tokens you stored as registry credentials
     hint: Railway removed them from its side, but they keep working on GitHub until you revoke them yourself
-  - title: Check provider audit logs and billing since Oct 21 (earlier if you can)
+  - title: Check provider audit logs and billing from Oct 20 or earlier
     hint: Unknown IPs in AWS CloudTrail / GCP audit logs, new GitHub tokens or deploy keys, odd Stripe API calls, surprise AI token bills
-  - title: Reconnect GitHub and redeploy once builds are back for your plan
-    hint: Containers only read variables at startup, so new secrets and the reset bucket keys do nothing until you redeploy
+  - title: Reconnect GitHub, replace deploy credentials and redeploy
+    hint: "Builds are accepted again. Missed commits were not queued: trigger Deploy Latest Commit. Reconnect the GitHub app, run railway logout then railway login, and replace revoked RAILWAY_TOKEN / RAILWAY_API_TOKEN CI secrets. Redeploy to load rotated variables and bucket keys"
   - title: Review your Railway account and deploy history
     hint: Audit log for changes you didn't make (Railway's own resets show as "Railway Staff"), unknown members, tokens or deploys
   - title: Watch your inbox for a Railway email
@@ -76,26 +82,36 @@ sources:
     primary: true
   - name: Cybersecurity News
     url: https://cybersecuritynews.com/railway-security-incident/amp/
-    says: No affected-account count, attacker or access method disclosed; no confirmed misuse
+    says: Early coverage had no affected-account count or access details; scope later revised by the vendor; no confirmed misuse
   - name: StartupHub.ai
     url: https://www.startuphub.ai/cybersecurity/railway-tells-all-users-to-rotate-secrets-after-breach
-    says: Notes Railway hasn't said how encrypted values became readable or which providers it notified
+    says: Early gaps in decryption mechanics and notified providers, partially superseded by the preliminary report
+  - name: Railway preliminary incident report
+    url: https://blog.railway.com/p/preliminary-report-october-security-incident
+    says: October 22 preliminary scope, attack timeline, containment and restored build tiers
+    primary: true
+  - name: Railway deployment recovery guide
+    url: https://blog.railway.com/p/security-disclosure-recommendation-recover-failing-deploys
+    says: Missed commits were not queued; reconnect GitHub and replace revoked CLI / CI credentials
+    primary: true
+  - name: Railway account recovery guide
+    url: https://blog.railway.com/p/security-disclosure-recommendation-recover-account-access
+    says: Log in with the original account identity; an empty dashboard can indicate a different account
+    primary: true
 ---
 
-Railway, a popular platform-as-a-service, says that on the morning of **October 21, 2026** it detected
-unusual activity in the systems that store customer **environment variables**. Its investigation so far
-says an unauthorized party may have accessed the encrypted variables and, **for some of them, obtained the
+Railway, a popular platform-as-a-service, initially said that on the morning of **October 21, 2026** it detected
+unusual activity in the systems that store customer **environment variables**. That initial notice said an unauthorized party may have accessed the encrypted variables and, **for some of them, obtained the
 decrypted contents**. On Railway, environment variables are where apps keep their API keys, database
 passwords and registry credentials, so this is effectively a secrets store.
 
 Railway believes the intrusion is part of a recent series of attacks on platform companies whose goal is to
 get at **AI inference providers**. It says it has asked those upstream providers to revoke keys proactively.
-It has not named them, but its own follow-up guides cover OpenAI, Anthropic, Grok and OpenRouter usage
-checks.
+The initial notice did not name them; its preliminary report identifies GitHub, GitLab, Anthropic, OpenAI, OpenRouter, SpaceXSI and Stripe among notified providers. Its usage-check guides also cover Grok.
 
 ## What Railway did on its side
 
-- **Paused all builds and deployments**, Enterprise included, from the morning of Oct 21. Builds came back
+- **Paused new builds and deployments** during triage, including earlier October 20 interruptions. Builds came back
   for Enterprise around 03:30 UTC on Oct 22, with other plans following in stages.
 - **Invalidated OAuth sessions** (users get logged out).
 - **Reset every storage bucket's S3 credentials** and the **GitHub tokens** Railway held for account
@@ -116,13 +132,10 @@ system. That is L4. It would move up if large-scale abuse of the stolen keys wer
 
 ## What's still unclear
 
-- **How** the attacker got in (stolen employee or service credential, vendor, bug) and when the intrusion
-  actually started. Railway has only said when it detected it.
-- **How many** customers or variables were affected, and which ones were decrypted. Railway will email
-  confirmed accounts, but has given no number.
-- **How** encrypted values became readable, and therefore whether rotating secrets alone closes the path
-  the attacker used.
-- Whether the outage that started at 07:24 UTC was caused by the attack or by the response. Railway's
-  status page tracks both under one incident but doesn't say.
+- Initial entry and exact exploit details remain undisclosed. The preliminary report describes privilege escalation and compromised CI credentials.
+- Exactly which variables were decrypted remains unknown; the workspace upper bound does not answer that. Broad provider revocations do not establish compromise of every reset credential.
+- Railway says individual user accounts were not accessed; source-code access is still not ruled out.
 - **Misuse.** No public report yet confirms that a stolen Railway secret was used. Absence of reports is
   not evidence of absence: check your own provider logs.
+
+**Correction, October 24:** Railway's October 22 preliminary report supersedes the earlier unknown-scope account: at most 1.85% of workspaces (about 100,000) potentially had variables compromised. This is an upper bound, not a confirmed-victim total. It dates the attack window to October 20, 13:58 UTC through October 22, 03:32 UTC, and says existing workloads stayed online. All plan tiers accept builds again. The October 23 guides explain how to catch up missed deployments and replace revoked access; use the original login identity if projects appear missing.
