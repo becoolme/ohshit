@@ -63,15 +63,15 @@ checklist:
   - title: 找出所有装了 1.107.0 的地方
     hint: "requirements、uv.lock、poetry.lock、Pipfile.lock、CI 缓存、wheelhouse，以及 10月21日用 latest/main-* 启动的所有容器。grep 一下 litellm-1.107.0.dist-info"
   - title: 按 digest 而不是标签检查镜像
-    hint: 恶意索引是 sha256:1bbcb1443bc9…c339e（litellm）；litellm-database 和 litellm-non_root 各有各的恶意 digest。现在标签看着已经没问题了
+    hint: 恶意索引是 sha256:1bbcb1443bc962e45f5aad53fe3d2c30600e0379715fb6c664cdd3ac126c339e（litellm）；litellm-database 和 litellm-non_root 各有各的恶意 digest。厂商对另两个索引仅公布前缀 c00f9d92c427 和 7b00e91cd2fe，应作为搜索前缀，不能当完整摘要。标签已移动，应检查原始拉取记录
   - title: 别想着 pip install 一下就完事
     hint: .pth 在每次 Python 启动时都会执行，pip 也不例外。先隔离主机，杀掉持有 /tmp/remote_code_loader.lock 的守护进程，再从零重建
   - title: 轮换进程能读到的每一个密钥
     hint: LiteLLM 数据库里的所有供应商密钥、master key 和虚拟密钥、DATABASE_URL 里的密码、实例 / 任务的 IAM 角色、环境变量、SSH/git/npm/PyPI/kube 凭据。对，全部
   - title: 排查 IOC
-    hint: "访问 litellm[.]dev、raw.githubusercontent.com/letters9813/… 的出站流量；文件 cook.pth、cook.py、sitecustomize.py、/tmp/.pc_once_72129118c59f5636c0bb；环境变量 PRIVCOLLECT_ACTIVE=1"
+    hint: "Socket 可导出 32 项 IoC；软件包、载荷和容器哈希见其完整指标表。网络路径：http://www.litellm.dev/healthcheck、https://raw.githubusercontent.com/letters9813/pythonclient-test/main/domain.txt 和 https://github.com/Berri-AI/litellm；关联后续 /codepy 请求及 X-Token 请求头 XWiA8gZNa7NcX2XRoAEb。文件：cook.pth、cook.py、sitecustomize.py、/tmp/.pc_once_72129118c59f5636c0bb、/tmp/remote_code_loader.lock；环境变量 PRIVCOLLECT_ACTIVE=1。仅命中指标不能证明入侵；GitHub 和 Python 启动文件名也有合法用途"
   - title: 检查云审计日志
-    hint: 安装时间前后，你的实例角色在 CloudTrail 里有没有 GetCallerIdentity 调用，以及来自 168.100.8.57 或 165.227.201.8 的任何操作
+    hint: 安装时间前后，你的实例角色在 CloudTrail 里有没有 GetCallerIdentity 调用，以及来自 168.100.8.57 或 165.227.201.8 的任何操作；关联角色、时间及行为，单独 IP 命中不能证明入侵
   - title: 按哈希锁定 1.106.2，别再用浮动标签
     hint: 如果用了按哈希锁定的锁文件和镜像 digest，这事根本不会找上你。说好的中间人只有代理一个，结果又冒出来一个
   - title: 审计已确认的上游凭据泄露路径
