@@ -32,4 +32,6 @@ sources:
 
 这份公告独立于 10月21日已修复的两个 [PHP2Shell 漏洞](/zh/incidents/php2shell/)。PHP 认为所需配置在实践中很罕见，因此按较窄的暴露范围评为 L3。
 
+此路径需要同时满足：会话上传进度开启，配置中的 `session.serialize_handler` 为 `php_binary` 或 `php_serialize`，应用又在 `session_start()` 前通过 `ini_set()` 将其切换为 `php`。
+
 从不在运行时修改会话序列化处理器的应用，可以继续开启上传进度。完整的受影响版本范围、严重性评分和首个修复版本尚未公布。此前的 PHP2Shell 版本检查不能证明不受此问题影响。
