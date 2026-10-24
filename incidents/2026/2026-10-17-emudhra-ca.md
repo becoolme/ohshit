@@ -9,7 +9,7 @@ ecosystems: [go, python, node, browsers]
 summary: >-
   Eight intermediate certificates (six TLS, two code signing) under emSign ECC Root CA - G3, cross-signed by
   Sectigo, had P-384 private keys that were integers below 256. Anyone could recover them instantly and mint
-  certificates for any domain. Dart, Flutter and Firestore clients also need updates.
+  certificates for any domain. Affected Dart, Flutter and Firestore client builds need updates.
 splash: "Clients trusting emSign ECC G3 / Sectigo cross-signs; network-path attackers can target unpatched runtimes and embedded SDKs"
 wipe: "Update browsers, OSes and trust stores (certifi 2026.10.19, Go 1.27.3 / 1.26.10, Node 22.23.4+); replace certs under emSign ECC G3 before ~Oct 27"
 inTheWild: "no"
@@ -32,7 +32,7 @@ cves:
     description: uv before 0.13.4 trusts the affected root by default; system or custom stores require separate verification.
   - id: GHSA-frr6-h895-5pxp
     name: Dart and Flutter trust compromised intermediates
-    description: Network-path attackers can intercept dart:io HTTPS on Android, Windows and Linux with unpatched CA bundles; rebuild with patched SDKs.
+    description: Network-path attackers can intercept dart:io HTTPS on Android and Windows, plus Linux retaining affected roots; rebuild with patched SDKs.
 fixed:
   - { product: Go, version: 1.27.3 / 1.26.10, status: "CVE-2026-111943. Go 1.25 and older get no fix" }
   - { product: Python certifi, version: 2026.10.19 }
@@ -48,7 +48,7 @@ fixed:
   - { product: Dart SDK stable / beta, version: 3.13.7 / 3.14.0-315.3.beta, status: Rebuild and redistribute affected applications }
   - { product: Flutter SDK stable / beta, version: 3.47.8 / 3.50.0-0.2.pre, status: Rebuild with patched Dart SDK }
   - { product: FirebaseFirestore for Apple, version: 13.1.1 / 12.19.3, status: CocoaPods uses 12.19.3; republish apps }
-  - { product: FlutterFire cloud_firestore, version: 7.1.0 / 6.10.1 (Apple) / 6.10.2 (Windows), status: Rebuild and republish apps }
+  - { product: FlutterFire cloud_firestore (Apple / Windows), version: 7.1.0 / 6.10.1 (Apple) / 6.10.2 (Windows), status: Rebuild and republish apps }
   - { product: Firebase Unity SDK, version: 14.1.0 / 13.17.1, status: Firestore on Apple and desktop; rebuild and republish }
   - { product: Firebase C++ SDK, version: 14.1.0 / 13.13.1, status: Firestore on Apple and desktop; rebuild and republish }
   - { product: Firebase App Distribution Gradle plugin, version: 5.3.1, status: Refresh CI dependencies; app republication not required }
@@ -214,11 +214,10 @@ still carry the old bundle.
 
 **Update, October 23:** Earlier guidance omitted package managers that bundle their own roots. Update pip separately in every environment, even after updating system certificates or standalone certifi. Use the hash-pinned bootstrap in the Python security announcement. pip 26.2.2 requires Python 3.10 or newer; older interpreters need a compatible remediation plan, not an assumption that their CA bundle is safe. The additional minimums above come from Python and tool maintainers; they do not replace the runtime updates or October 27 certificate-migration deadline. For conda, update CA packages outside the base environment too. Mamba rebuilds may retain the same version, so inspect package builds as well.
 
-
 ### Application bundles and Java mitigation gaps
 
 **Update, October 24:** The [Dart advisory](https://github.com/dart-lang/sdk/security/advisories/GHSA-frr6-h895-5pxp) covers network-path interception of `dart:io` HTTPS on Android and Windows, plus Linux environments retaining affected roots. Its exclusion of web and Apple verification does not exempt separately bundled Firestore TLS libraries.
 
-[Firebase](https://firebase.google.com/support/guides/compromised-emudhra-intermediate-ca) identifies affected Firestore clients on Apple and desktop platforms. Ship rebuilt apps and have users install them. Cloud Firestore and App Distribution backends were unaffected.
+[Firebase](https://firebase.google.com/support/guides/compromised-emudhra-intermediate-ca) lists Firestore fixes for native Apple apps, FlutterFire on iOS/macOS/Windows, and Unity or C++ on iOS/Linux/macOS/Windows. These client SDK scopes differ from the Dart advisory above. Ship rebuilt apps and have users install them. Cloud Firestore and App Distribution backends were unaffected.
 
 [Sonatype](https://www.sonatype.com/blog/the-limits-of-fingerprint-blocklists-a-reproducible-java-certificate-bypass) found that alternate encodings of ECDSA- and RSA-signed intermediates escaped Java fingerprint blocks in its tests. Removing relevant roots blocked both chains, with potential disruption to legitimate connections. Verify each deployed runtime and trust store with vendor guidance; this is a laboratory mitigation bypass, not evidence of attacks or a universal claim about every JDK.
