@@ -3,14 +3,14 @@ title: "eMudhra CA intermediate private keys were so weak that every one was a n
 headline: "eMudhra: eight CA keys you could guess on a pocket calculator"
 level: 4
 date: 2026-10-17
-updated: 2026-10-23
+updated: 2026-10-24
 tags: [PKI, CA, TLS]
 ecosystems: [go, python, node, browsers]
 summary: >-
   Eight intermediate certificates (six TLS, two code signing) under emSign ECC Root CA - G3, cross-signed by
   Sectigo, had P-384 private keys that were integers below 256. Anyone could recover them instantly and mint
-  certificates for any domain.
-splash: "Anything trusting emSign ECC Root CA - G3 or the Sectigo cross-signs: browsers, OSes, Go, Python, Node"
+  certificates for any domain. Dart, Flutter and Firestore clients also need updates.
+splash: "Clients trusting emSign ECC G3 / Sectigo cross-signs; network-path attackers can target unpatched runtimes and embedded SDKs"
 wipe: "Update browsers, OSes and trust stores (certifi 2026.10.19, Go 1.27.3 / 1.26.10, Node 22.23.4+); replace certs under emSign ECC G3 before ~Oct 27"
 inTheWild: "no"
 inTheWildNote: No end-entity certs found in CT logs; blocked within hours
@@ -30,18 +30,28 @@ cves:
   - id: GHSA-hq85-5cpj-mr62
     name: uv bundled root removal
     description: uv before 0.13.4 trusts the affected root by default; system or custom stores require separate verification.
+  - id: GHSA-frr6-h895-5pxp
+    name: Dart and Flutter trust compromised intermediates
+    description: Network-path attackers can intercept dart:io HTTPS on Android, Windows and Linux with unpatched CA bundles; rebuild with patched SDKs.
 fixed:
   - { product: Go, version: 1.27.3 / 1.26.10, status: "CVE-2026-111943. Go 1.25 and older get no fix" }
   - { product: Python certifi, version: 2026.10.19 }
   - { product: Node.js, version: 22.23.4 / 24.22.1 / 26.12.1, status: Ships NSS 3.131.1 CA bundle }
   - { product: Mozilla NSS, version: 3.131.1, status: Root removed Oct 20 }
   - { product: Cloudflare WARP / 1.1.1.1 / cloudflared, version: 2026.10.2 }
-  - { product: Java (cacerts), version: unknown, status: Not covered by sources we reviewed. Check your vendor }
+  - { product: Java (cacerts), version: unknown, status: No universal fixed version verified; Sonatype reproduced fingerprint-blocklist bypasses in tested configurations }
   - { product: pip, version: 26.2.2, status: Requires Python 3.10+; update pip separately in each environment }
   - { product: uv, version: 0.13.4, status: Refreshes bundled CA roots }
   - { product: sigstore-python, version: 4.5.1, status: Python security team’s recommended minimum }
   - { product: conda, version: 26.9.4, status: Also update CA packages in other environments }
   - { product: Pixi, version: 0.82.1, status: Updates bundled CA dependencies }
+  - { product: Dart SDK stable / beta, version: 3.13.7 / 3.14.0-315.3.beta, status: Rebuild and redistribute affected applications }
+  - { product: Flutter SDK stable / beta, version: 3.47.8 / 3.50.0-0.2.pre, status: Rebuild with patched Dart SDK }
+  - { product: FirebaseFirestore for Apple, version: 13.1.1 / 12.19.3, status: CocoaPods uses 12.19.3; republish apps }
+  - { product: FlutterFire cloud_firestore, version: 7.1.0 / 6.10.1 (Apple) / 6.10.2 (Windows), status: Rebuild and republish apps }
+  - { product: Firebase Unity SDK, version: 14.1.0 / 13.17.1, status: Firestore on Apple and desktop; rebuild and republish }
+  - { product: Firebase C++ SDK, version: 14.1.0 / 13.13.1, status: Firestore on Apple and desktop; rebuild and republish }
+  - { product: Firebase App Distribution Gradle plugin, version: 5.3.1, status: Refresh CI dependencies; app republication not required }
 timeline:
   - date: Apr 30, 2025
     title: The keys are generated, in a batch of 24 intermediates
@@ -65,9 +75,15 @@ timeline:
   - date: Oct 21, 2026
     title: Docker rebuilds Sandboxes templates with updated CA certificates
     body: Existing sandboxes must be recreated from fresh images; updating sbx alone is insufficient.
+  - date: Oct 21, 2026
+    title: Sonatype reports Java fingerprint-blocklist bypasses
+    body: Re-encoded intermediates passed tested configurations; removing the relevant roots rejected both tested chains.
   - date: Oct 22, 2026
     title: eMudhra announces withdrawal from global SSL/TLS issuance
     body: Partner replacements are free; revocation and status services continue until all issued certificates expire or are replaced. No exit date is given.
+  - date: Oct 23, 2026
+    title: Dart advisory and Firebase guidance identify application-level fixes
+    body: SDK updates require rebuilt and redistributed clients; the Gradle plugin needs only an update in build pipelines.
   - date: ~Oct 27, 2026
     title: Chrome Root Store v43 removes the emSign ECC Root CA - G3
 checklist:
@@ -81,8 +97,10 @@ checklist:
     hint: uv 0.13.4, sigstore-python 4.5.1, conda 26.9.4, Pixi 0.82.1; check CI tools and separately installed copies
   - title: Refresh conda and Mamba CA packages and rebuild images
     hint: Update certifi and ca-certificates in each relevant environment; update mamba/libmamba together and rebuild containers without layer caching
+  - title: Verify Java trust paths beyond fingerprint blocklists
+    hint: Follow vendor guidance for each deployed JDK and custom trust store. Sonatype bypassed blocked.certs with re-encoded intermediates in its tests. Test dependent services before removing relevant roots; monitor TLS failures and restart affected applications
   - title: Patch custom trust stores
-    hint: Java cacerts, internal CA bundles, appliances, distroless images
+    hint: Internal CA bundles, appliances and distroless images need separate updates; an OS update does not refresh every application bundle
   - title: Check code-signing trust
     hint: Two of the eight were code-signing CAs that Microsoft trusted
   - title: Replace any certificate of yours that chains to emSign ECC Root CA - G3
@@ -91,6 +109,10 @@ checklist:
     hint: Anything on your domains you didn't request is a red flag
   - title: Refresh Docker Sandboxes templates and recreate existing sandboxes
     hint: Save files and unpushed commits first; create with --pull always. Updating sbx alone does not refresh existing sandboxes
+  - title: Rebuild Dart and Flutter clients
+    hint: Use Dart 3.13.7 or Flutter 3.47.8 with patched Dart; beta minimums are 3.14.0-315.3.beta and 3.50.0-0.2.pre. Rebuild and distribute binaries. Android and Windows ignore OS intermediate blocklists; Linux exposure depends on its CA bundle
+  - title: Ship updated Firestore clients and refresh App Distribution CI
+    hint: Use the platform-specific SDK versions above. Rebuild, republish and prompt users to update Firestore apps; browser or OS fixes alone do not replace embedded bundles. Update the App Distribution Gradle plugin to 5.3.1+ and refresh CI dependencies; this plugin needs no app republication
 sources:
   - name: Mozilla Bugzilla 2083449
     url: https://bugzilla.mozilla.org/show_bug.cgi?id=2083449
@@ -150,6 +172,18 @@ sources:
     url: https://pypi.org/pypi/pip/26.2.2/json
     says: Requires Python 3.10 or newer
     primary: true
+  - name: Dart SDK security advisory
+    url: https://github.com/dart-lang/sdk/security/advisories/GHSA-frr6-h895-5pxp
+    says: October 23 advisory; Android and Windows ignore OS intermediate blocks; Linux depends on its CA bundle; stable and beta fixes listed
+    primary: true
+  - name: Firebase eMudhra remediation guide
+    url: https://firebase.google.com/support/guides/compromised-emudhra-intermediate-ca
+    says: Platform-specific SDK and Gradle plugin updates; installed apps need redistributed binaries; Firebase backends unaffected
+    primary: true
+  - name: Sonatype Java blocklist research
+    url: https://www.sonatype.com/blog/the-limits-of-fingerprint-blocklists-a-reproducible-java-certificate-bypass
+    says: Tested re-encodings bypassed exact-fingerprint blocks; root removal rejected both tested chains; results limited to tested configurations
+    primary: true
 ---
 
 A certificate authority's private key is the thing that makes "this is really your bank" true. For eight
@@ -179,3 +213,12 @@ still carry the old bundle.
 **Further update, October 22:** eMudhra’s board has decided to exit the global SSL/TLS certificate business. It promises free replacement certificates through partners and continued revocation/status services until every issued certificate expires or is replaced. The exit date and partners are unspecified. Its remaining RSA hierarchy is under Chrome review, so do not treat the vendor’s transition plan as a guarantee of future browser trust. Replace affected site certificates promptly; Chrome expects root removal on October 27 PDT.
 
 **Update, October 23:** Earlier guidance omitted package managers that bundle their own roots. Update pip separately in every environment, even after updating system certificates or standalone certifi. Use the hash-pinned bootstrap in the Python security announcement. pip 26.2.2 requires Python 3.10 or newer; older interpreters need a compatible remediation plan, not an assumption that their CA bundle is safe. The additional minimums above come from Python and tool maintainers; they do not replace the runtime updates or October 27 certificate-migration deadline. For conda, update CA packages outside the base environment too. Mamba rebuilds may retain the same version, so inspect package builds as well.
+
+
+### Application bundles and Java mitigation gaps
+
+**Update, October 24:** The [Dart advisory](https://github.com/dart-lang/sdk/security/advisories/GHSA-frr6-h895-5pxp) covers network-path interception of `dart:io` HTTPS on Android and Windows, plus Linux environments retaining affected roots. Its exclusion of web and Apple verification does not exempt separately bundled Firestore TLS libraries.
+
+[Firebase](https://firebase.google.com/support/guides/compromised-emudhra-intermediate-ca) identifies affected Firestore clients on Apple and desktop platforms. Ship rebuilt apps and have users install them. Cloud Firestore and App Distribution backends were unaffected.
+
+[Sonatype](https://www.sonatype.com/blog/the-limits-of-fingerprint-blocklists-a-reproducible-java-certificate-bypass) found that alternate encodings of ECDSA- and RSA-signed intermediates escaped Java fingerprint blocks in its tests. Removing relevant roots blocked both chains, with potential disruption to legitimate connections. Verify each deployed runtime and trust store with vendor guidance; this is a laboratory mitigation bypass, not evidence of attacks or a universal claim about every JDK.
