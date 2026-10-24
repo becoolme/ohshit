@@ -72,15 +72,15 @@ checklist:
   - title: Find every 1.107.0 install
     hint: "requirements, uv.lock, poetry.lock, Pipfile.lock, CI caches, wheelhouses, and any container started from latest/main-* on Oct 21. Grep for litellm-1.107.0.dist-info"
   - title: Check images by digest, not tag
-    hint: Bad index is sha256:1bbcb1443bc9…c339e (litellm); litellm-database and litellm-non_root had their own bad digests. The tag looks innocent now
+    hint: Bad index is sha256:1bbcb1443bc962e45f5aad53fe3d2c30600e0379715fb6c664cdd3ac126c339e (litellm); litellm-database and litellm-non_root had their own bad digests. The vendor publishes only prefixes c00f9d92c427 and 7b00e91cd2fe for those other indexes; treat them as search prefixes, not complete digests. Use original pull records because tags have moved
   - title: Don't pip install your way out
     hint: The .pth runs on every Python start, pip included. Isolate the host, kill the daemon holding /tmp/remote_code_loader.lock, then rebuild from scratch
   - title: Rotate every key the process could read
     hint: All provider keys in the LiteLLM DB, master and virtual keys, the DATABASE_URL password, instance/task IAM roles, env vars, SSH/git/npm/PyPI/kube creds. Yes, all of them
   - title: Hunt the IOCs
-    hint: "Egress to litellm[.]dev, raw.githubusercontent.com/letters9813/…; files cook.pth, cook.py, sitecustomize.py, /tmp/.pc_once_72129118c59f5636c0bb; env PRIVCOLLECT_ACTIVE=1"
+    hint: "Socket exports 32 IoCs; use its complete indicator tables for package, payload and container hashes. Network paths: http://www.litellm.dev/healthcheck, https://raw.githubusercontent.com/letters9813/pythonclient-test/main/domain.txt and https://github.com/Berri-AI/litellm; correlate subsequent /codepy requests and X-Token header XWiA8gZNa7NcX2XRoAEb. Files: cook.pth, cook.py, sitecustomize.py, /tmp/.pc_once_72129118c59f5636c0bb, /tmp/remote_code_loader.lock; env PRIVCOLLECT_ACTIVE=1. A match alone does not prove compromise; GitHub and Python startup filenames also have legitimate uses"
   - title: Check cloud audit logs
-    hint: CloudTrail GetCallerIdentity from your instance role near install time, and any use from 168.100.8.57 or 165.227.201.8
+    hint: CloudTrail GetCallerIdentity from your instance role near install time, and any use from 168.100.8.57 or 165.227.201.8; correlate role, timing and actions because an IP match alone does not prove compromise
   - title: Pin to 1.106.2 by hash and stop using floating tags
     hint: Hash-pinned lockfiles and image digests would have made this a non-event. The proxy was supposed to be the only middleman
   - title: Audit the confirmed upstream credential path
