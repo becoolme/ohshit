@@ -66,12 +66,15 @@ export function normalizeCve(raw: any): CveRecord {
 export function assertSnapshot(value: unknown): asserts value is CveSnapshot {
   const s = value as CveSnapshot;
   if (s?.schemaVersion !== 1 || !validDate(s.syncedAt) || !validDate(s.windowStart) || !validDate(s.kevUpdatedAt) || !Array.isArray(s.records) || !Array.isArray(s.kev)) throw new Error('Invalid CVE snapshot');
+  assertRecords(s.records);
+  if (!s.kev.every(id => /^CVE-\d{4}-\d{4,}$/.test(id))) throw new Error('Invalid KEV IDs');
+}
+export function assertRecords(records: unknown[]): asserts records is CveRecord[] {
   const ids = new Set<string>();
-  for (const r of s.records) {
+  for (const r of records as CveRecord[]) {
     if (!r || !/^CVE-\d{4}-\d{4,}$/.test(r.id) || ids.has(r.id) || !validDate(r.published) || !validDate(r.modified) || typeof r.description !== 'string' || typeof r.status !== 'string' || (r.score !== null && (typeof r.score !== 'number' || !Number.isFinite(r.score) || r.score < 0 || r.score > 10))) throw new Error('Invalid CVE record');
     for (const key of ['products', 'weaknesses', 'references'] as const) if (!Array.isArray(r[key]) || !r[key].every(x => typeof x === 'string')) throw new Error('Invalid CVE list');
     for (const key of ['cvssVersion', 'scoreSource', 'vector'] as const) if (r[key] !== null && typeof r[key] !== 'string') throw new Error('Invalid CVE metric');
     ids.add(r.id);
   }
-  if (!s.kev.every(id => /^CVE-\d{4}-\d{4,}$/.test(id))) throw new Error('Invalid KEV IDs');
 }

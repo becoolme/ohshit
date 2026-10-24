@@ -99,3 +99,17 @@ test('static assets contain complete versioned index chunks and matching detail 
     const oldFiles = await readdir(output); await buildCves(source, output); assert.deepEqual(await readdir(output), oldFiles);
   } finally { await rm(dir, { recursive: true, force: true }); }
 });
+test('sync archives aged-out CVE pages forever, keeps them updated and drops rejected ones', async () => {
+  const old = (id, extra) => normalizeCve(raw(id, { published: '2026-09-01T00:00:00.000', ...extra }));
+  const before = snapshot([normalizeCve(raw()), old('CVE-2026-10005'), old('CVE-2026-10006')]);
+  const archive = [old('CVE-2026-10007', { published: '2026-06-01T00:00:00.000' }), old('CVE-2026-10008', { published: '2026-06-01T00:00:00.000' })];
+  const fetcher = async url => url.includes('cisa.gov')
+    ? Response.json({ ...kev, vulnerabilities: [{ cveID: 'CVE-2026-10005' }] })
+    : Response.json({ startIndex: 0, totalResults: 2, vulnerabilities: [
+      { cve: raw('CVE-2026-10007', { published: '2026-06-01T00:00:00.000', descriptions: [{ lang: 'en', value: 'Rescored' }] }) },
+      { cve: raw('CVE-2026-10008', { published: '2026-06-01T00:00:00.000', vulnStatus: 'Rejected' }) }] });
+  const result = await syncCves({ previous: before, now, fetcher, sleep: async () => {}, archive: { records: archive, keep: (r, k) => k.has(r.id) } });
+  assert.deepEqual(result.records.map(r => r.id), ['CVE-2026-10000']);
+  assert.deepEqual(result.archived.map(r => r.id), ['CVE-2026-10005', 'CVE-2026-10007']);
+  assert.equal(result.archived[1].description, 'Rescored');
+});

@@ -1,7 +1,9 @@
-import { DAY, WINDOW_DAYS, normalizeCve, assertSnapshot, type CveSnapshot, type CveRecord } from './data.ts';
+import { DAY, WINDOW_DAYS, normalizeCve, assertSnapshot, assertRecords, type CveSnapshot, type CveRecord } from './data.ts';
 const NVD = 'https://services.nvd.nist.gov/rest/json/cves/2.0';
 const KEV = 'https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json';
-export interface SyncOptions { previous?: CveSnapshot; now?: Date; apiKey?: string; fetcher?: typeof fetch; sleep?: (ms: number) => Promise<void>; onProgress?: (loaded: number, total: number) => void; }
+/** CVEs whose static page outlives the window. Kept records still receive NVD updates; rejected ones are dropped. */
+export interface CveArchive { records: CveRecord[]; keep: (r: CveRecord, kev: Set<string>) => boolean }
+export interface SyncOptions { previous?: CveSnapshot; archive?: CveArchive; now?: Date; apiKey?: string; fetcher?: typeof fetch; sleep?: (ms: number) => Promise<void>; onProgress?: (loaded: number, total: number) => void; }
 export async function scanCves(options: Omit<SyncOptions, 'previous'> & { since?: string }, onPage: (records: CveRecord[]) => Promise<void>) {
   const { now = new Date(), apiKey, fetcher = fetch, sleep = ms => new Promise(resolve => setTimeout(resolve, ms)), onProgress, since } = options;
   const end = now.toISOString(), start = new Date(now.getTime() - WINDOW_DAYS * DAY).toISOString();
@@ -43,13 +45,25 @@ export async function scanCves(options: Omit<SyncOptions, 'previous'> & { since?
   return { syncedAt: end, windowStart: start, kev: kev.vulnerabilities.map((v: any) => v.cveID) as string[], kevUpdatedAt: new Date(kev.dateReleased).toISOString() };
 }
 // Build a complete replacement snapshot only after all source requests succeed.
-export async function syncCves({ previous, ...options }: SyncOptions = {}): Promise<CveSnapshot> {
+export async function syncCves(options?: SyncOptions & { archive?: undefined }): Promise<CveSnapshot>;
+export async function syncCves(options: SyncOptions & { archive: CveArchive }): Promise<CveSnapshot & { archived: CveRecord[] }>;
+export async function syncCves({ previous, archive, ...options }: SyncOptions = {}) {
   if (previous) assertSnapshot(previous);
+  if (archive) assertRecords(archive.records);
   const records = new Map((previous?.records ?? []).map(r => [r.id, r]));
+  const archived = new Map((archive?.records ?? []).map(r => [r.id, r]));
   const meta = await scanCves({ ...options, since: previous?.syncedAt }, async page => {
-    for (const r of page) if (r.status === 'Rejected') records.delete(r.id); else records.set(r.id, r);
+    for (const r of page) {
+      if (r.status === 'Rejected') { records.delete(r.id); archived.delete(r.id); }
+      else { records.set(r.id, r); if (archived.has(r.id)) archived.set(r.id, r); }
+    }
   });
-  const snapshot: CveSnapshot = { schemaVersion: 1, ...meta, records: [...records.values()].filter(r => r.published >= meta.windowStart && r.published <= meta.syncedAt).sort((a, b) => b.published.localeCompare(a.published) || a.id.localeCompare(b.id)) };
+  const order = (a: CveRecord, b: CveRecord) => b.published.localeCompare(a.published) || a.id.localeCompare(b.id);
+  const inWindow = (r: CveRecord) => r.published >= meta.windowStart && r.published <= meta.syncedAt;
+  const snapshot: CveSnapshot = { schemaVersion: 1, ...meta, records: [...records.values()].filter(inWindow).sort(order) };
   assertSnapshot(snapshot);
-  return snapshot;
+  if (!archive) return snapshot;
+  const kev = new Set(meta.kev);
+  for (const r of records.values()) if (r.published < meta.windowStart && archive.keep(r, kev)) archived.set(r.id, r);
+  return { ...snapshot, archived: [...archived.values()].sort(order) };
 }
