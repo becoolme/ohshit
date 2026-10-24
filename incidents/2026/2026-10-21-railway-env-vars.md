@@ -117,7 +117,7 @@ The initial notice did not name them; its preliminary report identifies GitHub, 
 - **Reset every storage bucket's S3 credentials** and the **GitHub tokens** Railway held for account
   connections, and removed GitHub tokens stored as registry credentials. These resets show in workspace
   audit logs under "Railway Staff".
-- Asked upstream (unnamed) providers to revoke keys.
+- Asked upstream providers to revoke keys; the initial notice left them unnamed, and the preliminary report now identifies several.
 
 Railway **can't rotate your third-party secrets for you**: the Stripe key, the OpenAI key and the
 database password in your variables are yours to roll. And because containers only read variables at
