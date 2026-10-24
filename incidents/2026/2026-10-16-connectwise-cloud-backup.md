@@ -1,6 +1,6 @@
 ---
 title: "ConnectWise Cloud Backup's app secret got stolen, and attackers walked into Microsoft 365 tenants through the front door"
-headline: "ConnectWise: steal one app secret, inherit 170 tenants"
+headline: "ConnectWise: one app secret opens too many tenant doors"
 level: 4
 date: 2026-10-16
 updated: 2026-10-24
@@ -10,7 +10,7 @@ summary: >-
   An API secret for ConnectWise's multi-tenant backup app (formerly SkyKick) was stolen. Every Microsoft 365
   tenant that had consented to the app was suddenly reachable with the permissions customers had granted it.
   ConnectWise suspended several cloud services.
-splash: "Microsoft 365 tenants using ConnectWise Cloud Backup or Cloud Management: 173 confirmed, ~1,000 touched"
+splash: "M365 tenants that authorized affected apps; Huntress saw ~1,000 sign-in targets and >300 successful sign-ins"
 wipe: "Disable affected app connections, preserve Entra evidence, inspect app credentials and roles; re-consent only on vendor instructions"
 inTheWild: "yes"
 inTheWildNote: Huntress confirmed post-compromise activity in 2 tenants
@@ -22,15 +22,21 @@ timeline:
     title: Password spraying from the attacker's IP
   - date: Oct 14, 2026
     title: ConnectWise discovers the issue
-  - date: Oct 15, 06:13–08:34 UTC
-    title: Mass Microsoft Graph token grabs
-    body: One abused Cloud Management app (“MS Teams”) gives itself Global Administrator in a tenant and adds secrets to other apps, including Huntress's.
+  - date: Oct 15, 03:44–03:48 UTC
+    title: Privilege changes and credential planting observed in one tenant
+    body: Huntress later confirms similar post-compromise activity in a second tenant; it does not establish that the earlier changes and later public-IP sign-ins had the same operator.
+  - date: Oct 15, 06:13–08:44 UTC
+    title: Huntress observes vendor-credential application sign-ins
+    body: The October 19 update extends the last observed successful sign-in to 08:44 UTC.
   - date: Oct 16, 2026
     title: Huntress and ConnectWise go public
-    body: 162 tenants confirmed by 19:00 UTC, later 173.
+    body: Huntress confirmed unauthorized sign-ins in 162 tenants by 19:00 UTC. THN later reported 173; that is not an independently verified total.
   - date: Oct 17, 07:00 UTC
     title: Seven app identities disabled; Cloud Backup suspended
     body: SaaS Security and Cloud Management are suspended as a precaution the next day.
+  - date: Oct 19, 2026
+    title: Huntress updates its telemetry and IP classifications
+    body: Two tenants had confirmed post-compromise changes; shared Azure addresses and failed password sprays require separate interpretation.
   - date: Oct 21, 2026
     title: Phased restoration begins
   - date: Oct 21, 2026
@@ -40,14 +46,16 @@ timeline:
     title: ConnectWise clarifies restoration is still being validated
     body: Backup-restore access is planned first, early the following week after successful validation; full service re-enrollment follows. Neither is confirmed available.
 checklist:
-  - title: Find the ConnectWise / SkyKick apps in Entra ID
-    hint: Inventory application IDs and service-principal Object IDs, including integrations no longer in use
+  - title: Identify and disable affected ConnectWise / SkyKick apps
+    hint: "In Entra Enterprise applications, preserve local service-principal Object IDs and disable affected connections; do not delete the apps. Huntress lists seven application IDs: 506e08f9-6e9a-4da4-942b-a099a03644ae, 2399d300-6fca-4e6a-a686-399fefe75b83, 24205314-2b89-4e07-a2a4-579e898a5640, b78f6a77-d4e5-46fb-87e5-d1648bd02519, 0de14c77-b9b0-4137-9360-34878a929827, 412dcf96-176d-4b3a-a1b0-4981ad66971e, b2b55f5b-7758-4719-8d8f-88ae172e6bdb. Map names using its full table; include integrations no longer in use. Presence alone does not prove abuse"
   - title: Review sign-in and audit logs, extending to Oct 1 where available
-    hint: Preserve evidence before deleting apps; review service-principal sign-ins from Oct 1 where available, beyond known IPs
+    hint: Preserve Entra sign-in/audit and available Graph records without delaying containment. Use the Service principal sign-ins tab, not User sign-ins; review from Oct 1 where available, beyond published IPs
   - title: Check for new Global Admins
-    hint: Role assignments made by service principals are the big tell
+    hint: Review Entra directory-role assignments by service principals; after preserving evidence and disabling the app, remove privileges you did not intentionally grant
   - title: Check every app for new secrets or certificates
-    hint: The attacker added credentials to other apps in the tenant
+    hint: Review Enterprise applications and App registrations for unexpected secrets or certificates added since Oct 13. Preserve evidence, then remove unauthorized credentials; disabling ConnectWise alone does not remove these footholds
+  - title: Correlate published indicators with application activity
+    hint: "Microsoft lists six IPs and five User-Agents: 144.172.64.128, 144.172.64.99, 144.172.64.60, 187.15.88.186, 187.15.90.217, 187.15.89.186; its full IoC table supplies all User-Agents. The three VPN IPs need October 15\u201316 context. Huntress additionally discusses 144.172.94.243 and shared Azure ULA fde4:8dba:2600:37ce:6d26:200:a76:*. Huntress observed only .128 for public-IP app sign-ins and classifies the other RouterHosting addresses as failed user logins/sprays, while Microsoft links .99 and .60 to its broader campaign. Correlate actor, app and operation; a match alone does not prove compromise, and the ULA is also legitimate traffic"
   - title: Re-consent only after ConnectWise restores service
     hint: Keep affected connections disabled until service-specific vendor instructions arrive. The October 23 notice plans backup-restore access before full re-enrollment, subject to testing; grant only the minimum permissions when instructed
 sources:
@@ -57,11 +65,11 @@ sources:
     primary: true
   - name: Huntress
     url: https://www.huntress.com/blog/vendor-credential-enables-unauthorized-access
-    says: ~1,000 tenants saw attacker activity, 300+ successful, 2 with confirmed post-compromise activity
+    says: ~1,000 sign-in targets, 300+ successful, two with post-compromise changes; seven application IDs and qualified IP/User-Agent evidence
     primary: true
   - name: The Hacker News
     url: https://thehackernews.com/2026/10/hackers-use-compromised-connectwise.html
-    says: 173 tenants confirmed; quotes Microsoft that Directory.ReadWrite.All was likely abused
+    says: Reports 173 affected tenants without an independently confirmed total; quotes likely Directory.ReadWrite.All abuse
   - name: SecurityWeek
     url: https://www.securityweek.com/connectwise-suspends-cloud-services-in-response-to-cyberattack/
     says: Service suspension timeline
@@ -76,12 +84,11 @@ Microsoft 365 that access belongs to the vendor's **multi-tenant app**. So the v
 master key to every customer who clicked "Accept".
 
 Here, an attacker got hold of an **API secret for ConnectWise's Cloud Backup app** (the former SkyKick
-product). They used it from the vendor's own home tenant to request Microsoft Graph tokens for customer
-tenants. Six ConnectWise Cloud Management apps were abused as well. One of them gave itself **Global
-Administrator** in a customer tenant and added secrets to other apps.
+product). The vendor-side credential was used to request Microsoft Graph tokens for consenting customer
+tenants. ConnectWise disabled six Cloud Management identities alongside Cloud Backup; that does not establish abuse of all seven. Huntress reports abuse of the Teams, Exchange Online and SharePoint Online apps. The Teams app granted itself **Global Administrator** and added credentials to other applications.
 
 Huntress saw activity in about 1,000 Entra tenants, more than 300 of them successful, and confirmed
-hands-on-keyboard activity in two. Whether data was stolen is unknown. Graph directory reads leave no audit
+post-compromise activity in two. THN’s earlier 173-tenant figure is unverified as a total and is not interchangeable with Huntress’s sign-in counts. Whether data was stolen is unknown. Graph directory reads leave no audit
 trail, so "no evidence" here does not mean "nothing happened".
 
 **Update, October 22:** Microsoft attributes the compromise to the China-aligned Storm-0940 actor and describes ARTEX-assisted targeting of more than 2,250 tenants. This is an attempted-access count, not a revised confirmed-victim total. Microsoft observed follow-on credential and role changes in some environments but says authentication alone does not prove data theft. Preserve evidence, disable affected connections, and inspect other application credentials for persistence before re-consenting. L4 remains appropriate.
