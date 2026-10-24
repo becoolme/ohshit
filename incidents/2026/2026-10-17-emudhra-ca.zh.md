@@ -2,7 +2,7 @@
 title: "eMudhra CA 中间证书私钥弱到离谱：每一个都是小于 256 的数"
 headline: "eMudhra：八个 CA 私钥，计算器按几下就猜出来了"
 summary: >-
-  emSign ECC Root CA - G3 下的八张中间证书（六张 TLS，两张代码签名）由 Sectigo 交叉签名，它们的 P-384 私钥都是小于 256 的整数。任何人都能瞬间还原出私钥，给任意域名签发证书。Dart、Flutter 和 Firestore 客户端也需要更新。
+  emSign ECC Root CA - G3 下的八张中间证书（六张 TLS，两张代码签名）由 Sectigo 交叉签名，它们的 P-384 私钥都是小于 256 的整数。任何人都能瞬间还原出私钥，给任意域名签发证书。受影响的 Dart、Flutter 和 Firestore 客户端构建需要更新。
 splash: "信任 emSign ECC G3 或 Sectigo 交叉签名的客户端；网络路径上的攻击者可针对未修补的运行时及内嵌 SDK"
 wipe: "更新浏览器、系统和信任库（certifi 2026.10.19、Go 1.27.3 / 1.26.10、Node 22.23.4+）；赶在 Chrome 约 10月27日移除根证书前，更换 emSign ECC G3 下的证书"
 inTheWildNote: CT 日志里没发现终端实体证书；几小时内就被拦截
@@ -18,7 +18,7 @@ cves:
   - name: uv 内置根证书移除
     description: 0.13.4 之前的 uv 默认信任受影响的根证书；系统或自定义证书库需要单独核验。
   - name: Dart 和 Flutter 信任被攻破的中间证书
-    description: 网络路径上的攻击者可拦截 Android、Windows，以及 CA 证书包未修补的 Linux 上的 dart:io HTTPS；须使用修补后的 SDK 重建。
+    description: 网络路径上的攻击者可拦截 Android、Windows，以及保留受影响根证书的 Linux 上的 dart:io HTTPS；须使用修补后的 SDK 重建。
 fixed:
   - { status: "CVE-2026-111943。Go 1.25 及更早版本不会修复" }
   - {}
@@ -31,10 +31,10 @@ fixed:
   - { status: Python 安全团队建议的最低版本 }
   - { status: 其他环境中的 CA 软件包也需更新 }
   - { status: 更新内置 CA 依赖 }
-  - { status: 重建并重新分发受影响的应用 }
-  - { status: 使用修补后的 Dart SDK 重建 }
-  - { status: CocoaPods 使用 12.19.3；重新发布应用 }
-  - { status: 重建并重新发布应用 }
+  - { product: Dart SDK 稳定版 / beta, status: 重建并重新分发受影响的应用 }
+  - { product: Flutter SDK 稳定版 / beta, status: 使用修补后的 Dart SDK 重建 }
+  - { product: Apple 平台的 FirebaseFirestore, status: CocoaPods 使用 12.19.3；重新发布应用 }
+  - { product: FlutterFire cloud_firestore（Apple / Windows）, status: 重建并重新发布应用 }
   - { status: Apple 及桌面平台上的 Firestore；重建并重新发布 }
   - { status: Apple 及桌面平台上的 Firestore；重建并重新发布 }
   - { status: 刷新 CI 依赖；无需重新发布应用 }
@@ -155,11 +155,10 @@ CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eM
 
 **10月23日更新：** 此前的指南漏列了自带根证书的包管理工具。即使系统证书或独立 certifi 已更新，也要逐个环境更新 pip，使用 Python 安全公告中带固定哈希的引导升级方式。pip 26.2.2 需要 Python 3.10 或更新版本；旧解释器需要兼容的处置方案，不能假定其 CA 证书包安全。上表新增最低版本来自 Python 及工具维护者，不能替代运行时更新或 10月27日的证书迁移期限。使用 conda 时，base 之外环境的 CA 软件包也要更新。Mamba 重建可能沿用相同版本号，因此还要检查软件包构建号。
 
-
 ### 应用内嵌证书包与 Java 缓解缺口
 
 **10月24日更新：** [Dart 公告](https://github.com/dart-lang/sdk/security/advisories/GHSA-frr6-h895-5pxp) 涉及网络路径上的攻击者拦截 Android、Windows，以及保留受影响根证书的 Linux 环境中的 `dart:io` HTTPS。公告排除 Web 和 Apple 验证路径，不代表使用独立内嵌 TLS 库的 Firestore 也不受影响。
 
-[Firebase](https://firebase.google.com/support/guides/compromised-emudhra-intermediate-ca) 列出 Apple 及桌面平台上受影响的 Firestore 客户端。须发布重建后的应用并让用户安装。Cloud Firestore 和 App Distribution 后端不受影响。
+[Firebase](https://firebase.google.com/support/guides/compromised-emudhra-intermediate-ca) 为原生 Apple 应用、iOS/macOS/Windows 上的 FlutterFire，以及 iOS/Linux/macOS/Windows 上的 Unity 或 C++ 列出 Firestore 修复。这些客户端 SDK 的影响范围与上面的 Dart 公告不同。须发布重建后的应用并让用户安装。Cloud Firestore 和 App Distribution 后端不受影响。
 
 [Sonatype](https://www.sonatype.com/blog/the-limits-of-fingerprint-blocklists-a-reproducible-java-certificate-bypass) 发现，使用 ECDSA 或 RSA 签名的中间证书经替代编码后，可在其测试中绕过 Java 指纹阻止。移除相关根证书可拒绝这两条证书链，但可能中断合法连接。请按厂商指南核验每个已部署运行时及信任库；这是实验室复现的缓解绕过，并非在野攻击证据，也不能推广到所有 JDK。
