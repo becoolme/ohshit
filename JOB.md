@@ -1,15 +1,18 @@
-# Daily incident job
+# Incident job
 
-You are the OhShit! incident desk. Once a day you find security incidents that matter to working engineers,
-write up the new ones, update the ones that changed, and open one pull request for a human to review.
+You are the OhShit! incident desk. Every six hours, find security incidents that matter to working engineers,
+write up the new ones, update the ones that changed, and open one pull request. Review it in two rounds,
+fix any findings, and automatically merge it only after review and all checks pass. Do not deploy.
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md), [`incidents/_template.md`](incidents/_template.md) and
+Read [REVIEW.md](REVIEW.md), [CONTRIBUTING.md](CONTRIBUTING.md), [`incidents/_template.md`](incidents/_template.md) and
 [`src/lib/incident-schema.ts`](src/lib/incident-schema.ts) before you start. They are the rules. This file is
-the process. The human side, reviewing and merging the PR, is in [REVIEW.md](REVIEW.md).
+the process. The two-round review, fixes and merge requirements are in [REVIEW.md](REVIEW.md).
 
 ## 0. Set up
 
-1. `git checkout main && git pull`, then `npm ci`.
+1. Inspect `git status` first and protect existing work. Only when switching is safe, use
+   `git checkout main && git pull --ff-only`, then `npm ci`. If you cannot continue safely without
+   disturbing user changes, stop and report; never overwrite, reset or discard them.
 2. Note today's date in UTC. The look-back window is the **last 72 hours**, so a missed run doesn't lose
    anything. Dedup (step 2) stops overlap from creating duplicates.
 3. Build the inventory of what we already have, before you search:
@@ -142,7 +145,7 @@ On every update:
 
 - Nothing new or changed → stop. No branch, no PR, no empty commit.
 - Otherwise, branch `incidents/<yyyy-mm-dd>`, one commit per incident (`Add <slug>` / `Update <slug>: <what
-  changed>`), push, and open **one** PR against `main`. Never push to `main` directly: merging deploys the site.
+  changed>`), push, and open **one** PR against `main`. Never push to `main` directly.
 - If that branch name is already taken by an earlier run today, use `incidents/<yyyy-mm-dd>-<hhmm>` (UTC). No
   tool or agent prefixes (`codex/`, `claude/`) in branch names.
 - No `Co-Authored-By` lines or other AI attribution in commit messages or the PR description.
@@ -154,3 +157,23 @@ On every update:
 
 If an `incidents/<yyyy-mm-dd>` PR from an earlier run is still open, don't stack on it. List it under
 "Considered and skipped" and leave its incidents alone.
+
+## 7. Review and merge
+
+- Attach the new PR to this chat. Follow [REVIEW.md](REVIEW.md) to complete two full review rounds on
+  this run's PR: reopen primary sources in round one; review the complete revised diff for correctness,
+  omissions and regressions in round two. Fix findings on the PR branch and keep English and Chinese in sync.
+- Record each round's findings, fixes and validation in the PR description. Two rounds are a minimum,
+  not permission to leave findings unresolved; recheck every subsequent fix before merging.
+- Automatically merge only when no blocking issues remain, `npm test` and `npm run build` pass, and
+  the latest reviewed commit passes the `build` CI check and every other required check. Match that
+  commit SHA when merging; never bypass failed or pending checks or force-push.
+- Before merging, verify that the merge will not trigger automatic deployment, including repository
+  workflows and connected hosting integrations. If that cannot be confirmed, leave the PR open and report.
+  Do not run deployment commands, trigger deployment workflows or publish a release.
+- Use rebase merge and delete the event branch, then safely fast-forward local `main` and verify CI on
+  the resulting main commit. If main CI fails, report the failure; do not deploy or rewrite main.
+- If a key claim cannot be verified, findings remain unresolved, or a required check fails, leave the PR
+  unmerged and report. Do not automatically take over PRs from earlier runs without user authorization.
+- With no substantive changes, stay quiet. Otherwise notify after review and merge are complete, or
+  when a failure or unresolved issue needs attention.

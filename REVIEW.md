@@ -2,17 +2,21 @@
 
 How to review, fix and merge the pull requests that [JOB.md](JOB.md) opens. The rules for what an incident
 should say are in JOB.md, [CONTRIBUTING.md](CONTRIBUTING.md) and [`docs/translation-zh.md`](docs/translation-zh.md).
-This file covers checking a PR against them and getting it onto `main`. Merging deploys the site, so anything
-you merge is live within minutes.
+This file covers two rounds of review, fixes and automatic merge onto `main`. The scheduled job runs every
+six hours and may review and merge the PR it creates in that run. Other PRs require user authorization.
+Deployment is separate: do not deploy, trigger deployment workflows or publish releases.
 
 ## 0. Set up
 
-1. `git checkout main && git pull`, then `gh pr list --state open`.
-2. Review the oldest PR first. Later runs dedup against earlier PRs, so their "Considered and skipped" lists
-   assume the earlier ones will land.
+1. Inspect `git status` and protect existing work before switching. When safe, use
+   `git checkout main && git pull --ff-only`, then `gh pr list --state open`.
+2. Review the PR created by this run, or the PRs the user explicitly requested. Leave unrelated open PRs
+   alone and include their full diffs in the dedup inventory. When authorized to review several PRs,
+   review the oldest first.
 3. If the job's branch is checked out somewhere you shouldn't disturb, work in a detached worktree in a
    scratch directory instead of switching branches:
    `git fetch origin && git worktree add --detach <dir> origin/<branch>`.
+   If no safe checkout is available, stop and report; never overwrite, reset or discard user changes.
 
 ## 1. Read the PR
 
@@ -81,8 +85,8 @@ Open the primary sources yourself. Don't trust the PR's summary of them. For eve
 | Not newsworthy (under L3, marketing, single rumour) | Drop that incident from the PR; close the PR if nothing is left |
 | Can't verify a central claim | Hold it: remove the claim or the incident, list it as skipped |
 
-Don't send fixes back to the job as review comments. The next run won't read them. Fix the PR, then change
-JOB.md if the mistake is likely to happen again (see step 7).
+Don't send fixes back to the job as review comments. The next run won't read them. Fix the PR, then report
+any missing rule that could prevent the mistake recurring (see step 8).
 
 ## 5. Fix
 
@@ -90,25 +94,52 @@ JOB.md if the mistake is likely to happen again (see step 7).
   `git push origin HEAD:<branch>` from your worktree.
 - Add one commit per incident you touch, named like the job's (`Update <slug>: <what you fixed>`). Don't
   rewrite the job's commits and don't force-push.
-- Change English and Chinese together. Run `npm test`; rely on CI's `build` check when the local Node is too
-  old for `npm run build`.
+- Change English and Chinese together. Run `npm test` and `npm run build` with a supported Node version;
+  an old local runtime is not a reason to skip validation. Never weaken tests or schema to get green.
 - Re-read your diff once against the sources before pushing.
 
-## 6. Merge
+## 6. Complete two review rounds
 
-1. Wait for the `build` check on the PR's latest commit to pass. Never merge on red or pending.
-2. `gh pr merge <n> --rebase --delete-branch`. Rebase keeps one commit per incident on `main`.
-3. If the next PR now conflicts, rebase it onto `main` in a worktree, re-run `npm test`, push, and wait for
-   CI again.
-4. After the last merge, `git checkout main && git pull --ff-only` and check that `main`'s CI run passed (it
-   deploys).
-5. Remove scratch worktrees: `git worktree remove <dir>`.
+1. **Round one:** Apply steps 1–5 to the complete PR diff. Reopen the primary sources yourself and verify
+   versions, dates, IDs, victim figures, prerequisites, exploitation evidence and actionable remediation.
+   Fix every finding on the PR branch.
+2. **Round two:** Review the complete revised diff again, including the fixes. Repeat the source and
+   writing checks; check for omissions, regressions, duplicates and English/Chinese mismatches. Fix any
+   new findings and rerun validation after changes.
+3. Record both rounds' findings, fixes, remaining uncertainties and test/build results in the PR
+   description. Record a clean round explicitly. Two rounds are the minimum: keep correcting and
+   rechecking until no blocking findings remain. An unverifiable central claim blocks merge unless it
+   is removed and the remaining incident still meets the sourcing and newsworthiness rules.
+4. Review the final diff and identify its exact head SHA. Any later change, including conflict resolution,
+   needs review and fresh checks on the resulting commit before merge.
 
-## 7. Feed back into JOB.md
+## 7. Merge without deploying
+
+1. Confirm both review rounds are complete and all findings are resolved. `npm test` and `npm run build`
+   must pass; wait for the `build` CI check and every other required check on the latest reviewed commit
+   to pass. Never merge on red or pending, bypass checks, or use administrator overrides.
+2. Verify that merging will not trigger deployment through repository workflows or connected hosting
+   integrations. If this cannot be confirmed, stop before merging and report. Do not run deployment
+   commands, trigger deployment workflows or publish releases.
+3. Automatically merge the authorized PR with
+   `gh pr merge <n> --rebase --delete-branch --match-head-commit <reviewed-head-sha>`.
+   Rebase preserves the event and review-fix commits. Never push directly to `main` or force-push.
+4. If conflicts prevent merging, resolve them on the PR branch without rewriting published history,
+   review the resulting complete diff, rerun tests/build and wait for fresh CI. If you cannot do this
+   safely, leave the PR open and report. Do not modify unrelated PRs.
+5. Safely return to `main`, run `git pull --ff-only`, and confirm CI passed for the exact resulting main
+   commit. Report any failure; do not deploy or rewrite main to repair it automatically.
+6. Remove only scratch worktrees created for this review, after preserving any work they contain.
+7. Notify with the PR link, review/fix summary and validation outcome after completion, or report a
+   failure or unresolved issue that prevents completion. No substantive change means no PR or notification.
+
+## 8. Feed back into JOB.md
 
 Every fix you made is a rule the job didn't follow or didn't have. After merging:
 
 - If JOB.md already covers it, leave JOB.md alone; it was a one-off.
-- If JOB.md doesn't cover it, add a short, concrete rule in the step where the job would apply it, with the
-  reason. Commit as `JOB.md: <what>` straight to `main`.
-- Keep REVIEW.md in step: a new JOB.md rule is a new thing to check here.
+- If JOB.md doesn't cover it, report a short, concrete proposed rule and its reason. The scheduled job
+  only changes `incidents/**`; documentation changes require a separately authorized task and must not
+  be committed directly to `main` by the job.
+- When documentation updates are authorized, keep JOB.md and REVIEW.md in step: a new job rule is a new
+  thing to check here.
