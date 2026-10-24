@@ -3,7 +3,7 @@ title: "ConnectWise Cloud Backup's app secret got stolen, and attackers walked i
 headline: "ConnectWise: steal one app secret, inherit 170 tenants"
 level: 4
 date: 2026-10-16
-updated: 2026-10-22
+updated: 2026-10-24
 tags: [SaaS, OAuth, Microsoft 365]
 ecosystems: [microsoft-365, entra-id]
 summary: >-
@@ -36,6 +36,9 @@ timeline:
   - date: Oct 21, 2026
     title: Microsoft attributes the compromise to Storm-0940
     body: ARTEX accelerated attempts against over 2,250 tenants; targeting does not establish data theft.
+  - date: Oct 23, 2026, 14:00 UTC
+    title: ConnectWise clarifies restoration is still being validated
+    body: Backup-restore access is planned first, early the following week after successful validation; full service re-enrollment follows. Neither is confirmed available.
 checklist:
   - title: Find the ConnectWise / SkyKick apps in Entra ID
     hint: Inventory application IDs and service-principal Object IDs, including integrations no longer in use
@@ -46,11 +49,11 @@ checklist:
   - title: Check every app for new secrets or certificates
     hint: The attacker added credentials to other apps in the tenant
   - title: Re-consent only after ConnectWise restores service
-    hint: Grant the minimum permissions the backup actually needs
+    hint: Keep affected connections disabled until service-specific vendor instructions arrive. The October 23 notice plans backup-restore access before full re-enrollment, subject to testing; grant only the minimum permissions when instructed
 sources:
   - name: ConnectWise Trust Center
     url: https://www.connectwise.com/company/trust/advisories
-    says: Discovered Oct 14; backup archives encrypted and isolated, no sign they were compromised
+    says: October 23 restoration testing continues; backup-restore access first, full re-enrollment later; keep connections disabled. Archives remain encrypted, isolated and preserved, with no indication of compromise
     primary: true
   - name: Huntress
     url: https://www.huntress.com/blog/vendor-credential-enables-unauthorized-access
@@ -82,3 +85,5 @@ hands-on-keyboard activity in two. Whether data was stolen is unknown. Graph dir
 trail, so "no evidence" here does not mean "nothing happened".
 
 **Update, October 22:** Microsoft attributes the compromise to the China-aligned Storm-0940 actor and describes ARTEX-assisted targeting of more than 2,250 tenants. This is an attempted-access count, not a revised confirmed-victim total. Microsoft observed follow-on credential and role changes in some environments but says authentication alone does not prove data theft. Preserve evidence, disable affected connections, and inspect other application credentials for persistence before re-consenting. L4 remains appropriate.
+
+**Update, October 24:** The vendor's October 23, 14:00 UTC notice clarifies that restoration testing and security validation are still underway. The October 21 start of phased restoration work did not mean customer capabilities were already available. ConnectWise anticipates finishing validation by the end of the weekend, enabling access to restore existing backups early the following week, then full service re-enrollment. These are conditional plans, not confirmed restoration dates. Keep affected app connections disabled until the vendor provides instructions for your service, and continue investigating each tenant; restoring the vendor service does not remove tenant-level persistence.
