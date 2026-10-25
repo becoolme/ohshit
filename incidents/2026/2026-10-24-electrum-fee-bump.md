@@ -4,7 +4,7 @@ level: 4
 date: 2026-10-24
 tags: [Electrum, Bitcoin, exploited]
 ecosystems: [electrum]
-summary: "A malicious Electrum server can substitute an invalid pending transaction. If the user fee-bumps it, the wallet signs a payment to the attacker. Maintainers report one user lost funds; upgrade to 4.8.3."
+summary: "A malicious Electrum server can replace a pending payment with an invalid transaction. If the user fee-bumps it, the wallet signs a payment to the attacker. Maintainers report one user lost funds; upgrade to 4.8.3."
 splash: "Electrum before 4.8.3 connected to a malicious main server; loss requires the user to sign the substituted transaction"
 wipe: "Install Electrum 4.8.3 from electrum.org; verify signatures and every full destination address and amount before signing"
 inTheWild: yes
@@ -46,7 +46,7 @@ sources:
     primary: true
   - name: Electrum 4.8.3 release notes
     url: https://raw.githubusercontent.com/spesmilo/electrum/4.8.3/RELEASE-NOTES
-    says: "October 23 source release is a security update; binary release and disclosure followed October 24"
+    says: "October 23 source release is a security update"
     primary: true
   - name: Electrum official downloads
     url: https://electrum.org/
