@@ -3,7 +3,7 @@ title: "eMudhra CA intermediate private keys were so weak that every one was a n
 headline: "eMudhra: eight CA keys you could guess on a pocket calculator"
 level: 4
 date: 2026-10-17
-updated: 2026-10-24
+updated: 2026-10-25
 tags: [PKI, CA, TLS]
 ecosystems: [go, python, node, browsers]
 summary: >-
@@ -33,13 +33,21 @@ cves:
   - id: GHSA-frr6-h895-5pxp
     name: Dart and Flutter trust compromised intermediates
     description: Network-path attackers can intercept dart:io HTTPS on Android and Windows, plus Linux retaining affected roots; rebuild with patched SDKs.
+  - id: CVE-2026-91403
+    score: 9.1
+    name: Oracle Java intermediate-certificate distrust update
+    description: Oracle's October 21 JSSE alert covers the compromised eMudhra intermediates; its initial update is distinct from the later root-removal fix.
+  - id: CVE-2026-114820
+    score: 9.1
+    name: Oracle Java root-certificate removal update
+    description: Oracle's October 24 JSSE alert removes related roots in Java SE and GraalVM; attackers need a trusted affected chain and a network path to intercept TLS.
 fixed:
   - { product: Go, version: 1.27.3 / 1.26.10, status: "CVE-2026-111943. Go 1.25 and older get no fix" }
   - { product: Python certifi, version: 2026.10.19 }
   - { product: Node.js, version: 22.23.4 / 24.22.1 / 26.12.1, status: Ships NSS 3.131.1 CA bundle }
   - { product: Mozilla NSS, version: 3.131.1, status: Root removed Oct 20 }
   - { product: Cloudflare WARP / 1.1.1.1 / cloudflared, version: 2026.10.2 }
-  - { product: Java (cacerts), version: unknown, status: No universal fixed version verified; Sonatype reproduced fingerprint-blocklist bypasses in tested configurations }
+  - { product: Java (cacerts), version: unknown, status: Oracle October 24 root-removal patches available; exact fixed builds require vendor verification. Other JDKs and custom stores need separate checks }
   - { product: pip, version: 26.2.2, status: Requires Python 3.10+; update pip separately in each environment }
   - { product: uv, version: 0.13.4, status: Refreshes bundled CA roots }
   - { product: sigstore-python, version: 4.5.1, status: Python security team’s recommended minimum }
@@ -78,12 +86,18 @@ timeline:
   - date: Oct 21, 2026
     title: Sonatype reports Java fingerprint-blocklist bypasses
     body: Re-encoded intermediates passed tested configurations; removing the relevant roots rejected both tested chains.
+  - date: Oct 21, 2026
+    title: Oracle publishes the initial intermediate-distrust alert
+    body: CVE-2026-91403 covers Java SE and GraalVM; a later alert removes related roots.
   - date: Oct 22, 2026
     title: eMudhra announces withdrawal from global SSL/TLS issuance
     body: Partner replacements are free; revocation and status services continue until all issued certificates expire or are replaced. No exit date is given.
   - date: Oct 23, 2026
     title: Dart advisory and Firebase guidance identify application-level fixes
     body: SDK updates require rebuilt and redistributed clients; the Gradle plugin needs only an update in build pipelines.
+  - date: Oct 24, 2026
+    title: Oracle issues a root-removal update
+    body: CVE-2026-114820 and revised operational guidance supersede reliance on intermediate fingerprint blocking alone.
   - date: ~Oct 27, 2026
     title: Chrome Root Store v43 removes the emSign ECC Root CA - G3
 checklist:
@@ -98,7 +112,7 @@ checklist:
   - title: Refresh conda and Mamba CA packages and rebuild images
     hint: Update certifi and ca-certificates in each relevant environment; update mamba/libmamba together and rebuild containers without layer caching
   - title: Verify Java trust paths beyond fingerprint blocklists
-    hint: Follow vendor guidance for each deployed JDK and custom trust store. Sonatype bypassed blocked.certs with re-encoded intermediates in its tests. Test dependent services before removing relevant roots; monitor TLS failures and restart affected applications
+    hint: Install the October 24 Oracle root-removal patch. If unavailable, follow ops.java/emudhra/ to back up cacerts, remove its four listed roots in every runtime, and restart. Test dependent TLS services and custom stores; fingerprint blocking alone failed Sonatype's tests
   - title: Patch custom trust stores
     hint: Internal CA bundles, appliances and distroless images need separate updates; an OS update does not refresh every application bundle
   - title: Check code-signing trust
@@ -184,6 +198,18 @@ sources:
     url: https://www.sonatype.com/blog/the-limits-of-fingerprint-blocklists-a-reproducible-java-certificate-bypass
     says: Tested re-encodings bypassed exact-fingerprint blocks; root removal rejected both tested chains; results limited to tested configurations
     primary: true
+  - name: Oracle CVE-2026-91403 alert
+    url: https://www.oracle.com/security-alerts/alert-cve-2026-91403.html
+    says: October 21 intermediate-distrust update; affected Java SE and GraalVM releases
+    primary: true
+  - name: Oracle CVE-2026-114820 alert
+    url: https://www.oracle.com/security-alerts/alert-cve-2026-114820.html
+    says: October 24 root-removal update; its version table lists affected releases, not fixed builds
+    primary: true
+  - name: Oracle JDK operational guidance
+    url: https://ops.java/emudhra/
+    says: October 24 guidance includes per-runtime keystore backup, root removal and restart, revocation checks and CheckCerts.java
+    primary: true
 ---
 
 A certificate authority's private key is the thing that makes "this is really your bank" true. For eight
@@ -221,3 +247,7 @@ still carry the old bundle.
 [Firebase](https://firebase.google.com/support/guides/compromised-emudhra-intermediate-ca) lists Firestore fixes for native Apple apps, FlutterFire on iOS/macOS/Windows, and Unity or C++ on iOS/Linux/macOS/Windows. These client SDK scopes differ from the Dart advisory above. Ship rebuilt apps and have users install them. Cloud Firestore and App Distribution backends were unaffected.
 
 [Sonatype](https://www.sonatype.com/blog/the-limits-of-fingerprint-blocklists-a-reproducible-java-certificate-bypass) found that alternate encodings of ECDSA- and RSA-signed intermediates escaped Java fingerprint blocks in its tests. Removing relevant roots blocked both chains, with potential disruption to legitimate connections. Verify each deployed runtime and trust store with vendor guidance; this is a laboratory mitigation bypass, not evidence of attacks or a universal claim about every JDK.
+
+**Update, October 25:** Oracle's October 24 alert, CVE-2026-114820, now provides root-removal patches after its October 21 intermediate-distrust alert, CVE-2026-91403. Both belong to this same incident. The public version table identifies affected builds, not safe ones; obtain the matching patch through Oracle's availability document. Keep the other runtime and application updates above. No exploitation is established by these alerts.
+
+For an unpatched Oracle runtime, the [operational guide](https://ops.java/emudhra/) gives an alternative: back up `cacerts`, remove `emsignrootcag1 [jdk]`, `emsignrootcag2 [jdk]`, `emsigneccrootcag3 [jdk]` and `comodoaaaca [jdk]`, then restart each installed runtime. JDK 8 uses `$JDK_HOME/jre/lib/security/cacerts`; JDK 11+ uses `$JDK_HOME/lib/security/cacerts`. Test legitimate certificate chains before removal, monitor failures afterward, and check application-specific stores separately. The guide also documents revocation-checking options and a verification tool.

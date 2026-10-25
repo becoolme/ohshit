@@ -19,13 +19,17 @@ cves:
     description: 0.13.4 之前的 uv 默认信任受影响的根证书；系统或自定义证书库需要单独核验。
   - name: Dart 和 Flutter 信任被攻破的中间证书
     description: 网络路径上的攻击者可拦截 Android、Windows，以及保留受影响根证书的 Linux 上的 dart:io HTTPS；须使用修补后的 SDK 重建。
+  - name: Oracle Java 中间证书取消信任更新
+    description: Oracle 10月21日的 JSSE 公告涉及被攻破的 eMudhra 中间证书；初次更新与后续移除根证书的修复不同。
+  - name: Oracle Java 根证书移除更新
+    description: Oracle 10月24日的 JSSE 公告从 Java SE 和 GraalVM 移除相关根证书；攻击者需要受信任的受影响证书链，并处于可拦截 TLS 的网络路径上。
 fixed:
   - { status: "CVE-2026-111943。Go 1.25 及更早版本不会修复" }
   - {}
   - { status: 内置 NSS 3.131.1 的 CA 证书包 }
   - { status: 10月20日移除根证书 }
   - {}
-  - { status: 未核实统一修复版本；Sonatype 在所测配置中复现指纹阻止列表绕过 }
+  - { status: Oracle 10月24日根证书移除补丁已提供；具体修复构建须向厂商核验。其他 JDK 和自定义证书库需单独检查 }
   - { status: 需要 Python 3.10 或更新版本；逐个环境单独更新 pip }
   - { status: 刷新内置 CA 根证书 }
   - { status: Python 安全团队建议的最低版本 }
@@ -64,12 +68,18 @@ timeline:
   - date: 2026年10月21日
     title: Sonatype 报告 Java 指纹阻止列表绕过
     body: 重新编码的中间证书通过所测配置的验证；移除相关根证书后，两条测试证书链均被拒绝。
+  - date: 2026年10月21日
+    title: Oracle 发布初次中间证书取消信任公告
+    body: CVE-2026-91403 涉及 Java SE 和 GraalVM；后续公告移除相关根证书。
   - date: 2026年10月22日
     title: eMudhra 宣布退出全球 SSL/TLS 证书签发业务
     body: 合作伙伴免费提供替换证书；吊销与状态服务持续到所有已签发证书过期或被替换。未给出退出日期。
   - date: 2026年10月23日
     title: Dart 公告和 Firebase 指南列出应用层修复
     body: SDK 更新后须重建并重新分发客户端；Gradle 插件只需在构建流水线中更新。
+  - date: 2026年10月24日
+    title: Oracle 发布根证书移除更新
+    body: CVE-2026-114820 及修订后的操作指南取代了仅依赖中间证书指纹阻止的做法。
   - date: 2026年10月27日前后
     title: Chrome Root Store v43 移除 emSign ECC Root CA - G3
 checklist:
@@ -84,7 +94,7 @@ checklist:
   - title: 刷新 conda、Mamba 的 CA 软件包并重建镜像
     hint: 更新每个相关环境的 certifi 和 ca-certificates；同步更新 mamba/libmamba，重建容器时禁用层缓存
   - title: 核验 Java 信任路径，不要只依赖指纹阻止列表
-    hint: 针对每个已部署 JDK 和自定义信任库遵循厂商指南。Sonatype 在测试中用重新编码的中间证书绕过 blocked.certs。移除相关根证书前先测试依赖服务，部署后监控 TLS 失败并重启受影响应用
+    hint: 安装 Oracle 10月24日的根证书移除补丁。暂时无法安装时，按 ops.java/emudhra/ 在每个运行时备份 cacerts，移除指南列出的四张根证书并重启。测试依赖的 TLS 服务及自定义证书库；Sonatype 的测试表明仅依赖指纹阻止不够
   - title: 修补自定义信任库
     hint: 内部 CA 证书包、各类设备和 distroless 镜像需要单独更新；系统更新不会刷新所有应用证书包
   - title: 检查代码签名信任
@@ -133,6 +143,12 @@ sources:
     says: 各平台 SDK 和 Gradle 插件更新；已安装应用需要重新分发二进制文件；Firebase 后端不受影响
   - name: Sonatype Java 阻止列表研究
     says: 测试中重新编码可绕过精确指纹阻止，移除根证书后两条测试链均被拒绝；结论限于所测配置
+  - name: Oracle CVE-2026-91403 公告
+    says: 10月21日的中间证书取消信任更新；列出受影响的 Java SE 和 GraalVM 版本
+  - name: Oracle CVE-2026-114820 公告
+    says: 10月24日的根证书移除更新；版本表列出受影响版本，并非修复构建
+  - name: Oracle JDK 操作指南
+    says: 10月24日指南包含逐运行时备份证书库、移除根证书并重启，以及吊销检查和 CheckCerts.java
 ---
 CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eMudhra 有八张中间证书，P-384 私钥都是**小于 256 的整数**。据研究人员 Scott Helme 说，其中一个就是数字 4。谁要是注意到了，就能给任意域名签证书，而所有信任这条链的客户端都会照单全收。
 
@@ -162,3 +178,7 @@ CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eM
 [Firebase](https://firebase.google.com/support/guides/compromised-emudhra-intermediate-ca) 为原生 Apple 应用、iOS/macOS/Windows 上的 FlutterFire，以及 iOS/Linux/macOS/Windows 上的 Unity 或 C++ 列出 Firestore 修复。这些客户端 SDK 的影响范围与上面的 Dart 公告不同。须发布重建后的应用并让用户安装。Cloud Firestore 和 App Distribution 后端不受影响。
 
 [Sonatype](https://www.sonatype.com/blog/the-limits-of-fingerprint-blocklists-a-reproducible-java-certificate-bypass) 发现，使用 ECDSA 或 RSA 签名的中间证书经替代编码后，可在其测试中绕过 Java 指纹阻止。移除相关根证书可拒绝这两条证书链，但可能中断合法连接。请按厂商指南核验每个已部署运行时及信任库；这是实验室复现的缓解绕过，并非在野攻击证据，也不能推广到所有 JDK。
+
+**10月25日更新：** Oracle 在 10月21日发布中间证书取消信任公告 CVE-2026-91403 后，于 10月24日通过 CVE-2026-114820 提供移除根证书的补丁。两者属于同一事件。公开版本表列出的是受影响构建，并非安全版本；应通过 Oracle 的补丁可用性文档获取对应补丁。仍须完成上面其他运行时和应用的更新。这些公告没有证实在野利用。
+
+未修补的 Oracle 运行时可采用[操作指南](https://ops.java/emudhra/)中的替代办法：备份 `cacerts`，移除 `emsignrootcag1 [jdk]`、`emsignrootcag2 [jdk]`、`emsigneccrootcag3 [jdk]` 和 `comodoaaaca [jdk]`，然后重启每个已安装的运行时。JDK 8 使用 `$JDK_HOME/jre/lib/security/cacerts`；JDK 11+ 使用 `$JDK_HOME/lib/security/cacerts`。移除前测试合法证书链，之后监控失败，并单独检查应用专用信任库。指南也列出吊销检查选项和验证工具。
