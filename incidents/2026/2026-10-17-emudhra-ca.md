@@ -112,7 +112,7 @@ checklist:
   - title: Refresh conda and Mamba CA packages and rebuild images
     hint: Update certifi and ca-certificates in each relevant environment; update mamba/libmamba together and rebuild containers without layer caching
   - title: Verify Java trust paths beyond fingerprint blocklists
-    hint: Install the October 24 Oracle root-removal patch. If unavailable, follow ops.java/emudhra/ to back up cacerts, remove its four listed roots in every runtime, and restart. Test dependent TLS services and custom stores; fingerprint blocking alone failed Sonatype's tests
+    hint: For Oracle runtimes, install the October 24 root-removal patch or follow ops.java/emudhra/ to back up cacerts, remove its four listed roots, and restart every installation. For other JDKs and custom stores, follow their vendor guidance. Test TLS dependencies and monitor failures; fingerprint blocking alone failed Sonatype's tests
   - title: Patch custom trust stores
     hint: Internal CA bundles, appliances and distroless images need separate updates; an OS update does not refresh every application bundle
   - title: Check code-signing trust

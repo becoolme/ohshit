@@ -94,7 +94,7 @@ checklist:
   - title: 刷新 conda、Mamba 的 CA 软件包并重建镜像
     hint: 更新每个相关环境的 certifi 和 ca-certificates；同步更新 mamba/libmamba，重建容器时禁用层缓存
   - title: 核验 Java 信任路径，不要只依赖指纹阻止列表
-    hint: 安装 Oracle 10月24日的根证书移除补丁。暂时无法安装时，按 ops.java/emudhra/ 在每个运行时备份 cacerts，移除指南列出的四张根证书并重启。测试依赖的 TLS 服务及自定义证书库；Sonatype 的测试表明仅依赖指纹阻止不够
+    hint: Oracle 运行时应安装 10月24日的根证书移除补丁，或按 ops.java/emudhra/ 备份 cacerts、移除所列四张根证书，并重启每个安装实例。其他 JDK 和自定义信任库应遵循各自厂商指南。测试依赖的 TLS 服务并监控失败；Sonatype 的测试表明仅依赖指纹阻止不够
   - title: 修补自定义信任库
     hint: 内部 CA 证书包、各类设备和 distroless 镜像需要单独更新；系统更新不会刷新所有应用证书包
   - title: 检查代码签名信任
