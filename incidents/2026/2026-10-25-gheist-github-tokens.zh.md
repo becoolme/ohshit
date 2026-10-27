@@ -22,7 +22,7 @@ checklist:
   - title: 联合排查 GitHub 和云审计日志
     hint: "查找符合 ^ci-sync-[0-9a-z]{6}$ 的分支、新增的 .github/workflows/sync-check.yml、提交消息 ci: sync config、工作流名 sync-check 和 User-Agent gheist。关联完成后一分钟内被删除的任务，以及主体中带有 ci-sync- 分支的云端 OIDC 角色代入或令牌交换。仅命中指标不能证明密钥被窃取。"
   - title: 调查自托管运行器，并比对全部公开的工作流对象
-    hint: "若受影响分支已在自托管运行器执行，应视主机及其实例角色为已失陷。查找任务 sync-host、文件 .gdmp_pat、.gdmp_patg、.gdmp_sweep、日志头 ===== gdmp-pivot:，以及 toJSON(secrets)、base32 -w 120 和 LAFA==== 标记。Wiz 列出四个工作流 blob SHA：f3da2b8b357dcda02fd455d314be2a95007516a6（基础版）、d09535857a741bbb976bdc084a9a021713133291（超时版）、1dc5af9cce950aad1eb1546ecce8565b117540c4（分隔符版）、c665b778b2d822453293003e7ca0bbb2cb08e39d（自托管版）。环境矩阵变体的哈希不同，未命中不能证明安全，单独的标记也不能证明已经执行。"
+    hint: "若受影响分支已在自托管运行器执行，应视主机及其实例角色为已失陷。检查主目录和工作区中的 .env、Terraform state、Shell 历史、/proc/*/environ、运行器凭据及 Kubernetes 服务账号令牌，轮换范围不能只限于仓库密钥。查找任务 sync-host、文件 .gdmp_pat、.gdmp_patg、.gdmp_sweep、日志头 ===== gdmp-pivot:，以及 toJSON(secrets)、base32 -w 120 和 LAFA==== 标记。Wiz 列出四个工作流 blob SHA：f3da2b8b357dcda02fd455d314be2a95007516a6（基础版）、d09535857a741bbb976bdc084a9a021713133291（超时版）、1dc5af9cce950aad1eb1546ecce8565b117540c4（分隔符版）、c665b778b2d822453293003e7ca0bbb2cb08e39d（自托管版）。环境矩阵变体的哈希不同，未命中不能证明安全，单独的标记也不能证明已经执行。"
   - title: 保护环境密钥和云角色，隔离运行器
     hint: "为生产环境要求审批，将 OIDC 信任限制到受保护分支或环境。优先使用 GitHub Apps 或短期细粒度令牌。使用临时自托管运行器，不开放 Docker socket 或无限制的元数据访问。"
 sources:
