@@ -3,16 +3,16 @@ title: "Railway says an intruder reached the store holding customer environment 
 headline: "Railway: your .env went for a ride without you"
 level: 4
 date: 2026-10-21
-updated: 2026-10-24
+updated: 2026-10-27
 tags: [PaaS, secrets, credentials, supply chain]
 ecosystems: [railway]
 summary: >-
   Railway's preliminary report says variables were potentially compromised in at most 1.85% of workspaces (about 100,000).
-  Precautionary provider resets affected more users. Builds are restored; rotate stored secrets and recreate revoked deployment credentials.
+  Precautionary provider resets affected more users. Services are restored for existing users; rotate stored secrets and recreate revoked deployment credentials.
 splash: "Secrets stored before Oct 21; vendor upper bound is 1.85% of workspaces (~100,000), with broader precautionary resets"
 wipe: "Rotate/revoke stored secrets, audit logs from Oct 20, recreate deploy tokens, reconnect GitHub and redeploy"
 inTheWild: "n/a"
-inTheWildNote: An intrusion, not a bug; no misuse of stolen secrets confirmed publicly yet
+inTheWildNote: "An intrusion; the October 26 update gives a claims process, not verified misuse totals"
 oneLiner: >-
   Your hosting provider keeps a locked box of all your passwords so your apps can use them. Someone got into
   the room with the box, and for some customers they got it open.
@@ -46,6 +46,9 @@ timeline:
   - date: Oct 23, 2026
     title: Login and deployment recovery guides published
     body: Missed commits were not queued; revoked CLI and CI credentials must be replaced before retrying deployments.
+  - date: Oct 26, 2026
+    title: Existing-user services restored; AI-spend claims guidance added
+    body: "New signups remain paused. Ask the AI provider about refunds first, then submit supporting evidence to Railway for escalation."
 checklist:
   - title: Rotate every secret stored in Railway variables, starting with the expensive ones
     hint: AI provider keys, cloud (AWS/GCP) keys, Stripe, DB passwords, OAuth client secrets, webhook signing secrets. If it's in Variables, assume it's gone
@@ -57,6 +60,8 @@ checklist:
     hint: Railway removed them from its side, but they keep working on GitHub until you revoke them yourself
   - title: Check provider audit logs and billing from Oct 20 or earlier
     hint: Unknown IPs in AWS CloudTrail / GCP audit logs, new GitHub tokens or deploy keys, odd Stripe API calls, surprise AI token bills
+  - title: Escalate suspected fraudulent AI charges
+    hint: "Contact the AI provider directly first: Railway cannot refund third-party AI spend. Then submit timestamps, prompts and supporting proof through station.railway.com so Railway can escalate the request; a refund is not guaranteed."
   - title: Reconnect GitHub, replace deploy credentials and redeploy
     hint: "Builds are accepted again. Missed commits were not queued: trigger Deploy Latest Commit. Reconnect the GitHub app, run railway logout then railway login, and replace revoked RAILWAY_TOKEN / RAILWAY_API_TOKEN CI secrets. Redeploy to load rotated variables and bucket keys"
   - title: Review your Railway account and deploy history
@@ -88,7 +93,7 @@ sources:
     says: Early gaps in decryption mechanics and notified providers, partially superseded by the preliminary report
   - name: Railway preliminary incident report
     url: https://blog.railway.com/p/preliminary-report-october-security-incident
-    says: October 22 preliminary scope, attack timeline, containment and restored build tiers
+    says: October 22 preliminary scope and containment; October 26 existing-user restoration and third-party AI-spend escalation guidance
     primary: true
   - name: Railway deployment recovery guide
     url: https://blog.railway.com/p/security-disclosure-recommendation-recover-failing-deploys
@@ -135,7 +140,8 @@ system. That is L4. It would move up if large-scale abuse of the stolen keys wer
 - Initial entry and exact exploit details remain undisclosed. The preliminary report describes privilege escalation and compromised CI credentials.
 - Exactly which variables were decrypted remains unknown; the workspace upper bound does not answer that. Broad provider revocations do not establish compromise of every reset credential.
 - Railway says individual user accounts were not accessed; source-code access is still not ruled out.
-- **Misuse.** No public report yet confirms that a stolen Railway secret was used. Absence of reports is
-  not evidence of absence: check your own provider logs.
+- **Misuse.** Railway now gives a process for customers seeking refunds for fraudulent AI spend. That guidance does not publish a verified misuse count or attribute every suspicious charge to this intrusion; check your own provider logs.
 
 **Correction, October 24:** Railway's October 22 preliminary report supersedes the earlier unknown-scope account: at most 1.85% of workspaces (about 100,000) potentially had variables compromised. This is an upper bound, not a confirmed-victim total. It dates the attack window to October 20, 13:58 UTC through October 22, 03:32 UTC, and says existing workloads stayed online. All plan tiers accept builds again. The October 23 guides explain how to catch up missed deployments and replace revoked access; use the original login identity if projects appear missing.
+
+**Update, October 27:** Railway’s October 26 update says services are fully restored for existing users, while new signups remain paused. Recovery does not replace the credential rotation and deployment-recovery steps above. For suspected fraudulent AI charges, contact the AI provider first, then submit timestamps, prompts and supporting proof at [Railway Station](https://station.railway.com/) for escalation. Railway cannot refund third-party AI spend, and its escalation offer is not a refund guarantee. No verified downstream-abuse total or broader victim count is established by this update.
