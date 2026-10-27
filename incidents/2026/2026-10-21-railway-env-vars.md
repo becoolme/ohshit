@@ -47,7 +47,7 @@ timeline:
     title: Login and deployment recovery guides published
     body: Missed commits were not queued; revoked CLI and CI credentials must be replaced before retrying deployments.
   - date: Oct 26, 2026
-    title: Existing-user services restored; AI-spend claims guidance added
+    title: Railway reports existing-user restoration and adds AI-spend guidance
     body: "New signups remain paused. Ask the AI provider about refunds first, then submit supporting evidence to Railway for escalation."
 checklist:
   - title: Rotate every secret stored in Railway variables, starting with the expensive ones
@@ -93,7 +93,7 @@ sources:
     says: Early gaps in decryption mechanics and notified providers, partially superseded by the preliminary report
   - name: Railway preliminary incident report
     url: https://blog.railway.com/p/preliminary-report-october-security-incident
-    says: October 22 preliminary scope and containment; October 26 existing-user restoration and third-party AI-spend escalation guidance
+    says: October 22 preliminary scope, attack timeline, containment and restored build tiers; October 26 existing-user restoration and third-party AI-spend escalation guidance
     primary: true
   - name: Railway deployment recovery guide
     url: https://blog.railway.com/p/security-disclosure-recommendation-recover-failing-deploys
