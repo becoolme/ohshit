@@ -36,7 +36,7 @@ checklist:
   - title: Update the licensed proxy
     hint: Select the matching patched release above from verified official channels; the October 21 rollback version 1.106.2 does not fix this separate Enterprise flaw.
   - title: Block the trigger and constrain network paths
-    hint: Reject or strip POST JSON keys standard_callback_dynamic_params, gcs_path_service_account, callbacks, success_callback and failure_callback at ingress. Allow outbound traffic only to configured LLM providers; use VPN, mTLS, authenticating ingress or an IP allowlist for access.
+    hint: "At ingress, reject POST bodies containing any of these JSON keys: standard_callback_dynamic_params, gcs_path_service_account, callbacks, success_callback and failure_callback. Allow outbound traffic only to configured LLM providers; use VPN, mTLS, authenticating ingress or an IP allowlist for access."
   - title: Reduce secret exposure and investigate reachable credentials
     hint: "Load the master key from a secret manager, set a separate LITELLM_SALT_KEY, and review suspected file access/exfiltration, including /proc/self/environ. General incident-response guidance: preserve logs and rotate master/provider keys if exposure is found; no campaign-specific indicators are published."
 sources:
