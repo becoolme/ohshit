@@ -10,7 +10,7 @@ ecosystems:
 - n8n
 summary: n8n’s October 28 batch includes three high-severity code-execution issues and nine medium issues. Workflow editors, untrusted node inputs and enabled features create different attack paths. Update and migrate deprecated code nodes; saved workflows can keep running.
 splash: n8n workflow editors or untrusted inputs reaching affected nodes; Browser Use and Enterprise OAuth have additional prerequisites
-wipe: Use 2.45.5 / 2.46.1 / 3.0.1 as appropriate; replace deprecated code nodes and audit affected workflows and credentials
+wipe: Use stable 2.45.5; 2.46.1/3.0.1 are prereleases. Replace deprecated code nodes and audit workflows and credentials
 inTheWild: unknown
 inTheWildNote: The advisories do not report a malicious campaign or victim counts.
 cves:
@@ -53,16 +53,19 @@ cves:
 fixed:
 - product: n8n 2.45
   version: 2.45.5
+  status: Stable maintenance release
 - product: n8n 2.46
   version: 2.46.1
+  status: GitHub prerelease; not a routine production channel switch
 - product: n8n 3.0
   version: 3.0.1
+  status: GitHub prerelease; review major-version migration requirements
 timeline:
 - date: Oct 28, 2026
   title: n8n publishes twelve advisories
 checklist:
 - title: Upgrade all running n8n components
-  hint: Use the applicable 2.45.5, 2.46.1 or 3.0.1 release or a later patched build. Several advisories list 1.123.89, but others do not list a 1.x fix; do not treat that version as blanket coverage. Follow each advisory for older backports.
+  hint: Prefer the stable 2.45.5 maintenance release. GitHub marks 2.46.1 and 3.0.1 as prereleases; use those only with an appropriate release-channel/migration plan. Do not switch major versions as a routine patch. Several advisories list 1.123.89, but others do not list a 1.x fix; do not treat that version as blanket coverage. Follow each advisory for older backports.
 - title: Replace deprecated nodes even after upgrading
   hint: Migrate existing Function, Function Item and LangChain Code workflows to the Code node. Keep the default block enabled; N8N_DEPRECATED_NODES_BLOCK=false restores the risky behavior. As temporary mitigation, exclude n8n-nodes-base.function, n8n-nodes-base.functionItem and @n8n/n8n-nodes-langchain.code via NODES_EXCLUDE.
 - title: Remove untrusted image and database paths
@@ -122,6 +125,20 @@ sources:
   url: https://github.com/n8n-io/n8n/security/advisories/GHSA-jmcg-c7p5-q69g
   primary: true
   says: Affected node/feature, conditions, fixed releases and interim controls.
+- name: n8n 2.45.5 release metadata
+  url: https://github.com/n8n-io/n8n/releases/tag/n8n%402.45.5
+  primary: true
+  says: October 28 publication, marked stable at review.
+
+- name: n8n 2.46.1 release metadata
+  url: https://github.com/n8n-io/n8n/releases/tag/n8n%402.46.1
+  primary: true
+  says: October 28 publication, marked prerelease at review.
+
+- name: n8n 3.0.1 release metadata
+  url: https://github.com/n8n-io/n8n/releases/tag/n8n%403.0.1
+  primary: true
+  says: October 28 publication, marked prerelease at review.
 ---
 
 L3 reflects isolation failures and credential exposure in a mainstream automation service. The twelve advisories describe different trust boundaries; they do not establish a single unauthenticated takeover path for every instance. The default block on deprecated nodes rejects newly added or modified nodes but leaves saved workflows running. Some fixes were available on earlier maintenance releases; the disclosure day is October 28. No CVE IDs are assigned in the reviewed advisories. A universal version checker is omitted because older-line coverage differs.
