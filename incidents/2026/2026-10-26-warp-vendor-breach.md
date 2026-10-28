@@ -8,7 +8,7 @@ tags:
   - data exposure
 summary: Warp estimates roughly 1% of users as a potential upper bound after an intrusion reached agent traces and telemetry. The vendor, vulnerability and exact exposed fields remain undisclosed; credential theft is not established.
 splash: Warp users whose agent traces or telemetry were affected; exact accounts and attack prerequisites remain undisclosed
-wipe: Follow verified Warp notices, preserve relevant activity and investigate credentials only if exposure is identified
+wipe: Follow verified Warp notices, preserve and review relevant activity, and apply exposure-specific credential guidance
 inTheWild: n/a
 inTheWildNote: A vendor intrusion; the underlying flaw has not been identified.
 timeline:
@@ -24,8 +24,8 @@ checklist:
 sources:
   - name: Warp CEO disclosure
     url: https://x.com/zachlloydtweets/status/2114800787716972873
-    says: Original October 26 statement; X returned 403 during this review, so the archived text below was used.
-  - name: Archived copy of the CEO disclosure
+    says: Original October 26 statement; X returned 403 during this review, so the reproduced text below was used.
+  - name: Reproduced copy of the CEO disclosure
     url: https://ainews.leverageai.com.au/case/warp-vendor-infrastructure-exploitation
     primary: true
     says: "Reproduces the statement: roughly 1% upper bound, traces/telemetry, mitigation and CrowdStrike investigation."
