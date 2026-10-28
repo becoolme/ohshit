@@ -2,6 +2,7 @@
 title: bitcoinjs-lib patches six fee-accounting, block-validation and parsing flaws
 level: 3
 date: 2026-10-26
+updated: 2026-10-28
 tags:
   - Bitcoin
   - JavaScript
@@ -12,7 +13,7 @@ wipe: Upgrade to 5.2.3 / 6.1.10 / 7.0.5, verify resolved parser dependencies and
 inTheWild: unknown
 inTheWildNote: Advisories demonstrate defects but do not establish real-world exploitation.
 cves:
-  - id: GHSA-8vv3-6qpc-gpw6
+  - id: CVE-2026-107846
     name: Undetected Merkle duplication
     description: Forged transaction lists can pass block-root checks.
   - id: GHSA-88jr-9qj4-ccm4
@@ -50,6 +51,8 @@ timeline:
   - date: Oct 26, 2026
     title: Six security advisories published
     body: Different defects have different fix thresholds; use the complete-batch versions above.
+  - date: Oct 28, 2026
+    title: Review verifies CVE-2026-107846 on the Merkle advisory
 checklist:
   - title: Update every resolved copy and rebuild consumers
     hint: Use npm ls bitcoinjs-lib and the lockfile. The fee fixes alone are 5.2.2 / 6.1.9 / 7.0.4; those remain affected by the proof-of-work-target flaw. Use 5.2.3 / 6.1.10 / 7.0.5 for the whole batch.
@@ -63,7 +66,7 @@ sources:
   - name: bitcoinjs-lib — Undetected Merkle duplication
     url: https://github.com/bitcoinjs/bitcoinjs-lib/security/advisories/GHSA-8vv3-6qpc-gpw6
     primary: true
-    says: Merkle-duplication PoC and fixes 5.2.1 / 6.1.8 / 7.0.2.
+    says: CVE-2026-107846, Merkle-duplication PoC and fixes 5.2.1 / 6.1.8 / 7.0.2.
   - name: bitcoinjs-lib — Transaction parsing denial of service
     url: https://github.com/bitcoinjs/bitcoinjs-lib/security/advisories/GHSA-88jr-9qj4-ccm4
     primary: true
@@ -90,4 +93,6 @@ The fee defects affect applications trusting imported, updated or combined PSBT 
 
 The missing-value flaw begins in v5.1.0, conflicting-record handling in v5.2.0, Merkle validation in v2.3.0 and proof-of-work checking in v2.2.0; v6 and v7 release candidates are included where the advisories specify them. Both copying defects affect v7 through 7.0.2; untrusted parsing can stall the synchronous event loop before validation.
 
-These library bugs do not establish a Bitcoin Core consensus compromise or a confirmed loss. L3 reflects public reproductions and downstream financial/availability risks. This is distinct from the [Electrum malicious-server incident](https://github.com/spesmilo/electrum/security/advisories/GHSA-6jp4-8v48-cc5v).
+These library bugs do not establish a Bitcoin Core consensus compromise or a confirmed loss. L3 reflects public reproductions and downstream financial/availability risks. This is distinct from the [Electrum malicious-server incident](/incidents/electrum-fee-bump/).
+
+**Update, October 28:** Review verified that the Merkle-duplication advisory GHSA-8vv3-6qpc-gpw6 now lists CVE-2026-107846. These identify the same flaw; the batch still contains six vulnerabilities. The review date does not establish when the identifier was assigned.
