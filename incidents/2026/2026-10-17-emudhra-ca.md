@@ -3,7 +3,7 @@ title: "eMudhra CA intermediate private keys were so weak that every one was a n
 headline: "eMudhra: eight CA keys you could guess on a pocket calculator"
 level: 4
 date: 2026-10-17
-updated: 2026-10-25
+updated: 2026-10-28
 tags: [PKI, CA, TLS]
 ecosystems: [go, python, node, browsers]
 summary: >-
@@ -98,6 +98,9 @@ timeline:
   - date: Oct 24, 2026
     title: Oracle issues a root-removal update
     body: CVE-2026-114820 and revised operational guidance supersede reliance on intermediate fingerprint blocking alone.
+  - date: Oct 27, 2026
+    title: Google expands Cloud and Firebase operational guidance
+    body: Self-managed trust stores, Cloud CLI and COS nodes need specific updates; managed fleets are being updated.
   - date: ~Oct 27, 2026
     title: Chrome Root Store v43 removes the emSign ECC Root CA - G3
 checklist:
@@ -127,6 +130,8 @@ checklist:
     hint: Use Dart 3.13.7 or Flutter 3.47.8 with patched Dart; beta minimums are 3.14.0-315.3.beta and 3.50.0-0.2.pre. Rebuild and distribute binaries. Android and Windows ignore OS intermediate blocklists; Linux exposure depends on its CA bundle
   - title: Ship updated Firestore clients and refresh App Distribution CI
     hint: Use the platform-specific SDK versions above. Rebuild, republish and prompt users to update Firestore apps; browser or OS fixes alone do not replace embedded bundles. Update the App Distribution Gradle plugin to 5.3.1+ and refresh CI dependencies; this plugin needs no app republication
+  - title: Apply Google Cloud guidance to the layers you manage
+    hint: Update gcloud CLI and OS/custom-image trust stores. For COS, upgrade or restart nodes onto current milestones, or follow the cos_ca_cert_mitigation guidance. Check GKE’s linked version matrix and each managed service’s notices; Google fleet updates do not replace customer image/SDK updates. Google reports no infrastructure breach or exploitation against Cloud workloads.
 sources:
   - name: Mozilla Bugzilla 2083449
     url: https://bugzilla.mozilla.org/show_bug.cgi?id=2083449
@@ -210,6 +215,11 @@ sources:
     url: https://ops.java/emudhra/
     says: October 24 guidance includes per-runtime keystore backup, root removal and restart, revocation checks and CheckCerts.java
     primary: true
+  - name: Google Cloud GCP-2026-071
+    url: https://docs.cloud.google.com/support/bulletins#gcp-2026-071
+    primary: true
+    says: October 27 update; customer-managed trust stores, gcloud/COS/GKE guidance and managed-service rollout, without an infrastructure breach.
+
 ---
 
 A certificate authority's private key is the thing that makes "this is really your bank" true. For eight
@@ -251,3 +261,5 @@ still carry the old bundle.
 **Update, October 25:** Oracle's October 24 alert, CVE-2026-114820, now provides root-removal patches after its October 21 intermediate-distrust alert, CVE-2026-91403. Both belong to this same incident. The public version table identifies affected builds, not safe ones; obtain the matching patch through Oracle's availability document. Keep the other runtime and application updates above. No exploitation is established by these alerts.
 
 For an unpatched Oracle runtime, the [operational guide](https://ops.java/emudhra/) gives an alternative: back up `cacerts`, remove `emsignrootcag1 [jdk]`, `emsignrootcag2 [jdk]`, `emsigneccrootcag3 [jdk]` and `comodoaaaca [jdk]`, then restart each installed runtime. JDK 8 uses `$JDK_HOME/jre/lib/security/cacerts`; JDK 11+ uses `$JDK_HOME/lib/security/cacerts`. Test legitimate certificate chains before removal, monitor failures afterward, and check application-specific stores separately. The guide also documents revocation-checking options and a verification tool.
+
+**Update, October 28:** Google’s October 27 bulletin separates managed-service rollout from customer-controlled trust stores, custom images and bundled clients. Review its service-specific guidance; the affected-product list does not establish that Cloud backends were breached. Existing runtime, SDK and certificate-replacement instructions still apply.
