@@ -6,7 +6,7 @@ tags:
 - aviation
 - third party
 - data exposure
-summary: JAL/JTA report traces of external access affecting about 92,000 customers in Amadeus. Around 2,000 records also included passport and contact details. The airlines report no card-number/password compromise, confirmed misuse or flight disruption.
+summary: JAL/JTA report traces of external access affecting about 92,000 customers in Amadeus. About 2,000 customers also had additional fields such as passport/contact details accessed. The airlines report no card-number/password compromise, confirmed misuse or flight disruption.
 splash: Some JAL/JTA reservation records in Amadeus; access method and attacker are undisclosed
 wipe: Watch for impersonation; use verified airline contacts and individual notices to assess your exposure
 inTheWild: n/a
