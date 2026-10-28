@@ -16,7 +16,7 @@ inTheWildNote: Docker’s release notes do not report malicious exploitation.
 cves:
 - id: CVE-2026-114409
   name: Third-party credentials logged in cleartext
-  description: Insufficient IPC redaction exposes third-party API keys/OAuth tokens to readers of local logs or diagnostic bundles; these are not Docker account tokens.
+  description: Docker’s CNA identifies versions 4.39.0 to before 4.97.0. Insufficient IPC redaction exposes third-party API keys/OAuth tokens to readers of local logs or diagnostic bundles; these are not Docker account tokens.
 - id: CVE-2026-99999
   name: VM network-stack corruption
   description: A container can abuse bad IPv4 checksum metadata through TUN or AF_PACKET to corrupt the VM network stack; the notes do not establish a host escape.
@@ -25,8 +25,12 @@ fixed:
   version: 4.97.0
   status: Includes existing host-log/crash-dump cleanup
 timeline:
+- date: Oct 15, 2026
+  title: Linux publishes the underlying kernel CVE
 - date: Oct 26, 2026
   title: Docker Desktop 4.97.0 released
+- date: Oct 27, 2026
+  title: Docker publishes the credential CVE record
 checklist:
 - title: Verify the Desktop application version
   hint: Update through Docker’s official release channels and verify 4.97.0 in Docker Desktop. A docker client/Engine version alone does not identify the Desktop application build.
@@ -43,6 +47,16 @@ sources:
   url: https://docs.docker.com/desktop/release-notes/#4970
   primary: true
   says: October 26 release; distinguishes credential logging from VM network-stack corruption.
+- name: Docker CNA credential record
+  url: https://cveawg.mitre.org/api/cve/CVE-2026-114409
+  primary: true
+  says: Affected Desktop range starts at 4.39.0; October 27 CVE publication follows the release.
+- name: Linux CNA network-checksum record
+  url: https://cveawg.mitre.org/api/cve/CVE-2026-99999
+  primary: true
+  says: Underlying kernel CVE was public October 15; October 26 is the Desktop remediation batch.
 ---
 
 L3 reflects security-boundary failures in a mainstream developer tool. Neither a confirmed host takeover nor a victim count is established. The separate [eMudhra trust-store response](/incidents/emudhra-ca/) still requires attention; this release batch concerns different flaws.
+
+The kernel flaw was already public before this Desktop release; this entry covers the October 26 Desktop remediation batch, not a newly discovered Linux bug.
