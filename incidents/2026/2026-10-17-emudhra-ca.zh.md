@@ -82,7 +82,7 @@ timeline:
     body: CVE-2026-114820 及修订后的操作指南取代了仅依赖中间证书指纹阻止的做法。
   - date: 2026年10月27日
     title: Google 扩充 Cloud 与 Firebase 运维指导
-    body: 自管信任库、Cloud CLI 及 COS 节点需单独更新；托管集群正在更新。
+    body: 自管信任库、Cloud CLI 及 COS 节点需单独更新；托管服务正在更新。
   - date: 2026年10月27日前后
     title: Chrome Root Store v43 移除 emSign ECC Root CA - G3
 checklist:
@@ -113,7 +113,7 @@ checklist:
   - title: 发布更新后的 Firestore 客户端并刷新 App Distribution CI
     hint: 使用上表中对应平台的 SDK 版本。重建、重新发布 Firestore 应用并提示用户升级；浏览器或系统修复不能替换内嵌证书包。将 App Distribution Gradle 插件升级到 5.3.1 或更新版本并刷新 CI 依赖；此插件无需重新发布应用
   - title: 按所管理的层级应用 Google Cloud 指导
-    hint: 更新 gcloud CLI，以及操作系统或自定义镜像的信任库。COS 应升级或重启节点以使用当前里程碑版本，或遵循 cos_ca_cert_mitigation 指导。核对链接中的 GKE 版本矩阵及各托管服务通告；Google 的集群更新不能代替客户镜像和 SDK 更新。Google 称基础设施未遭入侵，未发现面向 Cloud 工作负载的利用。
+    hint: 更新 gcloud CLI，以及操作系统或自定义镜像的信任库。COS 应升级或重启节点以使用当前里程碑版本，或遵循 cos_ca_cert_mitigation 指导。核对链接中的 GKE 版本矩阵及各托管服务通告；Google 的托管服务更新不能代替客户镜像和 SDK 更新。Google 称基础设施未遭入侵，未发现面向 Cloud 工作负载的利用。
 sources:
   - says: 私钥是小于 256 的整数；报告时间、OneCRL 条目，以及 10月18日的吊销
   - name: eMudhra 声明
@@ -156,7 +156,6 @@ sources:
     says: 10月24日指南包含逐运行时备份证书库、移除根证书并重启，以及吊销检查和 CheckCerts.java
   - name: Google Cloud GCP-2026-071
     says: 10 月 27 日更新：客户管理的信任库、gcloud/COS/GKE 指导及托管服务更新，不代表基础设施遭入侵。
-
 ---
 CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eMudhra 有八张中间证书，P-384 私钥都是**小于 256 的整数**。据研究人员 Scott Helme 说，其中一个就是数字 4。谁要是注意到了，就能给任意域名签证书，而所有信任这条链的客户端都会照单全收。
 

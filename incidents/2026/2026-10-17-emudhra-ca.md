@@ -100,7 +100,7 @@ timeline:
     body: CVE-2026-114820 and revised operational guidance supersede reliance on intermediate fingerprint blocking alone.
   - date: Oct 27, 2026
     title: Google expands Cloud and Firebase operational guidance
-    body: Self-managed trust stores, Cloud CLI and COS nodes need specific updates; managed fleets are being updated.
+    body: Self-managed trust stores, Cloud CLI and COS nodes need specific updates; managed services are being updated.
   - date: ~Oct 27, 2026
     title: Chrome Root Store v43 removes the emSign ECC Root CA - G3
 checklist:
@@ -219,7 +219,6 @@ sources:
     url: https://docs.cloud.google.com/support/bulletins#gcp-2026-071
     primary: true
     says: October 27 update; customer-managed trust stores, gcloud/COS/GKE guidance and managed-service rollout, without an infrastructure breach.
-
 ---
 
 A certificate authority's private key is the thing that makes "this is really your bank" true. For eight
