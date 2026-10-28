@@ -4,7 +4,8 @@ How to review, fix and merge the pull requests that [JOB.md](JOB.md) opens. The 
 should say are in JOB.md, [CONTRIBUTING.md](CONTRIBUTING.md) and [`docs/translation-zh.md`](docs/translation-zh.md).
 This file covers two rounds of review, fixes and automatic merge onto `main`. The scheduled job runs every
 six hours and may review and merge the PR it creates in that run. Other PRs require user authorization.
-Deployment is separate: do not deploy, trigger deployment workflows or publish releases.
+The user authorizes merge pushes to trigger the configured Cloudflare automatic deployment. Do not run
+standalone deployment commands, manually trigger deployment workflows or publish releases.
 
 ## 0. Set up
 
@@ -113,14 +114,14 @@ any missing rule that could prevent the mistake recurring (see step 8).
 4. Review the final diff and identify its exact head SHA. Any later change, including conflict resolution,
    needs review and fresh checks on the resulting commit before merge.
 
-## 7. Merge without deploying
+## 7. Merge after review and checks
 
 1. Confirm both review rounds are complete and all findings are resolved. `npm test` and `npm run build`
    must pass; wait for the `build` CI check and every other required check on the latest reviewed commit
    to pass. Never merge on red or pending, bypass checks, or use administrator overrides.
-2. Verify that merging will not trigger deployment through repository workflows or connected hosting
-   integrations. If this cannot be confirmed, stop before merging and report. Do not run deployment
-   commands, trigger deployment workflows or publish releases.
+2. Merging onto `main` may trigger the configured Cloudflare automatic deployment; the user explicitly
+   authorizes this behavior. Do not hold an otherwise ready PR because of that integration. Do not run
+   standalone deployment commands, manually trigger deployment workflows or publish releases.
 3. Automatically merge the authorized PR with
    `gh pr merge <n> --rebase --delete-branch --match-head-commit <reviewed-head-sha>`.
    Rebase preserves the event and review-fix commits. Never push directly to `main` or force-push.
@@ -128,7 +129,7 @@ any missing rule that could prevent the mistake recurring (see step 8).
    review the resulting complete diff, rerun tests/build and wait for fresh CI. If you cannot do this
    safely, leave the PR open and report. Do not modify unrelated PRs.
 5. Safely return to `main`, run `git pull --ff-only`, and confirm CI passed for the exact resulting main
-   commit. Report any failure; do not deploy or rewrite main to repair it automatically.
+   commit. Report any failure; do not manually deploy or rewrite main to repair it automatically.
 6. Remove only scratch worktrees created for this review, after preserving any work they contain.
 7. Notify with the PR link, review/fix summary and validation outcome after completion, or report a
    failure or unresolved issue that prevents completion. No substantive change means no PR or notification.
