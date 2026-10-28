@@ -34,6 +34,8 @@ timeline:
   - date: 2026年10月26日
     title: 公开六份安全公告
     body: 各缺陷的修复门槛不同；完整批次应采用上方版本。
+  - date: 2026年10月28日
+    title: 复核确认 Merkle 公告列出 CVE-2026-107846
 checklist:
   - title: 更新所有实际依赖副本，并重建使用方
     hint: 检查 npm ls bitcoinjs-lib 及锁文件。费用漏洞的修复版本仅为 5.2.2 / 6.1.9 / 7.0.4，这些版本仍有工作量证明目标漏洞。完整修复使用 5.2.3 / 6.1.10 / 7.0.5。
@@ -45,7 +47,7 @@ checklist:
     hint: 限制输入大小并使用独立解析工作线程。v7 应核实嵌套 uint8array-tools >=0.0.10、varuint-bitcoin >=2.0.1 和 bip174 >=3.0.1；仅更新依赖不能修复独立的区块后缀复制问题。
 sources:
   - name: bitcoinjs-lib——未检测 Merkle 重复
-    says: Merkle 重复 PoC，修复版本为 5.2.1 / 6.1.8 / 7.0.2。
+    says: CVE-2026-107846、Merkle 重复 PoC，修复版本为 5.2.1 / 6.1.8 / 7.0.2。
   - name: bitcoinjs-lib——交易解析拒绝服务
     says: v7 解析器暴露及 7.0.3 修复；不需要有效的已挖出区块。
   - name: bitcoinjs-lib——区块解析拒绝服务
@@ -62,4 +64,6 @@ sources:
 
 缺少金额漏洞始于 v5.1.0，记录冲突始于 v5.2.0，Merkle 验证始于 v2.3.0，工作量证明检查始于 v2.2.0；公告列明的 v6、v7 候选版本也在范围内。两项复制缺陷影响截至 7.0.2 的 v7；不可信解析可在验证前阻塞同步事件循环。
 
-这些库漏洞不代表 Bitcoin Core 共识失陷，也没有确认资金损失。公开复现及下游资金、可用性风险支持 L3 评级。本批次独立于 [Electrum 恶意服务器事件](https://github.com/spesmilo/electrum/security/advisories/GHSA-6jp4-8v48-cc5v)。
+这些库漏洞不代表 Bitcoin Core 共识失陷，也没有确认资金损失。公开复现及下游资金、可用性风险支持 L3 评级。本批次独立于 [Electrum 恶意服务器事件](/zh/incidents/electrum-fee-bump/)。
+
+**10 月 28 日更新：** 复核确认 Merkle 重复公告 GHSA-8vv3-6qpc-gpw6 现已列出 CVE-2026-107846。两个编号对应同一漏洞，本批次仍为六项。复核日期不代表编号分配日期。
