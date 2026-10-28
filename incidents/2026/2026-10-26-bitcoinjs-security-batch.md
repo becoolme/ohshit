@@ -6,7 +6,7 @@ tags:
   - Bitcoin
   - JavaScript
   - PSBT
-summary: Six advisories cover understated miner fees, invalid block checks and parsing denial of service. Upgrade to 5.2.3 / 6.1.10 / 7.0.5 for the full batch. Loss requires downstream reliance and, for excess fees, a valid broadcast transaction; real-world exploitation is unconfirmed.
+summary: Six advisories cover understated miner fees, invalid block checks and parsing denial of service. Upgrade to 5.2.3 / 6.1.10 / 7.0.5 for the full batch. Loss requires downstream reliance and, for excess fees, a valid transaction broadcast and accepted by the network; real-world exploitation is unconfirmed.
 splash: Apps accepting untrusted PSBTs, transactions or blocks and relying on bitcoinjs-lib fee, parsing or validation APIs
 wipe: Upgrade to 5.2.3 / 6.1.10 / 7.0.5, verify resolved parser dependencies and independently validate inputs
 inTheWild: unknown
@@ -90,4 +90,4 @@ The fee defects affect applications trusting imported, updated or combined PSBT 
 
 The missing-value flaw begins in v5.1.0, conflicting-record handling in v5.2.0, Merkle validation in v2.3.0 and proof-of-work checking in v2.2.0; v6 and v7 release candidates are included where the advisories specify them. Both copying defects affect v7 through 7.0.2; untrusted parsing can stall the synchronous event loop before validation.
 
-These library bugs do not establish a Bitcoin Core consensus compromise or a confirmed loss. L3 reflects public reproductions and downstream financial/availability risks. This is distinct from the [Electrum malicious-server incident](/incidents/electrum-fee-bump/).
+These library bugs do not establish a Bitcoin Core consensus compromise or a confirmed loss. L3 reflects public reproductions and downstream financial/availability risks. This is distinct from the [Electrum malicious-server incident](https://github.com/spesmilo/electrum/security/advisories/GHSA-6jp4-8v48-cc5v).
