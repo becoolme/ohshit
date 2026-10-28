@@ -25,7 +25,7 @@ checklist:
   - title: 更新启用许可证的代理
     hint: 从经核实的官方渠道选择上方对应修复版本；10 月 21 日投毒事件的回退版本 1.106.2 无法修复本次独立 Enterprise 漏洞。
   - title: 阻断触发条件并限制网络路径
-    hint: 在入口拒绝或移除 POST JSON 键 standard_callback_dynamic_params、gcs_path_service_account、callbacks、success_callback 和 failure_callback。出站仅允许已配置的 LLM 服务商；通过 VPN、mTLS、认证入口或 IP 白名单限制访问。
+    hint: 在入口拒绝包含以下任一 JSON 键的 POST 请求： standard_callback_dynamic_params、gcs_path_service_account、callbacks、success_callback 和 failure_callback。出站仅允许已配置的 LLM 服务商；通过 VPN、mTLS、认证入口或 IP 白名单限制访问。
   - title: 减少密钥暴露并调查可访问凭据
     hint: 从密钥管理器加载主密钥，设置独立的 LITELLM_SALT_KEY，并检查疑似文件访问及外传，包括 /proc/self/environ。通用事件响应建议：保留日志，若发现暴露应轮换主密钥及服务商密钥；没有公开的攻击活动专属指标。
 sources:
