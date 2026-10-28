@@ -27,9 +27,9 @@ checklist:
   - title: 核实清理并处理脚本缓存
     hint: 商户应向 Convertr 核实清理并通知支付服务商。浏览器缓存可保留恶意脚本 24 小时；购物者再次访问前应清除相关站点缓存。
   - title: 排查当前及历史指标
-    hint: analytics.convertr.app.br/js/script.pageview-props.tagged-events.js；1x0.is/ws 及 /ws/<base64>；SHA256 ee4618d24737eff785e5a267b55903d5ef6ff7ecbeb099347a67fee77734d7f7。Sansec 列出 14 个旧域名：snf.is、kk.land、nmn.is、kof.one、anl.is、xsox.diy、eqp.is、shy.is、blz.is、tray.is、miorl.net、xwv.is、fasthook.app、antiddos-protection.net。完整清单还含六个 Discord webhook ID 及脚本字符串；历史指标属于更广泛活动，不一定用于 Convertr。仅命中不能证明失陷。
+    hint: analytics.convertr.app.br/js/script.pageview-props.tagged-events.js；1x0.is/ws 及 /ws/<base64>；SHA256 ee4618d24737eff785e5a267b55903d5ef6ff7ecbeb099347a67fee77734d7f7。Sansec 列出 14 个旧域名：snf.is、kk.land、nmn.is、kof.one、anl.is、xsox.diy、eqp.is、shy.is、blz.is、tray.is、miorl.net、xwv.is、fasthook.app、antiddos-protection.net。六个历史 Discord webhook 路径为 discord.com/api/webhooks/1349318491479605268、discord.com/api/webhooks/1349948669419327508、discord.com/api/webhooks/1351613753069801583、discord.com/api/webhooks/1398562090934993036、discord.com/api/webhooks/1414969348262596778、discord.com/api/webhooks/1557650706259902495；脚本字符串为 indexOf('checkout.convertr') 及 _s+=String.fromCharCode(_a[_i]);(0,eval)(_s)；历史指标属于更广泛活动，不一定用于 Convertr。仅命中不能证明失陷。
   - title: 修复并调查自托管 Plausible CE
-    hint: ">=3 且 <3.2.1 应升级至 3.2.1 或更新版本，或暂时阻断 /storybook。检查端点日志及容器活动；保留证据、重建失陷系统，并轮换可访问的密钥。"
+    hint: ">=3 且 <3.2.1 应升级至 3.2.1 或更新版本，或暂时阻断 /storybook。检查端点日志及容器活动；保留证据、重建失陷系统，并轮换可访问的密钥。 将 priv/tracker/js/ 中的文件与官方发行版比对。"
 sources:
   - name: Sansec 调查
     says: 10 月 26 日披露、27 日清理、完整指标及缓存警告；最初入口未确认。
