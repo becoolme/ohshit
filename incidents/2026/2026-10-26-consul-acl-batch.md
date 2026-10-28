@@ -12,16 +12,16 @@ inTheWildNote: "HashiCorp's five advisories do not report malicious exploitation
 cves:
   - id: CVE-2026-105765
     name: Cached mesh leaf certificate authorization bypass
-    description: "Consul/Enterprise 1.17.0 through 2.0.4 can return an already-cached service leaf certificate and private key without validating an ACL token. Requires ACLs enabled and access to the agent HTTP API; its default loopback binding limits remote exposure."
+    description: "Affected Consul/Enterprise releases from 1.17.0 through 2.0.4, excluding the fixed Enterprise 1.21.19 release, can return an already-cached service leaf certificate and private key without validating an ACL token. Requires ACLs enabled and access to the agent HTTP API; its default loopback binding limits remote exposure."
   - id: CVE-2026-105608
     name: Proxy escape-hatch permission bypass
     description: "Affected releases are Consul 2.0.4 and Enterprise 2.0.4, 1.22.12 and 1.21.18. With ACLs enabled, a principal with write access to the proxy and destination service but without mesh write can bypass override-key checks and supply Envoy configuration."
   - id: CVE-2026-105626
     name: Unbounded HTTP request memory consumption
-    description: "Affected Consul/Enterprise releases through 2.0.4 decode request bodies without a size cap before ACL checks. An attacker who can reach the HTTP API can exhaust agent memory without a valid token."
+    description: "Affected Consul/Enterprise releases through 2.0.4, excluding the fixed Enterprise 1.21.19 release, decode request bodies without a size cap before ACL checks. An attacker who can reach the HTTP API can exhaust agent memory without a valid token."
   - id: CVE-2026-115804
     name: Cross-service health-check authorization bypass
-    description: "Consul/Enterprise 0.7.2 through 2.0.4 with ACLs enabled allow a principal with service:write for another service on the same node to modify or rebind an existing health check, affecting discovery or mesh routing."
+    description: "Affected Consul/Enterprise releases from 0.7.2 through 2.0.4, excluding the fixed Enterprise 1.21.19 release, with ACLs enabled allow a principal with service:write for another service on the same node to modify or rebind an existing health check, affecting discovery or mesh routing."
   - id: CVE-2026-110720
     name: Cross-namespace consul-k8s component authentication
     description: "The advisory identifies consul-k8s 0.42.0 through 2.0.4, except fixed 1.8.18, with system ACL management enabled. An attacker able to create a ServiceAccount and obtain its token in another namespace, and reach the Consul API, can obtain a component's Consul privileges."

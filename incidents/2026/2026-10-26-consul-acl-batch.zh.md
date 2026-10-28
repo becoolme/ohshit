@@ -7,13 +7,13 @@ wipe: "按产品更新：Consul CE 2.1.0、Enterprise 2.1.0/1.21.19、consul-k8s
 inTheWildNote: "HashiCorp 的五项公告未报告恶意利用"
 cves:
   - name: 缓存中的网格叶证书授权绕过
-    description: "Consul/Enterprise 1.17.0 至 2.0.4 可在未验证 ACL 令牌时返回已有缓存的服务叶证书及私钥。要求启用 ACL 且能够访问 agent HTTP API；默认绑定回环地址限制了远程暴露。"
+    description: "受影响的 Consul/Enterprise 版本从 1.17.0 至 2.0.4，已修复的 Enterprise 1.21.19 除外，可在未验证 ACL 令牌时返回已有缓存的服务叶证书及私钥。要求启用 ACL 且能够访问 agent HTTP API；默认绑定回环地址限制了远程暴露。"
   - name: 代理 escape-hatch 权限绕过
     description: "影响 Consul 2.0.4 及 Enterprise 2.0.4、1.22.12、1.21.18。启用 ACL 时，具有代理及其目标服务写权限、但无 mesh write 的主体，可绕过覆盖配置键检查并提交 Envoy 配置。"
   - name: HTTP 请求内存消耗不受限制
-    description: "受影响的 Consul/Enterprise 版本截至 2.0.4，在 ACL 检查前解码请求体且没有大小上限。能够访问 HTTP API 的攻击者无需有效令牌即可耗尽 agent 内存。"
+    description: "受影响的 Consul/Enterprise 版本截至 2.0.4，已修复的 Enterprise 1.21.19 除外，在 ACL 检查前解码请求体且没有大小上限。能够访问 HTTP API 的攻击者无需有效令牌即可耗尽 agent 内存。"
   - name: 跨服务健康检查授权绕过
-    description: "Consul/Enterprise 0.7.2 至 2.0.4 启用 ACL 时，拥有同一节点上另一个服务的 service:write 权限的主体，可修改或重新绑定已有健康检查，影响服务发现或网格路由。"
+    description: "受影响的 Consul/Enterprise 版本从 0.7.2 至 2.0.4，已修复的 Enterprise 1.21.19 除外，启用 ACL 时，拥有同一节点上另一个服务的 service:write 权限的主体，可修改或重新绑定已有健康检查，影响服务发现或网格路由。"
   - name: consul-k8s 组件认证跨命名空间绕过
     description: "公告标明影响启用系统 ACL 管理的 consul-k8s 0.42.0 至 2.0.4，但已修复的 1.8.18 除外。攻击者需能在其他命名空间创建 ServiceAccount、取得其令牌并访问 Consul API，才能获得组件关联的 Consul 权限。"
 fixed:
