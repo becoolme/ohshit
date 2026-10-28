@@ -17,7 +17,7 @@ timeline:
     title: UNM reports clinical systems and ambulance operations restored
 checklist:
   - title: Confirm rescheduled care with your clinic
-    hint: UNM says care teams will contact patients whose appointments or procedures were disrupted.
+    hint: Contact your care team to reschedule a disrupted appointment or procedure; UNM says its teams will work with affected patients.
   - title: Check official HSC operating notices
     hint: Health Sciences classes remained canceled October 27; central and branch campuses were unaffected.
   - title: Watch for unsolicited breach messages
