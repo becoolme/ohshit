@@ -2,6 +2,7 @@
 title: "Electrum fixes an exploited malicious-server trick that turns a fee bump into an attacker payment"
 level: 4
 date: 2026-10-24
+updated: 2026-10-28
 tags: [Electrum, Bitcoin, exploited]
 ecosystems: [electrum]
 summary: "A malicious Electrum server can replace a pending payment with an invalid transaction. If the user fee-bumps it, the wallet signs a payment to the attacker. Maintainers report one user lost funds; upgrade to 4.8.3."
@@ -10,7 +11,7 @@ wipe: "Install Electrum 4.8.3 from electrum.org; verify signatures and every ful
 inTheWild: yes
 inTheWildNote: "Maintainers confirm attacking servers and two reports, including one loss"
 cves:
-  - id: GHSA-6jp4-8v48-cc5v
+  - id: CVE-2026-117601
     name: Malicious-server substitution of an unconfirmed transaction
     description: "A server hides a broadcast and supplies a conflicting transaction with invalid signatures; a manual replace-by-fee operation can authorize the attacker payment."
 fixed:
@@ -26,6 +27,9 @@ timeline:
     title: The fixed 4.8.3 source is tagged
   - date: Oct 24, 2026
     title: Binaries and the public advisory are released
+  - date: Oct 28, 2026
+    title: Review verifies the maintainer advisory now identifies CVE-2026-117601
+    body: This is the same flaw as GHSA-6jp4-8v48-cc5v, not an additional vulnerability or a new disclosure date.
 checklist:
   - title: Upgrade before signing another transaction
     hint: "Use electrum.org and its GPG verification instructions; confirm the running application is 4.8.3 or newer"
@@ -61,3 +65,5 @@ This needs a malicious main server and a further user signature. It is not autom
 Version 4.8.3 rejects invalid signatures on inputs belonging to the wallet before accepting mempool history. It does not turn this light client into a full consensus validator: incoming unconfirmed payments remain outside that added check.
 
 The project received two reports and says one reporter lost money. It gives no total loss or wider victim count. Active exploitation in a widely used wallet warrants L4; no broader loss estimate is inferred.
+
+**Update, October 28:** The maintainer advisory now identifies this same vulnerability as **CVE-2026-117601**, also tracked as **GHSA-6jp4-8v48-cc5v**. The October 24 disclosure date and Electrum 4.8.3 fix are unchanged; the advisory does not specify when the CVE was added.
