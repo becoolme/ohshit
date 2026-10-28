@@ -80,6 +80,9 @@ timeline:
   - date: 2026年10月24日
     title: Oracle 发布根证书移除更新
     body: CVE-2026-114820 及修订后的操作指南取代了仅依赖中间证书指纹阻止的做法。
+  - date: 2026年10月27日
+    title: Google 扩充 Cloud 与 Firebase 运维指导
+    body: 自管信任库、Cloud CLI 及 COS 节点需单独更新；托管集群正在更新。
   - date: 2026年10月27日前后
     title: Chrome Root Store v43 移除 emSign ECC Root CA - G3
 checklist:
@@ -109,6 +112,8 @@ checklist:
     hint: 使用 Dart 3.13.7，或搭配已修补 Dart 的 Flutter 3.47.8；beta 最低版本分别为 3.14.0-315.3.beta 和 3.50.0-0.2.pre。重建并分发二进制文件。Android 和 Windows 不读取系统中间证书阻止列表；Linux 是否暴露取决于 CA 证书包
   - title: 发布更新后的 Firestore 客户端并刷新 App Distribution CI
     hint: 使用上表中对应平台的 SDK 版本。重建、重新发布 Firestore 应用并提示用户升级；浏览器或系统修复不能替换内嵌证书包。将 App Distribution Gradle 插件升级到 5.3.1 或更新版本并刷新 CI 依赖；此插件无需重新发布应用
+  - title: 按所管理的层级应用 Google Cloud 指导
+    hint: 更新 gcloud CLI，以及操作系统或自定义镜像的信任库。COS 应升级或重启节点以使用当前里程碑版本，或遵循 cos_ca_cert_mitigation 指导。核对链接中的 GKE 版本矩阵及各托管服务通告；Google 的集群更新不能代替客户镜像和 SDK 更新。Google 称基础设施未遭入侵，未发现面向 Cloud 工作负载的利用。
 sources:
   - says: 私钥是小于 256 的整数；报告时间、OneCRL 条目，以及 10月18日的吊销
   - name: eMudhra 声明
@@ -149,6 +154,9 @@ sources:
     says: 10月24日的根证书移除更新；版本表列出受影响版本，并非修复构建
   - name: Oracle JDK 操作指南
     says: 10月24日指南包含逐运行时备份证书库、移除根证书并重启，以及吊销检查和 CheckCerts.java
+  - name: Google Cloud GCP-2026-071
+    says: 10 月 27 日更新：客户管理的信任库、gcloud/COS/GKE 指导及托管服务更新，不代表基础设施遭入侵。
+
 ---
 CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eMudhra 有八张中间证书，P-384 私钥都是**小于 256 的整数**。据研究人员 Scott Helme 说，其中一个就是数字 4。谁要是注意到了，就能给任意域名签证书，而所有信任这条链的客户端都会照单全收。
 
@@ -182,3 +190,5 @@ CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eM
 **10月25日更新：** Oracle 在 10月21日发布中间证书取消信任公告 CVE-2026-91403 后，于 10月24日通过 CVE-2026-114820 提供移除根证书的补丁。两者属于同一事件。公开版本表列出的是受影响构建，并非安全版本；应通过 Oracle 的补丁可用性文档获取对应补丁。仍须完成上面其他运行时和应用的更新。这些公告没有证实在野利用。
 
 未修补的 Oracle 运行时可采用[操作指南](https://ops.java/emudhra/)中的替代办法：备份 `cacerts`，移除 `emsignrootcag1 [jdk]`、`emsignrootcag2 [jdk]`、`emsigneccrootcag3 [jdk]` 和 `comodoaaaca [jdk]`，然后重启每个已安装的运行时。JDK 8 使用 `$JDK_HOME/jre/lib/security/cacerts`；JDK 11+ 使用 `$JDK_HOME/lib/security/cacerts`。移除前测试合法证书链，之后监控失败，并单独检查应用专用信任库。指南也列出吊销检查选项和验证工具。
+
+**10 月 28 日更新：** Google 的 10 月 27 日公告区分托管服务更新与客户控制的信任库、自定义镜像及内置客户端。按服务核对具体指导；受影响产品清单不能证明 Cloud 后端遭入侵。既有运行时、SDK 及证书替换措施仍然适用。
