@@ -80,7 +80,7 @@ checklist:
 - title: Review suspicious configuration and account activity
   hint: Compare job and agent config.xml files, user records and controller filesystem changes with trusted backups; review available access logs for unusual configuration requests. These are behavioral checks, not published IoCs; one anomaly alone does not prove compromise.
 - title: Treat stolen-token cookies as separate credentials
-  hint: If an API token was exposed, do not assume revoking it also ends existing remember-me access. Contain controller access and use your incident-response process to invalidate affected persistent sessions and replace exposed credentials.
+  hint: If an API token was exposed, do not assume revoking it also ends existing remember-me access. After containment and upgrade, use the affected user’s configuration page to revoke all sessions by renewing the user seed; this also invalidates remember-me cookies. Revoke the token and replace exposed credentials.
 sources:
 - name: Jenkins October 28 core security advisory
   url: https://www.jenkins.io/security/advisory/2026-10-28/
@@ -153,6 +153,14 @@ sources:
 - name: 'Jenkins CNA record: CVE-2026-117626'
   url: https://cveawg.mitre.org/api/cve/CVE-2026-117626
   says: File browser metadata traversal.
+  primary: true
+- name: Jenkins session and remember-me revocation advisory
+  url: https://www.jenkins.io/security/advisory/2019-01-16/
+  says: Renewing a user's seed through the configuration page invalidates sessions and remember-me cookies.
+  primary: true
+- name: Jenkins UserSeedProperty API
+  url: https://javadoc.jenkins.io/jenkins/security/seed/UserSeedProperty.html
+  says: The user seed provides session revocation; disabling seed verification defeats that protection.
   primary: true
 ---
 
