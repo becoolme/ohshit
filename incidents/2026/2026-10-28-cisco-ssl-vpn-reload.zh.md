@@ -39,9 +39,12 @@ fixed:
 timeline:
 - date: 10月28日 19:15 UTC
   title: Cisco 发布修复并确认利用
+- date: 2026年10月29日
+  title: CISA 纳入 KEV，处置期限为 11 月 1 日
+  body: 目录确认已遭利用；取证分诊标记为 No，勒索软件利用情况未知。
 checklist:
 - title: 按产品和维护分支升级
-  hint: 在 Cisco Software Checker 中选择产品、平台和已安装版本，按公告矩阵选择对应目标；升级后核对运行版本。
+  hint: 在 Cisco Software Checker 中选择产品、平台和已安装版本，按公告矩阵选择对应目标；升级后核对运行版本。CISA 为美国联邦文职行政部门机构（FCEB）设定了 11 月 1 日处置期限；其他运维方也应立即优先处理此已遭利用的漏洞。
 - title: 检查所有相关 tunnel group
   hint: 检查 webvpn enable 和 secondary-authentication-server-group。存在 tunnel-group-list enable 时，检查所有组，包括 DefaultWEBVPNGroup；不存在时，检查 DefaultWEBVPNGroup。FTD 需核对已部署的 FMC/FDM 策略和设备配置。
 - title: 修改认证前评估厂商缓解方案
@@ -53,6 +56,10 @@ sources:
   says: CVSS 3.1 为 8.6，说明未认证重启影响及利用状态。
 - name: Cisco CSAF 发布数据
   says: 公告和修复版本矩阵的机器可读副本。
+- name: CISA KEV 目录
+  says: 10 月 29 日加入，期限为 11 月 1 日；取证分诊为 No，勒索软件利用情况未知。
 ---
 
 Cisco 已确认利用，因此评为 L4。认证配置是暴露前提，不代表攻击者需要凭据。来源未给出受害者数量或攻击者 IoC。虽然公告横幅写着没有变通办法，正文仍列出临时配置缓解措施；默认组自身启用二次认证时，仅隐藏组列表不够。
+
+CISA 于 10 月 29 日将 CVE-2026-76418 纳入 KEV。11 月 1 日期限适用于 FCEB 机构；该条目没有像 GitLab 漏洞一样标记为需要取证分诊。这是同一 DoS 事件的额外确认，不代表新的 RCE，也未增加已确认受害者数量。
