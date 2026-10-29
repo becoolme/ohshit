@@ -3,17 +3,17 @@ title: "GitLab patches its second CVSS 10.0 regex-compiler RCE in nine days, and
 headline: "GitLab: two perfect 10s, one regex engine, nine days apart"
 level: 4
 date: 2026-10-21
-updated: 2026-10-23
+updated: 2026-10-29
 tags: [GitLab, RCE, self-managed]
 ecosystems: [gitlab, ruby]
 summary: >-
-  CVE-2026-110264 (CVSS 10.0) is an integer overflow in the Onigmo regex compiler that lets an unauthenticated user
-  run code on self-managed GitLab, from 7.0 onwards. It lands nine days after CVE-2026-97229, a sibling bug that
-  already has a public PoC. Servers patched on Oct 12 are still exposed.
+  CISA now confirms exploitation of CVE-2026-97229, the Oct 12 GitLab regex RCE. The separate CVSS 10.0
+  CVE-2026-110264 still requires the Oct 21 fixes for GitLab 7.0 onwards; an Oct 12 patch alone is insufficient.
+  The older flaw has a public PoC. Upgrade GitLab and affected Ruby applications; investigate exposed servers.
 splash: "Self-managed GitLab CE/EE 7.0+; other Ruby apps only when compiling attacker-controlled patterns"
 wipe: "Upgrade to 19.5.1 / 19.4.3 / 19.3.6 / 19.2.9 / 19.1.9 / 19.0.10 / 18.11.13. Ruby apps: 4.0.9 / 3.4.12 / 3.3.13"
-inTheWild: "no"
-inTheWildNote: No exploitation reported; the Oct 12 sibling has a public PoC
+inTheWild: "yes"
+inTheWildNote: CISA confirms exploitation of CVE-2026-97229; not a confirmation for CVE-2026-110264
 oneLiner: >-
   Feed GitLab a regular expression shaped just wrong and the engine's size maths wraps around, so it builds
   instructions that run the attacker's commands as the git user.
@@ -63,7 +63,12 @@ timeline:
   - date: Oct 23, 03:11 UTC
     title: Ruby publishes upstream fixes and exposure guidance
     body: Ruby 4.0.9, 3.4.12 and 3.3.13 contain all three underlying fixes; 4.0.8 misses the newest overflow.
+  - date: Oct 29, 2026
+    title: CISA adds CVE-2026-97229 to KEV
+    body: The FCEB remediation deadline is November 1; CISA flags this entry for forensic triage. This confirms exploitation of the Oct 12 flaw, not the Oct 21 sibling.
 checklist:
+  - title: Preserve evidence and triage exposed GitLab servers
+    hint: CISA flags CVE-2026-97229 for forensic triage. Scope affected instances; when possible preserve volatile data and relevant logs before patching, record collection details, then patch, contain and investigate unauthorized access or persistence. FCEB agencies must meet the November 1 KEV deadline; other operators should prioritize remediation now. Do not treat a successful upgrade as proof that no intrusion occurred.
   - title: Find every self-managed GitLab
     hint: Including forgotten Omnibus VMs and Docker images
   - title: Upgrade to the fixed version for your line
@@ -98,6 +103,14 @@ sources:
     url: https://www.ruby-lang.org/en/news/2026/10/23/regexp-fixes-for-gitlab-cves/
     says: Three Onigmo fixes address four GitLab CVEs; other Ruby apps compiling attacker-controlled patterns also need the upstream releases
     primary: true
+  - name: CISA KEV catalog
+    url: https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json
+    primary: true
+    says: CVE-2026-97229 added October 29; due November 1, forensic triage Yes, ransomware use Unknown.
+  - name: CISA forensic triage implementation guidance
+    url: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk
+    primary: true
+    says: Evidence preservation, critical patching, containment and analysis steps; per-step target timelines are recommendations.
 ---
 
 GitLab runs user-supplied regular expressions in many places: CI rules, code owners, push rules, markup
@@ -114,10 +127,9 @@ so the compiler emits broken bytecode that an attacker can turn into code execut
 
 ### Why L4
 
-Both bugs are CVSS 10.0, unauthenticated, in a core developer platform, and one sibling has a public PoC.
-That is close to L5. We held at L4 because GitLab.com and Dedicated were patched before disclosure, nobody
-has reported exploitation of either bug, and CISA had not added them to KEV as of Oct 22. If exploitation
-shows up, this goes to L5. Send a PR.
+CISA added CVE-2026-97229 to KEV on October 29, superseding our earlier statement that neither flaw had confirmed exploitation. This evidence concerns the October 12 sibling; it does not confirm attacks using CVE-2026-110264. L4 remains appropriate for active exploitation of a mainstream platform. The cited evidence does not establish a worm or internet-scale compromise that would warrant L5. GitLab.com and Dedicated were patched before disclosure; self-managed operators still need the newer package fixes listed above.
+
+FCEB agencies have a November 1 remediation deadline for CVE-2026-97229, with forensic triage required by its KEV entry. That deadline is a federal requirement, not a grace period for other operators. Preserve evidence where possible, patch promptly and investigate possible prior access. CISA lists ransomware involvement as unknown; no victim count is supplied.
 
 **October 23 — upstream Ruby:** The same bugs also affect applications that compile attacker-controlled strings into patterns. Ruby 4.0.9, 3.4.12 and 3.3.13 contain all three fixes behind GitLab's four regex CVEs, including the two September issues already noted above. Ruby 4.0.8 lacks the CVE-2026-110264 fix. Developer-written static patterns are outside this exposure. Neither regex timeouts nor pattern-length caps reliably prevent it; stop accepting untrusted patterns until upgraded.
 
