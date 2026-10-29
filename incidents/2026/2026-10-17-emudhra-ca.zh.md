@@ -131,7 +131,7 @@ checklist:
   - title: 按所管理的层级应用 Google Cloud 指导
     hint: 更新 gcloud CLI，以及操作系统或自定义镜像的信任库。COS 应升级或重启节点以使用当前里程碑版本，或遵循 cos_ca_cert_mitigation 指导。核对链接中的 GKE 版本矩阵及各托管服务通告；Google 的托管服务更新不能代替客户镜像和 SDK 更新。Google 称基础设施未遭入侵，未发现面向 Cloud 工作负载的利用。
   - title: 更新 Checkmk 站点及受影响 Agent 组件
-    hint: 使用 2.4.0p39 或 2.3.0p52；2.5.0p18 已公布但尚未发布，2.2 已停止维护。按部署更新 Linux Agent 更新器及 Windows Python Agent 插件。check_httpv2 始终使用内置根证书，切换 Use system wide CAs 不能消除暴露。由 cron 启动的站点进程可能使用内置 certifi；还要更新系统及站点 CA 信任库。
+    hint: 使用 2.4.0p39 或 2.3.0p52；2.5.0p18 已公布但尚未发布，2.2 已停止维护。按部署更新 Pro/Ultimate/Cloud 版 Linux Agent 更新器及 Windows Python Agent 插件。check_httpv2 始终使用内置根证书，切换 Use system wide CAs 不能消除暴露。由 cron 启动的站点进程可能使用内置 certifi；还要更新系统及站点 CA 信任库。
 sources:
   - says: 私钥是小于 256 的整数；报告时间、OneCRL 条目，以及 10月18日的吊销
   - name: eMudhra 声明
@@ -222,4 +222,4 @@ CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eM
 
 **10 月 29 日更新：** eMudhra 在 10 月 28 日更新中称，受影响 G3 层级下约 30,800 张证书属于一个美国客户生态，现已使用其 G1 RSA 签发路径。公司计划在该生态完成迁移后停止经 G1 签发 TLS 证书，但没有确定日期。该厂商迁移数量不能证明八张弱密钥中间证书签发过证书，也不能证明在野利用。G1 不能保证未来继续受浏览器信任；上文的证书替换和信任库更新仍须完成。
 
-**10 月 29 日进一步更新：** Checkmk 为同一 CA 信任事件分配 CVE-2026-117611（CVSS 4.0 为 7.1）。HTTP 检查始终使用内置根证书，系统 CA 开关不能绕过这一暴露。内置 Python 信任库影响 Linux Agent 更新器、Windows Python 插件，以及从站点环境之外启动且未设置 SSL_CERT_FILE / REQUESTS_CA_BUNDLE 的进程。通过 `omd start` 或站点 Shell 启动的进程则使用站点 CA 文件。分别更新相关证书包及系统、站点信任库。2.5.0p18 尚未发布，不能将已公布目标视为已安装的修复。这次补充产品处置措施，不代表已发现利用。
+**10 月 29 日进一步更新：** Checkmk 为同一 CA 信任事件分配 CVE-2026-117611（CVSS 4.0 为 7.1）。HTTP 检查始终使用内置根证书，系统 CA 开关不能绕过这一暴露。内置 Python 信任库影响 Pro/Ultimate/Cloud 版 Linux Agent 更新器、Windows Python 插件，以及从站点环境之外启动且 SSL_CERT_FILE 和 REQUESTS_CA_BUNDLE 均未设置的进程。通过 `omd start` 或站点 Shell 启动的进程则使用站点 CA 文件。分别更新相关证书包及系统、站点信任库。2.5.0p18 尚未发布，不能将已公布目标视为已安装的修复。这次补充产品处置措施，不代表已发现利用。
