@@ -32,7 +32,7 @@ checklist:
 - title: 替换部署前备份数据，并准备现有账户登录
   hint: 备份数据库、secret key 及上传文件。自动登录部署应先按现有账户密码准备指引操作；仅设置 LANGFLOW_SUPERUSER_PASSWORD 不会重置现有账户的非旧版默认密码。不要通过删除或重装来恢复访问。
 - title: 安装产品升级，并保留 Docker 数据
-  hint: 在应用环境运行 pip install --upgrade "langflow==1.13.0"，或拉取 langflowai/langflow:1.13.0 并按厂商步骤重建。将 LANGFLOW_CONFIG_DIR 指向已挂载路径以保存密钥和上传文件；数据库另用 LANGFLOW_DATABASE_URL 保存在外部，或用 LANGFLOW_SAVE_DB_IN_CONFIG_DIR=true 保存在该挂载目录。替换旧容器前，先迁移仍在容器内的数据；只挂载卷并不够。随后测试密码登录及现有工作流。
+  hint: 在应用环境运行 pip install --upgrade "langflow==1.13.0"，或拉取 langflowai/langflow:1.13.0 并按厂商步骤重建。将 LANGFLOW_CONFIG_DIR 指向已挂载路径以保存密钥和上传文件；数据库另用 LANGFLOW_DATABASE_URL 保存在外部，或用 LANGFLOW_SAVE_DB_IN_CONFIG_DIR=true 保存在该挂载目录。替换旧容器前，先迁移仍在容器内的数据；只挂载卷并不够。保留现有数据库后端：将 SQLite 用户指向新 PostgreSQL 数据库不会自动迁移数据。随后测试密码登录及现有工作流。
 sources:
 - name: IBM Langflow 安全公告
   says: 10 月 28 日首次发布，29 日更新；列出七个 CVE，建议将产品升级至 1.13.0。
