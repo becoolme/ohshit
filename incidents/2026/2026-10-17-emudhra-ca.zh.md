@@ -83,6 +83,9 @@ timeline:
   - date: 2026年10月27日
     title: Google 扩充 Cloud 与 Firebase 运维指导
     body: 自管信任库、Cloud CLI 及 COS 节点需单独更新；托管服务正在更新。
+  - date: 2026年10月28日
+    title: eMudhra 说明受影响客户的迁移情况
+    body: 厂商称，G3 层级下约 30,800 张证书属于一个美国客户生态，正临时使用 G1 RSA 签发路径；没有给出停止 G1 签发的确定日期。
   - date: 2026年10月27日前后
     title: Chrome Root Store v43 移除 emSign ECC Root CA - G3
 checklist:
@@ -191,3 +194,5 @@ CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eM
 未修补的 Oracle 运行时可采用[操作指南](https://ops.java/emudhra/)中的替代办法：备份 `cacerts`，移除 `emsignrootcag1 [jdk]`、`emsignrootcag2 [jdk]`、`emsigneccrootcag3 [jdk]` 和 `comodoaaaca [jdk]`，然后重启每个已安装的运行时。JDK 8 使用 `$JDK_HOME/jre/lib/security/cacerts`；JDK 11+ 使用 `$JDK_HOME/lib/security/cacerts`。移除前测试合法证书链，之后监控失败，并单独检查应用专用信任库。指南也列出吊销检查选项和验证工具。
 
 **10 月 28 日更新：** Google 的 10 月 27 日公告区分托管服务更新与客户控制的信任库、自定义镜像及内置客户端。按服务核对具体指导；受影响产品清单不能证明 Cloud 后端遭入侵。既有运行时、SDK 及证书替换措施仍然适用。
+
+**10 月 29 日更新：** eMudhra 在 10 月 28 日更新中称，受影响 G3 层级下约 30,800 张证书属于一个美国客户生态，现已使用其 G1 RSA 签发路径。公司计划在该生态完成迁移后停止 G1 签发，但没有确定日期。该厂商迁移数量不能证明八张弱密钥中间证书签发过证书，也不能证明在野利用。G1 不能保证未来继续受浏览器信任；上文的证书替换和信任库更新仍须完成。

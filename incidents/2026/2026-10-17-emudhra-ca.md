@@ -3,7 +3,7 @@ title: "eMudhra CA intermediate private keys were so weak that every one was a n
 headline: "eMudhra: eight CA keys you could guess on a pocket calculator"
 level: 4
 date: 2026-10-17
-updated: 2026-10-28
+updated: 2026-10-29
 tags: [PKI, CA, TLS]
 ecosystems: [go, python, node, browsers]
 summary: >-
@@ -101,6 +101,9 @@ timeline:
   - date: Oct 27, 2026
     title: Google expands Cloud and Firebase operational guidance
     body: Self-managed trust stores, Cloud CLI and COS nodes need specific updates; managed services are being updated.
+  - date: Oct 28, 2026
+    title: eMudhra clarifies the affected customer migration
+    body: The vendor places roughly 30,800 G3-hierarchy certificates in a US client ecosystem using a temporary G1 RSA issuance pathway; no firm G1 shutdown date is given.
   - date: ~Oct 27, 2026
     title: Chrome Root Store v43 removes the emSign ECC Root CA - G3
 checklist:
@@ -262,3 +265,5 @@ still carry the old bundle.
 For an unpatched Oracle runtime, the [operational guide](https://ops.java/emudhra/) gives an alternative: back up `cacerts`, remove `emsignrootcag1 [jdk]`, `emsignrootcag2 [jdk]`, `emsigneccrootcag3 [jdk]` and `comodoaaaca [jdk]`, then restart each installed runtime. JDK 8 uses `$JDK_HOME/jre/lib/security/cacerts`; JDK 11+ uses `$JDK_HOME/lib/security/cacerts`. Test legitimate certificate chains before removal, monitor failures afterward, and check application-specific stores separately. The guide also documents revocation-checking options and a verification tool.
 
 **Update, October 28:** Google’s October 27 bulletin separates managed-service rollout from customer-controlled trust stores, custom images and bundled clients. Review its service-specific guidance; the affected-product list does not establish that Cloud backends were breached. Existing runtime, SDK and certificate-replacement instructions still apply.
+
+**Update, October 29:** In its October 28 update, eMudhra says roughly 30,800 certificates under the affected G3 hierarchies belong to a US client ecosystem now using its G1 RSA issuance pathway. It plans to end G1 issuance once that transition completes, without a firm date. This vendor migration figure does not establish issuance by the eight weak-key intermediates or exploitation. G1 is not a guarantee of continued browser trust; the replacement and trust-store updates above remain necessary.
