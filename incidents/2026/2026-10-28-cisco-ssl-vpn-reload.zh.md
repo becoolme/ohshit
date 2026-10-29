@@ -41,7 +41,7 @@ timeline:
   title: Cisco 发布修复并确认利用
 checklist:
 - title: 按产品和维护分支升级
-  hint: 在 Cisco Software Checker 中选择产品、平台和已安装版本，按下表选择对应目标；升级后核对运行版本。
+  hint: 在 Cisco Software Checker 中选择产品、平台和已安装版本，按公告矩阵选择对应目标；升级后核对运行版本。
 - title: 检查所有相关 tunnel group
   hint: 检查 webvpn enable 和 secondary-authentication-server-group。存在 tunnel-group-list enable 时，检查所有组，包括 DefaultWEBVPNGroup；不存在时，检查 DefaultWEBVPNGroup。FTD 需核对已部署的 FMC/FDM 策略和设备配置。
 - title: 修改认证前评估厂商缓解方案

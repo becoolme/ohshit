@@ -66,7 +66,7 @@ timeline:
   title: Cisco publishes fixes and confirms exploitation
 checklist:
 - title: Upgrade the matching product and release train
-  hint: Use Cisco Software Checker with product, platform and installed version; select the corresponding target below and verify the running release after upgrading.
+  hint: Use Cisco Software Checker with product, platform and installed version; select the corresponding target in the advisory matrix and verify the running release after upgrading.
 - title: Check every relevant tunnel group
   hint: Inspect webvpn enable and secondary-authentication-server-group. With tunnel-group-list enable, inspect all groups including DefaultWEBVPNGroup; without it, inspect DefaultWEBVPNGroup. On FTD, check deployed FMC/FDM policy and device configuration.
 - title: Evaluate the vendor mitigation before changing authentication
