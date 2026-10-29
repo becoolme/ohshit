@@ -23,6 +23,8 @@ cves:
     description: Oracle 10月21日的 JSSE 公告涉及被攻破的 eMudhra 中间证书；初次更新与后续移除根证书的修复不同。
   - name: Oracle Java 根证书移除更新
     description: Oracle 10月24日的 JSSE 公告从 Java SE 和 GraalVM 移除相关根证书；攻击者需要受信任的受影响证书链，并处于可拦截 TLS 的网络路径上。
+  - name: Checkmk 内置 CA 信任
+    description: Checkmk 的 certifi 和 webpki-roots 证书包仍信任受影响层级。攻击者需要拦截 TLS 连接；这属于同一 eMudhra 事件，不是新的 CA 失陷。
 fixed:
   - { status: "CVE-2026-111943。Go 1.25 及更早版本不会修复" }
   - {}
@@ -42,6 +44,10 @@ fixed:
   - { status: Apple 及桌面平台上的 Firestore；重建并重新发布 }
   - { status: Apple 及桌面平台上的 Firestore；重建并重新发布 }
   - { status: 刷新 CI 依赖；无需重新发布应用 }
+  - { product: Checkmk 2.4, status: 已修复 }
+  - { product: Checkmk 2.3, status: 已修复 }
+  - { product: Checkmk 2.5, status: 已公布目标；厂商标记为尚未发布 }
+  - { product: Checkmk 2.2, status: 已停止维护；迁移到受支持的已修复分支 }
 timeline:
   - date: 2025年4月30日
     title: 私钥生成，同一批共 24 张中间证书
@@ -80,12 +86,19 @@ timeline:
   - date: 2026年10月24日
     title: Oracle 发布根证书移除更新
     body: CVE-2026-114820 及修订后的操作指南取代了仅依赖中间证书指纹阻止的做法。
+  - date: 2026年10月26日
+    title: Checkmk 2.3.0p52 发布 CA 信任库修复
+  - date: 2026年10月27日
+    title: Checkmk 2.4.0p39 发布 CA 信任库修复
   - date: 2026年10月27日
     title: Google 扩充 Cloud 与 Firebase 运维指导
     body: 自管信任库、Cloud CLI 及 COS 节点需单独更新；托管服务正在更新。
   - date: 2026年10月28日
     title: eMudhra 说明受影响客户的迁移情况
     body: 厂商称，G3 层级下约 30,800 张证书属于一个美国客户生态，正临时使用 G1 RSA 签发路径；没有给出停止经 G1 签发 TLS 证书的确定日期。
+  - date: 2026年10月29日
+    title: Checkmk 为内置信任库问题发布 CVE-2026-117611
+    body: 2.5.0p18 仍标记为尚未发布；系统 CA 更新不能替换所有内置证书包。
   - date: 2026年10月27日前后
     title: Chrome Root Store v43 移除 emSign ECC Root CA - G3
 checklist:
@@ -117,6 +130,8 @@ checklist:
     hint: 使用上表中对应平台的 SDK 版本。重建、重新发布 Firestore 应用并提示用户升级；浏览器或系统修复不能替换内嵌证书包。将 App Distribution Gradle 插件升级到 5.3.1 或更新版本并刷新 CI 依赖；此插件无需重新发布应用
   - title: 按所管理的层级应用 Google Cloud 指导
     hint: 更新 gcloud CLI，以及操作系统或自定义镜像的信任库。COS 应升级或重启节点以使用当前里程碑版本，或遵循 cos_ca_cert_mitigation 指导。核对链接中的 GKE 版本矩阵及各托管服务通告；Google 的托管服务更新不能代替客户镜像和 SDK 更新。Google 称基础设施未遭入侵，未发现面向 Cloud 工作负载的利用。
+  - title: 更新 Checkmk 站点及受影响 Agent 组件
+    hint: 使用 2.4.0p39 或 2.3.0p52；2.5.0p18 已公布但尚未发布，2.2 已停止维护。按部署更新 Linux Agent 更新器及 Windows Python Agent 插件。check_httpv2 始终使用内置根证书，切换 Use system wide CAs 不能消除暴露。由 cron 启动的站点进程可能使用内置 certifi；还要更新系统及站点 CA 信任库。
 sources:
   - says: 私钥是小于 256 的整数；报告时间、OneCRL 条目，以及 10月18日的吊销
   - name: eMudhra 声明
@@ -159,6 +174,16 @@ sources:
     says: 10月24日指南包含逐运行时备份证书库、移除根证书并重启，以及吊销检查和 CheckCerts.java
   - name: Google Cloud GCP-2026-071
     says: 10 月 27 日更新：客户管理的信任库、gcloud/COS/GKE 指导及托管服务更新，不代表基础设施遭入侵。
+  - name: Checkmk Werk 22169
+    says: HTTP 检查始终使用内置根证书，不受系统 CA 开关影响；目标版本包括尚未发布的 2.5.0p18。
+  - name: Checkmk Werk 22623
+    says: 说明 Linux 更新器、Windows Python 插件及站点外启动进程的内置 certifi 暴露。
+  - name: Checkmk CNA 记录
+    says: 10 月 29 日发布；CVSS 4.0 为 7.1，列出受影响版本。
+  - name: Checkmk 2.3.0p52 发布公告
+    says: 10 月 26 日版本包含两项 CA 信任库修复。
+  - name: Checkmk 2.4.0p39 发布公告
+    says: 10 月 27 日版本包含两项 CA 信任库修复。
 ---
 CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eMudhra 有八张中间证书，P-384 私钥都是**小于 256 的整数**。据研究人员 Scott Helme 说，其中一个就是数字 4。谁要是注意到了，就能给任意域名签证书，而所有信任这条链的客户端都会照单全收。
 
@@ -196,3 +221,5 @@ CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eM
 **10 月 28 日更新：** Google 的 10 月 27 日公告区分托管服务更新与客户控制的信任库、自定义镜像及内置客户端。按服务核对具体指导；受影响产品清单不能证明 Cloud 后端遭入侵。既有运行时、SDK 及证书替换措施仍然适用。
 
 **10 月 29 日更新：** eMudhra 在 10 月 28 日更新中称，受影响 G3 层级下约 30,800 张证书属于一个美国客户生态，现已使用其 G1 RSA 签发路径。公司计划在该生态完成迁移后停止经 G1 签发 TLS 证书，但没有确定日期。该厂商迁移数量不能证明八张弱密钥中间证书签发过证书，也不能证明在野利用。G1 不能保证未来继续受浏览器信任；上文的证书替换和信任库更新仍须完成。
+
+**10 月 29 日进一步更新：** Checkmk 为同一 CA 信任事件分配 CVE-2026-117611（CVSS 4.0 为 7.1）。HTTP 检查始终使用内置根证书，系统 CA 开关不能绕过这一暴露。内置 Python 信任库影响 Linux Agent 更新器、Windows Python 插件，以及从站点环境之外启动且未设置 SSL_CERT_FILE / REQUESTS_CA_BUNDLE 的进程。通过 `omd start` 或站点 Shell 启动的进程则使用站点 CA 文件。分别更新相关证书包及系统、站点信任库。2.5.0p18 尚未发布，不能将已公布目标视为已安装的修复。这次补充产品处置措施，不代表已发现利用。
