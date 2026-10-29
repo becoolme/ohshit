@@ -47,6 +47,10 @@ sources:
 - name: The Hacker News
   url: https://thehackernews.com/2026/10/telegram-android-flaw-lets-attackers.html
   says: Reports NebuSec’s affected range, ARM64 private-call testing and lack of a public full-chain write-up.
+- name: Telegram Android 12.10.4 source commit
+  url: https://github.com/DrKLO/Telegram/commit/c84801762fd5f936c8296ecf09a14a48ebfc4fe4
+  primary: true
+  says: Commit metadata dates the 12.10.4 (7099) source update to September 24, 2026.
 ---
 
 The public report concerns Android call signaling, not the separate animated-sticker research. It requires the victim to answer; describing it as zero-click would be misleading. L3 reflects a mainstream client and a public researcher claim, not evidence of ongoing attacks.
