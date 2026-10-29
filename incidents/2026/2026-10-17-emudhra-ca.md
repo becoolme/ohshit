@@ -41,6 +41,10 @@ cves:
     score: 9.1
     name: Oracle Java root-certificate removal update
     description: Oracle's October 24 JSSE alert removes related roots in Java SE and GraalVM; attackers need a trusted affected chain and a network path to intercept TLS.
+  - id: CVE-2026-117611
+    score: 7.1
+    name: Checkmk bundled CA trust
+    description: Checkmk certifi and webpki-roots bundles retain trust for the affected hierarchy. An attacker must intercept the TLS connection; this is the same eMudhra event, not a newly compromised CA.
 fixed:
   - { product: Go, version: 1.27.3 / 1.26.10, status: "CVE-2026-111943. Go 1.25 and older get no fix" }
   - { product: Python certifi, version: 2026.10.19 }
@@ -60,6 +64,10 @@ fixed:
   - { product: Firebase Unity SDK, version: 14.1.0 / 13.17.1, status: Firestore on Apple and desktop; rebuild and republish }
   - { product: Firebase C++ SDK, version: 14.1.0 / 13.13.1, status: Firestore on Apple and desktop; rebuild and republish }
   - { product: Firebase App Distribution Gradle plugin, version: 5.3.1, status: Refresh CI dependencies; app republication not required }
+  - { product: Checkmk 2.4, version: 2.4.0p39, status: Patched }
+  - { product: Checkmk 2.3, version: 2.3.0p52, status: Patched }
+  - { product: Checkmk 2.5, version: 2.5.0p18, status: Announced target; not yet released per vendor }
+  - { product: Checkmk 2.2, version: none, status: End of life; migrate to a supported fixed line }
 timeline:
   - date: Apr 30, 2025
     title: The keys are generated, in a batch of 24 intermediates
@@ -98,12 +106,19 @@ timeline:
   - date: Oct 24, 2026
     title: Oracle issues a root-removal update
     body: CVE-2026-114820 and revised operational guidance supersede reliance on intermediate fingerprint blocking alone.
+  - date: Oct 26, 2026
+    title: Checkmk 2.3.0p52 ships CA-store fixes
+  - date: Oct 27, 2026
+    title: Checkmk 2.4.0p39 ships CA-store fixes
   - date: Oct 27, 2026
     title: Google expands Cloud and Firebase operational guidance
     body: Self-managed trust stores, Cloud CLI and COS nodes need specific updates; managed services are being updated.
   - date: Oct 28, 2026
     title: eMudhra clarifies the affected customer migration
     body: The vendor places roughly 30,800 G3-hierarchy certificates in a US client ecosystem using a temporary G1 RSA issuance pathway; no firm date for ending G1 TLS issuance is given.
+  - date: Oct 29, 2026
+    title: Checkmk publishes CVE-2026-117611 for its bundled trust stores
+    body: The 2.5.0p18 target is still marked unreleased; system CA updates do not replace every bundled store.
   - date: ~Oct 27, 2026
     title: Chrome Root Store v43 removes the emSign ECC Root CA - G3
 checklist:
@@ -135,6 +150,8 @@ checklist:
     hint: Use the platform-specific SDK versions above. Rebuild, republish and prompt users to update Firestore apps; browser or OS fixes alone do not replace embedded bundles. Update the App Distribution Gradle plugin to 5.3.1+ and refresh CI dependencies; this plugin needs no app republication
   - title: Apply Google Cloud guidance to the layers you manage
     hint: Update gcloud CLI and OS/custom-image trust stores. For COS, upgrade or restart nodes onto current milestones, or follow the cos_ca_cert_mitigation guidance. Check GKE’s linked version matrix and each managed service’s notices; Google fleet updates do not replace customer image/SDK updates. Google reports no infrastructure breach or exploitation against Cloud workloads.
+  - title: Update Checkmk sites and the affected agent components
+    hint: Use 2.4.0p39 or 2.3.0p52; 2.5.0p18 is announced but not yet released, and 2.2 is EOL. Refresh Linux agent updaters and Windows Python-based agent plug-ins as applicable. check_httpv2 always consults its built-in roots; toggling Use system wide CAs does not remove exposure. Cron-launched site processes may use bundled certifi; also update OS/site CA stores.
 sources:
   - name: Mozilla Bugzilla 2083449
     url: https://bugzilla.mozilla.org/show_bug.cgi?id=2083449
@@ -222,6 +239,26 @@ sources:
     url: https://docs.cloud.google.com/support/bulletins#gcp-2026-071
     primary: true
     says: October 27 update; customer-managed trust stores, gcloud/COS/GKE guidance and managed-service rollout, without an infrastructure breach.
+  - name: Checkmk Werk 22169
+    url: https://checkmk.com/werk/22169
+    primary: true
+    says: Built-in HTTP-check roots remain relevant regardless of the system-CA toggle; version targets include unreleased 2.5.0p18.
+  - name: Checkmk Werk 22623
+    url: https://checkmk.com/werk/22623
+    primary: true
+    says: Identifies Linux updater, Windows Python plug-ins and external site-process exposure through bundled certifi.
+  - name: Checkmk CNA record
+    url: https://cveawg.mitre.org/api/cve/CVE-2026-117611
+    primary: true
+    says: October 29 publication; CVSS 4.0 score 7.1 and affected Checkmk versions.
+  - name: Checkmk 2.3.0p52 release
+    url: https://forum.checkmk.com/t/release-checkmk-stable-release-2-3-0p52/60718
+    primary: true
+    says: October 26 release includes both CA-store fixes.
+  - name: Checkmk 2.4.0p39 release
+    url: https://forum.checkmk.com/t/release-checkmk-stable-release-2-4-0p39/60722
+    primary: true
+    says: October 27 release includes both CA-store fixes.
 ---
 
 A certificate authority's private key is the thing that makes "this is really your bank" true. For eight
@@ -267,3 +304,5 @@ For an unpatched Oracle runtime, the [operational guide](https://ops.java/emudhr
 **Update, October 28:** Google’s October 27 bulletin separates managed-service rollout from customer-controlled trust stores, custom images and bundled clients. Review its service-specific guidance; the affected-product list does not establish that Cloud backends were breached. Existing runtime, SDK and certificate-replacement instructions still apply.
 
 **Update, October 29:** In its October 28 update, eMudhra says roughly 30,800 certificates under the affected G3 hierarchies belong to a US client ecosystem now using its G1 RSA issuance pathway. It plans to end TLS issuance through G1 once that transition completes, without a firm date. This vendor migration figure does not establish issuance by the eight weak-key intermediates or exploitation. G1 is not a guarantee of continued browser trust; the replacement and trust-store updates above remain necessary.
+
+**Further update, October 29:** Checkmk assigns CVE-2026-117611 (CVSS 4.0 7.1) to the same CA-trust incident. Its HTTP check always consults bundled roots; the system-CA setting cannot bypass this exposure. Bundled Python trust affects Linux agent updaters, Windows Python plug-ins, and processes launched outside the site environment without SSL_CERT_FILE / REQUESTS_CA_BUNDLE. Processes started by `omd start` or a site shell use the site CA file instead. Update each relevant bundle and the OS/site store. The 2.5.0p18 milestone is not yet released; do not count an announced target as an installed fix. This adds product remediation, not evidence of exploitation.
