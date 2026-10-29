@@ -65,7 +65,7 @@ const cveHref = (id: string) =>
   cveSite.pages.has(id) ? `/cves/${id}/` : cveSite.byId.has(id) ? `${localePath(lang, '/cves/')}?id=${id}` : undefined;
 ---
 
-<Base title={d.title} description={d.summary} type="article" image={`/og/${incident.id}.png`} lang={lang} translated={!untranslated}>
+<Base title={d.title} description={d.summary} type="article" image={localePath(lang, `/og/${incident.id}.png`)} lang={lang} translated={!untranslated}>
   <div class="hazard hazard--orange" aria-hidden="true"></div>
   <Header variant="inner" lang={lang} />
   <PoliceTape lang={lang} />

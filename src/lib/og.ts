@@ -2,7 +2,8 @@ import fs from 'node:fs';
 import { createRequire } from 'node:module';
 import satori from 'satori';
 import { Resvg } from '@resvg/resvg-js';
-import { LEVELS, type Level } from './levels';
+import { LEVELS, type Level } from './levels.ts';
+import { UI, type Lang } from './i18n.ts';
 
 /**
  * Build-time Open Graph images (1200×630 PNG) for Twitter/X, Slack, etc.
@@ -12,12 +13,18 @@ const require = createRequire(import.meta.url);
 const font = (pkg: string, file: string) => fs.readFileSync(require.resolve(`${pkg}/files/${file}`));
 
 let fonts: Parameters<typeof satori>[1]['fonts'] | undefined;
-function loadFonts() {
-  return (fonts ??= [
+let chineseFonts: Parameters<typeof satori>[1]['fonts'] | undefined;
+function loadFonts(lang: Lang) {
+  const latin = (fonts ??= [
     { name: 'Inter', data: font('@fontsource/inter', 'inter-latin-500-normal.woff'), weight: 500, style: 'normal' },
     { name: 'Inter', data: font('@fontsource/inter', 'inter-latin-800-normal.woff'), weight: 800, style: 'normal' },
     { name: 'Archivo Black', data: font('@fontsource/archivo-black', 'archivo-black-latin-400-normal.woff'), weight: 400, style: 'normal' },
     { name: 'Mono', data: font('@fontsource/jetbrains-mono', 'jetbrains-mono-latin-700-normal.woff'), weight: 700, style: 'normal' },
+  ]);
+  if (lang === 'en') return latin;
+  return (chineseFonts ??= [...latin,
+    { name: 'Noto Sans SC', data: font('@fontsource/noto-sans-sc', 'noto-sans-sc-chinese-simplified-500-normal.woff'), weight: 500, style: 'normal' },
+    { name: 'Noto Sans SC', data: font('@fontsource/noto-sans-sc', 'noto-sans-sc-chinese-simplified-800-normal.woff'), weight: 800, style: 'normal' },
   ]);
 }
 
@@ -53,17 +60,21 @@ const wordmark = () =>
   ]);
 
 export interface OgInput {
+  lang?: Lang;
   title: string;
   level?: Level;
   kicker?: string;
   meta?: string[];
 }
 
-export async function renderOg({ title, level, kicker, meta = [] }: OgInput): Promise<Buffer> {
+export async function renderOg({ title, level, kicker, meta = [], lang = 'en' }: OgInput): Promise<Buffer> {
   const L = level ? LEVELS[level] : undefined;
-  const size = title.length > 70 ? 56 : title.length > 45 ? 66 : 76;
+  const length = Array.from(title).reduce((n, char) => n + (/[^\u0000-\u00ff]/u.test(char) ? 2 : 1), 0);
+  const size = lang === 'en' ? (title.length > 70 ? 56 : title.length > 45 ? 66 : 76)
+    : length > 180 ? 36 : length > 130 ? 44 : length > 95 ? 50 : length > 70 ? 56 : length > 45 ? 66 : 76;
+  const family = (latin: string) => lang === 'zh' ? `${latin}, Noto Sans SC` : latin;
 
-  const tree = h('div', { width: 1200, height: 630, flexDirection: 'column', background: C.bg, color: C.text, fontFamily: 'Inter' }, [
+  const tree = h('div', { width: 1200, height: 630, flexDirection: 'column', background: C.bg, color: C.text, fontFamily: family('Inter') }, [
     hazard(L && level! >= 4 ? C.orange : C.yellow),
     h('div', { flex: 1, flexDirection: 'column', padding: '44px 64px 40px' }, [
       h('div', { justifyContent: 'space-between', alignItems: 'center' }, [
@@ -71,21 +82,21 @@ export async function renderOg({ title, level, kicker, meta = [] }: OgInput): Pr
         L
           ? h('div', { alignItems: 'center', gap: 6, background: L.color, color: C.bg, border: `4px solid ${C.bg}`, boxShadow: `6px 6px 0 ${C.orange}`, padding: '10px 18px', fontWeight: 800, fontSize: 28 }, [
               ...Array.from({ length: L.n }, () => ({ type: 'img', props: { src: poop(C.bg), width: 26, height: 26 } })),
-              h('span', { marginLeft: 8 }, `L${L.n} ${L.name}`),
+              h('span', { marginLeft: 8 }, `L${L.n} ${UI[lang].levels[L.n].name}`),
             ])
           : h('div', {}, ''),
       ]),
       h('div', { flex: 1, flexDirection: 'column', justifyContent: 'center' }, [
-        kicker ? h('div', { fontFamily: 'Mono', fontWeight: 700, fontSize: 26, color: C.yellow, marginBottom: 14 }, kicker) : h('div', {}, ''),
-        h('div', { fontFamily: 'Archivo Black', fontSize: size, lineHeight: 1.08, letterSpacing: -1, maxWidth: 1070 }, title),
+        kicker ? h('div', { fontFamily: family('Mono'), fontWeight: 700, fontSize: 26, color: C.yellow, marginBottom: 14 }, kicker) : h('div', {}, ''),
+        h('div', { fontFamily: lang === 'zh' ? 'Noto Sans SC' : 'Archivo Black', fontWeight: lang === 'zh' ? 800 : 400, fontSize: size, lineHeight: lang === 'zh' ? 1.16 : 1.08, letterSpacing: -1, maxWidth: 1070 }, title),
       ]),
       h('div', { justifyContent: 'space-between', alignItems: 'center', borderTop: `3px solid ${C.line}`, paddingTop: 22, fontSize: 26, color: C.muted, fontWeight: 500 }, [
         h('div', { gap: 28 }, meta.map((m) => h('span', {}, m))),
         h('span', { fontFamily: 'Mono', fontWeight: 700, color: C.yellow }, 'ohshit.app'),
       ]),
     ]),
-  ]);
+  ], { lang: lang === 'zh' ? 'zh-CN' : 'en' });
 
-  const svg = await satori(tree as never, { width: 1200, height: 630, fonts: loadFonts() });
+  const svg = await satori(tree as never, { width: 1200, height: 630, fonts: loadFonts(lang) });
   return new Resvg(svg, { fitTo: { mode: 'width', value: 1200 } }).render().asPng();
 }
