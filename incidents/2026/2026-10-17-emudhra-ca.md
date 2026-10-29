@@ -103,7 +103,7 @@ timeline:
     body: Self-managed trust stores, Cloud CLI and COS nodes need specific updates; managed services are being updated.
   - date: Oct 28, 2026
     title: eMudhra clarifies the affected customer migration
-    body: The vendor places roughly 30,800 G3-hierarchy certificates in a US client ecosystem using a temporary G1 RSA issuance pathway; no firm G1 shutdown date is given.
+    body: The vendor places roughly 30,800 G3-hierarchy certificates in a US client ecosystem using a temporary G1 RSA issuance pathway; no firm date for ending G1 TLS issuance is given.
   - date: ~Oct 27, 2026
     title: Chrome Root Store v43 removes the emSign ECC Root CA - G3
 checklist:
@@ -266,4 +266,4 @@ For an unpatched Oracle runtime, the [operational guide](https://ops.java/emudhr
 
 **Update, October 28:** Google’s October 27 bulletin separates managed-service rollout from customer-controlled trust stores, custom images and bundled clients. Review its service-specific guidance; the affected-product list does not establish that Cloud backends were breached. Existing runtime, SDK and certificate-replacement instructions still apply.
 
-**Update, October 29:** In its October 28 update, eMudhra says roughly 30,800 certificates under the affected G3 hierarchies belong to a US client ecosystem now using its G1 RSA issuance pathway. It plans to end G1 issuance once that transition completes, without a firm date. This vendor migration figure does not establish issuance by the eight weak-key intermediates or exploitation. G1 is not a guarantee of continued browser trust; the replacement and trust-store updates above remain necessary.
+**Update, October 29:** In its October 28 update, eMudhra says roughly 30,800 certificates under the affected G3 hierarchies belong to a US client ecosystem now using its G1 RSA issuance pathway. It plans to end TLS issuance through G1 once that transition completes, without a firm date. This vendor migration figure does not establish issuance by the eight weak-key intermediates or exploitation. G1 is not a guarantee of continued browser trust; the replacement and trust-store updates above remain necessary.
