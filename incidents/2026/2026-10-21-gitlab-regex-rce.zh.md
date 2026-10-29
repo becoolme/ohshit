@@ -54,8 +54,8 @@ checklist:
     hint: 光打 10月12日的补丁不够。单节点部署升级 19.4.3 / 19.3.6 要预留停机时间
   - title: 用不上自助注册就关掉
     hint: 开放注册让 10月12日那个漏洞从“需要账号”变成了“谁都行”
-  - title: 打开 GitLab 提供的两条检测规则
-    hint: “Onigmo native worker crash”和“Org mode render error burst”
+  - title: 使用覆盖两个正则漏洞的 GitLab 检测规则
+    hint: '10 月 12 日公告链接 onigmo_native_worker_crash、graphql_cilint_hostile_regexp、ci_regexp_oversized_non_ascii_path、ci_regexp_guard_rejection、ci_lint_workhorse_worker_crash 和 ci_lint_scripted_client_error_burst；同时保留 10 月 21 日的 Org mode render error burst 规则。Omnibus 部署保存 /var/log/gitlab/gitlab-rails/ 下的 application_json.log、api_json.log、graphql_json.log 和 production_json.log，以及 /var/log/gitlab/gitlab-workhorse/current、/var/log/gitlab/puma/puma_stderr.log 和 /var/log/gitlab/sidekiq/current。按行为主体、时间及 correlation_id 关联告警；单独匹配不能证明遭入侵。规则中的示例来自实验室，不是已确认攻击者 IP。'
   - title: 如果曾经暴露过，轮换 CI/CD 变量和 Runner 令牌
     hint: 代码以 git 用户身份运行，这些它都读得到
   - title: 自托管的 AI Gateway 也要升级
@@ -75,6 +75,18 @@ sources:
     says: CVE-2026-97229 于 10 月 29 日加入；期限为 11 月 1 日，要求取证分诊，勒索软件利用情况未知。
   - name: CISA 取证分诊实施指引
     says: 涵盖证据保全、关键补丁、遏制及分析；各步骤的目标时间仅为建议。
+  - name: GitLab 检测 onigmo_native_worker_crash
+    says: 厂商检测逻辑、日志位置及关联局限；合成示例不是攻击者 IoC。
+  - name: GitLab 检测 graphql_cilint_hostile_regexp
+    says: 厂商检测逻辑、日志位置及关联局限；合成示例不是攻击者 IoC。
+  - name: GitLab 检测 ci_regexp_oversized_non_ascii_path
+    says: 厂商检测逻辑、日志位置及关联局限；合成示例不是攻击者 IoC。
+  - name: GitLab 检测 ci_regexp_guard_rejection
+    says: 厂商检测逻辑、日志位置及关联局限；合成示例不是攻击者 IoC。
+  - name: GitLab 检测 ci_lint_workhorse_worker_crash
+    says: 厂商检测逻辑、日志位置及关联局限；合成示例不是攻击者 IoC。
+  - name: GitLab 检测 ci_lint_scripted_client_error_burst
+    says: 厂商检测逻辑、日志位置及关联局限；合成示例不是攻击者 IoC。
 ---
 GitLab 在很多地方都会执行用户提供的正则表达式：CI 规则、代码所有者、推送规则、标记语言渲染。编译这些正则用的是 **Onigmo**，也就是 Ruby 背后的正则引擎，GitLab 在自己的安装包里打包并维护它的补丁。这个月研究人员两次在 Onigmo 计算大小的地方发现了**溢出**，编译器因此生成了错误的字节码，攻击者可以借此以 `git` 用户身份执行代码。
 

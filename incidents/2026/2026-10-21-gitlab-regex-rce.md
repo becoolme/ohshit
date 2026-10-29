@@ -75,8 +75,8 @@ checklist:
     hint: The Oct 12 patch is not enough. Plan downtime for 19.4.3 / 19.3.6 on single-node setups
   - title: Close self-registration if you don't need it
     hint: Open sign-up turned the Oct 12 bug from "needs an account" into "anyone"
-  - title: Turn on GitLab's two detection rules
-    hint: “Onigmo native worker crash” and “Org mode render error burst”
+  - title: Use GitLab's detections for both regex flaws
+    hint: 'The Oct 12 advisory links onigmo_native_worker_crash, graphql_cilint_hostile_regexp, ci_regexp_oversized_non_ascii_path, ci_regexp_guard_rejection, ci_lint_workhorse_worker_crash and ci_lint_scripted_client_error_burst; retain the Oct 21 Org mode render error burst rule too. On Omnibus preserve application_json.log, api_json.log, graphql_json.log and production_json.log under /var/log/gitlab/gitlab-rails/, plus /var/log/gitlab/gitlab-workhorse/current, /var/log/gitlab/puma/puma_stderr.log and /var/log/gitlab/sidekiq/current. Correlate alerts by actor, time and correlation_id; a match alone is not proof of compromise. The rules contain lab examples, not confirmed attacker IPs.'
   - title: Rotate CI/CD variables and runner tokens if you were exposed
     hint: Code runs as the git user, which can read them
   - title: Update a self-hosted AI Gateway too
@@ -111,6 +111,30 @@ sources:
     url: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk
     primary: true
     says: Evidence preservation, critical patching, containment and analysis steps; per-step target timelines are recommendations.
+  - name: GitLab detection onigmo_native_worker_crash
+    url: https://gitlab.com/gitlab-security-oss/tldr/-/raw/main/Detections/platforms/GitLab/Vulnerability%20Detections/onigmo_native_worker_crash.md
+    primary: true
+    says: Vendor detection logic, log locations and correlation limits; synthetic examples are not attacker IoCs.
+  - name: GitLab detection graphql_cilint_hostile_regexp
+    url: https://gitlab.com/gitlab-security-oss/tldr/-/raw/main/Detections/platforms/GitLab/Vulnerability%20Detections/graphql_cilint_hostile_regexp.md
+    primary: true
+    says: Vendor detection logic, log locations and correlation limits; synthetic examples are not attacker IoCs.
+  - name: GitLab detection ci_regexp_oversized_non_ascii_path
+    url: https://gitlab.com/gitlab-security-oss/tldr/-/raw/main/Detections/platforms/GitLab/Vulnerability%20Detections/ci_regexp_oversized_non_ascii_path.md
+    primary: true
+    says: Vendor detection logic, log locations and correlation limits; synthetic examples are not attacker IoCs.
+  - name: GitLab detection ci_regexp_guard_rejection
+    url: https://gitlab.com/gitlab-security-oss/tldr/-/raw/main/Detections/platforms/GitLab/Vulnerability%20Detections/ci_regexp_guard_rejection.md
+    primary: true
+    says: Vendor detection logic, log locations and correlation limits; synthetic examples are not attacker IoCs.
+  - name: GitLab detection ci_lint_workhorse_worker_crash
+    url: https://gitlab.com/gitlab-security-oss/tldr/-/raw/main/Detections/platforms/GitLab/Vulnerability%20Detections/ci_lint_workhorse_worker_crash.md
+    primary: true
+    says: Vendor detection logic, log locations and correlation limits; synthetic examples are not attacker IoCs.
+  - name: GitLab detection ci_lint_scripted_client_error_burst
+    url: https://gitlab.com/gitlab-security-oss/tldr/-/raw/main/Detections/platforms/GitLab/Vulnerability%20Detections/ci_lint_scripted_client_error_burst.md
+    primary: true
+    says: Vendor detection logic, log locations and correlation limits; synthetic examples are not attacker IoCs.
 ---
 
 GitLab runs user-supplied regular expressions in many places: CI rules, code owners, push rules, markup
