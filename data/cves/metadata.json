@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "syncedAt": "2026-10-29T05:45:42.335Z",
-  "windowStart": "2026-09-29T05:45:42.335Z",
+  "syncedAt": "2026-10-29T12:58:28.769Z",
+  "windowStart": "2026-09-29T12:58:28.769Z",
   "kev": [
     "CVE-2026-41709",
     "CVE-2026-46300",
@@ -1767,5 +1767,5 @@
     "CVE-2020-29583"
   ],
   "kevUpdatedAt": "2026-10-28T19:00:04.807Z",
-  "recordCount": 16985
+  "recordCount": 17014
 }
