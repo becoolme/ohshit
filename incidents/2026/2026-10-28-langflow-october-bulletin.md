@@ -57,7 +57,7 @@ checklist:
 - title: Back up and prepare existing sign-in before replacing the deployment
   hint: Back up the database, secret key and uploads. For auto-login installations, follow the existing-account password preparation guide before upgrading; setting LANGFLOW_SUPERUSER_PASSWORD alone does not reset an existing non-legacy password. Do not delete or reinstall to recover access.
 - title: Install the product upgrade and preserve Docker data
-  hint: In the application environment run pip install --upgrade "langflow==1.13.0", or pull langflowai/langflow:1.13.0 and recreate using the vendor upgrade procedure. Check LANGFLOW_CONFIG_DIR, LANGFLOW_DATABASE_URL or LANGFLOW_SAVE_DB_IN_CONFIG_DIR=true so the actual database, key and uploads persist outside the old container; a mounted volume alone is insufficient. Test password sign-in and your flows afterward.
+  hint: In the application environment run pip install --upgrade "langflow==1.13.0", or pull langflowai/langflow:1.13.0 and recreate using the vendor upgrade procedure. Mount the path set in LANGFLOW_CONFIG_DIR for the key and uploads; separately keep the database external with LANGFLOW_DATABASE_URL or in that mounted directory with LANGFLOW_SAVE_DB_IN_CONFIG_DIR=true. Move any data still inside the old container before replacing it; a mounted volume alone is insufficient. Test password sign-in and your flows afterward.
 sources:
 - name: IBM Langflow security bulletin
   url: https://www.ibm.com/support/pages/node/7294467
