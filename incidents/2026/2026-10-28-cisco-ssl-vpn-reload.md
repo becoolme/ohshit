@@ -37,7 +37,7 @@ fixed:
 - product: Cisco ASA 9.24
   version: 9.24.1.27
   status: Patched
-- product: Cisco ASA 9.24 alternative train
+- product: Cisco ASA 9.24, additional listed target
   version: 9.24.10.1
   status: Patched
 - product: Cisco FTD 7.0 and earlier

@@ -20,7 +20,7 @@ fixed:
   status: 已修复
 - product: Cisco ASA 9.24
   status: 已修复
-- product: Cisco ASA 9.24 另一维护路径
+- product: Cisco ASA 9.24，另一已列目标
   status: 已修复
 - product: Cisco FTD 7.0 及更早版本
   status: 已修复
