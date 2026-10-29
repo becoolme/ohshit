@@ -16,7 +16,7 @@ inTheWildNote: The Jenkins advisory does not report in-the-wild exploitation.
 cves:
 - id: CVE-2026-117612
   name: XStream type filter bypass
-  description: Overall/Read plus a non-anonymous account or config.xml POST permission permits unfiltered resolves-to classes during deserialization, potentially enabling code execution.
+  description: Overall/Read plus either a non-anonymous account or permission to POST config.xml permits unfiltered resolves-to classes during deserialization, potentially enabling code execution.
 - id: CVE-2026-117613
   name: Collection type confusion
   description: Crafted job XML from a caller with Item/Configure can insert unexpected collection elements and cause stored XSS; other impacts may be possible.
@@ -34,7 +34,7 @@ cves:
   description: Item/Configure permits concurrent artifact archiving to race symbolic-link checks and write outside the extraction directory on the controller, potentially enabling code execution.
 - id: CVE-2026-117618
   name: First administrator creation race
-  description: An unauthenticated attacker can create an administrator during the brief setup-wizard interval between deletion of the initial user and creation of its replacement.
+  description: With Jenkins’s own user database, an unauthenticated attacker can create an administrator during the brief setup-wizard interval between deletion of the initial user and creation of its replacement.
 - id: CVE-2026-117619
   name: API token revocation bypass via cookies
   description: A stolen API token can obtain a persistent remember-me cookie that continues granting access after the token is revoked or expires.
@@ -76,7 +76,7 @@ checklist:
 - title: Restrict access during the upgrade
   hint: Review Overall/Read, Item/Create, Item/Configure and Agent/Configure grants; restrict untrusted agents. Keep initial setup reachable only by administrators. Requirements differ across the 15 flaws.
 - title: Retain the new deserialization protections
-  hint: Test representative job and agent configurations after upgrading. Do not use SUPPRESS_TYPE_PERMISSION or skipFieldValueElementTypeCheck as security workarounds; they turn off added checks. Investigate compatibility failures against the advisory.
+  hint: Test representative job and agent configurations after upgrading. Do not enable hudson.util.XStream2.SUPPRESS_TYPE_PERMISSION or hudson.util.RobustReflectionConverter.skipFieldValueElementTypeCheck as security workarounds; they turn off added checks. Investigate compatibility failures against the advisory.
 - title: Review suspicious configuration and account activity
   hint: Compare job and agent config.xml files, user records and controller filesystem changes with trusted backups; review available access logs for unusual configuration requests. These are behavioral checks, not published IoCs; one anomaly alone does not prove compromise.
 - title: Treat stolen-token cookies as separate credentials

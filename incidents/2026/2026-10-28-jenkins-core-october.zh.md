@@ -18,7 +18,7 @@ cves:
 - name: 制品解包竞态
   description: 具有 Item/Configure 的攻击者可通过并发归档制品绕过符号链接检查，向控制器解包目录之外写入文件，可能执行代码。
 - name: 首次管理员创建竞态
-  description: 在初始化向导删除初始用户、尚未创建替代用户的短暂窗口中，未认证攻击者可抢先创建管理员账户。
+  description: 使用 Jenkins 自有用户数据库时，在初始化向导删除初始用户、尚未创建替代用户的短暂窗口中，未认证攻击者可抢先创建管理员账户。
 - name: 通过 Cookie 绕过 API 令牌吊销
   description: 被盗 API 令牌可换取持久的“保持登录” Cookie；令牌吊销或过期后，该 Cookie 仍可用于访问。
 - name: 旧数据提示导致账户覆盖
@@ -49,7 +49,7 @@ checklist:
 - title: 升级期间限制访问
   hint: 检查 Overall/Read、Item/Create、Item/Configure 和 Agent/Configure 授权，限制不可信 Agent。初始化向导仅允许管理员访问。15 个漏洞的前提条件各不相同。
 - title: 保留新增的反序列化保护
-  hint: 升级后测试典型任务和 Agent 配置。不要把 SUPPRESS_TYPE_PERMISSION 或 skipFieldValueElementTypeCheck 当作安全缓解措施，它们会关闭新增检查。按公告排查兼容性错误。
+  hint: 升级后测试典型任务和 Agent 配置。不要启用 hudson.util.XStream2.SUPPRESS_TYPE_PERMISSION 或 hudson.util.RobustReflectionConverter.skipFieldValueElementTypeCheck 来缓解漏洞，它们会关闭新增检查。按公告排查兼容性错误。
 - title: 核查异常配置与账户活动
   hint: 将任务和 Agent 的 config.xml、用户记录及控制器文件系统变化与可信备份比对，检查现有访问日志中的异常配置请求。这些是行为排查方向，公告没有发布 IoC；单个异常不足以证明入侵。
 - title: 单独处理被盗令牌换取的 Cookie
