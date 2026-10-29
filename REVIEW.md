@@ -3,7 +3,7 @@
 How to review, fix and merge the pull requests that [JOB.md](JOB.md) opens. The rules for what an incident
 should say are in JOB.md, [CONTRIBUTING.md](CONTRIBUTING.md) and [`docs/translation-zh.md`](docs/translation-zh.md).
 This file covers two rounds of review, fixes and automatic merge onto `main`. The scheduled job runs every
-six hours and may review and merge the PR it creates in that run. Other PRs require user authorization.
+two hours and may review and merge the PR it creates in that run. Other PRs require user authorization.
 The user authorizes merge pushes to trigger the configured Cloudflare automatic deployment. Do not run
 standalone deployment commands, manually trigger deployment workflows or publish releases.
 
@@ -29,6 +29,9 @@ standalone deployment commands, manually trigger deployment workflows or publish
   commits or the description.
 - The description has New / Updated / Considered and skipped / Unsure. Read "Unsure" first: that's where the
   author told you to look.
+- Check the Discovery coverage summary against JOB.md: all six discovery lanes, English and Chinese
+  searches, access gaps and unresolved leads. A CVE-only search does not cover crypto theft or browser-script
+  compromises. Missing coverage needs additional discovery before the run is declared complete.
 
 ## 2. Check the facts against the sources
 
@@ -45,6 +48,10 @@ Open the primary sources yourself. Don't trust the PR's summary of them. For eve
 - **Prerequisites:** what an attack needs (auth, guest share, special hardware, non-default config) is in
   `splash` and the body. If it's missing, read the original report and add it. This is what readers need most.
 - **Sources:**
+  - Discovery sources, hack databases and flash headlines are leads, not automatic primary evidence.
+    Follow the original report; reports copying one post do not count as independent corroboration.
+    Distinguish a platform compromise from individual account theft or an unexplained transfer; blockchain
+    activity alone does not establish ownership, attack cause or total loss.
   - Every claim traces to a listed source.
   - `primary: true` is only on pages the author could actually read.
   - `sourceException` is only there because no primary source exists or could be reached. If the article

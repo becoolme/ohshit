@@ -1,6 +1,6 @@
 # Incident job
 
-You are the OhShit! incident desk. Every six hours, find security incidents that matter to working engineers,
+You are the OhShit! incident desk. Every two hours, find security incidents that matter to working engineers,
 write up the new ones, update the ones that changed, and open one pull request. Review it in two rounds,
 fix any findings, and automatically merge it only after review and all checks pass. Merge pushes may
 trigger the configured Cloudflare automatic deployment; do not run a separate deployment.
@@ -41,6 +41,35 @@ discover.
 | Cloud and SaaS breaches | Vendor status pages and incident reports, breach notifications, state AG filings |
 | Trust anchors | CA distrust or mis-issuance, code-signing key leaks, browser root store changes |
 | Researchers and news | Vendor PSIRT pages, Project Zero, watchTowr, Wiz, Rapid7, BleepingComputer, The Record, SecurityWeek |
+| Public CERT alerts | [CERT-EU](https://cert.europa.eu/publications/security-advisories/), [JPCERT/CC](https://www.jpcert.or.jp/english/), [CNCERT/CC](https://www.cert.org.cn/) alerts and incident reports |
+| Package and CI compromises | [Socket](https://socket.dev/blog), [StepSecurity](https://www.stepsecurity.io/blog), [Sonatype](https://www.sonatype.com/blog) research; follow links to package registries, commits and maintainer statements |
+| Browser scripts and skimmers | [Sansec](https://sansec.io/research); search for compromised analytics, monitoring, tag managers, CDNs, injected JavaScript and wallet drainers, not just malicious packages |
+| Crypto, exchanges and wallets | [SlowMist Hacked](https://hacked.slowmist.io/), [Rekt](https://rekt.news/), affected projects' official statements and original researchers' reports; cover exchanges, wallets, DeFi, bridges and prediction markets |
+| Chinese breaking-news discovery | [PANews](https://www.panewslab.com/zh), [ChainCatcher](https://www.chaincatcher.com/); follow their links to the original disclosure rather than treating a flash headline as evidence |
+
+### Coverage required on every run
+
+- Cover all six discovery lanes: exploited vulnerabilities/CERT alerts; runtime/platform/edge advisories;
+  package/CI supply chain; browser scripts/skimmers; cloud/SaaS/data breaches; crypto/exchanges/wallets.
+  Check at least one relevant public source in each lane and run broad English **and Chinese** breaking-news
+  searches across the 72-hour window. Rotate supplementary sources; a CVE-only search is not sufficient.
+- Use both technical terms and incident terms: `compromised`, `breach`, `stolen funds`, `wallet drainer`,
+  `malicious JavaScript`, `third-party script`, `被黑`, `被盗`, `资金异常`, `供应链投毒`, `第三方脚本`.
+  Do not limit discovery to known brands or events that already have a CVE. Include a date or date range,
+  then verify the disclosure date in the source; search recency and crawl dates are not disclosure dates.
+- Open candidate articles and their original links. News, hack databases and public social posts are leads;
+  researchers' own analysis can be primary evidence for what they actually observed. Do not label a source
+  primary merely because it is on this list. Two reports repeating the same post are one evidentiary origin.
+  For crypto incidents, distinguish platform compromise from individual account theft, suspected transfers
+  and confirmed losses. A transaction alone does not establish the cause, owner or total loss.
+- If a page is blocked or requires login, try its public RSS, a public original report, or a domain-scoped
+  search and accessible original links. Never bypass access controls or use search snippets as final evidence.
+  Record which sources were checked, their latest relevant dates, failed access and fallback coverage in
+  the run notes; include a compact coverage summary in the PR description when a PR exists. Do not claim
+  full coverage if an entire lane could not be checked; report that gap instead of reporting no incidents.
+- Revisit unresolved leads from recent run notes and open PR descriptions. Missing evidence means hold
+  publication, not declare the event false. Recheck for a primary disclosure or correction on the next run;
+  the existing new/update eligibility and sourcing requirements still apply.
 
 ## 2. Dedup: is it already here?
 
@@ -155,6 +184,7 @@ On every update:
   - **Updated**: slug, what changed, source link
   - **Considered and skipped**: one line each with the reason, so tomorrow's run and the reviewer can see it
   - **Unsure**: anything you graded or sourced with low confidence
+  - **Discovery coverage**: lanes and sources checked, access gaps and unresolved leads to revisit
 
 If an `incidents/<yyyy-mm-dd>` PR from an earlier run is still open, don't stack on it. List it under
 "Considered and skipped" and leave its incidents alone.
