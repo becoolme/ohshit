@@ -20,7 +20,7 @@ checklist:
   - title: 从自有网站移除 DebugBear RUM
     hint: DebugBear 要求 RUM 客户移除嵌入代码。检查模板、标签管理器及生成后的页面。此警告不限于 Polymarket，但不代表每个 DebugBear 客户均遭攻击。
   - title: 排查已捕获的恶意样本
-    hint: '在留存脚本和请求日志中检查 cdn.debugbear[.]com/C7xcKKrjUnXK.js；SHA-256 0755e767504d8103f6c27b9e765a1026507a17c04513242adb503df7777879e5；接收地址 0x3F99139F1C5854bb628c2e576Aaf638e99dFfc18；跟踪 ID 4c6b64a0-a7ef-4c0f-9c70-3a4e6f89065c；以及 data.debugbear[.]com/metrics/submit、/metrics/update、/metrics/handle 和 /metrics/init。保存证据，不要执行样本。单独匹配不能证明遭入侵：这些主机也承载正常监控流量，远程配置还可改变接收地址。'
+    hint: '在留存脚本和请求日志中检查 cdn.debugbear[.]com/C7xcKKrjUnXK.js；SHA-256 0755e767504d8103f6c27b9e765a1026507a17c04513242adb503df7777879e5；接收地址 0x3F99139F1C5854bb628c2e576Aaf638e99dFfc18；跟踪 ID 4c6b64a0-a7ef-4c0f-9c70-3a4e6f89065c；以及 data.debugbear[.]com/metrics/submit、/metrics/update、/metrics/handle 和配置路径 /metrics/init。保存证据，不要执行样本。单独匹配不能证明遭入侵：这些主机也承载正常监控流量，远程配置还可改变接收地址。'
 sources:
   - name: Polymarket 官方状态历史
     says: 记录 10 月 29 日的暂停交易、服务商入侵、赔付承诺及解决状态，并明确标注 UTC 时间。
@@ -34,6 +34,6 @@ sources:
 
 Polymarket 国际平台于 10 月 29 日确认服务商遭入侵，并承诺赔付受影响用户。状态页现已将中断标记为已解决。评为 L4 是因为发生了真实入侵，而非仅有理论漏洞。
 
-Hudson Rock 将恶意脚本追溯到 DebugBear 的分发 URL。样本复用已登录应用的交易客户端和签名器，尝试转移持仓代币，或卖出持仓后转移资产。这不能证明每次签名请求都会静默成功，也不能证明私钥被导出或智能合约遭攻破。移除脚本不等于清除了已打开会话中的恶意代码。
+Hudson Rock 将恶意脚本追溯到 DebugBear 的分发 URL。样本复用已登录应用的交易客户端和签名器，尝试转移持仓代币，或卖出持仓后转移资产。这不能证明每次签名请求都会静默成功，也不能证明私钥被导出或智能合约遭攻破。移除脚本不能证明每个已打开的会话均已安全。
 
 平台通知未点名服务商；DebugBear 则独立确认了安全事件。确切暴露窗口、初始入侵方式及受影响人数仍不清楚。钱包余额和个别用户自报损失都不能代表被盗总额。这是独立的 10 月事件，不能套用 6 月事件的数据。

@@ -24,7 +24,7 @@ checklist:
   - title: Remove DebugBear RUM from your websites
     hint: DebugBear asks RUM customers to remove the embed code. Check templates, tag managers and generated pages. This warning applies beyond Polymarket; it does not establish that every DebugBear customer was attacked.
   - title: Hunt for the captured payload
-    hint: 'Check retained scripts and request logs for cdn.debugbear[.]com/C7xcKKrjUnXK.js; SHA-256 0755e767504d8103f6c27b9e765a1026507a17c04513242adb503df7777879e5; recipient 0x3F99139F1C5854bb628c2e576Aaf638e99dFfc18; tracking ID 4c6b64a0-a7ef-4c0f-9c70-3a4e6f89065c; and data.debugbear[.]com/metrics/submit, /metrics/update, /metrics/handle and /metrics/init. Preserve evidence without executing the file. A match alone is not proof of compromise: the hosts serve legitimate monitoring traffic, and configuration can change the recipient.'
+    hint: 'Check retained scripts and request logs for cdn.debugbear[.]com/C7xcKKrjUnXK.js; SHA-256 0755e767504d8103f6c27b9e765a1026507a17c04513242adb503df7777879e5; recipient 0x3F99139F1C5854bb628c2e576Aaf638e99dFfc18; tracking ID 4c6b64a0-a7ef-4c0f-9c70-3a4e6f89065c; data.debugbear[.]com/metrics/submit, /metrics/update and /metrics/handle; and configuration path /metrics/init. Preserve evidence without executing the file. A match alone is not proof of compromise: the hosts serve legitimate monitoring traffic, and configuration can change the recipient.'
 sources:
   - name: Polymarket official status history
     url: https://status.polymarket.com/history/1
@@ -45,6 +45,6 @@ sources:
 
 Polymarket's international platform confirmed a compromised provider on October 29 and committed to compensating affected users. Its status page now records the outage as resolved. L4 reflects a real compromise, rather than a theoretical vulnerability.
 
-Hudson Rock attributes the malicious script to a DebugBear delivery URL. The sample reuses the logged-in application's trading client and signer to attempt position transfers or sales and subsequent asset transfers. This does not prove every signing request silently succeeds, private keys were exported, or smart contracts were compromised. Removing the script does not clear already-open sessions.
+Hudson Rock attributes the malicious script to a DebugBear delivery URL. The sample reuses the logged-in application's trading client and signer to attempt position transfers or sales and subsequent asset transfers. This does not prove every signing request silently succeeds, private keys were exported, or smart contracts were compromised. Removing the script does not establish that every already-open session is safe.
 
 The platform's notice does not name its provider; DebugBear separately acknowledges an incident. The precise exposure window, initial access and total affected population remain unknown. Neither reported wallet balances nor individual loss claims establish aggregate stolen funds. This is a separate October event; June incident figures must not be reused for it.
