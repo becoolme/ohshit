@@ -8,7 +8,7 @@ tags:
   - investigation
 ecosystems:
   - crypto
-summary: Binance preliminarily links the incident to a compromised DevOps laptop, service-container access and unauthorized withdrawals. It promises loss coverage, suspends deposits/withdrawals and reports about $3bn frozen, not final loss. Aave’s precautionary V3/V4 freeze remains recorded; root cause is not final.
+summary: Binance preliminarily cites a compromised DevOps laptop leading to service-container access and unauthorized withdrawals. It promises loss coverage, pauses deposits/withdrawals and reports about $3bn frozen, not net loss. Aave froze DAO-run V3/V4 markets as a precaution, with contracts unaffected. Final root cause remains unconfirmed.
 splash: Binance.com deposits and withdrawals suspended; Aave reports a precautionary freeze of DAO-operated V3/V4 markets
 wipe: Follow official updates, inspect account activity, and use Binance's account-lock procedure if you find unauthorized actions
 inTheWild: yes
