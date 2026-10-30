@@ -14,13 +14,13 @@ inTheWild: n/a
 inTheWildNote: Confirmed unauthorized access; no specific software vulnerability disclosed.
 timeline:
 - date: Oct 23, 2026
-  title: Amadeus informs the airlines
+  title: Amadeus informs JAL/JTA
 - date: Oct 28, 2026
   title: JAL and JTA publish the affected scope
-- date: Oct 29, 2026
-  title: JAL/JTA dedicated inquiry desk opens
 - date: Oct 30, 2026
-  title: Cathay discloses its scope; JAL/JTA confirm customer notices sent
+  title: Cathay discloses scope; JAL/JTA confirm emails sent and inquiry desk operating
+- date: Oct 29, 2026 (scheduled)
+  title: Original planned opening of the JAL/JTA inquiry desk
 checklist:
 - title: Check individual notices through verified channels
   hint: JAL/JTA say affected customers have been emailed. Open the official notice directly; the stated access-trace period is August 10, 2023–September 23, 2026, not a rule that every flight in that period is affected.
@@ -41,6 +41,6 @@ sources:
   says: 'October 30: around 53,000 bookings, system-account credential access, containment and notifications.'
 ---
 
-The vendor-confirmed total separates about 90,000 customers with booking code, name, flight date, sector and class from about 2,000 with additional fields such as email, phone, passport number, nationality, frequent-flyer number, airline, flight/ticket number and seat. It is not 92,000 passport records. L4 reflects the scale of personal-data exposure. Amadeus has completed security measures; the notice does not identify a root cause or establish ongoing access.
+The vendor-confirmed total separates about 90,000 customers with booking code, name, flight date, sector and class from about 2,000 with additional fields such as email, phone, passport number, nationality, frequent-flyer number, airline, flight/ticket number and seat. It is not 92,000 passport records. L4 reflects the scale of personal-data exposure. Amadeus has completed security measures; the JAL/JTA notice does not identify a root cause or establish ongoing access.
 
 Cathay was informed on October 28 and received details on October 29. Its notice describes access between August 2023 and September 2026 using Amadeus system-account credentials. Most affected bookings exposed references, passenger names and flight details; a smaller subset potentially exposed contact details, travel-document or frequent-flyer numbers. There is no evidence of accessed payment information or data misuse. Amadeus reset a password and enhanced monitoring. Cathay’s systems and operations were unaffected. This expands the existing vendor event; it does not establish that every airline using Amadeus was affected.
