@@ -8,7 +8,7 @@ tags:
   - investigation
 ecosystems:
   - crypto
-summary: Yi He says Binance will cover all hacking losses and confirms deposits and withdrawals are suspended. Binance reports about $3 billion frozen, not a final loss total. Aave has frozen DAO-operated V3/V4 markets as a precaution and says its contracts are unaffected. Root cause remains unknown.
+summary: Binance preliminarily links the incident to a compromised DevOps laptop, service-container access and unauthorized withdrawals. It promises loss coverage, suspends deposits/withdrawals and reports about $3bn frozen, not final loss. Aave’s precautionary V3/V4 freeze remains recorded; root cause is not final.
 splash: Binance.com deposits and withdrawals suspended; Aave reports a precautionary freeze of DAO-operated V3/V4 markets
 wipe: Follow official updates, inspect account activity, and use Binance's account-lock procedure if you find unauthorized actions
 inTheWild: yes
@@ -34,6 +34,9 @@ timeline:
   - date: Oct 30, 2026
     title: Binance reports around $3 billion in frozen assets
     body: The vendor calls this a verified frozen amount. It is not the total stolen, permanently recovered or reimbursed.
+  - date: Oct 30, 2026
+    title: Binance gives a preliminary DevOps-to-service-container attack path
+    body: The exchange says a compromised engineer laptop may have enabled service-container access and unauthorized withdrawal submissions. The visible notice is a preliminary investigation, not a completed post-mortem.
 checklist:
   - title: Use official channels and reject recovery messages
     hint: Open Binance through your existing bookmark or official app and check its announcements for deposit and withdrawal restoration; the cited notice gives no resumption time. Verify unsolicited communications with Binance Verify or official support. Do not share passwords or 2FA codes, follow recovery links, or send money to purported support agents.
@@ -93,6 +96,10 @@ sources:
     url: https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fbinance%2Fstatus%2F2115970069696217576&omit_script=true
     primary: true
     says: The visible official embed reports around $3 billion frozen and continuing tracing/freezing; not a final stolen-fund or reimbursement total.
+  - name: Binance preliminary attack-path notice
+    url: https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fbinance%2Fstatus%2F2115993361517891592&omit_script=true
+    primary: true
+    says: The visible first sentence describes a possible compromised DevOps laptop leading to service-container access and unauthorized withdrawal submissions. The sentence beginning about wallet private keys is truncated and not used to establish their status.
 updated: 2026-10-30
 ---
 
@@ -105,3 +112,5 @@ The root cause, affected wallet scope, initial access and containment status rem
 **Update, October 30:** Yi He now explicitly says Binance will cover all hacking losses, confirms that deposits and withdrawals are temporarily suspended, and promises a post-mortem after the investigation. This current-management acknowledgment replaces the earlier uncertainty over whether the exchange itself had acknowledged hacking losses and supports L4. It does not establish a technical root cause or audited net loss.
 
 Binance separately reports a verified frozen amount of around $3 billion. This vendor figure is not an independent reconciliation, and frozen assets must not be treated as returned funds or added to outflow estimates. Aave says it froze all DAO-operated V3/V4 markets as a precaution while its contracts remain unaffected and positions overcollateralized; the available official embed truncates later operational details.
+
+**Further update, October 30:** Binance now says its initial investigation suggests a compromised DevOps engineer’s laptop may have enabled access to a service container and submission of unauthorized withdrawals. This replaces the earlier absence of a vendor-described attack path, but remains preliminary. The visible notice truncates its private-key statement, so it does not establish here whether wallet keys were exposed. The previously reported loss-coverage commitment, deposit/withdrawal suspension and frozen-asset figure remain in place; a full post-mortem and reconciled net loss are still outstanding.
