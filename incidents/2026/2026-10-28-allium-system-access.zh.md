@@ -3,7 +3,7 @@ title: Allium 披露系统未授权访问，恢复平台期间吊销 API 密钥
 summary: Allium 确认于 10 月 25 日发现系统未授权访问。10 月 28 日恢复通知要求更换既有 API 密钥并设置新密码。核心 Explorer API 已恢复，但本次可读通知中，已上传数据访问及 AI/MCP 仍不可用。尚不能确定客户数据是否泄露。
 splash: Allium 应用及 API 客户，尤其使用既有密钥或已上传数据表的集成
 wipe: 按通知更换已吊销 API 密钥，设置新密码并开启 MFA；重启前验证受影响工作流
-inTheWildNote: Allium 确认部分系统遭未授权访问，未说明客户数据暴露范围。
+inTheWildNote: Allium 确认未授权访问，客户数据影响仍未说明。
 cves: []
 fixed: []
 timeline:

@@ -13,7 +13,7 @@ summary: Allium confirms unauthorized access detected October 25. Its October 28
 splash: Allium application and API customers, especially integrations using existing keys or uploaded tables
 wipe: Replace revoked API keys as instructed, set a new password, enable MFA and check affected workflows before restarting
 inTheWild: yes
-inTheWildNote: Allium confirms unauthorized access to certain systems; customer-data exposure is unspecified.
+inTheWildNote: Allium confirms unauthorized access; customer-data impact remains unspecified.
 cves: []
 fixed: []
 timeline:
