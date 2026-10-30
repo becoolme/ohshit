@@ -37,7 +37,7 @@ timeline:
     title: Talos publishes the KeyDrift campaign analysis; Cisco updates its advisory
 checklist:
   - title: Patch every affected control component
-    hint: "Inventory Controller/vSmart, Manager/vManage and Validator/vBond. Use Cisco’s release table and compatibility matrix: 20.9.8.2, 20.12.5.3 or 20.12.6.1, 20.15.4.2, or 20.18.2.1 as appropriate. Migrate unsupported lines; no version checker is provided for these four-part releases."
+    hint: "Inventory Controller/vSmart, Manager/vManage and Validator/vBond. Use Cisco’s release table and compatibility matrix: 20.9.8.2, 20.12.5.3 or 20.12.6.1, 20.15.4.2, or 20.18.2.1 as appropriate. Migrate unsupported lines using Cisco’s compatibility and upgrade matrices."
   - title: Restrict management and peering access
     hint: For on-premises deployments, allow ports 22 and 830 only from known controller and required trusted IPs, and follow Cisco’s hardening guide for the remaining control-plane ports. Test topology requirements before changing rules. ACLs reduce exposure but do not replace patches.
   - title: Preserve evidence and investigate controller persistence
