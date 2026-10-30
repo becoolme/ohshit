@@ -24,7 +24,7 @@ checklist:
   - title: Confirm the deployed runtime before resuming integrations
     hint: Check spec 134 at block 20,446,186 against the official report. Do not assume patch activation also reopens frozen services.
   - title: Reconcile balances and follow recovery notices
-    hint: Compare account state around attack block 20,445,791. Reference transaction 0x5ed6b9e5661b7ba5237a81244725272482044b0b572267d2f7f31874d68c4a82; a match alone does not prove compromise. Use official channels for reimbursement instructions; reject unsolicited claim links.
+    hint: Compare account state around attack block 20,445,791; event labels can mislead. Reference transaction 0x5ed6b9e5661b7ba5237a81244725272482044b0b572267d2f7f31874d68c4a82; a match alone does not prove compromise. Use official reimbursement channels; reject unsolicited claim links.
 sources:
   - name: Humanode incident response and recovery report
     url: https://blog.humanode.io/humanode-incident-response-and-recovery-update/
