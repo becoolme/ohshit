@@ -8,7 +8,7 @@ tags:
   - investigation
 ecosystems:
   - crypto
-summary: Binance preliminarily cites DevOps-laptop compromise, service-container access and unauthorized withdrawals. It promises loss coverage and reports about $3bn frozen, not net loss. Yi He now says deposits operate normally and withdrawals should begin resuming within 48 hours. Aave froze DAO-run V3/V4 markets; its contracts remain unaffected.
+summary: Binance reports additional breach points beyond its laptop theory. TRM estimates $6.36bn outflows and attributes the attack to TraderTraitor, not a final vendor finding. Loss coverage and ~$3bn frozen remain reported. Deposits operate normally; withdrawals should begin resuming within 48 hours. Aave froze V3/V4 as a precaution; contracts are unaffected.
 splash: Binance.com withdrawal users; Aave reports a precautionary freeze of DAO-operated V3/V4 markets
 wipe: Follow official updates, inspect account activity, and use Binance's account-lock procedure if you find unauthorized actions
 inTheWild: yes
@@ -40,6 +40,9 @@ timeline:
   - date: Oct 30, 2026
     title: Yi He says deposits operate normally and gives a withdrawal recovery estimate
     body: Withdrawal service and address-control enhancements continue; resumption is expected to begin within the next 48 hours, not guaranteed complete recovery.
+  - date: Oct 30, 2026
+    title: Binance reports additional breach points; TRM publishes cross-chain findings
+    body: The vendor investigation extends beyond the preliminary laptop theory. TRM’s amount and TraderTraitor attribution are research findings, not audited net loss or final vendor attribution.
 checklist:
   - title: Use official channels and reject recovery messages
     hint: Open Binance through your existing bookmark or official app and check its announcements for deposit and withdrawal restoration; Yi He now expects withdrawals to begin resuming within 48 hours of her October 30 update. This is an estimate, not confirmation that withdrawals have reopened. Verify unsolicited communications with Binance Verify or official support. Do not share passwords or 2FA codes, follow recovery links, or send money to purported support agents.
@@ -107,6 +110,14 @@ sources:
     url: https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fheyibinance%2Fstatus%2F2116021551262740985&omit_script=true
     primary: true
     says: Visible official statement says deposits operate normally and withdrawal resumption is expected to begin within 48 hours; later text is truncated.
+  - name: Binance further investigation update
+    url: https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fbinance%2Fstatus%2F2116089661408108712&omit_script=true
+    primary: true
+    says: Visible official embed confirms additional breach points beyond the initial laptop hypothesis; later text truncates.
+  - name: TRM original cross-chain investigation
+    url: https://www.trmlabs.com/resources/blog/north-korea-steals-usd-6-36-billion-from-binance-in-the-largest-hack-in-history
+    primary: true
+    says: High-confidence TraderTraitor attribution and roughly $6.36bn outflows across ten chains; snapshot as of October 30 00:30 UTC.
 updated: 2026-10-30
 ---
 
@@ -123,3 +134,5 @@ Binance separately reports a verified frozen amount of around $3 billion. This v
 **Further update, October 30:** Binance now says its initial investigation suggests a compromised DevOps engineer’s laptop may have enabled access to a service container and submission of unauthorized withdrawals. This replaces the earlier absence of a vendor-described attack path, but remains preliminary. The visible notice truncates its private-key statement, so it does not establish here whether wallet keys were exposed. At that stage, loss coverage, deposit/withdrawal suspension and the frozen-asset figure were unchanged. The newer service update below supersedes current deposit status; a full post-mortem and reconciled net loss remain outstanding.
 
 **Service update, October 30:** Yi He now says deposits remain unaffected and operate normally, superseding the earlier suspension notice for current deposit status. Withdrawals are expected to begin resuming within 48 hours while service and address-control enhancements continue. This forecast does not establish full reopening or completed containment.
+
+**Investigation update:** Binance now reports additional breach points, so the laptop must not be treated as a confirmed single root cause. TRM attributes the attack with high confidence to North Korea’s TraderTraitor and assesses signing-infrastructure compromise as likely; these are researcher judgments, not final vendor findings. Its roughly $6.36bn measures outflows at transfer-time prices, not net loss. TRM’s ~$2.7bn frozen snapshot at 00:30 UTC differs in timing and scope from Binance’s later ~$3bn report; do not add them.
