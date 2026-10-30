@@ -21,7 +21,7 @@ timeline:
     title: Talos 发布 KeyDrift 分析；Cisco 更新公告
 checklist:
   - title: 修补所有受影响的控制组件
-    hint: 清点 Controller/vSmart、Manager/vManage 和 Validator/vBond。按 Cisco 发布表及兼容性矩阵选择 20.9.8.2、20.12.5.3 或 20.12.6.1、20.15.4.2、20.18.2.1；不受支持的分支应迁移。这些四段版本不提供版本检查器。
+    hint: 清点 Controller/vSmart、Manager/vManage 和 Validator/vBond。按 Cisco 发布表及兼容性矩阵选择 20.9.8.2、20.12.5.3 或 20.12.6.1、20.15.4.2、20.18.2.1；不受支持的分支应按 Cisco 兼容性和升级矩阵迁移。
   - title: 限制管理与对等连接访问
     hint: 自托管部署的 22、830 端口仅允许已知控制组件及必需的可信 IP；其余控制平面端口按 Cisco 加固指南配置。修改前验证拓扑需求。ACL 只能降低暴露，不能代替补丁。
   - title: 保留证据并排查控制组件持久化
