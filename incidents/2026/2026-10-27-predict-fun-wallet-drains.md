@@ -42,6 +42,6 @@ sources:
 
 Public disclosure was on October 27, although the researcher traces activity back to October 22. Bitquery reports 397,708 USDT taken from 29 wallets over two waves; the approximate monetary scale agrees with the platform acknowledgment. The exact wallet count and trace remain researcher-reported, unverified outside that investigation. Its observation window ends on October 27.
 
-The observed signatures establish use of owner-key authority, not how those keys were obtained. Bitquery found no market-contract calls in the drains it examined. Its proposed connection to exported API keys and a third-party documentation site is an explanation, not a demonstrated key-theft mechanism or evidence that Privy itself was breached. L4 reflects confirmed unauthorized transfers.
+The observed signatures establish use of owner-key authority, not how those keys were obtained. Bitquery found no market-contract calls in the drains it examined. Its proposed connection to exported owner keys used for API trading and a third-party documentation site is an explanation, not a demonstrated key-theft mechanism or evidence that Privy itself was breached. L4 reflects confirmed unauthorized transfers.
 
 A further drain after the statement illustrates why taking a documentation site offline cannot invalidate copied keys. The research reports a reimbursement pledge, not completed refunds. This is separate from the later Binance and Polymarket incidents; no shared attacker or root cause is established.
