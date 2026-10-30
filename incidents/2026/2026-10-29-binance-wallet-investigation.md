@@ -1,5 +1,5 @@
 ---
-title: Binance co-founder promises to cover hacking losses; deposits and withdrawals remain suspended
+title: Binance says deposits operate normally and expects withdrawals to begin resuming within 48 hours
 level: 4
 date: 2026-10-29
 tags:
@@ -8,8 +8,8 @@ tags:
   - investigation
 ecosystems:
   - crypto
-summary: Binance preliminarily cites a compromised DevOps laptop leading to service-container access and unauthorized withdrawals. It promises loss coverage, pauses deposits/withdrawals and reports about $3bn frozen, not net loss. Aave froze DAO-run V3/V4 markets as a precaution, with contracts unaffected. Final root cause remains unconfirmed.
-splash: Binance.com deposits and withdrawals suspended; Aave reports a precautionary freeze of DAO-operated V3/V4 markets
+summary: Binance preliminarily cites DevOps-laptop compromise, service-container access and unauthorized withdrawals. It promises loss coverage and reports about $3bn frozen, not net loss. Yi He now says deposits operate normally and withdrawals should begin resuming within 48 hours. Aave froze DAO-run V3/V4 markets; its contracts remain unaffected.
+splash: Binance.com withdrawal users; Aave reports a precautionary freeze of DAO-operated V3/V4 markets
 wipe: Follow official updates, inspect account activity, and use Binance's account-lock procedure if you find unauthorized actions
 inTheWild: yes
 inTheWildNote: Yi He acknowledges hacking losses and says Binance will cover them.
@@ -37,9 +37,12 @@ timeline:
   - date: Oct 30, 2026
     title: Binance gives a preliminary DevOps-to-service-container attack path
     body: The exchange says a compromised engineer laptop may have enabled service-container access and unauthorized withdrawal submissions. The visible notice is a preliminary investigation, not a completed post-mortem.
+  - date: Oct 30, 2026
+    title: Yi He says deposits operate normally and gives a withdrawal recovery estimate
+    body: Withdrawal service and address-control enhancements continue; resumption is expected to begin within the next 48 hours, not guaranteed complete recovery.
 checklist:
   - title: Use official channels and reject recovery messages
-    hint: Open Binance through your existing bookmark or official app and check its announcements for deposit and withdrawal restoration; the cited notice gives no resumption time. Verify unsolicited communications with Binance Verify or official support. Do not share passwords or 2FA codes, follow recovery links, or send money to purported support agents.
+    hint: Open Binance through your existing bookmark or official app and check its announcements for deposit and withdrawal restoration; Yi He now expects withdrawals to begin resuming within 48 hours of her October 30 update. This is an estimate, not confirmation that withdrawals have reopened. Verify unsolicited communications with Binance Verify or official support. Do not share passwords or 2FA codes, follow recovery links, or send money to purported support agents.
   - title: Inspect your own account and respond to unauthorized activity
     hint: Review Security and Account Activity for unfamiliar logins, transactions or security-setting changes. If found, Binance instructs users to disable the account and contact official support. In the app, its guide uses Account Info → Security → Manage Account → Disable Account. Read the consequences before confirming; reopening may require support. This account control does not fix a possible exchange-wallet compromise.
   - title: Check Aave status before planning deposits or borrowing
@@ -100,6 +103,10 @@ sources:
     url: https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fbinance%2Fstatus%2F2115993361517891592&omit_script=true
     primary: true
     says: The visible first sentence describes a possible compromised DevOps laptop leading to service-container access and unauthorized withdrawal submissions. The sentence beginning about wallet private keys is truncated and not used to establish their status.
+  - name: Yi He service recovery update
+    url: https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fheyibinance%2Fstatus%2F2116021551262740985&omit_script=true
+    primary: true
+    says: Visible official statement says deposits operate normally and withdrawal resumption is expected to begin within 48 hours; later text is truncated.
 updated: 2026-10-30
 ---
 
@@ -114,3 +121,5 @@ The root cause, affected wallet scope, initial access and containment status rem
 Binance separately reports a verified frozen amount of around $3 billion. This vendor figure is not an independent reconciliation, and frozen assets must not be treated as returned funds or added to outflow estimates. Aave says it froze all DAO-operated V3/V4 markets as a precaution while its contracts remain unaffected and positions overcollateralized; the available official embed truncates later operational details.
 
 **Further update, October 30:** Binance now says its initial investigation suggests a compromised DevOps engineer’s laptop may have enabled access to a service container and submission of unauthorized withdrawals. This replaces the earlier absence of a vendor-described attack path, but remains preliminary. The visible notice truncates its private-key statement, so it does not establish here whether wallet keys were exposed. The previously reported loss-coverage commitment, deposit/withdrawal suspension and frozen-asset figure remain in place; a full post-mortem and reconciled net loss are still outstanding.
+
+**Service update, October 30:** Yi He now says deposits remain unaffected and operate normally, superseding the earlier suspension notice for current deposit status. Withdrawals are expected to begin resuming within 48 hours while service and address-control enhancements continue. This forecast does not establish full reopening or completed containment.
