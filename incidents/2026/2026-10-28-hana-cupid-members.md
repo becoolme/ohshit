@@ -19,7 +19,7 @@ timeline:
     title: Public notice and customer notifications begin
 checklist:
   - title: Check your membership and reset your password
-    hint: Use the account-recovery page from your official i879.com bookmark. The notice excludes external marketplace, telephone-only and member-florist purchases without direct email registration.
+    hint: Use account recovery at i879.com. Former members may also be affected; their accounts are disabled. External marketplace, telephone-only and florist purchases without direct email registration are excluded.
   - title: Replace reused passwords and reject suspicious messages
     hint: Give every account a unique password. Open the official site yourself instead of following unexpected email links; never provide passwords or authentication codes to an unsolicited contact.
 sources:
