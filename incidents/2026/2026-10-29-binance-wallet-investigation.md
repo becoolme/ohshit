@@ -8,7 +8,7 @@ tags:
   - investigation
 ecosystems:
   - crypto
-summary: Binance reports additional breach points beyond its laptop theory. TRM estimates $6.36bn outflows and attributes the attack to TraderTraitor, not a final vendor finding. Loss coverage and ~$3bn frozen remain reported. Deposits operate normally; withdrawals should begin resuming within 48 hours. Aave froze V3/V4 as a precaution; contracts are unaffected.
+summary: Binance reports additional breach points beyond its laptop theory. TRM estimates $6.36bn outflows and attributes the attack to TraderTraitor, not a final vendor finding. Loss coverage and ~$3bn frozen remain reported. Deposits operate normally; withdrawals should begin resuming within 48 hours. Aave froze DAO V3/V4 as a precaution; contracts are unaffected.
 splash: Binance.com withdrawal users; Aave reports a precautionary freeze of DAO-operated V3/V4 markets
 wipe: Follow official updates, inspect account activity, and use Binance's account-lock procedure if you find unauthorized actions
 inTheWild: yes
@@ -28,6 +28,9 @@ timeline:
   - date: Oct 29, 2026
     title: Aave freezes DAO-operated V3/V4 markets as a precaution
     body: Aave says its contracts are unaffected and positions remain overcollateralized; its statement concerns reports about Binance-affiliated wallets.
+  - date: Oct 29, 2026
+    title: TRM publishes cross-chain investigation
+    body: The report is dated October 29; its figures use an October 30 00:30 UTC snapshot. Amounts and attribution are researcher findings.
   - date: Oct 30, 2026
     title: Yi He says Binance will cover hacking losses and confirms deposit and withdrawal suspension
     body: The co-founder says security checks, fund freezes and law-enforcement coordination continue; a post-mortem will follow the investigation.
@@ -41,8 +44,8 @@ timeline:
     title: Yi He says deposits operate normally and gives a withdrawal recovery estimate
     body: Withdrawal service and address-control enhancements continue; resumption is expected to begin within the next 48 hours, not guaranteed complete recovery.
   - date: Oct 30, 2026
-    title: Binance reports additional breach points; TRM publishes cross-chain findings
-    body: The vendor investigation extends beyond the preliminary laptop theory. TRM’s amount and TraderTraitor attribution are research findings, not audited net loss or final vendor attribution.
+    title: Binance reports additional breach points
+    body: The vendor investigation extends beyond its preliminary laptop theory; no final root cause is established.
 checklist:
   - title: Use official channels and reject recovery messages
     hint: Open Binance through your existing bookmark or official app and check its announcements for deposit and withdrawal restoration; Yi He now expects withdrawals to begin resuming within 48 hours of her October 30 update. This is an estimate, not confirmation that withdrawals have reopened. Verify unsolicited communications with Binance Verify or official support. Do not share passwords or 2FA codes, follow recovery links, or send money to purported support agents.
