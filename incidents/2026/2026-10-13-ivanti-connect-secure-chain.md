@@ -106,10 +106,10 @@ the latest version at the time. The chain:
 
 The attacker left no web shell. It simply re-exploited the box for every command and tampered with logs to
 get past Ivanti's internal Integrity Checker. From there it went after LDAP/AD credentials, LAPS passwords
-and BitLocker keys, and ran Kerberoasting.
+and BitLocker keys, and deployed a Kerberos tool capable of Kerberoasting. The report does not establish that the accompanying credential-test script used that capability.
 
 Volexity has medium confidence that the actor used LLMs to build its tooling, and low confidence that it is
-criminal rather than espionage. Ivanti's own advisory was not reachable for our review. The fixed-version
-list comes from secondary press, so double-check it against Ivanti's portal.
+criminal rather than espionage. At the original review, Ivanti's advisory was unreachable and the version
+list relied on secondary press. The current vendor-verified table and update below replace that evidence gap.
 
 **October 31 update:** The description above records the initial disclosure. Volexity's October 29 update and Ivanti now confirm a patch for the formerly unnumbered privilege escalation, CVE-2026-111357; Ivanti also adds CVE-2026-118527. CISA listed both on October 30. The earlier patch thresholds and “unpatched” status are superseded by the current table. Ivanti's full advisory is now readable and confirms limited-customer exploitation of the three-flaw chain. This is not a new incident or proof that patching removes an existing compromise.
