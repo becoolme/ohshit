@@ -24,11 +24,17 @@ timeline:
     title: Provider-side revocation and abuse reporting reiterated
   - date: Oct 31, 01:04 UTC
     title: Audit logs enabled for every customer, including free users
+  - date: Oct 31, 13:34 UTC
+    title: MySQL and Redis secret rotation enabled for all customers
 checklist:
   - title: Replace credentials at their issuing services
     hint: From a trusted environment, disable or rotate keys stored in workloads, secret groups and global secrets; update dependent applications. Editing an environment-variable value alone does not revoke the old key. Review provider usage and billing for abuse.
   - title: Finish database credential rotation
-    hint: Northflank enabled rotation for Postgres and MongoDB. Its addon API creates replacement credentials but keeps old ones valid until finalisation. Update clients, verify connections, then finalise the rotation to remove old credentials; do not assume enabling rotation completed revocation.
+    hint: For Postgres and MongoDB, the addon API creates replacement credentials but keeps old ones valid until finalisation. Update clients, verify connections, then finalise the rotation to remove old credentials; do not assume enabling rotation completed revocation. MySQL and Redis now also support rotation, with the distinct steps below.
+  - title: Choose the MySQL rotation scope
+    hint: Usernames stay unchanged. The default user-facing mode rotates user passwords; full mode also rotates internal passwords and restarts the addon. Both modes keep old passwords until finalisation. Update clients before finalising; user-facing finalisation disconnects affected sessions, while full finalisation restarts the addon.
+  - title: Plan the Redis restart and client reconnects
+    hint: Redis rotation restarts the addon and revokes old credentials in one step; clients must reconnect with the new password. Redeploy linked services yourself. Do not call the finalisation endpoint for Redis. Nonpersistent Redis is unsupported, and Sentinel requires at least three replicas; check your deployment before starting.
   - title: Restrict exposed addons
     hint: Disable addon public access where enabled, as Northflank requests; follow the official status notice for recovery updates.
   - title: Review available audit and provider logs
