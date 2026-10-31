@@ -76,7 +76,7 @@ checklist:
   - title: Find every self-managed GitLab
     hint: Including forgotten Omnibus VMs and Docker images
   - title: Upgrade to the fixed version for your line
-    hint: The Oct 12 patch is not enough. Plan downtime for 19.4.3 / 19.3.6 on single-node setups
+    hint: Install the latest patched release for your branch; the table lists minimum fixes, not downgrade targets. The Oct 12 patch is not enough. Plan downtime for 19.4.3 / 19.3.6 on single-node setups
   - title: Close self-registration if you don't need it
     hint: Open sign-up turned the Oct 12 bug from "needs an account" into "anyone"
   - title: Use GitLab's detections for both regex flaws
@@ -88,7 +88,7 @@ checklist:
   - title: Update other Ruby applications that compile untrusted patterns
     hint: Upgrade to Ruby 4.0.9 / 3.4.12 / 3.3.13; otherwise stop compiling attacker-controlled strings via Regexp.new, union, compile or interpolation. Regexp.timeout and pattern-length limits do not reliably protect these paths
   - title: Patch Ruby separately in custom GitLab builds
-    hint: Source installs and custom images need Ruby 3.3.13 / 3.4.12 / 4.0.9 or later in the appropriate line, in addition to GitLab updates. Re-pull alpinelinux/gitlab:19.3.6 if using that tag; only its October 27 image includes Ruby 3.3.13. Verify the running image and Ruby rather than trusting the tag.
+    hint: Source installs and custom images need Ruby 3.3.13 / 3.4.12 / 4.0.9 or later in the appropriate line, in addition to GitLab updates. Re-pull alpinelinux/gitlab:19.3.6 if using that tag; the image republished October 27 includes Ruby 3.3.13, whereas earlier pulls do not. Verify the running image and Ruby rather than trusting the tag.
   - title: Restore Alpine GitLab access safely
     hint: Use the official reopened-service notice. Reset the password and any reuse elsewhere; re-enroll 2FA and discard old recovery codes. Verify new SSH host fingerprints against that notice before accepting them; uploaded SSH/GPG user keys were retained. Replace access tokens, feed URLs and private reply addresses. Refill project and schedule variables using new credentials; renew integration, webhook, mirror and OAuth secrets.
 sources:
