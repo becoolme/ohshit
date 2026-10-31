@@ -26,6 +26,8 @@ timeline:
     title: Audit logs enabled for every customer, including free users
   - date: Oct 31, 13:34 UTC
     title: MySQL and Redis secret rotation enabled for all customers
+  - date: Oct 31, 22:32 UTC
+    title: Minio addon secret rotation enabled for all customers
 checklist:
   - title: Replace credentials at their issuing services
     hint: From a trusted environment, disable or rotate keys stored in workloads, secret groups and global secrets; update dependent applications. Editing an environment-variable value alone does not revoke the old key. Review provider usage and billing for abuse.
@@ -35,6 +37,8 @@ checklist:
     hint: Usernames stay unchanged. The default user-facing mode rotates user passwords; full mode also rotates internal passwords and restarts the addon. Both modes keep old passwords until finalisation. Update clients before finalising; user-facing finalisation disconnects affected sessions, while full finalisation restarts the addon.
   - title: Plan the Redis restart and client reconnects
     hint: Redis rotation restarts the addon and revokes old credentials in one step; clients must reconnect with the new password. Redeploy linked services yourself. Do not call the finalisation endpoint for Redis. Nonpersistent Redis is unsupported, and Sentinel requires at least three replicas; check your deployment before starting.
+  - title: Rotate Minio addon credentials
+    hint: Northflank now enables secret rotation for Minio addons for all customers. Use the addon rotation controls, update every client using those credentials and verify that old credentials no longer work. The notice does not specify restart or finalisation semantics for Minio; do not assume the MySQL or Redis procedure applies.
   - title: Restrict exposed addons
     hint: Disable addon public access where enabled, as Northflank requests; follow the official status notice for recovery updates.
   - title: Review available audit and provider logs
