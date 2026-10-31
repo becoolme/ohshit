@@ -3,7 +3,7 @@ title: "GitLab patches its second CVSS 10.0 regex-compiler RCE in nine days, and
 headline: "GitLab: two perfect 10s, one regex engine, nine days apart"
 level: 4
 date: 2026-10-21
-updated: 2026-10-29
+updated: 2026-10-31
 tags: [GitLab, RCE, self-managed]
 ecosystems: [gitlab, ruby]
 summary: >-
@@ -63,9 +63,13 @@ timeline:
   - date: Oct 23, 03:11 UTC
     title: Ruby publishes upstream fixes and exposure guidance
     body: Ruby 4.0.9, 3.4.12 and 3.3.13 contain all three underlying fixes; 4.0.8 misses the newest overflow.
+  - date: Oct 28, 2026
+    title: Alpine reports attempted exploitation and rebuild
   - date: Oct 29, 2026
     title: CISA adds CVE-2026-97229 to KEV
     body: The FCEB remediation deadline is November 1; CISA flags this entry for forensic triage. This confirms exploitation of the Oct 12 flaw, not the Oct 21 sibling.
+  - date: Oct 30, 2026
+    title: Alpine publishes reopened-service recovery steps
 checklist:
   - title: Preserve evidence and triage exposed GitLab servers
     hint: CISA flags CVE-2026-97229 for forensic triage. Scope affected instances; when possible preserve volatile data and relevant logs before patching, record collection details, then patch, contain and investigate unauthorized access or persistence. FCEB agencies must meet the November 1 KEV deadline; other operators should prioritize remediation now. Do not treat a successful upgrade as proof that no intrusion occurred.
@@ -83,6 +87,10 @@ checklist:
     hint: CVE-2026-90970 needs gateway 19.2.4 / 19.3.2 / 19.4.1
   - title: Update other Ruby applications that compile untrusted patterns
     hint: Upgrade to Ruby 4.0.9 / 3.4.12 / 3.3.13; otherwise stop compiling attacker-controlled strings via Regexp.new, union, compile or interpolation. Regexp.timeout and pattern-length limits do not reliably protect these paths
+  - title: Patch Ruby separately in custom GitLab builds
+    hint: Source installs and custom images need Ruby 3.3.13 / 3.4.12 / 4.0.9 or later in the appropriate line, in addition to GitLab updates. Re-pull alpinelinux/gitlab:19.3.6 if using that tag; only its October 27 image includes Ruby 3.3.13. Verify the running image and Ruby rather than trusting the tag.
+  - title: Restore Alpine GitLab access safely
+    hint: Use the official reopened-service notice. Reset the password and any reuse elsewhere; re-enroll 2FA and discard old recovery codes. Verify new SSH host fingerprints against that notice before accepting them; uploaded SSH/GPG user keys were retained. Replace access tokens, feed URLs and private reply addresses. Refill project and schedule variables using new credentials; renew integration, webhook, mirror and OAuth secrets.
 sources:
   - name: GitLab patch release 19.5.1
     url: https://docs.gitlab.com/releases/patches/patch-release-gitlab-19-5-1-released/
@@ -135,6 +143,12 @@ sources:
     url: https://gitlab.com/gitlab-security-oss/tldr/-/raw/main/Detections/platforms/GitLab/Vulnerability%20Detections/ci_lint_scripted_client_error_burst.md
     primary: true
     says: Vendor detection logic, log locations and correlation limits; synthetic examples are not attacker IoCs.
+  - name: Alpine attempted-exploitation incident report
+    url: https://alpinelinux.org/posts/GitLab-security-incident-CVE-2026-97229.html
+    primary: true
+  - name: Alpine reopened-service recovery notice
+    url: https://alpinelinux.org/posts/GitLab-reopened-after-security-incident.html
+    primary: true
 ---
 
 GitLab runs user-supplied regular expressions in many places: CI rules, code owners, push rules, markup
@@ -158,3 +172,5 @@ FCEB agencies have a November 1 remediation deadline for CVE-2026-97229, with fo
 **October 23 — upstream Ruby:** The same bugs also affect applications that compile attacker-controlled strings into patterns. Ruby 4.0.9, 3.4.12 and 3.3.13 contain all three fixes behind GitLab's four regex CVEs, including the two September issues already noted above. Ruby 4.0.8 lacks the CVE-2026-110264 fix. Developer-written static patterns are outside this exposure. Neither regex timeouts nor pattern-length caps reliably prevent it; stop accepting untrusted patterns until upgraded.
 
 The table and checker cover GitLab packages, which ship their own patched Ruby. Upgrading an unrelated system Ruby does not replace the GitLab package upgrade. Ruby has not requested separate CVE identifiers for these fixes and asks users to track the GitLab identifiers instead.
+
+**Alpine update:** Alpine reports October 20–21 exploit attempts, with no evidence of successful execution but insufficient logs to exclude it. It rebuilt GitLab and found no tampering in checked packages or releases; signing keys were never stored there. Its custom image remained vulnerable after a GitLab-only upgrade because it used unpatched system Ruby. This attempted attack does not negate CISA’s separate exploitation confirmation.
