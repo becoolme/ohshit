@@ -2,6 +2,7 @@
 title: Northflank tells all users to rotate secrets after a security incident
 level: 4
 date: 2026-10-30
+updated: 2026-10-31
 tags: [Northflank, cloud, credentials]
 summary: Northflank tells all users to assume environment variables are compromised and rotate workload, secret-group and global credentials immediately. Its notice reports multiple users confirming AI-key use; investigation remains open, with no published root cause or victim count.
 splash: All Northflank users with credentials in workloads, secret groups or global secrets
@@ -19,6 +20,10 @@ timeline:
     title: Postgres and MongoDB secret rotation enabled for all users
   - date: Oct 30, 19:28 UTC
     title: Broad rotation guidance remains; investigation ongoing
+  - date: Oct 30, 23:38 UTC
+    title: Provider-side revocation and abuse reporting reiterated
+  - date: Oct 31, 01:04 UTC
+    title: Audit logs enabled for every customer, including free users
 checklist:
   - title: Replace credentials at their issuing services
     hint: From a trusted environment, disable or rotate keys stored in workloads, secret groups and global secrets; update dependent applications. Editing an environment-variable value alone does not revoke the old key. Review provider usage and billing for abuse.
@@ -26,6 +31,8 @@ checklist:
     hint: Northflank enabled rotation for Postgres and MongoDB. Its addon API creates replacement credentials but keeps old ones valid until finalisation. Update clients, verify connections, then finalise the rotation to remove old credentials; do not assume enabling rotation completed revocation.
   - title: Restrict exposed addons
     hint: Disable addon public access where enabled, as Northflank requests; follow the official status notice for recovery updates.
+  - title: Review available audit and provider logs
+    hint: Northflank has enabled audit logs for all tiers. Review those logs alongside AI-provider usage and billing; report suspicious usage to Northflank support and the relevant provider. Log availability does not establish complete historical coverage or prove that an account is unaffected.
 sources:
   - name: Northflank original incident updates
     url: https://status.northflank.com/cmvv0rn5a092f14rutwccodpp
@@ -35,6 +42,9 @@ sources:
     primary: true
   - name: Northflank rotation finalisation API
     url: https://northflank.com/docs/v1/api/project/addons/finalise-addon-secret-rotation?tab=api
+    primary: true
+  - name: Northflank live status updates
+    url: https://status.northflank.com/
     primary: true
 ---
 
