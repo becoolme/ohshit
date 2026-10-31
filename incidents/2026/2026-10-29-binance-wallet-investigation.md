@@ -49,9 +49,15 @@ timeline:
   - date: Oct 30, 2026
     title: Full notice updates recovery plans and private-key assessment
     body: Phased withdrawals remain conditional on security checks; no completed reopening is confirmed.
+  - date: Oct 31, 2026, 00:00 UTC
+    title: Binance takes its new proof-of-reserves snapshot
+    body: The later recovery notice says this snapshot is available; the full zero-knowledge proof is still being generated.
+  - date: Oct 31, 2026
+    title: Binance reports 90% replenishment and updates recovery targets
+    body: The vendor targets November 1 for withdrawals and November 3 UTC for the full reserve proof. Replenishment is not recovery of stolen assets.
 checklist:
   - title: Use official channels and reject recovery messages
-    hint: Open Binance through your existing bookmark or official app and check its announcements for deposit and withdrawal restoration. The full October 30 notice supersedes the earlier 48-hour estimate with a conditional, roughly 34-hour target and phased reopening by token. Check live status before relying on a withdrawal. Verify unsolicited communications with Binance Verify or official support. Do not share passwords or 2FA codes, follow recovery links, or send money to purported support agents.
+    hint: Open Binance through your existing bookmark or official app and check its announcements for deposit and withdrawal restoration. The October 31 recovery update targets November 1 for withdrawals, superseding the earlier countdown estimates; this is a forecast, not confirmed reopening. Check live status before relying on a withdrawal. Verify unsolicited communications with Binance Verify or official support. Do not share passwords or 2FA codes, follow recovery links, or send money to purported support agents.
   - title: Inspect your own account and respond to unauthorized activity
     hint: Review Security and Account Activity for unfamiliar logins, transactions or security-setting changes. If found, Binance instructs users to disable the account and contact official support. In the app, its guide uses Account Info → Security → Manage Account → Disable Account. Read the consequences before confirming; reopening may require support. This account control does not fix a possible exchange-wallet compromise.
   - title: Check Aave status before planning deposits or borrowing
@@ -127,6 +133,10 @@ sources:
   - name: Binance full security progress notice, number 2
     url: https://www.binance.com/zh-CN/support/announcement/detail/d3306d9dca5243548c813b605e1d1751
     primary: true
+  - name: Binance recovery update number 3
+    url: https://www.binance.com/en-AU/support/announcement/detail/1fdf1f61559c401da0435895ffcccb62
+    primary: true
+    says: October 31 notice reports 90% replenishment, a 00:00 UTC reserve snapshot, a November 3 UTC proof target and November 1 withdrawal target.
 updated: 2026-10-31
 ---
 
@@ -147,3 +157,5 @@ Binance separately reports a verified frozen amount of around $3 billion. This v
 **Investigation update:** Binance now reports additional breach points, so the laptop must not be treated as a confirmed single root cause. TRM attributes the attack with high confidence to North Korea’s TraderTraitor and assesses signing-infrastructure compromise as likely; these are researcher judgments, not final vendor findings. Its roughly $6.36bn measures outflows at transfer-time prices, not net loss; this figure is not independently verified here. TRM’s ~$2.7bn frozen snapshot at 00:30 UTC differs in timing and scope from Binance’s later ~$3bn report; do not add them.
 
 **Full-notice update:** Binance puts stolen assets at about $6.3bn and says it has not found evidence of wallet-private-key leakage. This supersedes the earlier truncated notice, without ruling out exposure. Its loss figure remains unaudited here and differs from TRM’s outflow estimate. Recovery timing is conditional; the report does not establish completed containment or a final root cause.
+
+**Recovery update, October 31:** Binance says it has replenished 90% of the previously announced company-funded coverage. This is a vendor claim about replacement funding, not a statement that 90% of stolen assets were recovered. Its new reserve snapshot is dated October 31 at 00:00 UTC; the full zero-knowledge proof is still being generated and is now expected November 3 UTC. Withdrawals remain targeted for November 1, superseding earlier countdown estimates without confirming reopening. Neither this funding update nor a reserve snapshot establishes a final attack root cause.
