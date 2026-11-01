@@ -66,11 +66,14 @@ timeline:
     title: Binance adds new wallet addresses to its reserve list for future withdrawals
   - date: Nov 1, 2026
     title: Yi He reports broadly smooth processing but warns of congestion
+  - date: Nov 1, 2026
+    title: Binance reports selected Ethereum and BSC withdrawals restored
+    body: Ethereum supports USDC, USDT and ETH; BSC supports USDC, USDT and BNB. This is a limited asset/network update, not full restoration.
   - date: Nov 1, 06:00–09:00 UTC (scheduled)
     title: First withdrawal phase is planned
 checklist:
   - title: Use official channels and reject recovery messages
-    hint: Open Binance through your existing bookmark or official app and check its announcements for deposit and withdrawal restoration. The November 1 notice schedules the first withdrawal phase for 06:00–09:00 UTC; check your exact asset/network pair on the withdrawal or network-status page. The subsequent official update names Bitcoin as the first batch; this does not establish availability of every listed pair. Binance says future withdrawals use new wallets in its updated reserve-address list. Verify destination addresses and device security; congestion remains possible. The notice advises retrying later if needed. Verify unsolicited communications with Binance Verify or official support. Do not share passwords or 2FA codes, follow recovery links, or send money to purported support agents.
+    hint: Open Binance through your existing bookmark or official app and check its announcements for deposit and withdrawal restoration. The November 1 notice schedules the first withdrawal phase for 06:00–09:00 UTC; check your exact asset/network pair on the withdrawal or network-status page. The subsequent official update names Bitcoin as the first batch; a later update confirms Ethereum withdrawals for USDC, USDT and ETH, and BSC withdrawals for USDC, USDT and BNB. This does not establish availability of every listed pair. Binance says future withdrawals use new wallets in its updated reserve-address list. Verify destination addresses and device security; congestion remains possible. The notice advises retrying later if needed. Verify unsolicited communications with Binance Verify or official support. Do not share passwords or 2FA codes, follow recovery links, or send money to purported support agents.
   - title: Inspect your own account and respond to unauthorized activity
     hint: Review Security and Account Activity for unfamiliar logins, transactions or security-setting changes. If found, Binance instructs users to disable the account and contact official support. In the app, its guide uses Account Info → Security → Manage Account → Disable Account. Read the consequences before confirming; reopening may require support. This account control does not fix a possible exchange-wallet compromise.
   - title: Check Aave status before planning deposits or borrowing
@@ -171,6 +174,10 @@ sources:
     url: https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fheyibinance%2Fstatus%2F2116791881057354102&omit_script=true
     primary: true
     says: Readable portion describes generally smooth processing, possible congestion and address/device checks; the ending truncates.
+  - name: Binance Ethereum and BSC withdrawal update
+    url: https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fbinance%2Fstatus%2F2116799757507305516&omit_script=true
+    primary: true
+    says: Readable original lists six restored asset/network pairs; the final sentence is truncated.
 updated: 2026-11-01
 ---
 
@@ -199,3 +206,5 @@ Binance separately reports a verified frozen amount of around $3 billion. This v
 **November 1 recovery update:** The new notice specifies a first-phase withdrawal window of 06:00–09:00 UTC. Check the vendor’s asset/network table and live status; other pairs await readiness checks. Binance now reports 95% replacement funding, with the remaining 5% in less-liquid tokens outside its ten fully backed assets. This is company funding, not recovered stolen funds or an independent audit. A post-incident report remains pending.
 
 **Further November 1 update:** Binance names Bitcoin as the first withdrawal batch and says newly generated wallets, now included in its reserve-address list, will handle future withdrawals. Yi He subsequently describes processing as broadly smooth while allowing for congestion and asks users to check destinations and device security. These statements do not establish that every asset/network pair is available, that the full reserve proof has been published, or that the investigation is complete.
+
+**Later November 1 restoration:** Binance now explicitly reports withdrawals restored for USDC, USDT and ETH on Ethereum, and USDC, USDT and BNB on BNB Smart Chain. This is stronger than the earlier first-batch announcement for these six pairs only. Continue checking live availability for the exact pair; the post does not establish recovery of every asset or network, a completed investigation, or a published full reserve proof.
