@@ -21,6 +21,9 @@ timeline:
     title: Polymarket confirms the provider compromise and promises reimbursement
   - date: Oct 29, 19:05 UTC
     title: Official status history marks the incident resolved
+  - date: Oct 29, 19:49 UTC
+    title: Bitquery snapshot traces 737 drained accounts
+    body: Its route-specific analysis counts 985 withdrawals and about $2.73m; these are researcher estimates, not unique-person or final incident totals.
   - date: Oct 30, 20:07 UTC
     title: Postmortem details containment and compensation
     body: Polymarket reports cache clearance, active-session resets and $3.9m in total compensation.
@@ -36,6 +39,8 @@ checklist:
     hint: 'Check retained scripts and request logs for cdn.debugbear[.]com/C7xcKKrjUnXK.js; SHA-256 0755e767504d8103f6c27b9e765a1026507a17c04513242adb503df7777879e5; recipient 0x3F99139F1C5854bb628c2e576Aaf638e99dFfc18; tracking ID 4c6b64a0-a7ef-4c0f-9c70-3a4e6f89065c; data.debugbear[.]com/metrics/submit, /metrics/update and /metrics/handle; and configuration path /metrics/init. Preserve evidence without executing the file. A match alone is not proof of compromise: the hosts serve legitimate monitoring traffic, and configuration can change the recipient.'
   - title: Verify automatic compensation through official channels
     hint: Polymarket says eligible wallets need no claim or ticket; its October 30 postmortem links an official review form for missing or disputed payments. Reach it from the official incident page, not unsolicited recovery messages. The reported 95% is a dated wallet figure, not a current completion guarantee.
+  - title: Compare the dated Bitquery tracing ledger
+    hint: "Bitquery’s dated ledger has 16 role entries (15 distinct values): Polygon recipient 0x3f99139f1c5854bb628c2e576aaf638e99dffc18; largest-drain transaction 0xc6fcf3a65c85eb322fe41c193f74bb37845e19be29364b126d3ea7a149f78dcc; gfg44433 account 0x5a2764fbbe5d139ef0ed988ec5f95320ce730c0b; Polygon split wallet (15.3m POL) 0xe4c4c39c1733e1c7c06b79f97ed442b68df41ec6; Polygon split wallet (4.3m POL) 0x5392587814ce8c6af6789764f88e5e9ab0b9962c; bridge wallet on Polygon and Ethereum (two ledger entries) 0xc91ee0574a14446de200923729c349b9cae19b60; Polygon bridge wallet (3.28m POL) 0x3f7019221a925537dc20767c38e80a7127fb1ffa; Ethereum collection wallet 0xe5e76a4d73f3bfb5cc9a8f53d4f8459fcac495f6; Ethereum pass-through wallet 0x74e940e4eb470a9d8b78c5eb8919938041219897; Polygon bridge-entry transaction 0x6ff9322601c17bd3f82933c5a9399a615d7c8687f786646225531a9369af7738; Polygon bridge-claim transaction 0x744fdeed0629d9704f42817de0cbbe04626a0a8860892fa411daa440a054825f; Ethereum swap wallet 0x9ab3c17b1a37886f1d702945fcf8016e3e549b18; deBridge-entry transaction 0xa7727418d0c2dce55461840c41ef017d2646feb72f18e5bb74ad4af20b884351; Polymarket wallet factory 0x00000000000fb5c9adea0298d729a0cb3823cc07; Relay router on Polygon 0xb92fe925dc43a0ecde6c8b1a2709c170ec4fff4f. Compare historical transactions, not just current balances. The factory and router are legitimate infrastructure, not attacker wallets; account labels are not verified people. A match alone does not prove compromise or loss. Figures and balances stop at October29 19:49 UTC; use the complete linked report for context."
 sources:
   - name: Polymarket official status history
     url: https://status.polymarket.com/history/1
@@ -59,6 +64,10 @@ sources:
     url: https://www.linkedin.com/posts/debugbear_were-continuing-to-investigate-the-security-activity-7522072665495588865-NsiJ
     primary: true
     says: Reports registrar-mediated DNS compromise, interrupted inbound email and preliminary scope; public post metadata dates publication to October 30 at 23:11 UTC.
+  - name: Bitquery original October29 on-chain investigation
+    url: https://www.bitquery.io/investigations/polymarket-hack
+    primary: true
+    says: Traces one recipient route through October29 19:49 UTC; supplies account/withdrawal counts and a 16-entry ledger. This predates the operator postmortem and refunds.
 ---
 
 Polymarket's international platform confirmed a compromised provider on October 29 and committed to compensating affected users. Its status page now records the outage as resolved. L4 reflects a real compromise, rather than a theoretical vulnerability.
@@ -70,3 +79,5 @@ The platform's notice does not name its provider; DebugBear separately acknowled
 **October 30 postmortem:** Polymarket reports removing the script, clearing caches and resetting active sessions. It assigns $2.7m to drained funds and $1.2m to pause-related losses: $3.9m in compensation, not $3.9m stolen. Its 95% refund figure includes drained-wallet and goodwill refunds at that time. These are operator figures, not an independent audit. It also describes stronger script integrity controls and continued investigation.
 
 **DebugBear’s October 30 update:** The provider says its DNS records were altered through its domain registrar. Its early findings point to one customer website, with no evidence so far of intrusion into its internal systems; investigation continues. This does not establish that other customers were unaffected or that the monitoring script is safe to restore. DebugBear also reported that inbound email to its domain was unavailable at the time; follow its public updates rather than assuming an emailed support request was received.
+
+**Dated on-chain scope:** Bitquery counts 737 drained accounts and 985 withdrawals on its main route, plus outcome-share transfers from 33 accounts, through October 29 at 19:49 UTC. These are research-defined accounts, not unique people; do not add the 33 to 737 without resolving overlap. Its approximately $2.73m is a route-specific estimate using dated conversion prices, not an extra loss to add to Polymarket’s $2.7m or $3.9m compensation. The snapshot does not measure later refunds or establish today’s exposed population.
