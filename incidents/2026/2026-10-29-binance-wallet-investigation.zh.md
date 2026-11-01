@@ -68,13 +68,22 @@ timeline:
     title: 币安确认更多 XRP、Base、DOGE 及 Optimism 提现恢复
     body: 可读原帖列出 XRP 网络的 XRP、Base 的 ETH 和 USDC、DOGE 网络的 DOGE，以及 Optimism 的 ETH、USDT 和 USDC。
   - date: 2026年11月1日
+    title: 币安确认 Arbitrum 和 TRX 提现恢复
+    body: Arbitrum 支持 ARB、ETH、USDT 和 USDC；TRX 支持 TRX 和 USDT。
+  - date: 2026年11月1日
+    title: 币安确认 Solana 指定资产提现恢复
+    body: 新增部分列出 Solana 上的 SOL、USDT 和 USDC。
+  - date: 2026年11月1日
+    title: 币安确认 Polygon 和 Avalanche C-Chain 提现恢复
+    body: Polygon 支持 POL、USDT 和 USDC；Avalanche C-Chain 支持 AVAX、USDT 和 USDC。
+  - date: 2026年11月1日
     title: 币安确认 ZEC、TON 和 SUI 的指定资产提现恢复
     body: 较新原帖列出 ZEC 网络的 ZEC、TON 的 USDT 和 GRAM，以及 SUI 网络的 SUI；其他网络仍需分别核查。
   - date: 11月1日 06:00–09:00 UTC（计划）
     title: 计划启动第一阶段提现
 checklist:
   - title: 使用官方渠道，拒绝资产追回消息
-    hint: 通过已有书签或官方应用访问币安，查看充值和提款恢复公告；11 月 1 日公告计划于 06:00–09:00 UTC 启动第一阶段提款；在提款页或网络状态页核对具体资产与网络组合。后续官方更新将 Bitcoin 列为首批网络，后续更新确认以太坊上的 USDC、USDT、ETH，以及 BSC 上的 USDC、USDT、BNB 已恢复提现，不代表所有列出的组合均已开放。币安称后续提现使用已加入更新储备地址清单的新钱包。核对收款地址及设备安全；仍可能拥堵，公告建议必要时稍后重试。使用 Binance Verify 或官方支持核实陌生联系。不要分享密码或 2FA 验证码，不要点击资产追回链接，也不要向冒充客服的人转账。 后续原帖另确认 XRP 网络的 XRP、Base 的 ETH 和 USDC、DOGE 网络的 DOGE、Optimism 的 ETH、USDT 和 USDC、ZEC 网络的 ZEC、TON 的 USDT 和 GRAM，以及 SUI 网络的 SUI。这不代表全部计划中的组合或这些网络上的所有资产均已恢复。
+    hint: 通过已有书签或官方应用访问币安，查看充值和提款恢复公告；11 月 1 日公告计划于 06:00–09:00 UTC 启动第一阶段提款；在提款页或网络状态页核对具体资产与网络组合。后续官方更新将 Bitcoin 列为首批网络，后续更新确认以太坊上的 USDC、USDT、ETH，以及 BSC 上的 USDC、USDT、BNB 已恢复提现，不代表所有列出的组合均已开放。币安称后续提现使用已加入更新储备地址清单的新钱包。核对收款地址及设备安全；仍可能拥堵，公告建议必要时稍后重试。使用 Binance Verify 或官方支持核实陌生联系。不要分享密码或 2FA 验证码，不要点击资产追回链接，也不要向冒充客服的人转账。 后续原帖另确认 XRP 网络的 XRP、Base 的 ETH 和 USDC、DOGE 网络的 DOGE、Optimism 的 ETH、USDT 和 USDC、ZEC 网络的 ZEC、TON 的 USDT 和 GRAM，以及 SUI 网络的 SUI。链接中的中间更新另确认 Arbitrum 的 ARB、ETH、USDT 和 USDC，TRX 的 TRX 和 USDT，Solana 的 SOL、USDT 和 USDC，Polygon 的 POL、USDT 和 USDC，以及 Avalanche C-Chain 的 AVAX、USDT 和 USDC。仍须实时核对具体组合；这些声明不代表各网络上的全部资产均已开放。
   - title: 核查自己的账户，处置未授权活动
     hint: 在安全设置及账户活动中检查陌生登录、交易或安全设置变更。若有异常，币安指引要求停用账户并联系官方支持。应用内指引路径为 Account Info → Security → Manage Account → Disable Account。确认前阅读停用后果，重新开启可能需要客服协助。账户控制措施不能修复可能发生的交易所钱包入侵。
   - title: 计划存款或借款前核对 Aave 状态
@@ -134,6 +143,12 @@ sources:
     says: 可读部分确认 BTC、ETH、BSC、XRP、Base、DOGE、Optimism 的具体组合；结尾被截断。
   - name: 币安 ZEC、TON 和 SUI 恢复原帖的公开嵌入副本
     says: 可读新增部分确认 ZEC/ZEC、TON/USDT 和 GRAM、SUI/SUI；后续已恢复清单被截断。
+  - name: 币安 Arbitrum 和 TRX 恢复原帖的公开嵌入副本
+    says: 可读新增部分确认 Arbitrum/ARB、ETH、USDT、USDC 和 TRX/TRX、USDT；旧清单被截断。
+  - name: 币安 Solana 恢复原帖的公开嵌入副本
+    says: 可读新增部分确认 Solana/SOL、USDT、USDC；旧清单被截断。
+  - name: 币安 Polygon 和 Avalanche C-Chain 恢复原帖的公开嵌入副本
+    says: 可读新增部分确认 Polygon/POL、USDT、USDC 和 Avalanche C-Chain/AVAX、USDT、USDC；旧清单被截断。
 
 ---
 
@@ -165,4 +180,4 @@ CZ 独立表示怀疑被黑，并预计用户会得到资金覆盖，同时明�
 
 **11 月 1 日稍后恢复进展：** 币安现明确表示，以太坊网络上的 USDC、USDT、ETH，以及 BNB Smart Chain 上的 USDC、USDT、BNB 已恢复提现。这比此前的首批网络公告更明确，但只适用于这六种组合。仍应实时核对具体组合的可用情况；原帖不能证明每种资产或网络均已恢复、调查已经完成，或完整储备证明已公布。
 
-**11 月 1 日进一步恢复更新：** 币安明确确认清单中新增的资产与网络组合。这些是厂商恢复声明，并非独立验证每笔提现均成功。较新帖的已恢复清单在公开副本中被截断，不能据此确认不可读余下部分的状态。更广的首阶段计划仍附带条件；提现恢复及替补资金均不等于被盗资金已追回。
+**11 月 1 日进一步恢复更新：** 分别阅读币安链接原帖的新增资产部分后，确认清单中的 15 个网络、33 种具体组合。公开副本的结尾或重复清单有截断。这些是厂商声明，并非独立验证每笔提现均成功或某网络的全部资产均受支持，仍需检查实时可用情况。提现恢复及替补资金均不等于被盗资金已追回；调查仍未完成。
