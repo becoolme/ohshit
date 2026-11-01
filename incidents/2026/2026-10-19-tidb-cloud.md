@@ -84,6 +84,7 @@ According to PingCAP, the intruder copied:
 - billing and business information: contacts, contract terms, orders, pricing
 - a table of **encrypted TiDB Cloud API-key values**. NebuSec later found the encryption key was not exposed; this protection does not extend to plaintext credentials in support materials
 - PingCAP source code
+- the later independent report also lists **AI interactions, gateway connection logs, support tickets and attachments**, diagnostic data, internal alert-chat history and membership lists, and infrastructure/orchestration backups; the mix varies by customer
 
 PingCAP says it found **no evidence that data stored in customers' TiDB databases was accessed**, and no
 command execution or persistence on the production systems it reviewed.
