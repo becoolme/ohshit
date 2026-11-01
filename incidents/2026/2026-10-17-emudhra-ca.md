@@ -3,7 +3,7 @@ title: "eMudhra CA intermediate private keys were so weak that every one was a n
 headline: "eMudhra: eight CA keys you could guess on a pocket calculator"
 level: 4
 date: 2026-10-17
-updated: 2026-10-29
+updated: 2026-11-01
 tags: [PKI, CA, TLS]
 ecosystems: [go, python, node, browsers]
 summary: >-
@@ -45,6 +45,10 @@ cves:
     score: 7.1
     name: Checkmk bundled CA trust
     description: Checkmk certifi and webpki-roots bundles retain trust for the affected hierarchy. An attacker must intercept the TLS connection; this is the same eMudhra event, not a newly compromised CA.
+  - id: GHSA-5xjx-3w67-w9x9
+    score: 9.3
+    name: PyPI publishing action bundled CA trust
+    description: The action bundles certifi roots used by its Sigstore dependency; the advisory lists 1.14.3 as patched.
 fixed:
   - { product: Go, version: 1.27.3 / 1.26.10, status: "CVE-2026-111943. Go 1.25 and older get no fix" }
   - { product: Python certifi, version: 2026.10.19 }
@@ -68,6 +72,7 @@ fixed:
   - { product: Checkmk 2.3, version: 2.3.0p52, status: Patched }
   - { product: Checkmk 2.5, version: 2.5.0p18, status: Announced target; not yet released per vendor }
   - { product: Checkmk 2.2, version: none, status: End of life; migrate to a supported fixed line }
+  - { product: pypa/gh-action-pypi-publish, version: 1.14.3, status: Refresh pinned action references as well as local tools }
 timeline:
   - date: Apr 30, 2025
     title: The keys are generated, in a batch of 24 intermediates
@@ -97,6 +102,8 @@ timeline:
   - date: Oct 21, 2026
     title: Oracle publishes the initial intermediate-distrust alert
     body: CVE-2026-91403 covers Java SE and GraalVM; a later alert removes related roots.
+  - date: Oct 21, 2026
+    title: PyPI publishing-action advisory identifies a bundled CA fix
   - date: Oct 22, 2026
     title: eMudhra announces withdrawal from global SSL/TLS issuance
     body: Partner replacements are free; revocation and status services continue until all issued certificates expire or are replaced. No exit date is given.
@@ -152,6 +159,8 @@ checklist:
     hint: Update gcloud CLI and OS/custom-image trust stores. For COS, upgrade or restart nodes onto current milestones, or follow the cos_ca_cert_mitigation guidance. Check GKE’s linked version matrix and each managed service’s notices; Google fleet updates do not replace customer image/SDK updates. Google reports no infrastructure breach or exploitation against Cloud workloads.
   - title: Update Checkmk sites and the affected agent components
     hint: Use 2.4.0p39 or 2.3.0p52; 2.5.0p18 is announced but not yet released, and 2.2 is EOL. Refresh Linux agent updaters in Pro/Ultimate/Cloud editions and Windows Python-based agent plug-ins as applicable. check_httpv2 always consults its built-in roots; toggling Use system wide CAs does not remove exposure. Cron-launched site processes may use bundled certifi; also update OS/site CA stores.
+  - title: Update the PyPI publishing action in CI
+    hint: Use pypa/gh-action-pypi-publish 1.14.3 or later, including replacing older commit-SHA pins. Updating runner or local certifi alone does not replace the action’s bundled copy.
 sources:
   - name: Mozilla Bugzilla 2083449
     url: https://bugzilla.mozilla.org/show_bug.cgi?id=2083449
@@ -259,6 +268,13 @@ sources:
     url: https://forum.checkmk.com/t/release-checkmk-stable-release-2-4-0p39/60722
     primary: true
     says: October 27 release includes both CA-store fixes.
+  - name: PyPA publishing-action advisory
+    url: https://github.com/pypa/gh-action-pypi-publish/security/advisories/GHSA-5xjx-3w67-w9x9
+    primary: true
+    says: Lists 1.14.3 as patched; description and affected-version metadata differ at the 1.14.2 boundary.
+  - name: PyPA 1.14.3 release
+    url: https://github.com/pypa/gh-action-pypi-publish/releases/tag/v1.14.3
+    primary: true
 ---
 
 A certificate authority's private key is the thing that makes "this is really your bank" true. For eight
@@ -306,3 +322,5 @@ For an unpatched Oracle runtime, the [operational guide](https://ops.java/emudhr
 **Update, October 29:** In its October 28 update, eMudhra says roughly 30,800 certificates under the affected G3 hierarchies belong to a US client ecosystem now using its G1 RSA issuance pathway. It plans to end TLS issuance through G1 once that transition completes, without a firm date. This vendor migration figure does not establish issuance by the eight weak-key intermediates or exploitation. G1 is not a guarantee of continued browser trust; the replacement and trust-store updates above remain necessary.
 
 **Further update, October 29:** Checkmk assigns CVE-2026-117611 (CVSS 4.0 7.1) to the same CA-trust incident. Its HTTP check always consults bundled roots; the system-CA setting cannot bypass this exposure. Bundled Python trust affects Linux agent updaters in Pro/Ultimate/Cloud editions, Windows Python plug-ins, and processes launched outside the site environment with neither SSL_CERT_FILE nor REQUESTS_CA_BUNDLE set. Processes started by `omd start` or a site shell use the site CA file instead. Update each relevant bundle and the OS/site store. The 2.5.0p18 milestone is not yet released; do not count an announced target as an installed fix. This adds product remediation, not evidence of exploitation.
+
+**November 1 addition:** PyPA’s October 21 advisory covers this same trust-store event, not a separate compromise of PyPI publishing. Its metadata includes 1.14.2 as affected while prose says versions before 1.14.2; both direct users to 1.14.3. Update the action itself rather than assuming a runner CA update is sufficient. The advisory does not establish theft of publishing credentials.

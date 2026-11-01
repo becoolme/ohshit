@@ -25,6 +25,8 @@ cves:
     description: Oracle 10月24日的 JSSE 公告从 Java SE 和 GraalVM 移除相关根证书；攻击者需要受信任的受影响证书链，并处于可拦截 TLS 的网络路径上。
   - name: Checkmk 内置 CA 信任
     description: Checkmk 的 certifi 和 webpki-roots 证书包仍信任受影响层级。攻击者需要拦截 TLS 连接；这属于同一 eMudhra 事件，不是新的 CA 失陷。
+  - name: PyPI 发布 Action 内置 CA 信任
+    description: 该 Action 内置的 certifi 根证书由 Sigstore 依赖使用；公告列出 1.14.3 为修复版本。
 fixed:
   - { status: "CVE-2026-111943。Go 1.25 及更早版本不会修复" }
   - {}
@@ -48,6 +50,7 @@ fixed:
   - { product: Checkmk 2.3, status: 已修复 }
   - { product: Checkmk 2.5, status: 已公布目标；厂商标记为尚未发布 }
   - { product: Checkmk 2.2, status: 已停止维护；迁移到受支持的已修复分支 }
+  - { status: 除本地工具外，也须更新固定的 Action 引用 }
 timeline:
   - date: 2025年4月30日
     title: 私钥生成，同一批共 24 张中间证书
@@ -77,6 +80,8 @@ timeline:
   - date: 2026年10月21日
     title: Oracle 发布初次中间证书取消信任公告
     body: CVE-2026-91403 涉及 Java SE 和 GraalVM；后续公告移除相关根证书。
+  - date: 2026年10月21日
+    title: PyPI 发布 Action 公告列出内置 CA 修复
   - date: 2026年10月22日
     title: eMudhra 宣布退出全球 SSL/TLS 证书签发业务
     body: 合作伙伴免费提供替换证书；吊销与状态服务持续到所有已签发证书过期或被替换。未给出退出日期。
@@ -132,6 +137,8 @@ checklist:
     hint: 更新 gcloud CLI，以及操作系统或自定义镜像的信任库。COS 应升级或重启节点以使用当前里程碑版本，或遵循 cos_ca_cert_mitigation 指导。核对链接中的 GKE 版本矩阵及各托管服务通告；Google 的托管服务更新不能代替客户镜像和 SDK 更新。Google 称基础设施未遭入侵，未发现面向 Cloud 工作负载的利用。
   - title: 更新 Checkmk 站点及受影响 Agent 组件
     hint: 使用 2.4.0p39 或 2.3.0p52；2.5.0p18 已公布但尚未发布，2.2 已停止维护。按部署更新 Pro/Ultimate/Cloud 版 Linux Agent 更新器及 Windows Python Agent 插件。check_httpv2 始终使用内置根证书，切换 Use system wide CAs 不能消除暴露。由 cron 启动的站点进程可能使用内置 certifi；还要更新系统及站点 CA 信任库。
+  - title: 更新 CI 中的 PyPI 发布 Action
+    hint: 使用 pypa/gh-action-pypi-publish 1.14.3 或更新版本，包括替换固定到旧提交 SHA 的引用。仅更新运行器或本地 certifi 不会替换 Action 内置副本。
 sources:
   - says: 私钥是小于 256 的整数；报告时间、OneCRL 条目，以及 10月18日的吊销
   - name: eMudhra 声明
@@ -184,6 +191,9 @@ sources:
     says: 10 月 26 日版本包含两项 CA 信任库修复。
   - name: Checkmk 2.4.0p39 发布公告
     says: 10 月 27 日版本包含两项 CA 信任库修复。
+  - name: PyPA 发布 Action 公告
+    says: 列出 1.14.3 为修复版本；正文与受影响版本元数据对 1.14.2 边界的描述不同。
+  - name: PyPA 1.14.3 发布
 ---
 CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eMudhra 有八张中间证书，P-384 私钥都是**小于 256 的整数**。据研究人员 Scott Helme 说，其中一个就是数字 4。谁要是注意到了，就能给任意域名签证书，而所有信任这条链的客户端都会照单全收。
 
@@ -223,3 +233,5 @@ CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eM
 **10 月 29 日更新：** eMudhra 在 10 月 28 日更新中称，受影响 G3 层级下约 30,800 张证书属于一个美国客户生态，现已使用其 G1 RSA 签发路径。公司计划在该生态完成迁移后停止经 G1 签发 TLS 证书，但没有确定日期。该厂商迁移数量不能证明八张弱密钥中间证书签发过证书，也不能证明在野利用。G1 不能保证未来继续受浏览器信任；上文的证书替换和信任库更新仍须完成。
 
 **10 月 29 日进一步更新：** Checkmk 为同一 CA 信任事件分配 CVE-2026-117611（CVSS 4.0 为 7.1）。HTTP 检查始终使用内置根证书，系统 CA 开关不能绕过这一暴露。内置 Python 信任库影响 Pro/Ultimate/Cloud 版 Linux Agent 更新器、Windows Python 插件，以及从站点环境之外启动且 SSL_CERT_FILE 和 REQUESTS_CA_BUNDLE 均未设置的进程。通过 `omd start` 或站点 Shell 启动的进程则使用站点 CA 文件。分别更新相关证书包及系统、站点信任库。2.5.0p18 尚未发布，不能将已公布目标视为已安装的修复。这次补充产品处置措施，不代表已发现利用。
+
+**11 月 1 日补充：** PyPA 的 10 月 21 日公告属于同一信任库事件，不是 PyPI 发布渠道另遭入侵。元数据将 1.14.2 列为受影响，而正文说早于 1.14.2；两者均指向 1.14.3。应更新 Action 本身，不能假定运行器的 CA 更新已经足够。该公告没有证实发布凭据遭窃。
