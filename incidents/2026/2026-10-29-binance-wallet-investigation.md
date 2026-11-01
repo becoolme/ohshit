@@ -8,7 +8,7 @@ tags:
   - investigation
 ecosystems:
   - crypto
-summary: Binance reports ~$6.3bn stolen; the FBI attributes the theft to TraderTraitor. Bitcoin is the first withdrawal batch, with new wallets added to the reserve-address list. Yi He reports broadly smooth processing with possible congestion. Reported 95% replacement funding and ~$3bn frozen remain separate figures; full recovery is not established.
+summary: Binance reports ~$6.3bn stolen, no key-leak evidence and multiple breach points; FBI blames TraderTraitor. Deposits work; Bitcoin leads phased withdrawals via new wallets. Yi He reports smooth processing with possible congestion. Vendor 95% funding and ~$3bn frozen are separate; Aave’s freeze is separate. Full recovery remains unconfirmed.
 splash: Binance.com withdrawal users; Aave reports a precautionary freeze of DAO-operated V3/V4 markets
 wipe: Follow official updates, inspect account activity, and use Binance's account-lock procedure if you find unauthorized actions
 inTheWild: yes
