@@ -1,14 +1,14 @@
 ---
-title: JAL/JTA and Cathay disclose unauthorized access to Amadeus reservation data
+title: JAL/JTA, ANA and Cathay disclose unauthorized access to Amadeus reservation data
 level: 4
 date: 2026-10-28
-updated: 2026-10-30
+updated: 2026-11-01
 tags:
 - aviation
 - third party
 - data exposure
-summary: JAL/JTA report about 92,000 customers affected by Amadeus reservation-data access; about 2,000 had additional fields accessed. Cathay now reports around 53,000 affected bookings, a different unit that cannot be added to the customer count. No confirmed misuse or operational disruption is reported.
-splash: Some JAL/JTA and Cathay records in Amadeus; Cathay reports misuse of a system-account login
+summary: Amadeus reservation-data access affects about 92,000 JAL/JTA customers and 37,800 ANA customers, including 1,700 ANA customers with additional fields potentially accessed. Cathay reports around 53,000 bookings, a different unit. Do not add these figures into a unique-person total.
+splash: Some JAL/JTA, ANA and Cathay reservation records in Amadeus; airline-specific notices define individual exposure
 wipe: Watch for impersonation; use verified airline contacts and individual notices to assess your exposure
 inTheWild: n/a
 inTheWildNote: Confirmed unauthorized access; no specific software vulnerability disclosed.
@@ -19,6 +19,8 @@ timeline:
   title: JAL and JTA publish the affected scope
 - date: Oct 30, 2026
   title: Cathay discloses scope; JAL/JTA confirm emails sent and inquiry desk operating
+- date: Oct 30, 2026
+  title: ANA publishes an updated scope of approximately 37,800 customers
 - date: Oct 29, 2026 (scheduled)
   title: Original planned opening of the JAL/JTA inquiry desk
 checklist:
@@ -30,6 +32,8 @@ checklist:
   hint: 'From October 29: Japan 0120-25-6050 or 03-4332-7280; overseas +81-3-4332-7280. Hours are 10:00–17:00 JST on weekdays excluding Japanese national holidays.'
 - title: Check Cathay notices separately
   hint: Read Cathay’s official October 30 notice through its website; individual notifications will follow once details are established. Use known Cathay contacts to verify unexpected requests quoting booking details.
+- title: Check ANA’s individual notification and inquiry channels
+  hint: Read ANA’s October 30 notice directly and use its linked customer, reservation or Mileage Club contacts. ANA plans to contact affected customers; the reservation period alone does not establish individual exposure. Verify messages quoting travel details through those known channels.
 sources:
 - name: JAL/JTA official disclosure
   url: https://www.jal.co.jp/ja-jp/news/general/2026/other/261028.html?inbound=ar
@@ -39,8 +43,14 @@ sources:
   url: https://www.cathaypacific.com/cx/es_ES/latest-news/security-and-operational-changes/personal-data-security.html
   primary: true
   says: 'October 30: around 53,000 bookings, system-account credential access, containment and notifications.'
+- name: ANA official Amadeus scope update
+  url: https://www.ana.co.jp/en/jp/special-notice/001613.html?p1=international&p2=en&p3=global
+  primary: true
+  says: October 30 notice lists two customer groups, planned individual contact and revoked compromised authentication credentials.
 ---
 
-The vendor-confirmed total separates about 90,000 customers with booking code, name, flight date, sector and class from about 2,000 with additional fields such as email, phone, passport number, nationality, frequent-flyer number, airline, flight/ticket number and seat. It is not 92,000 passport records. L4 reflects the scale of personal-data exposure. Amadeus has completed security measures; the JAL/JTA notice does not identify a root cause or establish ongoing access.
+JAL/JTA’s disclosure separates about 90,000 customers with booking code, name, flight date, sector and class from about 2,000 with additional fields such as email, phone, passport number, nationality, frequent-flyer number, airline, flight/ticket number and seat. It is not 92,000 passport records. L4 reflects the scale of personal-data exposure. Amadeus has completed security measures; the JAL/JTA notice does not identify a root cause or establish ongoing access.
 
 Cathay was informed on October 28 and received details on October 29. Its notice describes access between August 2023 and September 2026 using Amadeus system-account credentials. Most affected bookings exposed references, passenger names and flight details; a smaller subset potentially exposed contact details, travel-document or frequent-flyer numbers. There is no evidence of accessed payment information or data misuse. Amadeus reset a password and enhanced monitoring. Cathay’s systems and operations were unaffected. This expands the existing vendor event; it does not establish that every airline using Amadeus was affected.
+
+**November 1 addition:** ANA’s October 30 notice identifies about 37,800 customers with reservations between August 10, 2023 and September 23, 2026. About 36,100 had names, booking references, travel dates, routes and cabin classes potentially accessed; about 1,700 also potentially had contact, passport, nationality, frequent-flyer, flight, ticket or seat details accessed. ANA excludes credit-card numbers and account passwords, reports revocation of the compromised authentication credentials and enhanced monitoring, and plans individual contact. These airline counts are separate: bookings are not people, and overlap between customer populations is unknown.
