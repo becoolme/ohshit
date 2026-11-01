@@ -3,7 +3,7 @@ title: "LiteLLM 1.107.0 on PyPI and Docker was a credential stealer with a remot
 headline: "LiteLLM, round two: your LLM gateway now proxies your keys to someone else"
 level: 4
 date: 2026-10-21
-updated: 2026-10-24
+updated: 2026-11-01
 tags: [supply chain, PyPI, Docker, AI, secrets]
 ecosystems: [pypi, docker]
 summary: >-
@@ -62,6 +62,9 @@ timeline:
 - date: Oct 23, 2026
   title: LiteLLM publishes its canonical attack-chain findings
   body: The vendor replaces the earlier internal-deployment-log theory with a confirmed exposed-key and Agent Platform API path.
+- date: Oct 30, 2026
+  title: Vendor publishes the replacement image-signing key fingerprint
+  body: The key rotated on October 23 signs releases starting with v1.103.8, v1.104.6, v1.105.4 and v1.106.3. The compromised images also had valid old-key signatures.
 - date: Oct 21, 2026, ~13:20 UTC
   title: PyPI removes 1.107.0
   body: Wiz and Datadog say 13:20; LiteLLM's report says 13:23.
@@ -85,6 +88,8 @@ checklist:
     hint: Hash-pinned lockfiles and image digests would have made this a non-event. The proxy was supposed to be the only middleman
   - title: Audit the confirmed upstream credential path
     hint: 'Review Agent Platform API and GitHub audit records from October 10. 15 investigation artifacts: 69.48.229.143, 199.91.221.39, webhook.site, Berri-AI/litellm, ci-tmp-a351cc, ci-tmp-be33e9 and commits 20535d8f, 9cf97e9, 285fbdc5, b69bc36, 78d968b, 1a6e3c1, d687b69. Check opencode.json history and /api/v1/managed_agents/agents?limit=100 access; compare the full canonical timeline. Revoke exposed keys even after history is rewritten. A match alone does not prove compromise; webhook.site is a legitimate shared service'
+  - title: Replace the image-verification trust key
+    hint: Use cosign.pub pinned to vendor commit e82a3c646908ba0a6ee0beddc4310d7a6cac4065 and verify its file SHA-256 e3fe3e08c44b16407fe0b37c43b4f8b603b3a0f4ee74c29e647bc022d762c2c0. Use the Docker image security guide for cosign commands. Check artifact digests too; an old-key signature cannot establish that 1.107.0 is safe, and verification does not clean an exposed host
 sources:
   - name: LiteLLM incident report
     url: https://docs.litellm.ai/blog/security-incident-oct-21-2026
@@ -113,6 +118,9 @@ sources:
   - name: GitHub malware advisory
     url: https://github.com/advisories/GHSA-92x9-889m-jgmw
     says: October 22 update includes 1.107.0; GHSA-5mg7-485q-xm76 still covers only the March versions
+    primary: true
+  - name: LiteLLM image-signature verification and key rotation
+    url: https://docs.litellm.ai/docs/proxy/docker_image_security
     primary: true
 ---
 
@@ -172,3 +180,5 @@ no core runtime or trust anchor broke.
 - **Tracker correction:** GHSA-92x9-889m-jgmw now includes 1.107.0. Its older publication date and March entries do not establish a relationship between the attacks. Wiz and JFrog also track this incident as `wiz-adv-2026-188` and `XRAY-955589`.
 - LiteLLM mentions an embargoed enterprise fix due for disclosure on October 27; it is not clear whether it is
   related.
+
+**Update, November 1 (UTC):** The vendor’s October 30 notice publishes the replacement cosign public-key fingerprint and says the old private key may have been exposed. The rotation happened October 23; the first releases signed with the replacement key shipped October 24. Verify the pinned key and the image digest together. The malicious images were signed by the real release pipeline with the old key, so a valid signature alone never excluded this compromise. The exposed-host rebuild and credential-rotation steps above still apply.

@@ -53,6 +53,9 @@ timeline:
 - date: 2026年10月23日
   title: LiteLLM 发布正式攻击链调查结论
   body: 厂商以已确认的密钥泄露和 Agent Platform API 路径，取代此前关于内部部署日志的推测。
+- date: 2026年10月30日
+  title: 厂商公布替代镜像签名公钥的指纹
+  body: 10月23日轮换的密钥从 v1.103.8、v1.104.6、v1.105.4 和 v1.106.3 起签署发布。恶意镜像也带有有效的旧密钥签名。
 - date: 2026年10月21日 ~13:20 UTC
   title: PyPI 下架 1.107.0
   body: Wiz 和 Datadog 说是 13:20，LiteLLM 的报告说是 13:23。
@@ -76,6 +79,8 @@ checklist:
     hint: 如果用了按哈希锁定的锁文件和镜像 digest，这事根本不会找上你。说好的中间人只有代理一个，结果又冒出来一个
   - title: 审计已确认的上游凭据泄露路径
     hint: 从 10月10日起检查 Agent Platform API 和 GitHub 审计记录。15 项调查线索：69.48.229.143、199.91.221.39、webhook.site、Berri-AI/litellm、ci-tmp-a351cc、ci-tmp-be33e9，以及提交 20535d8f、9cf97e9、285fbdc5、b69bc36、78d968b、1a6e3c1、d687b69。检查 opencode.json 历史及 /api/v1/managed_agents/agents?limit=100 访问，并对照正式报告完整时间线。即使历史已改写，也要吊销暴露的密钥。仅命中指标不能证明入侵；webhook.site 是合法共享服务
+  - title: 更换镜像验证所信任的公钥
+    hint: 使用固定到厂商提交 e82a3c646908ba0a6ee0beddc4310d7a6cac4065 的 cosign.pub，核对文件 SHA-256 为 e3fe3e08c44b16407fe0b37c43b4f8b603b3a0f4ee74c29e647bc022d762c2c0。cosign 命令见 Docker image security guide。同时核对制品摘要；旧密钥签名不能证明 1.107.0 安全，验证也不能清理已暴露主机
 sources:
   - name: LiteLLM 事件报告
     says: 早期初始入口推测已被 10月23日正式报告取代；受影响制品、恢复时锁定 1.106.2 的建议及企业版排除范围不变
@@ -88,6 +93,7 @@ sources:
     says: 确认主密钥泄露及 10月10日所有者令牌访问，取代早期初始入口推测
   - name: GitHub 恶意软件公告
     says: 10月22日更新已包含 1.107.0；GHSA-5mg7-485q-xm76 仍只覆盖 3 月版本
+  - name: LiteLLM 镜像签名验证与密钥轮换
 ---
 LiteLLM 是夹在应用和几十家 LLM 供应商之间的 Python SDK 兼代理，所以它手里往往攥着公司所有供应商的密钥。**2026年10月21日** 11:39 UTC，恶意的 `litellm==1.107.0` 出现在 PyPI 上；从 11:46 UTC 起，`v1.107.0`、`latest`、`main-latest` 和 `main-stable` 这几个官方 Docker 镜像标签也都指向了投毒构建。这是 LiteLLM 今年第二次发布流水线被攻破，上一次是 3 月的 1.82.7 和 1.82.8。JFrog 和 Datadog 表示，目前没有证据把两次事件联系起来。
 
@@ -121,3 +127,5 @@ LiteLLM 是夹在应用和几十家 LLM 供应商之间的 Python SDK 兼代理�
 - **厂商现已确认初始入口：** 暴露的主密钥 → Agent Platform API → GitHub 所有者令牌 → CI 密钥外传，修正了此前未经证实的推测。
 - **跟踪条目更正：** GHSA-92x9-889m-jgmw 现已包含 1.107.0。较早的发布日期和其中的 3 月版本不能证明两次攻击有关。Wiz 和 JFrog 也分别用 `wiz-adv-2026-188` 和 `XRAY-955589` 跟踪本次事件。
 - LiteLLM 提到一个定于 10月27日披露的企业版修复，目前处于保密期，不清楚和这次事件有没有关系。
+
+**11月1日更新（UTC）：** 厂商10月30日通知公布替代 cosign 公钥的指纹，并表示旧私钥可能已经泄露。轮换发生于10月23日，首批使用替代密钥签署的版本于10月24日发布。应同时验证固定提交中的公钥和镜像摘要。恶意镜像由真实发布流水线使用旧密钥签署，因此仅有有效签名不能排除此事件的影响。上述暴露主机重建及凭据轮换措施仍然适用。
