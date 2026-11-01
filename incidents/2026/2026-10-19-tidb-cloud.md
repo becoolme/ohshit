@@ -47,7 +47,7 @@ checklist:
   - title: Scrub secrets from SQL editor history
     hint: Queries and error text were copied
   - title: Review org and project access logs
-    hint: Look for logins and API calls you can't explain since Sep 9
+    hint: Review September 9–October 7 cloud identity and access logs for 146.70.173[.]219, 23.234.82[.]156, 23.234.83[.]80, 23.234.80[.]121, 138.199.43[.]96 and 23.234.81[.]225. Correlate Python-urllib/3.12, compute.instances.aggregatedList, google.cloud.bigquery.v2.JobService.InsertJob EXTRACT jobs, .json.gz staging, rclone and storage.objects.get responses 200/206. These operations also have legitimate uses; a match alone does not prove compromise. Use NebuSec’s complete table for per-IP dates and activity
   - title: Rotate credentials shared with support
     hint: Inventory support tickets, attachments, diagnostic logs and connection strings; rotate any embedded AWS keys, tokens, database passwords or other secrets. Do not wait for individual notification or send secrets to support again
   - title: Watch for targeted phishing
