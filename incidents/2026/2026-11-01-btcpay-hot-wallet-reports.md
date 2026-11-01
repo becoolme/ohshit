@@ -19,7 +19,8 @@ checklist:
   - title: Stop the instance using your deployment's shutdown procedure
     hint: The alert specifies ./btcpay-down.sh. For the official Docker deployment, run it from the existing btcpayserver-docker directory; the documented btcpay-down.sh wrapper also stops the stack. For hosted or other deployments, contact your operator. Expect payment processing to stop; the warning does not identify a safe configuration.
   - title: Preserve evidence and wallet records
-    hint: Keep existing logs, deployment and version details, wallet addresses and suspicious transaction hashes before deleting containers or rebuilding. The documented shutdown removes stack containers, so retain accessible logs without delaying containment. Never publish seeds, private keys or access tokens in a support ticket.
+    hint: >-
+      The documented shutdown removes stack containers. If immediately available, save logs with docker-compose -f "$BTCPAY_DOCKER_COMPOSE" logs --timestamps before shutdown; do not delay containment to troubleshoot log collection. Retain deployment and version details, wallet addresses and suspicious transaction hashes before rebuilding. Never publish seeds, private keys or access tokens in a support ticket.
   - title: Wait for verified recovery instructions
     hint: Check the project's established official account and release notes before restarting. This alert provides no fixed version or verified funds-recovery procedure. A successful shutdown does not recover completed transfers, and an unrelated earlier release is not evidence that this incident is fixed. Reject unsolicited refund links or requests for wallet secrets.
 sources:
