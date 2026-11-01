@@ -38,7 +38,7 @@ checklist:
   - title: 清理 SQL 编辑器历史里的密钥
     hint: 查询语句和报错文本都被拷走了
   - title: 排查组织和项目的访问日志
-    hint: 找 9月9日以来解释不了的登录和 API 调用
+    hint: 检查9月9日至10月7日的云身份和访问日志：146.70.173[.]219、23.234.82[.]156、23.234.83[.]80、23.234.80[.]121、138.199.43[.]96、23.234.81[.]225。关联 Python-urllib/3.12、compute.instances.aggregatedList、google.cloud.bigquery.v2.JobService.InsertJob EXTRACT 作业、.json.gz 暂存文件、rclone 及 storage.objects.get 的 200/206 响应。这些操作也有合法用途，仅命中指标不能证明入侵。各 IP 对应的日期及活动见 NebuSec 完整表格
   - title: 轮换曾提供给支持团队的凭据
     hint: 清点支持工单、附件、诊断日志和连接字符串，轮换其中的 AWS 密钥、令牌、数据库密码及其他密钥。不要等待个别通知，也不要再次向支持团队发送密钥
   - title: 提防定向钓鱼
