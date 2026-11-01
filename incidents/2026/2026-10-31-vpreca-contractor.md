@@ -27,9 +27,9 @@ sources:
   primary: true
   says: Confirms contractor intrusion, possible data exposure, investigation and partial suspension; scope and counts are not established.
 - name: V-Preca official maintenance FAQ
-  url: https://support.vpc.lifecard.co.jp/システムメンテナンスについて-663973daed6bb900247d3a1e
+  url: https://support.vpc.lifecard.co.jp/%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%83%A1%E3%83%B3%E3%83%86%E3%83%8A%E3%83%B3%E3%82%B9%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6-663973daed6bb900247d3a1e
   primary: true
-  says: Describes unavailable registration/login, shopping exception and no fixed restoration date; this FAQ is undated.
+  says: Read in full through the public web reader; describes unavailable registration/login, shopping exception and no fixed restoration date. This FAQ is undated.
 ---
 
 The announcement concerns V-Preca’s service contractor. It does not identify the entry point or confirm stolen balances. Broader LifeCard or payment-network compromise is not established.
