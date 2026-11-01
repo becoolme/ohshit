@@ -22,6 +22,9 @@ timeline:
   - date: Oct 30, 20:07 UTC
     title: Postmortem details containment and compensation
     body: Polymarket reports cache clearance, active-session resets and $3.9m in total compensation.
+  - date: Oct 30, 23:11 UTC
+    title: DebugBear reports DNS changes through its registrar
+    body: Its preliminary investigation points to a specific customer website; it reports no evidence of an internal-system compromise so far.
 checklist:
   - title: Close exposed tabs and inspect account activity
     hint: Reject unexpected signatures. From a clean session, check orders, position movements and wallet transfers; preserve timestamps and transaction hashes for official support. Review sessions, API credentials and permissions with support. Disconnecting a wallet does not revoke on-chain approvals or reverse transfers. Never give recovery agents a seed phrase.
@@ -50,12 +53,18 @@ sources:
   - name: Polymarket October 30 postmortem
     url: https://status.polymarket.com/cmvvek1i90eme14ruga1z6tuj
     primary: true
+  - name: DebugBear October 30 investigation update
+    url: https://www.linkedin.com/posts/debugbear_were-continuing-to-investigate-the-security-activity-7522072665495588865-NsiJ
+    primary: true
+    says: Reports registrar-mediated DNS compromise, interrupted inbound email and preliminary scope; public post metadata dates publication to October 30 at 23:11 UTC.
 ---
 
 Polymarket's international platform confirmed a compromised provider on October 29 and committed to compensating affected users. Its status page now records the outage as resolved. L4 reflects a real compromise, rather than a theoretical vulnerability.
 
 Hudson Rock attributes the malicious script to a DebugBear delivery URL. The sample reuses the logged-in application's trading client and signer to attempt position transfers or sales and subsequent asset transfers. This does not prove every signing request silently succeeds, private keys were exported, or smart contracts were compromised. Removing the script does not establish that every already-open session is safe.
 
-The platform's notice does not name its provider; DebugBear separately acknowledges an incident. The precise exposure window, vendor initial access and total affected population remain unknown. The later operator figures below supersede the absence of a vendor loss estimate; wallet balances and individual claims are not aggregate losses. This is a separate October event; June incident figures must not be reused for it.
+The platform's notice does not name its provider; DebugBear separately acknowledges an incident. The precise exposure window, how access to the registrar was obtained and total affected population remain unknown. The later operator figures below supersede the absence of a vendor loss estimate; wallet balances and individual claims are not aggregate losses. This is a separate October event; June incident figures must not be reused for it.
 
 **October 30 postmortem:** Polymarket reports removing the script, clearing caches and resetting active sessions. It assigns $2.7m to drained funds and $1.2m to pause-related losses: $3.9m in compensation, not $3.9m stolen. Its 95% refund figure includes drained-wallet and goodwill refunds at that time. These are operator figures, not an independent audit. It also describes stronger script integrity controls and continued investigation.
+
+**DebugBear’s October 30 update:** The provider says its DNS records were altered through its domain registrar. Its early findings point to one customer website, with no evidence so far of intrusion into its internal systems; investigation continues. This does not establish that other customers were unaffected or that the monitoring script is safe to restore. DebugBear also reported that inbound email to its domain was unavailable at the time; follow its public updates rather than assuming an emailed support request was received.
