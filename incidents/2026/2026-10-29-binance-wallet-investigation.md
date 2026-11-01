@@ -2,6 +2,7 @@
 title: Binance reports $6.3bn stolen; Bitcoin leads phased withdrawal rollout
 level: 4
 date: 2026-10-29
+updated: 2026-11-01
 tags:
   - Binance
   - crypto
@@ -69,11 +70,17 @@ timeline:
   - date: Nov 1, 2026
     title: Binance reports selected Ethereum and BSC withdrawals restored
     body: Ethereum supports USDC, USDT and ETH; BSC supports USDC, USDT and BNB. This is a limited asset/network update, not full restoration.
+  - date: Nov 1, 2026
+    title: Binance confirms additional XRP, Base, DOGE and Optimism withdrawals
+    body: The readable original lists XRP on XRP; ETH and USDC on Base; DOGE on DOGE; and ETH, USDT and USDC on Optimism.
+  - date: Nov 1, 2026
+    title: Binance confirms selected ZEC, TON and SUI withdrawals
+    body: The newer original lists ZEC on ZEC, USDT and GRAM on TON, and SUI on SUI. Other networks remain subject to separate checks.
   - date: Nov 1, 06:00–09:00 UTC (scheduled)
     title: First withdrawal phase is planned
 checklist:
   - title: Use official channels and reject recovery messages
-    hint: Open Binance through your existing bookmark or official app and check its announcements for deposit and withdrawal restoration. The November 1 notice schedules the first withdrawal phase for 06:00–09:00 UTC; check your exact asset/network pair on the withdrawal or network-status page. The subsequent official update names Bitcoin as the first batch; a later update confirms Ethereum withdrawals for USDC, USDT and ETH, and BSC withdrawals for USDC, USDT and BNB. This does not establish availability of every listed pair. Binance says future withdrawals use new wallets in its updated reserve-address list. Verify destination addresses and device security; congestion remains possible. The notice advises retrying later if needed. Verify unsolicited communications with Binance Verify or official support. Do not share passwords or 2FA codes, follow recovery links, or send money to purported support agents.
+    hint: Open Binance through your existing bookmark or official app and check its announcements for deposit and withdrawal restoration. The November 1 notice schedules the first withdrawal phase for 06:00–09:00 UTC; check your exact asset/network pair on the withdrawal or network-status page. The subsequent official update names Bitcoin as the first batch; a later update confirms Ethereum withdrawals for USDC, USDT and ETH, and BSC withdrawals for USDC, USDT and BNB. Later original posts also confirm XRP on XRP; ETH and USDC on Base; DOGE on DOGE; ETH, USDT and USDC on Optimism; ZEC on ZEC; USDT and GRAM on TON; and SUI on SUI. This does not establish availability of every planned pair or every asset on these networks. Binance says future withdrawals use new wallets in its updated reserve-address list. Verify destination addresses and device security; congestion remains possible. The notice advises retrying later if needed. Verify unsolicited communications with Binance Verify or official support. Do not share passwords or 2FA codes, follow recovery links, or send money to purported support agents.
   - title: Inspect your own account and respond to unauthorized activity
     hint: Review Security and Account Activity for unfamiliar logins, transactions or security-setting changes. If found, Binance instructs users to disable the account and contact official support. In the app, its guide uses Account Info → Security → Manage Account → Disable Account. Read the consequences before confirming; reopening may require support. This account control does not fix a possible exchange-wallet compromise.
   - title: Check Aave status before planning deposits or borrowing
@@ -178,7 +185,15 @@ sources:
     url: https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fbinance%2Fstatus%2F2116799757507305516&omit_script=true
     primary: true
     says: Readable original lists six restored asset/network pairs; the final sentence is truncated.
-updated: 2026-11-01
+  - name: Binance original additional-network restoration update, public embed
+    url: https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fbinance%2Fstatus%2F2116833451949306221&omit_script=true
+    primary: true
+    says: Readable portion confirms exact BTC/ETH/BSC/XRP/Base/DOGE/Optimism pairs; closing text truncates.
+  - name: Binance original ZEC, TON and SUI restoration update, public embed
+    url: https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fbinance%2Fstatus%2F2116871932075516174&omit_script=true
+    primary: true
+    says: Readable new-asset section confirms ZEC/ZEC, TON/USDT and GRAM, and SUI/SUI; later already-enabled list truncates.
+
 ---
 
 Binance’s initial notice said it had not confirmed an impact on user funds. The exchange then edited that notice to state that user funds are safe, and subsequently said withdrawals would resume after the security issue is fully resolved. These are the vendor’s statements, not an independently audited reserve or loss assessment. No resumption time or technical containment report was supplied in those notices. The withdrawal notice does not specify affected networks or withdrawal routes; do not infer that every Binance product is affected. Those earlier notices supported L3 because they acknowledged disruption without confirming the suspected theft.
@@ -208,3 +223,5 @@ Binance separately reports a verified frozen amount of around $3 billion. This v
 **Further November 1 update:** Binance names Bitcoin as the first withdrawal batch and says newly generated wallets, now included in its reserve-address list, will handle future withdrawals. Yi He subsequently describes processing as broadly smooth while allowing for congestion and asks users to check destinations and device security. These statements do not establish that every asset/network pair is available, that the full reserve proof has been published, or that the investigation is complete.
 
 **Later November 1 restoration:** Binance now explicitly reports withdrawals restored for USDC, USDT and ETH on Ethereum, and USDC, USDT and BNB on BNB Smart Chain. This is stronger than the earlier first-batch announcement for these six pairs only. Continue checking live availability for the exact pair; the post does not establish recovery of every asset or network, a completed investigation, or a published full reserve proof.
+
+**Further November 1 restoration updates:** Binance explicitly confirms the additional asset/network pairs listed in the checklist. These are vendor restoration statements, not independent proof that every withdrawal succeeds. The newer post’s already-enabled list is truncated in the public copy; it cannot establish the status of its unreadable remainder. The broader phase-one plan remains conditional, and neither restoration nor replacement funding proves recovery of stolen funds.
