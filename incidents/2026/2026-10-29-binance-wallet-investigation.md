@@ -1,5 +1,5 @@
 ---
-title: Binance reports $6.3bn stolen; withdrawals await phased recovery
+title: Binance reports $6.3bn stolen; Bitcoin leads phased withdrawal rollout
 level: 4
 date: 2026-10-29
 tags:
@@ -8,7 +8,7 @@ tags:
   - investigation
 ecosystems:
   - crypto
-summary: Binance reports ~$6.3bn stolen, no wallet-key leak evidence and additional breach points. The FBI attributes the theft to North Korea's TraderTraitor. Deposits work; phase-one withdrawals are planned for November 1, 06:00–09:00 UTC. Replacement funding is reportedly 95%; ~$3bn frozen remains a separate vendor claim; Aave's freeze is separate.
+summary: Binance reports ~$6.3bn stolen; the FBI attributes the theft to TraderTraitor. Bitcoin is the first withdrawal batch, with new wallets added to the reserve-address list. Yi He reports broadly smooth processing with possible congestion. Reported 95% replacement funding and ~$3bn frozen remain separate figures; full recovery is not established.
 splash: Binance.com withdrawal users; Aave reports a precautionary freeze of DAO-operated V3/V4 markets
 wipe: Follow official updates, inspect account activity, and use Binance's account-lock procedure if you find unauthorized actions
 inTheWild: yes
@@ -60,11 +60,17 @@ timeline:
     body: The bureau identifies TraderTraitor and requests transaction blocking against published laundering addresses.
   - date: Nov 1, 2026
     title: Binance reports 95% replacement funding
+  - date: Nov 1, 2026
+    title: Binance identifies Bitcoin as the first withdrawal batch
+  - date: Nov 1, 2026
+    title: Binance adds new wallet addresses to its reserve list for future withdrawals
+  - date: Nov 1, 2026
+    title: Yi He reports broadly smooth processing but warns of congestion
   - date: Nov 1, 06:00–09:00 UTC (scheduled)
     title: First withdrawal phase is planned
 checklist:
   - title: Use official channels and reject recovery messages
-    hint: Open Binance through your existing bookmark or official app and check its announcements for deposit and withdrawal restoration. The November 1 notice schedules the first withdrawal phase for 06:00–09:00 UTC; check your exact asset/network pair on the withdrawal or network-status page. Availability is progressive; the schedule does not confirm reopening. Temporary delays are expected, and the notice advises retrying later. Verify unsolicited communications with Binance Verify or official support. Do not share passwords or 2FA codes, follow recovery links, or send money to purported support agents.
+    hint: Open Binance through your existing bookmark or official app and check its announcements for deposit and withdrawal restoration. The November 1 notice schedules the first withdrawal phase for 06:00–09:00 UTC; check your exact asset/network pair on the withdrawal or network-status page. The subsequent official update names Bitcoin as the first batch; this does not establish availability of every listed pair. Binance says future withdrawals use new wallets in its updated reserve-address list. Verify destination addresses and device security; congestion remains possible. The notice advises retrying later if needed. Verify unsolicited communications with Binance Verify or official support. Do not share passwords or 2FA codes, follow recovery links, or send money to purported support agents.
   - title: Inspect your own account and respond to unauthorized activity
     hint: Review Security and Account Activity for unfamiliar logins, transactions or security-setting changes. If found, Binance instructs users to disable the account and contact official support. In the app, its guide uses Account Info → Security → Manage Account → Disable Account. Read the consequences before confirming; reopening may require support. This account control does not fix a possible exchange-wallet compromise.
   - title: Check Aave status before planning deposits or borrowing
@@ -153,6 +159,18 @@ sources:
     url: https://www.binance.com/en-GB/support/announcement/security-incident-recovery-update-4-withdrawals-resume-in-phases-2026-11-01-73911fb819b240f88b88256bdd318eda
     primary: true
     says: Schedules phase-one withdrawals and reports 95% replacement funding.
+  - name: Binance first-batch network update
+    url: https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fbinance%2Fstatus%2F2116773465072251141&omit_script=true
+    primary: true
+    says: Complete public embed identifies Bitcoin as the first-batch network.
+  - name: Binance new withdrawal-wallet notice
+    url: https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fbinance%2Fstatus%2F2116785774540787920&omit_script=true
+    primary: true
+    says: Complete public embed says new wallets are in the reserve-address list and will process future withdrawals.
+  - name: Yi He withdrawal-processing update
+    url: https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fheyibinance%2Fstatus%2F2116791881057354102&omit_script=true
+    primary: true
+    says: Readable portion describes generally smooth processing, possible congestion and address/device checks; the ending truncates.
 updated: 2026-11-01
 ---
 
@@ -179,3 +197,5 @@ Binance separately reports a verified frozen amount of around $3 billion. This v
 **October 31 attribution update:** The FBI now assigns the theft to North Korea’s TraderTraitor. This adds a law-enforcement assessment to TRM’s earlier research finding. It does not resolve Binance’s initial-access investigation or establish a reconciled net loss. The FBI observed conversion mainly into ETH; further DeFi and instant-swap laundering is its expectation.
 
 **November 1 recovery update:** The new notice specifies a first-phase withdrawal window of 06:00–09:00 UTC. Check the vendor’s asset/network table and live status; other pairs await readiness checks. Binance now reports 95% replacement funding, with the remaining 5% in less-liquid tokens outside its ten fully backed assets. This is company funding, not recovered stolen funds or an independent audit. A post-incident report remains pending.
+
+**Further November 1 update:** Binance names Bitcoin as the first withdrawal batch and says newly generated wallets, now included in its reserve-address list, will handle future withdrawals. Yi He subsequently describes processing as broadly smooth while allowing for congestion and asks users to check destinations and device security. These statements do not establish that every asset/network pair is available, that the full reserve proof has been published, or that the investigation is complete.
