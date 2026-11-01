@@ -8,6 +8,8 @@ inTheWildNote: Polymarket 确认服务商遭入侵，并承诺赔付受影响用
 cves: []
 fixed: []
 timeline:
+  - date: 10月29日 17:38 UTC
+    title: Polymarket 报告钱包出现未经授权的活动
   - date: 10月29日 18:05 UTC
     title: Polymarket 暂停新交易和 relayer 操作
   - date: 10月29日 18:37 UTC
@@ -33,7 +35,7 @@ sources:
   - name: Polymarket 官方状态历史
     says: 记录 10 月 29 日的暂停交易、服务商入侵、赔付承诺及解决状态，并明确标注 UTC 时间。
   - name: Hudson Rock 研究报告
-    says: 静态分析发现会话复用及资产转移逻辑；通过公开索引阅读了指标和财务证据的局限。直接获取页面返回 403。
+    says: 直接阅读静态分析报告，核实会话复用及资产转移逻辑、捕获样本的指标，以及财务和暴露窗口证据的明确局限。
   - name: DebugBear 安全通知
     says: 厂商原始通知；通过下方 X 官方嵌入副本阅读。
   - name: DebugBear 通知的 X 官方嵌入副本

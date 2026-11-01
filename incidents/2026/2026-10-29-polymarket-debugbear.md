@@ -13,6 +13,8 @@ inTheWildNote: Polymarket confirms a provider compromise and reimbursement for a
 cves: []
 fixed: []
 timeline:
+  - date: Oct 29, 17:38 UTC
+    title: Polymarket reports unauthorized wallet activity
   - date: Oct 29, 18:05 UTC
     title: Polymarket pauses new trades and relayer actions
   - date: Oct 29, 18:37 UTC
@@ -42,7 +44,7 @@ sources:
   - name: Hudson Rock research
     url: https://www.infostealers.com/article/polymarket-breach-alert-wallet-draining-code-found-in-a-third-party-script/
     primary: true
-    says: Static analysis identifies session reuse and asset-transfer logic; indicators and financial-evidence limitations were read in the publicly indexed report. Direct page retrieval returned 403.
+    says: Directly read static analysis of session reuse and asset-transfer logic, with captured-sample indicators and explicit limits on financial and exposure-window evidence.
   - name: DebugBear security notice
     url: https://x.com/DebugBear/status/2115866496643535293
     says: Original vendor notice; read through the official X embed below.
