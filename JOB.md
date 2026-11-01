@@ -71,10 +71,42 @@ discover.
   publication, not declare the event false. Recheck for a primary disclosure or correction on the next run;
   the existing new/update eligibility and sourcing requirements still apply.
 
+### Mandatory follow-up of recent serious incidents
+
+Discovery and follow-up are separate duties. On **every run**, build and check a watchlist before deciding
+there is nothing to publish:
+
+- Include every existing **L4/L5 incident disclosed or substantively updated in the last 14 UTC days**.
+  Also include L3 incidents from the last seven days with an ongoing investigation, disputed scope,
+  unavailable primary evidence, or pending remediation. Carry unresolved incidents already on the
+  watchlist beyond those windows until the outstanding questions have been checked against a final
+  report or explicitly retained as unresolved.
+- For each incident, reopen its primary sources and search for the vendor/product plus incident terms
+  and `update`, `postmortem`, `refund`, `recovery`, `复盘`, `赔付`, `恢复`. Follow status-history entries to
+  incident detail pages and linked reports. Read the full relevant updates, not just a headline, index,
+  search snippet or operational-status badge. A status of **resolved** does not end follow-up: later
+  technical reports, revised losses, compensation and credential-reset guidance still matter.
+- Compare the newly read material with the current timeline, summary, scope and checklist. Record verified
+  changes in the **existing slug**, with the English and Chinese updated together. Preserve earlier facts
+  and distinguish stolen amounts, frozen assets, replacement funding and compensation. Never add a timeline
+  entry or change `updated:` merely because a source was checked.
+- Keep a per-incident follow-up record in the run notes: slug, check time in UTC, source URLs actually
+  opened, latest relevant source-update time/date, facts compared, and outcome (`update`, `unchanged`,
+  `blocked`, or `occupied by PR #…`). Record access failures and the next evidence to seek. An inaccessible
+  source is **blocked**, not evidence of no change. Respect the existing open-PR ownership rule; record
+  verified new facts for that PR without opening a duplicate or taking it over.
+- Include the watchlist and compact per-incident outcomes in the PR description when a PR exists. With
+  no substantive changes, keep the record outside the repository and create no empty PR. A run cannot
+  claim follow-up complete if any required incident was not checked; record the gap for the next run and
+  report it when user action is needed under the existing notification rules.
+
 ## 2. Dedup: is it already here?
 
 For every candidate, check in this order against the whole inventory, including incidents in open PRs. Stop
 at the first match.
+
+Here, "stop" means stop looking for another identity for the same event. **An existing incident is an
+update candidate, not a reason to skip reading new evidence.** Dedup must never bypass mandatory follow-up.
 
 1. **Same CVE or GHSA id** appears in any existing file → it's an existing incident.
 2. **Same vendor, same product, same advisory or release batch** (for example "Node.js October security
@@ -118,6 +150,7 @@ rumours, routine Patch Tuesday items with no exploitation, and anything you can 
 | New fixed versions, a missed branch, or a fix that was incomplete | `fixed`, `checker.examples`, `wipe`, timeline entry |
 | New CVE added to the same advisory | `cves`, title/summary counts ("ten CVEs") |
 | Victim count, scope or attribution confirmed or revised | `splash`, `summary`, body, sources (show the disagreement, don't overwrite it) |
+| Vendor postmortem, containment, session/credential resets, service recovery or compensation progress | timeline, summary/body, checklist and sources; separate vendor claims from independent verification |
 | Primary source published where we only had reports | add it with `primary: true`, **remove** `sourceException` |
 | A claim we made turned out wrong | fix it and say so in the body ("Earlier reports said X; the vendor now says Y") |
 

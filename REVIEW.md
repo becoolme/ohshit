@@ -32,6 +32,13 @@ standalone deployment commands, manually trigger deployment workflows or publish
 - Check the Discovery coverage summary against JOB.md: all six discovery lanes, English and Chinese
   searches, access gaps and unresolved leads. A CVE-only search does not cover crypto theft or browser-script
   compromises. Missing coverage needs additional discovery before the run is declared complete.
+- Check the mandatory follow-up watchlist against the incident inventory: all L4/L5 incidents disclosed
+  or substantively updated within 14 UTC days, qualifying L3 incidents within seven days, and carried
+  unresolved cases. Each needs an actual source check, UTC check time, latest source-update date/time and
+  a concrete comparison outcome. "Already covered", "deduped" or "resolved" alone is not evidence that
+  follow-up happened. Read incident detail pages and postmortems, including items omitted from the PR,
+  to catch missing updates. Complete missing checks and add verified changes before declaring the run
+  complete, respecting other open PRs' ownership. For a run without a PR, this record belongs in run notes.
 
 ## 2. Check the facts against the sources
 
@@ -62,6 +69,10 @@ Open the primary sources yourself. Don't trust the PR's summary of them. For eve
   - A second file for the same event is a blocker. Move its facts into the existing incident and drop the
     new file.
   - Never rename or delete an existing slug.
+  - Dedup prevents a second incident; it must not suppress new evidence for the existing one. Check for
+    later postmortems, revised scope/losses, refunds, recovery and session/credential-reset instructions.
+    A resolved outage can still need these updates. Do not manufacture an update for an unchanged source
+    or treat blocked access as proof that nothing changed.
 
 ## 3. Check the writing
 
