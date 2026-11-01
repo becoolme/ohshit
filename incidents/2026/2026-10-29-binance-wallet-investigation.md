@@ -8,7 +8,7 @@ tags:
   - investigation
 ecosystems:
   - crypto
-summary: Binance reports ~$6.3bn stolen, no wallet-key leak evidence and additional breach points. The FBI attributes the theft to North Korea's TraderTraitor. Deposits work; withdrawals await phased recovery. Coverage and ~$3bn frozen remain vendor claims; Aave's freeze is separate.
+summary: Binance reports ~$6.3bn stolen, no wallet-key leak evidence and additional breach points. The FBI attributes the theft to North Korea's TraderTraitor. Deposits work; phase-one withdrawals are planned for November 1, 06:00–09:00 UTC. Replacement funding is reportedly 95%; ~$3bn frozen remains a separate vendor claim; Aave's freeze is separate.
 splash: Binance.com withdrawal users; Aave reports a precautionary freeze of DAO-operated V3/V4 markets
 wipe: Follow official updates, inspect account activity, and use Binance's account-lock procedure if you find unauthorized actions
 inTheWild: yes
@@ -58,9 +58,13 @@ timeline:
   - date: Oct 31, 2026
     title: FBI attributes the theft to North Korea
     body: The bureau identifies TraderTraitor and requests transaction blocking against published laundering addresses.
+  - date: Nov 1, 2026
+    title: Binance reports 95% replacement funding
+  - date: Nov 1, 06:00–09:00 UTC (scheduled)
+    title: First withdrawal phase is planned
 checklist:
   - title: Use official channels and reject recovery messages
-    hint: Open Binance through your existing bookmark or official app and check its announcements for deposit and withdrawal restoration. The October 31 recovery update targets November 1 for withdrawals, superseding the earlier countdown estimates; this is a forecast, not confirmed reopening. Check live status before relying on a withdrawal. Verify unsolicited communications with Binance Verify or official support. Do not share passwords or 2FA codes, follow recovery links, or send money to purported support agents.
+    hint: Open Binance through your existing bookmark or official app and check its announcements for deposit and withdrawal restoration. The November 1 notice schedules the first withdrawal phase for 06:00–09:00 UTC; check your exact asset/network pair on the withdrawal or network-status page. Availability is progressive; the schedule does not confirm reopening. Temporary delays are expected, and the notice advises retrying later. Verify unsolicited communications with Binance Verify or official support. Do not share passwords or 2FA codes, follow recovery links, or send money to purported support agents.
   - title: Inspect your own account and respond to unauthorized activity
     hint: Review Security and Account Activity for unfamiliar logins, transactions or security-setting changes. If found, Binance instructs users to disable the account and contact official support. In the app, its guide uses Account Info → Security → Manage Account → Disable Account. Read the consequences before confirming; reopening may require support. This account control does not fix a possible exchange-wallet compromise.
   - title: Check Aave status before planning deposits or borrowing
@@ -145,7 +149,11 @@ sources:
   - name: FBI attribution and laundering-address notice
     url: https://www.fbi.gov/investigate/cyber/alerts/2026/north-korea-responsible-for-6-billion-binance-attack
     primary: true
-updated: 2026-10-31
+  - name: Binance recovery update number 4
+    url: https://www.binance.com/en-GB/support/announcement/security-incident-recovery-update-4-withdrawals-resume-in-phases-2026-11-01-73911fb819b240f88b88256bdd318eda
+    primary: true
+    says: Schedules phase-one withdrawals and reports 95% replacement funding.
+updated: 2026-11-01
 ---
 
 Binance’s initial notice said it had not confirmed an impact on user funds. The exchange then edited that notice to state that user funds are safe, and subsequently said withdrawals would resume after the security issue is fully resolved. These are the vendor’s statements, not an independently audited reserve or loss assessment. No resumption time or technical containment report was supplied in those notices. The withdrawal notice does not specify affected networks or withdrawal routes; do not infer that every Binance product is affected. Those earlier notices supported L3 because they acknowledged disruption without confirming the suspected theft.
@@ -169,3 +177,5 @@ Binance separately reports a verified frozen amount of around $3 billion. This v
 **Recovery update, October 31:** Binance says it has replenished 90% of the previously announced company-funded coverage. This is a vendor claim about replacement funding, not a statement that 90% of stolen assets were recovered. Its new reserve snapshot is dated October 31 at 00:00 UTC; the full zero-knowledge proof is still being generated and is now expected November 3 UTC. Withdrawals remain targeted for November 1, superseding earlier countdown estimates without confirming reopening. Neither this funding update nor a reserve snapshot establishes a final attack root cause.
 
 **October 31 attribution update:** The FBI now assigns the theft to North Korea’s TraderTraitor. This adds a law-enforcement assessment to TRM’s earlier research finding. It does not resolve Binance’s initial-access investigation or establish a reconciled net loss. The FBI observed conversion mainly into ETH; further DeFi and instant-swap laundering is its expectation.
+
+**November 1 recovery update:** The new notice specifies a first-phase withdrawal window of 06:00–09:00 UTC. Check the vendor’s asset/network table and live status; other pairs await readiness checks. Binance now reports 95% replacement funding, with the remaining 5% in less-liquid tokens outside its ten fully backed assets. This is company funding, not recovered stolen funds or an independent audit. A post-incident report remains pending.
