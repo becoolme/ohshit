@@ -7,7 +7,7 @@ tags:
 - data breach
 ecosystems:
 - web
-summary: Club Tourism confirms unauthorized server access and possible exposure of about 4.32 million online membership records. It excludes passwords and payment details, has stopped its homepage and will notify affected customers. Exact exfiltration remains under investigation.
+summary: Club Tourism confirms unauthorized server access and possible exposure of about 4.32 million online membership records. It excludes passwords, passport, card and bank-account data, has stopped its homepage and will notify affected customers. Exact exfiltration remains under investigation.
 splash: Registered Club Tourism internet members; the company excludes customers who never registered
 wipe: Verify notices through established channels, watch for phishing and replace reused passwords
 inTheWild: 'yes'
@@ -24,6 +24,8 @@ checklist:
   hint: Use a known official channel to verify messages. Do not open suspicious links or attachments or provide credentials or financial details to purported support.
 - title: Replace passwords reused elsewhere
   hint: The company excludes login passwords from the possible exposure but recommends changing reused passwords elsewhere as a precaution. Use unique passwords and enable MFA where available.
+- title: Report suspicious contact or related harm
+  hint: Verify the dedicated support number in the original notice, 0120-335-255, before calling. Report suspicious contact or activity through that channel; do not reply to unsolicited messages offering help.
 sources:
 - name: Club Tourism original customer notice
   url: https://www.club-tourism.co.jp/jpn/news/2026/1031/
