@@ -2,7 +2,7 @@
 title: "ConnectWise Cloud Backup 的应用密钥被盗，攻击者从正门大摇大摆走进了 Microsoft 365 租户"
 headline: "ConnectWise：应用一把钥匙，租户一排大门"
 summary: >-
-  ConnectWise 多租户备份应用（前身是 SkyKick）的一个 API 密钥被盗。所有授权过这个应用的 Microsoft 365 租户，一下子都能被人拿着客户当初授予它的权限访问。ConnectWise 暂停了多项云服务。截至10月30日，已重新授权的 M365 租户可进行备份及还原；报告和通知功能仍在分阶段恢复。
+  ConnectWise/SkyKick 应用密钥被盗，攻击者据此未经授权访问 M365 租户。截至10月30日，已重新授权的租户可通过新应用备份和还原；报告和通知功能仍在分阶段恢复。租户排查仍然必要。
 splash: "授权过受影响应用的 M365 租户；Huntress 观察到约 1000 个登录目标，300 多个登录成功"
 wipe: "禁用受影响应用连接，保留 Entra 证据，检查应用凭据和权限；仅在厂商指引下重新授权"
 inTheWildNote: Huntress 已在 2 个租户中确认了入侵后的活动
