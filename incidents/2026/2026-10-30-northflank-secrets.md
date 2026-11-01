@@ -2,7 +2,7 @@
 title: Northflank tells all users to rotate secrets after a security incident
 level: 4
 date: 2026-10-30
-updated: 2026-10-31
+updated: 2026-11-01
 tags: [Northflank, cloud, credentials]
 summary: Northflank tells all users to assume environment variables are compromised and rotate workload, secret-group and global credentials immediately. Its notice reports multiple users confirming AI-key use; investigation remains open, with no published root cause or victim count.
 splash: All Northflank users with credentials in workloads, secret groups or global secrets
@@ -28,6 +28,11 @@ timeline:
     title: MySQL and Redis secret rotation enabled for all customers
   - date: Oct 31, 22:32 UTC
     title: Minio addon secret rotation enabled for all customers
+  - date: Oct 31, 23:31 UTC
+    title: RabbitMQ rotation enabled for all customers
+  - date: Nov 1, 2026
+    title: RabbitMQ and MinIO rotation guidance verified
+    body: API documentation checked today; it does not provide a revision timestamp.
 checklist:
   - title: Replace credentials at their issuing services
     hint: From a trusted environment, disable or rotate keys stored in workloads, secret groups and global secrets; update dependent applications. Editing an environment-variable value alone does not revoke the old key. Review provider usage and billing for abuse.
@@ -37,8 +42,10 @@ checklist:
     hint: Usernames stay unchanged. The default user-facing mode rotates user passwords; full mode also rotates internal passwords and restarts the addon. Both modes keep old passwords until finalisation. Update clients before finalising; user-facing finalisation disconnects affected sessions, while full finalisation restarts the addon.
   - title: Plan the Redis restart and client reconnects
     hint: Redis rotation restarts the addon and revokes old credentials in one step; clients must reconnect with the new password. Redeploy linked services yourself. Do not call the finalisation endpoint for Redis. Nonpersistent Redis is unsupported, and Sentinel requires at least three replicas; check your deployment before starting.
-  - title: Rotate Minio addon credentials
-    hint: Northflank now enables secret rotation for Minio addons for all customers. Use the addon rotation controls, update every client using those credentials and verify that old credentials no longer work. The notice does not specify restart or finalisation semantics for Minio; do not assume the MySQL or Redis procedure applies.
+  - title: Plan MinIO rotation and backup handling
+    hint: Rotation restarts every node and finishes in one step; do not call finalisation. Only the secret key changes; the access key, existing users and their access keys stay valid. Review those separately and update clients. Old-key console sessions, temporary credentials and presigned URLs stop working. A pre-rotation backup restores the old secret key, so rotate again after such a restore.
+  - title: Choose RabbitMQ scope, then finalise
+    hint: Default user-facing mode changes account usernames and passwords; full also rotates the Erlang cookie and pauses the entire addon, interrupting connections. Failure can leave it paused; retries retain the saved mode. Both modes keep old accounts until finalisation. Update clients first, then finalise to remove old accounts; finalisation does not pause again, but some old sessions can remain open, so check and close them.
   - title: Restrict exposed addons
     hint: Disable addon public access where enabled, as Northflank requests; follow the official status notice for recovery updates.
   - title: Review available audit and provider logs
