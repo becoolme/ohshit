@@ -14,7 +14,7 @@ summary: zkLink reports suspended Nova block production and emergency-patched co
 splash: Users with assets in zkLink Nova bridge custody; the vendor names Arbitrator contracts on Ethereum and Optimism
 wipe: Avoid adding exposure to the affected bridge while containment is unresolved; preserve transaction records and follow official updates
 inTheWild: yes
-inTheWildNote: zkLink explicitly acknowledges an ongoing exploit against its Arbitrator contracts.
+inTheWildNote: zkLink confirmed exploitation; later reported block suspension and emergency patches.
 cves: []
 fixed: []
 timeline:
@@ -39,7 +39,7 @@ checklist:
   - title: Verify recovery notices before signing
     hint: Use the project’s established official website and verified announcement channels to check containment and any recovery instructions. The notice read does not establish a refund process or completed reimbursement; reject unsolicited claim pages and never share seed phrases. Do not infer that funds on every named chain were stolen.
   - title: Review the full research ledger and test containment
-    hint: Parapet’s Impact, Key contracts, Second wave and References sections contain more than ten addresses and transaction hashes, with attacker, receiver, helper and legitimate bridge roles separated. Use that full ledger, not a partial denylist; an address match alone is not proof of compromise. For bridge operators, pin the canonical message service per gateway, consume transient validation state per claim and test withdrawal pause coverage on a fork. These are researcher recommendations, not confirmation that zkLink deployed that exact patch.
+    hint: Parapet’s Impact, Key contracts, Second wave and References sections publish 13 full addresses and nine linked transaction hashes, with attacker, receiver, helper and legitimate bridge roles separated. Use that full ledger, not a partial denylist; an address match alone is not proof of compromise. For bridge operators, pin the canonical message service per gateway, consume transient validation state per claim and test withdrawal pause coverage on a fork. These are researcher recommendations, not confirmation that zkLink deployed that exact patch.
 sources:
   - name: zkLink official exploit acknowledgment
     url: https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FzkLink_Official%2Fstatus%2F2115731883313254565&omit_script=true

@@ -3,7 +3,7 @@ title: zkLink 报告 Nova 跨链桥紧急遏制措施，研究人员追踪到第
 summary: zkLink 称已暂停 Nova 出块并紧急修补合约。Parapet Labs 追踪到无需权限的中继利用路径，以及 Optimism、Base、Blast 和 Mantle 上的第二波攻击。其历史分析不能验证厂商后续补丁或安全重启，最终损失仍未确认。
 splash: 资产处于 zkLink Nova 跨链托管中的用户；厂商点名以太坊及 Optimism 的 Arbitrator 合约
 wipe: 遏制状态未明时避免继续增加相关跨链敞口；保存交易记录并关注官方更新
-inTheWildNote: zkLink 明确确认其 Arbitrator 合约正遭利用。
+inTheWildNote: zkLink 确认漏洞利用，后续称已暂停出块并紧急修补。
 cves: []
 fixed: []
 timeline:
@@ -28,7 +28,7 @@ checklist:
   - title: 签名前核实恢复通知
     hint: 通过项目既有官网及已验证公告渠道核对遏制情况和恢复指引。本次可读通知未确定退款流程或赔付完成；拒绝陌生索赔页面，绝不分享助记词。不能推断所有被点名的链均已有资金被盗。
   - title: 核对完整研究清单并测试遏制效果
-    hint: Parapet 报告的 Impact、Key contracts、Second wave 及 References 章节给出超过十个地址和交易哈希，区分攻击者、接收方、辅助合约及合法跨链桥角色。使用完整清单，不要只依赖部分黑名单；单独命中地址不能证明失陷。跨链桥运营方应按网关固定规范消息服务、逐次消费瞬态验证状态，并在分叉环境测试提款暂停覆盖范围。这些是研究方建议，并非确认 zkLink 已部署完全相同的补丁。
+    hint: Parapet 报告的 Impact、Key contracts、Second wave 及 References 章节公布 13 个完整地址及 9 个交易哈希链接，区分攻击者、接收方、辅助合约及合法跨链桥角色。使用完整清单，不要只依赖部分黑名单；单独命中地址不能证明失陷。跨链桥运营方应按网关固定规范消息服务、逐次消费瞬态验证状态，并在分叉环境测试提款暂停覆盖范围。这些是研究方建议，并非确认 zkLink 已部署完全相同的补丁。
 sources:
   - says: 可见文本确认 Nova 在以太坊及 Optimism 的 Arbitrator 合约遭持续利用，正在遏制；后半部分被截断。
   - says: 原始研究帖可见部分估算约 783100 美元，并指出 claimMessage 未清理瞬态消息状态；技术后续被截断。
