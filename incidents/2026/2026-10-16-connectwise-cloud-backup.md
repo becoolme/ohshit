@@ -3,7 +3,7 @@ title: "ConnectWise Cloud Backup's app secret got stolen, and attackers walked i
 headline: "ConnectWise: one app secret opens too many tenant doors"
 level: 4
 date: 2026-10-16
-updated: 2026-11-01
+updated: 2026-11-02
 tags: [SaaS, OAuth, Microsoft 365]
 ecosystems: [microsoft-365, entra-id]
 summary: >-
@@ -45,6 +45,9 @@ timeline:
   - date: Oct 23, 2026, 14:00 UTC
     title: ConnectWise clarifies restoration is still being validated
     body: Backup-restore access is planned first, early the following week after successful validation; full service re-enrollment follows. Neither is confirmed available.
+  - date: Oct 27, 2026
+    title: Huntress qualifies the AI attribution and adds detection guidance
+    body: Its own telemetry gives low-to-medium confidence of LLM involvement, rising to medium-to-high when Microsoft attribution is included; it does not independently verify the actor or ARTEX.
   - date: Oct 28, 16:00 UTC
     title: Re-enrollment opens through a new application
     body: Partners must reset their portal password, configure MFA and re-authorize every M365 tenant through ConnectWise Cloud Backup for M365.
@@ -62,6 +65,8 @@ checklist:
     hint: Review Enterprise applications and App registrations for unexpected secrets or certificates added since Oct 13. Preserve evidence, then remove unauthorized credentials; disabling ConnectWise alone does not remove these footholds
   - title: Correlate published indicators with application activity
     hint: "Microsoft lists six IPs and five User-Agents: 144.172.64.128, 144.172.64.99, 144.172.64.60, 187.15.88.186, 187.15.90.217, 187.15.89.186; its full IoC table supplies all User-Agents. The three VPN IPs need October 15\u201316 context. Huntress additionally discusses 144.172.94.243 and shared Azure ULA fde4:8dba:2600:37ce:6d26:200:a76:*. Huntress observed only .128 for public-IP app sign-ins and classifies the other RouterHosting addresses as failed user logins/sprays, while Microsoft links .99 and .60 to its broader campaign. Correlate actor, app and operation; a match alone does not prove compromise, and the ULA is also legitimate traffic"
+  - title: Detect credential planting and keep Graph visibility
+    hint: Alert on service principals granting Global Administrator or Privileged Role Administrator to themselves or siblings, deleting themselves, or adding unexpected credentials. Enable Graph activity logs where licensing permits, retaining raw User-Agents and sub-second timestamps. The Huntress follow-up lists four IPs (144.172.64.128, 144.172.64.99, 194.165.16.21, 144.172.64.60) and six User-Agent variants (Python-urllib/3.12, curl/7.88.1, python-requests/2.31, python-requests/2.31.0, python-requests/2.34.2, azure-toolkit/1.0). The .21 association is only possible. Its table and narrative disagree about observing python-requests/2.34.2; preserve that uncertainty. A match alone does not prove compromise, and cadence alone cannot identify AI.
   - title: Re-enroll through the new application and verify backups
     hint: Use Forgot password at login.cloudservices.connectwise.com, configure MFA, then follow the Trust Center instructions for each tenant using ConnectWise Cloud Backup for M365. Keep old disabled applications disabled unless ConnectWise specifically instructs otherwise. Check for a newly completed snapshot; re-authorization alone does not confirm recovery and the historical backup gap remains. A repeated password-reset status 500 needs cloud-support@connectwise.com assistance. Continue tenant investigation; re-enrollment does not remove persistence
 sources:
@@ -83,6 +88,10 @@ sources:
     url: https://www.microsoft.com/en-us/security/blog/2026/10/21/storm-0940-uses-artex-agentic-ai-connectwise-supply-chain-compromise/
     says: Attributes the compromise to Storm-0940; over 2,250 tenants targeted with ARTEX; preserve evidence and inspect downstream persistence
     primary: true
+  - name: Huntress follow-up telemetry analysis
+    url: https://www.huntress.com/blog/connectwise-attack-ai
+    says: Does not independently verify Microsoft attribution; adds role/credential detections and logging guidance. Narrative and IoC table differ on whether python-requests/2.34.2 was observed
+    primary: true
 ---
 
 Backup apps need wide access to your tenant: they read every mailbox, every OneDrive and every Team. In
@@ -102,3 +111,5 @@ trail, so "no evidence" here does not mean "nothing happened".
 **Update, October 24:** The vendor's October 23, 14:00 UTC notice clarifies that restoration testing and security validation are still underway. The October 21 start of phased restoration work did not mean customer capabilities were already available. ConnectWise anticipates finishing validation by the end of the weekend, enabling access to restore existing backups early the following week, then full service re-enrollment. These are conditional plans, not confirmed restoration dates. Keep affected app connections disabled until the vendor provides instructions for your service, and continue investigating each tenant; restoring the vendor service does not remove tenant-level persistence.
 
 **Update, November 1 (UTC):** The October 28–30 vendor notices replace the earlier conditional recovery forecast. Backups and restores are available for re-authorized M365 tenants, and the customer portal and backup-monitoring dashboards have returned. Backup Health reporting, export jobs and billing features are still being restored; notifications follow the supporting services. Reset the portal password, configure MFA and authorize each tenant through the new **ConnectWise Cloud Backup for M365** application using the Trust Center instructions. Do not re-enable the old disabled applications without specific vendor direction. Confirm a successful new snapshot: enrollment does not erase the backup-history gap or replace investigation of tenant-level persistence. The vendor still reports no indication that preserved backup archives or other ConnectWise products were compromised; that is its investigation status, not an independent guarantee.
+
+**Additional Huntress analysis:** The follow-up linked from its October 27 update separates observed automation from AI attribution. Huntress rates LLM involvement low-to-medium on its own telemetry, and medium-to-high with Microsoft’s attribution; it cannot independently verify Storm-0940 or ARTEX. Missing Graph request logs prevent reconstructing reads. Detect role grants and credential planting, preserve detailed logs, and investigate across tenants rather than using request speed or an IP hit as proof of AI or compromise. The follow-up does not revise the confirmed-victim count or establish data theft.

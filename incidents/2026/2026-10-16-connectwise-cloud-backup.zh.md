@@ -36,6 +36,9 @@ timeline:
   - date: 2026年10月23日 14:00 UTC
     title: ConnectWise 明确恢复工作仍在验证中
     body: 计划在成功验证后于下周初先开放现有备份还原，再恢复完整服务注册；两者均未确认可用。
+  - date: 2026年10月27日
+    title: Huntress 限定 AI 归因置信度，并补充检测建议
+    body: 仅凭自身遥测，对 LLM 参与的置信度为低至中等；结合微软归因后为中至高，但不能独立核实攻击者或 ARTEX。
   - date: 10月28日 16:00 UTC
     title: 开放通过新应用重新注册
     body: 合作伙伴须重置门户密码、配置 MFA，并通过 ConnectWise Cloud Backup for M365 为每个 M365 租户重新授权。
@@ -53,6 +56,8 @@ checklist:
     hint: 检查 Enterprise applications 和 App registrations 中自 10月13日起新增的意外密钥或证书。保留证据后删除未经授权的凭据；仅禁用 ConnectWise 不能清除这些入口
   - title: 将已发布指标与应用活动关联
     hint: "微软列出六个 IP 和五个 User-Agent：144.172.64.128, 144.172.64.99, 144.172.64.60, 187.15.88.186, 187.15.90.217, 187.15.89.186；全部 User-Agent 见其完整 IoC 表。三个 VPN IP 需结合 10月15–16日上下文。Huntress 另讨论了 144.172.94.243 及共享 Azure ULA fde4:8dba:2600:37ce:6d26:200:a76:*。Huntress 的公网 IP 应用登录仅观察到 .128，将其他 RouterHosting 地址归为失败用户登录或喷洒；微软则将 .99 和 .60 关联到更广的攻击活动。关联行为者、应用及操作；仅命中指标不能证明入侵，该 ULA 也用于合法流量"
+  - title: 检测凭据植入并保留 Graph 可见性
+    hint: 对服务主体给自己或同级主体授予 Global Administrator 或 Privileged Role Administrator、自行删除或添加意外凭据设置告警。许可证允许时启用 Graph 活动日志，保留原始 User-Agent 及亚秒时间戳。Huntress 后续报告列出四个 IP（144.172.64.128、144.172.64.99、194.165.16.21、144.172.64.60）及六种 User-Agent 写法（Python-urllib/3.12、curl/7.88.1、python-requests/2.31、python-requests/2.31.0、python-requests/2.34.2、azure-toolkit/1.0）。.21 仅为可能关联；其表格与正文对是否观察到 python-requests/2.34.2 存在分歧，应保留不确定性。仅命中指标不能证明入侵，仅凭节奏也不能认定使用 AI。
   - title: 通过新应用重新注册并验证备份
     hint: 在 login.cloudservices.connectwise.com 使用 Forgot password，配置 MFA，再按 Trust Center 指引通过 ConnectWise Cloud Backup for M365 为每个租户授权。除非 ConnectWise 明确要求，否则保持旧应用禁用。检查是否有新快照成功完成；重新授权本身不代表恢复，历史备份缺口仍然存在。重置密码反复出现状态码 500 时联系 cloud-support@connectwise.com。继续调查租户，重新注册不能清除持久化访问
 sources:
@@ -61,6 +66,8 @@ sources:
   - says: 报道 173 个受影响租户，但无独立确认的总数；援引 Directory.ReadWrite.All 可能遭滥用
   - says: 服务暂停的时间线
   - says: 将事件归因于 Storm-0940；利用 ARTEX 针对超过 2,250 个租户；保留证据并排查下游持久化
+  - name: Huntress 后续遥测分析
+    says: 未独立核实微软归因；补充权限、凭据检测及日志建议。正文与指标表对是否观察到 python-requests/2.34.2 存在分歧
 ---
 备份应用需要对租户有很大的访问权限：每个邮箱、每个 OneDrive、每个 Team 都要读。在 Microsoft 365 里，这份权限挂在厂商的**多租户应用**上。所以厂商的应用密钥，就是所有点过“接受”的客户的万能钥匙。
 
@@ -73,3 +80,5 @@ Huntress 在大约 1000 个 Entra 租户里看到了攻击活动，其中 300 �
 **10月24日更新：** 厂商 10月23日 14:00 UTC 通知明确，恢复测试和安全验证仍在进行。10月21日开始分阶段恢复工作，不代表客户功能已经可用。ConnectWise 预计周末结束前完成验证，下周初先开放现有备份还原，随后恢复完整服务注册。这些是附带条件的计划，并非已确认的恢复日期。收到对应服务的厂商指引前，应保持受影响应用连接禁用，并继续逐个调查租户；厂商恢复服务不能清除租户中的持久化访问。
 
 **11月1日更新（UTC）：** 厂商10月28–30日通知取代了此前附带条件的恢复预测。已重新授权的 M365 租户可进行备份及还原，客户门户和备份监控面板也已恢复。Backup Health 报告、导出任务和计费功能仍在恢复；通知将在支撑服务就绪后恢复。应重置门户密码、配置 MFA，并按 Trust Center 指引通过新的 **ConnectWise Cloud Backup for M365** 应用逐租户授权。未经厂商明确要求，不要重新启用已禁用的旧应用。须确认新快照成功完成：注册不能消除历史备份缺口，也不能替代租户持久化访问调查。厂商仍表示，保留的备份归档及其他 ConnectWise 产品没有遭入侵的迹象；这是其调查进展，并非独立安全保证。
+
+**Huntress 补充分析：** 其10月27日更新链接的后续报告将已观察到的自动化与 AI 归因分开。Huntress 仅凭自身遥测，对 LLM 参与的置信度为低至中等；结合微软归因后为中至高，不能独立核实 Storm-0940 或 ARTEX。缺少 Graph 请求日志使读取活动无法重建。应检测权限授予与凭据植入，保留详细日志并跨租户排查，不能把请求速度或 IP 命中当作使用 AI 或入侵的证明。后续报告未修改确认受害者总数，也未证实数据窃取。
