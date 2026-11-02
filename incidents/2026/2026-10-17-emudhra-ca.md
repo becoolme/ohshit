@@ -3,7 +3,7 @@ title: "eMudhra CA intermediate private keys were so weak that every one was a n
 headline: "eMudhra: eight CA keys you could guess on a pocket calculator"
 level: 4
 date: 2026-10-17
-updated: 2026-11-01
+updated: 2026-11-02
 tags: [PKI, CA, TLS]
 ecosystems: [go, python, node, browsers]
 summary: >-
@@ -70,7 +70,7 @@ fixed:
   - { product: Firebase App Distribution Gradle plugin, version: 5.3.1, status: Refresh CI dependencies; app republication not required }
   - { product: Checkmk 2.4, version: 2.4.0p39, status: Patched }
   - { product: Checkmk 2.3, version: 2.3.0p52, status: Patched }
-  - { product: Checkmk 2.5, version: 2.5.0p18, status: Announced target; not yet released per vendor }
+  - { product: Checkmk 2.5, version: 2.5.0p18, status: Patched; released November 2 }
   - { product: Checkmk 2.2, version: none, status: End of life; migrate to a supported fixed line }
   - { product: pypa/gh-action-pypi-publish, version: 1.14.3, status: Refresh pinned action references as well as local tools }
 timeline:
@@ -125,7 +125,10 @@ timeline:
     body: The vendor places roughly 30,800 G3-hierarchy certificates in a US client ecosystem using a temporary G1 RSA issuance pathway; no firm date for ending G1 TLS issuance is given.
   - date: Oct 29, 2026
     title: Checkmk publishes CVE-2026-117611 for its bundled trust stores
-    body: The 2.5.0p18 target is still marked unreleased; system CA updates do not replace every bundled store.
+    body: At this update, 2.5.0p18 was still marked unreleased; system CA updates do not replace every bundled store.
+  - date: Nov 2, 2026
+    title: Checkmk 2.5.0p18 becomes available
+    body: The official download archive lists this release for November 2; the CA-store fixes are no longer only an announced target.
   - date: ~Oct 27, 2026
     title: Chrome Root Store v43 removes the emSign ECC Root CA - G3
 checklist:
@@ -158,7 +161,7 @@ checklist:
   - title: Apply Google Cloud guidance to the layers you manage
     hint: Update gcloud CLI and OS/custom-image trust stores. For COS, upgrade or restart nodes onto current milestones, or follow the cos_ca_cert_mitigation guidance. Check GKE’s linked version matrix and each managed service’s notices; Google fleet updates do not replace customer image/SDK updates. Google reports no infrastructure breach or exploitation against Cloud workloads.
   - title: Update Checkmk sites and the affected agent components
-    hint: Use 2.4.0p39 or 2.3.0p52; 2.5.0p18 is announced but not yet released, and 2.2 is EOL. Refresh Linux agent updaters in Pro/Ultimate/Cloud editions and Windows Python-based agent plug-ins as applicable. check_httpv2 always consults its built-in roots; toggling Use system wide CAs does not remove exposure. Cron-launched site processes may use bundled certifi; also update OS/site CA stores.
+    hint: Use 2.5.0p18, 2.4.0p39 or 2.3.0p52 for the corresponding line; 2.5.0p18 was released November 2, and 2.2 is EOL. Refresh Linux agent updaters in Pro/Ultimate/Cloud editions and Windows Python-based agent plug-ins as applicable. check_httpv2 always consults its built-in roots; toggling Use system wide CAs does not remove exposure. Cron-launched site processes may use bundled certifi; also update OS/site CA stores.
   - title: Update the PyPI publishing action in CI
     hint: Use pypa/gh-action-pypi-publish 1.14.3 or later, including replacing older commit-SHA pins. Updating runner or local certifi alone does not replace the action’s bundled copy.
 sources:
@@ -251,7 +254,7 @@ sources:
   - name: Checkmk Werk 22169
     url: https://checkmk.com/werk/22169
     primary: true
-    says: Built-in HTTP-check roots remain relevant regardless of the system-CA toggle; version targets include unreleased 2.5.0p18.
+    says: Built-in HTTP-check roots remain relevant regardless of the system-CA toggle; fixed versions include 2.5.0p18, now listed in the vendor download archive.
   - name: Checkmk Werk 22623
     url: https://checkmk.com/werk/22623
     primary: true
@@ -275,6 +278,10 @@ sources:
   - name: PyPA 1.14.3 release
     url: https://github.com/pypa/gh-action-pypi-publish/releases/tag/v1.14.3
     primary: true
+  - name: Checkmk official download archive
+    url: https://checkmk.com/download/archive
+    primary: true
+    says: Fresh original HTML lists 2.5.0p18 dated November 2 with package metadata; the public web-reader cache still shows p17
 ---
 
 A certificate authority's private key is the thing that makes "this is really your bank" true. For eight
@@ -321,6 +328,8 @@ For an unpatched Oracle runtime, the [operational guide](https://ops.java/emudhr
 
 **Update, October 29:** In its October 28 update, eMudhra says roughly 30,800 certificates under the affected G3 hierarchies belong to a US client ecosystem now using its G1 RSA issuance pathway. It plans to end TLS issuance through G1 once that transition completes, without a firm date. This vendor migration figure does not establish issuance by the eight weak-key intermediates or exploitation. G1 is not a guarantee of continued browser trust; the replacement and trust-store updates above remain necessary.
 
-**Further update, October 29:** Checkmk assigns CVE-2026-117611 (CVSS 4.0 7.1) to the same CA-trust incident. Its HTTP check always consults bundled roots; the system-CA setting cannot bypass this exposure. Bundled Python trust affects Linux agent updaters in Pro/Ultimate/Cloud editions, Windows Python plug-ins, and processes launched outside the site environment with neither SSL_CERT_FILE nor REQUESTS_CA_BUNDLE set. Processes started by `omd start` or a site shell use the site CA file instead. Update each relevant bundle and the OS/site store. The 2.5.0p18 milestone is not yet released; do not count an announced target as an installed fix. This adds product remediation, not evidence of exploitation.
+**Further update, October 29:** Checkmk assigns CVE-2026-117611 (CVSS 4.0 7.1) to the same CA-trust incident. Its HTTP check always consults bundled roots; the system-CA setting cannot bypass this exposure. Bundled Python trust affects Linux agent updaters in Pro/Ultimate/Cloud editions, Windows Python plug-ins, and processes launched outside the site environment with neither SSL_CERT_FILE nor REQUESTS_CA_BUNDLE set. Processes started by `omd start` or a site shell use the site CA file instead. Update each relevant bundle and the OS/site store. At that October 29 update, the 2.5.0p18 milestone was not yet released; an announced target was not an installed fix. This adds product remediation, not evidence of exploitation.
 
 **November 1 addition:** PyPA’s October 21 advisory covers this same trust-store event, not a separate compromise of PyPI publishing. Its metadata includes 1.14.2 as affected while prose says versions before 1.14.2; both direct users to 1.14.3. Update the action itself rather than assuming a runner CA update is sufficient. The advisory does not establish theft of publishing credentials.
+
+**Update, November 2:** The vendor download archive now lists Checkmk 2.5.0p18 dated November 2 with edition/platform package metadata. Werks 22169 and 22623 list it as carrying the bundled CA-store fixes, without their earlier unreleased marker. This supersedes the earlier availability warning, not the need to update affected sites and agent components or separate OS/site trust stores. It is not new evidence of exploitation.
