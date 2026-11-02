@@ -34,7 +34,7 @@ checklist:
   - title: 检查已安装版本及管理员活动
     hint: 记录已安装版本，检查留存的管理员登录及钱包交易记录。项目方识别的路径针对 2.4.1 及更早版本；创始人报告管理员访问，但未确定登录入口。恢复前通过官方发行页核对 2.4.7 及后续指引。单纯升级不能证明此前被入侵的主机及其秘密已安全；在能与项目方或运营者核实安全恢复前，保留最初关停的预防措施。
   - title: 将留存交易与公开追踪记录核对
-    hint: Bitquery 列出的 BTC 归集地址为 bc1p0f7wmcnesrapznymf9ljdn04pudgmh96sqtrm9vmgqxdh666fh8qvn63r7，LTC 归集地址为 ltc1qp49tmfdueyaqrmgrx0uyx4uegyygt8yt02whee，关联 BTC 钱包为 bc1qqjynymlsxuanp5tavacqjz6588pt0n9nh6aru5，转出接收地址为 bc1qn3fze9w3c0m38y84v76qr2z5dz9cjx0hz4aeva 和 bc1q8hyw6c47t4cskvn655csdc8ym7wc7tcnj6ws4j，较早启用的后续接收地址为 bc1qxy6r4hznukvwkavz7aq9rnresr53trx6zn644k。交易引用为 870ec7afc3792dc02e81718e8fbaaad7ccdfdc77dbd89f45523393427703b82c, 7a81bddd918af1fb49b323f56820491e9e4147355adca9a1a4418c9ec1bb1b1d 和 8e25f0a572f562dd12514607eac4687408af09df8ccacd41e9acc66cea54ec11。这些是研究方赋予的角色，不能证明后续接收地址由谁控制。单独命中不能证明自己的实例失陷；保留交易及服务器证据供调查。
+    hint: Bitquery 列出的 BTC 归集地址为 bc1p0f7wmcnesrapznymf9ljdn04pudgmh96sqtrm9vmgqxdh666fh8qvn63r7，LTC 归集地址为 ltc1qp49tmfdueyaqrmgrx0uyx4uegyygt8yt02whee，关联 BTC 钱包为 bc1qqjynymlsxuanp5tavacqjz6588pt0n9nh6aru5，转出接收地址为 bc1qn3fze9w3c0m38y84v76qr2z5dz9cjx0hz4aeva 和 bc1q8hyw6c47t4cskvn655csdc8ym7wc7tcnj6ws4j，较早启用的后续接收地址为 bc1qxy6r4hznukvwkavz7aq9rnresr53trx6zn644k。交易引用为 870ec7afc3792dc02e81718e8fbaaad7ccdfdc77dbd89f45523393427703b82c，7a81bddd918af1fb49b323f56820491e9e4147355adca9a1a4418c9ec1bb1b1d 和 8e25f0a572f562dd12514607eac4687408af09df8ccacd41e9acc66cea54ec11。第二个钱包的关联基于行为分析，置信度为中高，未获独立标签确认。这些是研究方赋予的角色，不能证明后续接收地址由谁控制。单独命中不能证明自己的实例失陷；保留交易及服务器证据供调查。
 sources:
   - name: BTCPay Server 原始紧急预警
     says: 项目方表示收到热钱包资金被未经授权者转走的报告，要求调查期间关停实例；原帖 HTML 访问受限，但完整官方公开嵌入副本可读。
@@ -63,7 +63,7 @@ sources:
 
 **11 月 2 日范围更新：** 项目方已识别一条针对 2.4.1 及更早版本的攻击路径。Dorier 报告攻击者以管理员身份登录，入口仍未知。项目方尚无可信的 2.4.7 热钱包被盗报告；Dorier 表示其运行该版本的公共服务器未遭攻击，并呼吁经常更新、仅保留少量热钱包余额。这些说明缩小了已观察范围，但不能证明所有较新实例均安全，也不能将本次事件关联至8月某个具体漏洞。厂商确认的损失总额、受影响实例数及完整恢复指引仍未确认。另一个完整 Dorier 帖子报告存在 2.4.2 以前漏洞的利用痕迹，但未说明哪个漏洞或组合促成管理员访问。
 
-**11 月 2 日追踪更新：** Bitquery 原始调查估算，**682 笔归集转账**涉及**约 163 万美元**，约为 **18.38 BTC 及 3405 LTC**。其中 **267 笔在公开警报后发生**，按其选定价格约值 15 万美元。这些是研究方发现，并非项目方确认的最终损失数字。交易次数无法确定服务器或人数，同一运营者可能遭多次转出。
+**11 月 2 日追踪更新：** Bitquery 原始调查估算，**682 笔归集转账**涉及**约 163 万美元**，约为 **18.38 BTC 及 3405 LTC**。其中 **267 笔在公开警报后发生**，按其选定价格约值 15 万美元。这些研究数字尚未获独立核实，也并非项目方确认的最终损失数字。交易次数无法确定服务器或人数，同一运营者可能遭多次转出。
 
 比特币覆盖截至区块 **974216（11 月 2 日 05:42 UTC）**，莱特币截至 **06:00 UTC**。估算覆盖被点名的归集地址，不含闪电网络及其他币种，也排除了关联钱包收到但未转入已点名归集地址的 0.26 BTC。估值采用每 BTC 78326 美元、每 LTC 55.54 美元，改用其他估值日期会改变美元结果。Bitquery 称，截至统计时点，超过 99% 仍在本次盗窃中首次使用的地址内。这不证明资金已冻结、退回或能够追回；没有标签的转出地址也不能证明是交易所充值地址。
 
