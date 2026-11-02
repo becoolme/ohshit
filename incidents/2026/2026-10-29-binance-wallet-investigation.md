@@ -2,14 +2,14 @@
 title: Binance reports $6.3bn stolen; Bitcoin leads phased withdrawal rollout
 level: 4
 date: 2026-10-29
-updated: 2026-11-01
+updated: 2026-11-02
 tags:
   - Binance
   - crypto
   - investigation
 ecosystems:
   - crypto
-summary: Binance reports ~$6.3bn stolen, no key-leak evidence and multiple breach points; FBI blames TraderTraitor. Deposits work; Bitcoin leads phased withdrawals via new wallets. Yi He reports smooth processing with possible congestion. Vendor 95% funding and ~$3bn frozen are separate; Aave’s freeze is separate. Full recovery remains unconfirmed.
+summary: Binance reports ~$6.3bn stolen; FBI blames TraderTraitor. Selected withdrawals have resumed. On November 2, Binance says the October 31 reserve proof is ready for ten tokens. Its 95% replacement funding and ~$3bn frozen remain separate from recovered funds. Full recovery and a final root cause remain unconfirmed.
 splash: Binance.com withdrawal users; Aave reports a precautionary freeze of DAO-operated V3/V4 markets
 wipe: Follow official updates, inspect account activity, and use Binance's account-lock procedure if you find unauthorized actions
 inTheWild: yes
@@ -85,6 +85,9 @@ timeline:
   - date: Nov 1, 2026
     title: Binance confirms selected ZEC, TON and SUI withdrawals
     body: The newer original lists ZEC on ZEC, USDT and GRAM on TON, and SUI on SUI. Other networks remain subject to separate checks.
+  - date: Nov 2, 2026
+    title: Binance says the October 31 reserve proof is ready for ten tokens
+    body: Recovery Update #5 says users can verify their snapshot balances for BTC, ETH, USDT, BNB, SOL, USDC, XRP, USD1, RLUSD and ZEC. Replacement funding remains about 95%; additional withdrawals are planned for November 3, and a broader snapshot for November 4 is still planned.
   - date: Nov 1, 06:00–09:00 UTC (scheduled)
     title: First withdrawal phase is planned
 checklist:
@@ -96,6 +99,8 @@ checklist:
     hint: Aave reports all DAO-operated V3/V4 markets frozen as a precaution and says its contracts remain unaffected. Check official market status and support before acting; do not infer a smart-contract exploit or use unsolicited refund/unfreeze links. The read official embed truncates the later operation-specific details.
   - title: Screen the FBI laundering-address list
     hint: Virtual asset providers and node operators should use the FBI notice's complete ETH, BTC and SOL list, containing more than 600 addresses, to block transactions with or derived from them. Report relevant information to an FBI field office or IC3. A transaction match alone does not prove an account or platform was compromised.
+  - title: Verify your inclusion in the completed reserve snapshot
+    hint: Use Binance’s official PoR page and linked account-balance guide on a trusted device. In Profile → Wallet → Verification select the October 31 00:00 UTC record with verification type Merkle Tree + Zksnarks and download its data. Follow the guide’s verifier version and config instructions to check the root and your own inclusion with the -user mode; never upload account files to an unsolicited checker. Update #5 covers BTC, ETH, USDT, BNB, SOL, USDC, XRP, USD1, RLUSD and ZEC. This is a historical snapshot, not a live balance or evidence that stolen assets were recovered. The next withdrawal phase is planned for November 3, not confirmed open.
 sources:
   - name: Binance investigation notice
     url: https://x.com/binance/status/2115915708504900039
@@ -215,6 +220,14 @@ sources:
     primary: true
     says: Readable new section confirms Polygon/POL, USDT, USDC and Avalanche C-Chain/AVAX, USDT, USDC; older list truncates.
 
+  - name: Binance Recovery Update 5
+    url: https://www.binance.com/en-UZ/square/post/383927538755526
+    primary: true
+    says: November 2 official announcement says the October 31 ten-token proof is generated; about 95% replacement coverage is unchanged, more withdrawals are planned November 3 and a broader snapshot November 4.
+  - name: Binance account-balance verification guide
+    url: https://www.binance.com/en-UZ/support/faq/detail/815b25f0cb054bdd9d35eccc408fe981
+    primary: true
+    says: Explains official verifier downloads, account-specific Merkle data, configuration and root/user checks; explicitly says the report is a snapshot, not real-time assets.
 ---
 
 Binance’s initial notice said it had not confirmed an impact on user funds. The exchange then edited that notice to state that user funds are safe, and subsequently said withdrawals would resume after the security issue is fully resolved. These are the vendor’s statements, not an independently audited reserve or loss assessment. No resumption time or technical containment report was supplied in those notices. The withdrawal notice does not specify affected networks or withdrawal routes; do not infer that every Binance product is affected. Those earlier notices supported L3 because they acknowledged disruption without confirming the suspected theft.
@@ -246,3 +259,5 @@ Binance separately reports a verified frozen amount of around $3 billion. This v
 **Later November 1 restoration:** Binance now explicitly reports withdrawals restored for USDC, USDT and ETH on Ethereum, and USDC, USDT and BNB on BNB Smart Chain. This is stronger than the earlier first-batch announcement for these six pairs only. Continue checking live availability for the exact pair; the post does not establish recovery of every asset or network, a completed investigation, or a published full reserve proof.
 
 **Further November 1 restoration updates:** The separately read new-asset sections of Binance’s linked posts confirm the checklist’s 33 specific pairs across 15 networks. Their closing or repeated lists truncate in the public copies. These are vendor statements, not independent proof that every withdrawal succeeds or every asset on a network is supported. Check live availability. Neither restoration nor replacement funding proves recovery of stolen funds; the investigation remains unfinished.
+
+**November 2 reserve update:** Recovery Update #5 supersedes the earlier pending-proof status: Binance says the full zero-knowledge proof for the October 31 00:00 UTC snapshot is generated and the ten listed tokens are verifiable. This reports the vendor’s publication and verification instructions; it is not an independent audit or a claim that we verified a customer account. The approximately 95% replacement funding remains unchanged. Additional networks/assets are planned for November 3 and a broader snapshot for November 4; the latter is expected to require another 40–50 hours of proof generation. These plans do not establish that all withdrawals are already open or that the stolen money has been returned.
