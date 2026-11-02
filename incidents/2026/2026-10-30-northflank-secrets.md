@@ -4,7 +4,7 @@ level: 4
 date: 2026-10-30
 updated: 2026-11-02
 tags: [Northflank, cloud, credentials]
-summary: Northflank says evidence points to control-plane secrets, with no sign of workload or workload-data access. It reports continued unauthorized AI-key use and requires all integration and project secrets to be rotated. Forward-deployed and dedicated control planes are reportedly unaffected; independent forensics remain ongoing.
+summary: Northflank says evidence points to control-plane secrets, with no sign of workload or workload-data access. It reports unauthorized AI-key use and requires all integration and project secrets to be rotated. Forward-deployed and dedicated control planes are reportedly unaffected; independent forensics remain ongoing.
 splash: Northflank control-plane secrets; the vendor excludes forward-deployed and dedicated control planes
 wipe: Disable or rotate all exposed keys, update dependent workloads and disable public access to addons where enabled
 inTheWild: yes
@@ -32,7 +32,7 @@ timeline:
     title: RabbitMQ rotation enabled for all customers
   - date: Nov 2, 11:09 UTC
     title: Control-plane scope and ongoing independent forensics disclosed
-    body: Northflank believes the vector was contained within an hour of the first alert and reports no sign of subsequent attacker presence or workload-data access. It excludes forward-deployed and dedicated control planes, reiterates rotation of all integration and project secrets, and says some AI-key abuse continues.
+    body: Northflank believes the vector was contained within an hour of the first alert and reports no sign of subsequent attacker presence or workload-data access. It excludes forward-deployed and dedicated control planes, reiterates rotation of all integration and project secrets, and says customers have reported AI-key abuse.
 checklist:
   - title: Replace credentials at their issuing services
     hint: From a trusted environment, disable or rotate keys stored in workloads, secret groups and global secrets; update dependent applications. Include all integration and project secrets, even without suspicious activity. Prioritize AI-provider keys, cloud and payment credentials, private keys, database credentials and other service credentials. Editing an environment-variable value alone does not revoke the old key. Review provider usage and billing for abuse.
@@ -47,7 +47,7 @@ checklist:
   - title: Choose RabbitMQ scope, then finalise
     hint: Default user-facing mode changes account usernames and passwords; full also rotates the Erlang cookie and pauses the entire addon, interrupting connections. Failure can leave it paused; retries retain the saved mode. Both modes keep old accounts until finalisation. Update clients first, then finalise to remove old accounts; finalisation does not pause again, but some old sessions can remain open, so check and close them.
   - title: Sign in again and reconnect revoked integrations
-    hint: Where able to act for customers, Northflank says it revoked access tokens and sessions, VCS integrations, cross-account IAM roles and service accounts. Sign in again and reconnect affected integrations through your established Northflank access route. This does not replace rotating credentials at their issuing services.
+    hint: Where able to act for customers, Northflank says it revoked Northflank access tokens and sessions, VCS integrations, cross-account IAM roles and service accounts. Sign in again and reconnect affected integrations through your established Northflank access route. This does not replace rotating credentials at their issuing services.
   - title: Check disconnected BYOC clusters with support
     hint: Northflank separately reports patching CVE-2026-98432 across its fleet, including BYOC clusters with an active integration. If your BYOC cluster is no longer connected, contact support@northflank.com. This patch is not a published explanation of the breach or a replacement for secret rotation.
   - title: Restrict exposed addons
