@@ -228,6 +228,10 @@ sources:
     url: https://www.binance.com/en-UZ/support/faq/detail/815b25f0cb054bdd9d35eccc408fe981
     primary: true
     says: Explains official verifier downloads, account-specific Merkle data, configuration and root/user checks; explicitly says the report is a snapshot, not real-time assets.
+  - name: Binance official profile publishing Update 5
+    url: https://www.binance.com/en-UZ/square/profile/binance_announcement
+    primary: true
+    says: Readable complete official copy of November 2 Recovery Update5 when the individual post returns an unavailable response.
 ---
 
 Binance’s initial notice said it had not confirmed an impact on user funds. The exchange then edited that notice to state that user funds are safe, and subsequently said withdrawals would resume after the security issue is fully resolved. These are the vendor’s statements, not an independently audited reserve or loss assessment. No resumption time or technical containment report was supplied in those notices. The withdrawal notice does not specify affected networks or withdrawal routes; do not infer that every Binance product is affected. Those earlier notices supported L3 because they acknowledged disruption without confirming the suspected theft.
