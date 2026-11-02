@@ -45,7 +45,7 @@ timeline:
   - date: Oct 23, 2026, 14:00 UTC
     title: ConnectWise clarifies restoration is still being validated
     body: Backup-restore access is planned first, early the following week after successful validation; full service re-enrollment follows. Neither is confirmed available.
-  - date: Oct 27, 2026
+  - date: Oct 26, 2026
     title: Huntress qualifies the AI attribution and adds detection guidance
     body: Its own telemetry gives low-to-medium confidence of LLM involvement, rising to medium-to-high when Microsoft attribution is included; it does not independently verify the actor or ARTEX.
   - date: Oct 28, 16:00 UTC
