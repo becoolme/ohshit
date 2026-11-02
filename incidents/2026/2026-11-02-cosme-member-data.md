@@ -6,7 +6,7 @@ tags:
 - data breach
 - Japan
 - consumer accounts
-summary: istyle says unauthorized access to @cosme exposed about 3 million members’ details, including addresses, birth dates and skin/hair types. It says passwords and card data were not included. Former members can be affected; individual notices are planned by November 6 while investigation continues.
+summary: istyle says unauthorized access to @cosme exposed about 3 million members’ details, including addresses, birth dates and skin/hair types. It says passwords and credit-card data were not included. Former members can be affected; individual notices are planned by November 6 while investigation continues.
 splash: '@cosme Common ID members at the time of unauthorized access, including people who have since left'
 wipe: Check official notices and beware targeted email, SMS and calls; use the published support address for questions
 inTheWild: 'yes'
@@ -22,7 +22,7 @@ checklist:
 - title: Check the notice even if you left @cosme
   hint: Read the notice through your usual @cosme website or app. istyle includes people who were members when the unauthorized access occurred and says it will use retained contact details; notification is planned to finish November 6, not already complete.
 - title: Treat messages using leaked details cautiously
-  hint: Do not open suspicious links or enter personal information in response to unsolicited email, SMS or calls. istyle says its notification emails come from cosme.net and never request passwords or card information. A familiar name or sender domain alone does not authenticate a message.
+  hint: Do not open suspicious links or enter personal information in response to unsolicited email, SMS or calls. istyle says its notification emails come from cosme.net and never request passwords or credit-card information. A familiar name or sender domain alone does not authenticate a message.
 - title: Use the published incident support route
   hint: 'For questions, use security-support@cosme.net from the original notice and check spam filtering for replies. Monitor official updates: the cause and full scope remain under investigation, and no observed misuse does not guarantee none will occur.'
 sources:
