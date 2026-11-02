@@ -43,6 +43,10 @@ sources:
 - name: BitNotícias report with the exchange statement
   url: https://bitnoticias.com.br/noticias/mercado-bitcoin-ataque-hacker/
   says: Reproduces the exchange’s temporary deposit/withdrawal pause and no-customer-loss statement; attributes the earlier preliminary $40M-plus estimate to Hypernative, rather than independently proving that amount.
+- name: Mercado Bitcoin official public embed
+  url: https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FMercadoBitcoin%2Fstatus%2F2117239507263132056&omit_script=true
+  primary: true
+  says: Public original embed actually read; confirms incident and containment/customer-loss/data-leak claims, but truncates before completing the transfer-pause sentence.
 ---
 
 Mercado Bitcoin’s public acknowledgement establishes a platform security incident, rather than just an unexplained transfer or an individual customer account theft. It does not disclose how the intruder entered, a compromised software version, the final financial impact or a recovery deadline. No published patch or user password-reset requirement is established by the statements read.
@@ -51,4 +55,4 @@ Bitquery reports hot-wallet outflows on ten chains and deposit-address sweeps co
 
 The reported 35,853 Ethereum deposit addresses represent addresses, not unique customers. A transfer signed by an address does not distinguish stolen private keys from misuse of a signing service. The research’s master-key and shared-supplier suggestions are hypotheses, not established causes; its separate $298k outflow and BitMart label do not establish that BitMart was breached or that the cases share a supplier.
 
-Bitquery estimates $7.3M frozen by Tether and Paxos at its observation cutoff. Frozen funds are not returned funds, and funds left in a wallet are not necessarily recoverable. The report’s FAQ rounds the issuer components to $5.9M and $1.5M, which do not sum exactly to its $7.3M headline; The discrepancy prevents treating these rounded figures as an audited total. The exchange’s customer-protection statement and its containment claim remain vendor claims, distinct from the researcher’s observations. No connection to the [Binance incident](/incidents/binance-wallet-investigation/) is established.
+Bitquery estimates $7.3M frozen by Tether and Paxos at its observation cutoff. Frozen funds are not returned funds, and funds left in a wallet are not necessarily recoverable. The report’s FAQ rounds the issuer components to $5.9M and $1.5M, which do not sum exactly to its $7.3M headline. The discrepancy prevents treating these rounded figures as an audited total. The exchange’s customer-protection statement and its containment claim remain vendor claims, distinct from the researcher’s observations. No connection to the [Binance incident](/incidents/binance-wallet-investigation/) is established.
