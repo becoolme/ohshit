@@ -49,6 +49,10 @@ sources:
     url: https://status.allium.so/incidents/dry5s6427nfb
     primary: true
     says: October 30 confirms all-chain delivery and historical verification; November 2 at 10:38 EST marks this datashare incident resolved. Other feature restrictions and the security investigation are separate.
+  - name: Allium separate Explorer/API recovery notice
+    url: https://status.allium.so/incidents/fhl7h8hp4sfz
+    primary: true
+    says: The October 28 separate entry still lists Allium Assistant and MCP as unavailable; the datashare resolution does not lift it.
 ---
 
 Allium’s security statement acknowledges access to some systems and says affected customers were notified directly. It does not identify the entry point, enumerate accessed customer data or provide a victim count. L3 reflects a developer-facing data provider’s confirmed intrusion and credential-reset requirements; it does not assert a mass data leak.
