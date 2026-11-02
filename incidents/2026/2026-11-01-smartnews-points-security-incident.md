@@ -37,4 +37,4 @@ fixed: []
 
 The November 1 follow-up explicitly distinguishes this case from the October 22 security issue. It confirms unauthorized operations in the points/rewards systems, not a measured theft total or a confirmed personal-data leak. Advertising delivery continues, while effects on advertising systems and information are being checked. The vendor says affected systems have been stopped and authentication credentials are being revoked and renewed. It has not published an entry point, affected-user count or complete restoration date.
 
-The follow-up heading gives 15:00 without a timezone, so the timeline uses the date only. Account-level investigation remains open despite the containment work.
+Account-level investigation remains open despite the containment work.
