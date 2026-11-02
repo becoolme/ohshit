@@ -281,7 +281,7 @@ sources:
   - name: Checkmk official download archive
     url: https://checkmk.com/download/archive
     primary: true
-    says: Fresh original HTML lists 2.5.0p18 dated November 2 with package metadata; the public web-reader cache still shows p17
+    says: Lists Checkmk 2.5.0p18 dated November 2 with edition and platform packages
 ---
 
 A certificate authority's private key is the thing that makes "this is really your bank" true. For eight
