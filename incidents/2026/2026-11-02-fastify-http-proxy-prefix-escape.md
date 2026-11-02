@@ -41,4 +41,4 @@ sources:
 
 The proxy inserts URL-decoded route parameters into rewritePrefix without re-encoding them. A decoded slash together with a fragment or query delimiter can add path segments and discard the required suffix without using parent-directory traversal. The attack needs a reachable vulnerable proxy configuration; the resulting access depends on the upstream’s own authorization. This is not a general compromise of Fastify or all proxy deployments.
 
-GHSA-h3vp-4jfr-v364 identifies the affected range and patch. The public advisory includes request examples, but does not confirm exploitation or publish a victim count. The rating reflects a mainstream component and public technical details, rather than confirmed active attacks.
+GHSA-h3vp-4jfr-v364 identifies the affected range and patch. The public advisory includes request examples, but does not confirm exploitation or publish a victim count.
