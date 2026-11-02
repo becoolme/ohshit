@@ -94,7 +94,7 @@ checklist:
   - title: 筛查 FBI 洗钱地址清单
     hint: 虚拟资产服务商及节点运营方应使用 FBI 公告中含 600 多个地址的完整 ETH、BTC 和 SOL 清单，拦截与这些地址或其衍生资金有关的交易。将相关信息报告给 FBI 地方办公室或 IC3。交易命中本身不能证明某个账户或平台已失陷。
   - title: 核验自己是否纳入已完成的储备快照
-    hint: 在可信设备上使用币安官方 PoR 页面及其账户余额核验指引。通过 Profile → Wallet → Verification 选择 10 月 31 日 00:00 UTC、核验类型为 Merkle Tree + Zksnarks 的记录，下载对应数据。按指引选择核验器版本并配置文件，检查根哈希，再以 -user 模式核验自己的纳入情况；不要向陌生核验工具上传账户文件。第 5 次公告覆盖 BTC、ETH、USDT、BNB、SOL、USDC、XRP、USD1、RLUSD 和 ZEC。这是历史快照，不是实时余额，也不证明被盗资产已追回。下一阶段提现计划于 11 月 3 日进行，不代表已开放。
+    hint: 在可信设备上使用币安官方 PoR 页面及其账户余额核验指引。通过 Profile → Wallet → Verification 选择 10 月 31 日 00:00 UTC、核验类型为 Merkle Tree + Zksnarks 的记录，下载对应数据。指引列明 2026 年 8 月起使用核验器 1.2.1。将 config.json、proof.csv 及 zkpor864.vk.save 放入其 config 目录，核对 ProofTable 和 ZkKeyName 指向下载的证明及密钥。运行对应平台核验器检查根哈希，再加入账户专属 user_config.json，并以 -user 模式检查纳入情况；不要向陌生核验工具上传账户文件。第 5 次公告覆盖 BTC、ETH、USDT、BNB、SOL、USDC、XRP、USD1、RLUSD 和 ZEC。这是历史快照，不是实时余额，也不证明被盗资产已追回。下一阶段提现计划于 11 月 3 日进行，不代表已开放。
 sources:
   - name: 币安调查通知
     says: 交易所较早版本的通知；先通过嵌入副本核对，随后直接阅读原帖及其指向修订版本的链接。
