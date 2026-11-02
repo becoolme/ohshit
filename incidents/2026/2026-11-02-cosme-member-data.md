@@ -6,7 +6,7 @@ tags:
 - data breach
 - Japan
 - consumer accounts
-summary: istyle says unauthorized access to @cosme exposed about 3 million members’ details, including addresses, birth dates and skin/hair types. It says passwords and credit-card data were not included. Former members can be affected; individual notices are planned by November 6 while investigation continues.
+summary: istyle says unauthorized access to @cosme exposed about 3 million members’ details, including addresses, birth dates and skin/hair types. It says passwords and credit-card data were not included. Former members can be affected; individual notifications are expected to finish on November 6 while investigation continues.
 splash: '@cosme Common ID members at the time of unauthorized access, including people who have since left'
 wipe: Check official notices and beware targeted email, SMS and calls; use the published support address for questions
 inTheWild: 'yes'
