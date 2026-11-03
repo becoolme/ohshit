@@ -2,6 +2,7 @@
 title: Troves confirms an xWBTC/WBTC vault exploit and pauses three vaults
 level: 4
 date: '2026-10-31'
+updated: 2026-11-03
 tags:
 - Troves
 - Starknet
@@ -18,6 +19,9 @@ ecosystems:
 timeline:
 - date: Oct 31, 2026
   title: Troves confirms a vault exploit and an approximately 8.6 BTC preliminary loss
+- date: Oct 31, 14:49 UTC
+  title: Recovery-wallet transaction records the bounty terms
+  body: The on-chain message offers 1 WBTC for return of the remaining assets, or their ETH equivalent, by November 3 at 23:59 UTC. An offer is not evidence of funds returned or legal immunity.
 - date: Oct 31, 2026
   title: Operator reports permission revocation, three pauses and a recovery bounty
   body: The visible posts report roughly 40 minutes to revoke permissions and a 1 WBTC offer; the full bounty conditions are not visible in the embed.
@@ -51,6 +55,13 @@ sources:
   url: https://dev.to/pandasecurity/troves-exploit-a-retired-rebalancer-drained-857-wbtc-2009
   primary: true
   says: Researcher reports reading a Starknet receipt and transfer events, publishes six ledger entries and distinguishes observed transfers from the operator loss estimate.
+- name: Recovery-wallet bounty message on Ethereum
+  url: https://etherscan.io/tx/0x6145fc3f07c0c8b903e6daf83e3b1465cad2636c4b04449cac82714347e259e9
+  primary: true
+  says: Readable transaction input from the recovery address previously identified by Panda Security; terms, deadline and contact channels, not a completed recovery.
 ---
 
 Panda Security attributes the path to a retired rebalancer with surviving vault permissions. Its receipt analysis reports about 6.32 WBTC reaching the sender in the examined transaction; that is not a reconciliation of the approximately 8.6 BTC operator estimate. The researcher leaves the exact vulnerable function and legacy-rebalancer address unconfirmed. Vendor statements describe containment, not a completed audit or restitution.
+
+
+**November 3 source update:** The previously inaccessible [Ethereum transaction](https://etherscan.io/tx/0x6145fc3f07c0c8b903e6daf83e3b1465cad2636c4b04449cac82714347e259e9) is now readable, including its input data. It was sent on October 31 at 14:49:59 UTC from 0x91926046e148c66869d71B9Fa37306e82DDc8934, the recovery address already identified in Panda Security’s analysis. The message offers return of the remaining funds less 1 WBTC, or the ETH equivalent, to that address by November 3, 2026 at 23:59 UTC. It lists Blockscan Chat, an on-chain reply to that address, and security@troves.fi as contacts, and says confidentiality and legal assurances can be discussed. These are terms in the message, not established immunity or evidence of repayment. The original short public bounty post corroborates the 1 WBTC offer; the message alone cannot verify final losses, broader wallet ownership or a completed refund. Depositors should not send money or sign new approvals to claim this bounty.
