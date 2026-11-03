@@ -21,12 +21,14 @@ checklist:
 - title: 核验 Desktop 应用版本
   hint: 从官方更新渠道安装 4.98.0 或更新版本，并检查应用中的版本。docker CLI 或 Engine 版本不能代替 Desktop 应用版本；分阶段推送可能延迟更新显示。
 - title: 同时更新 WSL 并核对后端
-  hint: Windows WSL 2 后端用户运行 wsl --update，再用 wsl --version 确认至少 3.0.3；按更新提示重启 Desktop 或主机。不要将发行版里的 Linux 软件包版本当成 WSL 版本。
+  hint: Windows WSL 2 后端用户在 PowerShell 或命令提示符运行 wsl --update，再用 wsl --version 确认至少 3.0.3；按更新提示重启 Desktop 或主机。不要将发行版里的 Linux 软件包版本当成 WSL 版本。
 sources:
 - name: Docker Desktop 4.98.0 发版说明
   says: 11 月 3 日两项 CVE 修复与 WSL 3.0.3 依赖。
 - name: Linux CNA TCP 漏洞记录
   says: 底层漏洞 10 月 15 日公开；解释 IPv4 TCP 选项生命周期竞态，不是新披露的 Linux 漏洞。
+- name: Microsoft WSL 命令文档
+  says: 说明 wsl --update、wsl --version 及 PowerShell/命令提示符运行环境。
 ---
 
 这是与 [10 月 Desktop 修复批次](/zh/incidents/docker-desktop-october/)不同的漏洞及发版，不能把旧批次首次修复版本从 4.97.0 改成 4.98.0。L3 依据是主流开发工具的内核及隔离边界问题，而非已确认攻击。
