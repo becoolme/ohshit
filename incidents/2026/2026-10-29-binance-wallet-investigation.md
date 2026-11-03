@@ -1,8 +1,8 @@
 ---
-title: Binance reports $6.3bn stolen; Bitcoin leads phased withdrawal rollout
+title: Binance expands phased withdrawal plans after $6.3bn theft
 level: 4
 date: 2026-10-29
-updated: 2026-11-02
+updated: 2026-11-03
 tags:
   - Binance
   - crypto
@@ -87,7 +87,10 @@ timeline:
     body: The newer original lists ZEC on ZEC, USDT and GRAM on TON, and SUI on SUI. Other networks remain subject to separate checks.
   - date: Nov 2, 2026
     title: Binance says the October 31 reserve proof is ready for ten tokens
-    body: Recovery Update #5 says users can verify their snapshot balances for BTC, ETH, USDT, BNB, SOL, USDC, XRP, USD1, RLUSD and ZEC. Replacement funding remains about 95%; additional withdrawals are planned for November 3, and a broader snapshot for November 4 is still planned.
+    body: "Recovery Update #5 says users can verify their snapshot balances for BTC, ETH, USDT, BNB, SOL, USDC, XRP, USD1, RLUSD and ZEC. Replacement funding remains about 95%; additional withdrawals are planned for November 3, and a broader snapshot for November 4 is still planned."
+  - date: Nov 3, 2026
+    title: Binance announces more withdrawal pairs from 04:00 UTC
+    body: "Recovery Update #6 lists further assets across nine networks and BSC bSTOCKS. Availability rolls out progressively after security/readiness checks; the notice does not establish that every listed pair is already open. Deposits remain open."
   - date: Nov 1, 06:00–09:00 UTC (scheduled)
     title: First withdrawal phase is planned
 checklist:
@@ -100,7 +103,7 @@ checklist:
   - title: Screen the FBI laundering-address list
     hint: Virtual asset providers and node operators should use the FBI notice's complete ETH, BTC and SOL list, containing more than 600 addresses, to block transactions with or derived from them. Report relevant information to an FBI field office or IC3. A transaction match alone does not prove an account or platform was compromised.
   - title: Verify your inclusion in the completed reserve snapshot
-    hint: Use Binance’s official PoR page and linked account-balance guide on a trusted device. In Profile → Wallet → Verification select the October 31 00:00 UTC record with verification type Merkle Tree + Zksnarks and download its data. The guide lists verifier 1.2.1 for August 2026 onward. Place config.json, proof.csv and zkpor864.vk.save in its config folder; check ProofTable and ZkKeyName against the downloaded proof/key. Run the platform’s verifier for the root, then add your account-specific user_config.json and use -user to check inclusion; never upload account files to an unsolicited checker. Update #5 covers BTC, ETH, USDT, BNB, SOL, USDC, XRP, USD1, RLUSD and ZEC. This is a historical snapshot, not a live balance or evidence that stolen assets were recovered. The next withdrawal phase is planned for November 3, not confirmed open.
+    hint: "Use Binance’s official PoR page and linked account-balance guide on a trusted device. In Profile → Wallet → Verification select the October 31 00:00 UTC record with verification type Merkle Tree + Zksnarks and download its data. The guide lists verifier 1.2.1 for August 2026 onward. Place config.json, proof.csv and zkpor864.vk.save in its config folder; check ProofTable and ZkKeyName against the downloaded proof/key. Run the platform’s verifier for the root, then add your account-specific user_config.json and use -user to check inclusion; never upload account files to an unsolicited checker. Update #5 covers BTC, ETH, USDT, BNB, SOL, USDC, XRP, USD1, RLUSD and ZEC. This is a historical snapshot, not a live balance or evidence that stolen assets were recovered. Update #6 announces a progressive rollout from November 3 04:00 UTC. Use its exact asset/network table and the live withdrawal or network-status page; the announcement does not confirm every listed pair is already open."
 sources:
   - name: Binance investigation notice
     url: https://x.com/binance/status/2115915708504900039
@@ -232,6 +235,10 @@ sources:
     url: https://www.binance.com/en-UZ/square/profile/binance_announcement
     primary: true
     says: Readable complete official copy of November 2 Recovery Update5 when the individual post returns an unavailable response.
+  - name: Binance Recovery Update 6
+    url: https://www.binance.com/en-UZ/square/post/384132999604606
+    primary: true
+    says: November 3 original lists nine networks and BSC bSTOCKS for progressive withdrawal reopening from 04:00 UTC, conditional on checks; deposits remain open.
 ---
 
 Binance’s initial notice said it had not confirmed an impact on user funds. The exchange then edited that notice to state that user funds are safe, and subsequently said withdrawals would resume after the security issue is fully resolved. These are the vendor’s statements, not an independently audited reserve or loss assessment. No resumption time or technical containment report was supplied in those notices. The withdrawal notice does not specify affected networks or withdrawal routes; do not infer that every Binance product is affected. Those earlier notices supported L3 because they acknowledged disruption without confirming the suspected theft.
@@ -265,3 +272,5 @@ Binance separately reports a verified frozen amount of around $3 billion. This v
 **Further November 1 restoration updates:** The separately read new-asset sections of Binance’s linked posts confirm the checklist’s 33 specific pairs across 15 networks. Their closing or repeated lists truncate in the public copies. These are vendor statements, not independent proof that every withdrawal succeeds or every asset on a network is supported. Check live availability. Neither restoration nor replacement funding proves recovery of stolen funds; the investigation remains unfinished.
 
 **November 2 reserve update:** Recovery Update #5 supersedes the earlier pending-proof status: Binance says the full zero-knowledge proof for the October 31 00:00 UTC snapshot is generated and the ten listed tokens are verifiable. This reports the vendor’s publication and verification instructions; it is not an independent audit or a claim that we verified a customer account. The approximately 95% replacement funding remains unchanged. Additional networks/assets are planned for November 3 and a broader snapshot for November 4; the latter is expected to require another 40–50 hours of proof generation. These plans do not establish that all withdrawals are already open or that the stolen money has been returned.
+
+**November 3 withdrawal update:** Recovery Update #6 announces further asset/network pairs from 04:00 UTC across BSC, Ethereum, Solana, XRP, SUI, Arbitrum, Optimism, TRX and Base, plus all BSC bSTOCKS. Its table is a rollout list: each pair awaits security and readiness checks, and the vendor directs users to live availability. Deposits remain open; delays and retries may occur. This advances the earlier plan without establishing complete restoration, recovered stolen funds or a final root cause.
