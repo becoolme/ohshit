@@ -13,7 +13,13 @@ inTheWildNote: BTCPay confirms BTC/LTC thefts targeting 2.4.1 and earlier.
 cves: []
 fixed: []
 timeline:
-  - date: Nov 1, 2026
+  - date: Nov 1, 13:46 UTC
+    title: Later report dates one reported wallet drain
+    body: The full project report supplies this drain time but says the first exploitation time remains unestablished.
+  - date: Nov 1, 20:56 UTC
+    title: Project receives its first theft-report email
+    body: This is the project’s first received email, not the start of all attacks or victim exposure.
+  - date: Nov 1, 22:25 UTC
     title: Project warns of hot-wallet sweeps and requests shutdown
     body: The official alert asks instance operators to run ./btcpay-down.sh until the investigation is complete; no patch or restart time is given.
   - date: Nov 2, 2026
@@ -33,14 +39,14 @@ timeline:
     body: The project ties the attacks to a different exploitation method for the flaw fixed in August’s 2.4.2. It calls for a fresh server, new seed and credential replacement on affected older installs, even after an update or without visible theft.
 checklist:
   - title: Move affected installations to a fresh server and new wallet
-    hint: If running 2.4.1 or earlier, or updated from those versions after the November 1 warning, use a trusted device/new seed to sweep remaining hot-wallet funds to a new wallet, then take the old instance offline and preserve evidence. This also applies without a visible theft or with keys held elsewhere; any signs of compromise require the same response regardless of current version. Provision a clean VM, install the latest supported release from trusted sources, connect the new wallet and do not restore the whole old machine. Contact your hosting provider if it was automatically stopped. Never reuse the old seed.
+    hint: If running 2.4.1 or earlier, or updated from those versions after the November 1 warning, use a trusted device/new seed to sweep remaining hot-wallet funds to a new wallet, then take the old instance offline and preserve evidence. For the official Docker deployment, run ./btcpay-down.sh from the existing btcpayserver-docker directory; for other deployments contact your operator. Shutdown interrupts payment processing. This also applies without a visible theft or with keys held elsewhere; any signs of compromise require the same response regardless of current version. Provision a clean VM, install the latest supported release from trusted sources, connect the new wallet and do not restore the whole old machine. Contact your hosting provider if it was automatically stopped. Never reuse the old seed.
   - title: Preserve evidence and wallet records
     hint: >-
       The documented shutdown removes stack containers. If immediately available, save logs with docker-compose -f "$BTCPAY_DOCKER_COMPOSE" logs --timestamps before shutdown; do not delay containment to troubleshoot log collection. Retain deployment and version details, wallet addresses and suspicious transaction hashes before rebuilding. Never publish seeds, private keys or access tokens in a support ticket.
   - title: Replace every secret the old server could access
     hint: From a trusted device revoke/replace applicable hosting, SSH, application, API and Lightning credentials, plus exposed passwords/access keys. Do not enter replacement credentials on the old machine. An update alone does not evict earlier access or secure a copied wallet seed. Use wallets whose spending keys stay off the server and keep hot balances small; this does not remove the older-server rebuild requirement. Reject unsolicited refund links and requests for wallet secrets.
   - title: Verify version history and report theft through the project
-    hint: Log in and check the version at the page bottom, using preserved records if the server is offline. The project observed no impact from these attacks on servers already at 2.4.2 or later when it warned on November 1; install the latest supported release on a clean machine rather than stopping at the old minimum. Send version/update history, incident time with timezone and public transaction IDs/addresses to security@btcpayserver.org; redact secrets and report stolen funds to local authorities.
+    hint: Log in and check the version at the page bottom, using preserved records if the server is offline. Review retained administrator login and wallet transaction records. The project observed no impact from these attacks on servers already at 2.4.2 or later when it warned on November 1; install the latest supported release on a clean machine rather than stopping at the old minimum. Send version/update history, incident time with timezone and public transaction IDs/addresses to security@btcpayserver.org; redact secrets and report stolen funds to local authorities.
   - title: Compare retained transactions with the published tracing record
     hint: Bitquery names BTC collector bc1p0f7wmcnesrapznymf9ljdn04pudgmh96sqtrm9vmgqxdh666fh8qvn63r7, LTC collector ltc1qp49tmfdueyaqrmgrx0uyx4uegyygt8yt02whee, associated BTC wallet bc1qqjynymlsxuanp5tavacqjz6588pt0n9nh6aru5, payout addresses bc1qn3fze9w3c0m38y84v76qr2z5dz9cjx0hz4aeva and bc1q8hyw6c47t4cskvn655csdc8ym7wc7tcnj6ws4j, and older onward recipient bc1qxy6r4hznukvwkavz7aq9rnresr53trx6zn644k. Its transaction references are 870ec7afc3792dc02e81718e8fbaaad7ccdfdc77dbd89f45523393427703b82c, 7a81bddd918af1fb49b323f56820491e9e4147355adca9a1a4418c9ec1bb1b1d and 8e25f0a572f562dd12514607eac4687408af09df8ccacd41e9acc66cea54ec11. The second wallet is behaviorally linked with moderate-high confidence, not independently labeled. These are research-assigned roles, not proof of who controls an onward recipient. A match alone does not prove your instance was compromised; preserve the transaction and server evidence for investigation.
 sources:
@@ -100,6 +106,5 @@ Do not infer that cold wallets, every Lightning deployment or the Bitcoin networ
 Bitcoin coverage ends at block **974216 (November 2, 05:42 UTC)**; Litecoin coverage ends at **06:00 UTC**. The estimate covers the named collection addresses, excludes Lightning and other coins, and leaves out 0.26 BTC received by an associated wallet without reaching the named collector. It values the coins at $78,326/BTC and $55.54/LTC; another valuation date changes the dollar estimate. Bitquery reports more than 99% still in addresses first used in the theft at its cutoff. This is not evidence that funds were frozen, returned or recoverable, and an unlabeled payout address is not proof of an exchange deposit.
 
 The project separately confirms that some hosting providers automatically shut down older instances. Verify your own service state with the provider before any restart; that notice supplies no complete host-cleanup or funds-recovery procedure.
-
 
 **Full November 2 report, verified November 3:** This supersedes the earlier incomplete recovery guidance and uncertainty over linkage to the August flaw. BTCPay confirms a different method against the vulnerability fixed in 2.4.2. Servers already at 2.4.2 or later when the November 1 warning was issued showed no observed impact from these attacks. Older installs, including those upgraded only afterward, should move to a fresh VM and new-seed wallet even without visible theft; signs of compromise trigger the same response regardless of present version. Keys kept off the server were unaffected by these thefts, but older-server rebuilding still applies. The project publishes the same BTC/LTC collector addresses and explicitly warns that earlier activity and unresolved attribution prevent treating their balances/history as confirmed losses. Bitquery’s separate estimate above remains source- and time-bounded, not a vendor-confirmed total.
