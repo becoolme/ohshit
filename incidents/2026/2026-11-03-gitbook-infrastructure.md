@@ -16,7 +16,7 @@ fixed: []
 timeline:
 - date: Nov 2, 18:00 UTC
   title: Attacker accesses infrastructure credentials
-  body: Vendor converts the incident time to 19:00 CET; GitBook says it detected the attack immediately and later took services offline as a precaution.
+  body: The original notice gives 19:00 CET (18:00 UTC); GitBook says it detected the attack immediately and later took services offline as a precaution.
 - date: Nov 3, 12:15 UTC
   title: Initial notice reports platform intrusion
   body: The 13:15 CET notice says data impact is still being investigated and no customer action is yet required.

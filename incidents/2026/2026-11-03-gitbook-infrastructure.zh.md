@@ -9,7 +9,7 @@ fixed: []
 timeline:
 - date: 11月2日 18:00 UTC
   title: 攻击者访问基础设施凭据
-  body: 原文为 19:00 CET；GitBook 称立即检测到攻击，随后预防性下线部分服务。
+  body: 原文为 19:00 CET（18:00 UTC）；GitBook 称立即检测到攻击，随后预防性下线部分服务。
 - date: 11月3日 12:15 UTC
   title: 初始公告确认平台遭入侵
   body: 13:15 CET 公告称数据影响仍在调查，当时尚不要求客户操作。
