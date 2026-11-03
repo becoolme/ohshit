@@ -231,10 +231,10 @@ sources:
     url: https://www.binance.com/en-UZ/support/faq/detail/815b25f0cb054bdd9d35eccc408fe981
     primary: true
     says: Explains official verifier downloads, account-specific Merkle data, configuration and root/user checks; explicitly says the report is a snapshot, not real-time assets.
-  - name: Binance official profile publishing Update 5
+  - name: Binance official profile publishing recovery updates
     url: https://www.binance.com/en-UZ/square/profile/binance_announcement
     primary: true
-    says: Readable complete official copy of November 2 Recovery Update5 when the individual post returns an unavailable response.
+    says: Readable complete official copies of Recovery Updates 5 and 6 when an individual post is unavailable; the same vendor statements, not independent corroboration.
   - name: Binance Recovery Update 6
     url: https://www.binance.com/en-UZ/square/post/384132999604606
     primary: true
