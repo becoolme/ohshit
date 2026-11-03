@@ -26,7 +26,7 @@ checklist:
 - title: Verify the Desktop application version
   hint: Install 4.98.0 or later through official channels and check the application version. Docker CLI/Engine versions do not identify the Desktop build; staged rollout can delay update availability.
 - title: Update WSL too and check the backend
-  hint: On the Windows WSL 2 backend, run wsl --update and confirm at least 3.0.3 with wsl --version; restart Desktop or the host if prompted. A Linux distribution package version is not the WSL version.
+  hint: On the Windows WSL 2 backend, run wsl --update in PowerShell or Command Prompt and confirm at least 3.0.3 with wsl --version; restart Desktop or the host if prompted. A Linux distribution package version is not the WSL version.
 sources:
 - name: Docker Desktop 4.98.0 release notes
   url: https://docs.docker.com/desktop/release-notes/#4980
@@ -36,6 +36,10 @@ sources:
   url: https://cveawg.mitre.org/api/cve/CVE-2026-98432
   primary: true
   says: Underlying October 15 disclosure and IPv4 TCP option-lifetime race; this is not a newly disclosed Linux flaw.
+- name: Microsoft WSL command documentation
+  url: https://learn.microsoft.com/en-us/windows/wsl/basic-commands
+  primary: true
+  says: Documents wsl --update, wsl --version and the PowerShell/Command Prompt execution context.
 level: 3
 date: '2026-11-03'
 tags:
