@@ -1,5 +1,5 @@
 ---
-title: Binance expands phased withdrawal plans after $6.3bn theft
+title: Binance preliminary report details signing-service intrusion and revises funding figures
 level: 4
 date: 2026-10-29
 updated: 2026-11-03
@@ -9,7 +9,7 @@ tags:
   - investigation
 ecosystems:
   - crypto
-summary: Binance reports ~$6.3bn stolen; FBI blames TraderTraitor. Selected withdrawals have resumed. On November 2, Binance says the October 31 reserve proof is ready for ten tokens. Its 95% replacement funding and ~$3bn frozen remain separate from recovered funds. Full recovery and a final root cause remain unconfirmed.
+summary: Binance preliminarily reports signing-service access and persistent EIP-7702 delegation; FBI blames TraderTraitor. It revises assets involved to ~$6.34bn, frozen/blocked to ~$2.85bn and replacement to 98% by Oct 31, not recovery. Selected withdrawals and ten-token reserve proofs are available; final findings and full restoration remain pending.
 splash: Binance.com withdrawal users; Aave reports a precautionary freeze of DAO-operated V3/V4 markets
 wipe: Follow official updates, inspect account activity, and use Binance's account-lock procedure if you find unauthorized actions
 inTheWild: yes
@@ -17,6 +17,9 @@ inTheWildNote: Yi He acknowledges hacking losses and says Binance will cover the
 cves: []
 fixed: []
 timeline:
+  - date: Oct 20, 2026
+    title: Preliminary report dates internal device pivot
+    body: Binance says the attacker pivoted through internal AI tools from engineer B to devices A and C and found A’s container-deployment token.
   - date: Oct 29, 2026
     title: Binance acknowledges an investigation; CZ separately suspects a hack
     body: The earlier exchange notice says user-fund impact is not confirmed. CZ reports stablecoin freezes and expects coverage, noting he no longer manages Binance.com.
@@ -32,6 +35,15 @@ timeline:
   - date: Oct 29, 2026
     title: TRM publishes cross-chain investigation
     body: The report is dated October 29; its figures use an October 30 00:30 UTC snapshot. Amounts and attribution are researcher findings.
+  - date: Oct 29, 17:15–19:56 UTC
+    title: Stolen token used to deploy a malicious container
+    body: The November 3 report places deployment in this window after conversion from UTC+8; unauthorized access to the internal signing service followed.
+  - date: Oct 29, 23:56 UTC
+    title: Last pending ETH transfer finalizes
+    body: Binance says the last pending 2,961.9 ETH transfer finalized, with no further unauthorized transfers identified afterward; this is a preliminary vendor assessment.
+  - date: Oct 30, 00:10 UTC
+    title: Binance clears malicious on-chain delegation
+    body: The preliminary report says a new authorization operation from the Binance14 hot wallet cleared malicious EIP-7702 delegation; pausing withdrawals alone did not revoke on-chain authorization.
   - date: Oct 30, 2026
     title: Yi He says Binance will cover hacking losses and confirms deposit and withdrawal suspension
     body: The co-founder says security checks, fund freezes and law-enforcement coordination continue; a post-mortem will follow the investigation.
@@ -91,6 +103,9 @@ timeline:
   - date: Nov 3, 2026
     title: Binance announces more withdrawal pairs from 04:00 UTC
     body: "Recovery Update #6 lists further assets across nine networks and BSC bSTOCKS. Availability rolls out progressively after security/readiness checks; the notice does not establish that every listed pair is already open. Deposits remain open."
+  - date: Nov 3, 2026
+    title: Preliminary report updates attack path, assets and response
+    body: The report puts assets involved at ~$6.34bn and frozen/blocked assets at ~$2.85bn, retrospectively reporting 98% replacement by October 31 versus earlier 95% notices. Binance claims exploited entry points were closed and affected systems rebuilt; independent review is still being commissioned.
   - date: Nov 1, 06:00–09:00 UTC (scheduled)
     title: First withdrawal phase is planned
 checklist:
@@ -104,6 +119,8 @@ checklist:
     hint: Virtual asset providers and node operators should use the FBI notice's complete ETH, BTC and SOL list, containing more than 600 addresses, to block transactions with or derived from them. Report relevant information to an FBI field office or IC3. A transaction match alone does not prove an account or platform was compromised.
   - title: Verify your inclusion in the completed reserve snapshot
     hint: "Use Binance’s official PoR page and linked account-balance guide on a trusted device. In Profile → Wallet → Verification select the October 31 00:00 UTC record with verification type Merkle Tree + Zksnarks and download its data. The guide lists verifier 1.2.1 for August 2026 onward. Place config.json, proof.csv and zkpor864.vk.save in its config folder; check ProofTable and ZkKeyName against the downloaded proof/key. Run the platform’s verifier for the root, then add your account-specific user_config.json and use -user to check inclusion; never upload account files to an unsolicited checker. Update #5 covers BTC, ETH, USDT, BNB, SOL, USDC, XRP, USD1, RLUSD and ZEC. This is a historical snapshot, not a live balance or evidence that stolen assets were recovered. Update #6 announces a progressive rollout from November 3 04:00 UTC. Use its exact asset/network table and the live withdrawal or network-status page; the announcement does not confirm every listed pair is already open."
+  - title: 'Operators: investigate devices, deployment tokens and signing authority'
+    hint: 'The report names /opt/homebrew/Cellar/pyenv/2.8.0/libexec/pyenv_, the replaced /opt/homebrew/Cellar/pyenv/2.8.0/libexec/pyenv and /opt/homebrew/bin/pyenv. Correlate file content, symlinks, processes and deployment logs; a path match alone is not proof. General operator response: isolate suspected devices, preserve evidence, rebuild from trusted media and revoke affected credentials/deployment tokens from a clean environment. Check signing-service access and whether EIP-7702 delegation still authorizes unknown code. Do not execute suspect installers. The report does not require ordinary Binance users to perform these server operations.'
 sources:
   - name: Binance investigation notice
     url: https://x.com/binance/status/2115915708504900039
@@ -222,7 +239,6 @@ sources:
     url: https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fbinance%2Fstatus%2F2116855614634852611&omit_script=true
     primary: true
     says: Readable new section confirms Polygon/POL, USDT, USDC and Avalanche C-Chain/AVAX, USDT, USDC; older list truncates.
-
   - name: Binance Recovery Update 5
     url: https://www.binance.com/en-UZ/square/post/383927538755526
     primary: true
@@ -239,13 +255,17 @@ sources:
     url: https://www.binance.com/en-UZ/square/post/384132999604606
     primary: true
     says: November 3 original lists nine networks and BSC bSTOCKS for progressive withdrawal reopening from 04:00 UTC, conditional on checks; deposits remain open.
+  - name: Binance November 3 preliminary investigation and response report
+    says: 'Full public page read without login: multi-stage device intrusion, token/signing-service access, delegation removal and revised 98% replacement/~$2.85bn frozen or blocked. Not a final independent audit.'
+    url: https://www.binance.com/en/square/post/384314641614134
+    primary: true
 ---
 
 Binance’s initial notice said it had not confirmed an impact on user funds. The exchange then edited that notice to state that user funds are safe, and subsequently said withdrawals would resume after the security issue is fully resolved. These are the vendor’s statements, not an independently audited reserve or loss assessment. No resumption time or technical containment report was supplied in those notices. The withdrawal notice does not specify affected networks or withdrawal routes; do not infer that every Binance product is affected. Those earlier notices supported L3 because they acknowledged disruption without confirming the suspected theft.
 
 CZ separately suspects a hack and says he expects users to be covered, while explicitly stating that he no longer manages Binance.com. His earlier expectation was not a formal reimbursement guarantee from current management. Reported stablecoin freezes must not be counted as refunds or added to outflow estimates to calculate a loss. Circulating monetary estimates are unverified here; no independently reconciled stolen-fund total or victim count is established.
 
-The root cause, affected wallet scope, initial access and containment status remain unresolved. We have not independently traced the transactions or authenticated wallet ownership. The cited sources do not establish a link to the separate Polymarket/DebugBear incident, or a Binance root cause of frontend injection or private-key theft. Ordinary account-security measures are useful against account abuse, but cannot establish that exchange custody systems are safe.
+The November 3 preliminary report now describes initial access and claims key containment steps are complete; final root cause and independent validation remain pending. We have not independently traced the transactions or authenticated wallet ownership. The cited sources do not establish a link to the separate Polymarket/DebugBear incident, or a Binance root cause of frontend injection or private-key theft. Ordinary account-security measures are useful against account abuse, but cannot establish that exchange custody systems are safe.
 
 **Update, October 30:** Yi He now explicitly says Binance will cover all hacking losses, confirms that deposits and withdrawals are temporarily suspended, and promises a post-mortem after the investigation. This current-management acknowledgment replaces the earlier uncertainty over whether the exchange itself had acknowledged hacking losses and supports L4. It does not establish a technical root cause or audited net loss.
 
@@ -274,3 +294,11 @@ Binance separately reports a verified frozen amount of around $3 billion. This v
 **November 2 reserve update:** Recovery Update #5 supersedes the earlier pending-proof status: Binance says the full zero-knowledge proof for the October 31 00:00 UTC snapshot is generated and the ten listed tokens are verifiable. This reports the vendor’s publication and verification instructions; it is not an independent audit or a claim that we verified a customer account. The approximately 95% replacement funding remains unchanged. Additional networks/assets are planned for November 3 and a broader snapshot for November 4; the latter is expected to require another 40–50 hours of proof generation. These plans do not establish that all withdrawals are already open or that the stolen money has been returned.
 
 **November 3 withdrawal update:** Recovery Update #6 announces further asset/network pairs from 04:00 UTC across BSC, Ethereum, Solana, XRP, SUI, Arbitrum, Optimism, TRX and Base, plus all BSC bSTOCKS. Its table is a rollout list: each pair awaits security and readiness checks, and the vendor directs users to live availability. Deposits remain open; delays and retries may occur. This advances the earlier plan without establishing complete restoration, recovered stolen funds or a final root cause.
+
+**November 3 preliminary investigation:** Binance retrospectively says engineer A ran a tampered Homebrew installer while seeking an AI coding tool in June. Device replacement and credential rotation followed, but role/team information had already been exposed. In September, engineer B ran a fake recruitment assignment that installed malware on a work device and replaced a development-tool component. This does not establish compromise of the official Homebrew project or an unpatched CVE. On October 20 the attacker pivoted through internal AI tools to other devices and obtained A’s container-deployment token. A malicious container was deployed from C’s device on October 29 at 17:15–19:56 UTC, followed by access to the internal wallet signing service, bypassing ordinary withdrawals.
+
+The report says 50 signed transactions manipulated account nonces and EIP-7702 delegation; malicious on-chain authority persisted after withdrawals were paused. The last pending 2,961.9 ETH transfer finalized on October 29 at 23:56 UTC. Binance says a new authorization operation from its Binance14 hot wallet cleared the delegation on October 30 at 00:10 UTC. These UTC times are converted from the report’s explicit UTC+8 timezone. This is not evidence that MPC was broken, private keys leaked or every ordinary user account was compromised.
+
+**Revised amounts and containment:** The report now puts assets involved at about $6.34bn and frozen or blocked assets at about $2.85bn, subject to reconciliation and price changes. It retrospectively says 98% of affected token assets had been replenished by October 31 (UTC+8), with illiquid tokens still being purchased. This differs from the roughly 95% in the November 1–2 notices: treat it as a later vendor revision, while preserving the historical timeline. Frozen assets, blocked assets and company-funded replacement are not returned stolen funds or an audited net loss.
+
+Binance claims exploited entry points are closed, systems on the attack path have been rebuilt or replaced, related credentials/tokens revoked and employee devices checked, with stronger wallet, device and anomaly monitoring. Independent security review is still being commissioned and some details remain undisclosed for the investigation. These are preliminary vendor findings, not a completed independent audit, final root cause or complete service restoration. The published pyenv paths require file and behavioural evidence; legitimate installations can contain the same paths.
