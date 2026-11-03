@@ -25,7 +25,7 @@ timeline:
   body: Up to roughly 5.5 million records including duplicates; unique individuals and final scope remain under investigation.
 checklist:
 - title: Confirm whether your assistance records are affected
-  hint: Use your insurer or roadside-assistance provider’s established app, website or support number. Ask whether Prestige Core Solution handled your case and what fields are involved. Prestige says client companies will coordinate notices; the maximum record count is not the number of people affected.
+  hint: Use your insurer or roadside-assistance provider’s established app, website or support number. Ask whether Prestige Core Solution handled your case and what fields are involved. Prestige says it will coordinate affected-customer notices with client companies; the maximum record count is not the number of people affected.
 - title: Reject impersonated support and credential requests
   hint: The company warns of calls, email and SMS impersonating Prestige, group companies or insurers. Do not follow unexpected URLs or disclose passwords or bank PINs. Confirm any request through a known provider contact; the company says it will not ask for those credentials by phone or email in connection with this incident.
 - title: Preserve notices and check affected financial accounts
