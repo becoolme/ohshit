@@ -3,7 +3,7 @@ title: "eMudhra CA intermediate private keys were so weak that every one was a n
 headline: "eMudhra: eight CA keys you could guess on a pocket calculator"
 level: 4
 date: 2026-10-17
-updated: 2026-11-02
+updated: 2026-11-03
 tags: [PKI, CA, TLS]
 ecosystems: [go, python, node, browsers]
 summary: >-
@@ -73,6 +73,33 @@ fixed:
   - { product: Checkmk 2.5, version: 2.5.0p18, status: Patched; released November 2 }
   - { product: Checkmk 2.2, version: none, status: End of life; migrate to a supported fixed line }
   - { product: pypa/gh-action-pypi-publish, version: 1.14.3, status: Refresh pinned action references as well as local tools }
+  - product: httplib2
+    version: 0.32.1
+    status: Used when certifi is absent from affected Python HTTP transports
+  - product: Python grpcio / Ruby grpc / PHP grpc/grpc
+    version: 1.84.1
+    status: Bundled gRPC roots; older maintained branches may have separate patches
+  - product: Java google-api-client
+    version: 2.9.2
+    status: For GoogleNetHttpTransport.newTrustedTransport(); also update JDK/custom stores
+  - product: Google Cloud Java libraries-bom
+    version: 26.91.0
+    status: Alternatively update service libraries to a -2.9.2 suffix or declare google-api-client 2.9.2
+  - product: Spring Framework on Google Cloud
+    version: 8.3.1 / 7.5.2 / 6.5.12 / 3.9.19
+    status: Use the patch for your release line; imports libraries-bom 26.91.0
+  - product: PHP google/gax
+    version: 1.51.2
+    status: Pulls grpc/grpc 1.84.1 or later
+  - product: C++ gRPC fallback roots
+    version: 1.84.1
+    status: Rebuild if bundled roots.pem is used instead of a system store
+  - product: rustls-webpki
+    version: 0.103.16
+    status: Rebuild and redeploy; RUSTSEC-2026-0382
+  - product: webpki-root-certs / webpki-roots
+    version: 1.0.10
+    status: Update whichever root-store crate the application uses; RUSTSEC-2026-0383 / 0381
 timeline:
   - date: Apr 30, 2025
     title: The keys are generated, in a batch of 24 intermediates
@@ -129,6 +156,9 @@ timeline:
   - date: Nov 2, 2026
     title: Checkmk 2.5.0p18 becomes available
     body: The official download archive lists this release for November 2; the CA-store fixes are no longer only an announced target.
+  - date: Nov 2, 2026
+    title: Google publishes language-specific Cloud SDK trust-store remediation
+    body: GCP-2026-075 separates bundled transports, runtimes and system stores; update the actual trust path and rebuild applications. Google reports no Cloud infrastructure breach or evidence of exploitation against Cloud workloads.
   - date: ~Oct 27, 2026
     title: Chrome Root Store v43 removes the emSign ECC Root CA - G3
 checklist:
@@ -164,6 +194,14 @@ checklist:
     hint: Use 2.5.0p18, 2.4.0p39 or 2.3.0p52 for the corresponding line; 2.5.0p18 was released November 2, and 2.2 is EOL. Refresh Linux agent updaters in Pro/Ultimate/Cloud editions and Windows Python-based agent plug-ins as applicable. check_httpv2 always consults its built-in roots; toggling Use system wide CAs does not remove exposure. Cron-launched site processes may use bundled certifi; also update OS/site CA stores.
   - title: Update the PyPI publishing action in CI
     hint: Use pypa/gh-action-pypi-publish 1.14.3 or later, including replacing older commit-SHA pins. Updating runner or local certifi alone does not replace the action’s bundled copy.
+  - title: Update Python, Ruby and PHP transport dependencies
+    hint: For Python, use certifi 2026.10.19+, httplib2 0.32.1+ (its bundle is used without certifi), and grpcio 1.84.1+. For Ruby, update grpc to 1.84.1+ or update google-cloud-* gems to pull it in. For PHP, update grpc/grpc to 1.84.1+ or google/gax to 1.51.2+. Update the OS store for REST paths too; do not assume gRPC reads system roots.
+  - title: Verify Google Java clients and legacy gRPC transports
+    hint: For newTrustedTransport(), use google-api-client 2.9.2+ or libraries-bom 26.91.0+. Service-library-only builds need a -2.9.2 or later suffix or an explicit client dependency. Spring line patches are 8.3.1, 7.5.2, 6.5.12 and 3.9.19 or later. Separately update JDK and Windows roots. Migrate deprecated Node grpc npm to @grpc/grpc-js and .NET Grpc.Core to Grpc.Net.Client.
+  - title: Rebuild the actual C++, Rust, Go and Swift trust paths
+    hint: 'For C++ fallback roots.pem, relink gRPC 1.84.1+ and update system/image roots. Run cargo update for Rust; verify rustls-webpki 0.103.16+ and the used webpki-root-certs or webpki-roots 1.0.10+. Rebuild Go with the patched toolchains above and current base images. Swift AsyncHTTPClient/grpc-swift-2 uses system stores: update the OS; do not apply the separate Objective-C CocoaPod fix to Swift by assumption. Redistribute rebuilt apps or redeploy images.'
+  - title: Check the root fingerprints actually loaded by applications
+    hint: 'GCP-2026-075 says to verify absence of all three: emSign ECC Root CA - G3, SHA-256 86:A1:EC:BA:08:9C:4A:8D:3B:BE:27:34:C6:12:BA:34:1D:81:3E:04:3C:F9:E8:A8:62:CD:5C:57:A3:6B:BE:6B; emSign Root TLS CA - G3, 7D:D7:8D:5F:4F:13:45:9A:83:DF:F9:AB:BB:A6:2E:DB:AF:6F:2D:10:2B:F2:57:FD:71:2F:4D:9F:27:46:ED:8D; AAA Certificate Services, D7:A7:A0:FB:5D:7E:27:31:D7:71:E9:48:4E:BC:DE:F7:1D:5F:0C:3E:0A:29:48:78:2B:C8:3E:E0:EA:69:9E:F4. Verify rebuilt images and each independent trust store. Presence means trust remains; it does not prove an attack.'
 sources:
   - name: Mozilla Bugzilla 2083449
     url: https://bugzilla.mozilla.org/show_bug.cgi?id=2083449
@@ -282,6 +320,10 @@ sources:
     url: https://checkmk.com/download/archive
     primary: true
     says: Lists Checkmk 2.5.0p18 dated November 2 with edition and platform packages
+  - name: Google Cloud SDK language-specific remediation
+    url: https://docs.cloud.google.com/support/bulletins#gcp-2026-075
+    primary: true
+    says: 'November 2 GCP-2026-075: per-language transport/client/system-store updates and verification fingerprints; GCP-2026-071 adds SDK Libraries the same day.'
 ---
 
 A certificate authority's private key is the thing that makes "this is really your bank" true. For eight
@@ -333,3 +375,6 @@ For an unpatched Oracle runtime, the [operational guide](https://ops.java/emudhr
 **November 1 addition:** PyPA’s October 21 advisory covers this same trust-store event, not a separate compromise of PyPI publishing. Its metadata includes 1.14.2 as affected while prose says versions before 1.14.2; both direct users to 1.14.3. Update the action itself rather than assuming a runner CA update is sufficient. The advisory does not establish theft of publishing credentials.
 
 **Update, November 2:** The vendor download archive now lists Checkmk 2.5.0p18 dated November 2 with edition/platform package metadata. Werks 22169 and 22623 list it as carrying the bundled CA-store fixes, without their earlier unreleased marker. This supersedes the earlier availability warning, not the need to update affected sites and agent components or separate OS/site trust stores. It is not new evidence of exploitation.
+
+
+**November 3 addition, following the November 2 official update:** GCP-2026-075 explains that Google Cloud SDK Libraries usually inherit trust from transport dependencies, runtimes or the OS; Java google-api-client before 2.9.2 is the exception. That Java library always uses its bundled store before 2.9.0, and falls back to it in 2.9.0/2.9.1 if the JDK store cannot be loaded. Updating a Cloud SDK alone does not prove all applications are fixed. Python grpcio, Ruby grpc and PHP grpc/grpc use bundled roots rather than system roots; deprecated Node grpc and .NET Grpc.Core require migration. Apply the added checklist to actual dependencies, verify removal of all three roots and rebuild, redistribute or redeploy. Google again reports no infrastructure breach or telemetry evidence of exploitation against Cloud workloads. This is downstream remediation of the same CA event.
