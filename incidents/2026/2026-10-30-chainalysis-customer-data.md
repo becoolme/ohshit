@@ -18,7 +18,7 @@ timeline:
   title: Chainalysis publishes its incident notice and customer email
 - date: Nov 2, 2026
   title: Chainalysis takes selected products offline
-  body: Reactor and Data Solutions are among products proactively disabled while external experts complete security assessments. Compliance transaction monitoring continues operating under close monitoring.
+  body: Reactor and Data Solutions are among products proactively disabled while external experts complete security assessments. The blog says compliance transaction monitoring continues under close monitoring; status-page exceptions are detailed below.
 - date: Nov 2, 15:50 UTC
   title: Status page specifies transaction-monitoring exceptions
   body: KYT and Address Screening run as usual except for KYT Graph preview and its Reactor integration.
@@ -50,6 +50,6 @@ updated: 2026-11-03
 
 The company describes offensive agentic techniques but identifies no attack framework, CVE or complete access window. Its investigation has found no indication of access to graphs, notes, cases, transaction or query results, cleartext passwords, MFA secrets or session tokens; that is an interim assessment, not proof exposure was impossible. Patching and external investigation continue. Chainalysis explicitly separates this event from Binance's theft. L3 reflects confirmed customer-data access without an established mass-leak total.
 
-**November 2 service update:** Chainalysis reports ongoing cyber threats associated with this incident. It has proactively disabled selected products, including Reactor and Data Solutions, pending further assessments with external security experts. Compliance transaction monitoring continues operating under close monitoring. These decisions do not establish new confirmed data exposure or completed containment; the investigation and organization-specific impact review continue.
+**November 2 service update:** Chainalysis reports ongoing cyber threats associated with this incident. It has proactively disabled selected products, including Reactor and Data Solutions, pending further assessments with external security experts. Its blog says compliance transaction monitoring continues under close monitoring; the status-page exceptions below qualify that statement. These decisions do not establish new confirmed data exposure or completed containment; the investigation and organization-specific impact review continue.
 
 **Product-specific status:** The November 2 status history qualifies the broader transaction-monitoring statement: KYT Graph preview and the KYT integration with Reactor are exceptions to normal KYT/Address Screening operation. It also identifies possible login issues, additional outages for Chain (Beta) and Rapid, and possible impact to some Hexagate monitoring. The November 3 08:55 UTC update still reports ongoing maintenance. These availability effects do not establish additional data access or a completed recovery.
