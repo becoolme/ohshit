@@ -1,5 +1,5 @@
 ---
-title: Mercado Bitcoin confirms a security incident; researchers trace multi-chain wallet drains
+title: Mercado Bitcoin reports $12.9M blocked; platform remains paused pending staged recovery
 level: 4
 date: '2026-11-02'
 tags:
@@ -8,7 +8,7 @@ tags:
 - wallets
 ecosystems:
 - crypto
-summary: Mercado Bitcoin confirms an incident and pauses transfers. Bitquery revises its estimate to $48.6M across 10 chains, 36,042 Ethereum deposit addresses swept and $11.4M frozen; figures remain unverified. The exchange says customers suffered no loss and no data leaked. The entry point is unknown.
+summary: Mercado Bitcoin remains paused and reports $36.3M in affected assets at current prices and $12.9M blocked. Bitquery separately estimates $48.6M across 10 chains, 36,042 Ethereum deposit addresses and $11.4M frozen; unverified snapshots differ in scope/time. The exchange says no customer loss or data leak; entry point unknown.
 splash: Mercado Bitcoin customers and integrations using its deposit addresses; exchange hot wallets are implicated
 wipe: Respect the deposit/withdrawal pause; do not reuse saved deposit addresses until official recovery guidance confirms them
 inTheWild: 'yes'
@@ -28,9 +28,12 @@ timeline:
 - date: Nov 3, 2026
   title: Research revises separate flows; exchange attribution remains unconfirmed
   body: Bitquery expands its earlier $298k separate-flow estimate to about $391k, mostly from wallets it links to BitMart. Do not add this to Mercado Bitcoin losses or treat it as confirmation that BitMart was breached.
+- date: Nov 3, 2026
+  title: Company updates amounts and confirms platform/app pause
+  body: The company reports affected assets currently worth ~$36.3M and $12.9M blocked, guaranteeing customer assets and preserved balance records. It subsequently plans gradual restoration after feature-specific security checks, without confirming reopening or a deadline.
 checklist:
 - title: Keep deposits paused and recheck saved addresses
-  hint: Do not send funds to a saved Mercado Bitcoin deposit address while transfers are suspended. Check the established exchange app and official channels for explicit recovery and address instructions before restarting automated payouts or exchange integrations. Bitquery reports signed transfers from deposit addresses; changing your login password alone does not secure exchange-controlled keys.
+  hint: Do not send funds to a saved Mercado Bitcoin deposit address while transfers are suspended. Check the established exchange app and official channels for explicit recovery and address instructions before restarting automated payouts or exchange integrations. Bitquery reports signed transfers from deposit addresses; changing your login password alone does not secure exchange-controlled keys. The November 3 original confirms that the platform/app remain paused and says reinstalling the app or changing devices is unnecessary. The recovery plan requires feature-specific security checks; confirm each service and limitation in subsequent official announcements, rather than treating the plan as completed reopening.
 - title: Verify balances and preserve transaction evidence
   hint: Record your account statement, affected network, deposit address, transaction hash, amount and time. Contact Mercado Bitcoin through its established support channel about missing credits or pending withdrawals. The exchange’s no-customer-loss statement is not independent verification that every balance or transfer is settled; address counts are not customer counts.
 - title: Monitor the published wallet set with its attribution limits
@@ -53,6 +56,14 @@ sources:
   url: https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FMercadoBitcoin%2Fstatus%2F2117239507263132056&omit_script=true
   primary: true
   says: Public original embed actually read; confirms incident and containment/customer-loss/data-leak claims, but truncates before completing the transfer-pause sentence.
+- name: Mercado Bitcoin November 3 official update
+  says: 'Full original read in public browser without login: $36.3M affected assets at current prices, $12.9M blocked, platform/app pause, preserved customer balances and no need to reinstall/change devices.'
+  url: https://x.com/MercadoBitcoin/status/2117637227551273267
+  primary: true
+- name: Mercado Bitcoin staged-restoration plan
+  says: Full original read without login; each functionality must pass security checks, stages and limits to be announced. This is a plan, not completed recovery.
+  url: https://x.com/MercadoBitcoin/status/2117648409838379026
+  primary: true
 updated: '2026-11-03'
 ---
 
@@ -69,3 +80,5 @@ Bitquery's November 3 revision raises its frozen estimate from $7.3M to $11.4M a
 The revised Ethereum cutoff is November 3 08:49 UTC, with other chains read between 08:49 and 10:05 UTC. It also reports cross-chain swaps and new recipients, which do not establish the entry point, a master-key leak or a shared-supplier compromise. The initial November 2 figures remain in the timeline as historical estimates, superseded by this revision.
 
 **November 3 separate-flow update:** Bitquery expands earlier flows unrelated to Mercado Bitcoin wallets from $298k to about $391k. It adds observations of 80 tokens leaving the Base wallet over roughly six minutes from November 2 20:20 UTC, with 45 sold the next morning for about $85k. The $391k is the separate-flow total: do not add its $298k subset again or include it in Mercado Bitcoin’s $48.6M. Ownership relies on labels and small 2024 payments with a wallet in BitMart’s proof of reserves; BitMart has not confirmed current wallet control or a platform intrusion. A separate roughly 66,283 USDC freeze on Base is also excluded from the Mercado Bitcoin freeze figures. These amounts and attributions remain unverified.
+
+**November 3 company update:** Full public originals now confirm the whole platform/app remain paused until a safe restart, with no need to reinstall the app or change devices. The company reports affected assets currently worth about $36.3M and about $12.9M blocked, guaranteeing customer assets and preserved balance records. A subsequent post plans staged recovery after feature-specific security checks, with advance notices of available services and limits, but no deadline. These are company claims, not independently reconciled balances, returned funds or completed recovery. The $36.3M uses current prices and is not interchangeable with Bitquery’s $48.6M transfer-time estimate; the $12.9M blocked and researcher’s $11.4M frozen are different statements/observation snapshots. The company has not reconciled all differences; do not add, subtract or derive a net loss from them.
