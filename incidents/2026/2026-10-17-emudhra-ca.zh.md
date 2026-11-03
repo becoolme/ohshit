@@ -69,6 +69,12 @@ fixed:
   - status: 重建并重新部署；RUSTSEC-2026-0382
   - status: 更新应用实际使用的根证书 crate；RUSTSEC-2026-0383 / 0381
   - status: 独立构件；公告列出 2.7.0–2.8.1 受影响；另须修补 JDK 信任库
+  - { product: "Istio 1.31", status: "更新镜像、Go 构建及 ztunnel 证书信任处理" }
+  - { product: "Istio 1.30", status: "更新镜像、Go 构建及 ztunnel 证书信任处理" }
+  - { product: "Istio 1.29", status: "停止维护后的特殊版本；Go 组件仅修复 CA 证书包，须迁移至 1.30+" }
+  - { product: "集群内 Cloud Service Mesh 1.31", status: "GCP-2026-076 修补版本" }
+  - { product: "集群内 Cloud Service Mesh 1.30", status: "GCP-2026-076 修补版本" }
+  - { product: "集群内 Cloud Service Mesh 1.29", status: "GCP-2026-076 修补版本；1.28 及更早版本已停止维护" }
 timeline:
   - date: 2025年4月30日
     title: 私钥生成，同一批共 24 张中间证书
@@ -128,6 +134,9 @@ timeline:
   - date: 2026年11月2日
     title: Google 发布 Cloud SDK 各语言信任库修复指南
     body: GCP-2026-075 区分内置传输证书包、运行时及系统信任库；须更新实际使用的路径并重建应用。Google 未发现 Cloud 基础设施被入侵或工作负载遭利用的证据。
+  - date: 2026年11月2日
+    title: Google 公布 Cloud Service Mesh 证书信任修补版本
+    body: GCP-2026-076 列出集群内版本 1.31.3-asm.3、1.30.7-asm.3 和 1.29.10-asm.0；托管版 Cloud Service Mesh 自动更新，无需客户操作。
   - date: 2026年10月27日前后
     title: Chrome Root Store v43 移除 emSign ECC Root CA - G3
 checklist:
@@ -171,6 +180,8 @@ checklist:
     hint: C++ 若使用回退 roots.pem，重新链接 gRPC 1.84.1+，并更新系统或镜像根证书。Rust 执行 cargo update，确认 rustls-webpki 0.103.16+ 及所用 webpki-root-certs 或 webpki-roots 1.0.10+。Go 使用上方已修补工具链和新基础镜像重建。Swift AsyncHTTPClient / grpc-swift-2 使用系统证书库，应更新系统；该指引不要求将 Objective-C CocoaPod 的独立修复套用到 Swift。随后重新分发应用或部署镜像。
   - title: 检查应用实际加载的根证书指纹
     hint: GCP-2026-075 要求确认实际信任库不含这三张证书：emSign ECC Root CA - G3，SHA-256 86:A1:EC:BA:08:9C:4A:8D:3B:BE:27:34:C6:12:BA:34:1D:81:3E:04:3C:F9:E8:A8:62:CD:5C:57:A3:6B:BE:6B；emSign Root TLS CA - G3，7D:D7:8D:5F:4F:13:45:9A:83:DF:F9:AB:BB:A6:2E:DB:AF:6F:2D:10:2B:F2:57:FD:71:2F:4D:9F:27:46:ED:8D；AAA Certificate Services，D7:A7:A0:FB:5D:7E:27:31:D7:71:E9:48:4E:BC:DE:F7:1D:5F:0C:3E:0A:29:48:78:2B:C8:3E:E0:EA:69:9E:F4。重建后的镜像及所有独立信任库均须核验；发现证书说明信任尚未移除，本身不证明遭到攻击。
+  - title: 修补实际运行的 Istio 或 Cloud Service Mesh 发行版
+    hint: 上游 Istio 升至 1.31.3、1.30.7 或特殊发布的 1.29.10；1.29 已停止维护，其 Go 1.25 构建缺少 Go 密钥拒信修复，应迁移至 1.30+。Google 集群内 Cloud Service Mesh 使用 1.31.3-asm.3、1.30.7-asm.3 或 1.29.10-asm.0，1.28 及更早版本已停止维护；托管版自动更新。检查未指定 caCertificates/credentialName 的 DestinationRule SIMPLE TLS、RequestAuthentication 的 jwksUri 获取，以及 XDS_ROOT_CA=SYSTEM。网格自行签发的 mTLS 证书不受影响。按需重新部署更新后的 sidecar、gateway 和工作负载；上游暂时无法升级时，对受影响外部 TLS 路径设置明确可信 CA 凭据或 caCrl，不要关闭验证。
 sources:
   - says: 私钥是小于 256 的整数；报告时间、OneCRL 条目，以及 10月18日的吊销
   - name: eMudhra 声明
@@ -238,6 +249,10 @@ sources:
     says: 原始内置根证书公告；升级与自定义信任库注意事项。
   - name: Google Java API 客户端公告
     says: 原始传输影响范围及缓解说明；Java 另涵盖独立 Apache v5 构件。
+  - name: Google Cloud Service Mesh GCP-2026-076
+    says: 11 月 2 日公告给出三条集群内修补版本，并说明托管部署自动更新。
+  - name: Istio ISTIO-SECURITY-2026-008
+    says: 上游修复、公有 CA 信任前提、Go 1.25 的限制、ztunnel 拒信及外部 TLS 缓解措施；网格自签发的 mTLS 不受影响。
 ---
 CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eMudhra 有八张中间证书，P-384 私钥都是**小于 256 的整数**。据研究人员 Scott Helme 说，其中一个就是数字 4。谁要是注意到了，就能给任意域名签证书，而所有信任这条链的客户端都会照单全收。
 
@@ -283,3 +298,5 @@ CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eM
 **11月2日更新：** 厂商下载归档现已列出11月2日的 Checkmk 2.5.0p18，并提供各版本、平台的软件包元数据。Werk 22169 和 22623 将该版本列为内置 CA 信任库修复，不再带有此前的尚未发布标记。这取代先前的可用性警告，但仍须更新受影响站点和 Agent 组件，以及单独的系统、站点信任库；不是新的利用证据。
 
 **11月3日补充，追踪 11月2日官方更新：** Google 的 GCP-2026-075 明确，Google Cloud SDK Libraries 通常不自带 CA，信任来自传输依赖、运行时或系统；Java google-api-client 2.9.2 之前是例外。对于 GoogleNetHttpTransport.newTrustedTransport()，2.9.0 之前使用内置信任库，2.9.0 与 2.9.1 在无法加载 JDK 信任库时回退使用它。直接调用传输构造器使用 JDK 信任库，需安装其厂商更新。不能只升级 Cloud SDK 就认定所有应用已修复。Python grpcio、Ruby grpc 和 PHP grpc/grpc 的内置库不读取系统根证书；已弃用的 Node grpc 和 .NET Grpc.Core 需要迁移。按新增清单更新实际依赖、核验三张根证书已移除，并重建、重新分发或部署。Google 再次表示 Cloud 基础设施未被入侵，遥测未发现针对 Cloud 工作负载的利用；这是同一 CA 事件的下游修复补充。
+
+**11 月 2 日网格处置指南：** Google 的 GCP-2026-076 补充了上列三条集群内 Cloud Service Mesh 修补版本，托管部署无需客户操作。所链接的 Istio 公告区分了公有根证书信任与网格自行签发的 mTLS。较旧 1.29 分支更新了 CA 镜像，但 Go 1.25 没有密钥拒信修复回移。这仍是既有 CA 证书被攻破事件，并非网格签发密钥发生新的泄露。
