@@ -6,8 +6,8 @@ tags:
 - Chainalysis
 - SaaS
 - data breach
-summary: Chainalysis paused Reactor, Data Solutions, Chain (Beta) and Rapid; Hexagate may be affected, and KYT has feature exceptions. KYT/Address Screening otherwise operate. Customer user IDs, names, emails and organization roles were accessed; no evidence yet of investigation content, cleartext passwords, MFA secrets or session-token access.
-splash: 'Chainalysis customers: four products paused, possible Hexagate impact and KYT exceptions; identity-data scope remains under investigation'
+summary: Chainalysis paused Reactor, Data Solutions, Chain (Beta) and Rapid; Academy and Hexagate may be affected, and KYT has exceptions. Customer user IDs, names, emails and organization roles were accessed; no evidence yet of investigation content, cleartext passwords, MFA-secret or session-token access. Other KYT/Address Screening functions operate.
+splash: 'Chainalysis customers: four products paused, possible Academy/Hexagate impact and KYT exceptions; identity-data scope under investigation'
 wipe: Enable two-factor authentication, scrutinize unexpected login or reset prompts and obtain your organization's affected-record breakdown
 inTheWild: 'yes'
 inTheWildNote: Chainalysis confirms unauthorized access to systems, tools and customer identity data.
@@ -28,13 +28,16 @@ timeline:
 - date: Nov 2, 19:43 UTC
   title: More products and monitoring features affected
   body: Data Solutions, Chain (Beta) and Rapid join Reactor as temporarily unavailable; some Hexagate monitoring capabilities may be affected.
+- date: Nov 3, 14:30 UTC
+  title: Academy training may also be inaccessible
+  body: The company adds its training platform to the security-maintenance impact; restoration work continues without a deadline.
 checklist:
 - title: Enable two-factor authentication
   hint: Ask your existing Chainalysis account manager for help if your organization has not enabled it. Check unexpected authentication or password-reset prompts through your normal sign-in route before responding.
 - title: Confirm your organization's exposure
   hint: Follow the direct customer updates and request the promised record breakdown. Treat unsolicited recovery or recruiting messages cautiously; verify senders through an established contact rather than links in the message.
 - title: Plan around the product-specific interruption
-  hint: Check the official security-maintenance incident and your account manager before relying on Reactor, Data Solutions, Chain (Beta) or Rapid. Some Hexagate monitoring may be affected; KYT and Address Screening otherwise operate, except KYT Graph preview and Reactor integration. Login issues may occur. The latest status update on November 3 at 08:55 UTC still says work is ongoing, without a restoration deadline. Report suspicious activity to your IT/security team and follow established protocols.
+  hint: Check the official security-maintenance incident and your account manager before relying on Reactor, Data Solutions, Chain (Beta) or Rapid. Some Hexagate monitoring may be affected; KYT and Address Screening otherwise operate, except KYT Graph preview and Reactor integration. Login issues may occur. The November 3 14:30 UTC update also warns Academy training may be inaccessible; maintenance continues without a restoration deadline. Report suspicious activity to your IT/security team and follow established protocols.
 sources:
 - name: Chainalysis original notice and full customer email
   url: https://www.chainalysis.com/blog/security-incident-october-30/
@@ -43,7 +46,7 @@ sources:
   url: https://www.bleepingcomputer.com/news/security/chainalysis-discloses-data-breach-from-offensive-agentic-techniques/amp/
 - name: Chainalysis security-maintenance incident history
   url: https://status.chainalysis.com/incidents/wpnnvwyvcnkz
-  says: Product-specific interruptions, KYT exceptions and possible login/Hexagate impact; maintenance still ongoing November 3 at 08:55 UTC.
+  says: Product-specific interruptions, KYT exceptions and possible login/Hexagate impact; November 3 14:30 UTC adds possible Academy inaccessibility.
   primary: true
 updated: 2026-11-03
 ---
@@ -52,4 +55,4 @@ The company describes offensive agentic techniques but identifies no attack fram
 
 **November 2 service update:** Chainalysis reports ongoing cyber threats associated with this incident. It has proactively disabled selected products, including Reactor and Data Solutions, pending further assessments with external security experts. Its blog says compliance transaction monitoring continues under close monitoring; the status-page exceptions below qualify that statement. These decisions do not establish new confirmed data exposure or completed containment; the investigation and organization-specific impact review continue.
 
-**Product-specific status:** The November 2 status history qualifies the broader transaction-monitoring statement: KYT Graph preview and the KYT integration with Reactor are exceptions to normal KYT/Address Screening operation. It also identifies possible login issues, additional outages for Chain (Beta) and Rapid, and possible impact to some Hexagate monitoring. The November 3 08:55 UTC update still reports ongoing maintenance. These availability effects do not establish additional data access or a completed recovery.
+**Product-specific status:** The November 2 status history qualifies the broader transaction-monitoring statement: KYT Graph preview and the KYT integration with Reactor are exceptions to normal KYT/Address Screening operation. It also identifies possible login issues, additional outages for Chain (Beta) and Rapid, and possible impact to some Hexagate monitoring. The November 3 14:30 UTC update adds that the Academy training platform may be inaccessible; maintenance continues. These availability effects do not establish additional data access or a completed recovery.
