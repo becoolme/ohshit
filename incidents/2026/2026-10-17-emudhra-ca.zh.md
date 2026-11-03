@@ -4,7 +4,7 @@ headline: "eMudhra：八个 CA 私钥，计算器按几下就猜出来了"
 summary: >-
   emSign ECC Root CA - G3 下的八张中间证书（六张 TLS，两张代码签名）由 Sectigo 交叉签名，它们的 P-384 私钥都是小于 256 的整数。任何人都能瞬间还原出私钥，给任意域名签发证书。受影响的 Dart、Flutter 和 Firestore 客户端构建需要更新。
 splash: "信任 emSign ECC G3 或 Sectigo 交叉签名的客户端；网络路径上的攻击者可针对未修补的运行时及内嵌 SDK"
-wipe: "更新浏览器、系统和信任库（certifi 2026.10.19、Go 1.27.3 / 1.26.10、Node 22.23.4+）；赶在 Chrome 约 10月27日移除根证书前，更换 emSign ECC G3 下的证书"
+wipe: "更新系统、浏览器及应用 CA 证书包（certifi 2026.10.19、Go 1.27.3 / 1.26.10、Node 22.23.4+），立即更换受影响证书。"
 inTheWildNote: CT 日志里没发现终端实体证书；几小时内就被拦截
 oneLiner: >-
   CA 的私钥本该是一个 384 位的秘密；这几个却小到掰着手指脚趾就能数过来，谁都能给任意网站签出“受信任”的证书。
@@ -148,7 +148,7 @@ checklist:
   - title: 检查代码签名信任
     hint: 八张里有两张是受微软信任的代码签名 CA
   - title: 你自己的证书如果链到 emSign ECC Root CA - G3，赶紧换掉
-    hint: 找别的 CA 重新签发。这八张中间证书已经验证不过了，Chrome 也会在 10月27日前后移除该根证书
+    hint: 立即从其他 CA 重新签发。八张中间证书已被吊销；Chrome 公布的根证书移除目标约为 10月27日，期限已过。应核验客户端当前信任状态，不要继续等待该日期。
   - title: 在 CT 监控里搜 emSign 签发的证书
     hint: 你的域名下只要出现不是你申请的证书，就是危险信号
   - title: 刷新 Docker Sandboxes 模板并重建现有沙箱
@@ -282,4 +282,4 @@ CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eM
 
 **11月2日更新：** 厂商下载归档现已列出11月2日的 Checkmk 2.5.0p18，并提供各版本、平台的软件包元数据。Werk 22169 和 22623 将该版本列为内置 CA 信任库修复，不再带有此前的尚未发布标记。这取代先前的可用性警告，但仍须更新受影响站点和 Agent 组件，以及单独的系统、站点信任库；不是新的利用证据。
 
-**11月3日补充，追踪 11月2日官方更新：** Google 的 GCP-2026-075 明确，Google Cloud SDK Libraries 通常不自带 CA，信任来自传输依赖、运行时或系统；Java google-api-client 2.9.2 之前是例外。该 Java 库的 2.9.0 之前版本始终使用内置信任库，2.9.0 与 2.9.1 则在无法加载 JDK 信任库时回退使用它。不能只升级 Cloud SDK 就认定所有应用已修复。Python grpcio、Ruby grpc 和 PHP grpc/grpc 的内置库不读取系统根证书；已弃用的 Node grpc 和 .NET Grpc.Core 需要迁移。按新增清单更新实际依赖、核验三张根证书已移除，并重建、重新分发或部署。Google 再次表示 Cloud 基础设施未被入侵，遥测未发现针对 Cloud 工作负载的利用；这是同一 CA 事件的下游修复补充。
+**11月3日补充，追踪 11月2日官方更新：** Google 的 GCP-2026-075 明确，Google Cloud SDK Libraries 通常不自带 CA，信任来自传输依赖、运行时或系统；Java google-api-client 2.9.2 之前是例外。对于 GoogleNetHttpTransport.newTrustedTransport()，2.9.0 之前使用内置信任库，2.9.0 与 2.9.1 在无法加载 JDK 信任库时回退使用它。直接调用传输构造器使用 JDK 信任库，需安装其厂商更新。不能只升级 Cloud SDK 就认定所有应用已修复。Python grpcio、Ruby grpc 和 PHP grpc/grpc 的内置库不读取系统根证书；已弃用的 Node grpc 和 .NET Grpc.Core 需要迁移。按新增清单更新实际依赖、核验三张根证书已移除，并重建、重新分发或部署。Google 再次表示 Cloud 基础设施未被入侵，遥测未发现针对 Cloud 工作负载的利用；这是同一 CA 事件的下游修复补充。

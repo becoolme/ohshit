@@ -11,7 +11,7 @@ summary: >-
   Sectigo, had P-384 private keys that were integers below 256. Anyone could recover them instantly and mint
   certificates for any domain. Affected Dart, Flutter and Firestore client builds need updates.
 splash: "Clients trusting emSign ECC G3 / Sectigo cross-signs; network-path attackers can target unpatched runtimes and embedded SDKs"
-wipe: "Update browsers, OSes and trust stores (certifi 2026.10.19, Go 1.27.3 / 1.26.10, Node 22.23.4+); replace certs under emSign ECC G3 before ~Oct 27"
+wipe: "Update OSes, browsers and app CA bundles (certifi 2026.10.19; Go 1.27.3/1.26.10; Node 22.23.4+). Replace affected certificates now."
 inTheWild: "no"
 inTheWildNote: No end-entity certs found in CT logs; blocked within hours
 oneLiner: >-
@@ -194,7 +194,7 @@ checklist:
   - title: Check code-signing trust
     hint: Two of the eight were code-signing CAs that Microsoft trusted
   - title: Replace any certificate of yours that chains to emSign ECC Root CA - G3
-    hint: Reissue from another CA. The eight intermediates already fail, and Chrome drops the root around Oct 27
+    hint: Reissue from another CA now. The eight intermediates are revoked; Chrome’s published root-removal target was around October 27, a past deadline. Verify current client trust rather than waiting for that date.
   - title: Search your CT monitor for emSign-issued certs
     hint: Anything on your domains you didn't request is a red flag
   - title: Refresh Docker Sandboxes templates and recreate existing sandboxes
@@ -407,4 +407,4 @@ For an unpatched Oracle runtime, the [operational guide](https://ops.java/emudhr
 
 **Update, November 2:** The vendor download archive now lists Checkmk 2.5.0p18 dated November 2 with edition/platform package metadata. Werks 22169 and 22623 list it as carrying the bundled CA-store fixes, without their earlier unreleased marker. This supersedes the earlier availability warning, not the need to update affected sites and agent components or separate OS/site trust stores. It is not new evidence of exploitation.
 
-**November 3 addition, following the November 2 official update:** GCP-2026-075 explains that Google Cloud SDK Libraries usually inherit trust from transport dependencies, runtimes or the OS; Java google-api-client before 2.9.2 is the exception. That Java library always uses its bundled store before 2.9.0, and falls back to it in 2.9.0/2.9.1 if the JDK store cannot be loaded. Updating a Cloud SDK alone does not prove all applications are fixed. Python grpcio, Ruby grpc and PHP grpc/grpc use bundled roots rather than system roots; deprecated Node grpc and .NET Grpc.Core require migration. Apply the added checklist to actual dependencies, verify removal of all three roots and rebuild, redistribute or redeploy. Google again reports no infrastructure breach or telemetry evidence of exploitation against Cloud workloads. This is downstream remediation of the same CA event.
+**November 3 addition, following the November 2 official update:** GCP-2026-075 explains that Google Cloud SDK Libraries usually inherit trust from transport dependencies, runtimes or the OS; Java google-api-client before 2.9.2 is the exception. For GoogleNetHttpTransport.newTrustedTransport(), versions before 2.9.0 use the bundled store, while 2.9.0/2.9.1 fall back to it if the JDK store cannot be loaded. Direct transport constructors use the JDK store and need its vendor update. Updating a Cloud SDK alone does not prove all applications are fixed. Python grpcio, Ruby grpc and PHP grpc/grpc use bundled roots rather than system roots; deprecated Node grpc and .NET Grpc.Core require migration. Apply the added checklist to actual dependencies, verify removal of all three roots and rebuild, redistribute or redeploy. Google again reports no infrastructure breach or telemetry evidence of exploitation against Cloud workloads. This is downstream remediation of the same CA event.
