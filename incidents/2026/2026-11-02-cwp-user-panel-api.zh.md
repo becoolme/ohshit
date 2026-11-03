@@ -25,7 +25,7 @@ cves:
   description: 1.30 之前，/user_panel_dashboard/（后改为 /valid_token/）的 user 参数进入 root 数据库查询；需要访问回环 API。
 fixed:
 - product: Control Web Panel 厂商当前版本
-  status: 厂商 10月31日发布该版本；CNA 受影响边界分别为 1.12、1.16 或 1.30。核验已安装更新覆盖全部九个 CVE
+  status: 厂商 11月3日发布 1.30.1 LTS 安全更新；CNA 受影响边界分别为 1.12、1.16 或 1.30。逐项核验适用修复
 timeline:
 - date: 2026年9月8日
   title: 厂商发布 CWP 1.12
@@ -36,15 +36,20 @@ timeline:
 - date: 2026年11月2日
   title: VulnCheck 发布九项相关 CVE 记录
   body: 这是详细公开披露日，与先前版本发布日期不同。
+- date: 2026年11月3日
+  title: 厂商发布并建议所有服务器更新至 1.30.1 LTS
+  body: 进一步加固 API 密钥验证、内部调用、一次性登录链接及更新下载；默认邮件信任网络也收窄。
 checklist:
 - title: 升级实际运行的 CWP
-  hint: 在 Settings > CWP Settings > CWP updates 中使用受支持更新渠道。厂商 Update 页面显示已装与最新版本及更新日志。完成后重新核验版本和更新结果，请支持确认全部九个 CVE 均已覆盖，不能只到认证绕过的 1.12 边界。
+  hint: 在 Settings > CWP Settings > CWP updates 中使用受支持更新渠道。厂商 Update 页面显示已装与最新版本及更新日志。选择厂商现已发布的 1.30.1 LTS 或适用更新版本；完成后重新核验版本和更新结果，请支持确认全部九个 CVE 均已覆盖，不能只到认证绕过的 1.12 边界。
 - title: 限制用户面板与内部 API 访问
   hint: 作为预防措施，仅通过受信任管理路径访问面板。检查回环 API 是否因公网监听、代理或转发而暴露。本机调用者或服务端请求路径仍可能访问回环服务；只过滤公网面板不能修复 API 漏洞。
 - title: 保留并复查面板活动
   hint: 作为预防措施，保留面板及 Web 访问日志，将涉及 module、phpini_editor、protected_directory 和下文 API 路由的请求与获批活动对照。检查异常文件、账户、配置或数据库修改。路由名只是漏洞入口，不是被利用的证据；公告未发布攻击 IoC。
 - title: 上报无法解释的特权修改
   hint: 发现未经批准的命令或 root 修改时，保存证据并联系托管商或事件响应人员。打补丁无法撤销已有入侵。披露材料未提供取证清理流程。
+- title: 核验更新后的 API 和邮件行为
+  hint: 1.30.1 加固 API 密钥与一次性登录链接。检查 /usr/local/cwp/.conf/api_strict_guard_off 是否关闭严格 API 守卫，核验集成仍须授权；不要为恢复功能而关闭保护。若邮件信任网络由旧默认值改为 127.0.0.0/8，其他私网机器须配置 SMTP 认证。升级后测试合法集成及发信。
 sources:
 - name: Control Web Panel 更新日志
   says: 厂商发布日期、当前更新流程及安全改动；未逐个对应 CVE 补丁。
@@ -66,3 +71,6 @@ sources:
 其余 API 问题还涉及另一条边界：CVE-2026-77877 至 CVE-2026-77881 针对回环服务。即使描述称最终可远程执行，其评分向量也是本地，攻击者必须能访问该服务。缺少令牌验证的路由包括 /v1/restoredatabase/、/generaluser/、/last_access/、/valid_user/、/valid_token/ 和 /user_panel_dashboard/。这些不是已发布的攻击指标。
 
 CNA 给出的受影响边界不同：重定向漏洞为 1.12；文件包含、phpini_editor、protected_directory、access_token() 和 /newpass/ 为 1.16；API 缺少认证、数据库恢复及盲 SQL 注入为 1.30。厂商更新日志列出 1.30 于 10月31日发布，但未将每个 CVE 对应到修复，也未提供 1.16 条目。应使用厂商当前受支持更新并确认覆盖，不能认为到 1.12 就够了。两段式版本号沿用厂商及 CNA 标注，此处不提供版本检测器。
+
+
+**11月3日更新：** 重新审阅时，厂商更新日志新增 1.30.1 LTS 安全与稳定性版本，建议所有服务器更新。它进一步要求端口 2304 的每次 API v1 调用使用密钥，内部迁移路由仅接受本机调用，并加固账户操作、一次性登录链接及 HTTPS 更新下载。仍须确认原有关闭严格守卫的 /usr/local/cwp/.conf/api_strict_guard_off 未使策略失效。版本日志没有逐项映射全部九个 CVE，因此此版本是厂商当前推荐更新，不是本文推定的每项首次修复版本。升级后测试集成和邮件：对仍使用旧默认值的服务器，新默认可信邮件网络收窄至 127.0.0.0/8；其他私网机器上的应用须通过 SMTP 认证发信。

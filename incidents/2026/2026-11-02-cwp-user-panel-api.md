@@ -2,6 +2,7 @@
 title: Control Web Panel discloses nine flaws across user-panel and root API boundaries
 level: 3
 date: '2026-11-02'
+updated: 2026-11-03
 tags:
 - hosting
 - auth bypass
@@ -52,8 +53,8 @@ cves:
   description: Before 1.30, the user parameter in /user_panel_dashboard/, later /valid_token/, enters a root database query; loopback API access is required.
 fixed:
 - product: Control Web Panel current vendor release
-  version: '1.30'
-  status: Vendor release dated October 31; CNA affected bounds are 1.12, 1.16 or 1.30. Confirm the installed update covers all nine CVEs
+  version: 1.30.1
+  status: Vendor November 3 LTS security update; CNA affected bounds are 1.12, 1.16 or 1.30. Verify each applicable fix
 timeline:
 - date: Sep 8, 2026
   title: Vendor releases CWP 1.12
@@ -64,15 +65,20 @@ timeline:
 - date: Nov 2, 2026
   title: VulnCheck publishes nine related CVE records
   body: Detailed public disclosure date, distinct from the earlier release dates.
+- date: Nov 3, 2026
+  title: Vendor releases 1.30.1 LTS and recommends it for every server
+  body: Further hardens API-key checks, internal calls, one-time login links and update downloads; default mail trust networks also narrow.
 checklist:
 - title: Upgrade the actual CWP installation
-  hint: Use Settings > CWP Settings > CWP updates and the supported update channel. The vendor’s Update page shows installed/latest versions and an update log. Confirm the version and completed update afterward; ask support to verify coverage of all nine CVEs. Do not stop at the 1.12 auth-bypass boundary.
+  hint: Use Settings > CWP Settings > CWP updates and the supported update channel. The vendor’s Update page shows installed/latest versions and an update log. Choose the now-published 1.30.1 LTS or an applicable later release. Confirm the version and completed update afterward; ask support to verify coverage of all nine CVEs. Do not stop at the 1.12 auth-bypass boundary.
 - title: Restrict user-panel and internal API access
   hint: As a precaution, limit panel access to trusted management paths. Check that loopback API services are not exposed through public binds, proxies or forwarding. Local callers or server-side request paths may still reach loopback; public-panel filtering alone does not fix API bugs.
 - title: Preserve and review panel activity
   hint: As a precaution, retain panel/web access logs and compare requests involving module, phpini_editor, protected_directory and the API routes listed below with approved activity. Review unexpected file, account, configuration or database changes. Route names are vulnerable surfaces, not proof of exploitation; the advisories publish no attack IoCs.
 - title: Escalate unexplained privileged changes
   hint: Preserve evidence and involve your hosting provider or incident responder if unapproved commands or root-level changes are found. Patching does not undo an existing compromise. The disclosures do not supply a forensic cleanup procedure.
+- title: Verify API and mail behavior after updating
+  hint: Version 1.30.1 hardens API keys and one-time login links. Check whether /usr/local/cwp/.conf/api_strict_guard_off disables the strict API guard and confirm integrations still require authorization; do not restore functionality by disabling protection. If mail trust changes from old defaults to 127.0.0.0/8, configure SMTP authentication on other private-network machines. Test legitimate integrations and mail delivery.
 sources:
 - name: Control Web Panel changelog
   url: https://control-webpanel.com/changelog
@@ -123,3 +129,6 @@ The user-panel authentication flaw is separate from the file and command-executi
 The remaining API issues are an additional boundary: CVE-2026-77877 through CVE-2026-77881 concern a loopback service. Their vectors are local, even where the description calls the resulting execution remote. An attacker must be able to reach that service. Missing-token routes include /v1/restoredatabase/, /generaluser/, /last_access/, /valid_user/, /valid_token/ and /user_panel_dashboard/. These are not published attack indicators.
 
 CNA affected bounds differ: 1.12 for the redirect flaw; 1.16 for file inclusion, phpini_editor, protected_directory, access_token() and /newpass/; 1.30 for missing API authentication, database restore and blind SQL injection. The vendor changelog lists 1.30 as released October 31 but does not map every CVE to its fix, and does not provide a 1.16 entry. Use the current supported vendor update and confirm coverage rather than treating 1.12 as sufficient. The two-component version labels are the vendor/CNA labels; no version checker is offered.
+
+
+**November 3 update:** On rereading, the vendor changelog added 1.30.1 LTS, a security and stability release recommended for every server. It further requires API keys for each API v1 call on port2304, limits internal migration routes to the local server, and hardens account actions, one-time login links and HTTPS update downloads. Check that an existing /usr/local/cwp/.conf/api_strict_guard_off switch is not disabling the strict guard. The changelog still does not map all nine CVEs individually, so this is the current vendor-recommended update rather than an inferred first fix for every flaw. Test integrations and mail after updating: servers still on the old default mail trust list are changed to 127.0.0.0/8, and applications on other private-network machines must use SMTP authentication.
