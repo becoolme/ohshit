@@ -17,7 +17,7 @@ fixed: []
 timeline:
 - date: Nov 1, 2026
   title: CBcloud detects unauthorized access
-  body: The company blocks access, disables misused accounts and fixes the exploited flaw.
+  body: The company blocks access, disables misused accounts and fixes the exploited defect.
 - date: Nov 2, 2026
   title: PickGo business-service incident disclosed
   body: Customer and partner-driver information may have leaked; scope and counts are still being investigated.
@@ -30,7 +30,7 @@ checklist:
 - title: Treat delivery-specific contact cautiously
   hint: 'Names, delivery addresses, some phone/postcode data and order details can make impersonation convincing. CBcloud warns against unexpected email, SMS and calls: do not follow their URLs or supply personal data; verify through a known company channel even when the sender knows an order.'
 - title: Check service restrictions without assuming a full outage
-  hint: CBcloud restricted some functions and access from outside Japan after blocking the attacker and fixing the exploited flaw. Seven-Eleven says 7NOW operates normally. Business users should confirm their own PickGo integration/operating limits through CBcloud support; no customer patch or restoration deadline is published.
+  hint: CBcloud restricted some functions and access from outside Japan after blocking the attacker and fixing the exploited defect. Seven-Eleven says 7NOW operates normally. Business users should confirm their own PickGo integration/operating limits through CBcloud support; no customer patch or restoration deadline is published.
 sources:
 - name: CBcloud first PickGo incident notice
   url: https://cb-cloud.com/news/AJZDw0h3
@@ -42,7 +42,7 @@ sources:
   says: Confirms 7NOW field-specific records acquired, excludes card/login credentials, reports normal operation and no confirmed secondary misuse, SMS notices and regulator report.
 ---
 
-CBcloud detected unauthorized access to PickGo’s business service on November 1 and published its first notice on November 2. It disabled misused accounts, blocked attacker communication and fixed the exploited flaw, without identifying a CVE or entry mechanism. Broader customer/partner-driver leakage is possible and still being scoped; the company says it found no malware contamination.
+CBcloud detected unauthorized access to PickGo’s business service on November 1 and published its first notice on November 2. It disabled misused accounts, blocked attacker communication and fixed the exploited defect, without identifying a CVE or entry mechanism. Broader customer/partner-driver leakage is possible and still being scoped; the company says it found no malware contamination.
 
 Seven-Eleven Japan’s November 3 notice confirms 7NOW recipient data was acquired: 164,180 records containing kana names, 4,762 with kana names and addresses, and 209 with names, addresses, phone numbers and postcodes. The notice does not establish whether categories overlap or provide a deduplicated person count, so no combined total is claimed. Some order dates, store names/addresses and item names were also obtained. Seven-Eleven says card data and login IDs/passwords were not leaked, and its authentication information/integration settings were not found exposed or altered.
 
