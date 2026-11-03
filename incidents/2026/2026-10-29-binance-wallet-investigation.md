@@ -2,7 +2,7 @@
 title: Binance preliminary report details signing-service intrusion and revises funding figures
 level: 4
 date: 2026-10-29
-updated: 2026-11-03
+updated: '2026-11-03'
 tags:
   - Binance
   - crypto
@@ -106,6 +106,9 @@ timeline:
   - date: Nov 3, 2026
     title: Preliminary report updates attack path, assets and response
     body: The report puts assets involved at ~$6.34bn and frozen/blocked assets at ~$2.85bn, retrospectively reporting 98% replacement by October 31 (UTC+8) versus earlier 95% notices. Binance claims exploited entry points were closed and affected systems rebuilt; independent review is still being commissioned.
+  - date: Nov 3, 2026
+    title: TRM traces new laundering routes through tokens and chained swaps
+    body: Research follows self-minted liquidity-pool tokens, lending receipt tokens and bridge-to-bridge payouts. These observations do not revise vendor losses or establish new platform intrusions.
   - date: Nov 1, 06:00–09:00 UTC (scheduled)
     title: First withdrawal phase is planned
 checklist:
@@ -121,6 +124,8 @@ checklist:
     hint: "Use Binance’s official PoR page and linked account-balance guide on a trusted device. In Profile → Wallet → Verification select the October 31 00:00 UTC record with verification type Merkle Tree + Zksnarks and download its data. The guide lists verifier 1.2.1 for August 2026 onward. Place config.json, proof.csv and zkpor864.vk.save in its config folder; check ProofTable and ZkKeyName against the downloaded proof/key. Run the platform’s verifier for the root, then add your account-specific user_config.json and use -user to check inclusion; never upload account files to an unsolicited checker. Update #5 covers BTC, ETH, USDT, BNB, SOL, USDC, XRP, USD1, RLUSD and ZEC. This is a historical snapshot, not a live balance or evidence that stolen assets were recovered. Update #6 announces a progressive rollout from November 3 04:00 UTC. Use its exact asset/network table and the live withdrawal or network-status page; the announcement does not confirm every listed pair is already open."
   - title: 'Operators: investigate devices, deployment tokens and signing authority'
     hint: 'The report names /opt/homebrew/Cellar/pyenv/2.8.0/libexec/pyenv_, the replaced /opt/homebrew/Cellar/pyenv/2.8.0/libexec/pyenv and /opt/homebrew/bin/pyenv. Correlate file content, symlinks, processes and deployment logs; a path match alone is not proof. General operator response: isolate suspected devices, preserve evidence, rebuild from trusted media and revoke affected credentials/deployment tokens from a clean environment. Check signing-service access and whether EIP-7702 delegation still authorizes unknown code. Do not execute suspect installers. The report does not require ordinary Binance users to perform these server operations.'
+  - title: Trace receipt tokens and cross-chain payouts when screening exposure
+    hint: Compliance teams should follow lending receipt-token transfers and liquidity-pool relationships, not just USDT transfers; examine several hops and bridge-to-bridge deposit payouts. TRM notes that some matches rely only on amount/timing and remain under investigation. Use the linked research and corroborate counterparties; a label or matched transfer alone does not establish ownership or criminal involvement.
 sources:
   - name: Binance investigation notice
     url: https://x.com/binance/status/2115915708504900039
@@ -259,6 +264,10 @@ sources:
     says: 'Full public page read without login: multi-stage device intrusion, token/signing-service access, delegation removal and revised 98% replacement/~$2.85bn frozen or blocked. Not a final independent audit.'
     url: https://www.binance.com/en/square/post/384314641614134
     primary: true
+  - name: TRM November 3 laundering update
+    url: https://www.trmlabs.com/resources/blog/binance-hack-update-north-korea-launders-proceeds-through-self-minted-tokens-and-chained-bridges
+    primary: true
+    says: Researchers trace self-minted tokens/pools, lending receipt tokens and chained bridge swaps. Quantities/snapshot dates and the stale no-government-attribution FAQ are not adopted as reconciled facts.
 ---
 
 Binance’s initial notice said it had not confirmed an impact on user funds. The exchange then edited that notice to state that user funds are safe, and subsequently said withdrawals would resume after the security issue is fully resolved. These are the vendor’s statements, not an independently audited reserve or loss assessment. No resumption time or technical containment report was supplied in those notices. The withdrawal notice does not specify affected networks or withdrawal routes; do not infer that every Binance product is affected. Those earlier notices supported L3 because they acknowledged disruption without confirming the suspected theft.
@@ -302,3 +311,6 @@ The report says 50 signed transactions manipulated account nonces and EIP-7702 d
 **Revised amounts and containment:** The report now puts assets involved at about $6.34bn and frozen or blocked assets at about $2.85bn, subject to reconciliation and price changes. It retrospectively says 98% of affected token assets had been replenished by October 31 (UTC+8), with illiquid tokens still being purchased. This differs from the roughly 95% in the November 1–2 notices: treat it as a later vendor revision, while preserving the historical timeline. Frozen assets, blocked assets and company-funded replacement are not returned stolen funds or an audited net loss.
 
 Binance claims exploited entry points are closed, systems on the attack path have been rebuilt or replaced, related credentials/tokens revoked and employee devices checked, with stronger wallet, device and anomaly monitoring. Independent security review is still being commissioned and some details remain undisclosed for the investigation. These are preliminary vendor findings, not a completed independent audit, final root cause or complete service restoration. The published pyenv paths require file and behavioural evidence; legitimate installations can contain the same paths.
+
+
+**November 3 laundering research:** TRM reports value moving through attacker-created tokens and liquidity pools on TRON, transferable lending receipt tokens, and chained cross-chain swaps whose payout is sent directly to another bridge’s deposit address. These routes can break a USDT-only trace without proving funds vanished. TRM also describes active TRON/Solana movement while major ETH/BTC positions remained parked at its observation time; no current all-funds location is inferred. This is researcher attribution, with some payouts linked by amounts/timing. The report’s differing amounts and snapshot dates are not reconciled here and do not replace Binance’s figures, establish returned funds or prove that an onward service was compromised. Its FAQ’s statement that no government attributed the theft is superseded by the FBI source already retained above.
