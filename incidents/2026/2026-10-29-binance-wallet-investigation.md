@@ -9,7 +9,7 @@ tags:
   - investigation
 ecosystems:
   - crypto
-summary: Binance preliminarily reports signing-service access and persistent EIP-7702 delegation; FBI blames TraderTraitor. It revises assets involved to ~$6.34bn, frozen/blocked to ~$2.85bn and replacement to 98% by Oct 31, not recovery. Selected withdrawals and ten-token reserve proofs are available; final findings and full restoration remain pending.
+summary: Binance preliminarily reports signing-service access and persistent EIP-7702 delegation; FBI blames TraderTraitor. It revises assets involved to ~$6.34bn, frozen/blocked to ~$2.85bn and replacement to 98% by Oct 31 (UTC+8), not recovery. Selected withdrawals and ten-token reserve proofs are available; final findings and full restoration remain pending.
 splash: Binance.com withdrawal users; Aave reports a precautionary freeze of DAO-operated V3/V4 markets
 wipe: Follow official updates, inspect account activity, and use Binance's account-lock procedure if you find unauthorized actions
 inTheWild: yes
@@ -105,7 +105,7 @@ timeline:
     body: "Recovery Update #6 lists further assets across nine networks and BSC bSTOCKS. Availability rolls out progressively after security/readiness checks; the notice does not establish that every listed pair is already open. Deposits remain open."
   - date: Nov 3, 2026
     title: Preliminary report updates attack path, assets and response
-    body: The report puts assets involved at ~$6.34bn and frozen/blocked assets at ~$2.85bn, retrospectively reporting 98% replacement by October 31 versus earlier 95% notices. Binance claims exploited entry points were closed and affected systems rebuilt; independent review is still being commissioned.
+    body: The report puts assets involved at ~$6.34bn and frozen/blocked assets at ~$2.85bn, retrospectively reporting 98% replacement by October 31 (UTC+8) versus earlier 95% notices. Binance claims exploited entry points were closed and affected systems rebuilt; independent review is still being commissioned.
   - date: Nov 1, 06:00–09:00 UTC (scheduled)
     title: First withdrawal phase is planned
 checklist:
@@ -295,7 +295,7 @@ Binance separately reports a verified frozen amount of around $3 billion. This v
 
 **November 3 withdrawal update:** Recovery Update #6 announces further asset/network pairs from 04:00 UTC across BSC, Ethereum, Solana, XRP, SUI, Arbitrum, Optimism, TRX and Base, plus all BSC bSTOCKS. Its table is a rollout list: each pair awaits security and readiness checks, and the vendor directs users to live availability. Deposits remain open; delays and retries may occur. This advances the earlier plan without establishing complete restoration, recovered stolen funds or a final root cause.
 
-**November 3 preliminary investigation:** Binance retrospectively says engineer A ran a tampered Homebrew installer while seeking an AI coding tool in June. Device replacement and credential rotation followed, but role/team information had already been exposed. In September, engineer B ran a fake recruitment assignment that installed malware on a work device and replaced a development-tool component. This does not establish compromise of the official Homebrew project or an unpatched CVE. On October 20 the attacker pivoted through internal AI tools to other devices and obtained A’s container-deployment token. A malicious container was deployed from C’s device on October 29 at 17:15–19:56 UTC, followed by access to the internal wallet signing service, bypassing ordinary withdrawals.
+**November 3 preliminary investigation:** Binance retrospectively says engineer A downloaded a tampered Homebrew installer while seeking an AI coding tool in June. Device replacement and credential rotation followed, but role/team information had already been exposed. In September, engineer B ran a fake recruitment assignment that installed malware on a work device and replaced a development-tool component. This does not establish compromise of the official Homebrew project or an unpatched CVE. On October 20 the attacker pivoted through internal AI tools to other devices and obtained A’s container-deployment token. A malicious container was deployed from C’s device on October 29 at 17:15–19:56 UTC, followed by access to the internal wallet signing service, bypassing ordinary withdrawals.
 
 The report says 50 signed transactions manipulated account nonces and EIP-7702 delegation; malicious on-chain authority persisted after withdrawals were paused. The last pending 2,961.9 ETH transfer finalized on October 29 at 23:56 UTC. Binance says a new authorization operation from its Binance14 hot wallet cleared the delegation on October 30 at 00:10 UTC. These UTC times are converted from the report’s explicit UTC+8 timezone. This is not evidence that MPC was broken, private keys leaked or every ordinary user account was compromised.
 
