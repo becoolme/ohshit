@@ -4,7 +4,7 @@ tags:
 - Chainalysis
 - SaaS
 - 数据泄露
-summary: Chainalysis 已下线 Reactor 和 Data Solutions，以完成进一步安全评估。合规交易监控继续运行并加强监测。客户身份数据已遭访问；公司仍称未发现调查内容、凭据或会话令牌遭访问的证据。
+summary: Chainalysis 已下线 Reactor 和 Data Solutions，以完成进一步安全评估。合规交易监控继续运行并受到密切监测。客户用户 ID、姓名、邮箱及组织角色已遭访问；公司仍称未发现调查内容、凭据或会话令牌遭访问的证据。
 splash: Chainalysis 客户：Reactor 和 Data Solutions 已下线，客户身份数据影响范围仍在调查
 wipe: 启用双因素认证，审查异常登录或重置提示，获取本组织受影响记录明细
 inTheWildNote: Chainalysis 确认系统、工具及客户身份数据遭未授权访问。

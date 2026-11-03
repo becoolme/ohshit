@@ -6,7 +6,7 @@ tags:
 - Chainalysis
 - SaaS
 - data breach
-summary: Chainalysis has taken Reactor and Data Solutions offline for additional security assessments. Compliance transaction monitoring remains operational under enhanced monitoring. Customer identity data was accessed; the vendor still reports no evidence of access to investigation content, credentials or session tokens.
+summary: Chainalysis has taken Reactor and Data Solutions offline for additional security assessments. Compliance transaction monitoring continues under close monitoring. Customer user IDs, names, emails and organization roles were accessed; the vendor still reports no evidence of access to investigation content, credentials or session tokens.
 splash: 'Chainalysis customers: Reactor and Data Solutions are offline; customer identity-data scope remains under investigation'
 wipe: Enable two-factor authentication, scrutinize unexpected login or reset prompts and obtain your organization's affected-record breakdown
 inTheWild: 'yes'
