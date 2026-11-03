@@ -49,6 +49,18 @@ cves:
     score: 9.3
     name: PyPI publishing action bundled CA trust
     description: The action bundles certifi roots used by its Sigstore dependency; the advisory lists 1.14.3 as patched.
+  - id: GHSA-2xm2-c8xx-p9vh
+    name: Python grpcio bundled CA trust
+    description: grpcio before 1.84.1 retains affected roots; check the advisory for patched older release lines.
+  - id: GHSA-p3vr-xp4c-r8fh
+    name: Ruby grpc bundled CA trust
+    description: Ruby grpc before 1.84.1 uses affected bundled roots rather than the OS trust store.
+  - id: GHSA-gvrc-7wf9-p7hg
+    name: PHP grpc/grpc bundled CA trust
+    description: Composer grpc/grpc before 1.84.1 uses an affected bundled trust store.
+  - id: GHSA-m4gc-hcgx-wmc7
+    name: Google Java API client bundled CA trust
+    description: google-api-client before 2.9.2 can load affected bundled roots through newTrustedTransport(); JDK stores require separate updates.
 fixed:
   - { product: Go, version: 1.27.3 / 1.26.10, status: "CVE-2026-111943. Go 1.25 and older get no fix" }
   - { product: Python certifi, version: 2026.10.19 }
@@ -100,6 +112,9 @@ fixed:
   - product: webpki-root-certs / webpki-roots
     version: 1.0.10
     status: Update whichever root-store crate the application uses; RUSTSEC-2026-0383 / 0381
+  - product: Java google-api-client-apache-v5
+    version: 2.9.0
+    status: Separate artifact; advisory lists 2.7.0–2.8.1 as affected; also patch the JDK trust store
 timeline:
   - date: Apr 30, 2025
     title: The keys are generated, in a batch of 24 intermediates
@@ -195,9 +210,9 @@ checklist:
   - title: Update the PyPI publishing action in CI
     hint: Use pypa/gh-action-pypi-publish 1.14.3 or later, including replacing older commit-SHA pins. Updating runner or local certifi alone does not replace the action’s bundled copy.
   - title: Update Python, Ruby and PHP transport dependencies
-    hint: For Python, use certifi 2026.10.19+, httplib2 0.32.1+ (its bundle is used without certifi), and grpcio 1.84.1+. For Ruby, update grpc to 1.84.1+ or update google-cloud-* gems to pull it in. For PHP, update grpc/grpc to 1.84.1+ or google/gax to 1.51.2+. Update the OS store for REST paths too; do not assume gRPC reads system roots.
+    hint: For Python, use certifi 2026.10.19+, httplib2 0.32.1+ (its bundle is used without certifi), and grpcio 1.84.1+. For Ruby, update grpc to 1.84.1+ or update google-cloud-* gems to pull it in. For PHP, update grpc/grpc to 1.84.1+ or google/gax to 1.51.2+. Update the OS store for REST paths too; do not assume gRPC reads system roots. The PHP PECL extension itself does not bundle roots; its system store still needs updating. Explicitly supplied gRPC root sets need separate verification.
   - title: Verify Google Java clients and legacy gRPC transports
-    hint: For newTrustedTransport(), use google-api-client 2.9.2+ or libraries-bom 26.91.0+. Service-library-only builds need a -2.9.2 or later suffix or an explicit client dependency. Spring line patches are 8.3.1, 7.5.2, 6.5.12 and 3.9.19 or later. Separately update JDK and Windows roots. Migrate deprecated Node grpc npm to @grpc/grpc-js and .NET Grpc.Core to Grpc.Net.Client.
+    hint: For newTrustedTransport(), use google-api-client 2.9.2+ or libraries-bom 26.91.0+. Service-library-only builds need a -2.9.2 or later suffix or an explicit client dependency. Spring line patches are 8.3.1, 7.5.2, 6.5.12 and 3.9.19 or later. Before 2.9.0, Apache newTrustedTransport() methods also use bundled roots; update the separate google-api-client-apache-v5 artifact from affected 2.7.0–2.8.1 to 2.9.0+. Direct transport constructors use the JDK store. Separately update JDK and Windows roots. Migrate deprecated Node grpc npm to @grpc/grpc-js and .NET Grpc.Core to Grpc.Net.Client.
   - title: Rebuild the actual C++, Rust, Go and Swift trust paths
     hint: 'For C++ fallback roots.pem, relink gRPC 1.84.1+ and update system/image roots. Run cargo update for Rust; verify rustls-webpki 0.103.16+ and the used webpki-root-certs or webpki-roots 1.0.10+. Rebuild Go with the patched toolchains above and current base images. Swift AsyncHTTPClient/grpc-swift-2 uses system stores: update the OS; do not apply the separate Objective-C CocoaPod fix to Swift by assumption. Redistribute rebuilt apps or redeploy images.'
   - title: Check the root fingerprints actually loaded by applications
@@ -324,6 +339,22 @@ sources:
     url: https://docs.cloud.google.com/support/bulletins#gcp-2026-075
     primary: true
     says: 'November 2 GCP-2026-075: per-language transport/client/system-store updates and verification fingerprints; GCP-2026-071 adds SDK Libraries the same day.'
+  - name: gRPC Python advisory
+    url: https://github.com/grpc/grpc/security/advisories/GHSA-2xm2-c8xx-p9vh
+    primary: true
+    says: Original bundled-root advisory; upgrade and custom trust-store caveats.
+  - name: gRPC Ruby advisory
+    url: https://github.com/grpc/grpc/security/advisories/GHSA-p3vr-xp4c-r8fh
+    primary: true
+    says: Original bundled-root advisory; upgrade and custom trust-store caveats.
+  - name: gRPC PHP advisory
+    url: https://github.com/grpc/grpc/security/advisories/GHSA-gvrc-7wf9-p7hg
+    primary: true
+    says: Original bundled-root advisory; upgrade and custom trust-store caveats.
+  - name: Google Java API client advisory
+    url: https://github.com/googleapis/google-api-java-client/security/advisories/GHSA-m4gc-hcgx-wmc7
+    primary: true
+    says: Original transport-specific scope and mitigation; Java additionally covers the separate Apache v5 artifact.
 ---
 
 A certificate authority's private key is the thing that makes "this is really your bank" true. For eight
@@ -375,6 +406,5 @@ For an unpatched Oracle runtime, the [operational guide](https://ops.java/emudhr
 **November 1 addition:** PyPA’s October 21 advisory covers this same trust-store event, not a separate compromise of PyPI publishing. Its metadata includes 1.14.2 as affected while prose says versions before 1.14.2; both direct users to 1.14.3. Update the action itself rather than assuming a runner CA update is sufficient. The advisory does not establish theft of publishing credentials.
 
 **Update, November 2:** The vendor download archive now lists Checkmk 2.5.0p18 dated November 2 with edition/platform package metadata. Werks 22169 and 22623 list it as carrying the bundled CA-store fixes, without their earlier unreleased marker. This supersedes the earlier availability warning, not the need to update affected sites and agent components or separate OS/site trust stores. It is not new evidence of exploitation.
-
 
 **November 3 addition, following the November 2 official update:** GCP-2026-075 explains that Google Cloud SDK Libraries usually inherit trust from transport dependencies, runtimes or the OS; Java google-api-client before 2.9.2 is the exception. That Java library always uses its bundled store before 2.9.0, and falls back to it in 2.9.0/2.9.1 if the JDK store cannot be loaded. Updating a Cloud SDK alone does not prove all applications are fixed. Python grpcio, Ruby grpc and PHP grpc/grpc use bundled roots rather than system roots; deprecated Node grpc and .NET Grpc.Core require migration. Apply the added checklist to actual dependencies, verify removal of all three roots and rebuild, redistribute or redeploy. Google again reports no infrastructure breach or telemetry evidence of exploitation against Cloud workloads. This is downstream remediation of the same CA event.

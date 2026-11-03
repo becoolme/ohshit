@@ -27,6 +27,14 @@ cves:
     description: Checkmk 的 certifi 和 webpki-roots 证书包仍信任受影响层级。攻击者需要拦截 TLS 连接；这属于同一 eMudhra 事件，不是新的 CA 失陷。
   - name: PyPI 发布 Action 内置 CA 信任
     description: 该 Action 内置的 certifi 根证书由 Sigstore 依赖使用；公告列出 1.14.3 为修复版本。
+  - name: Python grpcio 内置 CA 信任
+    description: grpcio 1.84.1 之前保留受影响根证书；较早分支修复请查看公告。
+  - name: Ruby grpc 内置 CA 信任
+    description: Ruby grpc 1.84.1 之前使用受影响内置根证书，而非系统信任库。
+  - name: PHP grpc/grpc 内置 CA 信任
+    description: Composer grpc/grpc 1.84.1 之前使用受影响内置信任库。
+  - name: Google Java API 客户端内置 CA 信任
+    description: google-api-client 2.9.2 之前可经 newTrustedTransport() 加载受影响内置根证书；JDK 信任库需独立更新。
 fixed:
   - { status: "CVE-2026-111943。Go 1.25 及更早版本不会修复" }
   - {}
@@ -60,6 +68,7 @@ fixed:
   - status: 若使用内置 roots.pem 而非系统证书库，须重新构建
   - status: 重建并重新部署；RUSTSEC-2026-0382
   - status: 更新应用实际使用的根证书 crate；RUSTSEC-2026-0383 / 0381
+  - status: 独立构件；公告列出 2.7.0–2.8.1 受影响；另须修补 JDK 信任库
 timeline:
   - date: 2025年4月30日
     title: 私钥生成，同一批共 24 张中间证书
@@ -155,9 +164,9 @@ checklist:
   - title: 更新 CI 中的 PyPI 发布 Action
     hint: 使用 pypa/gh-action-pypi-publish 1.14.3 或更新版本，包括替换固定到旧提交 SHA 的引用。仅更新运行器或本地 certifi 不会替换 Action 内置副本。
   - title: 更新 Python、Ruby 与 PHP 的传输依赖
-    hint: Python 使用 certifi 2026.10.19+、httplib2 0.32.1+（无 certifi 时使用其内置库）、grpcio 1.84.1+；Ruby 将 grpc 更新到 1.84.1+，或更新 google-cloud-* gems 以引入它；PHP 将 grpc/grpc 更新到 1.84.1+，或将 google/gax 更新到 1.51.2+。REST 路径还须更新系统证书库，不能假设 gRPC 会读取系统根证书。
+    hint: Python 使用 certifi 2026.10.19+、httplib2 0.32.1+（无 certifi 时使用其内置库）、grpcio 1.84.1+；Ruby 将 grpc 更新到 1.84.1+，或更新 google-cloud-* gems 以引入它；PHP 将 grpc/grpc 更新到 1.84.1+，或将 google/gax 更新到 1.51.2+。REST 路径还须更新系统证书库，不能假设 gRPC 会读取系统根证书。PHP PECL 扩展本身不内置根证书，但仍须更新其系统信任库。显式提供给 gRPC 的根证书集合需单独核验。
   - title: 核验 Google Java 客户端及旧版 gRPC
-    hint: newTrustedTransport() 用户升级 google-api-client 至 2.9.2+ 或 libraries-bom 至 26.91.0+；单独声明服务库时，使用 -2.9.2 或更新后缀，也可显式声明客户端依赖。Spring 按对应分支使用 8.3.1、7.5.2、6.5.12、3.9.19 或更新版本。JDK 及 Windows 根证书仍须独立更新。已弃用的 Node grpc npm 包迁移至 @grpc/grpc-js，.NET Grpc.Core 迁移至 Grpc.Net.Client。
+    hint: newTrustedTransport() 用户升级 google-api-client 至 2.9.2+ 或 libraries-bom 至 26.91.0+；单独声明服务库时，使用 -2.9.2 或更新后缀，也可显式声明客户端依赖。Spring 按对应分支使用 8.3.1、7.5.2、6.5.12、3.9.19 或更新版本。2.9.0 之前的 Apache newTrustedTransport() 也使用内置根证书；独立 google-api-client-apache-v5 构件的受影响 2.7.0–2.8.1 应升级至 2.9.0+。直接调用传输构造器使用 JDK 信任库。JDK 及 Windows 根证书仍须独立更新。已弃用的 Node grpc npm 包迁移至 @grpc/grpc-js，.NET Grpc.Core 迁移至 Grpc.Net.Client。
   - title: 重建 C++、Rust、Go 与 Swift 的实际信任路径
     hint: C++ 若使用回退 roots.pem，重新链接 gRPC 1.84.1+，并更新系统或镜像根证书。Rust 执行 cargo update，确认 rustls-webpki 0.103.16+ 及所用 webpki-root-certs 或 webpki-roots 1.0.10+。Go 使用上方已修补工具链和新基础镜像重建。Swift AsyncHTTPClient / grpc-swift-2 使用系统证书库，应更新系统；该指引不要求将 Objective-C CocoaPod 的独立修复套用到 Swift。随后重新分发应用或部署镜像。
   - title: 检查应用实际加载的根证书指纹
@@ -221,6 +230,14 @@ sources:
     says: 列出11月2日的 Checkmk 2.5.0p18 及各版本、平台软件包
   - name: Google Cloud SDK 各语言处置公告
     says: 11月2日 GCP-2026-075：按语言列出传输证书包、客户端及系统根证书更新和核验指纹；同日 GCP-2026-071 增列 SDK Libraries。
+  - name: gRPC Python 公告
+    says: 原始内置根证书公告；升级与自定义信任库注意事项。
+  - name: gRPC Ruby 公告
+    says: 原始内置根证书公告；升级与自定义信任库注意事项。
+  - name: gRPC PHP 公告
+    says: 原始内置根证书公告；升级与自定义信任库注意事项。
+  - name: Google Java API 客户端公告
+    says: 原始传输影响范围及缓解说明；Java 另涵盖独立 Apache v5 构件。
 ---
 CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eMudhra 有八张中间证书，P-384 私钥都是**小于 256 的整数**。据研究人员 Scott Helme 说，其中一个就是数字 4。谁要是注意到了，就能给任意域名签证书，而所有信任这条链的客户端都会照单全收。
 
@@ -264,6 +281,5 @@ CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eM
 **11 月 1 日补充：** PyPA 的 10 月 21 日公告属于同一信任库事件，不是 PyPI 发布渠道另遭入侵。元数据将 1.14.2 列为受影响，而正文说早于 1.14.2；两者均指向 1.14.3。应更新 Action 本身，不能假定运行器的 CA 更新已经足够。该公告没有证实发布凭据遭窃。
 
 **11月2日更新：** 厂商下载归档现已列出11月2日的 Checkmk 2.5.0p18，并提供各版本、平台的软件包元数据。Werk 22169 和 22623 将该版本列为内置 CA 信任库修复，不再带有此前的尚未发布标记。这取代先前的可用性警告，但仍须更新受影响站点和 Agent 组件，以及单独的系统、站点信任库；不是新的利用证据。
-
 
 **11月3日补充，追踪 11月2日官方更新：** Google 的 GCP-2026-075 明确，Google Cloud SDK Libraries 通常不自带 CA，信任来自传输依赖、运行时或系统；Java google-api-client 2.9.2 之前是例外。该 Java 库的 2.9.0 之前版本始终使用内置信任库，2.9.0 与 2.9.1 则在无法加载 JDK 信任库时回退使用它。不能只升级 Cloud SDK 就认定所有应用已修复。Python grpcio、Ruby grpc 和 PHP grpc/grpc 的内置库不读取系统根证书；已弃用的 Node grpc 和 .NET Grpc.Core 需要迁移。按新增清单更新实际依赖、核验三张根证书已移除，并重建、重新分发或部署。Google 再次表示 Cloud 基础设施未被入侵，遥测未发现针对 Cloud 工作负载的利用；这是同一 CA 事件的下游修复补充。
