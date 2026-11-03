@@ -1,14 +1,14 @@
 ---
-title: WordPress patches upgrade-window RCE as attackers probe staged installers
+title: CISA lists WordPress upgrade-window RCE as exploited; patch and investigate
 date: 2026-10-28
 level: 4
 tags: [WordPress, RCE, race condition]
 ecosystems: [php]
-summary: WordPress 7.1.4 fixes an unauthenticated upgrade-window RCE and other security issues. Wordfence observes exploitation attempts, not confirmed successful intrusions; the RCE needs a full-package update and publicly executable staging files.
+summary: CISA confirms active exploitation of WordPress’s upgrade-window RCE and requires forensic triage, with a November 6 federal due date. Install 7.1.4 or the branch backport. The race requires a full-package update and publicly executable staging files; victim counts remain unknown.
 splash: Unpatched WordPress 4.7–7.1.3 during full-package updates with a web-accessible, PHP-executable staging tree
 wipe: Install 7.1.4 or the branch security backport; protect staging access during updates and verify the deployed version
 inTheWild: yes
-inTheWildNote: Wordfence reports active attempts; successful intrusions are not established.
+inTheWildNote: CISA KEV confirms active exploitation; forensic triage is required.
 cves:
   - id: CVE-2026-119977
     score: 8.1
@@ -46,13 +46,16 @@ timeline:
     title: WordPress publishes the security release
   - date: Oct 29, 2026
     title: Wordfence reports staged-installer exploitation attempts
+  - date: Nov 3, 2026
+    title: CISA adds the installer race to KEV
+    body: CISA cites evidence of active exploitation, sets a November 6 remediation due date and marks forensic triage required. No victim count is supplied.
 checklist:
   - title: Patch every installation and verify completion
     hint: Use Dashboard → Updates → Update Now, then verify the running release. Check automatic updates actually completed. Only the latest WordPress branch is actively supported; older branches receive courtesy security backports. Migrate 4.6 and earlier.
   - title: Protect the update window
     hint: Where you control the web server, deny public HTTP access to wp-content/upgrade before updating and verify the restriction. Do not delay patching if you cannot configure this. Wordfence users need Extended Protection for direct PHP requests; paid tiers received the rule October 28, Free receives it November 27. A rule is not a replacement for the update.
   - title: Investigate prior exposure
-    hint: Review web logs for unexpected PHP requests under wp-content/upgrade, including staged setup-config.php; check unfamiliar administrators, plugins and PHP files, and scan after updating. Preserve suspicious evidence for investigation. A request match alone does not prove code execution; the report publishes no attacker IP or hash list.
+    hint: Review web logs for unexpected PHP requests under wp-content/upgrade, including staged setup-config.php; check unfamiliar administrators, plugins and PHP files, and scan after updating. Preserve suspicious evidence for investigation. A request match alone does not prove code execution; the report publishes no attacker IP or hash list. CISA now marks forensic triage required. Applicable FCEB agencies must follow BOD 26-04 and its implementation/triage guidance by the catalog’s November 6 due date; other operators should prioritize the same exposure review. Patching does not establish that an earlier compromise is removed.
 sources:
   - name: WordPress security release
     url: https://wordpress.org/news/2026/10/wordpress-7-1-4/
@@ -69,8 +72,20 @@ sources:
   - name: NHS England CC-4884
     url: https://digital.nhs.uk/cyber-alerts/2026/cc-4884
     primary: true
+  - name: CISA November 3 KEV alert
+    url: https://www.cisa.gov/news-events/alerts/2026/11/03/cisa-adds-one-known-exploited-vulnerability-catalog
+    primary: true
+    says: Adds CVE-2026-119977 based on active-exploitation evidence.
+  - name: CISA live KEV catalog
+    url: https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json
+    primary: true
+    says: November 3 addition; November 6 due date; forensicTriage Yes, ransomware use Unknown.
+updated: '2026-11-03'
 ---
 
 The October 28 release groups stored XSS, Interactivity API, disclosure and authorization fixes with the installer race and a certificate-trust update. Their permissions and affected branches differ; the unauthenticated RCE prerequisite must not be applied to every sibling issue.
 
 The attacker must locate the temporary tree and finish before cleanup, typically seconds in Wordfence's testing. An idle WordPress installation is not continuously exposed through this race. L4 reflects active targeting of a widely deployed platform, not a demonstrated mass compromise. No victim count is established.
+
+
+**November 3 exploitation update:** CISA’s KEV addition supersedes the earlier attempt-only evidence assessment. It confirms active exploitation of this CVE, without specifying successful victims or changing the upgrade-window prerequisites. The catalog’s November 6 due date and BOD 26-04 obligations apply to covered federal agencies; ransomware use is listed as unknown. All branch fixes above remain necessary.
