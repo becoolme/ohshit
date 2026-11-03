@@ -1,5 +1,5 @@
 ---
-title: Control Web Panel discloses nine flaws across user-panel and root API boundaries
+title: Nine Control Web Panel flaws cross user-panel and root API boundaries
 level: 3
 date: '2026-11-02'
 updated: 2026-11-03
@@ -130,5 +130,4 @@ The remaining API issues are an additional boundary: CVE-2026-77877 through CVE-
 
 CNA affected bounds differ: 1.12 for the redirect flaw; 1.16 for file inclusion, phpini_editor, protected_directory, access_token() and /newpass/; 1.30 for missing API authentication, database restore and blind SQL injection. The vendor changelog lists 1.30 as released October 31 but does not map every CVE to its fix, and does not provide a 1.16 entry. Use the current supported vendor update and confirm coverage rather than treating 1.12 as sufficient. The two-component version labels are the vendor/CNA labels; no version checker is offered.
 
-
-**November 3 update:** On rereading, the vendor changelog added 1.30.1 LTS, a security and stability release recommended for every server. It further requires API keys for each API v1 call on port2304, limits internal migration routes to the local server, and hardens account actions, one-time login links and HTTPS update downloads. Check that an existing /usr/local/cwp/.conf/api_strict_guard_off switch is not disabling the strict guard. The changelog still does not map all nine CVEs individually, so this is the current vendor-recommended update rather than an inferred first fix for every flaw. Test integrations and mail after updating: servers still on the old default mail trust list are changed to 127.0.0.0/8, and applications on other private-network machines must use SMTP authentication.
+**November 3 update:** On rereading, the vendor changelog added 1.30.1 LTS, a security and stability release recommended for every server. It further requires API keys for each API v1 call on port 2304, limits internal migration routes to the local server, and hardens account actions, one-time login links and HTTPS update downloads. Check that an existing /usr/local/cwp/.conf/api_strict_guard_off switch is not disabling the strict guard. The changelog still does not map all nine CVEs individually, so this is the current vendor-recommended update rather than an inferred first fix for every flaw. Test integrations and mail after updating: servers still on the old default mail trust list are changed to 127.0.0.0/8, and applications on other private-network machines must use SMTP authentication.
