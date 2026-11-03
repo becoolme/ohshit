@@ -115,6 +115,12 @@ fixed:
   - product: Java google-api-client-apache-v5
     version: 2.9.0
     status: Separate artifact; advisory lists 2.7.0–2.8.1 as affected; also patch the JDK trust store
+  - { product: "Istio 1.31", version: "1.31.3", status: "Updated images, Go build and ztunnel trust handling" }
+  - { product: "Istio 1.30", version: "1.30.7", status: "Updated images, Go build and ztunnel trust handling" }
+  - { product: "Istio 1.29", version: "1.29.10", status: "Exceptional EOL release; CA-bundle fix only for Go components; migrate to 1.30+" }
+  - { product: "In-cluster Cloud Service Mesh 1.31", version: "1.31.3-asm.3", status: "GCP-2026-076 patched bundle" }
+  - { product: "In-cluster Cloud Service Mesh 1.30", version: "1.30.7-asm.3", status: "GCP-2026-076 patched bundle" }
+  - { product: "In-cluster Cloud Service Mesh 1.29", version: "1.29.10-asm.0", status: "GCP-2026-076 patched bundle; 1.28 and earlier are EOL" }
 timeline:
   - date: Apr 30, 2025
     title: The keys are generated, in a batch of 24 intermediates
@@ -174,6 +180,9 @@ timeline:
   - date: Nov 2, 2026
     title: Google publishes language-specific Cloud SDK trust-store remediation
     body: GCP-2026-075 separates bundled transports, runtimes and system stores; update the actual trust path and rebuild applications. Google reports no Cloud infrastructure breach or evidence of exploitation against Cloud workloads.
+  - date: Nov 2, 2026
+    title: Google publishes Cloud Service Mesh trust-store patch bundles
+    body: GCP-2026-076 lists in-cluster bundles 1.31.3-asm.3, 1.30.7-asm.3 and 1.29.10-asm.0. Managed Cloud Service Mesh updates automatically with no customer action required.
   - date: ~Oct 27, 2026
     title: Chrome Root Store v43 removes the emSign ECC Root CA - G3
 checklist:
@@ -217,6 +226,8 @@ checklist:
     hint: 'For C++ fallback roots.pem, relink gRPC 1.84.1+ and update system/image roots. Run cargo update for Rust; verify rustls-webpki 0.103.16+ and the used webpki-root-certs or webpki-roots 1.0.10+. Rebuild Go with the patched toolchains above and current base images. Swift AsyncHTTPClient/grpc-swift-2 uses system stores: update the OS; do not apply the separate Objective-C CocoaPod fix to Swift by assumption. Redistribute rebuilt apps or redeploy images.'
   - title: Check the root fingerprints actually loaded by applications
     hint: 'GCP-2026-075 says to verify absence of all three: emSign ECC Root CA - G3, SHA-256 86:A1:EC:BA:08:9C:4A:8D:3B:BE:27:34:C6:12:BA:34:1D:81:3E:04:3C:F9:E8:A8:62:CD:5C:57:A3:6B:BE:6B; emSign Root TLS CA - G3, 7D:D7:8D:5F:4F:13:45:9A:83:DF:F9:AB:BB:A6:2E:DB:AF:6F:2D:10:2B:F2:57:FD:71:2F:4D:9F:27:46:ED:8D; AAA Certificate Services, D7:A7:A0:FB:5D:7E:27:31:D7:71:E9:48:4E:BC:DE:F7:1D:5F:0C:3E:0A:29:48:78:2B:C8:3E:E0:EA:69:9E:F4. Verify rebuilt images and each independent trust store. Presence means trust remains; it does not prove an attack.'
+  - title: Patch Istio and the Cloud Service Mesh bundle you actually run
+    hint: For upstream Istio, use 1.31.3, 1.30.7 or the exceptional 1.29.10 release; 1.29 is EOL and its Go 1.25 build lacks the Go key-distrust fix, so migrate to 1.30+. For in-cluster Google Cloud Service Mesh, use 1.31.3-asm.3, 1.30.7-asm.3 or 1.29.10-asm.0; 1.28 and earlier are EOL. Managed Cloud Service Mesh updates automatically. Check DestinationRule SIMPLE TLS without caCertificates/credentialName, RequestAuthentication jwksUri fetches and XDS_ROOT_CA=SYSTEM. Mesh-issued mTLS certificates are unaffected. Redeploy updated sidecars/gateways and workloads as appropriate; if upstream upgrades must wait, use explicit trusted CA credentials or caCrl for affected external TLS paths, not disabled verification.
 sources:
   - name: Mozilla Bugzilla 2083449
     url: https://bugzilla.mozilla.org/show_bug.cgi?id=2083449
@@ -355,6 +366,14 @@ sources:
     url: https://github.com/googleapis/google-api-java-client/security/advisories/GHSA-m4gc-hcgx-wmc7
     primary: true
     says: Original transport-specific scope and mitigation; Java additionally covers the separate Apache v5 artifact.
+  - name: Google Cloud Service Mesh GCP-2026-076
+    url: https://docs.cloud.google.com/service-mesh/docs/security-bulletins#gcp-2026-076
+    primary: true
+    says: November 2 advisory gives three in-cluster patched bundles and says managed deployments update automatically.
+  - name: Istio ISTIO-SECURITY-2026-008
+    url: https://istio.io/latest/news/security/istio-security-2026-008/
+    primary: true
+    says: Upstream fixes, public-CA trust prerequisites, Go 1.25 limitation, ztunnel distrust and external-TLS workarounds; mesh-issued mTLS is unaffected.
 ---
 
 A certificate authority's private key is the thing that makes "this is really your bank" true. For eight
@@ -408,3 +427,5 @@ For an unpatched Oracle runtime, the [operational guide](https://ops.java/emudhr
 **Update, November 2:** The vendor download archive now lists Checkmk 2.5.0p18 dated November 2 with edition/platform package metadata. Werks 22169 and 22623 list it as carrying the bundled CA-store fixes, without their earlier unreleased marker. This supersedes the earlier availability warning, not the need to update affected sites and agent components or separate OS/site trust stores. It is not new evidence of exploitation.
 
 **November 3 addition, following the November 2 official update:** GCP-2026-075 explains that Google Cloud SDK Libraries usually inherit trust from transport dependencies, runtimes or the OS; Java google-api-client before 2.9.2 is the exception. For GoogleNetHttpTransport.newTrustedTransport(), versions before 2.9.0 use the bundled store, while 2.9.0/2.9.1 fall back to it if the JDK store cannot be loaded. Direct transport constructors use the JDK store and need its vendor update. Updating a Cloud SDK alone does not prove all applications are fixed. Python grpcio, Ruby grpc and PHP grpc/grpc use bundled roots rather than system roots; deprecated Node grpc and .NET Grpc.Core require migration. Apply the added checklist to actual dependencies, verify removal of all three roots and rebuild, redistribute or redeploy. Google again reports no infrastructure breach or telemetry evidence of exploitation against Cloud workloads. This is downstream remediation of the same CA event.
+
+**November 2 mesh guidance:** Google’s GCP-2026-076 adds the three in-cluster Cloud Service Mesh patch bundles above; managed deployments need no customer action. The linked Istio advisory separates public-root trust from mesh-issued mTLS. Its older 1.29 line gets updated CA images but no Go 1.25 key-distrust backport. This is the existing compromised-CA incident, not a new breach of mesh signing keys.
