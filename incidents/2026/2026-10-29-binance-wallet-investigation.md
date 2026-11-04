@@ -115,11 +115,12 @@ timeline:
   - date: Nov 4, 2026
     title: Research expands THORChain and Solana laundering observations
     body: Bitquery reports $3.1bn held and 556,271 ETH at its November 4 09:56 UTC snapshot, with some newly counted wallets checked through 11:28 UTC. It follows Solana proceeds toward Bitcoin and revises earlier TRX-route coverage. These remain unverified research estimates, not vendor losses or recovered assets.
-  - date: Nov 1, 06:00–09:00 UTC (scheduled)
-    title: First withdrawal phase is planned
   - date: Nov 4, 2026
     title: Polygon forum proposes a native-POL recovery fork; approval is pending
     body: The proposal attributes 46,626,593.27 POL to this incident, within about 70.49M POL across two separate cases. It is a governance proposal with no decided client release or activation block, not completed recovery or additional user compensation.
+  - date: Nov 1, 06:00–09:00 UTC (scheduled)
+    title: First withdrawal phase is planned
+
 checklist:
   - title: Use official channels and reject recovery messages
     hint: Open Binance through your existing bookmark or official app and check its announcements for deposit and withdrawal restoration. The November 1 notice schedules the first withdrawal phase for 06:00–09:00 UTC; check your exact asset/network pair on the withdrawal or network-status page. The subsequent official update names Bitcoin as the first batch; a later update confirms Ethereum withdrawals for USDC, USDT and ETH, and BSC withdrawals for USDC, USDT and BNB. Later original posts also confirm XRP on XRP; ETH and USDC on Base; DOGE on DOGE; ETH, USDT and USDC on Optimism; ZEC on ZEC; USDT and GRAM on TON; and SUI on SUI. The linked intermediate updates also confirm ARB, ETH, USDT and USDC on Arbitrum; TRX and USDT on TRX; SOL, USDT and USDC on Solana; POL, USDT and USDC on Polygon; and AVAX, USDT and USDC on Avalanche C-Chain. Verify the exact pair live; these statements do not establish that every asset on these networks is available. Binance says future withdrawals use new wallets in its updated reserve-address list. Verify destination addresses and device security; congestion remains possible. The notice advises retrying later if needed. Verify unsolicited communications with Binance Verify or official support. Do not share passwords or 2FA codes, follow recovery links, or send money to purported support agents.
