@@ -53,11 +53,16 @@ timeline:
   title: IBM initially publishes the multi-vulnerability bulletin
 - date: Oct 29, 2026
   title: IBM clarifies remediation and publishes product CVE records
+- date: Nov 4, 01:39 UTC
+  title: Langflow publishes a 1.12.9 backport release
+  body: The source release includes MCP, component-policy and image dependency changes; the reviewed material does not map it to all seven IBM bulletin CVEs. The 1.13.0 product remediation remains the verified recommendation.
 checklist:
 - title: Back up and prepare existing sign-in before replacing the deployment
   hint: Back up the database, secret key and uploads. For auto-login installations, follow the existing-account password preparation guide before upgrading; setting LANGFLOW_SUPERUSER_PASSWORD alone does not reset an existing non-legacy password. Do not delete or reinstall to recover access.
 - title: Install the product upgrade and preserve Docker data
   hint: In the application environment run pip install --upgrade "langflow==1.13.0", or pull langflowai/langflow:1.13.0 and recreate using the vendor upgrade procedure. Mount the path set in LANGFLOW_CONFIG_DIR for the key and uploads; separately keep the database external with LANGFLOW_DATABASE_URL or in that mounted directory with LANGFLOW_SAVE_DB_IN_CONFIG_DIR=true. Move any data still inside the old container before replacing it; a mounted volume alone is insufficient. Keep the existing database backend; pointing SQLite users at a new PostgreSQL database does not migrate their data. Test password sign-in and your flows afterward.
+- title: Verify the backport scope before choosing a different branch
+  hint: Read the 1.12.9 release and merged PRs 16119/16123, not only the latest-release badge. They document MCP credential/destination and component controls, dependency updates and deferred storage isolation. Python 3.10 keeps older Pillow/filelock lines. Do not assume the source release or a successful image build proves all seven IBM bulletin CVEs are fixed; the verified product-upgrade instructions above remain applicable.
 sources:
 - name: IBM Langflow security bulletin
   url: https://www.ibm.com/support/pages/node/7294467
@@ -75,9 +80,24 @@ sources:
   url: https://github.com/langflow-ai/langflow/releases/tag/v1.13.0
   says: Release availability predates the IBM disclosure; patch date is not the incident disclosure date.
   primary: true
+- name: Langflow 1.12.9 original release
+  url: https://github.com/langflow-ai/langflow/releases/tag/v1.12.9
+  primary: true
+  says: Source release published November 4 at 01:39:07 UTC; links the backport and lxml/Mako changes.
+- name: Langflow merged backport PR 16119
+  url: https://github.com/langflow-ai/langflow/pull/16119
+  primary: true
+  says: MCP, generated-component, login and dependency protections; storage isolation deferred and Python 3.10 dependency caveats. Not a complete mapping to IBM’s seven CVEs.
+- name: Langflow merged image dependency PR 16123
+  url: https://github.com/langflow-ai/langflow/pull/16123
+  primary: true
+  says: lxml built against system libraries and Mako security floor; upstream PR describes verification limits rather than a blanket image-safety guarantee.
 date: '2026-10-28'
+updated: '2026-11-04'
 ---
 
 IBM’s October 28 bulletin is the disclosure tracked here, with the October 29 clarification incorporated. The 1.13.0 release already existed on October 22. The bulletin combines four Langflow product CVEs with three older Hono dependency CVEs; it does not establish that every deployment exposes every dependency path. Hono’s underlying fixes are in 4.13.5, while IBM’s product remediation is Langflow 1.13.0. Upgrade the application rather than substituting an unverified dependency-only change.
 
 The critical product vectors require no credentials; Agentic Assistant code execution and the credential-disclosure CVE require authenticated access. The bulletin’s summary also mentions API-key access without intended authorization, while the credential CVE’s vector requires low privileges; do not generalize that path to all anonymous users. No exact exploit endpoint, confirmed victim count or real-world exploitation is established by the cited bulletin. L3 reflects a mainstream AI workflow server and serious disclosed attack paths.
+
+**November 4 backport release:** Upstream published 1.12.9 at 01:39:07 UTC, after the 1.13.0 release ceased to be the GitHub latest badge. Its merged changes cover MCP credentials/destinations, generated-component restrictions and image dependencies. Storage namespace isolation was deferred; Python 3.10 retains older Pillow/filelock lines. These are concrete new protections, but the reviewed release/PRs do not establish equivalence to every CVE in IBM’s October bulletin. The verified 1.13.0 upgrade recommendation, data-preservation and password preparation steps remain in force. Source-release availability is not proof that every deployed image has been rebuilt or scanned.
