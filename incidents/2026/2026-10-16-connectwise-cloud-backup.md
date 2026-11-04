@@ -3,13 +3,10 @@ title: "ConnectWise Cloud Backup's app secret got stolen, and attackers walked i
 headline: "ConnectWise: one app secret opens too many tenant doors"
 level: 4
 date: 2026-10-16
-updated: 2026-11-02
+updated: 2026-11-04
 tags: [SaaS, OAuth, Microsoft 365]
 ecosystems: [microsoft-365, entra-id]
-summary: >-
-  A stolen ConnectWise/SkyKick app secret enabled unauthorized M365 tenant access. By October 30,
-  re-authorized tenants could back up and restore through a new application; reporting and notifications
-  were still returning in phases. Tenant investigation remains necessary.
+summary: A stolen ConnectWise/SkyKick app secret enabled unauthorized M365 tenant access. Backup Health, exports and Marketplace APIs have returned; billing, parts of the platform dashboard and notifications remain incomplete. Re-authorize each tenant through the new app and verify new snapshots; tenant investigation is still required.
 splash: "M365 tenants that authorized affected apps; Huntress saw ~1,000 sign-in targets and >300 successful sign-ins"
 wipe: "Disable affected app connections, preserve Entra evidence, inspect app credentials and roles; re-consent only on vendor instructions"
 inTheWild: "yes"
@@ -54,6 +51,9 @@ timeline:
   - date: Oct 30, 21:00 UTC
     title: Backups, restores and customer monitoring are available
     body: Phases 1 and 2 are complete for re-authorized tenants; reporting, export jobs, billing and notifications are not all restored. Verify a successful new snapshot rather than assuming re-authorization resumed backups.
+  - date: Nov 4, 18:55 UTC
+    title: Reporting, exports and Marketplace APIs restored; login methods clarified
+    body: Backup Health, Export jobs and Marketplace APIs returned November 3. Billing, parts of the platform dashboard and notifications remain incomplete. M365 portal authentication needs tenant-admin consent to the new app, not a password reset.
 checklist:
   - title: Identify and disable affected ConnectWise / SkyKick apps
     hint: "In Entra Enterprise applications, preserve local service-principal Object IDs and disable affected connections; do not delete the apps. Huntress lists seven application IDs: 506e08f9-6e9a-4da4-942b-a099a03644ae, 2399d300-6fca-4e6a-a686-399fefe75b83, 24205314-2b89-4e07-a2a4-579e898a5640, b78f6a77-d4e5-46fb-87e5-d1648bd02519, 0de14c77-b9b0-4137-9360-34878a929827, 412dcf96-176d-4b3a-a1b0-4981ad66971e, b2b55f5b-7758-4719-8d8f-88ae172e6bdb. Map names using its full table; include integrations no longer in use. Presence alone does not prove abuse"
@@ -68,11 +68,13 @@ checklist:
   - title: Detect credential planting and keep Graph visibility
     hint: Alert on service principals granting Global Administrator or Privileged Role Administrator to themselves or siblings, deleting themselves, or adding unexpected credentials. Enable Graph activity logs where licensing permits, retaining raw User-Agents and sub-second timestamps. The Huntress follow-up lists four IPs (144.172.64.128, 144.172.64.99, 194.165.16.21, 144.172.64.60) and six User-Agent variants (Python-urllib/3.12, curl/7.88.1, python-requests/2.31, python-requests/2.31.0, python-requests/2.34.2, azure-toolkit/1.0). The .21 association is only possible. Its table and narrative disagree about observing python-requests/2.34.2; preserve that uncertainty. A match alone does not prove compromise, and cadence alone cannot identify AI.
   - title: Re-enroll through the new application and verify backups
-    hint: Use Forgot password at login.cloudservices.connectwise.com, configure MFA, then follow the Trust Center instructions for each tenant using ConnectWise Cloud Backup for M365. Keep old disabled applications disabled unless ConnectWise specifically instructs otherwise. Check for a newly completed snapshot; re-authorization alone does not confirm recovery and the historical backup gap remains. A repeated password-reset status 500 needs cloud-support@connectwise.com assistance. Continue tenant investigation; re-enrollment does not remove persistence
+    hint: At login.cloudservices.connectwise.com, portal username/password users must reset the password and complete MFA if prompted. Microsoft 365 authentication users do not need a password reset; a tenant administrator must sign in and consent to the new portal application. Then follow the Trust Center instructions for your self-authentication, delegated-authentication or Partner Center method to authorize each tenant through ConnectWise Cloud Backup for M365. Keep old disabled applications disabled unless ConnectWise specifically instructs otherwise. Check for a newly completed snapshot; re-authorization alone does not confirm recovery and the historical backup gap remains. A repeated password-reset status 500 needs cloud-support@connectwise.com assistance. Continue tenant investigation; re-enrollment does not remove persistence
+  - title: Verify each service and preserve evidence before retiring the old app
+    hint: The November 4 18:55 UTC notice says Backup Health, Export jobs and Marketplace APIs returned November 3. Billing (including its API and Management portal reports) and parts of the platform backup dashboard are not fully restored; core notifications are live and others are returning gradually. SaaS Security/Cloud Automation are restored but require separate M365/Azure reconnection using the technical guide; Cloud Migration returned October 28 and active projects require reauthorization. For c921256f-04a7-44e8-9b2a-69c33929ba19 specifically, the FAQ permits deletion only after full new-app authentication and collection of necessary logs. Do not generalize that instruction to all apps or delete evidence early.
 sources:
   - name: ConnectWise Trust Center
     url: https://www.connectwise.com/company/trust/advisories
-    says: October 30 phases 1 and 2 complete for re-authorized M365 tenants; use the new app, reset portal passwords, configure MFA and verify new snapshots. Old disabled apps stay disabled. Archives remain encrypted, isolated and preserved, with no indication of compromise
+    says: October 30 phases 1 and 2 complete for re-authorized M365 tenants; use the new app, reset portal passwords, configure MFA and verify new snapshots. Old disabled apps stay disabled. Archives remain encrypted, isolated and preserved, with no indication of compromise. November 4 18:55 UTC adds reporting/export/Marketplace API restoration on November 3, separate portal-password versus M365-consent paths, remaining billing/dashboard/notification gaps and service-specific reconnection.
     primary: true
   - name: Huntress
     url: https://www.huntress.com/blog/vendor-credential-enables-unauthorized-access
@@ -113,3 +115,5 @@ trail, so "no evidence" here does not mean "nothing happened".
 **Update, November 1 (UTC):** The October 28–30 vendor notices replace the earlier conditional recovery forecast. Backups and restores are available for re-authorized M365 tenants, and the customer portal and backup-monitoring dashboards have returned. Backup Health reporting, export jobs and billing features are still being restored; notifications follow the supporting services. Reset the portal password, configure MFA and authorize each tenant through the new **ConnectWise Cloud Backup for M365** application using the Trust Center instructions. Do not re-enable the old disabled applications without specific vendor direction. Confirm a successful new snapshot: enrollment does not erase the backup-history gap or replace investigation of tenant-level persistence. The vendor still reports no indication that preserved backup archives or other ConnectWise products were compromised; that is its investigation status, not an independent guarantee.
 
 **Additional Huntress analysis:** The follow-up linked from its October 27 update separates observed automation from AI attribution. Huntress rates LLM involvement low-to-medium on its own telemetry, and medium-to-high with Microsoft’s attribution; it cannot independently verify Storm-0940 or ARTEX. Missing Graph request logs prevent reconstructing reads. Detect role grants and credential planting, preserve detailed logs, and investigate across tenants rather than using request speed or an IP hit as proof of AI or compromise. The follow-up does not revise the confirmed-victim count or establish data theft.
+
+**November 4 restoration follow-up (18:55 UTC):** Backup Health reporting, Export jobs and Marketplace APIs returned November 3; billing, parts of the platform dashboard and notifications are still incomplete. Backups/restores remain conditional on each tenant reauthorizing, and a successful new snapshot must be verified. The revised FAQ qualifies the earlier blanket password-reset instruction: Microsoft 365 portal sign-in users need administrator consent to the new app, not a password reset. SaaS Security/Cloud Automation M365/Azure integrations and active migration projects need their own reauthorization. Preserve logs and continue tenant-by-tenant investigation: the vendor lacks customer-tenant audit logs and cannot determine your exposure for you; the original credential-acquisition mechanism remains under investigation. Only the old c921256f-04a7-44e8-9b2a-69c33929ba19 app has the conditional deletion instruction above; this does not authorize re-enabling old apps.
