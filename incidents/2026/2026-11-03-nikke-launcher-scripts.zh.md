@@ -29,9 +29,14 @@ timeline:
 - date: 11月4日 11:20 UTC
   title: 原始研究人员在四个已检查 CDN 节点发现干净文件
   body: MotherSphere 的 12:11 GMT 报告称，两主机的四个已知文件在四个检查节点均已干净；报告仍在 00:48 UTC 收到旧恶意 FeedList，节点于 03:12–03:21 UTC 取得干净副本。其他边缘节点和感染主机仍未核实。
+- date: 11月4日 13:39 UTC
+  title: 研究人员发布可选的本地证据检查工具
+  body: GitHub 发版元数据记录 NIKKE Launcher Check v0.5.1。作者称工具只在本地读取检查；未检出不能证明安全。删除缓存前应先检查或保留证据。
 checklist:
 - title: 停止启动器，清理前先保留证据
   hint: 关闭启动器及托盘进程，将疑似感染电脑断网。删除或重装前，保留 Launcher/intl_service/debug.log、Launcher/log/tinyget 及启动器缓存。研究报告指出，更新或服务器关闭不能撤销之前的远程访问。 私下保留未改动的证据副本。公开日志前，遮盖 tinyget.mem.log 及按日期保存的 tinyget API 请求中的 Cookie 行，以及 login_ticket、biz_ticket、uid、openid 和 sig 的值；path= 可能暴露 Windows 用户名。
+- title: 可选用研究人员工具检查已保留的证据
+  hint: 原报告链接 https://github.com/MotherSphere/NIKKE-Launcher-Check。README 描述 Windows、Linux／Proton 及 macOS／Wine 本地检查，不联网也不负责清理；这是作者说法，并非独立审计。通过原项目发版及 SHA256SUMS.txt 核对下载。删除 tbs_cache 前先检查，或保留私有副本。分享报告前启用 Hide my info 或 --redact。No traces found 只描述已检查路径，仍须执行下列手动排查及清理。本文没有运行该工具。
 - title: 排查已公布的网络及本地指标
   hint: 报告列出超过 30 个指标值及 264 个目标凭据、配置路径，请核对原文完整 Indicators of compromise 和 target-paths.md。网络指标：insightjs.com; analytics.insightjs.com; insightjs.org; 89.127.233.127; 89.126.250.172; https://insightjs.com/l.js?f=aegis; https://insightjs.com/l.js?f=images; https://insightjs.com/l.js?f=feedlist; https://insightjs.com/l.js?f=vue; https://analytics.insightjs.com/comm/assets/insight.bundle; https://analytics.insightjs.com/px/<32 hex>。被修改的官方 URL：https://sg-gpts.playerinfinite.com/comm/assets/lib/aegis-fix.min.js; https://na-webassets.playerinfinite.com/comm/nikke_launcher/assets/images.7fec4c32.js; https://na-webassets.playerinfinite.com/comm/nikke_launcher/assets/FeedList.feb647c9.js; https://na-webassets.playerinfinite.com/comm/assets/lib/vue-bucket.min.js。CDN 节点 43.175.144.148 和 43.175.145.181 曾分发旧恶意副本，属于共享分发节点，不能证明攻击者拥有它们。insightjs.org 后被第三方注册为警告网站。WormW 扩充清单包含超过 100 行指标，完整哈希、ETag 及本地痕迹见其 iocs/iocs.csv。额外网络排查线索：portal.insightjs.com; docs.insightjs.com; https://insightjs.com/l.js; https://insightjs.org/l.js; https://analytics.insightjs.com/px/<32 hex>.<kind>; https://analytics.insightjs.com/collect/<32 hex>.<kind>; https://analytics.insightjs.com/collect/<32 hex>; insightjs.com POST /speed; hooks.slack.com/(services|workflow|triggers)。裸 /collect/<32 hex> 被报告为诱饵；89.126.250.172 来自他人报告，未获该研究独立证实。/speed 是门面统计线索；Slack 及官方 CDN 流量可能正常。检查 debug.log 的 k2f_chan registered、Local Storage 的 k2f.agent.state，以及下列 HKCU CLSID 和 DLL。匹配须结合上下文，本身不能证明入侵；未命中哈希、DNS 或日志也不代表安全。 更新原文另列共享 CDN 节点 43.175.139.78；较早报告载荷的临时文件为 %TEMP%\k2f-keyscan-<time>-<rand>.db 和 %TEMP%\k2f_screen_<unix time>_<n>.png，较新临时数据库及截图为 %TEMP%\k2f-bcreds-<unix time>-<random>.db 和 %TEMP%\k2f_screen_<unix time>_<n>.jpg。代理状态也可能位于 Local Storage leveldb 的压缩 .ldb 文件中，应予保留。新增历史载荷哈希及七个 ETag 见完整原文。共享 CDN 地址不能证明攻击者归属。
 - title: 按记录顺序清理 Windows 持久化，或重建系统
@@ -51,6 +56,10 @@ sources:
   says: 11 月 4 日 07:14–07:20 UTC 复查发现四个已知文件已干净，记录历史恶意副本、当前哈希及缓存边界。原始分发观察归于 MotherSphere 及第三方报告。
 - name: WormW 完整指标 CSV
   says: 超过 100 行指标并标记置信度，包含历史哈希、ETag、网络模式及本地痕迹；共享服务和历史指标须结合上下文。
+- name: MotherSphere NIKKE Launcher Check 原始说明
+  says: 作者描述的本地只读扫描、可选报告保存、检查及判定限制、发版校验和与脱敏；不是工具独立审计或主机安全保证。
+- name: NIKKE Launcher Check v0.5.1 发版元数据
+  says: 11 月 4 日 13:39:38 UTC 发布，列出各平台文件及校验和文件；没有运行下载的可执行程序。
 ---
 
 11 月 3 日公开的原始分析指出，Level Infinite 官方 CDN 上四个被修改的 JavaScript 文件会加载外部脚本，再通过 PC 启动器内嵌 Chromium 的桥接接口下载 LuaJIT 远控 Agent。研究人员分析了一台受影响电脑及载荷静态代码，并将其他用户的观察标为转述证据。命令可读取文件、执行程序及截屏；分析还识别出浏览器、凭据窃取能力及 Windows Chrome 持久化路径。具有能力不代表每项凭据均已被盗，尚无受害者总数或确认的钱包损失总额。
@@ -60,3 +69,5 @@ sources:
 研究报告更正了早先建议：PlatformExperienceHelper 父目录属于正常 Chrome 内容，onominan.tmp 不是感染指标。攻击者如何获得 CDN 或发布权限仍不明。所引分析未涵盖移动客户端，不能据此证明移动端不受影响。涉及广泛使用的启动器及有记录的恶意分发，因此评为 L3；运营方尚未确认实际执行的完整范围。
 
 **11 月 4 日原始研究更新：** MotherSphere 现称 11:20 UTC 时，两主机的四个已知文件在四个已检查 CDN 节点均已干净，但其核阅的公开扫描在 00:48 UTC 仍取得恶意 FeedList，观察节点在 03:12–03:21 UTC 取得干净副本。这补充了上文时间更早的 WormW 复查，并不矛盾，也不能证明全球清缓存。清理启动器缓存前先保留日志及 Local Storage，包括压缩的 `.ldb` 文件。较早报告载荷使用额外临时文件名及哈希，未命中最新哈希不能证明安全。初始 CDN／发布权限入侵途径和完整受害范围仍未查明。
+
+**可选证据检查工具：** 原报告现链接作者发布的 NIKKE Launcher Check，v0.5.1 于 11 月 4 日 13:39 UTC 发布。说明区分脚本暴露、代理感染、未发现痕迹及未找到安装目录。这些是工具判定，不是完整取证结论。清理前保留缓存，分享报告前脱敏；疑似失陷时仍须手动调查、清除持久化或重建，并从干净设备轮换凭据。本文没有运行或独立审计该工具。
