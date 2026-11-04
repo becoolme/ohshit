@@ -7,7 +7,7 @@ inTheWildNote: The vendor release notes do not report exploitation in the wild.
 cves:
 - id: CVE-2026-98432
   name: Linux IPv4 TCP use-after-free
-  description: Docker includes the Linux TCP kernel fix in 4.98.0. The underlying flaw was public October 15; this entry covers the Desktop remediation batch. Google’s November 4 GKE bulletin separately describes node-root/container-escape and kernel-panic consequences, local unprivileged triggering and reachable TCP listeners for network attacks.
+  description: Docker includes the Linux TCP kernel fix in 4.98.0. The underlying flaw was public October 15; this entry covers Desktop remediation and related GKE guidance. Google’s November 4 GKE bulletin separately describes node-root/container-escape and kernel-panic consequences, local unprivileged triggering and reachable TCP listeners for network attacks.
 - id: CVE-2026-112917
   name: WSL 2 AF_VSOCK restriction bypass
   description: A container on the WSL 2 backend can bypass communication restrictions; remediation requires Desktop 4.98.0 and WSL 3.0.3 or later. The notes do not supply a complete affected starting range.
