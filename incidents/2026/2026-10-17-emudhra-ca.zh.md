@@ -137,6 +137,9 @@ timeline:
   - date: 2026年11月2日
     title: Google 公布 Cloud Service Mesh 证书信任修补版本
     body: GCP-2026-076 列出集群内版本 1.31.3-asm.3、1.30.7-asm.3 和 1.29.10-asm.0；托管版 Cloud Service Mesh 自动更新，无需客户操作。
+  - date: 2026年11月3日
+    title: Google 补充 Apigee 出站 TLS 处置指引
+    body: GCP-2026-077 区分托管平台更新、Hybrid 镜像内信任库、OPDK 手动处置及客户自定义 TrustStore，尚未列出 Hybrid 修补版本。
   - date: 2026年10月27日前后
     title: Chrome Root Store v43 移除 emSign ECC Root CA - G3
 checklist:
@@ -182,6 +185,14 @@ checklist:
     hint: GCP-2026-075 要求确认实际信任库不含这三张证书：emSign ECC Root CA - G3，SHA-256 86:A1:EC:BA:08:9C:4A:8D:3B:BE:27:34:C6:12:BA:34:1D:81:3E:04:3C:F9:E8:A8:62:CD:5C:57:A3:6B:BE:6B；emSign Root TLS CA - G3，7D:D7:8D:5F:4F:13:45:9A:83:DF:F9:AB:BB:A6:2E:DB:AF:6F:2D:10:2B:F2:57:FD:71:2F:4D:9F:27:46:ED:8D；AAA Certificate Services，D7:A7:A0:FB:5D:7E:27:31:D7:71:E9:48:4E:BC:DE:F7:1D:5F:0C:3E:0A:29:48:78:2B:C8:3E:E0:EA:69:9E:F4。重建后的镜像及所有独立信任库均须核验；发现证书说明信任尚未移除，本身不证明遭到攻击。
   - title: 修补实际运行的 Istio 或 Cloud Service Mesh 发行版
     hint: 上游 Istio 升至 1.31.3、1.30.7 或特殊发布的 1.29.10；1.29 已停止维护，其 Go 1.25 构建缺少 Go 密钥拒信修复，应迁移至 1.30+。Google 集群内 Cloud Service Mesh 使用 1.31.3-asm.3、1.30.7-asm.3 或 1.29.10-asm.0，1.28 及更早版本已停止维护；托管版自动更新。检查未指定 caCertificates/credentialName 的 DestinationRule SIMPLE TLS、RequestAuthentication 的 jwksUri 获取，以及 XDS_ROOT_CA=SYSTEM。网格自行签发的 mTLS 证书不受影响。按需重新部署更新后的 sidecar、gateway 和工作负载；上游暂时无法升级时，对受影响外部 TLS 路径设置明确可信 CA 凭据或 caCrl，不要关闭验证。
+  - title: 核查所有 Apigee 出站 TLS 信任路径
+    hint: 备份密钥库、信任库及配置，在非生产环境测试。检查 TargetEndpoint、TargetServer、ServiceCallout 的 SSLInfo 及出站 JWKS 获取。逐环境核查自定义 TrustStore；托管平台更新不会移除客户上传的证书。核对上列根证书指纹及 GCP-2026-077 的被攻破中间证书名称；匹配表示信任尚未移除，并非已发现攻击。
+  - title: 区分 Apigee 托管更新及 Hybrid 镜像升级
+    hint: Google 称 Apigee X 和 Edge SaaS 平台默认信任库处置仍在进行，不能视为全部完成。立即核查自定义库。Hybrid 在容器镜像内嵌入独立 CA 库，不挂载宿主机 CA 库：待 Google 发布修补镜像后升级。公告未列出 Hybrid 修复版本，只更新操作系统不够。
+  - title: 逐节点处置 Apigee Edge Private Cloud
+    hint: 按 GCP-2026-077 在 RHEL/CentOS/Rocky 更新 ca-certificates 并重新生成系统信任库。若 FIPS 仍使用随产品提供的 BCFKS 库，先按链接的 FIPS Option A 创建客户自管库，产品更新会覆盖原库。使用正确的 provider 及库密码核查、删除实际受影响别名，保留 apigee:apigee 所有权，然后逐节点按文档滚动停止并启动 Apigee 服务。另须核查或创建明确的出站目标 TrustStore。
+  - title: 先更换受影响后端证书，再移除相应信任
+    hint: 检查后端证书签发者。对 eMudhra 签发的后端证书，先通过可信 CA 重新签发并替换，再删除自定义库中的受影响别名。在控制台进入 Apigee > Management > Environments > TLS Keystores，核查别名并删除受影响证书，将 SSLInfo 指向经核实的 TrustStore。ref:// 引用无需重新部署代理即可生效，直接名称引用则须重新部署代理。测试出站 TLS/mTLS 及依赖 JWKS 的流程，不要通过关闭验证恢复连接。
 sources:
   - says: 私钥是小于 256 的整数；报告时间、OneCRL 条目，以及 10月18日的吊销
   - name: eMudhra 声明
@@ -253,6 +264,8 @@ sources:
     says: 11 月 2 日公告给出三条集群内修补版本，并说明托管部署自动更新。
   - name: Istio ISTIO-SECURITY-2026-008
     says: 上游修复、公有 CA 信任前提、Go 1.25 的限制、ztunnel 拒信及外部 TLS 缓解措施；网格自签发的 mTLS 不受影响。
+  - name: Google Apigee GCP-2026-077 安全公告
+    says: 11 月 3 日发布：托管更新仍在进行、Hybrid 镜像独立信任库、OPDK 系统/FIPS/自定义库步骤及后端证书与重新部署检查；尚未指定 Hybrid 修补版本。
 ---
 CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eMudhra 有八张中间证书，P-384 私钥都是**小于 256 的整数**。据研究人员 Scott Helme 说，其中一个就是数字 4。谁要是注意到了，就能给任意域名签证书，而所有信任这条链的客户端都会照单全收。
 
@@ -300,3 +313,5 @@ CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eM
 **11月3日补充，追踪 11月2日官方更新：** Google 的 GCP-2026-075 明确，Google Cloud SDK Libraries 通常不自带 CA，信任来自传输依赖、运行时或系统；Java google-api-client 2.9.2 之前是例外。对于 GoogleNetHttpTransport.newTrustedTransport()，2.9.0 之前使用内置信任库，2.9.0 与 2.9.1 在无法加载 JDK 信任库时回退使用它。直接调用传输构造器使用 JDK 信任库，需安装其厂商更新。不能只升级 Cloud SDK 就认定所有应用已修复。Python grpcio、Ruby grpc 和 PHP grpc/grpc 的内置库不读取系统根证书；已弃用的 Node grpc 和 .NET Grpc.Core 需要迁移。按新增清单更新实际依赖、核验三张根证书已移除，并重建、重新分发或部署。Google 再次表示 Cloud 基础设施未被入侵，遥测未发现针对 Cloud 工作负载的利用；这是同一 CA 事件的下游修复补充。
 
 **11 月 2 日网格处置指南：** Google 的 GCP-2026-076 补充了上列三条集群内 Cloud Service Mesh 修补版本，托管部署无需客户操作。所链接的 Istio 公告区分了公有根证书信任与网格自行签发的 mTLS。较旧 1.29 分支更新了 CA 镜像，但 Go 1.25 没有密钥拒信修复回移。这仍是既有 CA 证书被攻破事件，并非网格签发密钥发生新的泄露。
+
+**11 月 4 日跟进 11 月 3 日发布的 GCP-2026-077：** Apigee 出站 TLS 仍可能通过默认或客户自定义信任库接受被攻破的证书链。攻击者需要网络拦截位置及被信任的伪造链；公告不是 Apigee 遭入侵或已被利用的证据。X 和 Edge SaaS 默认库仍在滚动更新，各产品客户均须核查自定义 TrustStore。Hybrid 须在修补镜像发布后更新容器，仅更新宿主机 CA 不够；OPDK 须处置系统及 JVM 信任并重启服务。移除信任前先安排后端证书替换，避免中断合法目标连接。上列运行时、SDK、网格及证书替换措施仍须完成。

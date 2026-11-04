@@ -3,7 +3,7 @@ title: "eMudhra CA intermediate private keys were so weak that every one was a n
 headline: "eMudhra: eight CA keys you could guess on a pocket calculator"
 level: 4
 date: 2026-10-17
-updated: 2026-11-03
+updated: 2026-11-04
 tags: [PKI, CA, TLS]
 ecosystems: [go, python, node, browsers]
 summary: >-
@@ -183,6 +183,9 @@ timeline:
   - date: Nov 2, 2026
     title: Google publishes Cloud Service Mesh trust-store patch bundles
     body: GCP-2026-076 lists in-cluster bundles 1.31.3-asm.3, 1.30.7-asm.3 and 1.29.10-asm.0. Managed Cloud Service Mesh updates automatically with no customer action required.
+  - date: Nov 3, 2026
+    title: Google adds Apigee outbound TLS remediation
+    body: GCP-2026-077 distinguishes managed platform rollouts, image-local Hybrid stores, manual OPDK remediation and customer-managed TrustStores. No Hybrid patch version is named.
   - date: ~Oct 27, 2026
     title: Chrome Root Store v43 removes the emSign ECC Root CA - G3
 checklist:
@@ -228,6 +231,14 @@ checklist:
     hint: 'GCP-2026-075 says to verify absence of all three: emSign ECC Root CA - G3, SHA-256 86:A1:EC:BA:08:9C:4A:8D:3B:BE:27:34:C6:12:BA:34:1D:81:3E:04:3C:F9:E8:A8:62:CD:5C:57:A3:6B:BE:6B; emSign Root TLS CA - G3, 7D:D7:8D:5F:4F:13:45:9A:83:DF:F9:AB:BB:A6:2E:DB:AF:6F:2D:10:2B:F2:57:FD:71:2F:4D:9F:27:46:ED:8D; AAA Certificate Services, D7:A7:A0:FB:5D:7E:27:31:D7:71:E9:48:4E:BC:DE:F7:1D:5F:0C:3E:0A:29:48:78:2B:C8:3E:E0:EA:69:9E:F4. Verify rebuilt images and each independent trust store. Presence means trust remains; it does not prove an attack.'
   - title: Patch Istio and the Cloud Service Mesh bundle you actually run
     hint: For upstream Istio, use 1.31.3, 1.30.7 or the exceptional 1.29.10 release; 1.29 is EOL and its Go 1.25 build lacks the Go key-distrust fix, so migrate to 1.30+. For in-cluster Google Cloud Service Mesh, use 1.31.3-asm.3, 1.30.7-asm.3 or 1.29.10-asm.0; 1.28 and earlier are EOL. Managed Cloud Service Mesh updates automatically. Check DestinationRule SIMPLE TLS without caCertificates/credentialName, RequestAuthentication jwksUri fetches and XDS_ROOT_CA=SYSTEM. Mesh-issued mTLS certificates are unaffected. Redeploy updated sidecars/gateways and workloads as appropriate; if upstream upgrades must wait, use explicit trusted CA credentials or caCrl for affected external TLS paths, not disabled verification.
+  - title: Audit every Apigee outbound TLS trust path
+    hint: Back up keystores, trust stores and configuration; test changes outside production. Inspect TargetEndpoint, TargetServer, ServiceCallout SSLInfo and outbound JWKS lookups. Review custom TrustStores in every environment; managed platform updates do not remove certificates customers uploaded. Check the affected root fingerprints above and the compromised intermediate names in GCP-2026-077; a match shows remaining trust, not an observed attack.
+  - title: Separate Apigee managed rollouts from Hybrid image upgrades
+    hint: 'Google describes Apigee X and Edge SaaS platform-default remediation as in progress; do not call it complete. Audit custom stores now. Hybrid embeds isolated CA stores inside its containers and does not bind-mount host CA stores: upgrade to patched images once Google releases them. The bulletin names no fixed Hybrid version; an OS-only update is insufficient.'
+  - title: Remediate Apigee Edge Private Cloud on every node
+    hint: 'Follow GCP-2026-077: update ca-certificates and extract OS trust on RHEL/CentOS/Rocky. For FIPS using the shipped BCFKS store, first create a customer-owned store using the linked FIPS Option A; Edge updates overwrite the shipped store. Inspect and remove the actual affected aliases with the correct provider/store password, preserve apigee:apigee ownership, then perform the documented rolling stop/start of Apigee services across all nodes. Also audit or create explicit outbound target TrustStores.'
+  - title: Replace affected backend certificates before removing their trust
+    hint: Inspect backend certificate issuers. Replace and reissue eMudhra-issued backend certificates through a trusted CA, then remove affected aliases from custom stores. In the console use Apigee > Management > Environments > TLS Keystores, inspect aliases and delete the affected certificates. Update SSLInfo to a validated TrustStore; ref:// references take effect without proxy redeployment, while direct-name references require redeploying the proxy. Test outbound TLS/mTLS and JWKS-dependent flows; never disable verification to restore connectivity.
 sources:
   - name: Mozilla Bugzilla 2083449
     url: https://bugzilla.mozilla.org/show_bug.cgi?id=2083449
@@ -374,6 +385,10 @@ sources:
     url: https://istio.io/latest/news/security/istio-security-2026-008/
     primary: true
     says: Upstream fixes, public-CA trust prerequisites, Go 1.25 limitation, ztunnel distrust and external-TLS workarounds; mesh-issued mTLS is unaffected.
+  - name: Google Apigee GCP-2026-077 security bulletin
+    url: https://docs.cloud.google.com/apigee/docs/security-bulletins/security-bulletins#gcp-2026-077
+    primary: true
+    says: 'Published November 3: managed rollout still in progress, Hybrid image-local stores, OPDK OS/FIPS/custom-store steps and target certificate/redeployment checks. No patched Hybrid version specified.'
 ---
 
 A certificate authority's private key is the thing that makes "this is really your bank" true. For eight
@@ -429,3 +444,5 @@ For an unpatched Oracle runtime, the [operational guide](https://ops.java/emudhr
 **November 3 addition, following the November 2 official update:** GCP-2026-075 explains that Google Cloud SDK Libraries usually inherit trust from transport dependencies, runtimes or the OS; Java google-api-client before 2.9.2 is the exception. For GoogleNetHttpTransport.newTrustedTransport(), versions before 2.9.0 use the bundled store, while 2.9.0/2.9.1 fall back to it if the JDK store cannot be loaded. Direct transport constructors use the JDK store and need its vendor update. Updating a Cloud SDK alone does not prove all applications are fixed. Python grpcio, Ruby grpc and PHP grpc/grpc use bundled roots rather than system roots; deprecated Node grpc and .NET Grpc.Core require migration. Apply the added checklist to actual dependencies, verify removal of all three roots and rebuild, redistribute or redeploy. Google again reports no infrastructure breach or telemetry evidence of exploitation against Cloud workloads. This is downstream remediation of the same CA event.
 
 **November 2 mesh guidance:** Google’s GCP-2026-076 adds the three in-cluster Cloud Service Mesh patch bundles above; managed deployments need no customer action. The linked Istio advisory separates public-root trust from mesh-issued mTLS. Its older 1.29 line gets updated CA images but no Go 1.25 key-distrust backport. This is the existing compromised-CA incident, not a new breach of mesh signing keys.
+
+**November 4 follow-up to GCP-2026-077 (published November 3):** Apigee outbound TLS can still trust the compromised chain through default or customer-managed stores. An attacker needs a network interception position and a trusted forged chain; this bulletin is not evidence of an Apigee breach or exploitation. X and Edge SaaS platform-default updates are described as rolling out, while all products still require customer TrustStore review. Hybrid needs updated container images once released, not merely host CA updates. OPDK requires OS/JVM trust remediation and service restarts. Plan backend certificate replacement before removing trust to avoid breaking legitimate target connections. Existing runtime, SDK, mesh and certificate-replacement actions above remain necessary.
