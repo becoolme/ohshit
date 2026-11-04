@@ -6,7 +6,7 @@ tags:
 - Chainalysis
 - SaaS
 - data breach
-summary: Chainalysis paused Reactor, Data Solutions, Chain (Beta) and Rapid; Academy/Hexagate and KYT exceptions remain. Admin functionality is restored. Customer IDs, names, emails and roles were accessed; no evidence yet of investigation content, cleartext passwords, MFA-secret or session-token access. Other KYT/Address Screening functions operate.
+summary: Chainalysis paused Reactor, Data Solutions, Chain (Beta) and Rapid; Academy/Hexagate, Knowledge Base and KYT exceptions remain. Admin functionality is restored. Customer IDs, names, emails and roles were accessed; no evidence yet of investigation content, cleartext passwords, MFA-secret or session-token access. Other KYT/Address Screening functions operate.
 splash: 'Chainalysis customers: four products paused, possible Academy/Hexagate impact and KYT exceptions; identity-data scope under investigation'
 wipe: Enable two-factor authentication, scrutinize unexpected login or reset prompts and obtain your organization's affected-record breakdown
 inTheWild: 'yes'
@@ -40,13 +40,16 @@ timeline:
 - date: Nov 3, 23:05 UTC
   title: Customer Admin Portal functionality restored
   body: Previously affected portal functionality is back; wider security maintenance and product restrictions continue. The incident now also lists Rapid Lookup.
+- date: Nov 4, 08:28 UTC
+  title: Knowledge Base access also affected
+  body: Chainalysis adds its Knowledge Base to the ongoing security-maintenance impact; work to restore systems continues. This is an availability update, not confirmation of additional data access.
 checklist:
 - title: Enable two-factor authentication
   hint: Ask your existing Chainalysis account manager for help if your organization has not enabled it. Check unexpected authentication or password-reset prompts through your normal sign-in route before responding.
 - title: Confirm your organization's exposure
   hint: Follow the direct customer updates and request the promised record breakdown. Treat unsolicited recovery or recruiting messages cautiously; verify senders through an established contact rather than links in the message.
 - title: Plan around the product-specific interruption
-  hint: Check the official security-maintenance incident and your account manager before relying on Reactor, Data Solutions, Chain (Beta) or Rapid. Some Hexagate monitoring may be affected; KYT and Address Screening otherwise operate, except KYT Graph preview and Reactor integration. Login issues may occur. The November 3 14:30 UTC update also warns Academy training may be inaccessible; maintenance continues without a restoration deadline. Report suspicious activity to your IT/security team and follow established protocols. At 17:00 UTC on November 3, the company offered extra time or exam-deadline extensions as appropriate. Ask your established account manager about your specific exam; do not assume every deadline automatically changes. The November 3 19:56 UTC update also warns of temporarily unavailable Customer Admin Portal functions. At 23:05 UTC, the company confirmed the previously affected portal functionality was restored. Check the incident detail and your account manager for remaining restrictions; this is not complete service or security recovery.
+  hint: Check the official security-maintenance incident and your account manager before relying on Reactor, Data Solutions, Chain (Beta) or Rapid. Some Hexagate monitoring may be affected; KYT and Address Screening otherwise operate, except KYT Graph preview and Reactor integration. Login issues may occur. The November 3 14:30 UTC update also warns Academy training may be inaccessible; maintenance continues without a restoration deadline. Report suspicious activity to your IT/security team and follow established protocols. At 17:00 UTC on November 3, the company offered extra time or exam-deadline extensions as appropriate. Ask your established account manager about your specific exam; do not assume every deadline automatically changes. The November 3 19:56 UTC update also warns of temporarily unavailable Customer Admin Portal functions. At 23:05 UTC, the company confirmed the previously affected portal functionality was restored. Check the incident detail and your account manager for remaining restrictions; this is not complete service or security recovery. The November 4 08:28 UTC update also identifies Knowledge Base access as affected; use established support or your account manager when documentation is unavailable.
 sources:
 - name: Chainalysis original notice and full customer email
   url: https://www.chainalysis.com/blog/security-incident-october-30/
@@ -55,7 +58,7 @@ sources:
   url: https://www.bleepingcomputer.com/news/security/chainalysis-discloses-data-breach-from-offensive-agentic-techniques/amp/
 - name: Chainalysis security-maintenance incident history
   url: https://status.chainalysis.com/incidents/wpnnvwyvcnkz
-  says: Product-specific interruptions, KYT exceptions and possible login/Hexagate impact; November 3 14:30 UTC adds possible Academy inaccessibility. The 17:00 UTC update adds accommodations for affected certifications and exams. At 19:56 UTC it adds possible Customer Admin Portal functional unavailability; at 23:05 UTC it confirms that functionality restored. Rapid Lookup is also listed among affected investigation components.
+  says: Product-specific interruptions, KYT exceptions and possible login/Hexagate impact; November 3 14:30 UTC adds possible Academy inaccessibility. The 17:00 UTC update adds accommodations for affected certifications and exams. At 19:56 UTC it adds possible Customer Admin Portal functional unavailability; at 23:05 UTC it confirms that functionality restored. Rapid Lookup is also listed among affected investigation components. November 4 08:28 UTC adds Knowledge Base access impact while restoration continues.
   primary: true
 updated: '2026-11-04'
 ---
@@ -71,3 +74,5 @@ The company describes offensive agentic techniques but identifies no attack fram
 **November 3 administration update:** The November 3 19:56 UTC update also warns of temporarily unavailable Customer Admin Portal functions. At 23:05 UTC, the company confirmed the previously affected portal functionality was restored. Check the incident detail and your account manager for remaining restrictions; this is not complete service or security recovery. This does not establish additional confirmed data access or unavailability of every portal function.
 
 **November 3, 23:05 UTC restoration:** The previously affected Customer Admin Portal functionality is restored. The same original update explicitly keeps broader security maintenance ongoing; the incident also lists Rapid Lookup alongside Reactor. This does not announce full product recovery, change the KYT exceptions, or resolve the data-scope investigation. Earlier exam accommodations and credential precautions remain applicable.
+
+**November 4 documentation access:** At 08:28 UTC, the company added Knowledge Base access to the maintenance impact. Use established support or your account manager for unavailable documentation; this does not establish further data exposure or full restoration.
