@@ -9,7 +9,7 @@ tags:
   - investigation
 ecosystems:
   - crypto
-summary: Binance preliminarily reports signing-service access and persistent EIP-7702 delegation; FBI blames TraderTraitor. It revises assets involved to ~$6.34bn, frozen/blocked to ~$2.85bn and replacement to 98% by Oct 31 (UTC+8), not recovery. Selected withdrawals and ten-token reserve proofs are available; final findings and full restoration remain pending.
+summary: Binance preliminarily reports signing-service access and persistent EIP-7702 delegation; FBI blames TraderTraitor. It revises assets involved to ~$6.34bn, frozen/blocked to ~$2.85bn and replacement to 98% by Oct 31 (UTC+8), not recovery. Selected withdrawals and the older ten-token proof are available; a new 44-token snapshot awaits its proof. Final findings and full restoration remain pending.
 splash: Binance.com withdrawal users; Aave reports a precautionary freeze of DAO-operated V3/V4 markets
 wipe: Follow official updates, inspect account activity, and use Binance's account-lock procedure if you find unauthorized actions
 inTheWild: yes
@@ -109,6 +109,9 @@ timeline:
   - date: Nov 3, 2026
     title: TRM traces new laundering routes through tokens and chained swaps
     body: Research follows self-minted liquidity-pool tokens, lending receipt tokens and bridge-to-bridge payouts. These observations do not revise vendor losses or establish new platform intrusions.
+  - date: Nov 4, 00:00 UTC
+    title: Binance takes a broader 44-token reserve snapshot
+    body: "Recovery Update #7 says the new snapshot covers 44 tokens instead of ten; full zero-knowledge proof generation is expected to take 50–60 hours. The older ten-token proof remains separate."
   - date: Nov 4, 2026
     title: Research expands THORChain and Solana laundering observations
     body: Bitquery reports $3.1bn held and 556,271 ETH at its November 4 09:56 UTC snapshot, with some newly counted wallets checked through 11:28 UTC. It follows Solana proceeds toward Bitcoin and revises earlier TRX-route coverage. These remain unverified research estimates, not vendor losses or recovered assets.
@@ -124,7 +127,7 @@ checklist:
   - title: Screen the FBI laundering-address list
     hint: Virtual asset providers and node operators should use the FBI notice's complete ETH, BTC and SOL list, containing more than 600 addresses, to block transactions with or derived from them. Report relevant information to an FBI field office or IC3. A transaction match alone does not prove an account or platform was compromised.
   - title: Verify your inclusion in the completed reserve snapshot
-    hint: "Use Binance’s official PoR page and linked account-balance guide on a trusted device. In Profile → Wallet → Verification select the October 31 00:00 UTC record with verification type Merkle Tree + Zksnarks and download its data. The guide lists verifier 1.2.1 for August 2026 onward. Place config.json, proof.csv and zkpor864.vk.save in its config folder; check ProofTable and ZkKeyName against the downloaded proof/key. Run the platform’s verifier for the root, then add your account-specific user_config.json and use -user to check inclusion; never upload account files to an unsolicited checker. Update #5 covers BTC, ETH, USDT, BNB, SOL, USDC, XRP, USD1, RLUSD and ZEC. This is a historical snapshot, not a live balance or evidence that stolen assets were recovered. Update #6 announces a progressive rollout from November 3 04:00 UTC. Use its exact asset/network table and the live withdrawal or network-status page; the announcement does not confirm every listed pair is already open."
+    hint: "Use Binance’s official PoR page and linked account-balance guide on a trusted device. In Profile → Wallet → Verification select the October 31 00:00 UTC record with verification type Merkle Tree + Zksnarks and download its data. The guide lists verifier 1.2.1 for August 2026 onward. Place config.json, proof.csv and zkpor864.vk.save in its config folder; check ProofTable and ZkKeyName against the downloaded proof/key. Run the platform’s verifier for the root, then add your account-specific user_config.json and use -user to check inclusion; never upload account files to an unsolicited checker. Update #5 covers BTC, ETH, USDT, BNB, SOL, USDC, XRP, USD1, RLUSD and ZEC. This is a historical snapshot, not a live balance or evidence that stolen assets were recovered. Update #7 announces a separate November 4 00:00 UTC snapshot covering 44 tokens; its full proof is still pending, with a 50–60-hour generation estimate. Use the older completed proof until the newer one is published; do not treat the new snapshot alone as a completed verification. Update #6 announces a progressive rollout from November 3 04:00 UTC. Use its exact asset/network table and the live withdrawal or network-status page; the announcement does not confirm every listed pair is already open."
   - title: 'Operators: investigate devices, deployment tokens and signing authority'
     hint: 'The report names /opt/homebrew/Cellar/pyenv/2.8.0/libexec/pyenv_, the replaced /opt/homebrew/Cellar/pyenv/2.8.0/libexec/pyenv and /opt/homebrew/bin/pyenv. Correlate file content, symlinks, processes and deployment logs; a path match alone is not proof. General operator response: isolate suspected devices, preserve evidence, rebuild from trusted media and revoke affected credentials/deployment tokens from a clean environment. Check signing-service access and whether EIP-7702 delegation still authorizes unknown code. Do not execute suspect installers. The report does not require ordinary Binance users to perform these server operations.'
   - title: Trace receipt tokens and cross-chain payouts when screening exposure
@@ -281,6 +284,14 @@ sources:
     url: https://www.binance.bh/en/blog/community/3229153443759566763
     primary: true
     says: Readable official November 3 report corroborates affected/frozen amounts, replacement funding, signing-service access and ongoing independent review; same company report, not independent corroboration.
+  - name: Binance Recovery Update 7
+    url: https://www.binance.com/en/support/announcement/detail/c6ba9aa726974fc6b9332a2c8f63b405
+    primary: true
+    says: November 4 original read in full through the public CMS response below; 44-token snapshot at 00:00 UTC, proof pending with a 50–60-hour estimate, 98% replenishment and remaining illiquid purchases.
+  - name: Binance public CMS copy of Recovery Update 7
+    url: https://www.binance.com/bapi/composite/v1/public/cms/article/detail/query?articleCode=c6ba9aa726974fc6b9332a2c8f63b405
+    primary: true
+    says: Complete original article payload; the ordinary announcement page returned an empty response. Same vendor source, not independent corroboration.
 ---
 
 Binance’s initial notice said it had not confirmed an impact on user funds. The exchange then edited that notice to state that user funds are safe, and subsequently said withdrawals would resume after the security issue is fully resolved. These are the vendor’s statements, not an independently audited reserve or loss assessment. No resumption time or technical containment report was supplied in those notices. The withdrawal notice does not specify affected networks or withdrawal routes; do not infer that every Binance product is affected. Those earlier notices supported L3 because they acknowledged disruption without confirming the suspected theft.
@@ -331,3 +342,6 @@ Binance claims exploited entry points are closed, systems on the attack path hav
 **November 4 research revision:** Bitquery expands its TRX-route tracing from an earlier partial THORChain sample to 98 labelled sending wallets and 102 named Ethereum payees, reporting about 19,985 ETH in their onward wallets, including about 4,000 ETH from senders it has not traced. It separately describes Solana proceeds moving via USDC/CCTP to Ethereum or Avalanche and then through THORChain toward Bitcoin after that service reopened. Its total holdings estimate is about **$3.1bn**, including **556,271 ETH**, at 09:56 UTC; selected newly counted Solana/Bitcoin wallets were checked through 11:28 UTC. These unverified research estimates mix attribution, routing and valuation assumptions; they are neither an additional theft nor returned funds, and do not replace Binance’s ~$6.34bn affected/~$2.85bn frozen-or-blocked vendor figures or replacement-funding claims.
 
 The researcher no longer says none of the traced money reached exchange deposit addresses: some TRX reportedly reached HitBTC and a cash desk, while it found no mixer transfer in the paths it followed. This does not prove those onward services were compromised or identify all proceeds. The newly counted wallets revise coverage, not the original theft size; do not extrapolate one snapshot into a complete current balance or combine unrelated bank/BitMart events.
+
+
+**November 4 reserve expansion:** Recovery Update #7 confirms a new 00:00 UTC snapshot for 44 tokens, replacing the earlier plan for a broader snapshot. Its full zero-knowledge proof is still being generated, now estimated at 50–60 hours rather than the earlier 40–50-hour forecast. The completed October 31 ten-token proof remains a separate historical record. Binance repeats 98% company-funded replenishment, with remaining illiquid tokens bought through market and OTC channels. This is neither a new recovery of stolen funds nor confirmation of full withdrawal restoration.
