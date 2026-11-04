@@ -9,7 +9,7 @@ tags:
 ecosystems:
 - chromium
 - android
-summary: Chrome 157 fixes 213 security bugs, including seven critical flaws. Crafted web pages can trigger code execution; three critical entries are Android-specific. Update desktop/Android Stable and restart. Extended Stable 156.0.8078.88 carries a separate 55-fix subset, not all 213 fixes. Exploitation is unconfirmed.
+summary: Chrome 157 fixes 213 security bugs, including seven critical flaws. Crafted web pages can trigger code execution; three critical entries are Android-specific. Update desktop/Android Stable and restart. Extended Stable 156.0.8078.88 carries a separate 55-fix update, not all 213 fixes. Exploitation is unconfirmed.
 splash: Chrome desktop and Android users visiting attacker-controlled HTML; some critical bugs are Android-specific
 wipe: 'Install Chrome Stable 157.0.8103.38+ (.38/.39 Windows/Mac), then restart; managed Extended Stable: 156.0.8078.88+ subset'
 inTheWild: unknown
@@ -54,7 +54,7 @@ fixed:
   status: Google Play rollout
 - product: Chrome Extended Stable — Windows / macOS
   version: 156.0.8078.88
-  status: Separate 55-fix subset; not all 157 fixes
+  status: Separate 55-fix update; not all 157 fixes
 timeline:
 - date: Nov 3, 2026
   title: Extended Stable receives a separate 55-fix update
@@ -84,7 +84,7 @@ sources:
 - name: Google Extended Stable November 3 release
   url: https://chromereleases.googleblog.com/2026/11/extended-stable-update-for-desktop.html
   primary: true
-  says: 156.0.8078.88 and its separate 55-CVE subset.
+  says: 156.0.8078.88 and its separate 55-CVE list.
 - name: Google Chrome Releases public feed
   url: https://chromereleases.googleblog.com/feeds/posts/default?alt=json&max-results=10
   primary: true

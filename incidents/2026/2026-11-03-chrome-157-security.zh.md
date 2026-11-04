@@ -1,6 +1,6 @@
 ---
 title: Chrome 157 修复 213 个安全问题，其中 7 个为严重漏洞
-summary: Chrome 157 修复 213 个安全问题，其中 7 个为严重漏洞。特制网页可触发代码执行；三个严重条目仅涉及 Android。更新桌面及 Android Stable 后重启。Extended Stable 156.0.8078.88 是独立的 55 项修复子集，不涵盖全部 213 项。尚未确认实际利用。
+summary: Chrome 157 修复 213 个安全问题，其中 7 个为严重漏洞。特制网页可触发代码执行；三个严重条目仅涉及 Android。更新桌面及 Android Stable 后重启。Extended Stable 156.0.8078.88 是独立的 55 项修复更新，不涵盖全部 213 项。尚未确认实际利用。
 splash: 访问攻击者控制 HTML 的 Chrome 桌面及 Android 用户；部分严重漏洞仅涉及 Android
 wipe: Stable 安装 157.0.8103.38+ 并重启（Windows/Mac 为 .38/.39）；受管 Extended Stable 的部分修复为 156.0.8078.88+
 inTheWildNote: Google 发版说明未报告实际利用，这不能证明从未发生利用。
@@ -31,7 +31,7 @@ fixed:
 - product: Chrome Stable——Android
   status: 经 Google Play 逐步推送
 - product: Chrome Extended Stable——Windows / macOS
-  status: 独立 55 项修复子集，不含全部 157 修复
+  status: 独立 55 项修复更新，不含全部 157 修复
 timeline:
 - date: 2026年11月3日
   title: Extended Stable 获得独立的 55 项修复更新
@@ -55,7 +55,7 @@ sources:
 - name: Google Chrome 157 Android 发版
   says: 157.0.8103.38 推送及对应桌面安全修复。
 - name: Google 11 月 3 日 Extended Stable 发版
-  says: 156.0.8078.88 及独立的 55 个 CVE 子集。
+  says: 156.0.8078.88 及独立的 55 个 CVE 清单。
 - name: Google Chrome Releases 公开订阅源
   says: 直接 HTML 缺少正文时核阅的完整原文，同一发布者，不是独立佐证。
 - name: Google 桌面更新说明
