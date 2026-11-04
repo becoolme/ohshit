@@ -9,7 +9,7 @@ tags:
   - investigation
 ecosystems:
   - crypto
-summary: Binance preliminarily reports signing-service access and persistent EIP-7702 delegation; FBI blames TraderTraitor. It revises assets involved to ~$6.34bn, frozen/blocked to ~$2.85bn and replacement to 98% by Oct 31 (UTC+8), not recovery. Selected withdrawals and the older ten-token proof are available; a new 44-token snapshot awaits its proof. Final findings and full restoration remain pending.
+summary: Binance reports signing-service intrusion and persistent EIP-7702 delegation; FBI blames TraderTraitor. Its revised figures are ~$6.34bn affected, ~$2.85bn frozen/blocked and 98% replacement by Oct 31 (UTC+8), not recovery. Selected withdrawals and the ten-token proof are available; a new 44-token snapshot awaits its proof. Final review/reopening pending.
 splash: Binance.com withdrawal users; Aave reports a precautionary freeze of DAO-operated V3/V4 markets
 wipe: Follow official updates, inspect account activity, and use Binance's account-lock procedure if you find unauthorized actions
 inTheWild: yes
@@ -342,6 +342,5 @@ Binance claims exploited entry points are closed, systems on the attack path hav
 **November 4 research revision:** Bitquery expands its TRX-route tracing from an earlier partial THORChain sample to 98 labelled sending wallets and 102 named Ethereum payees, reporting about 19,985 ETH in their onward wallets, including about 4,000 ETH from senders it has not traced. It separately describes Solana proceeds moving via USDC/CCTP to Ethereum or Avalanche and then through THORChain toward Bitcoin after that service reopened. Its total holdings estimate is about **$3.1bn**, including **556,271 ETH**, at 09:56 UTC; selected newly counted Solana/Bitcoin wallets were checked through 11:28 UTC. These unverified research estimates mix attribution, routing and valuation assumptions; they are neither an additional theft nor returned funds, and do not replace Binance’s ~$6.34bn affected/~$2.85bn frozen-or-blocked vendor figures or replacement-funding claims.
 
 The researcher no longer says none of the traced money reached exchange deposit addresses: some TRX reportedly reached HitBTC and a cash desk, while it found no mixer transfer in the paths it followed. This does not prove those onward services were compromised or identify all proceeds. The newly counted wallets revise coverage, not the original theft size; do not extrapolate one snapshot into a complete current balance or combine unrelated bank/BitMart events.
-
 
 **November 4 reserve expansion:** Recovery Update #7 confirms a new 00:00 UTC snapshot for 44 tokens, replacing the earlier plan for a broader snapshot. Its full zero-knowledge proof is still being generated, now estimated at 50–60 hours rather than the earlier 40–50-hour forecast. The completed October 31 ten-token proof remains a separate historical record. Binance repeats 98% company-funded replenishment, with remaining illiquid tokens bought through market and OTC channels. This is neither a new recovery of stolen funds nor confirmation of full withdrawal restoration.
