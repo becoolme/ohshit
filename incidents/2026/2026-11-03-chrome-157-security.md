@@ -69,7 +69,7 @@ checklist:
 - title: Update and relaunch desktop Stable
   hint: 'Open Chrome’s menu → Help → About Google Chrome, allow the update, select Relaunch and recheck the displayed version: 157.0.8103.38 or newer (Windows/Mac may show .39). Linux users can update through the package manager. Downloading without restarting leaves the running browser unpatched.'
 - title: Update Android through Google Play
-  hint: Open Google Play → profile → Manage apps & device → Updates available → Chrome → Update, then reopen Chrome and verify 157.0.8103.38 or newer. Google rolls the release out over several days; if unavailable, recheck rather than treating the old version as patched.
+  hint: Open Google Play → profile → Manage apps & device → Updates available → Chrome → Update, then reopen Chrome → menu → Settings → About Chrome and verify 157.0.8103.38 or newer. Google rolls the release out over several days; if unavailable, recheck rather than treating the old version as patched.
 - title: Verify managed channel and product-specific coverage
   hint: For Windows/Mac Extended Stable fleets, install 156.0.8078.88 or later and restart, then verify the actual channel and version. Its 55-fix list overlaps Chrome 157 but does not assert coverage of every 157 CVE. Track your browser vendor’s own advisory for Edge, other Chromium products, WebView, ChromeOS and iOS; these version numbers do not establish their fixes. Bug details remain restricted in some cases; do not try to bypass them.
 sources:

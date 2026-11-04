@@ -46,7 +46,7 @@ checklist:
 - title: 更新并重启桌面 Stable
   hint: 打开 Chrome 菜单 → 帮助 → 关于 Google Chrome，完成更新后选择重新启动，再确认显示版本为 157.0.8103.38 或更新版本（Windows/Mac 也可能显示 .39）。Linux 可经包管理器更新。仅下载更新而不重启，正在运行的浏览器仍未修补。
 - title: 经 Google Play 更新 Android
-  hint: 打开 Google Play → 个人资料 → 管理应用和设备 → 有可用更新 → Chrome → 更新，然后重新打开 Chrome，核实版本为 157.0.8103.38 或更新版本。Google 分数日推送；若暂未提供，应再次检查，不能将旧版视为已修复。
+  hint: 打开 Google Play → 个人资料 → 管理应用和设备 → 有可用更新 → Chrome → 更新，然后重新打开 Chrome → 菜单 → 设置 → 关于 Chrome，核实版本为 157.0.8103.38 或更新版本。Google 分数日推送；若暂未提供，应再次检查，不能将旧版视为已修复。
 - title: 核实受管渠道及各产品覆盖范围
   hint: Windows/Mac 的 Extended Stable 设备安装 156.0.8078.88 或更新版本并重启，再核实实际渠道和版本。其 55 项修复与 Chrome 157 重叠，但未声称覆盖全部 157 CVE。Edge、其他 Chromium 产品、WebView、ChromeOS 和 iOS 应跟进各自厂商公告；本文版本不能证明这些产品已修复。部分漏洞详情仍受限，不要尝试绕过访问限制。
 sources:
