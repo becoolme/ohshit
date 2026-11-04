@@ -48,8 +48,8 @@ cves:
   description: Authentication bypass grants administrator access under additional preconditions. Requires remote network access and no prior authentication; no user interaction is required.
 - id: CVE-2026-95739
   score: 8.1
-  name: Insufficient API login limits permit brute force under additional preconditions
-  description: Insufficient API login limits permit brute force under additional preconditions. Requires remote network access and no prior authentication; no user interaction is required.
+  name: Insufficient API login limits permit brute force and administrator access under additional preconditions
+  description: Insufficient API login limits permit brute force and administrator access under additional preconditions. Requires remote network access and no prior authentication; no user interaction is required.
 - id: CVE-2026-95740
   score: 8
   name: Certificate validation flaw exposes server communications under additional preconditions
