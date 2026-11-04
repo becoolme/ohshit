@@ -1,8 +1,7 @@
 ---
 title: "eMudhra CA 中间证书私钥弱到离谱：每一个都是小于 256 的数"
 headline: "eMudhra：八个 CA 私钥，计算器按几下就猜出来了"
-summary: >-
-  emSign ECC Root CA - G3 下的八张中间证书（六张 TLS，两张代码签名）由 Sectigo 交叉签名，它们的 P-384 私钥都是小于 256 的整数。任何人都能瞬间还原出私钥，给任意域名签发证书。受影响的 Dart、Flutter 和 Firestore 客户端构建需要更新。
+summary: emSign ECC G3 下八张中间证书的私钥可瞬间恢复，可伪造证书，受影响 SDK 及 CA 包须更新。Chrome 另计划对 G1 根下最早 SCT 晚于 11 月 16 日 23:59:59 UTC 的 TLS 证书取消默认信任，适用于 Chrome 153 及更高版本；更早 SCT 不受这项新限制影响。
 splash: "信任 emSign ECC G3 或 Sectigo 交叉签名的客户端；网络路径上的攻击者可针对未修补的运行时及内嵌 SDK"
 wipe: "更新系统、浏览器及应用 CA 证书包（certifi 2026.10.19、Go 1.27.3 / 1.26.10、Node 22.23.4+），立即更换受影响证书。"
 inTheWildNote: CT 日志里没发现终端实体证书；几小时内就被拦截
@@ -140,6 +139,9 @@ timeline:
   - date: 2026年11月3日
     title: Google 补充 Apigee 出站 TLS 处置指引
     body: GCP-2026-077 区分托管平台更新、Hybrid 镜像内信任库、OPDK 手动处置及客户自定义 TrustStore，尚未列出 Hybrid 修补版本。
+  - date: 2026年11月4日
+    title: Chrome 为 emSign Root CA - G1 公布独立 SCT 截止限制
+    body: 最早 SCT 晚于 11 月 16 日 23:59:59 UTC 的证书将在 Chrome 153 及更高版本失去默认信任。更早 SCT 不受这项新限制影响，显式本地信任可覆盖限制。计划配合 11 月 17 日 Chrome 158 Stable 发布，日期可能调整。
   - date: 2026年10月27日前后
     title: Chrome Root Store v43 移除 emSign ECC Root CA - G3
 checklist:
@@ -193,6 +195,8 @@ checklist:
     hint: 按 GCP-2026-077 在 RHEL/CentOS/Rocky 更新 ca-certificates 并重新生成系统信任库。若 FIPS 仍使用随产品提供的 BCFKS 库，先按链接的 FIPS Option A 创建客户自管库，产品更新会覆盖原库。使用正确的 provider 及库密码核查、删除实际受影响别名，保留 apigee:apigee 所有权，然后逐节点按文档滚动停止并启动 Apigee 服务。另须核查或创建明确的出站目标 TrustStore。
   - title: 先更换受影响后端证书，再移除相应信任
     hint: 检查后端证书签发者。对 eMudhra 签发的后端证书，先通过可信 CA 重新签发并替换，再删除自定义库中的受影响别名。在控制台进入 Apigee > Management > Environments > TLS Keystores，核查别名并删除受影响证书，将 SSLInfo 指向经核实的 TrustStore。ref:// 引用无需重新部署代理即可生效，直接名称引用则须重新部署代理。测试出站 TLS/mTLS 及依赖 JWKS 的流程，不要通过关闭验证恢复连接。
+  - title: 规划替换新签发的 G1 根 TLS 证书
+    hint: 检查实际服务证书链及最早 Signed Certificate Timestamp，不要仅看 NotBefore 或到期日。针对 emSign Root CA - G1，而非已移除的 ECC G3，Chrome 153 及更高版本将在最早 SCT 晚于 2026 年 11 月 16 日 23:59:59 UTC 时拒绝默认信任。在新签发或续期越过截止点前协调迁移到其他受信任 CA 层级，并在 Chrome 测试证书链。较早 SCT 只是不受本项变更影响，不代表所有信任检查均通过。核查 Windows GPO 等企业或用户显式信任，这会覆盖 SCT 限制；不要将添加覆盖作为常规缓解。跟进关联 Root Program 公告的实施时间修订。
 sources:
   - says: 私钥是小于 256 的整数；报告时间、OneCRL 条目，以及 10月18日的吊销
   - name: eMudhra 声明
@@ -266,6 +270,8 @@ sources:
     says: 上游修复、公有 CA 信任前提、Go 1.25 的限制、ztunnel 拒信及外部 TLS 缓解措施；网格自签发的 mTLS 不受影响。
   - name: Google Apigee GCP-2026-077 安全公告
     says: 11 月 3 日发布：托管更新仍在进行、Hybrid 镜像独立信任库、OPDK 系统/FIPS/自定义库步骤及后端证书与重新部署检查；尚未指定 Hybrid 修补版本。
+  - name: Chrome Root Program 11 月 4 日 G1 信任限制原始通知
+    says: 区分 G1 与已移除的 ECC G3，给出最早 SCT 截止点、Chrome 版本、拟于 11 月 17 日实施及显式本地信任例外。
 ---
 CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eMudhra 有八张中间证书，P-384 私钥都是**小于 256 的整数**。据研究人员 Scott Helme 说，其中一个就是数字 4。谁要是注意到了，就能给任意域名签证书，而所有信任这条链的客户端都会照单全收。
 
@@ -315,3 +321,6 @@ CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eM
 **11 月 2 日网格处置指南：** Google 的 GCP-2026-076 补充了上列三条集群内 Cloud Service Mesh 修补版本，托管部署无需客户操作。所链接的 Istio 公告区分了公有根证书信任与网格自行签发的 mTLS。较旧 1.29 分支更新了 CA 镜像，但 Go 1.25 没有密钥拒信修复回移。这仍是既有 CA 证书被攻破事件，并非网格签发密钥发生新的泄露。
 
 **11 月 4 日跟进 11 月 3 日发布的 GCP-2026-077：** Apigee 出站 TLS 仍可能通过默认或客户自定义信任库接受被攻破的证书链。攻击者需要网络拦截位置及被信任的伪造链；公告不是 Apigee 遭入侵或已被利用的证据。X 和 Edge SaaS 默认库仍在滚动更新，各产品客户均须核查自定义 TrustStore。Hybrid 须在修补镜像发布后更新容器，仅更新宿主机 CA 不够；OPDK 须处置系统及 JVM 信任并重启服务。移除信任前先安排后端证书替换，避免中断合法目标连接。上列运行时、SDK、网格及证书替换措施仍须完成。
+
+
+**11 月 4 日 Chrome 策略：** Root Program 对 **emSign Root CA - G1** 增加独立限制。最早 SCT 晚于 **2026 年 11 月 16 日 23:59:59 UTC** 的 TLS 服务器证书，将在 Chrome 153 及更高版本失去默认信任。截止点或之前的证书不受本项变更影响，这不是对其他信任检查的全面保证。计划配合 11 月 17 日 Chrome 158 Stable 实施，项目可能调整日期或提前收紧限制。平台、用户或企业显式信任可覆盖这些 SCT 限制。G1 策略决定不能证明另有密钥被盗、新伪造证书或实际拦截，也不取代现有 ECC G3 移除及运行时、SDK 更新。

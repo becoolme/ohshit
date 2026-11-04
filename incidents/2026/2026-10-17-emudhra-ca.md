@@ -6,10 +6,7 @@ date: 2026-10-17
 updated: 2026-11-04
 tags: [PKI, CA, TLS]
 ecosystems: [go, python, node, browsers]
-summary: >-
-  Eight intermediate certificates (six TLS, two code signing) under emSign ECC Root CA - G3, cross-signed by
-  Sectigo, had P-384 private keys that were integers below 256. Anyone could recover them instantly and mint
-  certificates for any domain. Affected Dart, Flutter and Firestore client builds need updates.
+summary: Eight intermediate certificates under emSign ECC G3 had instantly recoverable private keys, enabling forged certificates; affected SDKs and CA bundles need updates. Chrome also plans to reject G1-rooted TLS certificates with earliest SCT after Nov 16, 23:59:59 UTC, in Chrome 153+. Earlier SCTs are unchanged by that new constraint.
 splash: "Clients trusting emSign ECC G3 / Sectigo cross-signs; network-path attackers can target unpatched runtimes and embedded SDKs"
 wipe: "Update OSes, browsers and app CA bundles (certifi 2026.10.19; Go 1.27.3/1.26.10; Node 22.23.4+). Replace affected certificates now."
 inTheWild: "no"
@@ -186,6 +183,9 @@ timeline:
   - date: Nov 3, 2026
     title: Google adds Apigee outbound TLS remediation
     body: GCP-2026-077 distinguishes managed platform rollouts, image-local Hybrid stores, manual OPDK remediation and customer-managed TrustStores. No Hybrid patch version is named.
+  - date: Nov 4, 2026
+    title: Chrome announces a separate SCT cutoff for emSign Root CA - G1
+    body: Certificates whose earliest SCT is after November 16 23:59:59 UTC will lose default trust in Chrome 153 and higher. Earlier SCTs are unaffected by this new restriction; explicit local trust overrides it. Rollout aims to coincide with Chrome 158 Stable on November 17 and may change.
   - date: ~Oct 27, 2026
     title: Chrome Root Store v43 removes the emSign ECC Root CA - G3
 checklist:
@@ -239,6 +239,8 @@ checklist:
     hint: 'Follow GCP-2026-077: update ca-certificates and extract OS trust on RHEL/CentOS/Rocky. For FIPS using the shipped BCFKS store, first create a customer-owned store using the linked FIPS Option A; Edge updates overwrite the shipped store. Inspect and remove the actual affected aliases with the correct provider/store password, preserve apigee:apigee ownership, then perform the documented rolling stop/start of Apigee services across all nodes. Also audit or create explicit outbound target TrustStores.'
   - title: Replace affected backend certificates before removing their trust
     hint: Inspect backend certificate issuers. Replace and reissue eMudhra-issued backend certificates through a trusted CA, then remove affected aliases from custom stores. In the console use Apigee > Management > Environments > TLS Keystores, inspect aliases and delete the affected certificates. Update SSLInfo to a validated TrustStore; ref:// references take effect without proxy redeployment, while direct-name references require redeploying the proxy. Test outbound TLS/mTLS and JWKS-dependent flows; never disable verification to restore connectivity.
+  - title: Plan replacement of newly issued G1-rooted TLS certificates
+    hint: Inspect the served chain and earliest Signed Certificate Timestamp, not just NotBefore or expiry. For emSign Root CA - G1 (not the already removed ECC G3 root), Chrome 153+ will reject default trust when the earliest SCT is later than November 16, 2026 23:59:59 UTC. Coordinate migration to another trusted CA hierarchy before new issuance or renewal crosses that cutoff, and test the chain in Chrome. Earlier SCTs are unaffected by this specific change, not guaranteed universally trusted. Audit enterprise/user explicit trust such as Windows GPO, which overrides these SCT constraints; do not add such an override as a routine workaround. Follow the linked Root Program notice for rollout revisions.
 sources:
   - name: Mozilla Bugzilla 2083449
     url: https://bugzilla.mozilla.org/show_bug.cgi?id=2083449
@@ -389,6 +391,10 @@ sources:
     url: https://docs.cloud.google.com/apigee/docs/security-bulletins/security-bulletins#gcp-2026-077
     primary: true
     says: 'Published November 3: managed rollout still in progress, Hybrid image-local stores, OPDK OS/FIPS/custom-store steps and target certificate/redeployment checks. No patched Hybrid version specified.'
+  - name: Chrome Root Program November 4 G1 trust-constraint notice
+    url: https://groups.google.com/a/ccadb.org/g/public/c/DU8p98nyQWc/m/R33zS9UIBgAJ
+    primary: true
+    says: Original policy distinguishes G1 from removed ECC G3, specifies earliest-SCT cutoff, Chrome versions, intended November 17 rollout and explicit-local-trust exception.
 ---
 
 A certificate authority's private key is the thing that makes "this is really your bank" true. For eight
@@ -446,3 +452,6 @@ For an unpatched Oracle runtime, the [operational guide](https://ops.java/emudhr
 **November 2 mesh guidance:** Google’s GCP-2026-076 adds the three in-cluster Cloud Service Mesh patch bundles above; managed deployments need no customer action. The linked Istio advisory separates public-root trust from mesh-issued mTLS. Its older 1.29 line gets updated CA images but no Go 1.25 key-distrust backport. This is the existing compromised-CA incident, not a new breach of mesh signing keys.
 
 **November 4 follow-up to GCP-2026-077 (published November 3):** Apigee outbound TLS can still trust the compromised chain through default or customer-managed stores. An attacker needs a network interception position and a trusted forged chain; this bulletin is not evidence of an Apigee breach or exploitation. X and Edge SaaS platform-default updates are described as rolling out, while all products still require customer TrustStore review. Hybrid needs updated container images once released, not merely host CA updates. OPDK requires OS/JVM trust remediation and service restarts. Plan backend certificate replacement before removing trust to avoid breaking legitimate target connections. Existing runtime, SDK, mesh and certificate-replacement actions above remain necessary.
+
+
+**November 4 Chrome policy:** The Root Program adds a separate constraint for **emSign Root CA - G1**. TLS server certificates whose earliest SCT is after **November 16, 2026 23:59:59 UTC** will no longer be trusted by default in Chrome 153 and higher. Certificates at or before the cutoff are unaffected by this particular change; it is not a blanket assurance about other trust checks. The intended rollout coincides with Chrome 158 Stable on November 17, and the programme may revise the date or accelerate restrictions. Explicit platform/user/enterprise trust overrides these SCT constraints. This G1 policy decision does not establish another stolen key, new forged certificate or actual interception, and does not replace the existing ECC G3 removal or runtime/SDK updates.
