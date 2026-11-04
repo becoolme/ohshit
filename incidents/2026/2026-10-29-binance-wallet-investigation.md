@@ -111,7 +111,7 @@ timeline:
     body: Research follows self-minted liquidity-pool tokens, lending receipt tokens and bridge-to-bridge payouts. These observations do not revise vendor losses or establish new platform intrusions.
   - date: Nov 4, 2026
     title: Research expands THORChain and Solana laundering observations
-    body: Bitquery reports $3.1bn held and 556,271 ETH at its November4 09:56UTC snapshot, with some newly counted wallets checked through11:28UTC. It follows Solana proceeds toward Bitcoin and revises earlier TRX-route coverage. These remain unverified research estimates, not vendor losses or recovered assets.
+    body: Bitquery reports $3.1bn held and 556,271 ETH at its November 4 09:56 UTC snapshot, with some newly counted wallets checked through 11:28 UTC. It follows Solana proceeds toward Bitcoin and revises earlier TRX-route coverage. These remain unverified research estimates, not vendor losses or recovered assets.
   - date: Nov 1, 06:00–09:00 UTC (scheduled)
     title: First withdrawal phase is planned
 checklist:
@@ -130,7 +130,7 @@ checklist:
   - title: Trace receipt tokens and cross-chain payouts when screening exposure
     hint: Compliance teams should follow lending receipt-token transfers and liquidity-pool relationships, not just USDT transfers; examine several hops and bridge-to-bridge deposit payouts. TRM notes that some matches rely only on amount/timing and remain under investigation. Use the linked research and corroborate counterparties; a label or matched transfer alone does not establish ownership or criminal involvement.
   - title: Recheck downstream swap routes against the dated research record
-    hint: 'Compliance teams should consult Bitquery’s full November4 Binance report and address record, which contains over100 address/transaction indicators. Start with the labelled main receiver 0x5227f603c1ee34ce3c06efe6477003bdfccb2f8c, then follow the reported THORChain, CCTP and Relay routes and their payout notes. Source wallets, recipients, transactions and legitimate services have different roles: do not block every user of a named service or treat an address match alone as proof of compromise/ownership. Preserve the FBI list above; a research snapshot is supplementary and incomplete.'
+    hint: 'Compliance teams should consult Bitquery’s full November 4 Binance report and address record, which contains over 100 address/transaction indicators. Start with the labelled main receiver 0x5227f603c1ee34ce3c06efe6477003bdfccb2f8c, then follow the reported THORChain, CCTP and Relay routes and their payout notes. Source wallets, recipients, transactions and legitimate services have different roles: do not block every user of a named service or treat an address match alone as proof of compromise/ownership. Preserve the FBI list above; a research snapshot is supplementary and incomplete.'
 sources:
   - name: Binance investigation notice
     url: https://x.com/binance/status/2115915708504900039
@@ -273,10 +273,14 @@ sources:
     url: https://www.trmlabs.com/resources/blog/binance-hack-update-north-korea-launders-proceeds-through-self-minted-tokens-and-chained-bridges
     primary: true
     says: Researchers trace self-minted tokens/pools, lending receipt tokens and chained bridge swaps. Quantities/snapshot dates and the stale no-government-attribution FAQ are not adopted as reconciled facts.
-  - name: Bitquery original November4 Binance investigation revision
+  - name: Bitquery original November 4 Binance investigation revision
     url: https://bitquery.io/investigations/binance-hack
     primary: true
-    says: Revised THORChain payees and Solana-to-Bitcoin routes; holdings snapshot09:56UTC, selected wallets through11:28UTC. About$3.1bn held/556,271ETH are unverified researcher figures; bank/exchange/service compromise and recovered funds cannot be inferred from flows.
+    says: Revised THORChain payees and Solana-to-Bitcoin routes; holdings snapshot 09:56 UTC, selected wallets through 11:28 UTC. About $3.1bn held / 556,271 ETH are unverified researcher figures; bank/exchange/service compromise and recovered funds cannot be inferred from flows.
+  - name: Binance original preliminary report on its Bahrain site
+    url: https://www.binance.bh/en/blog/community/3229153443759566763
+    primary: true
+    says: Readable official November 3 report corroborates affected/frozen amounts, replacement funding, signing-service access and ongoing independent review; same company report, not independent corroboration.
 ---
 
 Binance’s initial notice said it had not confirmed an impact on user funds. The exchange then edited that notice to state that user funds are safe, and subsequently said withdrawals would resume after the security issue is fully resolved. These are the vendor’s statements, not an independently audited reserve or loss assessment. No resumption time or technical containment report was supplied in those notices. The withdrawal notice does not specify affected networks or withdrawal routes; do not infer that every Binance product is affected. Those earlier notices supported L3 because they acknowledged disruption without confirming the suspected theft.
