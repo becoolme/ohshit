@@ -6,7 +6,7 @@ wipe: 更新 Desktop 至 4.98.0、WSL 至 3.0.3+；GKE 按 GCP-2026-078 更新�
 inTheWildNote: 厂商发版说明未报告在野利用。
 cves:
 - name: Linux IPv4 TCP 释放后重用
-  description: Docker 将 Linux TCP 内核修复纳入 4.98.0。底层漏洞在 10 月 15 日已公开；本条记录的是 Desktop 修复批次。 Google 11 月 4 日 GKE 公告另说明节点 root/容器逃逸、内核崩溃后果，本地无特权进程可触发，网络攻击需能访问 TCP 监听端口。
+  description: Docker 将 Linux TCP 内核修复纳入 4.98.0。底层漏洞在 10 月 15 日已公开；本条记录 Desktop 修复及相关 GKE 指引。 Google 11 月 4 日 GKE 公告另说明节点 root/容器逃逸、内核崩溃后果，本地无特权进程可触发，网络攻击需能访问 TCP 监听端口。
 - name: WSL 2 AF_VSOCK 限制绕过
   description: WSL 2 后端的容器可绕过通信限制；修复须同时具备 Desktop 4.98.0 和 WSL 3.0.3 或更新版本。公告未给出完整受影响起始版本。
 fixed:
