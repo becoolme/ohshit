@@ -6,8 +6,8 @@ date: 2026-10-17
 updated: 2026-11-04
 tags: [PKI, CA, TLS]
 ecosystems: [go, python, node, browsers]
-summary: Eight intermediate certificates under emSign ECC G3 had instantly recoverable private keys, enabling forged certificates; affected SDKs and CA bundles need updates. Chrome also plans to reject G1-rooted TLS certificates with earliest SCT after Nov 16, 23:59:59 UTC, in Chrome 153+. Earlier SCTs are unchanged by that new constraint.
-splash: "Clients trusting emSign ECC G3 / Sectigo cross-signs; network-path attackers can target unpatched runtimes and embedded SDKs"
+summary: Eight emSign ECC G3 intermediates (six TLS/two code signing, Sectigo-cross-signed) had P-384 keys below 256, enabling forged certificates. Update Dart/Flutter/Firestore and CA bundles. Chrome 153+ will distrust G1 TLS certificates with earliest SCT after Nov 16, 23:59:59 UTC; earlier SCTs are unaffected by this new rule.
+splash: "Clients trusting ECC G3/Sectigo on attacker-controlled network paths; G1 TLS sites issuing certificates past Chrome’s SCT cutoff."
 wipe: "Update OSes, browsers and app CA bundles (certifi 2026.10.19; Go 1.27.3/1.26.10; Node 22.23.4+). Replace affected certificates now."
 inTheWild: "no"
 inTheWildNote: No end-entity certs found in CT logs; blocked within hours
@@ -452,6 +452,5 @@ For an unpatched Oracle runtime, the [operational guide](https://ops.java/emudhr
 **November 2 mesh guidance:** Google’s GCP-2026-076 adds the three in-cluster Cloud Service Mesh patch bundles above; managed deployments need no customer action. The linked Istio advisory separates public-root trust from mesh-issued mTLS. Its older 1.29 line gets updated CA images but no Go 1.25 key-distrust backport. This is the existing compromised-CA incident, not a new breach of mesh signing keys.
 
 **November 4 follow-up to GCP-2026-077 (published November 3):** Apigee outbound TLS can still trust the compromised chain through default or customer-managed stores. An attacker needs a network interception position and a trusted forged chain; this bulletin is not evidence of an Apigee breach or exploitation. X and Edge SaaS platform-default updates are described as rolling out, while all products still require customer TrustStore review. Hybrid needs updated container images once released, not merely host CA updates. OPDK requires OS/JVM trust remediation and service restarts. Plan backend certificate replacement before removing trust to avoid breaking legitimate target connections. Existing runtime, SDK, mesh and certificate-replacement actions above remain necessary.
-
 
 **November 4 Chrome policy:** The Root Program adds a separate constraint for **emSign Root CA - G1**. TLS server certificates whose earliest SCT is after **November 16, 2026 23:59:59 UTC** will no longer be trusted by default in Chrome 153 and higher. Certificates at or before the cutoff are unaffected by this particular change; it is not a blanket assurance about other trust checks. The intended rollout coincides with Chrome 158 Stable on November 17, and the programme may revise the date or accelerate restrictions. Explicit platform/user/enterprise trust overrides these SCT constraints. This G1 policy decision does not establish another stolen key, new forged certificate or actual interception, and does not replace the existing ECC G3 removal or runtime/SDK updates.
