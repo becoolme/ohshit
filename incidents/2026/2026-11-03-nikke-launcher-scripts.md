@@ -81,7 +81,7 @@ sources:
 - name: NIKKE Launcher Check v0.5.1 release metadata
   url: https://api.github.com/repos/MotherSphere/NIKKE-Launcher-Check/releases/tags/v0.5.1
   primary: true
-  says: Published November4 13:39:38UTC, with platform assets and checksum file; downloaded executables were not run.
+  says: Published November 4 13:39:38 UTC, with platform assets and checksum file; downloaded executables were not run.
 ---
 
 The November 3 original analysis reports four altered JavaScript files on Level Infinite’s official CDN loading an external script, which used the PC launcher’s embedded Chromium bridge to download a LuaJIT remote-access agent. The researcher analyzed one affected machine and static payload code, and labels additional users’ observations as reported evidence. Commands could read files, execute programs and capture screenshots; the analysis also identifies browser/credential theft capabilities and a Windows Chrome persistence path. Capability is not proof that every secret was stolen. No victim total or confirmed aggregate wallet loss is established.
