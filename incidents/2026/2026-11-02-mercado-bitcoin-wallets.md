@@ -8,7 +8,7 @@ tags:
 - wallets
 ecosystems:
 - crypto
-summary: Mercado Bitcoin plans a staged website return November 9 and reports over $15M blocked, pledging its own funds to replace affected assets. Its prior current-value estimate was $36.3M; Bitquery separately estimates $48.6M stolen and $11.8M frozen. Snapshots differ; blocked assets are not returned funds. Entry point remains unknown.
+summary: Mercado Bitcoin plans website viewing Nov 9, reports >$15M blocked, pledges its own replacement funds and says no customer loss/data leak. Its prior valuation was $36.3M; Bitquery estimates $48.6M across 10 chains, 36,042 Ethereum addresses and $11.8M frozen (unverified). Blocking is not repayment; entry unknown.
 splash: Mercado Bitcoin customers and integrations using its deposit addresses; exchange hot wallets are implicated
 wipe: Respect the deposit/withdrawal pause; do not reuse saved deposit addresses until official recovery guidance confirms them
 inTheWild: 'yes'
@@ -53,7 +53,7 @@ sources:
 - name: Mercado Bitcoin official statement
   url: https://x.com/MercadoBitcoin/status/2117239507263132056
   primary: true
-  says: Readable public embed confirms the incident, rapid containment claim, no customer loss and no data leak. It truncates at the deposits/withdrawals sentence; the full suspension wording is reproduced by BitNotícias.
+  says: 'Full public original now read without login: incident, rapid-containment/no-customer-loss/no-data-leak claims and complete temporary deposit/withdrawal suspension. The separately cited oEmbed remains truncated.'
 - name: Bitquery original multi-chain investigation
   url: https://bitquery.io/investigations/mercado-bitcoin-hack
   primary: true
@@ -81,10 +81,14 @@ sources:
   url: https://x.com/MercadoBitcoin/status/2118096171818504630
   primary: true
   says: Full public original reports over $15M blocked, ongoing repatriation efforts and official-channel anti-scam guidance. No completed recovery is established.
+- name: Mercado Bitcoin November 4 validation and buyback preparations
+  url: https://x.com/MercadoBitcoin/status/2118096168265892094
+  primary: true
+  says: 'Full public original: environments/flows undergoing independent tests, investigation continues, own-fund wallet replacement and buybacks being prepared; spend/withdraw only as services reopen.'
 updated: '2026-11-04'
 ---
 
-Mercado Bitcoin’s public acknowledgement establishes a platform security incident, rather than just an unexplained transfer or an individual customer account theft. It does not disclose how the intruder entered, a compromised software version, the final financial impact or a recovery deadline. No published patch or user password-reset requirement is established by the statements read.
+Mercado Bitcoin’s public acknowledgement establishes a platform security incident, rather than just an unexplained transfer or an individual customer account theft. The November 2–3 statements did not disclose how the intruder entered, a compromised software version, the final financial impact or a recovery deadline; the November 4 plan below now sets a website-viewing target. No published patch or user password-reset requirement is established by the statements read.
 
 Bitquery reports hot-wallet outflows on ten chains and deposit-address sweeps continuing after the exchange’s rapid-containment statement. Its estimate is **unverified**: some source-wallet ownership comes from labels, behaviour and timing, particularly on Solana, Tron and Stellar. The revised $48.6M uses transfer-time prices and excludes tokens without a price; $1.21M comes from a thinly traded EVA token, and the report gives $47.4M when excluding it. Neither figure is an exchange-confirmed final loss.
 
@@ -105,3 +109,5 @@ The November 3 revision’s Ethereum cutoff was 08:49 UTC, with other chains rea
 **November 4 company update:** The exchange now reports **over $15M blocked**, replacing its earlier $12.9M snapshot, and pledges to replace affected assets with its own funds. This is distinct from Bitquery’s $11.8M frozen estimate and $48.6M transfer-time loss estimate; the company’s earlier $36.3M current-value figure remains historical. Do not add the snapshots, subtract them to derive a net loss, or treat blocking as returned assets. No completed customer reimbursement is demonstrated.
 
 Initial website access is planned from **November 9**, limited first to viewing balances, statements, assets and investments. Transfers, withdrawals and trading will follow each module’s final security validation, with no confirmed full-reopening date. This supersedes the earlier absence of a recovery date, not the transfer pause or unknown entry point.
+
+The accompanying company post says each environment and transaction flow is undergoing independent tests while the investigation continues. Its trading desk is **preparing** domestic and international buybacks; the statement does not establish completed purchases or full reserve coverage. The replacement balances are to become usable for trading or withdrawal only as services are released.
