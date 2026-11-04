@@ -2,7 +2,7 @@
 title: Binance preliminary report details signing-service intrusion and revises funding figures
 level: 4
 date: 2026-10-29
-updated: '2026-11-03'
+updated: '2026-11-04'
 tags:
   - Binance
   - crypto
@@ -109,6 +109,9 @@ timeline:
   - date: Nov 3, 2026
     title: TRM traces new laundering routes through tokens and chained swaps
     body: Research follows self-minted liquidity-pool tokens, lending receipt tokens and bridge-to-bridge payouts. These observations do not revise vendor losses or establish new platform intrusions.
+  - date: Nov 4, 2026
+    title: Research expands THORChain and Solana laundering observations
+    body: Bitquery reports $3.1bn held and 556,271 ETH at its November4 09:56UTC snapshot, with some newly counted wallets checked through11:28UTC. It follows Solana proceeds toward Bitcoin and revises earlier TRX-route coverage. These remain unverified research estimates, not vendor losses or recovered assets.
   - date: Nov 1, 06:00–09:00 UTC (scheduled)
     title: First withdrawal phase is planned
 checklist:
@@ -126,6 +129,8 @@ checklist:
     hint: 'The report names /opt/homebrew/Cellar/pyenv/2.8.0/libexec/pyenv_, the replaced /opt/homebrew/Cellar/pyenv/2.8.0/libexec/pyenv and /opt/homebrew/bin/pyenv. Correlate file content, symlinks, processes and deployment logs; a path match alone is not proof. General operator response: isolate suspected devices, preserve evidence, rebuild from trusted media and revoke affected credentials/deployment tokens from a clean environment. Check signing-service access and whether EIP-7702 delegation still authorizes unknown code. Do not execute suspect installers. The report does not require ordinary Binance users to perform these server operations.'
   - title: Trace receipt tokens and cross-chain payouts when screening exposure
     hint: Compliance teams should follow lending receipt-token transfers and liquidity-pool relationships, not just USDT transfers; examine several hops and bridge-to-bridge deposit payouts. TRM notes that some matches rely only on amount/timing and remain under investigation. Use the linked research and corroborate counterparties; a label or matched transfer alone does not establish ownership or criminal involvement.
+  - title: Recheck downstream swap routes against the dated research record
+    hint: 'Compliance teams should consult Bitquery’s full November4 Binance report and address record, which contains over100 address/transaction indicators. Start with the labelled main receiver 0x5227f603c1ee34ce3c06efe6477003bdfccb2f8c, then follow the reported THORChain, CCTP and Relay routes and their payout notes. Source wallets, recipients, transactions and legitimate services have different roles: do not block every user of a named service or treat an address match alone as proof of compromise/ownership. Preserve the FBI list above; a research snapshot is supplementary and incomplete.'
 sources:
   - name: Binance investigation notice
     url: https://x.com/binance/status/2115915708504900039
@@ -268,6 +273,10 @@ sources:
     url: https://www.trmlabs.com/resources/blog/binance-hack-update-north-korea-launders-proceeds-through-self-minted-tokens-and-chained-bridges
     primary: true
     says: Researchers trace self-minted tokens/pools, lending receipt tokens and chained bridge swaps. Quantities/snapshot dates and the stale no-government-attribution FAQ are not adopted as reconciled facts.
+  - name: Bitquery original November4 Binance investigation revision
+    url: https://bitquery.io/investigations/binance-hack
+    primary: true
+    says: Revised THORChain payees and Solana-to-Bitcoin routes; holdings snapshot09:56UTC, selected wallets through11:28UTC. About$3.1bn held/556,271ETH are unverified researcher figures; bank/exchange/service compromise and recovered funds cannot be inferred from flows.
 ---
 
 Binance’s initial notice said it had not confirmed an impact on user funds. The exchange then edited that notice to state that user funds are safe, and subsequently said withdrawals would resume after the security issue is fully resolved. These are the vendor’s statements, not an independently audited reserve or loss assessment. No resumption time or technical containment report was supplied in those notices. The withdrawal notice does not specify affected networks or withdrawal routes; do not infer that every Binance product is affected. Those earlier notices supported L3 because they acknowledged disruption without confirming the suspected theft.
@@ -314,3 +323,7 @@ Binance claims exploited entry points are closed, systems on the attack path hav
 
 
 **November 3 laundering research:** TRM reports value moving through attacker-created tokens and liquidity pools on TRON, transferable lending receipt tokens, and chained cross-chain swaps whose payout is sent directly to another bridge’s deposit address. These routes can break a USDT-only trace without proving funds vanished. TRM also describes active TRON/Solana movement while major ETH/BTC positions remained parked at its observation time; no current all-funds location is inferred. This is researcher attribution, with some payouts linked by amounts/timing. The report’s differing amounts and snapshot dates are not reconciled here and do not replace Binance’s figures, establish returned funds or prove that an onward service was compromised. Its FAQ’s statement that no government attributed the theft is superseded by the FBI source already retained above.
+
+**November 4 research revision:** Bitquery expands its TRX-route tracing from an earlier partial THORChain sample to 98 labelled sending wallets and 102 named Ethereum payees, reporting about 19,985 ETH in their onward wallets, including about 4,000 ETH from senders it has not traced. It separately describes Solana proceeds moving via USDC/CCTP to Ethereum or Avalanche and then through THORChain toward Bitcoin after that service reopened. Its total holdings estimate is about **$3.1bn**, including **556,271 ETH**, at 09:56 UTC; selected newly counted Solana/Bitcoin wallets were checked through 11:28 UTC. These unverified research estimates mix attribution, routing and valuation assumptions; they are neither an additional theft nor returned funds, and do not replace Binance’s ~$6.34bn affected/~$2.85bn frozen-or-blocked vendor figures or replacement-funding claims.
+
+The researcher no longer says none of the traced money reached exchange deposit addresses: some TRX reportedly reached HitBTC and a cash desk, while it found no mixer transfer in the paths it followed. This does not prove those onward services were compromised or identify all proceeds. The newly counted wallets revise coverage, not the original theft size; do not extrapolate one snapshot into a complete current balance or combine unrelated bank/BitMart events.
