@@ -2,7 +2,7 @@
 title: PickGo supplier intrusion exposes 7NOW and Demae-can delivery records
 level: 4
 date: '2026-11-02'
-updated: '2026-11-03'
+updated: '2026-11-04'
 tags:
 - PickGo
 - 7NOW
@@ -30,13 +30,18 @@ timeline:
 - date: Nov 3, 2026
   title: Demae-can confirms its delivery-record exposure
   body: 799 name records, 794 address records and 33 phone/postcode records are reported separately; email notifications and a regulator report are announced.
+- date: Nov 3, 2026
+  title: CBcloud defines the wider possible customer and driver data scope
+  body: Its second report lists maximum possible fields, varying by company, excludes payment information and login passwords, and says domestic access remains available while some overseas access is restricted. No supplier-wide count is given.
 checklist:
 - title: Confirm your own affected delivery fields
   hint: Use the existing 7NOW app or known company website to contact 7NOW/CBcloud. Seven-Eleven says affected recipients will be notified progressively by SMS to their registered number. Ask which records/fields concern you; do not add the three categories as deduplicated people. Demae-can says it will notify affected customers progressively at their registered email address; use its known service channel to ask about your records.
+- title: Check business and driver records against the expanded field list
+  hint: Ask CBcloud through its known support channel which registration, order and assigned-driver fields concern you. The second report lists possible driver contact details, vehicle number, delivery-time location and vehicle/profile image URLs; those URLs expire five minutes after issuance. This is the maximum possible scope, not confirmation every field was taken.
 - title: Treat delivery-specific contact cautiously
   hint: 'Names, delivery addresses, some phone/postcode data and order details can make impersonation convincing. CBcloud warns against unexpected email, SMS and calls: do not follow their URLs or supply personal data; verify through a known company channel even when the sender knows an order.'
 - title: Check service restrictions without assuming a full outage
-  hint: CBcloud restricted some functions and access from outside Japan after blocking the attacker and fixing the exploited defect. Seven-Eleven says 7NOW operates normally. Business users should confirm their own PickGo integration/operating limits through CBcloud support; no customer patch or restoration deadline is published. Demae-can says its own connection was restored on November 2 after checks; this does not establish recovery of every PickGo customer.
+  hint: CBcloud restricted some functions and access from outside Japan after blocking the attacker and fixing the exploited defect. Seven-Eleven says 7NOW operates normally. Business users should confirm their own PickGo integration/operating limits through CBcloud support; no customer patch or restoration deadline is published. The second report says access from within Japan remains available as before, with some restrictions on access from outside Japan. Demae-can says its own connection was restored on November 2 after checks; this does not establish recovery of every PickGo customer.
 sources:
 - name: CBcloud first PickGo incident notice
   url: https://cb-cloud.com/news/AJZDw0h3
@@ -50,6 +55,10 @@ sources:
   url: https://corporate.demae-can.co.jp/pr/info/20261103.html
   primary: true
   says: Confirms field-specific delivery records, additional order data, integration suspension/restoration, email notices and regulator report; no confirmed secondary misuse.
+- name: CBcloud second PickGo incident notice
+  url: https://cb-cloud.com/news/MC7mDLUO
+  primary: true
+  says: November 3 original article decoded from its public HTML payload. Maximum possible customer/order/driver fields vary by company; no payment information or login passwords taken; domestic access available, some overseas restrictions.
 ---
 
 CBcloud detected unauthorized access to PickGo’s business service on November 1 and published its first notice on November 2. It disabled misused accounts, blocked attacker communication and fixed the exploited defect, without identifying a CVE or entry mechanism. Broader customer/partner-driver leakage is possible and still being scoped; the company says it found no malware contamination.
@@ -60,3 +69,5 @@ Seven-Eleven Japan’s November 3 notice confirms 7NOW recipient data was acquir
 
 
 **Demae-can update:** Its November 3 original confirms 799 recipient-name records, 794 addresses through street number, and 33 phone/postcode records; these are field categories, not an additive or unique-person total. Some store names, store addresses/phones, order notes, item names and fee details were also acquired. It excludes credit-card data and login IDs/passwords, reports no identified exposure/alteration of its authentication or integration configuration, and no confirmed secondary misuse. It reported to Japan’s Personal Information Protection Commission and will notify registered emails. Its CBcloud connection was paused and restored on November 2 after defect-fix confirmation and communication checks; no timezone is supplied for the hours. These figures are separate from 7NOW and cannot establish supplier-wide totals or intrusion into either customer’s own systems.
+
+**CBcloud second report:** The November 3 notice defines the maximum possible scope, varying by company: company name; registered contact name, address, phone and email; order ID and amount; collection/delivery location names, addresses and contact names/phones; and assigned-driver names, phones, emails, vehicle numbers, delivery-time locations and URLs for vehicle/profile images. The company says image URLs become inaccessible five minutes after issuance. It excludes bank-account/card payment information and login passwords. These possible supplier-held fields do not replace the separately confirmed 7NOW/Demae-can figures or establish a supplier-wide count. Domestic access remains available as before, with some overseas-access restrictions; this does not imply every integration or every function has recovered.
