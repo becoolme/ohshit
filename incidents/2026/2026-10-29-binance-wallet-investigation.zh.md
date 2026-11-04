@@ -109,11 +109,12 @@ timeline:
   - date: 2026年11月4日
     title: 研究扩充 THORChain 及 Solana 洗钱路径观察
     body: Bitquery 的 11 月 4 日 09:56 UTC 快照报告持有约 31 亿美元、556,271 ETH，部分新增钱包检查至 11:28 UTC；追踪 Solana 资金转向 Bitcoin，并修订此前 TRX 路径覆盖。均未经独立核实，不是厂商损失或已追回资产。
-  - date: 11月1日 06:00–09:00 UTC（计划）
-    title: 计划启动第一阶段提现
   - date: 2026年11月4日
     title: Polygon 论坛提出原生 POL 追回硬分叉，尚未批准
     body: 提案将约 46,626,593.27 枚 POL 归于本事件；两案合计约 7049 万枚。仅为治理提案，尚无确定客户端或激活区块，不能视为资金已追回或用户已获额外赔付。
+  - date: 11月1日 06:00–09:00 UTC（计划）
+    title: 计划启动第一阶段提现
+
 checklist:
   - title: 使用官方渠道，拒绝资产追回消息
     hint: 通过已有书签或官方应用访问币安，查看充值和提款恢复公告；11 月 1 日公告计划于 06:00–09:00 UTC 启动第一阶段提款；在提款页或网络状态页核对具体资产与网络组合。后续官方更新将 Bitcoin 列为首批网络，后续更新确认以太坊上的 USDC、USDT、ETH，以及 BSC 上的 USDC、USDT、BNB 已恢复提现，不代表所有列出的组合均已开放。币安称后续提现使用已加入更新储备地址清单的新钱包。核对收款地址及设备安全；仍可能拥堵，公告建议必要时稍后重试。使用 Binance Verify 或官方支持核实陌生联系。不要分享密码或 2FA 验证码，不要点击资产追回链接，也不要向冒充客服的人转账。 后续原帖另确认 XRP 网络的 XRP、Base 的 ETH 和 USDC、DOGE 网络的 DOGE、Optimism 的 ETH、USDT 和 USDC、ZEC 网络的 ZEC、TON 的 USDT 和 GRAM，以及 SUI 网络的 SUI。链接中的中间更新另确认 Arbitrum 的 ARB、ETH、USDT 和 USDC，TRX 的 TRX 和 USDT，Solana 的 SOL、USDT 和 USDC，Polygon 的 POL、USDT 和 USDC，以及 Avalanche C-Chain 的 AVAX、USDT 和 USDC。仍须实时核对具体组合；这些声明不代表各网络上的全部资产均已开放。
