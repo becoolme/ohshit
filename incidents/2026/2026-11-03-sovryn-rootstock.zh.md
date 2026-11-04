@@ -3,7 +3,7 @@ title: Sovryn 披露 Rootstock 借贷和 AMM 攻击，提款仍暂停
 summary: Sovryn 确认借贷及保证金净流出 604,575.19 XUSD 和 4.02792509 WRBTC，另有 AMM 付款 541,455.998472 XUSD。锁定托管及金库资产不等于追回攻击者资金。应停止合约交互，包括替代界面；提款仍暂停，最终损失尚未完成对账。
 splash: Rootstock 上 Sovryn 借贷、保证金及 XUSD/WRBTC AMM 用户；技术利用前提尚未公开
 wipe: 避免 Sovryn 合约交互，保留头寸记录，等待经核实的安全、对账及恢复指引
-inTheWildNote: Sovryn 确认攻击者付款及暂停措施，最终损失分配仍在对账。
+inTheWildNote: Sovryn 确认向攻击者的付款及暂停措施，最终损失分配仍在对账。
 cves: []
 fixed: []
 timeline:
