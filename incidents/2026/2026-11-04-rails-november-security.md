@@ -137,7 +137,7 @@ sources:
   says: Maintainer-authored original read through its public GitHub API; configuration-specific impact, patches and mitigation.
 ---
 
-This is one coordinated Rails release, not 21 separate incidents. The two upload-processing advisories detailed above affect activestorage below 8.0.5.2 and 8.1 releases before 8.1.4.1. They are configuration-dependent; neither a default modern Rails deployment nor every FFmpeg build is necessarily exposed. No victim count or confirmed in-the-wild campaign is established. L3 reflects a mainstream framework and potential server-side file access/code execution.
+This is one coordinated Rails release, not 21 separate incidents. The two upload-processing advisories detailed above affect activestorage below 8.0.5.2 and 8.1 releases before 8.1.4.1. They are configuration-dependent; neither a default modern Rails deployment nor every FFmpeg build is necessarily exposed. No victim count or confirmed in-the-wild campaign is established.
 
 For the ImageMagick flaw, untrusted attachment uploads and a permissive coder policy are enough to reach analysis. Disk storage adds the documented arbitrary-read exposure; file contents can include credentials that enable further attacks. For the decoder flaw, attacker-chosen filename extensions influence external processing; the described native-library execution route needs additional AviSynth build/runtime support. Lack of AviSynth does not address all extension-driven decoding risks.
 
