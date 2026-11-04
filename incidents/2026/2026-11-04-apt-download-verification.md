@@ -6,7 +6,7 @@ tags:
 - APT
 - Debian
 - Ubuntu
-summary: CVE-2026-109518 lets an on-path attacker replace an APT package after verification through HTTP redirects, resumed downloads and hard-link reuse. Non-zero Acquire::Retries is required. Debian fixes are available; Ubuntu’s CVE page still lists releases vulnerable. No exploitation is established.
+summary: CVE-2026-109518 lets an on-path attacker replace an APT package after verification through HTTP redirects, download retries and hard-link reuse. Non-zero Acquire::Retries is required. Debian fixes are available; Ubuntu’s CVE page still lists releases vulnerable. No exploitation is established.
 splash: APT clients using attacker-manipulable HTTP downloads, redirects/retries and non-zero Acquire::Retries.
 wipe: Install your distribution’s fixed APT package through a trusted route; verify its security notice and installed version.
 inTheWild: unknown
@@ -57,8 +57,8 @@ sources:
   says: Detailed affected/fixed version thresholds and CVSS 4.0; CISA November 4 assessment records no exploitation. Referenced Ubuntu USN returned 404.
 ---
 
-APT can collapse distinct package downloads onto one URI after a redirect. Reusing hard links while retrying lets a network-path attacker substitute an already-verified package before installation. A malicious mirror or proxy is within the stated threat model; this is not a claim that package signing keys or the Debian archive were compromised.
+APT’s hard-link reuse during download redirects and retries lets a network-path attacker cause installation of an attacker-controlled, unverified package. A malicious mirror or proxy is within the stated threat model; this is not a claim that package signing keys or the Debian archive were compromised.
 
-The attack needs an install/download with redirects, retries and a non-zero retry setting. Debian and Ubuntu defaults make newer releases exposed, but older releases can also be exposed under changed configuration. Canonical rates the flaw high; no actual exploitation or victim count is established. The mainstream package manager and potential root execution support L3.
+The attack needs an install/download with redirects, retries and a non-zero retry setting. Debian and Ubuntu defaults make newer releases exposed, but older releases can also be exposed under changed configuration. Canonical rates the flaw high; no actual exploitation or victim count is established.
 
 Debian’s tracker supplies the three distribution fixes listed above. Canonical’s CNA additionally describes older Debian and Ubuntu version thresholds; those are not proof that a supported distribution update is available. Its current Ubuntu page still lists affected releases, and the linked USN returned 404. Debian mailing-list originals presented an access challenge; no challenge was bypassed, and no unread mailing-list text is used as evidence.
