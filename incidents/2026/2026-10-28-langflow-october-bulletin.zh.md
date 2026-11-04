@@ -2,7 +2,7 @@
 title: Langflow 公告披露未授权 RCE 及身份验证绕过；请升级至 1.13.0
 summary: IBM 披露影响 Langflow OSS 1.0.0–1.12.8 的严重未授权代码执行和身份验证绕过，另含需登录的问题及 Hono 依赖漏洞。先备份数据并准备密码登录，再升级至 1.13.0。
 splash: Langflow OSS 1.0.0–1.12.8；严重远程路径无需登录，其他问题有更窄的前提
-wipe: 备份数据库、secret key 及上传文件，准备现有账户登录，然后升级 Langflow OSS 至 1.13.0 或更高版本
+wipe: 备份数据库、secret key 及上传文件，准备登录并安装 IBM 建议的 1.13.0 修复版本；评估 1.13.1 的额外保护
 inTheWildNote: 所引厂商公告未确认真实攻击。
 cves:
 - name: 身份验证绕过
@@ -21,6 +21,8 @@ cves:
   description: 构建期 SSG 在 ssgParams 不可信时可写到输出目录外；普通请求路由及完全由开发者控制的参数不在影响范围内。
 fixed:
 - status: IBM 建议的产品修复
+- product: Langflow 额外存储及 MCP 保护
+  status: 后续源码发版；IBM 公告修复下限仍为 1.13.0
 timeline:
 - date: 2026年10月22日
   title: Langflow 1.13.0 已发布

@@ -10,7 +10,7 @@ ecosystems:
 - langflow
 summary: IBM discloses critical unauthenticated code execution and authentication bypass affecting Langflow OSS 1.0.0–1.12.8, alongside authenticated issues and Hono dependency flaws. Upgrade to 1.13.0 after backing up data and preparing password sign-in.
 splash: Langflow OSS 1.0.0–1.12.8; critical remote paths need no login, while other issues have narrower prerequisites
-wipe: Back up database, secret key and uploads; prepare existing login, then upgrade Langflow OSS to 1.13.0 or later
+wipe: Back up database, secret key and uploads; prepare login and install IBM’s 1.13.0 baseline; evaluate 1.13.1 for added protections
 inTheWild: unknown
 inTheWildNote: The cited vendor bulletin does not confirm real-world exploitation.
 cves:
@@ -46,6 +46,9 @@ fixed:
 - product: Langflow OSS
   version: 1.13.0
   status: IBM recommended product fix
+- product: Langflow additional storage and MCP protections
+  version: 1.13.1
+  status: Follow-up source release; IBM bulletin baseline remains 1.13.0
 timeline:
 - date: Oct 22, 2026
   title: Langflow 1.13.0 release is available
@@ -98,7 +101,7 @@ sources:
   primary: true
   says: lxml built against system libraries and Mako security floor; upstream PR describes verification limits rather than a blanket image-safety guarantee.
 - name: Langflow 1.13.1 release metadata and notes
-  url: https://api.github.com/repos/langflow-ai/langflow/releases/latest
+  url: https://api.github.com/repos/langflow-ai/langflow/releases/tags/v1.13.1
   says: 'Checked November 4: v1.13.1 published at 03:14:15 UTC; lists included security changes.'
   primary: true
 - name: Langflow storage isolation PR 15982
