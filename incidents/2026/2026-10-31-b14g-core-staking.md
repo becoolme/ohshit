@@ -2,7 +2,7 @@
 title: b14g confirms unauthorized withdrawal of about 97 million staked CORE
 level: 4
 date: 2026-10-31
-updated: 2026-11-01
+updated: 2026-11-04
 tags: [b14g, Core, staking]
 ecosystems: [crypto]
 summary: b14g says about 97 million CORE staked through its service was withdrawn without authorization on October 31. It reports pausing affected contracts upon discovery. This is a token count, not dollars or users; the readable portion of the original notice does not establish a final cause, verified fix or repayment plan.
@@ -21,6 +21,9 @@ timeline:
   - date: Oct 31, 2026
     title: Bitquery publishes a zero-amount withdrawal analysis
     body: The researcher reports 99 zero-amount requests draining 91 orders and an on-chain pause 66 minutes later; source code and discovery time were not established.
+  - date: Nov 2, 2026
+    title: BTCS discloses preliminary token exposure and an accounting impairment
+    body: The company reports about 20M CORE potentially lost and remaining staked tokens locked. Its PLN6.05M full carrying-value write-down is not an additional theft amount.
 checklist:
   - title: Verify contract status before taking further staking actions
     hint: Open b14g through your existing bookmark or its established b14g_network account and check its incident announcements before depositing or interacting with the affected deployment. The readable notice reports a pause; it does not establish a safe replacement contract or verified fix. Do not treat this report as a confirmed compromise of the Core network itself.
@@ -40,8 +43,14 @@ sources:
     url: https://bitquery.io/investigations/b14g-hack
     primary: true
     says: October 31 transaction analysis and role-labelled address ledger; researchers did not inspect b14g source code or verify the Bitcoin side.
+  - name: BTCS company ESPI report 32/2026, publicly republished by Bankier
+    url: https://www.bankier.pl/wiadomosc/BTCS-S-A-Incydenty-bezpieczenstwa-w-protokole-b14g-i-na-gieldzie-Binance-ekspozycja-Spolki-oraz-odpis-aktualizujacy-wartosc-tokenow-CORE-9222306.html
+    primary: true
+    says: November 2 issuer-authored Polish/English filing; preliminary ~20M CORE loss subject to verification, remaining stake locked; PLN6.05M non-cash impairment is not additional stolen funds; no known withdrawal-restoration date.
 ---
 
 The operator describes unauthorized withdrawals and attacker-controlled recipients, rather than an unexplained transfer. That confirmed asset theft supports L4. Approximately 97 million CORE must not be reported as $97 million. The readable opening of the vendor's October 31 notice confirms the pause but does not establish when discovery occurred or how quickly the pause followed the withdrawal. Its later text could not be read in full, so later tracing, frozen-fund, unaffected-asset and compensation claims are not established here. Frozen or traced assets would not by themselves prove that users have been repaid.
 
 **November 1 research update:** Bitquery reports that a wallet with no funded orders submitted 99 requests for zero CORE, emptying 91 orders. Its analysis says the downstream staking contract interprets zero as full withdrawal. This is a transaction-based finding, not a source-code audit or final vendor root cause. The researcher places the pause at 10:35:51 UTC on October 31, about 66 minutes after the drain; that does not establish when b14g discovered it. The vendor’s pause statement remains valid. Its 19:43 UTC balance snapshot is historical and cannot prove exchange freezes or repayments. The verified-fix and exit-procedure gaps remain.
+
+**November 2 affected-company disclosure:** BTCS’s ESPI report 32/2026, read as an issuer-authored filing publicly republished by Bankier, says it holds about 68.3M CORE, around 90% staked through b14g. Preliminary information from the protocol operator suggests about 30% (~20M CORE) may have been lost; BTCS is verifying this. Remaining staked tokens are locked with no known withdrawal-restoration date. This is one holder’s exposure within the ~97M CORE incident, not an additive loss. The company writes down the full CORE carrying value by about PLN6.05M to zero, also citing liquidity and its exit decision. That non-cash impairment does not change token quantities and is neither a confirmed theft total nor compensation. BTCS says its own 202.27 BTC (September 30 snapshot) was unaffected and it has no Binance exposure; this does not establish safety or recovery of all b14g assets. It reported its positions to the operator; final losses and recovery arrangements remain pending.
