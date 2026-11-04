@@ -26,20 +26,23 @@ timeline:
 - date: 11月4日 07:14–07:20 UTC
   title: 研究人员复查四个已知官方文件，响应均已干净
   body: WormW 报告四个 URL 的响应已干净，FeedList 的标准及带缓存参数请求也均如此。这只是限定范围的观察，不能证明每个 CDN 节点、本地缓存或受感染主机均已干净。
+- date: 11月4日 11:20 UTC
+  title: 原始研究人员在四个已检查 CDN 节点发现干净文件
+  body: MotherSphere 的 12:11 GMT 报告称，两主机的四个已知文件在四个检查节点均已干净；报告仍在 00:48 UTC 收到旧恶意 FeedList，节点于 03:12–03:21 UTC 取得干净副本。其他边缘节点和感染主机仍未核实。
 checklist:
 - title: 停止启动器，清理前先保留证据
   hint: 关闭启动器及托盘进程，将疑似感染电脑断网。删除或重装前，保留 Launcher/intl_service/debug.log、Launcher/log/tinyget 及启动器缓存。研究报告指出，更新或服务器关闭不能撤销之前的远程访问。
 - title: 排查已公布的网络及本地指标
-  hint: 报告列出超过 30 个指标值及 264 个目标凭据、配置路径，请核对原文完整 Indicators of compromise 和 target-paths.md。网络指标：insightjs.com; analytics.insightjs.com; insightjs.org; 89.127.233.127; 89.126.250.172; https://insightjs.com/l.js?f=aegis; https://insightjs.com/l.js?f=images; https://insightjs.com/l.js?f=feedlist; https://insightjs.com/l.js?f=vue; https://analytics.insightjs.com/comm/assets/insight.bundle; https://analytics.insightjs.com/px/<32 hex>。被修改的官方 URL：https://sg-gpts.playerinfinite.com/comm/assets/lib/aegis-fix.min.js; https://na-webassets.playerinfinite.com/comm/nikke_launcher/assets/images.7fec4c32.js; https://na-webassets.playerinfinite.com/comm/nikke_launcher/assets/FeedList.feb647c9.js; https://na-webassets.playerinfinite.com/comm/assets/lib/vue-bucket.min.js。CDN 节点 43.175.144.148 和 43.175.145.181 曾分发旧恶意副本，属于共享分发节点，不能证明攻击者拥有它们。insightjs.org 后被第三方注册为警告网站。WormW 扩充清单包含超过 100 行指标，完整哈希、ETag 及本地痕迹见其 iocs/iocs.csv。额外网络排查线索：portal.insightjs.com; docs.insightjs.com; https://insightjs.com/l.js; https://insightjs.org/l.js; https://analytics.insightjs.com/px/<32 hex>.<kind>; https://analytics.insightjs.com/collect/<32 hex>.<kind>; https://analytics.insightjs.com/collect/<32 hex>; insightjs.com POST /speed; hooks.slack.com/(services|workflow|triggers)。裸 /collect/<32 hex> 被报告为诱饵；89.126.250.172 来自他人报告，未获该研究独立证实。/speed 是门面统计线索；Slack 及官方 CDN 流量可能正常。检查 debug.log 的 k2f_chan registered、Local Storage 的 k2f.agent.state，以及下列 HKCU CLSID 和 DLL。匹配须结合上下文，本身不能证明入侵；未命中哈希、DNS 或日志也不代表安全。
+  hint: 报告列出超过 30 个指标值及 264 个目标凭据、配置路径，请核对原文完整 Indicators of compromise 和 target-paths.md。网络指标：insightjs.com; analytics.insightjs.com; insightjs.org; 89.127.233.127; 89.126.250.172; https://insightjs.com/l.js?f=aegis; https://insightjs.com/l.js?f=images; https://insightjs.com/l.js?f=feedlist; https://insightjs.com/l.js?f=vue; https://analytics.insightjs.com/comm/assets/insight.bundle; https://analytics.insightjs.com/px/<32 hex>。被修改的官方 URL：https://sg-gpts.playerinfinite.com/comm/assets/lib/aegis-fix.min.js; https://na-webassets.playerinfinite.com/comm/nikke_launcher/assets/images.7fec4c32.js; https://na-webassets.playerinfinite.com/comm/nikke_launcher/assets/FeedList.feb647c9.js; https://na-webassets.playerinfinite.com/comm/assets/lib/vue-bucket.min.js。CDN 节点 43.175.144.148 和 43.175.145.181 曾分发旧恶意副本，属于共享分发节点，不能证明攻击者拥有它们。insightjs.org 后被第三方注册为警告网站。WormW 扩充清单包含超过 100 行指标，完整哈希、ETag 及本地痕迹见其 iocs/iocs.csv。额外网络排查线索：portal.insightjs.com; docs.insightjs.com; https://insightjs.com/l.js; https://insightjs.org/l.js; https://analytics.insightjs.com/px/<32 hex>.<kind>; https://analytics.insightjs.com/collect/<32 hex>.<kind>; https://analytics.insightjs.com/collect/<32 hex>; insightjs.com POST /speed; hooks.slack.com/(services|workflow|triggers)。裸 /collect/<32 hex> 被报告为诱饵；89.126.250.172 来自他人报告，未获该研究独立证实。/speed 是门面统计线索；Slack 及官方 CDN 流量可能正常。检查 debug.log 的 k2f_chan registered、Local Storage 的 k2f.agent.state，以及下列 HKCU CLSID 和 DLL。匹配须结合上下文，本身不能证明入侵；未命中哈希、DNS 或日志也不代表安全。 更新原文另列共享 CDN 节点 43.175.139.78；较早报告载荷的临时文件为 %TEMP%\k2f-keyscan-<time>-<rand>.db 和 %TEMP%\k2f_screen_<unix time>_<n>.png，较新临时数据库及截图为 %TEMP%\k2f-bcreds-<unix time>-<random>.db 和 %TEMP%\k2f_screen_<unix time>_<n>.jpg。代理状态也可能位于 Local Storage leveldb 的压缩 .ldb 文件中，应予保留。新增历史载荷哈希及七个 ETag 见完整原文。共享 CDN 地址不能证明攻击者归属。
 - title: 按记录顺序清理 Windows 持久化，或重建系统
   hint: 保留证据后按研究人员步骤处理：只删除 HKCU\Software\Classes\CLSID\{E77CC89B-7401-4C04-8CED-149DB35ADD04}，重启 Windows，再删除 %LOCALAPPDATA%\Google\Chrome\User Data\PlatformExperienceHelper 下包含 platform_experience_helper.dll 的 64 位十六进制名称子目录。保留正常 HKLM CLSID 和 PlatformExperienceHelper 父目录。DLL 可能锁定到重启后，且各受害者哈希不同。由于攻击者可能执行任意命令，疑似入侵时从可信介质重建更稳妥；杀毒未检出并不足够。
 - title: 从干净设备更换凭据并吊销会话
   hint: 疑似感染时更换 NIKKE/Level Infinite 及其他暴露账户的密码，终止活跃会话，吊销并重新签发 API 令牌、SSH 密钥及开发、云凭据。若钱包助记词可能暴露，从干净设备将资产迁往使用全新助记词的钱包。静态能力不代表所有列出凭据或钱包均已被盗。Proton 可暴露宿主用户有权读取的文件及环境变量；没有 Windows Chrome 持久化不代表 Linux 主机安全。
 - title: 恢复前核实官方更新并清除旧缓存
-  hint: 重新打开前查看当前 NIKKE 官方通知及处置状态。保留证据后，按研究人员建议清除 %APPDATA%\nikke_launcher\tbs_cache；Proton 需处理对应 prefix 内路径。按 WormW attack-path 报告及完整指标 CSV 中的历史恶意哈希、ETag 排查启动器及代理缓存。其 11 月 4 日 07:14–07:20 UTC 复查发现四个已知文件已干净，但不能证明所有节点或缓存均已清理；本轮没有可列出的修补版本下限。清缓存或升级启动器不能移除既有恶意程序，也不能使被盗会话失效。
+  hint: 重新打开前查看当前 NIKKE 官方通知及处置状态。保留证据后，按研究人员建议清除 %APPDATA%\nikke_launcher\tbs_cache；Proton 需处理对应 prefix 内路径。按 WormW attack-path 报告及完整指标 CSV 中的历史恶意哈希、ETag 排查启动器及代理缓存。其 11 月 4 日 07:14–07:20 UTC 复查发现四个已知文件已干净，但不能证明所有节点或缓存均已清理；本轮没有可列出的修补版本下限。清缓存或升级启动器不能移除既有恶意程序，也不能使被盗会话失效。 MotherSphere 后续 11:20 UTC 检查在四个节点上发现两主机的四个已知文件均已干净；初始发布权限入侵途径仍不明，应继续阻断已公布的恶意域名及 IP。
 sources:
 - name: MotherSphere 原始技术报告及指标清单
-  says: 通过公开 GitHub Gist API 阅读完整原文，区分自身主机、静态分析及评论者报告，列出 CDN 缓存观察、指标与清理更正。
+  says: 通过公开 GitHub Gist API 阅读完整原文，区分自身主机、静态分析及评论者报告，列出 CDN 缓存观察、指标与清理更正。 11 月 4 日 12:11 GMT 修订新增 11:20 UTC 四节点干净复查、较晚历史旧缓存观察、旧载荷指标及压缩 .ldb 证据。
 - name: NIKKE 官方通知的公开嵌入片段
   says: 可读官方片段承认 PC 脚本可能遭篡改，并说明 11 月 4 日 02:30 UTC+9 修复客户端。直接 X 页面返回 403，嵌入片段后半截被截断，未视为已读。
 - name: MotherSphere 公开 GitHub Gist API 原文副本
@@ -55,3 +58,5 @@ sources:
 运营方可读官方片段承认第三方可能篡改脚本，将客户端修复时间标为 11 月 4 日约 02:30 UTC+9，即 11 月 3 日 17:30 UTC。研究人员在 11 月 3 日 22:26 UTC 仍从两台 CDN 节点观察到被修改的 FeedList。WormW 随后报告，11 月 4 日 07:14–07:20 UTC 复查中四个已知官方文件均返回干净内容，包括 FeedList 的标准及带缓存参数请求；外部响应尚不能完全区分源站及中间缓存状态。这些观察涉及不同层面：客户端更新、源站清理、CDN 缓存及已经感染的电脑，不能将通知视为每份缓存或每台电脑均已干净。完整官方通知仍无法读取，本文不对未读部分作推断。
 
 研究报告更正了早先建议：PlatformExperienceHelper 父目录属于正常 Chrome 内容，onominan.tmp 不是感染指标。攻击者如何获得 CDN 或发布权限仍不明。所引分析未涵盖移动客户端，不能据此证明移动端不受影响。涉及广泛使用的启动器及有记录的恶意分发，因此评为 L3；运营方尚未确认实际执行的完整范围。
+
+**11 月 4 日原始研究更新：** MotherSphere 现称 11:20 UTC 时，两主机的四个已知文件在四个已检查 CDN 节点均已干净，但其核阅的公开扫描在 00:48 UTC 仍取得恶意 FeedList，观察节点在 03:12–03:21 UTC 取得干净副本。这补充了上文时间更晚的 WormW 复查，并不矛盾，也不能证明全球清缓存。清理启动器缓存前先保留日志及 Local Storage，包括压缩的 `.ldb` 文件。较早报告载荷使用额外临时文件名及哈希，未命中最新哈希不能证明安全。初始 CDN／发布权限入侵途径和完整受害范围仍未查明。
