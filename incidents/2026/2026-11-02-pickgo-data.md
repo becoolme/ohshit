@@ -7,7 +7,7 @@ tags:
 - PickGo
 - 7NOW
 - data breach
-summary: PickGo’s intrusion exposed 7NOW records (164,180 names; 4,762 name/address; 209 also phone/postcode) and Demae-can records (799 names; 794 addresses; 33 phone/postcode). Counts are not unique people. 7NOW operates; Demae-can restored its integration. Wider customer/driver scope remains under investigation.
+summary: PickGo exposed 7NOW records (164,180 names; 4,762 name/address; 209 also phone/postcode) and Demae-can records (799 names; 794 addresses; 33 phone/postcode). Counts are not unique people. CBcloud lists possible business/driver fields, including delivery locations. 7NOW operates; Demae-can restored integration.
 splash: PickGo customers/drivers potentially affected; confirmed 7NOW and Demae-can delivery records in Japan
 wipe: Verify notices through 7NOW or CBcloud, reject delivery-themed scams, and ask which fields were affected
 inTheWild: 'yes'
