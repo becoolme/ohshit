@@ -2,7 +2,7 @@
 title: Polymarket confirms third-party breach; researchers find wallet-draining DebugBear script
 level: 4
 date: '2026-10-29'
-updated: 2026-11-01
+updated: '2026-11-04'
 tags: [Polymarket, DebugBear, supply-chain, crypto]
 ecosystems: [web]
 summary: Polymarket's postmortem confirms session abuse through a compromised monitoring script. It reports $2.7m in drained funds plus $1.2m for pause-related losses, with 95% of affected wallets refunded as of October 30. Trading resumed and active sessions were reset; total affected users remain undisclosed.
@@ -30,6 +30,9 @@ timeline:
   - date: Oct 30, 23:11 UTC
     title: DebugBear reports DNS changes through its registrar
     body: Its preliminary investigation points to a specific customer website; it reports no evidence of an internal-system compromise so far.
+  - date: Nov 4, 2026
+    title: Polygon forum proposes a native-POL recovery fork; approval is pending
+    body: The proposal attributes 23,862,736.07 POL to this incident, within about 70.49M POL across two separate cases. It is a governance proposal with no decided client release or activation block, not completed recovery or additional user compensation.
 checklist:
   - title: Close exposed tabs and inspect account activity
     hint: Reject unexpected signatures. From a clean session, check orders, position movements and wallet transfers; preserve timestamps and transaction hashes for official support. Review sessions, API credentials and permissions with support. Disconnecting a wallet does not revoke on-chain approvals or reverse transfers. Never give recovery agents a seed phrase.
@@ -41,6 +44,8 @@ checklist:
     hint: Polymarket says eligible wallets need no claim or ticket; its October 30 postmortem links an official review form for missing or disputed payments. Reach it from the official incident page, not unsolicited recovery messages. The reported 95% is a dated wallet figure, not a current completion guarantee.
   - title: Compare the dated Bitquery tracing ledger
     hint: "Bitquery’s dated ledger has 16 role entries (15 distinct values): Polygon recipient 0x3f99139f1c5854bb628c2e576aaf638e99dffc18; largest-drain transaction 0xc6fcf3a65c85eb322fe41c193f74bb37845e19be29364b126d3ea7a149f78dcc; gfg44433 account 0x5a2764fbbe5d139ef0ed988ec5f95320ce730c0b; Polygon split wallet (15.3m POL) 0xe4c4c39c1733e1c7c06b79f97ed442b68df41ec6; Polygon split wallet (4.3m POL) 0x5392587814ce8c6af6789764f88e5e9ab0b9962c; bridge wallet on Polygon and Ethereum (two ledger entries) 0xc91ee0574a14446de200923729c349b9cae19b60; Polygon bridge wallet (3.28m POL) 0x3f7019221a925537dc20767c38e80a7127fb1ffa; Ethereum collection wallet 0xe5e76a4d73f3bfb5cc9a8f53d4f8459fcac495f6; Ethereum pass-through wallet 0x74e940e4eb470a9d8b78c5eb8919938041219897; Polygon bridge-entry transaction 0x6ff9322601c17bd3f82933c5a9399a615d7c8687f786646225531a9369af7738; Polygon bridge-claim transaction 0x744fdeed0629d9704f42817de0cbbe04626a0a8860892fa411daa440a054825f; Ethereum swap wallet 0x9ab3c17b1a37886f1d702945fcf8016e3e549b18; deBridge-entry transaction 0xa7727418d0c2dce55461840c41ef017d2646feb72f18e5bb74ad4af20b884351; Polymarket wallet factory 0x00000000000fb5c9adea0298d729a0cb3823cc07; Relay router on Polygon 0xb92fe925dc43a0ecde6c8b1a2709c170ec4fff4f. Compare historical transactions, not just current balances. The factory and router are legitimate infrastructure, not attacker wallets; account labels are not verified people. A match alone does not prove compromise or loss. Figures and balances stop at October29 19:49 UTC; use the complete linked report for context."
+  - title: Track the governance decision without treating a proposal as recovery
+    hint: Read the original Polygon forum proposal, subsequent governance decision and official client release. Separate transaction blocking, proposed recovery, actual returned funds and customer compensation. It lists this case’s addresses 0xe4C4C39C1733e1C7c06B79f97ED442B68Df41EC6, 0x5392587814Ce8c6af6789764f88e5e9AB0b9962C, 0xc91ee0574a14446DE200923729c349B9CAE19b60, 0x3f7019221a925537dC20767C38e80A7127fb1Ffa, with a historical reference total of 23,862,736.07 POL; roles are the proposal’s attribution and a match alone does not prove a new compromise. Only native POL would move; other tokens and Class B addresses are excluded. Recovery addresses must prove control. A PPGC discussion is planned for November 5 at 14:30 UTC; activation requires governance approval, Amoy rehearsal and a final release, with no client version or activation block decided yet. Do not transfer to unsolicited recovery addresses, connect a wallet or sign a claim. Existing reimbursement and security steps still apply.
 sources:
   - name: Polymarket official status history
     url: https://status.polymarket.com/history/1
@@ -68,6 +73,10 @@ sources:
     url: https://www.bitquery.io/investigations/polymarket-hack
     primary: true
     says: Traces one recipient route through October29 19:49 UTC; supplies account/withdrawal counts and a 16-entry ledger. This predates the operator postmortem and refunds.
+  - name: Original Polygon forum native-POL recovery proposal
+    says: Author proposes moving about 70.49M native POL from five listed addresses; separates incident shares, approval/rehearsal conditions and undecided activation parameters. Not evidence of an executed fork or repayment.
+    url: https://forum.polygon.technology/t/pip-proposal-recovery-of-funds-held-in-blocked-addresses-following-the-polymarket-and-binance-incidents/22497
+    primary: true
 ---
 
 Polymarket's international platform confirmed a compromised provider on October 29 and committed to compensating affected users. Its status page now records the outage as resolved. L4 reflects a real compromise, rather than a theoretical vulnerability.
@@ -81,3 +90,5 @@ The platform's notice does not name its provider; DebugBear separately acknowled
 **DebugBear’s October 30 update:** The provider says its DNS records were altered through its domain registrar. Its early findings point to one customer website, with no evidence so far of intrusion into its internal systems; investigation continues. This does not establish that other customers were unaffected or that the monitoring script is safe to restore. DebugBear also reported that inbound email to its domain was unavailable at the time; follow its public updates rather than assuming an emailed support request was received.
 
 **Dated on-chain scope:** Bitquery counts 737 drained accounts and 985 withdrawals on its main route, plus outcome-share transfers from 33 accounts, through October 29 at 19:49 UTC. These are research-defined accounts, not unique people; do not add the 33 to 737 without resolving overlap. Its approximately $2.73m is a route-specific estimate using dated conversion prices, not an extra loss to add to Polymarket’s reported $2.7m stolen or $3.9m compensation. The snapshot does not measure later refunds or establish today’s exposed population.
+
+**November 4 Polygon governance proposal:** The original forum proposal says five transaction-blocked addresses hold about 70.49M native POL associated with two separate incidents: four Polymarket addresses have a reference total of 23,862,736.07 POL and one Binance address 46,626,593.27 POL. It requests a one-time coordinated fork moving the specified balances to verified recovery addresses without changing supply; other tokens and Class B addresses are outside the transfer. Governance approval, balance reconciliation, proof of recovery-address control and an Amoy rehearsal are conditions. The client release, fork name and mainnet activation block are undecided. November 5 at 14:30 UTC is the planned discussion, not an activation promise. Address ownership and blocking are the author’s account, not an independent chain investigation here. This does not establish an approved fork, returned assets or additional customer reimbursement. Do not add the two incident shares to this event’s loss, or double-count them with frozen funds, replacement funding or compensation.
