@@ -155,6 +155,9 @@ timeline:
   - date: 2026年11月5日
     title: gRPC 公告补充 Python 和 Ruby 的旧发布线补丁
     body: Python 01:44:12 UTC、Ruby 02:01:37 UTC 修订列出 1.82.3、1.83.2 和 1.84.1；PHP Composer 公告仍只列 1.84.1，不能跨语言推定旧线版本。
+  - date: 2026年11月5日
+    title: eMudhra 报告更多 G1 迁移期限及区域进展
+    body: 颁发机构报告 Chrome 和 Mozilla 的 SCT 截止为 11 月 16 日，Apple 于 11 月 30 日移除全部 G1 信任；称美国以外迁移完成，美国仍在进行。具体浏览器政策仍以各根计划为准。
   - date: 2026年10月27日前后
     title: Chrome Root Store v43 移除 emSign ECC Root CA - G3
 checklist:
@@ -212,6 +215,8 @@ checklist:
     hint: 检查实际服务证书链及最早 Signed Certificate Timestamp，不要仅看 NotBefore 或到期日。针对 emSign Root CA - G1，而非已移除的 ECC G3，Chrome 153 及更高版本将在最早 SCT 晚于 2026 年 11 月 16 日 23:59:59 UTC 时拒绝默认信任。在新签发或续期越过截止点前协调迁移到其他受信任 CA 层级，并在 Chrome 测试证书链。较早 SCT 只是不受本项变更影响，不代表所有信任检查均通过。核查 Windows GPO 等企业或用户显式信任，这会覆盖 SCT 限制；不要将添加覆盖作为常规缓解。跟进关联 Root Program 公告的实施时间修订。
   - title: 重建使用 Objective-C gRPC CocoaPod 的 Apple 应用
     hint: 检查 Podfile.lock 中的 gRPC，包括 gRPC-ProtoRPC 的传递依赖，升至 1.84.1 或更新版本并重建、重新分发应用。不能只更新 iOS／macOS。公告排除独立 gRPC-Core、gRPC-C++ CocoaPod 及 grpc-ios Swift Package Manager 包；其他产品的内置证书库需分别核查。GRPC_DEFAULT_SSL_ROOTS_FILE_PATH 对这里不适用。
+  - title: 向颁发机构核实更广的 G1 替换计划
+    hint: eMudhra 11 月 5 日 Update 8 报告 Apple 将于 11 月 30 日移除所有 G1 链证书的信任，不同于其所述 Chrome 和 Mozilla 于 11 月 16 日实施的 SCT 规则。通过既有支持在适用期限前获取并测试替代链，包括面向 Apple 的既有证书。按颁发机构说法，美国迁移仍在进行。核实各浏览器根计划，保留上方 Chrome 精确 UTC 规则，不绕过验证。
 sources:
   - says: 私钥是小于 256 的整数；报告时间、OneCRL 条目，以及 10月18日的吊销
   - name: eMudhra 声明
@@ -342,3 +347,5 @@ CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eM
 **11 月 4 日 Chrome 策略：** Root Program 对 **emSign Root CA - G1** 增加独立限制。最早 SCT 晚于 **2026 年 11 月 16 日 23:59:59 UTC** 的 TLS 服务器证书，将在 Chrome 153 及更高版本失去默认信任。截止点或之前的证书不受本项变更影响，这不是对其他信任检查的全面保证。计划配合 11 月 17 日 Chrome 158 Stable 实施，项目可能调整日期或提前收紧限制。平台、用户或企业显式信任可覆盖这些 SCT 限制。G1 策略决定不能证明另有密钥被盗、新伪造证书或实际拦截，也不取代现有 ECC G3 移除及运行时、SDK 更新。
 
 **11 月 5 日 gRPC 补充：** Python 和 Ruby 公告现明确 1.82.3／1.83.2／1.84.1 三条补丁路径；先前只写 1.84.1 的描述应按发布线理解，PHP Composer 公告仍仅列 1.84.1。另补入 10 月 28 日的 Objective-C 公告，涵盖 gRPC CocoaPod 及通过 gRPC-ProtoRPC 引入的副本，须升级并重建、分发应用；它明确排除独立 Core／C++ CocoaPod 和 grpc-ios SPM 包，且不支持上述环境变量变通。没有新增 CA 失陷或在野攻击证据。
+
+**11 月 5 日颁发机构更新：** eMudhra 报告，美国以外客户已迁往其他供应商，美国客户仍在迁移。其报告 Chrome／Mozilla 的 SCT 限制日期为 11 月 16 日，Apple 将于 11 月 30 日移除全部 G1 证书信任，包括较早签发的证书。这是颁发机构对时间表的说明；独立核阅的 Chrome 精确规则仍见上文。不能据此认定美国已迁移完成或较早证书仍普遍受信任。
