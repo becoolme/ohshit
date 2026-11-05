@@ -18,7 +18,7 @@ timeline:
     body: BleepingComputer also received the notification and follows public customer posts describing an encrypted mSecure Cloud database copy. Those posts do not establish decrypted secrets or a final affected-user count.
 checklist:
   - title: Review your direct notice and inventory stored secrets
-    hint: Open your existing mSecure app and established support bookmark. Include former accounts and ask support which sync mode, stored data and time period your notice covers. Do not treat a customer forum transcription as proof your account is excluded.
+    hint: Open your existing mSecure app and established support bookmark. Include former accounts and ask support which sync mode, stored data and time period your notice covers. The customer-transcribed reply also recommends changing the master password; verify this through your established app/support route. Do not treat that transcription as proof your account is excluded.
   - title: Replace credentials at their issuing services
     hint: Start with email, administrator, financial and other high-impact accounts saved in mSecure. Use each service's established settings to change passwords and replace exposed tokens or other secrets as applicable. Changing only the vault password or deleting the app cannot revoke a previously copied database or invalidate credentials stored inside it.
   - title: Re-enroll affected MFA and replace old passkeys safely
