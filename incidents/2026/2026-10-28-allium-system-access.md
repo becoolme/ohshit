@@ -1,6 +1,6 @@
 ---
 date: 2026-10-28
-updated: 2026-11-02
+updated: 2026-11-05
 title: Allium discloses unauthorized system access and revokes API keys during platform recovery
 level: 3
 tags:
@@ -10,7 +10,7 @@ tags:
 ecosystems:
   - cloud
   - crypto
-summary: Allium confirms unauthorized access detected October 25. Its October 28 recovery notice revokes existing API keys and requires a new password. Datashares and Allium Assistant are restored as of November 2; MCP recovery and uploaded-data access remain separate. Customer-data exposure is not established.
+summary: Allium confirms unauthorized access detected October 25. Its October 28 recovery notice revokes existing API keys and requires a new password. Datashares and Assistant were restored November 2; MCP is restored November 5. Uploaded-data access remains separate. Customer-data exposure is not established.
 splash: Allium application and API customers, especially integrations using existing keys or uploaded tables
 wipe: Replace revoked API keys as instructed, set a new password, enable MFA and check affected workflows before restarting
 inTheWild: yes
@@ -32,13 +32,16 @@ timeline:
   - date: Nov 2, 16:22 UTC
     title: Allium Assistant restored for all users; MCP recovery still pending
     body: The separate Explorer/API recovery notice confirms Assistant restoration but says more features, including MCP, will follow. It does not lift the uploaded-table restriction or close the security investigation.
+  - date: Nov 5, 14:11 UTC
+    title: MCP restored for all users
+    body: The Explorer/API notice restores MCP; public dashboard-link sharing is still being brought back online. This does not announce uploaded-table recovery or completion of the security investigation.
 checklist:
   - title: Replace revoked API keys through the official app
     hint: Create a new key in Allium and update each integration’s secret store. If your Allium contact is issuing a key directly, follow the status notice and wait for it. Test a representative API request after updating configuration; a restored endpoint does not make the old key valid.
   - title: Reset your password and enable MFA
     hint: Use your existing official Allium bookmark to sign in and set a new password as instructed. Turn on multi-factor authentication. Review the direct customer notice and coordinate unusual activity with Allium support; do not infer that every stored credential or customer dataset was stolen.
   - title: Validate data dependencies and service recovery
-    hint: Check status.allium.so before resuming jobs. The read notice says uploads and access to previously uploaded tables are disabled, so queries depending on those tables will fail; Allium Assistant was restored for all users November 2 at 16:22 UTC, while MCP recovery remains pending. All-chain datashare delivery and historical verification were confirmed October 30, and that incident was marked resolved November 2. Validate your downstream jobs and affected interval; a stale verified_until timestamp alone does not establish missing data. Neither the datashare resolution nor Assistant restoration lifts the uploaded-table restriction or announces MCP recovery.
+    hint: Check status.allium.so before resuming jobs. The read notice says uploads and access to previously uploaded tables are disabled, so queries depending on those tables will fail; Allium Assistant was restored for all users November 2 at 16:22 UTC, and MCP was restored November 5 at 14:11 UTC. All-chain datashare delivery and historical verification were confirmed October 30, and that incident was marked resolved November 2. Validate your downstream jobs and affected interval; a stale verified_until timestamp alone does not establish missing data. These recoveries do not lift the uploaded-table restriction; public dashboard-link sharing is still being restored.
 sources:
   - name: Allium security statement
     url: https://www.allium.so/blog/allium-security-update-incident-response-and-platform-recovery/
@@ -55,7 +58,7 @@ sources:
   - name: Allium separate Explorer/API recovery notice
     url: https://status.allium.so/incidents/fhl7h8hp4sfz
     primary: true
-    says: The November 2 11:22 EST update restores Allium Assistant for all users; other features including MCP are still being brought back online. It does not announce uploaded-table restoration.
+    says: November 2 at 11:22 EST restores Assistant; November 5 at 09:11 EST restores MCP for all users. Public dashboard-link sharing remains pending; uploaded-table recovery is not announced.
 ---
 
 Allium’s security statement acknowledges access to some systems and says affected customers were notified directly. It does not identify the entry point, enumerate accessed customer data or provide a victim count. L3 reflects a developer-facing data provider’s confirmed intrusion and credential-reset requirements; it does not assert a mass data leak.
@@ -63,3 +66,5 @@ Allium’s security statement acknowledges access to some systems and says affec
 October 25 is the detection date. The incident date here follows the October 28 public security-reset and recovery notice, rather than treating an earlier maintenance/outage message as proof of public breach disclosure. Core service restoration is not equivalent to complete recovery: uploaded tables, AI/MCP functions and datashare verification have separate status. No link to the Binance or other bridge incidents is established.
 
 The November 2 resolution applies specifically to datashare service degradation. At 16:22 UTC on November 2, the separate Explorer/API notice subsequently restored Allium Assistant for all users while leaving MCP recovery pending. Neither update lifts the October 28 uploaded-table restriction. No new root cause, customer-data scope or final forensic report is published in this resolution.
+
+The November 5 update at 14:11 UTC restores MCP for all users. Public dashboard-link sharing remains in recovery. MCP availability does not establish restored uploaded-table access, a final forensic conclusion or resolved customer-data scope.
