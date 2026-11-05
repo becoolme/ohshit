@@ -202,6 +202,9 @@ timeline:
   - date: Nov 5, 2026
     title: gRPC advisories specify Python and Ruby backports
     body: Python’s 01:44:12 UTC and Ruby’s 02:01:37 UTC revisions list 1.82.3, 1.83.2 and 1.84.1. PHP Composer still lists only 1.84.1; do not infer older-line PHP patches from other languages.
+  - date: Nov 5, 2026
+    title: eMudhra reports additional G1 migration deadlines and regional progress
+    body: The issuer reports a November 16 SCT cutoff for Chrome and Mozilla and all-G1 Apple removal on November 30. It says migration is complete outside the US, where transition continues. Browser policy details remain subject to each root program.
   - date: ~Oct 27, 2026
     title: Chrome Root Store v43 removes the emSign ECC Root CA - G3
 checklist:
@@ -259,6 +262,8 @@ checklist:
     hint: Inspect the served chain and earliest Signed Certificate Timestamp, not just NotBefore or expiry. For emSign Root CA - G1 (not the already removed ECC G3 root), Chrome 153+ will reject default trust when the earliest SCT is later than November 16, 2026 23:59:59 UTC. Coordinate migration to another trusted CA hierarchy before new issuance or renewal crosses that cutoff, and test the chain in Chrome. Earlier SCTs are unaffected by this specific change, not guaranteed universally trusted. Audit enterprise/user explicit trust such as Windows GPO, which overrides these SCT constraints; do not add such an override as a routine workaround. Follow the linked Root Program notice for rollout revisions.
   - title: Rebuild Apple applications using the Objective-C gRPC CocoaPod
     hint: Inspect Podfile.lock for gRPC, including transitive gRPC-ProtoRPC dependencies. Upgrade to 1.84.1 or later, rebuild and redistribute the application; an iOS/macOS update alone is insufficient. The advisory excludes standalone gRPC-Core/gRPC-C++ CocoaPods and grpc-ios Swift Package Manager; other products’ bundled stores still require their own checks. GRPC_DEFAULT_SSL_ROOTS_FILE_PATH does not work here.
+  - title: Confirm the broader G1 replacement schedule with your issuer
+    hint: eMudhra’s November 5 Update 8 reports Apple will remove trust for all G1-chained certificates on November 30, unlike the SCT-based rules it reports for Chrome and Mozilla on November 16. Obtain and test a replacement chain through established support before the applicable cutoff, including existing Apple-facing certificates. US migration remains in progress according to the issuer. Verify each browser root program; retain Chrome’s precise UTC rule above and never bypass validation.
 sources:
   - name: Mozilla Bugzilla 2083449
     url: https://bugzilla.mozilla.org/show_bug.cgi?id=2083449
@@ -478,3 +483,5 @@ For an unpatched Oracle runtime, the [operational guide](https://ops.java/emudhr
 **November 4 Chrome policy:** The Root Program adds a separate constraint for **emSign Root CA - G1**. TLS server certificates whose earliest SCT is after **November 16, 2026 23:59:59 UTC** will no longer be trusted by default in Chrome 153 and higher. Certificates at or before the cutoff are unaffected by this particular change; it is not a blanket assurance about other trust checks. The intended rollout coincides with Chrome 158 Stable on November 17, and the programme may revise the date or accelerate restrictions. Explicit platform/user/enterprise trust overrides these SCT constraints. This G1 policy decision does not establish another stolen key, new forged certificate or actual interception, and does not replace the existing ECC G3 removal or runtime/SDK updates.
 
 **November 5 gRPC clarification:** Python and Ruby advisories now specify 1.82.3 / 1.83.2 / 1.84.1 patch paths. The earlier 1.84.1-only description needs this release-line qualification; PHP Composer still lists 1.84.1. The October 28 Objective-C advisory is also incorporated: it covers the gRPC CocoaPod, including gRPC-ProtoRPC dependencies, and requires an upgraded, rebuilt and redistributed app. Standalone Core/C++ CocoaPods and grpc-ios SPM are excluded from this specific store, and the environment-variable workaround does not apply. This is neither a new CA compromise nor new evidence of attacks.
+
+**November 5 issuer update:** eMudhra reports that migration to other providers is complete outside the US, with US customers still transitioning. It reports November 16 SCT constraints for Chrome/Mozilla and November 30 removal of all G1 certificates on Apple platforms, including earlier issuance. This is the issuer’s account of the schedules; Chrome’s independently read precise cutoff remains above. No completed US transition or universal continued trust of earlier certificates is established.
