@@ -26,7 +26,7 @@ checklist:
   - title: 无法立即修补时禁用密码登录
     hint: 先测试密钥登录并保留当前会话。备份 sshd 配置，在实际生效配置及适用的 Match 块中设置 PasswordAuthentication no，执行 sshd -t 并重启 sshd。核对 sshd -T 及代表性用户、来源的 Match 上下文，再测试新的密钥登录。Alpine 3.19+ 默认读取 sshd_config.d，旧版本可能忽略附加文件，不能只依赖该文件。验证期间继续限制 SSH 访问。
   - title: 核对所有账户及云镜像前提
-    hint: 在本机检查账户密码字段类型，不公开哈希。易受攻击目标为 '*'，且另有本地账户带 $5$ 或 $6$ 哈希。openssh-server-pam 配合 UsePAM no 仍受影响。默认 PermitRootLogin prohibit-password 保护 root，但不保护其他获准的纯密钥用户。Tiny-cloud 3.18.11–3.24.3 镜像在加入此类哈希后可能暴露，其 alpine 用户可免密码使用 doas。公告排除不运行 sshd 的容器、实际 PasswordAuthentication no，以及 UsePAM yes 的 PAM 部署。
+    hint: 在本机检查账户密码字段类型，不公开哈希。易受攻击目标为 '*'，且另有本地账户带 $5$ 或 $6$ 哈希。按公告提醒，纳入经 musl-nscd（nslcd、winbind 或 sssd）解析、没有 shadow 条目的目录服务用户。openssh-server-pam 配合 UsePAM no 仍受影响。默认 PermitRootLogin prohibit-password 保护 root，但不保护其他获准的纯密钥用户。Tiny-cloud 3.18.11–3.24.3 镜像在加入此类哈希后可能暴露，其 alpine 用户可免密码使用 doas。公告排除不运行 sshd 的容器、实际 PasswordAuthentication no，以及 UsePAM yes 的 PAM 部署。
   - title: 保留认证证据并调查异常登录
     hint: 在 /var/log/messages 查找为无密码账户记录的 sshd Accepted password。保留日志，检查 doas 使用、新用户、文件及 authorized_keys 更改。日志匹配须结合上下文，未发现不证明安全。若不能排除未授权登录，隔离并按主机失陷处置；修补不会清除既有访问。
 sources:
