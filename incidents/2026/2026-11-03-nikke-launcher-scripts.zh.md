@@ -47,9 +47,12 @@ timeline:
 - date: 11月4日 23:18 UTC
   title: 原始研究补充启动器变体、缓存及失败日志边界
   body: 该版报告纳入 Google Play Games 版本受影响的用户报告、HMT／Google 缓存路径及重建前端。FeedList 保持原 URL；k2f_chan 后的 UTF-8 启动失败不能证明载荷未执行，完整影响范围仍未确认。
+- date: 11月5日 14:39 UTC
+  title: 研究人员提醒证据删除及假清理命令
+  body: 修订转述一台更新后的干净安装未弹窗即删除 debug.log，补充 NTFS 日志的证据局限，并识别不相关的管理员脚本诱饵。另报告 insightjs.com 被注册商暂停，这不等于主机已清理。
 checklist:
 - title: 停止启动器，清理前先保留证据
-  hint: 关闭启动器及托盘进程，将疑似感染电脑断网。删除或重装前，保留 Launcher/intl_service/debug.log、Launcher/log/tinyget 及启动器缓存。研究报告指出，更新或服务器关闭不能撤销之前的远程访问。 私下保留未改动的证据副本。公开日志前，遮盖 tinyget.mem.log 及按日期保存的 tinyget API 请求中的 Cookie 行，以及 login_ticket、biz_ticket、uid、openid 和 sig 的值；path= 可能暴露 Windows 用户名。 同时关闭 Google Play Games 变体的 nikke_launcher_google.exe。 若启动时输入了另一账户的管理员凭据，也检查该账户的 %APPDATA%、%TEMP% 和 HKCU 持久化键，不能只查日常账户。 官方手动说明还要求关闭 NIKKE 游戏及 Chrome。ACE 清理会删除关联日志，运行前先保留私有证据副本。
+  hint: 关闭启动器及托盘进程，将疑似感染电脑断网。删除或重装前，保留 Launcher/intl_service/debug.log、Launcher/log/tinyget 及启动器缓存。研究报告指出，更新或服务器关闭不能撤销之前的远程访问。 私下保留未改动的证据副本。公开日志前，遮盖 tinyget.mem.log 及按日期保存的 tinyget API 请求中的 Cookie 行，以及 login_ticket、biz_ticket、uid、openid 和 sig 的值；path= 可能暴露 Windows 用户名。 同时关闭 Google Play Games 变体的 nikke_launcher_google.exe。 若启动时输入了另一账户的管理员凭据，也检查该账户的 %APPDATA%、%TEMP% 和 HKCU 持久化键，不能只查日常账户。 官方手动说明还要求关闭 NIKKE 游戏及 Chrome。ACE 清理会删除关联日志；研究人员另转述一台更新后的干净安装未询问便删除 debug.log。任何重开前均须保留证据，不只是同意 ACE 前。文件已丢失时，可取证检查有保留期限的 NTFS 变更日志，查找 tinyget.<time>.log.cdt→.log 及 k2f-bcreds 创建、删除；日志轮转及 Firefox 原位读取限制阴性结论。
 - title: 可选用研究人员工具检查已保留的证据
   hint: 原报告链接 https://github.com/MotherSphere/NIKKE-Launcher-Check。README 描述 Windows、Linux／Proton 及 macOS／Wine 本地检查，不联网也不负责清理；这是作者说法，并非独立审计。通过原项目发版及 SHA256SUMS.txt 核对下载。删除 tbs_cache 前先检查，或保留私有副本。分享报告前启用 Hide my info 或 --redact。No traces found 只描述已检查路径，仍须执行下列手动排查及清理。本文没有运行该工具。 v0.5.2 改进 Google Play Games 进程识别及启动失败判定，并仅统计 k2f-／k2f_ 临时文件；没有要求运行该工具。
 - title: 排查已公布的网络及本地指标
@@ -62,6 +65,8 @@ checklist:
   hint: 重新打开前查看当前 NIKKE 官方通知及处置状态。保留证据后，按研究人员建议清除 %APPDATA%\nikke_launcher\tbs_cache；Proton 需处理对应 prefix 内路径。按 WormW attack-path 报告及完整指标 CSV 中的历史恶意哈希、ETag 排查启动器及代理缓存。其 11 月 4 日 07:14–07:20 UTC 复查发现四个已知文件已干净，但不能证明所有节点或缓存均已清理；本轮没有可列出的修补版本下限。清缓存或升级启动器不能移除既有恶意程序，也不能使被盗会话失效。 MotherSphere 后续 11:20 UTC 检查在四个节点上发现两主机的四个已知文件均已干净；初始发布权限入侵途径仍不明，应继续阻断已公布的恶意域名及 IP。 HMT 变体还需处理 %APPDATA%\nikke_launcher_hmt\tbs_cache，Google Play Games 变体为 %APPDATA%\nikke_launcher_google\tbs_cache，均先保留证据。11 月 4 日重建前端仍沿用 FeedList.feb647c9.js 的 URL，不能只靠更新后文件名判断缓存已清理。
 - title: 核实官方 ACE 方案并向客服报告影响
   hint: 从官方 PC Launcher Security Incident and Follow-up Measures 公告查看 ACE 使用步骤。厂商宣布自 11 月 5 日 08:00 UTC+9 起提供；保留证据并关闭浏览器后，再决定是否允许删除相关日志、DLL 和注册表项。未弹窗不等于主机安全。也可按官方手动说明处理 Launcher\log\tinyget 中已识别的恶意下载文件：官方举例为 205,135 字节的 tinyget.<date>-<time>.log；研究报告另有较早 165,108 字节 k2f.lua，不能只凭一个大小排除感染，先取证再删确认的恶意文件。更新可信杀毒并执行全盘和 Defender 离线扫描。外部账户或资金疑受影响时，从已知游戏内客服入口提交记录；逐案调查不代表已承诺或完成损失赔付。
+- title: 拒绝陌生清理脚本
+  hint: 研究人员识别 kernelscv[.]cfd?t=nikke 为另一项假管理员 PowerShell 清理诱饵，不属于原始 NIKKE 基础设施，不要执行。其声称的 45.153.*:4444、nikke_bootstrap.dll、NikkeUpdate 和 NIKKE_Helper 并非本事件已验证指标。若运行过，隔离并按另一项入侵处置。即使注册商据报暂停域名，仍阻断既有 NIKKE 域名及 IP；匹配须结合上下文，暂停也可能解除。
 sources:
 - name: MotherSphere 原始技术报告及指标清单
   says: 通过公开 GitHub Gist API 阅读完整原文，区分自身主机、静态分析及评论者报告，列出 CDN 缓存观察、指标与清理更正。 11 月 4 日 12:11 GMT 修订新增 11:20 UTC 四节点干净复查、较晚历史旧缓存观察、旧载荷指标及压缩 .ldb 证据。 23:18 GMT 修订补充 Google Play Games 用户报告、变体缓存路径、重建前端及 UTF-8 启动失败边界。
@@ -104,3 +109,5 @@ sources:
 厂商称三份脚本于 11 月 3 日 17:04–17:23 UTC 替换，剩余脚本于 11 月 4 日 03:09 UTC 完成 CDN 刷新后逐步分发。其宣布从 11 月 4 日 23:00 UTC 起提供官方客户端 ACE 扫描与清理，需同意删除关联日志、DLL 和注册表项，故先保留证据。本文没有运行该功能，也不能以厂商对残留 DLL 不再执行的说法或未弹窗证明主机完全安全；任意命令能力可能留下其他持久化。手动指引另要求全盘及 Defender 离线扫描、账户密码更新、API 密钥和令牌轮换，并请受影响用户通过客服报损。没有公布确认损失总额或已完成赔付。
 
 厂商还计划加强监控、验证启动器外部资源的完整性，并审查各功能权限。这些是已宣布的预防措施，尚非独立验证完成的控制，也不能证明既有感染已清除。
+
+**11 月 5 日研究更新：** 重开更新后的启动器前先保留证据，一项干净安装据报未经同意便丢失 `debug.log`。研究人员 14:39 UTC 修订另称 `insightjs.com` 自 02:05 UTC 被暂停，09:09 UTC 检查时已不解析。这不撤销此前访问。无关假清理域名属于另一项诱饵，不能据此认定同一操作者。
