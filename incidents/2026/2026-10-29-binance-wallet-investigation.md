@@ -2,7 +2,7 @@
 title: Binance preliminary report details signing-service intrusion and revises funding figures
 level: 4
 date: 2026-10-29
-updated: '2026-11-04'
+updated: '2026-11-05'
 tags:
   - Binance
   - crypto
@@ -118,12 +118,15 @@ timeline:
   - date: Nov 4, 2026
     title: Polygon forum proposes a native-POL recovery fork; approval is pending
     body: The proposal attributes 46,626,593.27 POL to this incident, within about 70.49M POL across two separate cases. It is a governance proposal with no decided client release or activation block, not completed recovery or additional user compensation.
+  - date: Nov 5, 2026
+    title: Binance announces another staged withdrawal expansion from 04:00 UTC
+    body: Recovery Update 8 lists additional pairs on ETH, BSC, Base, TRX, MATIC and SUI. Security/readiness checks still govern each pair; this is not confirmation that all listed withdrawals are already available.
   - date: Nov 1, 06:00–09:00 UTC (scheduled)
     title: First withdrawal phase is planned
 
 checklist:
   - title: Use official channels and reject recovery messages
-    hint: Open Binance through your existing bookmark or official app and check its announcements for deposit and withdrawal restoration. The November 1 notice schedules the first withdrawal phase for 06:00–09:00 UTC; check your exact asset/network pair on the withdrawal or network-status page. The subsequent official update names Bitcoin as the first batch; a later update confirms Ethereum withdrawals for USDC, USDT and ETH, and BSC withdrawals for USDC, USDT and BNB. Later original posts also confirm XRP on XRP; ETH and USDC on Base; DOGE on DOGE; ETH, USDT and USDC on Optimism; ZEC on ZEC; USDT and GRAM on TON; and SUI on SUI. The linked intermediate updates also confirm ARB, ETH, USDT and USDC on Arbitrum; TRX and USDT on TRX; SOL, USDT and USDC on Solana; POL, USDT and USDC on Polygon; and AVAX, USDT and USDC on Avalanche C-Chain. Verify the exact pair live; these statements do not establish that every asset on these networks is available. Binance says future withdrawals use new wallets in its updated reserve-address list. Verify destination addresses and device security; congestion remains possible. The notice advises retrying later if needed. Verify unsolicited communications with Binance Verify or official support. Do not share passwords or 2FA codes, follow recovery links, or send money to purported support agents.
+    hint: Open Binance through your existing bookmark or official app and check its announcements for deposit and withdrawal restoration. The November 1 notice schedules the first withdrawal phase for 06:00–09:00 UTC; check your exact asset/network pair on the withdrawal or network-status page. The subsequent official update names Bitcoin as the first batch; a later update confirms Ethereum withdrawals for USDC, USDT and ETH, and BSC withdrawals for USDC, USDT and BNB. Later original posts also confirm XRP on XRP; ETH and USDC on Base; DOGE on DOGE; ETH, USDT and USDC on Optimism; ZEC on ZEC; USDT and GRAM on TON; and SUI on SUI. The linked intermediate updates also confirm ARB, ETH, USDT and USDC on Arbitrum; TRX and USDT on TRX; SOL, USDT and USDC on Solana; POL, USDT and USDC on Polygon; and AVAX, USDT and USDC on Avalanche C-Chain. Verify the exact pair live; these statements do not establish that every asset on these networks is available. Binance says future withdrawals use new wallets in its updated reserve-address list. Verify destination addresses and device security; congestion remains possible. The notice advises retrying later if needed. Verify unsolicited communications with Binance Verify or official support. Do not share passwords or 2FA codes, follow recovery links, or send money to purported support agents. Update 8 announces more pairs from November 5 04:00 UTC on ETH, BSC, Base, TRX, MATIC and SUI. Use its exact table and check the selected pair live; listing an asset does not mean all its networks are open. Deposits remain open, and delays/retries may occur during rollout.
   - title: Inspect your own account and respond to unauthorized activity
     hint: Review Security and Account Activity for unfamiliar logins, transactions or security-setting changes. If found, Binance instructs users to disable the account and contact official support. In the app, its guide uses Account Info → Security → Manage Account → Disable Account. Read the consequences before confirming; reopening may require support. This account control does not fix a possible exchange-wallet compromise.
   - title: Check Aave status before planning deposits or borrowing
@@ -302,6 +305,11 @@ sources:
     says: Author proposes moving about 70.49M native POL from five listed addresses; separates incident shares, approval/rehearsal conditions and undecided activation parameters. Not evidence of an executed fork or repayment.
     url: https://forum.polygon.technology/t/pip-proposal-recovery-of-funds-held-in-blocked-addresses-following-the-polymarket-and-binance-incidents/22497
     primary: true
+  - name: Binance public CMS copy of Recovery Update 8
+    url: https://www.binance.com/bapi/composite/v1/public/cms/article/detail/query?articleCode=a225a3b6084c41dc8c8dfb33f4de5872
+    primary: true
+    says: Full November 5 original lists six networks, progressive withdrawal reopening from 04:00 UTC, security/readiness conditions, live-status checks and possible delays; deposits stay open.
+
 ---
 
 Binance’s initial notice said it had not confirmed an impact on user funds. The exchange then edited that notice to state that user funds are safe, and subsequently said withdrawals would resume after the security issue is fully resolved. These are the vendor’s statements, not an independently audited reserve or loss assessment. No resumption time or technical containment report was supplied in those notices. The withdrawal notice does not specify affected networks or withdrawal routes; do not infer that every Binance product is affected. Those earlier notices supported L3 because they acknowledged disruption without confirming the suspected theft.
@@ -356,3 +364,5 @@ The researcher no longer says none of the traced money reached exchange deposit 
 **November 4 reserve expansion:** Recovery Update #7 confirms a new 00:00 UTC snapshot for 44 tokens, replacing the earlier plan for a broader snapshot. Its full zero-knowledge proof is still being generated, now estimated at 50–60 hours rather than the earlier 40–50-hour forecast. The completed October 31 ten-token proof remains a separate historical record. Binance repeats 98% company-funded replenishment, with remaining illiquid tokens bought through market and OTC channels. This is neither a new recovery of stolen funds nor confirmation of full withdrawal restoration.
 
 **November 4 Polygon governance proposal:** The original forum proposal says five transaction-blocked addresses hold about 70.49M native POL associated with two separate incidents: four Polymarket addresses have a reference total of 23,862,736.07 POL and one Binance address 46,626,593.27 POL. It requests a one-time coordinated fork moving the specified balances to verified recovery addresses without changing supply; other tokens and Class B addresses are outside the transfer. Governance approval, balance reconciliation, proof of recovery-address control and an Amoy rehearsal are conditions. The client release, fork name and mainnet activation block are undecided. November 5 at 14:30 UTC is the planned discussion, not an activation promise. Address ownership and blocking are the author’s account, not an independent chain investigation here. This does not establish an approved fork, returned assets or additional customer reimbursement. Do not add the two incident shares to this event’s loss, or double-count them with frozen funds, replacement funding or compensation.
+
+**November 5 withdrawal expansion:** [Recovery Update 8](https://www.binance.com/en/support/announcement/detail/a225a3b6084c41dc8c8dfb33f4de5872), read through its full public CMS response, announces additional asset/network pairs from **04:00 UTC**. The table covers ETH, BSC, Base, TRX, MATIC and SUI; examples are UNI/AAVE/PAXG on ETH, ASTER/PROM/UNI on BSC, AERO/VIRTUAL/MORPHO/AVNT on Base, JST/SUN/BTTC on TRX, GNS on MATIC and MMT on SUI. Consult the complete table for all entries. Each pair opens progressively after checks, not simultaneously; verify live availability and expect possible delays. This advances the restoration plan without establishing full reopening, a completed new reserve proof or additional recovered stolen funds.
