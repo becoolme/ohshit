@@ -8,7 +8,7 @@ tags:
 - wallets
 ecosystems:
 - crypto
-summary: Mercado Bitcoin plans website viewing Nov 9, reports >$15M blocked, pledges its own replacement funds and says no customer loss/data leak. Its prior valuation was $36.3M; Bitquery estimates $48.6M across 10 chains, 36,042 Ethereum addresses and $11.8M frozen (unverified). Blocking is not repayment; entry unknown.
+summary: Mercado Bitcoin plans website viewing Nov 9, reports >$15M blocked, pledges its own replacement funds and says no customer loss/data leak. Its prior valuation was $36.3M; Bitquery estimates $48.6M across 11 chains, 36,042 Ethereum addresses and $11.8M frozen (unverified). Blocking is not repayment; entry unknown.
 splash: Mercado Bitcoin customers and integrations using its deposit addresses; exchange hot wallets are implicated
 wipe: Respect the deposit/withdrawal pause; do not reuse saved deposit addresses until official recovery guidance confirms them
 inTheWild: 'yes'
@@ -31,18 +31,24 @@ timeline:
 - date: Nov 3, 2026
   title: Company updates amounts and confirms platform/app pause
   body: The company reports affected assets currently worth ~$36.3M and $12.9M blocked, guaranteeing customer assets and preserved balance records. It subsequently plans gradual restoration after feature-specific security checks, without confirming reopening or a deadline.
+- date: Nov 3, 2026
+  title: BitMart founder confirms a separate intrusion
+  body: The readable opening of Sheldon Xia’s original public post confirms a hack the previous day and calls the amount small, without a figure or wallets. This supersedes the earlier absence of a verified BitMart acknowledgment; it does not establish shared cause or ownership of the researcher-labelled wallets.
 - date: Nov 4, 2026
   title: Research raises freeze estimate and tracks new token sales
   body: Bitquery now estimates $11.8M frozen, including the remaining Ethereum EURC frozen at 00:55 UTC. It reports $11.9M of token sales and 8,678 ETH held by its November 4 snapshot. These are unverified research figures, not returned funds or confirmed customer losses.
 - date: Nov 4, 2026
   title: Exchange raises blocked-assets figure and pledges its own replacement funds
   body: Full public originals report over $15M blocked, superseding the company’s $12.9M snapshot, and promise replacement using its own funds. This is not completed repatriation, compensation or an independent balance reconciliation.
+- date: Nov 5, 2026
+  title: Research expands chain coverage and Base deposit sweeps
+  body: Bitquery now counts 11 chains and 308 Base deposit addresses (~$16k); its separate BitMart-linked estimate becomes ~$424k. Mercado Bitcoin remains ~$48.6M. Holdings were not refreshed beyond November 4; these are unverified research figures and address counts, not unique customers or confirmed exchange losses.
 - date: Nov 9, 2026 (scheduled)
   title: Staged website access is planned to begin
   body: First stage permits viewing balances, statements, assets and investments. Transfers, withdrawals and trading are to follow only after each module’s final security checks; this is not a promised date for full reopening.
 checklist:
 - title: Keep deposits paused and recheck saved addresses
-  hint: Do not send funds to a saved Mercado Bitcoin deposit address while transfers are suspended. Check the established exchange app and official channels for explicit recovery and address instructions before restarting automated payouts or exchange integrations. Bitquery reports signed transfers from deposit addresses; changing your login password alone does not secure exchange-controlled keys. The November 3 original confirms that the platform/app remain paused and says reinstalling the app or changing devices is unnecessary. The recovery plan requires feature-specific security checks; confirm each service and limitation in subsequent official announcements, rather than treating the plan as completed reopening. The November 4 company update now targets November 9 for initial website viewing only. Transfers, withdrawals and trading have no confirmed restart date; verify each module before enabling automation.
+  hint: Do not send funds to a saved Mercado Bitcoin deposit address while transfers are suspended. Check the established exchange app and official channels for explicit recovery and address instructions before restarting automated payouts or exchange integrations. Bitquery reports signed transfers from deposit addresses; changing your login password alone does not secure exchange-controlled keys. The November 3 original confirms that the platform/app remain paused and says reinstalling the app or changing devices is unnecessary. The recovery plan requires feature-specific security checks; confirm each service and limitation in subsequent official announcements, rather than treating the plan as completed reopening. The November 4 company update now targets November 9 for initial website viewing only. Transfers, withdrawals and trading have no confirmed restart date; verify each module before enabling automation. The November 5 research also identifies Base deposit-address sweeps; include Base in the saved-address review and do not assume an address is safe because it was absent from the earlier ten-chain list.
 - title: Verify balances and preserve transaction evidence
   hint: Record your account statement, affected network, deposit address, transaction hash, amount and time. Contact Mercado Bitcoin through its established support channel about missing credits or pending withdrawals. The exchange’s no-customer-loss statement is not independent verification that every balance or transfer is settled; address counts are not customer counts.
 - title: Monitor the published wallet set with its attribution limits
@@ -57,7 +63,7 @@ sources:
 - name: Bitquery original multi-chain investigation
   url: https://bitquery.io/investigations/mercado-bitcoin-hack
   primary: true
-  says: November 3 original-research revision estimates $48.6M, 36,042 Ethereum deposit addresses and $11.4M frozen; corrects the earlier sweep start and adds BNB Chain observations. Figures and labels remain unverified. A later revision expands separate flows to about $391k; BitMart ownership remains an inference from labels and historical payments. November 4 revision estimates $11.8M frozen, $11.9M in token sales and 8,678 ETH held; expands the wallet record to 18 entries. Cutoffs are 10:02 UTC on Ethereum and 10:02–10:08 UTC elsewhere.
+  says: November 3 original-research revision estimates $48.6M, 36,042 Ethereum deposit addresses and $11.4M frozen; corrects the earlier sweep start and adds BNB Chain observations. Figures and labels remain unverified. A later revision expands separate flows to about $391k; BitMart ownership remains an inference from labels and historical payments. November 4 revision estimates $11.8M frozen, $11.9M in token sales and 8,678 ETH held; expands the wallet record to 18 entries. Cutoffs are 10:02 UTC on Ethereum and 10:02–10:08 UTC elsewhere. November 5 revision adds Base deposit sweeps and an eleventh chain, retains the $48.6M Mercado Bitcoin estimate, and revises separate BitMart-linked flows to ~$424k. Holdings remain a November 4 snapshot.
 - name: BitNotícias report with the exchange statement
   url: https://bitnoticias.com.br/noticias/mercado-bitcoin-ataque-hacker/
   says: Reproduces the exchange’s temporary deposit/withdrawal pause and no-customer-loss statement; attributes the earlier preliminary $40M-plus estimate to Hypernative, rather than independently proving that amount.
@@ -85,7 +91,11 @@ sources:
   url: https://x.com/MercadoBitcoin/status/2118096168265892094
   primary: true
   says: 'Full public original: environments/flows undergoing independent tests, investigation continues, own-fund wallet replacement and buybacks being prepared; spend/withdraw only as services reopen.'
-updated: '2026-11-04'
+- name: BitMart founder Sheldon Xia original public embed
+  url: https://publish.twitter.com/oembed?url=https://x.com/sheldonbitmart/status/2117650361154691529
+  primary: true
+  says: Readable opening confirms a hack the previous day and calls the amount small. The embed truncates later prose; no amount, wallet attribution, root cause, customer-loss or full recovery claim is taken from the omitted section.
+updated: '2026-11-05'
 ---
 
 Mercado Bitcoin’s public acknowledgement establishes a platform security incident, rather than just an unexplained transfer or an individual customer account theft. The November 2–3 statements did not disclose how the intruder entered, a compromised software version, the final financial impact or a recovery deadline; the November 4 plan below now sets a website-viewing target. No published patch or user password-reset requirement is established by the statements read.
@@ -100,7 +110,7 @@ Bitquery's November 3 revision raises its frozen estimate from $7.3M to $11.4M a
 
 The November 3 revision’s Ethereum cutoff was 08:49 UTC, with other chains read between 08:49 and 10:05 UTC. It also reports cross-chain swaps and new recipients, which do not establish the entry point, a master-key leak or a shared-supplier compromise. The initial November 2 figures remain in the timeline as historical estimates, superseded by this revision.
 
-**November 3 separate-flow update:** Bitquery expands earlier flows unrelated to Mercado Bitcoin wallets from $298k to about $391k. It adds observations of 80 tokens leaving the Base wallet over roughly six minutes from November 2 20:20 UTC, with 45 sold the next morning for about $85k. The $391k is the separate-flow total: do not add its $298k subset again or include it in Mercado Bitcoin’s $48.6M. Ownership relies on labels and small 2024 payments with a wallet in BitMart’s proof of reserves; BitMart has not confirmed current wallet control or a platform intrusion. A separate roughly 66,283 USDC freeze on Base is also excluded from the Mercado Bitcoin freeze figures. These amounts and attributions remain unverified.
+**November 3 separate-flow update:** Bitquery expands earlier flows unrelated to Mercado Bitcoin wallets from $298k to about $391k. It adds observations of 80 tokens leaving the Base wallet over roughly six minutes from November 2 20:20 UTC, with 45 sold the next morning for about $85k. The $391k is the separate-flow total: do not add its $298k subset again or include it in Mercado Bitcoin’s $48.6M. Ownership relies on labels and small 2024 payments with a wallet in BitMart’s proof of reserves; at that check, no BitMart acknowledgment had been verified; the November 5 follow-up below supersedes that publication-status statement, while specific wallet control remains unconfirmed. A separate roughly 66,283 USDC freeze on Base is also excluded from the Mercado Bitcoin freeze figures. These amounts and attributions remain unverified.
 
 **November 3 company update:** Full public originals now confirm the whole platform/app remain paused until a safe restart, with no need to reinstall the app or change devices. The company reports affected assets currently worth about $36.3M and about $12.9M blocked, guaranteeing customer assets and preserved balance records. A subsequent post plans staged recovery after feature-specific security checks, with advance notices of available services and limits, but no deadline. These are company claims, not independently reconciled balances, returned funds or completed recovery. The $36.3M uses current prices and is not interchangeable with Bitquery’s $48.6M transfer-time estimate; the $12.9M blocked and researcher’s $11.4M frozen are different statements/observation snapshots. The company has not reconciled all differences; do not add, subtract or derive a net loss from them.
 
@@ -111,3 +121,7 @@ The November 3 revision’s Ethereum cutoff was 08:49 UTC, with other chains rea
 Initial website access is planned from **November 9**, limited first to viewing balances, statements, assets and investments. Transfers, withdrawals and trading will follow each module’s final security validation, with no confirmed full-reopening date. This supersedes the earlier absence of a recovery date, not the transfer pause or unknown entry point.
 
 The accompanying company post says each environment and transaction flow is undergoing independent tests while the investigation continues. Its trading desk is **preparing** domestic and international buybacks; the statement does not establish completed purchases or full reserve coverage. The replacement balances are to become usable for trading or withdrawal only as services are released.
+
+**November 5 research and BitMart acknowledgment:** Bitquery expands Mercado Bitcoin coverage from ten to **eleven chains**, adding **308 Base deposit addresses** that reportedly sent about **$16k** in three minutes. Of its sample of 92, 33 were also swept on Ethereum: these overlap and are not unique customer counts. Its Mercado Bitcoin estimate remains **$48.6M**. Use the report’s full wallet record to distinguish address roles; no full Base sweep-recipient address is supplied in its visible record. A signature still does not identify whether a key or signing service was compromised.
+
+The separate BitMart-linked research total is now about **$424k**, replacing the earlier $391k estimate, and must not be added to Mercado Bitcoin’s total. The readable opening of founder Sheldon Xia’s November 3 original confirms that BitMart was hacked the previous day and calls the amount small. This corrects the earlier statement here that no acknowledgment was verified. The public embed truncates later text; no quantified loss, customer-impact assessment or recovery promise is inferred. The original does not authenticate Bitquery’s specific wallet labels or shared-supplier hypothesis. Bitquery explicitly says it re-read missed sweeps on November 5 **without refreshing holdings**: its 8,678 ETH and other holdings remain a November 4 snapshot. The November 9 website-viewing plan, transfer pause and company replacement pledge remain unchanged.
