@@ -20,6 +20,9 @@ timeline:
 - date: Nov 4, 2026
   title: Bank clarifies provider entry, account scope and amount uncertainty
   body: The follow-up says entry was through a provider, not Fortuneo, and fraudulent transactions used Arkéa’s own account. It validates only the order of magnitude of the reported €118M/$133M, not those exact figures; some funds were blocked and recovery continues.
+- date: Nov 5, 2026
+  title: Research revises the suspected crypto cash-out scope
+  body: Bitquery now traces $126.04M to 17 wallets and corrects its earlier morning-only cutoff to November 2 16:30 UTC after finding two more wallets. Its November 5 08:47 UTC snapshot reports $37.26M held and 1.14M USDT frozen. These are unverified on-chain estimates, not the bank’s final loss or recovered funds.
 checklist:
 - title: Verify delayed transfers through your established banking channel
   hint: Open your usual banking app/site or contact your established adviser. Ask about the status of a specific delayed transfer before submitting it again; the bank says some transfers were delayed and operations are resuming progressively. Preserve references and timestamps and follow your bank’s instructions rather than assuming every operation is restored. The later clarification says the fraudulent transfers used the bank’s own account rather than customer accounts; nearly all operations resumed during the morning, not necessarily every pending transfer. It explicitly rejects Fortuneo as the intrusion entry point.
@@ -36,7 +39,11 @@ sources:
   url: https://www.cm-arkea.com/arkea/banque/assurances/pa_38386/fr/informations-complementaires-suite-a-l-attaque-dont-le-credit-mutuel-arkea-a-ete-victime
   primary: true
   says: Company FAQ clarifies provider entry rather than Fortuneo, own-account transfers, near-total morning resumption, some blocked funds and only order-of-magnitude validation of reported €118M/$133M.
-updated: '2026-11-04'
+- name: Bitquery November 5 original cash-out research revision
+  url: https://www.bitquery.io/investigations/eu-106m-crypto-theft
+  primary: true
+  says: Researcher’s own 17-wallet/$126.04M tracing, corrected November2 payout cutoff, November5 08:47UTC holdings/freeze snapshot and explicit limits on seeing bank transfers or exchange-account ownership. Not independent confirmation of the bank loss.
+updated: '2026-11-05'
 ---
 
 Crédit Mutuel Arkéa’s November 4 company release confirms a cyberattack that enabled fraudulent transactions. It says it contacted competent authorities and supervisors, mobilized its teams and temporarily suspended some transactions. It calls the incident contained/closed and reports progressive operational resumption during the morning after checks and stronger safeguards; its teams continue evaluating consequences and strengthening security. These are the bank’s statements, not an independent forensic conclusion or proof that every transfer has completed.
@@ -48,3 +55,5 @@ L4 reflects the bank’s confirmation of real cyber-enabled financial fraud and 
 **November 4 follow-up:** The bank now says attackers entered through an unnamed provider’s platform and reached Arkéa directly, **not through Fortuneo**. Fraudulent transactions used the bank’s own account to send money to other banking actors, which may then have enabled conversion through crypto platforms; customer accounts at its federations and subsidiaries were not used. The provider, technical entry method, destination-wallet ownership and crypto conversion remain unverified beyond that qualified statement by the bank.
 
 Asked about **€118M ($133M)**, the bank declines to confirm those exact figures and validates only their order of magnitude. It reports some funds blocked, ongoing recovery and a final financial impact still under assessment. Blocked funds are not returned funds, and the amount must not be presented as a confirmed final loss. The bank says nearly all operations resumed during the morning after checks, while some customer transfers were delayed. Its preventive phishing warning does not establish a customer-data breach.
+
+**November 5 research follow-up:** Bitquery now traces **$126.04M** in USDC paid from Kraken, Crypto.com and OKX to **17 wallets**, replacing its earlier $108.80M/15-wallet analysis. Two newly identified wallets account for about $17.2M paid on November 2 between **15:46 and 16:30 UTC**; the researcher corrects its earlier claim that payouts ended that morning. This traces a suspected crypto cash-out leg, not the bank transfers themselves. At **08:47 UTC on November 5**, the researcher counts **$37.26M** remaining in attributed Ethereum wallets, including **1.14M USDT frozen**; neither remaining holdings nor freezes are confirmed returned funds. These figures and attribution remain **unverified**, and must not be added to the bank’s reported order of magnitude or called its final loss. The research cannot see bank transfers, verify exchange-account identities or reconcile every difference with earlier $133M reports. The bank’s own-account/provider-entry account and customer-holdings assurances remain the authoritative company position; this is not proof that any of those exchanges or Trust Wallet was compromised.
