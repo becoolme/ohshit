@@ -3,7 +3,7 @@ title: "eMudhra CA intermediate private keys were so weak that every one was a n
 headline: "eMudhra: eight CA keys you could guess on a pocket calculator"
 level: 4
 date: 2026-10-17
-updated: 2026-11-04
+updated: '2026-11-05'
 tags: [PKI, CA, TLS]
 ecosystems: [go, python, node, browsers]
 summary: Eight emSign ECC G3 intermediates (six TLS/two code signing, Sectigo-cross-signed) had P-384 keys below 256, enabling forged certificates. Update Dart/Flutter/Firestore and CA bundles. Chrome 153+ will distrust G1 TLS certificates with earliest SCT after Nov 16, 23:59:59 UTC; earlier SCTs are unaffected by this new rule.
@@ -48,16 +48,20 @@ cves:
     description: The action bundles certifi roots used by its Sigstore dependency; the advisory lists 1.14.3 as patched.
   - id: GHSA-2xm2-c8xx-p9vh
     name: Python grpcio bundled CA trust
-    description: grpcio before 1.84.1 retains affected roots; check the advisory for patched older release lines.
+    description: Affected grpcio bundled roots require 1.82.3, 1.83.2 or 1.84.1 for the corresponding release line; updating OS roots or certifi alone does not replace this store.
   - id: GHSA-p3vr-xp4c-r8fh
     name: Ruby grpc bundled CA trust
-    description: Ruby grpc before 1.84.1 uses affected bundled roots rather than the OS trust store.
+    description: Affected Ruby grpc bundled roots require 1.82.3, 1.83.2 or 1.84.1 for the corresponding release line, independently of OS updates.
   - id: GHSA-gvrc-7wf9-p7hg
     name: PHP grpc/grpc bundled CA trust
     description: Composer grpc/grpc before 1.84.1 uses an affected bundled trust store.
   - id: GHSA-m4gc-hcgx-wmc7
     name: Google Java API client bundled CA trust
     description: google-api-client before 2.9.2 can load affected bundled roots through newTrustedTransport(); JDK stores require separate updates.
+  - id: GHSA-mm89-g5jq-mmfq
+    score: 9.1
+    name: Objective-C gRPC CocoaPod bundled CA trust
+    description: The gRPC CocoaPod before 1.84.1, including gRPC-ProtoRPC dependencies, needs upgrading and application rebuilds; standalone Core/C++ CocoaPods and grpc-ios SPM do not use this store.
 fixed:
   - { product: Go, version: 1.27.3 / 1.26.10, status: "CVE-2026-111943. Go 1.25 and older get no fix" }
   - { product: Python certifi, version: 2026.10.19 }
@@ -85,9 +89,9 @@ fixed:
   - product: httplib2
     version: 0.32.1
     status: Used when certifi is absent from affected Python HTTP transports
-  - product: Python grpcio / Ruby grpc / PHP grpc/grpc
-    version: 1.84.1
-    status: Bundled gRPC roots; older maintained branches may have separate patches
+  - product: Python grpcio / Ruby grpc
+    version: 1.82.3 / 1.83.2 / 1.84.1
+    status: Use the patch for the corresponding release line; bundled roots are separate from OS roots
   - product: Java google-api-client
     version: 2.9.2
     status: For GoogleNetHttpTransport.newTrustedTransport(); also update JDK/custom stores
@@ -118,6 +122,12 @@ fixed:
   - { product: "In-cluster Cloud Service Mesh 1.31", version: "1.31.3-asm.3", status: "GCP-2026-076 patched bundle" }
   - { product: "In-cluster Cloud Service Mesh 1.30", version: "1.30.7-asm.3", status: "GCP-2026-076 patched bundle" }
   - { product: "In-cluster Cloud Service Mesh 1.29", version: "1.29.10-asm.0", status: "GCP-2026-076 patched bundle; 1.28 and earlier are EOL" }
+  - product: PHP grpc/grpc
+    version: 1.84.1
+    status: Composer package; Python/Ruby backport versions must not be inferred for PHP
+  - product: Objective-C gRPC CocoaPod
+    version: 1.84.1
+    status: Rebuild applications; excludes standalone gRPC-Core/gRPC-C++ CocoaPods and grpc-ios SPM
 timeline:
   - date: Apr 30, 2025
     title: The keys are generated, in a batch of 24 intermediates
@@ -168,6 +178,9 @@ timeline:
   - date: Oct 28, 2026
     title: eMudhra clarifies the affected customer migration
     body: The vendor places roughly 30,800 G3-hierarchy certificates in a US client ecosystem using a temporary G1 RSA issuance pathway; no firm date for ending G1 TLS issuance is given.
+  - date: Oct 28, 2026
+    title: Objective-C advisory identifies the affected CocoaPod and rebuild requirement
+    body: GHSA-mm89-g5jq-mmfq belongs to the same CA event. gRPC CocoaPod 1.84.1 fixes the store; GRPC_DEFAULT_SSL_ROOTS_FILE_PATH does not work for this transport.
   - date: Oct 29, 2026
     title: Checkmk publishes CVE-2026-117611 for its bundled trust stores
     body: At this update, 2.5.0p18 was still marked unreleased; system CA updates do not replace every bundled store.
@@ -186,6 +199,9 @@ timeline:
   - date: Nov 4, 2026
     title: Chrome announces a separate SCT cutoff for emSign Root CA - G1
     body: Certificates whose earliest SCT is after November 16 23:59:59 UTC will lose default trust in Chrome 153 and higher. Earlier SCTs are unaffected by this new restriction; explicit local trust overrides it. Rollout aims to coincide with Chrome 158 Stable on November 17 and may change.
+  - date: Nov 5, 2026
+    title: gRPC advisories specify Python and Ruby backports
+    body: Python’s 01:44:12 UTC and Ruby’s 02:01:37 UTC revisions list 1.82.3, 1.83.2 and 1.84.1. PHP Composer still lists only 1.84.1; do not infer older-line PHP patches from other languages.
   - date: ~Oct 27, 2026
     title: Chrome Root Store v43 removes the emSign ECC Root CA - G3
 checklist:
@@ -222,7 +238,7 @@ checklist:
   - title: Update the PyPI publishing action in CI
     hint: Use pypa/gh-action-pypi-publish 1.14.3 or later, including replacing older commit-SHA pins. Updating runner or local certifi alone does not replace the action’s bundled copy.
   - title: Update Python, Ruby and PHP transport dependencies
-    hint: For Python, use certifi 2026.10.19+, httplib2 0.32.1+ (its bundle is used without certifi), and grpcio 1.84.1+. For Ruby, update grpc to 1.84.1+ or update google-cloud-* gems to pull it in. For PHP, update grpc/grpc to 1.84.1+ or google/gax to 1.51.2+. Update the OS store for REST paths too; do not assume gRPC reads system roots. The PHP PECL extension itself does not bundle roots; its system store still needs updating. Explicitly supplied gRPC root sets need separate verification.
+    hint: For Python, use certifi 2026.10.19+, httplib2 0.32.1+ (its bundle is used without certifi), and grpcio 1.84.1+. For Ruby, update grpc to 1.84.1+ or update google-cloud-* gems to pull it in. For PHP, update grpc/grpc to 1.84.1+ or google/gax to 1.51.2+. Update the OS store for REST paths too; do not assume gRPC reads system roots. The PHP PECL extension itself does not bundle roots; its system store still needs updating. Explicitly supplied gRPC root sets need separate verification. Python grpcio and Ruby grpc can also use 1.82.3 or 1.83.2 on the corresponding release line; PHP grpc/grpc retains its advisory’s 1.84.1 minimum. For Ruby’s temporary workaround, patch system CAs first and set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=/etc/ssl/certs/ca-certificates.crt before process startup on Debian; a missing/unreadable file falls back to bundled roots. PHP-FPM clears worker environments by default; configure env[GRPC_DEFAULT_SSL_ROOTS_FILE_PATH] in the pool if using that workaround and verify it takes effect.
   - title: Verify Google Java clients and legacy gRPC transports
     hint: For newTrustedTransport(), use google-api-client 2.9.2+ or libraries-bom 26.91.0+. Service-library-only builds need a -2.9.2 or later suffix or an explicit client dependency. Spring line patches are 8.3.1, 7.5.2, 6.5.12 and 3.9.19 or later. Before 2.9.0, Apache newTrustedTransport() methods also use bundled roots; update the separate google-api-client-apache-v5 artifact from affected 2.7.0–2.8.1 to 2.9.0+. Direct transport constructors use the JDK store. Separately update JDK and Windows roots. Migrate deprecated Node grpc npm to @grpc/grpc-js and .NET Grpc.Core to Grpc.Net.Client.
   - title: Rebuild the actual C++, Rust, Go and Swift trust paths
@@ -241,6 +257,8 @@ checklist:
     hint: Inspect backend certificate issuers. Replace and reissue eMudhra-issued backend certificates through a trusted CA, then remove affected aliases from custom stores. In the console use Apigee > Management > Environments > TLS Keystores, inspect aliases and delete the affected certificates. Update SSLInfo to a validated TrustStore; ref:// references take effect without proxy redeployment, while direct-name references require redeploying the proxy. Test outbound TLS/mTLS and JWKS-dependent flows; never disable verification to restore connectivity.
   - title: Plan replacement of newly issued G1-rooted TLS certificates
     hint: Inspect the served chain and earliest Signed Certificate Timestamp, not just NotBefore or expiry. For emSign Root CA - G1 (not the already removed ECC G3 root), Chrome 153+ will reject default trust when the earliest SCT is later than November 16, 2026 23:59:59 UTC. Coordinate migration to another trusted CA hierarchy before new issuance or renewal crosses that cutoff, and test the chain in Chrome. Earlier SCTs are unaffected by this specific change, not guaranteed universally trusted. Audit enterprise/user explicit trust such as Windows GPO, which overrides these SCT constraints; do not add such an override as a routine workaround. Follow the linked Root Program notice for rollout revisions.
+  - title: Rebuild Apple applications using the Objective-C gRPC CocoaPod
+    hint: Inspect Podfile.lock for gRPC, including transitive gRPC-ProtoRPC dependencies. Upgrade to 1.84.1 or later, rebuild and redistribute the application; an iOS/macOS update alone is insufficient. The advisory excludes standalone gRPC-Core/gRPC-C++ CocoaPods and grpc-ios Swift Package Manager; other products’ bundled stores still require their own checks. GRPC_DEFAULT_SSL_ROOTS_FILE_PATH does not work here.
 sources:
   - name: Mozilla Bugzilla 2083449
     url: https://bugzilla.mozilla.org/show_bug.cgi?id=2083449
@@ -395,6 +413,10 @@ sources:
     url: https://groups.google.com/a/ccadb.org/g/public/c/DU8p98nyQWc/m/R33zS9UIBgAJ
     primary: true
     says: Original policy distinguishes G1 from removed ECC G3, specifies earliest-SCT cutoff, Chrome versions, intended November 17 rollout and explicit-local-trust exception.
+  - name: gRPC Objective-C original security advisory
+    url: https://github.com/grpc/grpc/security/advisories/GHSA-mm89-g5jq-mmfq
+    primary: true
+    says: Published October 28; GHSA-mm89-g5jq-mmfq scopes the gRPC CocoaPod, 1.84.1 fix, rebuild requirement, excluded packages and unsupported environment-variable workaround.
 ---
 
 A certificate authority's private key is the thing that makes "this is really your bank" true. For eight
@@ -454,3 +476,5 @@ For an unpatched Oracle runtime, the [operational guide](https://ops.java/emudhr
 **November 4 follow-up to GCP-2026-077 (published November 3):** Apigee outbound TLS can still trust the compromised chain through default or customer-managed stores. An attacker needs a network interception position and a trusted forged chain; this bulletin is not evidence of an Apigee breach or exploitation. X and Edge SaaS platform-default updates are described as rolling out, while all products still require customer TrustStore review. Hybrid needs updated container images once released, not merely host CA updates. OPDK requires OS/JVM trust remediation and service restarts. Plan backend certificate replacement before removing trust to avoid breaking legitimate target connections. Existing runtime, SDK, mesh and certificate-replacement actions above remain necessary.
 
 **November 4 Chrome policy:** The Root Program adds a separate constraint for **emSign Root CA - G1**. TLS server certificates whose earliest SCT is after **November 16, 2026 23:59:59 UTC** will no longer be trusted by default in Chrome 153 and higher. Certificates at or before the cutoff are unaffected by this particular change; it is not a blanket assurance about other trust checks. The intended rollout coincides with Chrome 158 Stable on November 17, and the programme may revise the date or accelerate restrictions. Explicit platform/user/enterprise trust overrides these SCT constraints. This G1 policy decision does not establish another stolen key, new forged certificate or actual interception, and does not replace the existing ECC G3 removal or runtime/SDK updates.
+
+**November 5 gRPC clarification:** Python and Ruby advisories now specify 1.82.3 / 1.83.2 / 1.84.1 patch paths. The earlier 1.84.1-only description needs this release-line qualification; PHP Composer still lists 1.84.1. The October 28 Objective-C advisory is also incorporated: it covers the gRPC CocoaPod, including gRPC-ProtoRPC dependencies, and requires an upgraded, rebuilt and redistributed app. Standalone Core/C++ CocoaPods and grpc-ios SPM are excluded from this specific store, and the environment-variable workaround does not apply. This is neither a new CA compromise nor new evidence of attacks.

@@ -27,13 +27,15 @@ cves:
   - name: PyPI 发布 Action 内置 CA 信任
     description: 该 Action 内置的 certifi 根证书由 Sigstore 依赖使用；公告列出 1.14.3 为修复版本。
   - name: Python grpcio 内置 CA 信任
-    description: grpcio 1.84.1 之前保留受影响根证书；较早分支修复请查看公告。
+    description: grpcio 内置根证书库受影响；按发布线更新至 1.82.3、1.83.2 或 1.84.1。系统及 certifi 更新不会替换该证书库。
   - name: Ruby grpc 内置 CA 信任
-    description: Ruby grpc 1.84.1 之前使用受影响内置根证书，而非系统信任库。
+    description: Ruby grpc 内置证书库受影响；按发布线更新至 1.82.3、1.83.2 或 1.84.1，不能仅更新系统根证书。
   - name: PHP grpc/grpc 内置 CA 信任
     description: Composer grpc/grpc 1.84.1 之前使用受影响内置信任库。
   - name: Google Java API 客户端内置 CA 信任
     description: google-api-client 2.9.2 之前可经 newTrustedTransport() 加载受影响内置根证书；JDK 信任库需独立更新。
+  - name: Objective-C gRPC CocoaPod 内置 CA 信任
+    description: gRPC CocoaPod（含经 gRPC-ProtoRPC 引入）低于 1.84.1 受影响；升级并重建应用。其他独立 Core／C++ CocoaPod 和 grpc-ios SPM 包不使用这一证书库。
 fixed:
   - { status: "CVE-2026-111943。Go 1.25 及更早版本不会修复" }
   - {}
@@ -59,7 +61,8 @@ fixed:
   - { product: Checkmk 2.2, status: 已停止维护；迁移到受支持的已修复分支 }
   - { status: 除本地工具外，也须更新固定的 Action 引用 }
   - status: 受影响的 Python HTTP 传输在缺少 certifi 时使用此证书包
-  - status: gRPC 内置根证书；较早维护分支可能有独立补丁
+  - product: Python grpcio／Ruby grpc
+    status: 按对应发布线选补丁；内置根证书与系统证书库分开
   - status: 适用于 GoogleNetHttpTransport.newTrustedTransport()；另须更新 JDK 及自定义证书库
   - status: 也可将服务库升级到 -2.9.2 后缀版本，或显式声明 google-api-client 2.9.2
   - status: 使用对应分支的补丁；引入 libraries-bom 26.91.0
@@ -74,6 +77,10 @@ fixed:
   - { product: "集群内 Cloud Service Mesh 1.31", status: "GCP-2026-076 修补版本" }
   - { product: "集群内 Cloud Service Mesh 1.30", status: "GCP-2026-076 修补版本" }
   - { product: "集群内 Cloud Service Mesh 1.29", status: "GCP-2026-076 修补版本；1.28 及更早版本已停止维护" }
+  - product: PHP grpc/grpc
+    status: Composer 包修复；不能把 Python／Ruby 的旧线版本套用到 PHP
+  - product: Objective-C gRPC CocoaPod
+    status: 升级并重建应用；不涵盖独立 gRPC-Core／gRPC-C++ CocoaPod 或 grpc-ios SPM 包
 timeline:
   - date: 2025年4月30日
     title: 私钥生成，同一批共 24 张中间证书
@@ -124,6 +131,9 @@ timeline:
   - date: 2026年10月28日
     title: eMudhra 说明受影响客户的迁移情况
     body: 厂商称，G3 层级下约 30,800 张证书属于一个美国客户生态，正临时使用 G1 RSA 签发路径；没有给出停止经 G1 签发 TLS 证书的确定日期。
+  - date: 2026年10月28日
+    title: Objective-C 公告明确 CocoaPod 及应用重建要求
+    body: GHSA-mm89-g5jq-mmfq 属于同一 CA 事件；gRPC CocoaPod 1.84.1 修复，GRPC_DEFAULT_SSL_ROOTS_FILE_PATH 变通不适用于该传输。
   - date: 2026年10月29日
     title: Checkmk 为内置信任库问题发布 CVE-2026-117611
     body: 当时 2.5.0p18 仍标记为尚未发布；系统 CA 更新不能替换所有内置证书包。
@@ -142,6 +152,9 @@ timeline:
   - date: 2026年11月4日
     title: Chrome 为 emSign Root CA - G1 公布独立 SCT 截止限制
     body: 最早 SCT 晚于 11 月 16 日 23:59:59 UTC 的证书将在 Chrome 153 及更高版本失去默认信任。更早 SCT 不受这项新限制影响，显式本地信任可覆盖限制。计划配合 11 月 17 日 Chrome 158 Stable 发布，日期可能调整。
+  - date: 2026年11月5日
+    title: gRPC 公告补充 Python 和 Ruby 的旧发布线补丁
+    body: Python 01:44:12 UTC、Ruby 02:01:37 UTC 修订列出 1.82.3、1.83.2 和 1.84.1；PHP Composer 公告仍只列 1.84.1，不能跨语言推定旧线版本。
   - date: 2026年10月27日前后
     title: Chrome Root Store v43 移除 emSign ECC Root CA - G3
 checklist:
@@ -178,7 +191,7 @@ checklist:
   - title: 更新 CI 中的 PyPI 发布 Action
     hint: 使用 pypa/gh-action-pypi-publish 1.14.3 或更新版本，包括替换固定到旧提交 SHA 的引用。仅更新运行器或本地 certifi 不会替换 Action 内置副本。
   - title: 更新 Python、Ruby 与 PHP 的传输依赖
-    hint: Python 使用 certifi 2026.10.19+、httplib2 0.32.1+（无 certifi 时使用其内置库）、grpcio 1.84.1+；Ruby 将 grpc 更新到 1.84.1+，或更新 google-cloud-* gems 以引入它；PHP 将 grpc/grpc 更新到 1.84.1+，或将 google/gax 更新到 1.51.2+。REST 路径还须更新系统证书库，不能假设 gRPC 会读取系统根证书。PHP PECL 扩展本身不内置根证书，但仍须更新其系统信任库。显式提供给 gRPC 的根证书集合需单独核验。
+    hint: Python 使用 certifi 2026.10.19+、httplib2 0.32.1+（无 certifi 时使用其内置库）、grpcio 1.84.1+；Ruby 将 grpc 更新到 1.84.1+，或更新 google-cloud-* gems 以引入它；PHP 将 grpc/grpc 更新到 1.84.1+，或将 google/gax 更新到 1.51.2+。REST 路径还须更新系统证书库，不能假设 gRPC 会读取系统根证书。PHP PECL 扩展本身不内置根证书，但仍须更新其系统信任库。显式提供给 gRPC 的根证书集合需单独核验。 Python grpcio 和 Ruby grpc 也可按原发布线升级到 1.82.3 或 1.83.2；PHP grpc/grpc 仍采用其公告的 1.84.1 下限。Ruby 临时方案须先修补系统 CA，再在进程启动前设置 GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=/etc/ssl/certs/ca-certificates.crt（Debian 路径）；文件缺失或不可读会退回内置证书库。PHP-FPM 默认清理环境，若采用同类方案应在池配置设置 env[GRPC_DEFAULT_SSL_ROOTS_FILE_PATH]，并确认实际生效。
   - title: 核验 Google Java 客户端及旧版 gRPC
     hint: newTrustedTransport() 用户升级 google-api-client 至 2.9.2+ 或 libraries-bom 至 26.91.0+；单独声明服务库时，使用 -2.9.2 或更新后缀，也可显式声明客户端依赖。Spring 按对应分支使用 8.3.1、7.5.2、6.5.12、3.9.19 或更新版本。2.9.0 之前的 Apache newTrustedTransport() 也使用内置根证书；独立 google-api-client-apache-v5 构件的受影响 2.7.0–2.8.1 应升级至 2.9.0+。直接调用传输构造器使用 JDK 信任库。JDK 及 Windows 根证书仍须独立更新。已弃用的 Node grpc npm 包迁移至 @grpc/grpc-js，.NET Grpc.Core 迁移至 Grpc.Net.Client。
   - title: 重建 C++、Rust、Go 与 Swift 的实际信任路径
@@ -197,6 +210,8 @@ checklist:
     hint: 检查后端证书签发者。对 eMudhra 签发的后端证书，先通过可信 CA 重新签发并替换，再删除自定义库中的受影响别名。在控制台进入 Apigee > Management > Environments > TLS Keystores，核查别名并删除受影响证书，将 SSLInfo 指向经核实的 TrustStore。ref:// 引用无需重新部署代理即可生效，直接名称引用则须重新部署代理。测试出站 TLS/mTLS 及依赖 JWKS 的流程，不要通过关闭验证恢复连接。
   - title: 规划替换新签发的 G1 根 TLS 证书
     hint: 检查实际服务证书链及最早 Signed Certificate Timestamp，不要仅看 NotBefore 或到期日。针对 emSign Root CA - G1，而非已移除的 ECC G3，Chrome 153 及更高版本将在最早 SCT 晚于 2026 年 11 月 16 日 23:59:59 UTC 时拒绝默认信任。在新签发或续期越过截止点前协调迁移到其他受信任 CA 层级，并在 Chrome 测试证书链。较早 SCT 只是不受本项变更影响，不代表所有信任检查均通过。核查 Windows GPO 等企业或用户显式信任，这会覆盖 SCT 限制；不要将添加覆盖作为常规缓解。跟进关联 Root Program 公告的实施时间修订。
+  - title: 重建使用 Objective-C gRPC CocoaPod 的 Apple 应用
+    hint: 检查 Podfile.lock 中的 gRPC，包括 gRPC-ProtoRPC 的传递依赖，升至 1.84.1 或更新版本并重建、重新分发应用。不能只更新 iOS／macOS。公告排除独立 gRPC-Core、gRPC-C++ CocoaPod 及 grpc-ios Swift Package Manager 包；其他产品的内置证书库需分别核查。GRPC_DEFAULT_SSL_ROOTS_FILE_PATH 对这里不适用。
 sources:
   - says: 私钥是小于 256 的整数；报告时间、OneCRL 条目，以及 10月18日的吊销
   - name: eMudhra 声明
@@ -272,6 +287,8 @@ sources:
     says: 11 月 3 日发布：托管更新仍在进行、Hybrid 镜像独立信任库、OPDK 系统/FIPS/自定义库步骤及后端证书与重新部署检查；尚未指定 Hybrid 修补版本。
   - name: Chrome Root Program 11 月 4 日 G1 信任限制原始通知
     says: 区分 G1 与已移除的 ECC G3，给出最早 SCT 截止点、Chrome 版本、拟于 11 月 17 日实施及显式本地信任例外。
+  - name: gRPC Objective-C 原始安全公告
+    says: GHSA-mm89-g5jq-mmfq 于 10 月 28 日发布；限定 gRPC CocoaPod，列出 1.84.1、重建要求、未受影响包及不适用的环境变量变通。
 ---
 CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eMudhra 有八张中间证书，P-384 私钥都是**小于 256 的整数**。据研究人员 Scott Helme 说，其中一个就是数字 4。谁要是注意到了，就能给任意域名签证书，而所有信任这条链的客户端都会照单全收。
 
@@ -323,3 +340,5 @@ CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eM
 **11 月 4 日跟进 11 月 3 日发布的 GCP-2026-077：** Apigee 出站 TLS 仍可能通过默认或客户自定义信任库接受被攻破的证书链。攻击者需要网络拦截位置及被信任的伪造链；公告不是 Apigee 遭入侵或已被利用的证据。X 和 Edge SaaS 默认库仍在滚动更新，各产品客户均须核查自定义 TrustStore。Hybrid 须在修补镜像发布后更新容器，仅更新宿主机 CA 不够；OPDK 须处置系统及 JVM 信任并重启服务。移除信任前先安排后端证书替换，避免中断合法目标连接。上列运行时、SDK、网格及证书替换措施仍须完成。
 
 **11 月 4 日 Chrome 策略：** Root Program 对 **emSign Root CA - G1** 增加独立限制。最早 SCT 晚于 **2026 年 11 月 16 日 23:59:59 UTC** 的 TLS 服务器证书，将在 Chrome 153 及更高版本失去默认信任。截止点或之前的证书不受本项变更影响，这不是对其他信任检查的全面保证。计划配合 11 月 17 日 Chrome 158 Stable 实施，项目可能调整日期或提前收紧限制。平台、用户或企业显式信任可覆盖这些 SCT 限制。G1 策略决定不能证明另有密钥被盗、新伪造证书或实际拦截，也不取代现有 ECC G3 移除及运行时、SDK 更新。
+
+**11 月 5 日 gRPC 补充：** Python 和 Ruby 公告现明确 1.82.3／1.83.2／1.84.1 三条补丁路径；先前只写 1.84.1 的描述应按发布线理解，PHP Composer 公告仍仅列 1.84.1。另补入 10 月 28 日的 Objective-C 公告，涵盖 gRPC CocoaPod 及通过 gRPC-ProtoRPC 引入的副本，须升级并重建、分发应用；它明确排除独立 Core／C++ CocoaPod 和 grpc-ios SPM 包，且不支持上述环境变量变通。没有新增 CA 失陷或在野攻击证据。
