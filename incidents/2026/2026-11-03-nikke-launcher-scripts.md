@@ -1,5 +1,5 @@
 ---
-title: NIKKE PC launcher scripts linked to remote-access malware; client fix does not clean infected PCs
+title: NIKKE confirms PC launcher tampering; client fix does not clean infected PCs
 level: 3
 date: '2026-11-03'
 updated: '2026-11-05'
@@ -130,3 +130,5 @@ If a run ends with `startup failed: EIO: invalid UTF-8 in string` immediately af
 **November 4 official follow-up:** Level Infinite now confirms Windows launcher tampering and asks users who launched since September 27 15:41 UTC+9 (06:41 UTC) to check. It says mobile was unaffected, superseding our earlier limitation that the research did not cover mobile. Its retrospective dates malicious distribution to October 30 03:52 UTC+9 (October 29 18:52 UTC); researcher-reported logs begin October 23. Both accounts are retained, so the later date is not an exclusion rule. Domain hijacking and the CDN/network entry route remain part of the vendor’s investigation rather than an independently established complete root cause.
 
 The vendor dates replacement of three scripts to November 3 17:04–17:23 UTC and the remaining script’s CDN refresh to November 4 03:09 UTC, with gradual rollout afterward. It announced official-client ACE scanning/removal from November 4 23:00 UTC, requiring consent to delete associated logs, DLLs and registry entries: preserve evidence first. This feature was not run here. Neither its claim that remaining DLLs cannot execute nor a missing pop-up proves a fully clean host; arbitrary commands could have installed other persistence. The manual also calls for full/Defender Offline scans, password changes, key/token rotation and support reports for suspected losses. No confirmed loss total or completed financial compensation is published in these notices.
+
+The vendor also plans stronger monitoring, integrity verification for external launcher resources and a review of feature permissions. These are announced preventive measures, not independently verified completed controls or evidence that existing infections were removed.
