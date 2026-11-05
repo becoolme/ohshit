@@ -2,6 +2,7 @@
 title: Barracuda ESG authentication bypass can combine with a root command-injection flaw
 level: 3
 date: '2026-11-02'
+updated: '2026-11-05'
 tags:
 - edge device
 - auth bypass
@@ -50,6 +51,9 @@ timeline:
   body: Date in Mandiant’s disclosure timeline.
 - date: Nov 2, 2026
   title: Barracuda and Mandiant publish both advisories
+- date: Nov 5, 19:30 UTC
+  title: Barracuda corrects the ESG authentication requirement
+  body: The vendor now explicitly says CVE-2026-116606 requires access to the administrative UI, not authentication. The timezone flaw still requires administrator access; product and patch scope are unchanged.
 checklist:
 - title: Remove public access to management interfaces
   hint: Limit administration to trusted internal networks with network access controls. Review firewall/NAT exposure for each appliance; normal mail or application traffic is a separate service.
@@ -63,7 +67,7 @@ sources:
 - name: Barracuda product advisory
   url: https://trust.barracuda.com/security/pre-authentication-authorization-bypass-command-injection
   primary: true
-  says: November 2 publication; six products, patch IDs and management-access guidance. Its authentication labels conflict with the pre-authentication description.
+  says: November 2 publication; six products, patch IDs and management-access guidance. The explicit November 5 14:30 EST correction resolves the earlier authentication-label conflict for CVE-2026-116606.
 - name: Mandiant MNDT-2026-0042
   url: https://raw.githubusercontent.com/mandiant/Vulnerability-Disclosures/master/2026/MNDT-2026-0042.md
   primary: true
@@ -78,6 +82,6 @@ Barracuda says the two flaws can be combined to obtain root access when an attac
 
 Mandiant identifies the command-injection exposure as ESG through 9.4.0.27, ADC through 6.4.0, WAF through 11.0.1, WSG through 16.1.100.100, BMA through 5.5.4.0 and WCC through 2.2.1. The timezone flaw by itself requires administrator authentication. The ESG import bypass has a separate affected range: before 9.4.0.030.
 
-The vendor page labels both vulnerabilities “Authentication Required: Yes, administrative access,” despite calling the first pre-authentication and describing a combined authorization bypass. Mandiant explicitly says the ESG import attacker is unauthenticated. Treat reachability of the management service as exposure; an existing administrator login is not a dependable protection against the ESG chain.
+The vendor originally labelled both vulnerabilities as requiring administrator authentication, contradicting its pre-authentication description and Mandiant’s ESG finding. At **19:30 UTC on November 5** (14:30 EST), Barracuda explicitly corrected CVE-2026-116606 to require **administrative-UI reachability, not authentication**. This resolves the label conflict, rather than identifying another flaw or attack. The timezone issue still requires administrator access. Treat reachability of the management service as exposure; an existing administrator login is not a dependable protection against the ESG chain.
 
 The patch identifiers above are copied from Barracuda, including BNADC-16586 for both ADC and WAF. The firmware range for one CVE does not establish a safe release for every product or replace patch verification. No confirmed attacks, victim count or public exploit are established by these disclosures. This is rated L3 because it affects mainstream perimeter and messaging appliances.
