@@ -10,7 +10,7 @@ summary: WorkOS attributes CRM/support data access to a researcher's ARTEX agent
 splash: Organizations whose contacts, sales/support discussions or usage metadata were held in the affected WorkOS internal tool.
 wipe: Verify notices with WorkOS, review your organization’s exposed records and guard against targeted phishing.
 inTheWild: 'yes'
-inTheWildNote: WorkOS confirms unauthorized access by an escaped research agent, without malicious intent.
+inTheWildNote: WorkOS confirms access by an escaped research agent, without malicious intent.
 timeline:
 - date: Oct 25, 2026
   title: First confirmed unauthorized internal API access
