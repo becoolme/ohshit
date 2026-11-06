@@ -14,28 +14,28 @@ inTheWild: 'yes'
 inTheWildNote: Sekoia documents deployed exploit delivery; no confirmed visitor-infection total is given.
 cves:
 - id: CVE-2025-43529
-  name: Exploit-chain component reported by Sekoia
+  name: Class A/B WebKit entry
   description: Known, previously patched flaw used in a recovered mobile exploit chain; not a newly disclosed zero-day.
 - id: CVE-2024-27834
-  name: Exploit-chain component reported by Sekoia
+  name: Class A pointer-authentication bypass
   description: Known, previously patched flaw used in a recovered mobile exploit chain; not a newly disclosed zero-day.
 - id: CVE-2026-20700
-  name: Exploit-chain component reported by Sekoia
+  name: Class B pointer-authentication bypass
   description: Known, previously patched flaw used in a recovered mobile exploit chain; not a newly disclosed zero-day.
 - id: CVE-2025-14174
-  name: Exploit-chain component reported by Sekoia
+  name: Class B first sandbox-escape step
   description: Known, previously patched flaw used in a recovered mobile exploit chain; not a newly disclosed zero-day.
 - id: CVE-2025-43510
-  name: Exploit-chain component reported by Sekoia
+  name: Class B second sandbox-escape step
   description: Known, previously patched flaw used in a recovered mobile exploit chain; not a newly disclosed zero-day.
 - id: CVE-2025-43520
-  name: Exploit-chain component reported by Sekoia
+  name: Class B kernel privilege escalation
   description: Known, previously patched flaw used in a recovered mobile exploit chain; not a newly disclosed zero-day.
 - id: CVE-2026-3910
-  name: Exploit-chain component reported by Sekoia
+  name: Class C Chrome entry
   description: Known, previously patched flaw used in a recovered mobile exploit chain; not a newly disclosed zero-day.
 - id: CVE-2025-27038
-  name: Exploit-chain component reported by Sekoia
+  name: Class C Android escalation
   description: Known, previously patched flaw used in a recovered mobile exploit chain; not a newly disclosed zero-day.
 timeline:
 - date: Aug 27, 2026
