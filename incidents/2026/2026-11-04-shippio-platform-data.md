@@ -2,6 +2,7 @@
 title: Shippio confirms customer-data access, document downloads and unauthorized API credentials
 level: 4
 date: '2026-11-04'
+updated: 2026-11-06
 tags: [Shippio, SaaS, credentials]
 summary: Shippio confirms access to all customers’ company/contact records and about 1,300 document downloads. Attackers used credentials stored in an internal tool, created unauthorized accounts/API credentials across about 1,100 teams and uploaded malicious files. Service remains paused; users must verify exports and renew API access after reopening.
 splash: Shippio Platform customers and invited users; shipment, document and internal-file exposure varies by category.
@@ -20,9 +21,18 @@ timeline:
 - date: Nov 2, 01:40 UTC
   title: Platform enters maintenance mode after detection
   body: The vendor gives 10:40 Japan time; it blocks known routes, changes credentials and investigates restoration. This service pause does not establish that all unauthorized access ended at that time.
+- date: Nov 2, 02:40 UTC
+  title: Entry-point business tool is stopped
+  body: The November6 revision specifies approximately11:40 Japan time, one hour after the platform pause.
+- date: Nov 2, 08:38 UTC
+  title: Related unauthorized platform access is fully blocked
+  body: Shippio says it finished identifying routes including misuse of acquired credentials and blocked related access at17:38 Japan time.
 - date: Nov 4, 2026
   title: Public notice confirms exposure and response steps
   body: Findings are stated as of November 3 18:00, without repeating an explicit timezone for that cutoff. The notice confirms record access, about 1,300 downloads and account/API-credential changes affecting about 1,100 teams. Reopening remains undated.
+- date: Nov 6, 2026
+  title: Vendor clarifies the containment timeline
+  body: The revised original separates platform maintenance, tool shutdown and final access blocking; it does not announce reopening or revise exposure totals.
 checklist:
 - title: Confirm your organization’s exposure through the established support channel
   hint: Ask your account administrator to review notices sent to accounts held as of October 30, including invited users. Contact support@shippio.zohodesk.jp through the vendor’s published notice about your affected shipments, downloaded documents and internal shared-file exposure. About 1,300 documents is not a count of affected people; about 1,100 teams describes unauthorized account/API-credential creation.
@@ -36,7 +46,7 @@ sources:
 - name: Shippio original November 4 incident notice
   url: https://www.shippio.io/news/20261104/
   primary: true
-  says: Full Japanese original read through a normal public HTTP request after the web reader failed. Confirms category-specific exposure, unauthorized accounts/API credentials, malicious uploads, containment and customer recovery instructions; reopening and detailed root cause remain pending.
+  says: Full Japanese original read through a normal public HTTP request after the web reader failed. Confirms category-specific exposure, unauthorized accounts/API credentials, malicious uploads, containment and customer recovery instructions; November6 revision adds tool-shutdown and final-blocking times; reopening and detailed root cause remain pending.
 ---
 
 Shippio says an internal business tool was accessed from October 30 and stored credentials were used to reach Shippio Platform. Its public November 4 notice describes repeated platform access between approximately November 1 19:30 and November 2 17:00 Japan time. Detection and the service pause occurred on November 2; that pause is not evidence that the entire intrusion window ended immediately. All known routes are now blocked, according to the company. It has not named the internal tool, a CVE or a fixed customer software version; no connection to other recent SaaS incidents is established.
@@ -46,3 +56,5 @@ Company names, team names, phone numbers and addresses were viewed for **all cus
 The company confirms unauthorized user accounts and API credentials affecting approximately **1,100 contracted teams**, settings writes and malicious shipment-file uploads. It reports no evidence customers downloaded those malicious files and no confirmed rewriting of shipment business data. It removed unauthorized accounts/credentials and malicious files, restored changed settings, disabled the internal tool and changed or invalidated related credentials. It reset all login states; further environment/data-access validation and regulatory reporting/consultation remain in progress. No misuse of leaked information has been confirmed, which is not proof none occurred.
 
 L4 reflects confirmed broad customer-data access and attacker-controlled accounts/API credentials in a shared logistics platform. The company remains in maintenance mode without a reopening deadline. Customer notices began November 2; the public article is dated November 4. No financial-loss figure or complete recovery is established.
+
+**November6 timeline clarification:** The revised original dates the entry-point business tool shutdown to approximately **November2 11:40 Japan time (02:40 UTC)** and completed blocking of related unauthorized platform access to **17:38 Japan time (08:38 UTC)**. Between those actions, the team investigated routes involving credentials obtained through the tool. The platform had entered maintenance at10:40 Japan time (01:40 UTC); neither maintenance nor stopping the tool alone established complete containment. The vendor has not changed the confirmed exposure categories or announced a reopening date.
