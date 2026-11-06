@@ -33,7 +33,7 @@ checklist:
 - title: 从可信渠道安装已核实的 Windows 版本
   hint: 检查已安装的搜狗输入法版本，从可信网络或设备通过已知搜狗官网获取官方 16.10 或更高版本。厂商日志确认 16.10，ESET 称受影响 HTTP 请求已改用 HTTPS 并固定证书。没有核实公开的四段式构建号下限或独立临时变通措施。更新成功不能视为已清除恶意软件。
 - title: 隔离疑似主机，保留组件加载证据
-  hint: 清理前保留 SGTool.exe 进程与网络记录、DNS 设置及响应、下载配置和文件。检查 \SogouInput\Components\SogouComMgr.exe、\Components\libcef.dll，以及 \Components\biz_center\<version_number>\ 下的载荷位置，包括 biz_helper.exe。攻击将有合法签名的 Adobe helper 改名为 SogouComMgr.exe 侧载 DLL，签名或熟悉文件名不能证明安全。检查 HKCU\Software\Microsoft\IME\<HWID>\pluginHash 中的压缩插件。按自身事件响应流程确定持久化范围，必要时从可信介质重建，并从干净设备更换暴露凭据。这些是防御步骤，不是厂商提供的清理工具。
+  hint: 清理前保留 SGTool.exe 进程与网络记录、DNS 设置及响应、下载配置和文件。先找到实际 SogouInput 安装目录，检查其下的 Components\SogouComMgr.exe、Components\libcef.dll 及 Components\biz_center\<version_number>\ 载荷位置，包括 biz_helper.exe。这些均为相对安装目录的路径。攻击将有合法签名的 Adobe helper 改名为 SogouComMgr.exe 侧载 DLL，签名或熟悉文件名不能证明安全。检查 HKCU\Software\Microsoft\IME\<HWID>\pluginHash 中的压缩插件。按自身事件响应流程确定持久化范围，必要时从可信介质重建，并从干净设备更换暴露凭据。这些是防御步骤，不是厂商提供的清理工具。
 - title: 结合上下文排查完整网络指标
   hint: ESET 列出五个域名和四个 IP：blog.wangmengfun.top；update.mssproxy.net；img.fusfun.top；dev.soft-png-cdn.com；sogou-cdn.com；47.86.15.162；47.236.254.159；47.237.122.175；47.239.250.102。结合 DNS／代理／终端日志，关联 SGTool.exe --appid=scdreg -update 及 HTTP config.pinyin.sogou.com/api/brandScd/getBrandScd.php 请求。配置主机是搜狗合法基础设施，不是攻击者域名。核查终端、路由器 DNS 控制及上游解析器，ESET 尚未确定劫持发生的位置。单个匹配不能证明入侵，未匹配也不能排除暴露主机受影响。
 - title: 按原始哈希文件比对样本
