@@ -6,7 +6,7 @@ tags:
 - M1
 - Data breach
 - Singapore
-summary: M1 customer notices confirm an October 30 breach exposing names, NRIC/FIN details, birth dates, phone numbers, emails and addresses. The company says payment, banking and account access were unaffected. Customer count and entry mechanism remain undisclosed; notifications and investigation continue.
+summary: M1 customer notices confirm an October 30 breach exposing names, NRIC/FIN details, birth dates, phone numbers, emails and addresses. The company says payment-card data, banking information and account access were unaffected. Customer count and entry mechanism remain undisclosed; notifications and investigation continue.
 splash: M1 customers whose identity and contact details were involved; individual notices define exposure, not every subscriber.
 wipe: Verify your notice through M1, guard against targeted impersonation and check unexpected account or banking activity.
 inTheWild: 'yes'
@@ -35,4 +35,4 @@ sources:
   says: Reports containment, unaffected operations, planned email/letter notices and a PDPC investigation.
 ---
 
-L4 reflects confirmed personal-data exposure at a telecom provider, with scale unknown. The official release was inaccessible; the independently inspected notices support publication under a sourcing exception. M1’s exclusions remain company assessments. No CVE, software patch, compensation scheme or blanket password-reset order is established. This is separate from the Doctor Anywhere disclosure on the same day.
+L4 reflects confirmed personal-data exposure at a telecom provider, with scale unknown. The official release was inaccessible; this article relies on the two outlets’ independently inspected notices. M1’s exclusions remain company assessments. No CVE, software patch, compensation scheme or blanket password-reset order is established. This is separate from the Doctor Anywhere disclosure on the same day.
