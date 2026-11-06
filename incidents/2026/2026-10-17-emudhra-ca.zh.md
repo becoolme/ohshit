@@ -81,6 +81,8 @@ fixed:
     status: Composer 包修复；不能把 Python／Ruby 的旧线版本套用到 PHP
   - product: Objective-C gRPC CocoaPod
     status: 升级并重建应用；不涵盖独立 gRPC-Core／gRPC-C++ CocoaPod 或 grpc-ios SPM 包
+  - product: SonicOS 7.3.4 固件
+    status: 移除 eMudhra 可信链，须满足平台及迁移要求
 timeline:
   - date: 2025年4月30日
     title: 私钥生成，同一批共 24 张中间证书
@@ -163,6 +165,9 @@ timeline:
     body: 1.78.2 和 1.80.1 发布记录包含根证书修复。Python 和 Ruby 公告现将它们与 1.82.3、1.83.2、1.84.1 一并列出。PHP Composer 保留独立的 1.84.1 下限。
   - date: 2026年10月27日前后
     title: Chrome Root Store v43 移除 emSign ECC Root CA - G3
+  - date: 2026年11月前后
+    title: SonicWall 在 SonicOS 7.3.4-7015 移除该证书链
+    body: 11 月发布说明将 GEN7-59578 列为从可信证书库移除 eMudhra 链，未注明准确发布日期。
 checklist:
   - title: 更新浏览器和操作系统
     hint: Chrome、Firefox、Safari、Edge、Android 和 Windows 都已发布拦截
@@ -220,6 +225,8 @@ checklist:
     hint: 检查 Podfile.lock 中的 gRPC，包括 gRPC-ProtoRPC 的传递依赖，升至 1.84.1 或更新版本并重建、重新分发应用。不能只更新 iOS／macOS。公告排除独立 gRPC-Core、gRPC-C++ CocoaPod 及 grpc-ios Swift Package Manager 包；其他产品的内置证书库需分别核查。GRPC_DEFAULT_SSL_ROOTS_FILE_PATH 对这里不适用。
   - title: 向颁发机构核实更广的 G1 替换计划
     hint: eMudhra 11 月 5 日 Update 8 报告 Apple 将于 11 月 30 日移除所有 G1 链证书的信任，不同于其所述 Chrome 和 Mozilla 于 11 月 16 日实施的 SCT 规则。通过既有支持在适用期限前获取并测试替代链，包括面向 Apple 的既有证书。按颁发机构说法，美国迁移仍在进行。核实各浏览器根计划，保留上方 Chrome 精确 UTC 规则，不绕过验证。
+  - title: 按厂商升级说明更新受影响 SonicOS 信任库
+    hint: SonicOS 7.3.4-7015 移除 eMudhra 链（GEN7-59578）。核实平台支持及升级前提，版本不支持降级。NSv 从 7.0.1 升至 7.1 或更高版本需要全新安装；管理 7.3.4 需要 NSM On-Premises 4.4。若 GeoIP 曾固定为 204.212.170.21，改用默认解析或新 GeoIP 地址 204.212.170.31；不要将 Botnet Remote Server Address 设为后者。另行检查自定义证书及依赖连接。
 sources:
   - says: 私钥是小于 256 的整数；报告时间、OneCRL 条目，以及 10月18日的吊销
   - name: eMudhra 声明
@@ -305,6 +312,8 @@ sources:
     says: 11 月 5 日发布，包含仓库根证书的安全更新。
   - name: gRPC 1.80.1 发布记录
     says: 11 月 5 日发布，包含仓库根证书的安全更新。
+  - name: SonicWall SonicOS 7.3.4-7015 发布说明
+    says: 2026 年 11 月固件移除 eMudhra 可信链，并列出平台、迁移和 GeoIP 升级要求。
 ---
 CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eMudhra 有八张中间证书，P-384 私钥都是**小于 256 的整数**。据研究人员 Scott Helme 说，其中一个就是数字 4。谁要是注意到了，就能给任意域名签证书，而所有信任这条链的客户端都会照单全收。
 
@@ -362,3 +371,5 @@ CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eM
 **11 月 5 日颁发机构更新：** eMudhra 报告，美国以外客户已迁往其他供应商，美国客户仍在迁移。其报告 Chrome／Mozilla 的 SCT 限制日期为 11 月 16 日，Apple 将于 11 月 30 日移除全部 G1 证书信任，包括较早签发的证书。这是颁发机构对时间表的说明；独立核阅的 Chrome 精确规则仍见上文。不能据此认定美国已迁移完成或较早证书仍普遍受信任。
 
 **11 月 6 日旧线覆盖修正：** 11 月 5 日发布的 1.78.2 和 1.80.1 也修复了内置根证书库。Python 和 Ruby 公告现列出五条补丁路径。选择安装发布线对应的补丁，或迁移至 1.84.1 及更高版本；1.81.x 须使用 1.82.3 路径。这是对先前三版本指引的扩充，不改变 PHP Composer 或 Objective-C 的最低版本。仍须核验显式、自定义根证书，并重建或重启受影响应用。这不代表又发生 CA 失陷或新增在野利用。
+
+**SonicOS 信任库跟进：** 11 月发布说明确认 7.3.4-7015 移除 eMudhra 链。这是具体产品的处置，不是新的 CA 事件，也不能证明所有 SonicWall 版本均已移除该链。来源只给出月份，不推断准确发布日期。原有浏览器、运行时期限及证书更换要求仍适用。
