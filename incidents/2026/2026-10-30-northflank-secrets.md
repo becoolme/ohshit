@@ -2,9 +2,9 @@
 title: Northflank reports control-plane secret exposure and requires key rotation
 level: 4
 date: 2026-10-30
-updated: 2026-11-02
+updated: 2026-11-06
 tags: [Northflank, cloud, credentials]
-summary: Northflank says evidence points to control-plane secrets, with no sign of workload or workload-data access. It reports unauthorized AI-key use and requires all integration and project secrets to be rotated. Forward-deployed and dedicated control planes are reportedly unaffected; independent forensics remain ongoing.
+summary: Northflank says the first known decryption of control-plane secrets was on October 30, 02:39–03:08 UTC, with no sign of workload-data access. It reports AI-key abuse; rotate all integration and project secrets; use available provider IP/budget limits. Forward-deployed and dedicated control planes are reportedly unaffected; independent forensics continue.
 splash: Northflank control-plane secrets; the vendor excludes forward-deployed and dedicated control planes
 wipe: Disable or rotate all exposed keys, update dependent workloads and disable public access to addons where enabled
 inTheWild: yes
@@ -12,6 +12,9 @@ inTheWildNote: Northflank reports multiple users confirming AI-key use; total sc
 cves: []
 fixed: []
 timeline:
+  - date: Oct 30, 02:39–03:08 UTC
+    title: First known secret decryption, according to the later investigation
+    body: Northflank disclosed this interval on November 6; it is not a confirmed start or end of the full exposure window.
   - date: Oct 30, 11:43 UTC
     title: Wiz alert prompts investigation
   - date: Oct 30, 13:40 UTC
@@ -33,6 +36,9 @@ timeline:
   - date: Nov 2, 11:09 UTC
     title: Control-plane scope and ongoing independent forensics disclosed
     body: Northflank believes the vector was contained within an hour of the first alert and reports no sign of subsequent attacker presence or workload-data access. It excludes forward-deployed and dedicated control planes, reiterates rotation of all integration and project secrets, and says customers have reported AI-key abuse.
+  - date: Nov 6, 10:09 UTC
+    title: Decryption timing, response sequence and provider controls clarified
+    body: Northflank reports patching the exploit within 60 minutes of notification and notifying customers within two hours. It says workloads stayed online, attributes intermittent degradation to simultaneous customer redeployments and its own key rotation and hardening, and reports working with providers to revoke credentials where possible. Investigation and independent forensics continue; users still need to rotate secrets, inspect provider logs, and enable available IP restrictions and budget limits.
 checklist:
   - title: Replace credentials at their issuing services
     hint: From a trusted environment, disable or rotate keys stored in workloads, secret groups and global secrets; update dependent applications. Include all integration and project secrets, even without suspicious activity. Prioritize AI-provider keys, cloud and payment credentials, private keys, database credentials and other service credentials. Editing an environment-variable value alone does not revoke the old key. Review provider usage and billing for abuse.
@@ -51,7 +57,7 @@ checklist:
   - title: Check disconnected BYOC clusters with support
     hint: Northflank separately reports patching CVE-2026-98432 across its fleet, including BYOC clusters with an active integration. If your BYOC cluster is no longer connected, contact support@northflank.com. This patch is not a published explanation of the breach or a replacement for secret rotation.
   - title: Restrict exposed addons
-    hint: Disable addon public access where enabled, as Northflank requests; follow the official status notice for recovery updates.
+    hint: Disable addon public access where enabled, as Northflank requests. At each issuing provider, enable available IP restrictions and enforceable budget limits for replacement credentials; these limit exposure but do not replace revoking the old keys. Follow the official status notice for recovery updates.
   - title: Review available audit and provider logs
     hint: Northflank has enabled audit logs for all tiers. Review those logs alongside AI-provider usage and billing; contact your AI provider directly about unexpected usage or spending and report suspicious usage to Northflank support (support@northflank.com or your existing direct channel). Log availability does not establish complete historical coverage or prove that an account is unaffected.
 sources:
@@ -71,4 +77,6 @@ sources:
 
 The rotation precaution does not prove every secret was stolen. Northflank says evidence focuses on control-plane secrets, with no sign that workloads or their data were accessed; it says forward-deployed and dedicated control planes were unaffected. Confirm your deployment type with support if uncertain. Its belief that the vector was contained within an hour of the first alert is not a guarantee that stolen keys can no longer be abused. Independent forensic review is ongoing, with a root-cause report planned after findings are confirmed; the entry point, attacker identity, full exposure window and victim count remain unpublished.
 
-The fleet patch for CVE-2026-98432 is described separately, not as the cause or a credential-recovery fix. Northflank also reports intermittent degradation during its own key rotation and hardening. Rotating only database credentials leaves other stored keys in scope.
+On November 6, Northflank placed the first known secret decryption between 02:39 and 03:08 UTC on October 30, hours before the 11:43 UTC alert. It reports patching within 60 minutes of notification and notifying customers within two hours. Those are vendor response claims, not confirmation of a complete exposure window or of every credential being revoked. It says workloads remained online throughout; intermittent platform degradation accompanied simultaneous customer redeployments and its own key rotation and hardening.
+
+The fleet patch for CVE-2026-98432 is described separately, not as the cause or a credential-recovery fix. Provider-assisted revocation was possible only for some credentials; rotate all integration and project secrets yourself. Rotating only database credentials leaves other stored keys in scope.
