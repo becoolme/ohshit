@@ -9,7 +9,7 @@ tags:
 summary: DOCOMO’s third notice lists leaked identity-document numbers, subscription and tariff details among up to about 300,000 records; some also include bank-account, representative, employer or parenting-program information. Online Shop and My docomo procedures remain suspended; final scope, entry route and reopening remain unknown.
 splash: Customers with information held by DOCOMO Online Shop or My docomo; exact affected records and fields are still being investigated
 wipe: Verify your notice through established DOCOMO support, reject impersonation messages, and check official maintenance updates before retrying procedures.
-inTheWild: true
+inTheWild: 'yes'
 inTheWildNote: DOCOMO confirms unauthorized access and customer-information leakage.
 timeline:
 - date: Nov 4, 2026
