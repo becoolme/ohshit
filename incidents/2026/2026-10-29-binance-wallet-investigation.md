@@ -130,12 +130,12 @@ timeline:
   - date: Nov 5, 2026
     title: SEAL estimates an extended intrusion window and distinguishes TraderTraitor
     body: The research estimates roughly eight weeks of Binance access before the theft and publishes four front-company domains from broader TraderTraitor campaigns. This is a research estimate, not a precise vendor-confirmed first-access date or proof that each domain was used against Binance.
-  - date: Nov 6, 04:00 UTC
-    title: Update 9 schedules a further withdrawal expansion
-    body: More asset/network pairs across nine named networks reopen progressively after checks, not all at once. Deposits stay open; live availability remains pair-specific.
   - date: Nov 5, 2026
     title: Global Ledger publishes a November 4 holdings and freeze snapshot
     body: Its research estimates $5.99B still at linked addresses, including $2.82B frozen and $3.16B freely held. The selected tracing sample is $1.28B of outflows, not the entire theft; these are unverified research estimates, not returned funds.
+  - date: Nov 6, 04:00 UTC
+    title: Update 9 schedules a further withdrawal expansion
+    body: More asset/network pairs across nine named networks reopen progressively after checks, not all at once. Deposits stay open; live availability remains pair-specific.
   - date: Nov 1, 06:00–09:00 UTC (scheduled)
     title: First withdrawal phase is planned
 
