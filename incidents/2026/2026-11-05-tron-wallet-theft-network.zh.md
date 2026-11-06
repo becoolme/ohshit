@@ -17,7 +17,7 @@ checklist:
 - title: 保留并报告盗币记录
   hint: 保留钱包地址、交易哈希、时间、金额和设备证据。通过 Tether 及接收资金交易所的既有渠道尽快报告；不保证冻结或追回。陌生 TRX 充值后迅速转出值得调查，但也存在粉尘／地址投毒及合法交易所归集。不要向陌生追回联系人提供助记词或付款。
 - title: 使用完整且标明角色的地址记录
-  hint: Fee wallet TUYFAa8hHjeEW6bPqBJ4v3RjQR2uKM1Svk; matched-case collector TNJPXRWEptdSzbC1pYGp8suyTao4qddJe6; Ethereum hub 0x007147f598748749486041f5798b0b1379e13097. 报告地址记录列出 17
+  hint: 手续费钱包 TUYFAa8hHjeEW6bPqBJ4v3RjQR2uKM1Svk；匹配案例的归集地址 TNJPXRWEptdSzbC1pYGp8suyTao4qddJe6；以太坊中枢 0x007147f598748749486041f5798b0b1379e13097。 报告地址记录列出 17
     个完整地址和一个交易哈希；按各自角色使用全部记录，不要只查上述起点。其中有合法交易所、桥及铸币合约，也有归属未知的终点，不能一概当作攻击者钱包或封锁清单。保留交易证据并核实标签；匹配本身不证明归属、入侵或同一攻击者。
 sources:
 - name: Bitquery 原始 TRON 及跨链调查
