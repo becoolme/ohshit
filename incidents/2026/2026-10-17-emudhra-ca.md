@@ -134,6 +134,18 @@ fixed:
   - product: Rundeck / Runbook Automation / Runner official Docker images
     version: 6.3.0
     status: Pull updated images and recreate containers; Rundeck host installs require separate OS and Java trust-store updates
+  - product: New Relic Synthetics job manager
+    version: v642
+    status: Pull and redeploy all Private-location images, then restart; not automatically updated
+  - product: New Relic Synthetics Node API runtime
+    version: 1.2.296
+    status: Pull and redeploy all Private-location images, then restart; not automatically updated
+  - product: New Relic Synthetics Node browser runtime
+    version: 3.0.259
+    status: Pull and redeploy all Private-location images, then restart; not automatically updated
+  - product: New Relic Synthetics ping runtime
+    version: 1.87.0
+    status: Pull and redeploy all Private-location images, then restart; not automatically updated
 timeline:
   - date: Apr 30, 2025
     title: The keys are generated, in a batch of 24 intermediates
@@ -217,6 +229,9 @@ timeline:
   - date: Nov 5, 2026
     title: gRPC releases root-store fixes for two more older lines
     body: Releases 1.78.2 and 1.80.1 include root-store fixes. The Python and Ruby advisories now list these alongside 1.82.3, 1.83.2 and 1.84.1. PHP Composer retains its separate 1.84.1 minimum.
+  - date: Nov 6, 2026
+    title: New Relic requires manual Synthetics image updates and legacy-runtime migration
+    body: NR26-12 lists four Private-location image minimums and restart for every runtime; latest Public locations are patched, but Node16.10 monitors on either location type must migrate to vendor runtime22.23.0 before November18EOL.
   - date: ~Oct 27, 2026
     title: Chrome Root Store v43 removes the emSign ECC Root CA - G3
   - date: ~Nov 2026
@@ -283,6 +298,8 @@ checklist:
     hint: SonicOS 7.3.4-7015 removes the eMudhra chain (GEN7-59578). Verify platform support and upgrade prerequisites; downgrade is unsupported. NSv upgrading from 7.0.1 to 7.1 or later requires a fresh installation, and NSM On-Premises 4.4 is required for 7.3.4 management; GMS cannot manage SonicOS 7.1.x or later. If GeoIP was pinned to 204.212.170.21, use the default resolution or the new GeoIP address 204.212.170.31; do not set Botnet Remote Server Address to the latter. If DNS is unavailable, configure the Botnet endpoint manually as the release notes direct. Check custom certificates and dependent connections separately.
   - title: Recreate Rundeck and Runner containers with corrected trust stores
     hint: "Pull the official 6.3.0 images and recreate Rundeck, Runbook Automation and Docker/Kubernetes Runner containers. An apt-get upgrade inside a running container is lost on recreation. For RPM/DEB/WAR Rundeck or Runbook Automation, update the host OS ca-certificates package and the Java runtime trust store, then restart Rundeck. A host-installed Runner uses its host trust store; update that store according to the host vendor. The vendor excludes Runbook Automation SaaS. Run curl https://dv-g3b-emudhra.we-have-a-problem.com/ inside the container or host; a certificate error is the expected rejection. Successful TLS means the affected trust remains. This curl check covers its OS store, not Java or every custom store; verify those separately."
+  - title: Redeploy New Relic Synthetics and migrate Node16 monitors
+    hint: NR26-12 requires every Private location to pull and redeploy SJM v642+, Node API runtime1.2.296+, Node browser runtime3.0.259+ and ping runtime1.87.0+, then restart containers, regardless of runtime. In the NRQL query builder run SELECT uniques(monitorName) FROM SyntheticCheck WHERE runtimeType = 'NODE_API' AND runtimeTypeVersion = '16.10' SINCE 1 day ago, or filter Script API in Synthetics EOL. Migrate Node16.10 monitors on both Public and Private locations to New Relic's named runtime22.23.0 and test operation before November18. Public latest Node22/browser/ping infrastructure is already patched; Public Node16 automatic migration is planned to start November18, not complete today. No blanket secure-credential rotation is required absent specific compromise evidence; contact New Relic support for deployment-specific concerns.
 sources:
   - name: Mozilla Bugzilla 2083449
     url: https://bugzilla.mozilla.org/show_bug.cgi?id=2083449
@@ -468,6 +485,10 @@ sources:
     url: https://docs.rundeck.com/docs/history/6_x/version-6.3.0.html
     primary: true
 
+  - name: New Relic NR26-12 Synthetics advisory
+    url: https://docs.newrelic.com/docs/security/new-relic-security/security-bulletins/security-bulletin-nr26-12/
+    primary: true
+    says: Published November6; four Private-location image thresholds, restart for all runtimes, Public-location exceptions, Node16.10 migration/EOLNovember18, discoveryquery, no observed image tampering and no blanket secure-credential rotation.
 ---
 
 A certificate authority's private key is the thing that makes "this is really your bank" true. For eight
@@ -537,3 +558,5 @@ For an unpatched Oracle runtime, the [operational guide](https://ops.java/emudhr
 **SonicOS trust-store follow-up:** November release notes identify 7.3.4-7015 as removing the eMudhra chain. This is product-specific remediation, not a new CA incident or confirmation that every SonicWall release has removed the chain. The source gives only the month, so no exact release day is inferred. Existing browser/runtime deadlines and certificate-replacement requirements remain.
 
 **Rundeck deployment follow-up:** The vendor’s October 23 advisory documents the October 22 6.3.0 official Docker-image release for this same CA compromise. This corrects a missing downstream remediation path in this article, not a new CA incident. SaaS is excluded; host-managed OS and Java stores and containerized Runner must be handled according to their actual deployment. A passing curl rejection does not verify Java’s separate trust store.
+
+**November 6 New Relic downstream advisory:** NR26-12 requires the four Private-location images above to be pulled and redeployed manually, followed by container restarts. There is no automatic Private-location image update. Public Scripted API monitors using Node22, browser runtimes and ping monitors need no action for this CA issue because infrastructure images are patched; monitors pinned to Node16.10 are the exception and require migration on either location type. The stated22.23.0 is New Relic’s Synthetics migration runtime, not a replacement for the standalone Node security minimums in the separate October release incident. Test before the November18EOL and planned Public automatic migration. New Relic reports no evidence of synthetic-image tampering and requires secure-credential rotation only when there is a specific reason to suspect network/infrastructure compromise.
