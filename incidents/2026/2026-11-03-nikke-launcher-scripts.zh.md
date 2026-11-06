@@ -53,6 +53,9 @@ timeline:
 - date: 2026年11月6日
   title: 研究者说明浏览器及启动器已保存密码的收集边界
   body: 作者新回复只描述一个已分析版本，不代表全部下发载荷。浏览器锁或缺失 psd.dat 不能排除早期收集、任意文件读取、其他版本及未经分析的浏览器 DLL，仍建议从干净设备更换密码并吊销会话。
+- date: 2026年11月6日
+  title: 作者说明 cookie 输出方式及额外可读的登录票据
+  body: 后续作者回复解释 browserscan 会序列化选定 cookie 字段，而非上传原始 SQLite 数据库；任意文件读取还可复制启动器日志中的 login_ticket 及 biz_ticket。票据有效期及每台电脑执行过的命令仍不明。
 checklist:
 - title: 停止启动器，清理前先保留证据
   hint: 关闭启动器及托盘进程，将疑似感染电脑断网。删除或重装前，保留 Launcher/intl_service/debug.log、Launcher/log/tinyget 及启动器缓存。研究报告指出，更新或服务器关闭不能撤销之前的远程访问。 私下保留未改动的证据副本。公开日志前，遮盖 tinyget.mem.log 及按日期保存的 tinyget API 请求中的 Cookie 行，以及 login_ticket、biz_ticket、uid、openid 和 sig 的值；path= 可能暴露 Windows 用户名。 同时关闭 Google Play Games 变体的 nikke_launcher_google.exe。 若启动时输入了另一账户的管理员凭据，也检查该账户的 %APPDATA%、%TEMP% 和 HKCU 持久化键，不能只查日常账户。 官方手动说明还要求关闭 NIKKE 游戏及 Chrome。ACE 清理会删除关联日志；研究人员另转述一台更新后的干净安装未询问便删除 debug.log。任何重开前均须保留证据，不只是同意 ACE 前。文件已丢失时，可取证检查有保留期限的 NTFS 变更日志，查找 tinyget.<time>.log.cdt→.log 及 k2f-bcreds 创建、删除；日志轮转及 Firefox 原位读取限制阴性结论。
@@ -63,7 +66,7 @@ checklist:
 - title: 按记录顺序清理 Windows 持久化，或重建系统
   hint: 保留证据后按研究人员步骤处理：只删除 HKCU\Software\Classes\CLSID\{E77CC89B-7401-4C04-8CED-149DB35ADD04}，重启 Windows，再删除 %LOCALAPPDATA%\Google\Chrome\User Data\PlatformExperienceHelper 下包含 platform_experience_helper.dll 的 64 位十六进制名称子目录。保留正常 HKLM CLSID 和 PlatformExperienceHelper 父目录。DLL 可能锁定到重启后，且各受害者哈希不同。由于攻击者可能执行任意命令，疑似入侵时从可信介质重建更稳妥；杀毒未检出并不足够。 新官方手动步骤采用相同的 HKCU→重启→只删目标 64 位子目录顺序；不要删除其他路径的同名键或整个 Chrome 父目录。
 - title: 从干净设备更换凭据并吊销会话
-  hint: 疑似感染时更换 NIKKE/Level Infinite 及其他暴露账户的密码，终止活跃会话，吊销并重新签发 API 令牌、SSH 密钥及开发、云凭据。若钱包助记词可能暴露，从干净设备将资产迁往使用全新助记词的钱包。静态能力不代表所有列出凭据或钱包均已被盗。Proton 可暴露宿主用户有权读取的文件及环境变量；没有 Windows Chrome 持久化不代表 Linux 主机安全。 作者 11 月 6 日回复建议：若代理曾运行，将 Chrome、Edge、Brave、Vivaldi、Opera、Firefox 保存的密码视为暴露，并吊销上述 Chromium 浏览器的会话。Ungoogled Chromium 仍需防范其他命令、版本及未经分析的 DLL，维持密码和会话处置。即使目前没有 psd.dat，也应更换 NIKKE 密码，不能据此证明运行时该文件不存在。
+  hint: 疑似感染时更换 NIKKE/Level Infinite 及其他暴露账户的密码，终止活跃会话，吊销并重新签发 API 令牌、SSH 密钥及开发、云凭据。若钱包助记词可能暴露，从干净设备将资产迁往使用全新助记词的钱包。静态能力不代表所有列出凭据或钱包均已被盗。Proton 可暴露宿主用户有权读取的文件及环境变量；没有 Windows Chrome 持久化不代表 Linux 主机安全。 作者 11 月 6 日回复建议：若代理曾运行，将 Chrome、Edge、Brave、Vivaldi、Opera、Firefox 保存的密码视为暴露，并吊销上述 Chromium 浏览器的会话。Ungoogled Chromium 仍需防范其他命令、版本及未经分析的 DLL，维持密码和会话处置。即使目前没有 psd.dat，也应更换 NIKKE 密码，不能据此证明运行时该文件不存在。 将 tinyget.mem.log 及按日期保存的 Launcher/log/tinyget 日志中的 login_ticket、biz_ticket 视为可能被读取的凭据；向 Level Infinite 支持核实如何使既有登录票据失效，其权限和有效期尚未测试。从干净设备更换曾保存在该电脑上的路由器管理密码；若曾连接 Android 手机，可预防性检查已安装应用并运行 Play Protect，这不是手机或路由器已遭入侵的证据。
 - title: 恢复前核实官方更新并清除旧缓存
   hint: 重新打开前查看当前 NIKKE 官方通知及处置状态。保留证据后，按研究人员建议清除 %APPDATA%\nikke_launcher\tbs_cache；Proton 需处理对应 prefix 内路径。按 WormW attack-path 报告及完整指标 CSV 中的历史恶意哈希、ETag 排查启动器及代理缓存。其 11 月 4 日 07:14–07:20 UTC 复查发现四个已知文件已干净，但不能证明所有节点或缓存均已清理；本轮没有可列出的修补版本下限。清缓存或升级启动器不能移除既有恶意程序，也不能使被盗会话失效。 MotherSphere 后续 11:20 UTC 检查在四个节点上发现两主机的四个已知文件均已干净；初始发布权限入侵途径仍不明，应继续阻断已公布的恶意域名及 IP。 HMT 变体还需处理 %APPDATA%\nikke_launcher_hmt\tbs_cache，Google Play Games 变体为 %APPDATA%\nikke_launcher_google\tbs_cache，均先保留证据。11 月 4 日重建前端仍沿用 FeedList.feb647c9.js 的 URL，不能只靠更新后文件名判断缓存已清理。
 - title: 核实官方 ACE 方案并向客服报告影响
@@ -120,3 +123,7 @@ sources:
 在该版本中，浏览器持有的独占锁可阻止 cookie 数据库复制，却不会同样保护 Chromium 的已保存密码数据库。该命令也会跳过大于 4,194,304 字节的 cookie 文件，或在 `collect_cookies` 为 false 时跳过。这只是特定命令的限制：关闭浏览器后的另一次运行、任意文件命令、其他版本或未经分析的 Chrome DLL 都可能改变暴露范围。启动器日志和按小时统计的 SRUM 字节数不能说明执行过哪些命令或窃取了什么；少量上传或扫描无异常都不能排除风险。
 
 同一回复称，`creds` 会读取标准及 HMT 启动器目录中的 `last_user.dat` 和 `psd.dat`，选择已保存账户并解密其密码。缺失 `psd.dat` 会阻止该版本通过这一命令取得密码，但现在没有该文件，不能证明此前也不存在。命令跳过 Google 版本目录，但任意文件读取仍可触及该目录，其文件格式尚未核实。这些说明不能证明每个密码均已被窃取，也不能划定安全的启动器版本。
+
+**11 月 6 日作者进一步说明：** `browserscan` 读取 cookie 的站点、名称及加密值，返回附带路径、配置文件和密钥的条目，而非原始 SQLite 文件。`l.js` 以 base64url 分块读取这些 JSON，默认每块最多 2 MiB；最初操控代理的 `l.js` 未被捕获，可能存在的传输压缩、加密及 SRUM 字节统计，均不能说明哪些资料已外传。Opera GX 的 `%APPDATA%\Opera Software\Opera GX Stable` 不在已分析的内置列表中，但任意文件命令仍可读取。浏览器锁只影响当时的 cookie 复制，不能保护后续启动、已保存密码或未经分析的浏览器 DLL。
+
+作者还指出，`tinyget.mem.log` 及按日期保存的 `Launcher/log/tinyget` 日志含有 `login_ticket`、`biz_ticket`，可通过 `cat` 或 `download` 读取；尚未测试其权限及有效期。已分析代理没有手机、路由器专用代码或网络扫描器，但可以读取 Phone Link 存于电脑上的资料，任意执行也可能触及局域网管理入口或操作已连接的手机。这些是可能路径，并非已观察到的传播。向支持核实票据吊销方式，按上文保留及遮盖日志，检查关联设备和已保存的路由器凭据，不要据此声称它们已被入侵。
