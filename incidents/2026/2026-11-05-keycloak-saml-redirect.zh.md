@@ -9,7 +9,7 @@ cves:
   description: 消息处理接受编码参数名，签名验证却只检查原始字面名称。Red Hat 给出 CVSS 3.1 暂定评分 9.1。
 fixed:
 - product: 上游 Keycloak
-  status: 发布记录明确列出 CVE-2026-117691／issue54714
+  status: 发布记录明确列出 CVE-2026-117691／issue 54714
 timeline:
 - date: 2026年11月5日
   title: 上游发布及 Red Hat 记录披露 SAML 漏洞
@@ -23,9 +23,9 @@ checklist:
   hint: 作为防御性调查，保留身份代理、认证及应用审计记录，与安全团队检查异常联合会话及权限使用。若发现未授权会话，按既有响应流程撤销。厂商记录未公布专用指标或攻击时段，安静的日志不能证明安全。
 sources:
 - name: Keycloak 原始 26.8.2 发布记录
-  says: 11 月 5 日列出 issue54714／CVE-2026-117691，并关联迁移指引。
+  says: 11 月 5 日列出 issue 54714／CVE-2026-117691，并关联迁移指引。
 - name: Red Hat 原始 CVE 数据
-  says: 说明机制、暂定 CVSS3.1 评分 9.1、Build of Keycloak 受影响、Single Sign-On7 不受影响，未提供认可缓解措施。
+  says: 说明机制、暂定 CVSS 3.1 评分 9.1、Build of Keycloak 受影响、Single Sign-On 7 不受影响，未提供认可缓解措施。
 - name: Keycloak issue API
   says: 11 月 5 日公开条目标题说明编码参数签名绕过及任意用户代理登录；正文为空。
 ---

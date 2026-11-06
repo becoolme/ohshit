@@ -19,7 +19,7 @@ cves:
 fixed:
 - product: Upstream Keycloak
   version: 26.8.2
-  status: Release explicitly lists CVE-2026-117691 / issue54714
+  status: Release explicitly lists CVE-2026-117691 / issue 54714
 timeline:
 - date: Nov 5, 2026
   title: Upstream release and Red Hat record disclose the SAML flaw
@@ -35,15 +35,15 @@ sources:
 - name: Keycloak original 26.8.2 release
   url: https://www.keycloak.org/2026/11/keycloak-2682-released
   primary: true
-  says: November5 release lists issue54714/CVE-2026-117691 and points to migration guidance.
+  says: November 5 release lists issue 54714/CVE-2026-117691 and points to migration guidance.
 - name: Red Hat original CVE data
   url: https://access.redhat.com/hydra/rest/securitydata/cve/CVE-2026-117691.json
   primary: true
-  says: Original mechanism, draft9.1 CVSS3.1, affected Build of Keycloak, unaffected Single Sign-On7 and no accepted mitigation.
+  says: Original mechanism, draft 9.1 CVSS 3.1, affected Build of Keycloak, unaffected Single Sign-On 7 and no accepted mitigation.
 - name: Keycloak issue API
   url: https://api.github.com/repos/keycloak/keycloak/issues/54714
   primary: true
-  says: November5 public issue names encoded-parameter signature bypass and broker login as any user; its body is empty.
+  says: November 5 public issue names encoded-parameter signature bypass and broker login as any user; its body is empty.
 ---
 
 The signature checker and SAML message processor disagree about encoded query-parameter names. A crafted unsigned message can consequently be processed in place of a signed message, giving access as a federated user and to that user's roles/data. This is a network-reachable authentication bypass; an existing authenticated attacker account is not required. The reviewed originals do not establish the full vulnerable-version range, active exploitation or confirmed victims.
