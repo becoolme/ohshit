@@ -84,7 +84,7 @@ fixed:
   - product: SonicOS 7.3.4 固件
     status: 移除 eMudhra 可信链，须满足平台及迁移要求
   - product: Rundeck／Runbook Automation／Runner 官方 Docker 镜像
-    status: 拉取更新镜像并重建容器；主机安装须分别更新系统及 Java 信任库
+    status: 拉取更新镜像并重建容器；主机安装 Rundeck 须分别更新系统及 Java 信任库
 timeline:
   - date: 2025年4月30日
     title: 私钥生成，同一批共 24 张中间证书
@@ -233,7 +233,7 @@ checklist:
   - title: 按厂商升级说明更新受影响 SonicOS 信任库
     hint: SonicOS 7.3.4-7015 移除 eMudhra 链（GEN7-59578）。核实平台支持及升级前提，版本不支持降级。NSv 从 7.0.1 升至 7.1 或更高版本需要全新安装；管理 7.3.4 需要 NSM On-Premises 4.4，GMS 无法管理 SonicOS 7.1.x 及更高版本。若 GeoIP 曾固定为 204.212.170.21，改用默认解析或新 GeoIP 地址 204.212.170.31；不要将 Botnet Remote Server Address 设为后者。若 DNS 不可用，按发布说明手动设置 Botnet 端点。另行检查自定义证书及依赖连接。
   - title: 用修正信任库的镜像重建 Rundeck 和 Runner 容器
-    hint: 拉取官方 6.3.0 镜像，重建 Rundeck、Runbook Automation 及 Docker／Kubernetes Runner 容器。仅在运行中容器执行 apt-get upgrade 的更改会在重建时丢失。RPM／DEB／WAR 及主机安装的 Runner 使用主机管理的信任库，需更新系统 ca-certificates 包与 Java 运行时信任库，再重启 Rundeck。厂商称 Runbook Automation SaaS 未受影响。在容器内或主机执行 curl https://dv-g3b-emudhra.we-have-a-problem.com/，预期以证书错误拒绝；TLS 成功意味着仍保留受影响信任。curl 只检查其系统库，不能验证 Java 或全部自定义库，须分别核验。
+    hint: 拉取官方 6.3.0 镜像，重建 Rundeck、Runbook Automation 及 Docker／Kubernetes Runner 容器。仅在运行中容器执行 apt-get upgrade 的更改会在重建时丢失。RPM／DEB／WAR 安装的 Rundeck 或 Runbook Automation 需更新主机系统 ca-certificates 包与 Java 运行时信任库，再重启 Rundeck。主机安装的 Runner 使用主机信任库，按主机厂商指引更新该库。厂商称 Runbook Automation SaaS 未受影响。在容器内或主机执行 curl https://dv-g3b-emudhra.we-have-a-problem.com/，预期以证书错误拒绝；TLS 成功意味着仍保留受影响信任。curl 只检查其系统库，不能验证 Java 或全部自定义库，须分别核验。
 sources:
   - says: 私钥是小于 256 的整数；报告时间、OneCRL 条目，以及 10月18日的吊销
   - name: eMudhra 声明

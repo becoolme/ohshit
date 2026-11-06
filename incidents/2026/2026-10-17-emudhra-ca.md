@@ -133,7 +133,7 @@ fixed:
     status: Removes the eMudhra trusted chain; platform and migration requirements apply
   - product: Rundeck / Runbook Automation / Runner official Docker images
     version: 6.3.0
-    status: Pull updated images and recreate containers; host installs require OS and Java trust-store updates
+    status: Pull updated images and recreate containers; Rundeck host installs require separate OS and Java trust-store updates
 timeline:
   - date: Apr 30, 2025
     title: The keys are generated, in a batch of 24 intermediates
@@ -282,7 +282,7 @@ checklist:
   - title: Update affected SonicOS trust stores with the vendor upgrade notes
     hint: SonicOS 7.3.4-7015 removes the eMudhra chain (GEN7-59578). Verify platform support and upgrade prerequisites; downgrade is unsupported. NSv upgrading from 7.0.1 to 7.1 or later requires a fresh installation, and NSM On-Premises 4.4 is required for 7.3.4 management; GMS cannot manage SonicOS 7.1.x or later. If GeoIP was pinned to 204.212.170.21, use the default resolution or the new GeoIP address 204.212.170.31; do not set Botnet Remote Server Address to the latter. If DNS is unavailable, configure the Botnet endpoint manually as the release notes direct. Check custom certificates and dependent connections separately.
   - title: Recreate Rundeck and Runner containers with corrected trust stores
-    hint: "Pull the official 6.3.0 images and recreate Rundeck, Runbook Automation and Docker/Kubernetes Runner containers. An apt-get upgrade inside a running container is lost on recreation. RPM/DEB/WAR and host-installed Runner use host-managed stores: update the OS ca-certificates package and the Java runtime trust store, then restart Rundeck. The vendor excludes Runbook Automation SaaS. Run curl https://dv-g3b-emudhra.we-have-a-problem.com/ inside the container or host; a certificate error is the expected rejection. Successful TLS means the affected trust remains. This curl check covers its OS store, not Java or every custom store; verify those separately."
+    hint: "Pull the official 6.3.0 images and recreate Rundeck, Runbook Automation and Docker/Kubernetes Runner containers. An apt-get upgrade inside a running container is lost on recreation. For RPM/DEB/WAR Rundeck or Runbook Automation, update the host OS ca-certificates package and the Java runtime trust store, then restart Rundeck. A host-installed Runner uses its host trust store; update that store according to the host vendor. The vendor excludes Runbook Automation SaaS. Run curl https://dv-g3b-emudhra.we-have-a-problem.com/ inside the container or host; a certificate error is the expected rejection. Successful TLS means the affected trust remains. This curl check covers its OS store, not Java or every custom store; verify those separately."
 sources:
   - name: Mozilla Bugzilla 2083449
     url: https://bugzilla.mozilla.org/show_bug.cgi?id=2083449
