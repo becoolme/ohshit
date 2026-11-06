@@ -3,7 +3,7 @@ title: "eMudhra CA intermediate private keys were so weak that every one was a n
 headline: "eMudhra: eight CA keys you could guess on a pocket calculator"
 level: 4
 date: 2026-10-17
-updated: '2026-11-05'
+updated: '2026-11-06'
 tags: [PKI, CA, TLS]
 ecosystems: [go, python, node, browsers]
 summary: Eight emSign ECC G3 intermediates (six TLS/two code signing, Sectigo-cross-signed) had P-384 keys below 256, enabling forged certificates. Update Dart/Flutter/Firestore and CA bundles. Chrome 153+ will distrust G1 TLS certificates with earliest SCT after Nov 16, 23:59:59 UTC; earlier SCTs are unaffected by this new rule.
@@ -48,10 +48,10 @@ cves:
     description: The action bundles certifi roots used by its Sigstore dependency; the advisory lists 1.14.3 as patched.
   - id: GHSA-2xm2-c8xx-p9vh
     name: Python grpcio bundled CA trust
-    description: Affected grpcio bundled roots require 1.82.3, 1.83.2 or 1.84.1 for the corresponding release line; updating OS roots or certifi alone does not replace this store.
+    description: Affected grpcio bundled roots require 1.78.2, 1.80.1, 1.82.3, 1.83.2 or 1.84.1 for the corresponding release line; updating OS roots or certifi alone does not replace this store.
   - id: GHSA-p3vr-xp4c-r8fh
     name: Ruby grpc bundled CA trust
-    description: Affected Ruby grpc bundled roots require 1.82.3, 1.83.2 or 1.84.1 for the corresponding release line, independently of OS updates.
+    description: Affected Ruby grpc bundled roots require 1.78.2, 1.80.1, 1.82.3, 1.83.2 or 1.84.1 for the corresponding release line, independently of OS updates.
   - id: GHSA-gvrc-7wf9-p7hg
     name: PHP grpc/grpc bundled CA trust
     description: Composer grpc/grpc before 1.84.1 uses an affected bundled trust store.
@@ -90,7 +90,7 @@ fixed:
     version: 0.32.1
     status: Used when certifi is absent from affected Python HTTP transports
   - product: Python grpcio / Ruby grpc
-    version: 1.82.3 / 1.83.2 / 1.84.1
+    version: 1.78.2 / 1.80.1 / 1.82.3 / 1.83.2 / 1.84.1
     status: Use the patch for the corresponding release line; bundled roots are separate from OS roots
   - product: Java google-api-client
     version: 2.9.2
@@ -205,6 +205,9 @@ timeline:
   - date: Nov 5, 2026
     title: eMudhra reports additional G1 migration deadlines and regional progress
     body: The issuer reports a November 16 SCT cutoff for Chrome and Mozilla and all-G1 Apple removal on November 30. It says migration is complete outside the US, where transition continues. Browser policy details remain subject to each root program.
+  - date: Nov 5, 2026
+    title: gRPC releases root-store fixes for two more older lines
+    body: Releases 1.78.2 and 1.80.1 include root-store fixes. The Python and Ruby advisory APIs now list these alongside 1.82.3, 1.83.2 and 1.84.1; their HTML pages may still show only the three newer thresholds. PHP Composer retains its separate 1.84.1 minimum.
   - date: ~Oct 27, 2026
     title: Chrome Root Store v43 removes the emSign ECC Root CA - G3
 checklist:
@@ -241,7 +244,7 @@ checklist:
   - title: Update the PyPI publishing action in CI
     hint: Use pypa/gh-action-pypi-publish 1.14.3 or later, including replacing older commit-SHA pins. Updating runner or local certifi alone does not replace the action’s bundled copy.
   - title: Update Python, Ruby and PHP transport dependencies
-    hint: For Python, use certifi 2026.10.19+, httplib2 0.32.1+ (its bundle is used without certifi), and grpcio 1.84.1+. For Ruby, update grpc to 1.84.1+ or update google-cloud-* gems to pull it in. For PHP, update grpc/grpc to 1.84.1+ or google/gax to 1.51.2+. Update the OS store for REST paths too; do not assume gRPC reads system roots. The PHP PECL extension itself does not bundle roots; its system store still needs updating. Explicitly supplied gRPC root sets need separate verification. Python grpcio and Ruby grpc can also use 1.82.3 or 1.83.2 on the corresponding release line; PHP grpc/grpc retains its advisory’s 1.84.1 minimum. For Ruby’s temporary workaround, patch system CAs first and set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=/etc/ssl/certs/ca-certificates.crt before process startup on Debian; a missing/unreadable file falls back to bundled roots. PHP-FPM clears worker environments by default; configure env[GRPC_DEFAULT_SSL_ROOTS_FILE_PATH] in the pool if using that workaround and verify it takes effect.
+    hint: For Python, use certifi 2026.10.19+, httplib2 0.32.1+ (its bundle is used without certifi), and grpcio 1.84.1+. For Ruby, update grpc to 1.84.1+ or update google-cloud-* gems to pull it in. For PHP, update grpc/grpc to 1.84.1+ or google/gax to 1.51.2+. Update the OS store for REST paths too; do not assume gRPC reads system roots. The PHP PECL extension itself does not bundle roots; its system store still needs updating. Explicitly supplied gRPC root sets need separate verification. Python grpcio and Ruby grpc can also use 1.78.2, 1.80.1, 1.82.3 or 1.83.2 on the corresponding release line. The advisory API groups 1.81.x with the 1.82.3 patch path; do not assume an unlisted 1.79.x patch exists. PHP grpc/grpc retains its advisory’s 1.84.1 minimum. For Ruby’s temporary workaround, patch system CAs first and set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=/etc/ssl/certs/ca-certificates.crt before process startup on Debian; a missing/unreadable file falls back to bundled roots. PHP-FPM clears worker environments by default; configure env[GRPC_DEFAULT_SSL_ROOTS_FILE_PATH] in the pool if using that workaround and verify it takes effect.
   - title: Verify Google Java clients and legacy gRPC transports
     hint: For newTrustedTransport(), use google-api-client 2.9.2+ or libraries-bom 26.91.0+. Service-library-only builds need a -2.9.2 or later suffix or an explicit client dependency. Spring line patches are 8.3.1, 7.5.2, 6.5.12 and 3.9.19 or later. Before 2.9.0, Apache newTrustedTransport() methods also use bundled roots; update the separate google-api-client-apache-v5 artifact from affected 2.7.0–2.8.1 to 2.9.0+. Direct transport constructors use the JDK store. Separately update JDK and Windows roots. Migrate deprecated Node grpc npm to @grpc/grpc-js and .NET Grpc.Core to Grpc.Net.Client.
   - title: Rebuild the actual C++, Rust, Go and Swift trust paths
@@ -422,6 +425,22 @@ sources:
     url: https://github.com/grpc/grpc/security/advisories/GHSA-mm89-g5jq-mmfq
     primary: true
     says: Published October 28; GHSA-mm89-g5jq-mmfq scopes the gRPC CocoaPod, 1.84.1 fix, rebuild requirement, excluded packages and unsupported environment-variable workaround.
+  - name: gRPC Python advisory API
+    url: https://api.github.com/repos/grpc/grpc/security-advisories/GHSA-2xm2-c8xx-p9vh
+    primary: true
+    says: Lists five Python patch thresholds, including 1.78.2 and 1.80.1; 1.81.x is included in the 1.82.3 path.
+  - name: gRPC Ruby advisory API
+    url: https://api.github.com/repos/grpc/grpc/security-advisories/GHSA-p3vr-xp4c-r8fh
+    primary: true
+    says: Lists five Ruby patch thresholds, independently of the PHP Composer and Objective-C advisories.
+  - name: gRPC 1.78.2 release
+    url: https://github.com/grpc/grpc/releases/tag/v1.78.2
+    primary: true
+    says: November 5 release includes the security update to repository roots.
+  - name: gRPC 1.80.1 release
+    url: https://github.com/grpc/grpc/releases/tag/v1.80.1
+    primary: true
+    says: November 5 release includes the security update to repository roots.
 ---
 
 A certificate authority's private key is the thing that makes "this is really your bank" true. For eight
@@ -485,3 +504,5 @@ For an unpatched Oracle runtime, the [operational guide](https://ops.java/emudhr
 **November 5 gRPC clarification:** Python and Ruby advisories now specify 1.82.3 / 1.83.2 / 1.84.1 patch paths. The earlier 1.84.1-only description needs this release-line qualification; PHP Composer still lists 1.84.1. The October 28 Objective-C advisory is also incorporated: it covers the gRPC CocoaPod, including gRPC-ProtoRPC dependencies, and requires an upgraded, rebuilt and redistributed app. Standalone Core/C++ CocoaPods and grpc-ios SPM are excluded from this specific store, and the environment-variable workaround does not apply. This is neither a new CA compromise nor new evidence of attacks.
 
 **November 5 issuer update:** eMudhra reports that migration to other providers is complete outside the US, with US customers still transitioning. It reports November 16 SCT constraints for Chrome/Mozilla and November 30 removal of all G1 certificates on Apple platforms, including earlier issuance. This is the issuer’s account of the schedules; Chrome’s independently read precise cutoff remains above. No completed US transition or universal continued trust of earlier certificates is established.
+
+**November 6 correction to older-line coverage:** The November 5 releases 1.78.2 and 1.80.1 also repair the bundled root store. The Python and Ruby advisory APIs now list five patch paths, although the HTML advisory tables still show only three. Use the patch matching the installed release line or migrate to 1.84.1 or later; versions 1.81.x need the 1.82.3 path. This extends the earlier three-version guidance without changing the PHP Composer or Objective-C minimums. The requirement to verify explicit/custom roots and rebuild or restart affected applications remains. It does not establish another CA compromise or new exploitation.
