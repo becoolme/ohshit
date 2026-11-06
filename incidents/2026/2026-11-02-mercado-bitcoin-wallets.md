@@ -1,5 +1,5 @@
 ---
-title: Mercado Bitcoin reports over $15M blocked; staged website return planned for November 9
+title: Mercado Bitcoin reports over $16M blocked; staged website return planned for November 9
 level: 4
 date: '2026-11-02'
 tags:
@@ -8,7 +8,7 @@ tags:
 - wallets
 ecosystems:
 - crypto
-summary: Mercado Bitcoin plans website viewing Nov 9, reports >$15M blocked, pledges its own replacement funds and says no customer loss/data leak. Its prior valuation was $36.3M; Bitquery estimates $48.6M across 11 chains, 36,042 Ethereum addresses and $11.8M frozen (unverified). Blocking is not repayment; entry unknown.
+summary: Mercado Bitcoin plans website viewing Nov 9, reports >$16M blocked, pledges its own replacement funds and says no customer loss/data leak. Its prior valuation was $36.3M; Bitquery estimates $48.6M across 11 chains, 36,042 Ethereum addresses and $11.8M frozen (unverified). Blocking is not repayment; entry unknown.
 splash: Mercado Bitcoin customers and integrations using its deposit addresses; exchange hot wallets are implicated
 wipe: Respect the deposit/withdrawal pause; do not reuse saved deposit addresses until official recovery guidance confirms them
 inTheWild: 'yes'
@@ -43,6 +43,9 @@ timeline:
 - date: Nov 5, 2026
   title: Research expands chain coverage and Base deposit sweeps
   body: Bitquery now counts 11 chains and 308 Base deposit addresses (~$16k); its separate BitMart-linked estimate becomes ~$424k. Mercado Bitcoin remains ~$48.6M. Holdings were not refreshed beyond November 4; these are unverified research figures and address counts, not unique customers or confirmed exchange losses.
+- date: Nov 6, 2026
+  title: Official FAQ raises blocked assets and explains the staged return
+  body: The FAQ reports over $16M blocked, with buybacks still being prepared. Pre-interruption limit orders will be cancelled and reserved funds returned without fees. Initial November 9 website access remains viewing-only; transfers and trading await security validation.
 - date: Nov 9, 2026 (scheduled)
   title: Staged website access is planned to begin
   body: First stage permits viewing balances, statements, assets and investments. Transfers, withdrawals and trading are to follow only after each module’s final security checks; this is not a promised date for full reopening.
@@ -55,6 +58,8 @@ checklist:
   hint: 'Bitquery’s wallet record lists 18 addresses, including source wallets, suspected recipients, later destinations and a separate unconfirmed BitMart-labelled source. Main reported recipients: EVM 0xe485e7a70b1131216cb47ca4555c4bbb2c742478; Bitcoin 19qGpsHvzh1t6pVi526XNNkh6hW6prDZp; Solana 3YX6WHncP1Ra4AotE9YLawFt4nPmxyux288FWXkEW97J; Tron TEX3HuDRHRa3tnYpy96M4UfSx62VhDyA5L; Stellar GDXYRI6IONQA5YTGRLQ6O3FGJ2BWXPJTTQPUXFPSEXSRKBZLFKMZSOLP. Use the full research record for the other thirteen and each role. A match alone does not establish compromise, wallet ownership or attribution. The November 4 revision adds 0x4d5f3758938df94a76bfd19652f118ccd7a72c9d, 0x469189223f286b51198163b4eb5a1e532669523d and 0xf666e184bb8d7b9724c1746e3621e72df4d3ce08 as Ethereum sale/consolidation destinations; they are hunting pivots, not proven actor identities.'
 - title: Reject unsolicited recovery requests
   hint: Open the exchange through an existing bookmark or app. Do not follow refund links in replies or direct messages, disclose passwords, MFA codes or wallet recovery phrases, or send a payment to unlock a balance. Confirm any support request through the official channel. The November 4 company warning says password resets, biometric selfies and authentication occur only inside the official app/site; staff do not request codes, passwords, photos or deposits through WhatsApp, email, social media or telephone.
+- title: Review cancelled orders and pending investment payments
+  hint: The November 6 FAQ says all limit orders open before the November 2 interruption will be cancelled, with reserved amounts returned in full without fees. Check your records when services resume and submit any new order deliberately at current market conditions. The company says fixed-income positions are updating retroactively, but interest, amortization and maturity proceeds will be credited only after transaction services fully return; retained balances do not mean funds can already move. Password/account changes are also unavailable during suspension; any requested update will appear inside the platform, never through a balance-release message.
 sources:
 - name: Mercado Bitcoin official statement
   url: https://x.com/MercadoBitcoin/status/2117239507263132056
@@ -95,7 +100,15 @@ sources:
   url: https://publish.twitter.com/oembed?url=https://x.com/sheldonbitmart/status/2117650361154691529
   primary: true
   says: Readable opening confirms a hack the previous day and calls the amount small. The embed truncates later prose; no amount, wallet attribution, root cause, customer-loss or full recovery claim is taken from the omitted section.
-updated: '2026-11-05'
+- name: Mercado Bitcoin official incident FAQ
+  url: https://central.ajuda.mercadobitcoin.com.br/wiki/spaces/TF/pages/2968387585
+  primary: true
+  says: Over $16M blocked; balances versus replacement assets, cancelled orders, investment-payment sequencing, restricted account changes and staged November 9 viewing-only access.
+- name: Public FAQ revision metadata
+  url: https://central.ajuda.mercadobitcoin.com.br/wiki/rest/api/content/2968387585?expand=version,history
+  primary: true
+  says: Public version 7 was updated November 6 at 12:29:10 UTC; the FAQ was created November 3. The revision time does not date every individual freeze.
+updated: '2026-11-06'
 ---
 
 Mercado Bitcoin’s public acknowledgement establishes a platform security incident, rather than just an unexplained transfer or an individual customer account theft. The November 2–3 statements did not disclose how the intruder entered, a compromised software version, the final financial impact or a recovery deadline; the November 4 plan below now sets a website-viewing target. No published patch or user password-reset requirement is established by the statements read.
@@ -125,3 +138,5 @@ The accompanying company post says each environment and transaction flow is unde
 **November 5 research and BitMart acknowledgment:** Bitquery expands Mercado Bitcoin coverage from ten to **eleven chains**, adding **308 Base deposit addresses** that reportedly sent about **$16k** in three minutes. Of its sample of 92, 33 were also swept on Ethereum: these overlap and are not unique customer counts. Its Mercado Bitcoin estimate remains **$48.6M**. Use the report’s full wallet record to distinguish address roles; no full Base sweep-recipient address is supplied in its visible record. A signature still does not identify whether a key or signing service was compromised.
 
 The separate BitMart-linked research total is now about **$424k**, replacing the earlier $391k estimate, and must not be added to Mercado Bitcoin’s total. The readable opening of founder Sheldon Xia’s November 3 original confirms that BitMart was hacked the previous day and calls the amount small. This corrects the earlier statement here that no acknowledgment was verified. The public embed truncates later text; no quantified loss, customer-impact assessment or recovery promise is inferred. The original does not authenticate Bitquery’s specific wallet labels or shared-supplier hypothesis. Bitquery explicitly says it re-read missed sweeps on November 5 **without refreshing holdings**: its 8,678 ETH and other holdings remain a November 4 snapshot. The November 9 website-viewing plan, transfer pause and company replacement pledge remain unchanged.
+
+**November 6 official FAQ:** The exchange now reports **over $16M blocked**, superseding its $15M snapshot. Blocking is not repatriation or compensation. Preserved customer balance records establish entitlements; replacement assets and planned buybacks are separate, unfinished work. The FAQ gives the order-cancellation and investment-payment steps above. Initial November 9 access remains website viewing only; transaction modules and account changes are not yet restored. It describes only hot wallets as affected and BRL balances as preserved, without establishing the entry mechanism or a final loss total.
