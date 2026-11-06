@@ -226,7 +226,7 @@ checklist:
   - title: 向颁发机构核实更广的 G1 替换计划
     hint: eMudhra 11 月 5 日 Update 8 报告 Apple 将于 11 月 30 日移除所有 G1 链证书的信任，不同于其所述 Chrome 和 Mozilla 于 11 月 16 日实施的 SCT 规则。通过既有支持在适用期限前获取并测试替代链，包括面向 Apple 的既有证书。按颁发机构说法，美国迁移仍在进行。核实各浏览器根计划，保留上方 Chrome 精确 UTC 规则，不绕过验证。
   - title: 按厂商升级说明更新受影响 SonicOS 信任库
-    hint: SonicOS 7.3.4-7015 移除 eMudhra 链（GEN7-59578）。核实平台支持及升级前提，版本不支持降级。NSv 从 7.0.1 升至 7.1 或更高版本需要全新安装；管理 7.3.4 需要 NSM On-Premises 4.4。若 GeoIP 曾固定为 204.212.170.21，改用默认解析或新 GeoIP 地址 204.212.170.31；不要将 Botnet Remote Server Address 设为后者。另行检查自定义证书及依赖连接。
+    hint: SonicOS 7.3.4-7015 移除 eMudhra 链（GEN7-59578）。核实平台支持及升级前提，版本不支持降级。NSv 从 7.0.1 升至 7.1 或更高版本需要全新安装；管理 7.3.4 需要 NSM On-Premises 4.4，GMS 无法管理 SonicOS 7.1.x 及更高版本。若 GeoIP 曾固定为 204.212.170.21，改用默认解析或新 GeoIP 地址 204.212.170.31；不要将 Botnet Remote Server Address 设为后者。若 DNS 不可用，按发布说明手动设置 Botnet 端点。另行检查自定义证书及依赖连接。
 sources:
   - says: 私钥是小于 256 的整数；报告时间、OneCRL 条目，以及 10月18日的吊销
   - name: eMudhra 声明
