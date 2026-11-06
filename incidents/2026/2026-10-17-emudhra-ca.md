@@ -488,7 +488,7 @@ sources:
   - name: New Relic NR26-12 Synthetics advisory
     url: https://docs.newrelic.com/docs/security/new-relic-security/security-bulletins/security-bulletin-nr26-12/
     primary: true
-    says: Published November 6; four Private-location image thresholds, restart for all runtimes, Public-location exceptions, Node 16.10 migration/EOLNovember 18, discovery query, no observed image tampering and no blanket secure-credential rotation.
+    says: Published November 6; four Private-location image thresholds, restart for all runtimes, Public-location exceptions, Node 16.10 migration/EOL November 18, discovery query, no observed image tampering and no blanket secure-credential rotation.
 ---
 
 A certificate authority's private key is the thing that makes "this is really your bank" true. For eight

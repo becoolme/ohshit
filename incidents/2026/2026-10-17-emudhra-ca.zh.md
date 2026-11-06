@@ -338,7 +338,7 @@ sources:
   - name: Rundeck 6.3.0 发布说明
 
   - name: New Relic NR26-12 Synthetics 公告
-    says: 11 月 6 日发布，列明四项 Private location 镜像下限、全部运行时重启、Public location 例外、Node 16.10 迁移及11月18日停止支持、排查查询、未发现镜像篡改及无统一 secure credentials 轮换要求。
+    says: 11 月 6 日发布，列明四项 Private location 镜像下限、全部运行时重启、Public location 例外、Node 16.10 迁移及 11 月 18 日停止支持、排查查询、未发现镜像篡改及无统一 secure credentials 轮换要求。
 ---
 CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eMudhra 有八张中间证书，P-384 私钥都是**小于 256 的整数**。据研究人员 Scott Helme 说，其中一个就是数字 4。谁要是注意到了，就能给任意域名签证书，而所有信任这条链的客户端都会照单全收。
 
