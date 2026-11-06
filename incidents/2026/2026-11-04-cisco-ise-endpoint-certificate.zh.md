@@ -3,7 +3,7 @@ title: Cisco ISE 授权缺陷允许未认证攻击者获取端点证书
 summary: Cisco ISE 及 ISE-PIC 存在授权绕过，远程攻击者无需认证即可获取端点身份证书，不受设备配置限制。Cisco 列出五条 ISE 分支的补丁，尚不知有恶意利用；这不等于已确认服务器接管或所有网络访问控制均遭绕过。
 splash: 网络可达且运行受影响版本的 Cisco ISE 或 ISE-PIC，不受配置限制；ISE-PIC 最后支持版本为 3.4。
 wipe: 安装对应 Cisco 补丁，核验每个部署节点，并按既有安全流程检查异常证书签发。
-inTheWildNote: Cisco PSIRT 在 11 月 4 日公告中称尚不知有恶意利用或公开利用公告。
+inTheWildNote: Cisco PSIRT 在 11 月 4 日公告中称尚不知有恶意利用。
 cves:
 - name: 端点证书授权绕过
   description: 构造远程请求可绕过授权，无需认证便获取端点身份证书。Cisco 给出 CVSS 3.1 5.3 分；公告没有确立服务器任意代码执行或证书在所有下游的权限。
