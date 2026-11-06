@@ -23,10 +23,10 @@ timeline:
   body: The vendor gives 10:40 Japan time; it blocks known routes, changes credentials and investigates restoration. This service pause does not establish that all unauthorized access ended at that time.
 - date: Nov 2, 02:40 UTC
   title: Entry-point business tool is stopped
-  body: The November6 revision specifies approximately11:40 Japan time, one hour after the platform pause.
+  body: The November 6 revision specifies approximately 11:40 Japan time, one hour after the platform pause.
 - date: Nov 2, 08:38 UTC
   title: Related unauthorized platform access is fully blocked
-  body: Shippio says it finished identifying routes including misuse of acquired credentials and blocked related access at17:38 Japan time.
+  body: Shippio says it finished identifying routes including misuse of acquired credentials and blocked related access at 17:38 Japan time.
 - date: Nov 4, 2026
   title: Public notice confirms exposure and response steps
   body: Findings are stated as of November 3 18:00, without repeating an explicit timezone for that cutoff. The notice confirms record access, about 1,300 downloads and account/API-credential changes affecting about 1,100 teams. Reopening remains undated.
@@ -46,7 +46,7 @@ sources:
 - name: Shippio original November 4 incident notice
   url: https://www.shippio.io/news/20261104/
   primary: true
-  says: Full Japanese original read through a normal public HTTP request after the web reader failed. Confirms category-specific exposure, unauthorized accounts/API credentials, malicious uploads, containment and customer recovery instructions; November6 revision adds tool-shutdown and final-blocking times; reopening and detailed root cause remain pending.
+  says: Full Japanese original read through a normal public HTTP request after the web reader failed. Confirms category-specific exposure, unauthorized accounts/API credentials, malicious uploads, containment and customer recovery instructions; November 6 revision adds tool-shutdown and final-blocking times; reopening and detailed root cause remain pending.
 ---
 
 Shippio says an internal business tool was accessed from October 30 and stored credentials were used to reach Shippio Platform. Its public November 4 notice describes repeated platform access between approximately November 1 19:30 and November 2 17:00 Japan time. Detection and the service pause occurred on November 2; that pause is not evidence that the entire intrusion window ended immediately. All known routes are now blocked, according to the company. It has not named the internal tool, a CVE or a fixed customer software version; no connection to other recent SaaS incidents is established.
@@ -57,4 +57,4 @@ The company confirms unauthorized user accounts and API credentials affecting ap
 
 L4 reflects confirmed broad customer-data access and attacker-controlled accounts/API credentials in a shared logistics platform. The company remains in maintenance mode without a reopening deadline. Customer notices began November 2; the public article is dated November 4. No financial-loss figure or complete recovery is established.
 
-**November6 timeline clarification:** The revised original dates the entry-point business tool shutdown to approximately **November2 11:40 Japan time (02:40 UTC)** and completed blocking of related unauthorized platform access to **17:38 Japan time (08:38 UTC)**. Between those actions, the team investigated routes involving credentials obtained through the tool. The platform had entered maintenance at10:40 Japan time (01:40 UTC); neither maintenance nor stopping the tool alone established complete containment. The vendor has not changed the confirmed exposure categories or announced a reopening date.
+**November 6 timeline clarification:** The revised original dates the entry-point business tool shutdown to approximately **November 2 11:40 Japan time (02:40 UTC)** and completed blocking of related unauthorized platform access to **17:38 Japan time (08:38 UTC)**. Between those actions, the team investigated routes involving credentials obtained through the tool. The platform had entered maintenance at 10:40 Japan time (01:40 UTC); neither maintenance nor stopping the tool alone established complete containment. The vendor has not changed the confirmed exposure categories or announced a reopening date.
