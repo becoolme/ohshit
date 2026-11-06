@@ -27,9 +27,9 @@ cves:
   - name: PyPI 发布 Action 内置 CA 信任
     description: 该 Action 内置的 certifi 根证书由 Sigstore 依赖使用；公告列出 1.14.3 为修复版本。
   - name: Python grpcio 内置 CA 信任
-    description: grpcio 内置根证书库受影响；按发布线更新至 1.82.3、1.83.2 或 1.84.1。系统及 certifi 更新不会替换该证书库。
+    description: grpcio 内置根证书库受影响；按发布线更新至 1.78.2、1.80.1、1.82.3、1.83.2 或 1.84.1。系统及 certifi 更新不会替换该证书库。
   - name: Ruby grpc 内置 CA 信任
-    description: Ruby grpc 内置证书库受影响；按发布线更新至 1.82.3、1.83.2 或 1.84.1，不能仅更新系统根证书。
+    description: Ruby grpc 内置证书库受影响；按发布线更新至 1.78.2、1.80.1、1.82.3、1.83.2 或 1.84.1，不能仅更新系统根证书。
   - name: PHP grpc/grpc 内置 CA 信任
     description: Composer grpc/grpc 1.84.1 之前使用受影响内置信任库。
   - name: Google Java API 客户端内置 CA 信任
@@ -158,6 +158,9 @@ timeline:
   - date: 2026年11月5日
     title: eMudhra 报告更多 G1 迁移期限及区域进展
     body: 颁发机构报告 Chrome 和 Mozilla 的 SCT 截止为 11 月 16 日，Apple 于 11 月 30 日移除全部 G1 信任；称美国以外迁移完成，美国仍在进行。具体浏览器政策仍以各根计划为准。
+  - date: 2026年11月5日
+    title: gRPC 为另外两条旧线发布根证书修复
+    body: 1.78.2 和 1.80.1 发布记录包含根证书修复。Python 和 Ruby 公告 API 现将它们与 1.82.3、1.83.2、1.84.1 一并列出；HTML 页面可能仍仅显示后三项。PHP Composer 保留独立的 1.84.1 下限。
   - date: 2026年10月27日前后
     title: Chrome Root Store v43 移除 emSign ECC Root CA - G3
 checklist:
@@ -194,7 +197,7 @@ checklist:
   - title: 更新 CI 中的 PyPI 发布 Action
     hint: 使用 pypa/gh-action-pypi-publish 1.14.3 或更新版本，包括替换固定到旧提交 SHA 的引用。仅更新运行器或本地 certifi 不会替换 Action 内置副本。
   - title: 更新 Python、Ruby 与 PHP 的传输依赖
-    hint: Python 使用 certifi 2026.10.19+、httplib2 0.32.1+（无 certifi 时使用其内置库）、grpcio 1.84.1+；Ruby 将 grpc 更新到 1.84.1+，或更新 google-cloud-* gems 以引入它；PHP 将 grpc/grpc 更新到 1.84.1+，或将 google/gax 更新到 1.51.2+。REST 路径还须更新系统证书库，不能假设 gRPC 会读取系统根证书。PHP PECL 扩展本身不内置根证书，但仍须更新其系统信任库。显式提供给 gRPC 的根证书集合需单独核验。 Python grpcio 和 Ruby grpc 也可按原发布线升级到 1.82.3 或 1.83.2；PHP grpc/grpc 仍采用其公告的 1.84.1 下限。Ruby 临时方案须先修补系统 CA，再在进程启动前设置 GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=/etc/ssl/certs/ca-certificates.crt（Debian 路径）；文件缺失或不可读会退回内置证书库。PHP-FPM 默认清理环境，若采用同类方案应在池配置设置 env[GRPC_DEFAULT_SSL_ROOTS_FILE_PATH]，并确认实际生效。
+    hint: Python 使用 certifi 2026.10.19+、httplib2 0.32.1+（无 certifi 时使用其内置库）、grpcio 1.84.1+；Ruby 将 grpc 更新到 1.84.1+，或更新 google-cloud-* gems 以引入它；PHP 将 grpc/grpc 更新到 1.84.1+，或将 google/gax 更新到 1.51.2+。REST 路径还须更新系统证书库，不能假设 gRPC 会读取系统根证书。PHP PECL 扩展本身不内置根证书，但仍须更新其系统信任库。显式提供给 gRPC 的根证书集合需单独核验。 Python grpcio 和 Ruby grpc 也可按原发布线升级到 1.78.2、1.80.1、1.82.3 或 1.83.2。公告 API 将 1.81.x 归入 1.82.3 补丁路径；不要假定存在未列出的 1.79.x 补丁。PHP grpc/grpc 仍采用其公告的 1.84.1 下限。Ruby 临时方案须先修补系统 CA，再在进程启动前设置 GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=/etc/ssl/certs/ca-certificates.crt（Debian 路径）；文件缺失或不可读会退回内置证书库。PHP-FPM 默认清理环境，若采用同类方案应在池配置设置 env[GRPC_DEFAULT_SSL_ROOTS_FILE_PATH]，并确认实际生效。
   - title: 核验 Google Java 客户端及旧版 gRPC
     hint: newTrustedTransport() 用户升级 google-api-client 至 2.9.2+ 或 libraries-bom 至 26.91.0+；单独声明服务库时，使用 -2.9.2 或更新后缀，也可显式声明客户端依赖。Spring 按对应分支使用 8.3.1、7.5.2、6.5.12、3.9.19 或更新版本。2.9.0 之前的 Apache newTrustedTransport() 也使用内置根证书；独立 google-api-client-apache-v5 构件的受影响 2.7.0–2.8.1 应升级至 2.9.0+。直接调用传输构造器使用 JDK 信任库。JDK 及 Windows 根证书仍须独立更新。已弃用的 Node grpc npm 包迁移至 @grpc/grpc-js，.NET Grpc.Core 迁移至 Grpc.Net.Client。
   - title: 重建 C++、Rust、Go 与 Swift 的实际信任路径
@@ -294,6 +297,14 @@ sources:
     says: 区分 G1 与已移除的 ECC G3，给出最早 SCT 截止点、Chrome 版本、拟于 11 月 17 日实施及显式本地信任例外。
   - name: gRPC Objective-C 原始安全公告
     says: GHSA-mm89-g5jq-mmfq 于 10 月 28 日发布；限定 gRPC CocoaPod，列出 1.84.1、重建要求、未受影响包及不适用的环境变量变通。
+  - name: gRPC Python 公告 API
+    says: 列出含 1.78.2、1.80.1 在内的五项 Python 补丁下限；1.81.x 归入 1.82.3 路径。
+  - name: gRPC Ruby 公告 API
+    says: 列出五项 Ruby 补丁下限，与 PHP Composer 及 Objective-C 公告分别处理。
+  - name: gRPC 1.78.2 发布记录
+    says: 11 月 5 日发布，包含仓库根证书的安全更新。
+  - name: gRPC 1.80.1 发布记录
+    says: 11 月 5 日发布，包含仓库根证书的安全更新。
 ---
 CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eMudhra 有八张中间证书，P-384 私钥都是**小于 256 的整数**。据研究人员 Scott Helme 说，其中一个就是数字 4。谁要是注意到了，就能给任意域名签证书，而所有信任这条链的客户端都会照单全收。
 
@@ -349,3 +360,5 @@ CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eM
 **11 月 5 日 gRPC 补充：** Python 和 Ruby 公告现明确 1.82.3／1.83.2／1.84.1 三条补丁路径；先前只写 1.84.1 的描述应按发布线理解，PHP Composer 公告仍仅列 1.84.1。另补入 10 月 28 日的 Objective-C 公告，涵盖 gRPC CocoaPod 及通过 gRPC-ProtoRPC 引入的副本，须升级并重建、分发应用；它明确排除独立 Core／C++ CocoaPod 和 grpc-ios SPM 包，且不支持上述环境变量变通。没有新增 CA 失陷或在野攻击证据。
 
 **11 月 5 日颁发机构更新：** eMudhra 报告，美国以外客户已迁往其他供应商，美国客户仍在迁移。其报告 Chrome／Mozilla 的 SCT 限制日期为 11 月 16 日，Apple 将于 11 月 30 日移除全部 G1 证书信任，包括较早签发的证书。这是颁发机构对时间表的说明；独立核阅的 Chrome 精确规则仍见上文。不能据此认定美国已迁移完成或较早证书仍普遍受信任。
+
+**11 月 6 日旧线覆盖修正：** 11 月 5 日发布的 1.78.2 和 1.80.1 也修复了内置根证书库。Python 和 Ruby 公告 API 现列出五条补丁路径，HTML 公告表格仍只显示三条。选择安装发布线对应的补丁，或迁移至 1.84.1 及更高版本；1.81.x 须使用 1.82.3 路径。这是对先前三版本指引的扩充，不改变 PHP Composer 或 Objective-C 的最低版本。仍须核验显式、自定义根证书，并重建或重启受影响应用。这不代表又发生 CA 失陷或新增在野利用。
