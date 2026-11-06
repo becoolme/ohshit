@@ -1,6 +1,6 @@
 ---
-title: Reth trie 错误可能遗漏新状态项，上游及 Base 已提供修复
-summary: Reth 的 trie 迭代器可能跳过新插入的叶节点，算出错误的增量状态根。上游 2.10.0、Base 1.5.3 和 op-reth 2.8.1 包含修复，Celo、Mantle 合并了限定分支的回移补丁。完整受影响范围及其他下游发布覆盖仍须核实；原始修复记录未确立在野利用或资金损失。
+title: Reth trie 错误可能遗漏新状态项，上游及多个下游已提供修复
+summary: Reth 的 trie 迭代器可能跳过新插入的叶节点，算出错误的增量状态根。上游 2.10.0、Base 1.5.3、op-reth 2.8.1 及 Morph 1.4.1 包含修复，Celo、Mantle、BNB 和 Gravity 合并了限定分支的回移补丁。完整受影响范围及其他下游发布覆盖仍须核实；原始修复记录未确立在野利用或资金损失。
 splash: 使用受影响 Reth trie 实现的节点及应用；具体暴露取决于实际分支及固定的源码版本。
 wipe: 更新到包含 Reth 修复 8572c88 且兼容所运行链的版本，核验下游依赖并在重启后验证节点状态。
 inTheWildNote: 已核阅的原始修复记录未确立在野利用或资金损失。
@@ -12,6 +12,8 @@ fixed:
     status: 标签锁文件包含 op-v2.6.0-2 回移补丁；发布说明仅提及另一 RPC 修复
   - product: Base Mainnet 及 Sepolia 节点发布版
     status: Base 建议升级，发布说明明确关联状态根修复
+  - product: Morph morph-reth
+    status: 已发布热修复，固定包含上游等效补丁的 morph-l2/reth v2.5.2-morph.1
 timeline:
   - date: 11月3日 21:00 UTC
     title: 上游合并迭代边界修复
@@ -28,6 +30,12 @@ timeline:
   - date: 11月6日 02:40 UTC
     title: BNB Reth 单独合并 v2.8 集成回移
     body: PR 255 以 141cc278 合入 fix/bsc-static-file-td-611；确认分支补丁，不代表已发布安全版本下限。
+  - date: 2026年11月6日
+    title: Morph 发布 morph-reth 1.4.1
+    body: 热修复固定已修补的分支，并增加回归测试。包括 follower 在内的全部 Morph 节点应升级，无须数据库迁移或重同步。
+  - date: 2026年11月6日
+    title: Gravity 合并源码回移补丁
+    body: PR 464 以 c407bd9 合入 main。这是已核实的源码修复，不代表已发布安全版本下限。
 checklist:
   - title: 确认客户端和实际 Reth 源码版本
     hint: 盘点运行中的二进制或容器、链、分支、镜像摘要及依赖锁文件。核验是否包含上游合并提交 8572c88fe04fb2213d86f020ed9e72e612abb097 或厂商等效回移补丁。其他分支的版本号不能直接作为安全下限，本文未确立完整受影响范围。
@@ -39,6 +47,10 @@ checklist:
     hint: 保留状态根不匹配日志、受影响区块号和构建标识。作为防御性验证，将同步情况及受影响状态根与独立可信、已修补的提供方对照；若持续不匹配，遵循该链官方恢复步骤调查。已核阅的修复记录没有统一的删库或重同步操作。协议和 RPC 运营者应先核验自己的提供方实际构建覆盖，再依赖其状态数据。
   - title: 选择构建前核验 BNB Reth 的两条补丁线
     hint: BNB Reth PR 254 以 3b2bd02006ef8970c862d2af5dbc98a92f58d57d 合入 main；PR 255 以 141cc278068cb60d1045957709ad88d7bfdbed1f 合入 fix/bsc-static-file-td-611。按实际分支核验相应等效补丁，向 BNB Chain 确认正式产物。仅凭这些 PR 不能确定修复版本号，也不能认定全部 BNB 验证者或用户均受影响。
+  - title: 向全部 Morph 节点部署 1.4.1 热修复
+    hint: 使用官方 v1.4.1 二进制或 ghcr.io/morph-l2/morph-reth:v1.4.1，包括 follower。发布版保留数据库格式、参数、RPC 及链配置；滚动重启，无须迁移或重同步，回滚即换回原二进制。源码构建须允许或镜像 morph-l2/reth 的 v2.5.2-morph.1 标签，替代上游来源。PR 建议部署前测试启用 --engine.state-root-fallback 的 Hoodi follower 及 layer1-mode 验证者。不要求配套的 morph-geth 发布版。
+  - title: 区分 Gravity 源码修复与正式发布
+    hint: Gravity PR 464 以 c407bd9 合入 main，回移上游 8572c88 及回归测试。核验实际部署版本并向 Gravity 取得受支持产物；不能仅凭源码合并推定已打包的修复版本或全体节点完成部署。
 sources:
   - name: Reth 原始修复 PR
     says: 11 月 3 日公开迭代边界修正及回归测试，以 8572c88 合并。
@@ -64,6 +76,12 @@ sources:
     says: 11 月 6 日 02:19:15 UTC 以 3b2bd020 合入 main，包含同一上游修正及回归测试。
   - name: BNB Reth v2.8 集成回移 API
     says: 11 月 6 日 02:40:58 UTC 以 141cc278 合入 fix/bsc-static-file-td-611，属于单独分支集成，并非打包发布。
+  - name: Morph morph-reth 1.4.1 发布记录
+    says: 已发布的 trie 热修复、修正分支依赖、全部节点升级、产物及滚动重启指引。
+  - name: Morph 原始热修复 PR 228
+    says: 说明精确分支依赖、串行路径暴露、回归测试及部署前验证。
+  - name: Gravity 原始回移 PR 464
+    says: 11 月 6 日将上游等效修正以 c407bd9 合入 main；未确立正式安全版本。
 ---
 
 迭代器会组合已存储的 trie 分支和新哈希状态项。旧快捷路径在已存储分支深于 seek 前缀时可能跳过 seek，导致增量状态根遗漏新插入的叶节点。补丁将快捷路径限制为键完全相等时使用。上游回归测试和 Celo 回移说明描述了这一具体正确性错误。
@@ -73,3 +91,5 @@ Reth 2.10.0 列出 PR 28264，Base 1.5.3 明确称通过同一补丁防止状态
 L3 反映广泛使用的执行客户端家族存在完整性错误，并已有运营者可采取的升级措施。这些原始记录未确立攻击者盗币、远程代码执行、全链失陷或用户资金损失。桥暂停及错误证明响应的说法仍须各自原始证据，本文未据此扩张已核实范围。
 
 **11 月 6 日 BNB 回移：** BNB Reth 分别在 main 和 v2.8 集成分支合并了上游等效修正。应核验已部署产物的实际分支及提交；源码合并不代表已发布正式构建或全体节点完成部署。这些技术记录未确立全链事件、确认用户损失或 BNB Chain 的整体暴露程度。
+
+**11 月 6 日 Morph 与 Gravity 跟进：** Morph 已发布的 morph-reth 1.4.1 热修复，通过 morph-l2/reth v2.5.2-morph.1 使用上游 Reth 2.5.2 加 trie 补丁，避免立即进行完整上游升级。发布说明要求包括 follower 在内的全部节点升级，无须数据库迁移或重同步。Gravity 则在 main 单独合并等效修正，尚未确立 Gravity 修复发布版本号。这些记录扩充补丁覆盖，不是盗币或全链失陷证据。

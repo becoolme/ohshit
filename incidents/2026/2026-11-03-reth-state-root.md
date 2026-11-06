@@ -1,10 +1,10 @@
 ---
-title: Reth trie bug can omit new state entries; upstream and Base fixes are available
+title: Reth trie bug can omit new state entries; upstream and downstream fixes are available
 level: 3
 date: 2026-11-03
 updated: 2026-11-06
 tags: [Reth, Ethereum, integrity]
-summary: Reth's trie iterator could skip a new leaf and compute an incorrect incremental state root. Upstream 2.10.0, Base 1.5.3 and op-reth 2.8.1 contain the fix; Celo and Mantle merged scoped backports. Full affected ranges and other downstream releases need verification. The reviewed records do not establish exploitation or fund loss.
+summary: Reth's trie iterator could skip a new leaf and compute an incorrect incremental state root. Upstream 2.10.0, Base 1.5.3, op-reth 2.8.1 and Morph 1.4.1 contain the fix; Celo, Mantle, BNB and Gravity merged scoped backports. Full ranges and other downstream releases need verification; no exploitation or fund loss is established.
 splash: Nodes and applications using an affected Reth trie implementation; exposure depends on the actual fork and pinned revision.
 wipe: Upgrade to a chain-compatible build containing Reth fix 8572c88; verify downstream pins and validate node state after restarting.
 inTheWild: unknown
@@ -20,6 +20,9 @@ fixed:
   - product: Base Mainnet and Sepolia node release
     version: 1.5.3
     status: Base recommends upgrading; release notes explicitly link the state-root fix
+  - product: Morph morph-reth
+    version: 1.4.1
+    status: Released hotfix; pins morph-l2/reth v2.5.2-morph.1 with the upstream-equivalent fix
 timeline:
   - date: Nov 3, 21:00 UTC
     title: Upstream merges the iterator-boundary fix
@@ -36,6 +39,12 @@ timeline:
   - date: Nov 6, 02:40 UTC
     title: BNB Reth merges a separate v2.8 integration backport
     body: PR 255 merges as 141cc278 into fix/bsc-static-file-td-611. This establishes a branch-specific patch, not a released safe-version threshold.
+  - date: Nov 6, 2026
+    title: Morph releases morph-reth 1.4.1
+    body: The hotfix pins the corrected fork and adds a regression test. All Morph nodes, including followers, should upgrade; no database migration or resync is required.
+  - date: Nov 6, 2026
+    title: Gravity merges a source backport
+    body: PR 464 merges as c407bd9 into main. This is a verified source patch, not a released safe-version threshold.
 checklist:
   - title: Identify the client and the actual Reth revision
     hint: Inventory the running binary or container, chain, fork, image digest and dependency lockfile. Look for upstream merge 8572c88fe04fb2213d86f020ed9e72e612abb097 or the vendor's equivalent backport. A version from another fork is not a reliable threshold; the complete affected range is not established here.
@@ -47,6 +56,10 @@ checklist:
     hint: Preserve mismatch logs, affected block numbers and build identifiers. As a defensive validation step, compare synchronization and affected state roots against an independently trusted, patched provider; investigate persistent mismatches through the chain's official recovery procedure. The reviewed fix records do not prescribe a universal database deletion or resync procedure. Protocol and RPC operators should verify their own providers' build coverage before relying on state data.
   - title: Verify both BNB Reth patch lines before selecting a build
     hint: BNB Reth PR 254 merged into main as 3b2bd02006ef8970c862d2af5dbc98a92f58d57d; PR 255 merged into fix/bsc-static-file-td-611 as 141cc278068cb60d1045957709ad88d7bfdbed1f. Match your actual branch to the appropriate equivalent patch and ask BNB Chain for its released artifact. These PRs alone establish neither a fixed release number nor that all BNB validators or users were exposed.
+  - title: Roll out the Morph 1.4.1 hotfix across every node
+    hint: Use the official v1.4.1 binaries or ghcr.io/morph-l2/morph-reth:v1.4.1, followers included. The release retains the database format, flags, RPC and chain configuration; perform a rolling restart, with no migration or resync. Rollback means restoring the prior binary. Source builders must allow or mirror morph-l2/reth tag v2.5.2-morph.1, replacing the upstream source. The PR recommends testing a Hoodi follower with --engine.state-root-fallback and a layer1-mode validator before rollout. No matching morph-geth release is required.
+  - title: Verify Gravity source coverage separately from release availability
+    hint: Gravity PR 464 merged c407bd9 into main, backporting upstream 8572c88 and its regression test. Match the actual deployed revision and obtain the supported artifact from Gravity; do not infer a packaged fixed version or fleet-wide deployment from the source merge alone.
 sources:
   - name: Reth original fix PR
     url: https://github.com/paradigmxyz/reth/pull/28264
@@ -96,6 +109,18 @@ sources:
     url: https://api.github.com/repos/bnb-chain/reth/pulls/255
     primary: true
     says: November 6 02:40:58 UTC merge 141cc278 into fix/bsc-static-file-td-611; separate branch integration, not a packaged release.
+  - name: Morph morph-reth 1.4.1 release
+    url: https://github.com/morph-l2/morph-reth/releases/tag/v1.4.1
+    primary: true
+    says: Released trie hotfix, corrected fork pin, all-node upgrade, artifacts and rolling-restart guidance.
+  - name: Morph original hotfix PR 228
+    url: https://github.com/morph-l2/morph-reth/pull/228
+    primary: true
+    says: Explains exact pinned fork, serial-path exposure, regression test and pre-rollout validation.
+  - name: Gravity original backport PR 464
+    url: https://github.com/Galxe/gravity-reth/pull/464
+    primary: true
+    says: Merged upstream-equivalent correction as c407bd9 into main on November 6; no packaged safe version established.
 ---
 
 The iterator combines stored trie branches with newly hashed state entries. Its previous shortcut could skip a seek when the stored branch was deeper than the seek prefix, leaving a newly inserted leaf out of the incremental root. The patch permits that shortcut only when the keys are equal. The upstream regression test and Celo's backport explanation describe this concrete correctness failure.
@@ -105,3 +130,5 @@ Reth 2.10.0 lists PR 28264, and Base 1.5.3 explicitly says it prevents a state-r
 L3 reflects an integrity bug in a widely used execution-client family and an actionable operator update. These original records do not establish an attacker stealing assets, remote code execution, a chain-wide compromise or confirmed user losses. Claims about paused bridges or incorrect proof responses require their own original evidence and are not used to expand the verified scope here.
 
 **November 6 BNB backports:** BNB Reth merged the upstream-equivalent correction on main and separately on its v2.8 integration branch. Verify the actual fork/commit in the deployed artifact; a merged source patch is not evidence of a released build or fleet-wide deployment. These technical records do not establish a chain-wide incident, confirmed user loss or the extent of BNB Chain exposure.
+
+**November 6 Morph and Gravity follow-up:** Morph’s released morph-reth 1.4.1 hotfix uses upstream Reth 2.5.2 plus the trie fix through morph-l2/reth v2.5.2-morph.1, avoiding an immediate full upstream upgrade. Its release requires upgrading every node, including followers, without a database migration or resync. Gravity separately merged its equivalent correction on main; no fixed Gravity release number was established. These records expand patch coverage, not evidence of theft or a chain-wide compromise.
