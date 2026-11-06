@@ -5,21 +5,21 @@ splash: 访问攻击页面或 8 月 27 日至 9 月 3 日载入被篡改 Plerdy 
 wipe: 更新移动系统及浏览器，保留网站／设备证据，核验脚本，从可信设备吊销暴露会话。
 inTheWildNote: Sekoia 记录实际部署的利用投递，未提供确认的访客感染总数。
 cves:
-- name: Sekoia 报告的利用链组件
+- name: A／B 类 WebKit 初始入口
   description: 已知且早已修补的漏洞，用于取得的移动利用链，不是新披露的零日。
-- name: Sekoia 报告的利用链组件
+- name: A 类指针认证绕过
   description: 已知且早已修补的漏洞，用于取得的移动利用链，不是新披露的零日。
-- name: Sekoia 报告的利用链组件
+- name: B 类指针认证绕过
   description: 已知且早已修补的漏洞，用于取得的移动利用链，不是新披露的零日。
-- name: Sekoia 报告的利用链组件
+- name: B 类沙箱逃逸第一步
   description: 已知且早已修补的漏洞，用于取得的移动利用链，不是新披露的零日。
-- name: Sekoia 报告的利用链组件
+- name: B 类沙箱逃逸第二步
   description: 已知且早已修补的漏洞，用于取得的移动利用链，不是新披露的零日。
-- name: Sekoia 报告的利用链组件
+- name: B 类内核提权
   description: 已知且早已修补的漏洞，用于取得的移动利用链，不是新披露的零日。
-- name: Sekoia 报告的利用链组件
+- name: C 类 Chrome 初始入口
   description: 已知且早已修补的漏洞，用于取得的移动利用链，不是新披露的零日。
-- name: Sekoia 报告的利用链组件
+- name: C 类 Android 提权
   description: 已知且早已修补的漏洞，用于取得的移动利用链，不是新披露的零日。
 timeline:
 - date: 2026年8月27日
