@@ -136,11 +136,11 @@ sources:
 - name: BNB Reth dependency v0.1.4 release
   url: https://github.com/bnb-chain/reth/releases/tag/v0.1.4
   primary: true
-  says: Prerelease dependency tag includes PR 254 / 3b2bd02; release API dates publication to November 6 02:20:56 UTC.
+  says: Prerelease dependency tag includes PR 254 / 3b2bd02; GitHub’s UTC timestamp dates publication to November 6 02:20:56 UTC.
 - name: BNB reth-bsc 0.1.4-hotfix release
   url: https://github.com/bnb-chain/reth-bsc/releases/tag/v0.1.4-hotfix
   primary: true
-  says: Released node hotfix pins reth v0.1.4; all mainnet/testnet reth-bsc operators should upgrade and restart, without database migration or hardfork for this fix. Release API gives November 6 02:53:35 UTC.
+  says: Released node hotfix pins reth v0.1.4; all mainnet/testnet reth-bsc operators should upgrade and restart, without database migration or hardfork for this fix. GitHub’s UTC timestamp gives November 6 02:53:35 UTC.
 ---
 
 The iterator combines stored trie branches with newly hashed state entries. Its previous shortcut could skip a seek when the stored branch was deeper than the seek prefix, leaving a newly inserted leaf out of the incremental root. The patch permits that shortcut only when the keys are equal. The upstream regression test and Celo's backport explanation describe this concrete correctness failure.
@@ -153,4 +153,4 @@ L3 reflects an integrity bug in a widely used execution-client family and an act
 
 **November 6 Morph and Gravity follow-up:** Morph’s released morph-reth 1.4.1 hotfix uses upstream Reth 2.5.2 plus the trie fix through morph-l2/reth v2.5.2-morph.1, avoiding an immediate full upstream upgrade. Its release requires upgrading every node, including followers, without a database migration or resync. Gravity separately merged its equivalent correction on main; no fixed Gravity release number was established. These records expand patch coverage, not evidence of theft or a chain-wide compromise.
 
-**BNB released hotfix:** The node release `reth-bsc v0.1.4-hotfix` now provides a packaged remediation, beyond the earlier source merges. Its dependency tag `bnb-chain/reth v0.1.4` is marked prerelease; those are separate repositories and version contexts. Follow the hotfix instructions for the actual reth-bsc deployment. This does not establish that every BNB client uses the affected code, that the separate v2.8 branch has a released fix, or that exploitation occurred.
+**BNB released hotfix:** The node release `reth-bsc v0.1.4-hotfix` now provides a released node remediation, beyond the earlier source merges. Its dependency tag `bnb-chain/reth v0.1.4` is marked prerelease; those are separate repositories and version contexts. Follow the hotfix instructions for the actual reth-bsc deployment. This does not establish that every BNB client uses the affected code, that the separate v2.8 branch has a released fix, or that exploitation occurred.
