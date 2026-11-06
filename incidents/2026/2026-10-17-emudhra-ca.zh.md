@@ -85,6 +85,14 @@ fixed:
     status: 移除 eMudhra 可信链，须满足平台及迁移要求
   - product: Rundeck／Runbook Automation／Runner 官方 Docker 镜像
     status: 拉取更新镜像并重建容器；主机安装 Rundeck 须分别更新系统及 Java 信任库
+  - product: New Relic Synthetics job manager
+    status: 拉取并重新部署全部 Private location 镜像，再重启；不会自动更新
+  - product: New Relic Synthetics Node API runtime
+    status: 拉取并重新部署全部 Private location 镜像，再重启；不会自动更新
+  - product: New Relic Synthetics Node browser runtime
+    status: 拉取并重新部署全部 Private location 镜像，再重启；不会自动更新
+  - product: New Relic Synthetics ping runtime
+    status: 拉取并重新部署全部 Private location 镜像，再重启；不会自动更新
 timeline:
   - date: 2025年4月30日
     title: 私钥生成，同一批共 24 张中间证书
@@ -168,6 +176,9 @@ timeline:
   - date: 2026年11月5日
     title: gRPC 为另外两条旧线发布根证书修复
     body: 1.78.2 和 1.80.1 发布记录包含根证书修复。Python 和 Ruby 公告现将它们与 1.82.3、1.83.2、1.84.1 一并列出。PHP Composer 保留独立的 1.84.1 下限。
+  - date: 2026年11月6日
+    title: New Relic 要求手动更新 Synthetics 镜像并迁移旧运行时
+    body: NR26-12 列出四项 Private location 镜像下限，任何运行时均须更新并重启；最新版 Public location 已修补，但两种位置的 Node16.10 监测均须在 11 月 18 日停止支持前迁至厂商运行时22.23.0。
   - date: 2026年10月27日前后
     title: Chrome Root Store v43 移除 emSign ECC Root CA - G3
   - date: 2026年11月前后
@@ -234,6 +245,8 @@ checklist:
     hint: SonicOS 7.3.4-7015 移除 eMudhra 链（GEN7-59578）。核实平台支持及升级前提，版本不支持降级。NSv 从 7.0.1 升至 7.1 或更高版本需要全新安装；管理 7.3.4 需要 NSM On-Premises 4.4，GMS 无法管理 SonicOS 7.1.x 及更高版本。若 GeoIP 曾固定为 204.212.170.21，改用默认解析或新 GeoIP 地址 204.212.170.31；不要将 Botnet Remote Server Address 设为后者。若 DNS 不可用，按发布说明手动设置 Botnet 端点。另行检查自定义证书及依赖连接。
   - title: 用修正信任库的镜像重建 Rundeck 和 Runner 容器
     hint: 拉取官方 6.3.0 镜像，重建 Rundeck、Runbook Automation 及 Docker／Kubernetes Runner 容器。仅在运行中容器执行 apt-get upgrade 的更改会在重建时丢失。RPM／DEB／WAR 安装的 Rundeck 或 Runbook Automation 需更新主机系统 ca-certificates 包与 Java 运行时信任库，再重启 Rundeck。主机安装的 Runner 使用主机信任库，按主机厂商指引更新该库。厂商称 Runbook Automation SaaS 未受影响。在容器内或主机执行 curl https://dv-g3b-emudhra.we-have-a-problem.com/，预期以证书错误拒绝；TLS 成功意味着仍保留受影响信任。curl 只检查其系统库，不能验证 Java 或全部自定义库，须分别核验。
+  - title: 重新部署 New Relic Synthetics 并迁移 Node16 监测
+    hint: NR26-12 要求全部 Private location 拉取并重新部署 SJM v642+、Node API runtime1.2.296+、Node browser runtime3.0.259+ 及 ping runtime1.87.0+，随后重启容器，不论原有运行时。于 NRQL 查询编辑器执行 SELECT uniques(monitorName) FROM SyntheticCheck WHERE runtimeType = 'NODE_API' AND runtimeTypeVersion = '16.10' SINCE 1 day ago，或在 Synthetics EOL 过滤 Script API。Public 和 Private location 的 Node16.10 监测均应在 11 月 18 日前迁至 New Relic 所列运行时22.23.0，并测试运行。Public 最新 Node22／浏览器／ping 基础设施已修补，Public Node16 自动迁移拟于18日开始，不代表今天已完成。没有具体失陷证据时不要求统一轮换 secure credentials；部署疑问联系 New Relic 支持。
 sources:
   - says: 私钥是小于 256 的整数；报告时间、OneCRL 条目，以及 10月18日的吊销
   - name: eMudhra 声明
@@ -324,6 +337,8 @@ sources:
   - name: Rundeck eMudhra 信任库公告
   - name: Rundeck 6.3.0 发布说明
 
+  - name: New Relic NR26-12 Synthetics 公告
+    says: 11 月 6 日发布，列明四项 Private location 镜像下限、全部运行时重启、Public location 例外、Node16.10 迁移及11月18日停止支持、排查查询、未发现镜像篡改及无统一 secure credentials 轮换要求。
 ---
 CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eMudhra 有八张中间证书，P-384 私钥都是**小于 256 的整数**。据研究人员 Scott Helme 说，其中一个就是数字 4。谁要是注意到了，就能给任意域名签证书，而所有信任这条链的客户端都会照单全收。
 
@@ -385,3 +400,5 @@ CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eM
 **SonicOS 信任库跟进：** 11 月发布说明确认 7.3.4-7015 移除 eMudhra 链。这是具体产品的处置，不是新的 CA 事件，也不能证明所有 SonicWall 版本均已移除该链。来源只给出月份，不推断准确发布日期。原有浏览器、运行时期限及证书更换要求仍适用。
 
 **Rundeck 部署补充：** 厂商 10 月 23 日公告说明了 10 月 22 日发布的 6.3.0 官方 Docker 镜像对同一 CA 事件的修复。这里补上此前遗漏的下游处置路径，不是新的 CA 事件。SaaS 不受影响，主机管理的系统及 Java 信任库、容器化 Runner 则须按实际部署分别处理。curl 拒绝证书不能证明 Java 的独立信任库也已更新。
+
+**11 月 6 日 New Relic 下游公告：** NR26-12 要求手动拉取并重新部署上方四项 Private location 镜像，随后重启容器；Private location 镜像不会自动更新。Public location 使用 Node22 的 Scripted API、浏览器运行时及 ping 监测，其基础设施镜像已修补，针对本 CA 问题无需操作；固定在 Node16.10 的监测属于例外，两种位置均须迁移。所列22.23.0是 New Relic 的 Synthetics 迁移运行时，不替代另一篇10月Node发布事件中的独立Node安全版本下限。应在11月18日停止支持及计划Public自动迁移前测试。New Relic 称未发现合成监测镜像篡改证据，仅在有具体理由怀疑网络或基础设施失陷时要求轮换 secure credentials。
