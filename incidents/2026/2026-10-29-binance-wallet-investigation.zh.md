@@ -127,12 +127,12 @@ timeline:
   - date: 11月6日 04:00 UTC
     title: 第 9 次更新安排进一步扩大提现
     body: 九个指定网络上的更多资产／网络组合在检查后逐步开放，不会同时全部可用；充值继续开放，须核实具体组合的实时状态。
-  - date: 11月1日 06:00–09:00 UTC（计划）
-    title: 计划启动第一阶段提现
-
   - date: 2026年11月5日
     title: Global Ledger 发布截至 11 月 4 日的持仓与冻结快照
     body: 研究估计关联地址仍持有 59.9 亿美元，其中冻结 28.2 亿、可自由持有 31.6 亿；所选转出样本为 12.8 亿，不覆盖全部被盗资产。这是未经独立核实的研究估计，不是返还资金。
+  - date: 11月1日 06:00–09:00 UTC（计划）
+    title: 计划启动第一阶段提现
+
 checklist:
   - title: 使用官方渠道，拒绝资产追回消息
     hint: 通过已有书签或官方应用访问币安，查看充值和提款恢复公告；11 月 1 日公告计划于 06:00–09:00 UTC 启动第一阶段提款；在提款页或网络状态页核对具体资产与网络组合。后续官方更新将 Bitcoin 列为首批网络，后续更新确认以太坊上的 USDC、USDT、ETH，以及 BSC 上的 USDC、USDT、BNB 已恢复提现，不代表所有列出的组合均已开放。币安称后续提现使用已加入更新储备地址清单的新钱包。核对收款地址及设备安全；仍可能拥堵，公告建议必要时稍后重试。使用 Binance Verify 或官方支持核实陌生联系。不要分享密码或 2FA 验证码，不要点击资产追回链接，也不要向冒充客服的人转账。 后续原帖另确认 XRP 网络的 XRP、Base 的 ETH 和 USDC、DOGE 网络的 DOGE、Optimism 的 ETH、USDT 和 USDC、ZEC 网络的 ZEC、TON 的 USDT 和 GRAM，以及 SUI 网络的 SUI。链接中的中间更新另确认 Arbitrum 的 ARB、ETH、USDT 和 USDC，TRX 的 TRX 和 USDT，Solana 的 SOL、USDT 和 USDC，Polygon 的 POL、USDT 和 USDC，以及 Avalanche C-Chain 的 AVAX、USDT 和 USDC。仍须实时核对具体组合；这些声明不代表各网络上的全部资产均已开放。 第 8 次公告宣布从 11 月 5 日 04:00 UTC 起增加 ETH、BSC、Base、TRX、MATIC 和 SUI 上的组合；应对照完整表格并实时核对具体组合，列出某资产不代表其所有网络均开放。充值继续开放，逐步恢复期间可能延迟，必要时稍后重试。

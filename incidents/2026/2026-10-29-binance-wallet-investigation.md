@@ -133,12 +133,12 @@ timeline:
   - date: Nov 6, 04:00 UTC
     title: Update 9 schedules a further withdrawal expansion
     body: More asset/network pairs across nine named networks reopen progressively after checks, not all at once. Deposits stay open; live availability remains pair-specific.
-  - date: Nov 1, 06:00–09:00 UTC (scheduled)
-    title: First withdrawal phase is planned
-
   - date: Nov 5, 2026
     title: Global Ledger publishes a November 4 holdings and freeze snapshot
     body: Its research estimates $5.99B still at linked addresses, including $2.82B frozen and $3.16B freely held. The selected tracing sample is $1.28B of outflows, not the entire theft; these are unverified research estimates, not returned funds.
+  - date: Nov 1, 06:00–09:00 UTC (scheduled)
+    title: First withdrawal phase is planned
+
 checklist:
   - title: Use official channels and reject recovery messages
     hint: Open Binance through your existing bookmark or official app and check its announcements for deposit and withdrawal restoration. The November 1 notice schedules the first withdrawal phase for 06:00–09:00 UTC; check your exact asset/network pair on the withdrawal or network-status page. The subsequent official update names Bitcoin as the first batch; a later update confirms Ethereum withdrawals for USDC, USDT and ETH, and BSC withdrawals for USDC, USDT and BNB. Later original posts also confirm XRP on XRP; ETH and USDC on Base; DOGE on DOGE; ETH, USDT and USDC on Optimism; ZEC on ZEC; USDT and GRAM on TON; and SUI on SUI. The linked intermediate updates also confirm ARB, ETH, USDT and USDC on Arbitrum; TRX and USDT on TRX; SOL, USDT and USDC on Solana; POL, USDT and USDC on Polygon; and AVAX, USDT and USDC on Avalanche C-Chain. Verify the exact pair live; these statements do not establish that every asset on these networks is available. Binance says future withdrawals use new wallets in its updated reserve-address list. Verify destination addresses and device security; congestion remains possible. The notice advises retrying later if needed. Verify unsolicited communications with Binance Verify or official support. Do not share passwords or 2FA codes, follow recovery links, or send money to purported support agents. Update 8 announces more pairs from November 5 04:00 UTC on ETH, BSC, Base, TRX, MATIC and SUI. Use its exact table and check the selected pair live; listing an asset does not mean all its networks are open. Deposits remain open, and delays/retries may occur during rollout.
