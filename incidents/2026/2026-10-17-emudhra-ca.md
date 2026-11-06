@@ -207,7 +207,7 @@ timeline:
     body: The issuer reports a November 16 SCT cutoff for Chrome and Mozilla and all-G1 Apple removal on November 30. It says migration is complete outside the US, where transition continues. Browser policy details remain subject to each root program.
   - date: Nov 5, 2026
     title: gRPC releases root-store fixes for two more older lines
-    body: Releases 1.78.2 and 1.80.1 include root-store fixes. The Python and Ruby advisory APIs now list these alongside 1.82.3, 1.83.2 and 1.84.1; their HTML pages may still show only the three newer thresholds. PHP Composer retains its separate 1.84.1 minimum.
+    body: Releases 1.78.2 and 1.80.1 include root-store fixes. The Python and Ruby advisories now list these alongside 1.82.3, 1.83.2 and 1.84.1. PHP Composer retains its separate 1.84.1 minimum.
   - date: ~Oct 27, 2026
     title: Chrome Root Store v43 removes the emSign ECC Root CA - G3
 checklist:
@@ -505,4 +505,4 @@ For an unpatched Oracle runtime, the [operational guide](https://ops.java/emudhr
 
 **November 5 issuer update:** eMudhra reports that migration to other providers is complete outside the US, with US customers still transitioning. It reports November 16 SCT constraints for Chrome/Mozilla and November 30 removal of all G1 certificates on Apple platforms, including earlier issuance. This is the issuer’s account of the schedules; Chrome’s independently read precise cutoff remains above. No completed US transition or universal continued trust of earlier certificates is established.
 
-**November 6 correction to older-line coverage:** The November 5 releases 1.78.2 and 1.80.1 also repair the bundled root store. The Python and Ruby advisory APIs now list five patch paths, although the HTML advisory tables still show only three. Use the patch matching the installed release line or migrate to 1.84.1 or later; versions 1.81.x need the 1.82.3 path. This extends the earlier three-version guidance without changing the PHP Composer or Objective-C minimums. The requirement to verify explicit/custom roots and rebuild or restart affected applications remains. It does not establish another CA compromise or new exploitation.
+**November 6 correction to older-line coverage:** The November 5 releases 1.78.2 and 1.80.1 also repair the bundled root store. The Python and Ruby advisories now list five patch paths. Use the patch matching the installed release line or migrate to 1.84.1 or later; versions 1.81.x need the 1.82.3 path. This extends the earlier three-version guidance without changing the PHP Composer or Objective-C minimums. The requirement to verify explicit/custom roots and rebuild or restart affected applications remains. It does not establish another CA compromise or new exploitation.
