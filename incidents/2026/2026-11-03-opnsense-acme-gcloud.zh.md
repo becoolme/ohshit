@@ -6,7 +6,7 @@ wipe: 将 os-acme-client 更新至 4.18 并核查证书管理权限；Selfhost D
 inTheWildNote: 原始插件修复及 CVE 记录未确立在野攻击或受害者。
 cves:
 - name: Google Cloud DNS 验证命令注入
-  description: DnsGcloud::prepare() 将解码后的 gcloud_account／gcloud_project 拼入 shell 命令。CNA 给出 CVSS4.0 9.4，要求低权限。
+  description: DnsGcloud::prepare() 将解码后的 gcloud_account／gcloud_project 拼入 shell 命令。CNA 给出 CVSS 4.0 9.4，要求低权限。
 fixed:
 - product: OPNsense os-acme-client 插件
   status: 插件变更记录明确修复 Google Cloud DNS 命令注入；不是 OPNsense 核心版本号
@@ -30,7 +30,7 @@ sources:
 - name: OPNsense 插件变更记录
   says: 4.18 明确修复命令注入，并要求 Selfhost DNS API 密钥凭据重新填写。
 - name: 原始 CVE CNA 记录
-  says: 11 月 5 日记录说明 Google Cloud DNS、插件至 4.17、需认证签发／续期权限、root 执行及 CVSS4.0 9.4。
+  says: 11 月 5 日记录说明 Google Cloud DNS、插件至 4.17、需认证签发／续期权限、root 执行及 CVSS 4.0 9.4。
 ---
 
 解码后的 Google Cloud DNS 模型字段 gcloud_account 和 gcloud_project 未经验证或 shell 转义，经 LeUtils::run_shell_command() 传入 proc_open()。被授予证书签发或续期权限的用户可因此跨越权限边界，执行任意 root 代码。暴露取决于特定插件、模块及已认证证书管理权限；来源未确立 OPNsense 核心遭未认证入侵。
