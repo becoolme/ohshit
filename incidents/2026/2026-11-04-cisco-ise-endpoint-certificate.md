@@ -10,7 +10,7 @@ summary: Cisco ISE and ISE-PIC can issue an endpoint identity certificate to an 
 splash: Network-reachable Cisco ISE or ISE-PIC on an affected release, regardless of configuration; ISE-PIC support ends at 3.4.
 wipe: Install the matching Cisco patch, verify every deployment node and review suspicious certificate issuance through established security procedures.
 inTheWild: unknown
-inTheWildNote: Cisco PSIRT reports no known malicious use or public exploitation announcement in the November 4 advisory.
+inTheWildNote: Cisco PSIRT reports no known malicious use in its November 4 advisory.
 cves:
 - id: CVE-2026-20241
   score: 5.3
