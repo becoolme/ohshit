@@ -48,7 +48,7 @@ checklist:
 sources:
 - name: WorkOS security bulletin
   url: https://workos.com/security/bulletins/october-30th-2026-data-security-incident
-  says: Confirms internal-tool access and data categories; now also reports no evidence of production/application impact and limits current scope to CRM/support data. Investigation remains ongoing.
+  says: Confirms internal-tool access and data categories; the clarification observed November 3 reported no evidence of production/application impact and limited scope to CRM/support data. The November 6 report supersedes this interim assessment.
   primary: true
 - name: WorkOS CEO statement on Hacker News
   url: https://news.ycombinator.com/item?id=50346301
@@ -71,7 +71,7 @@ updated: '2026-11-06'
 
 The accessed categories include CRM identities and contact details, account histories, excerpts or summaries of sales/support/Slack discussions, and product-usage or connection/directory-health metadata. The initial bulletin did not publish a victim count or technical entry details, and ARTEX was then named separately by the CEO; the November 6 report below supplies attribution and root-cause details. No victim count is provided. This does not establish that WorkOS production authentication services were breached.
 
-**Bulletin clarification:** The public WorkOS bulletin now carries its own assessment that there is no evidence of application-data access or production-service access/impact, and that current findings limit the incident to CRM and customer support data. This adds a direct company bulletin to the CEO’s earlier statement, rather than independently proving the absence of exposure. The undated addition was observed on November 3; exact revision timing is unknown.
+**November 3 bulletin clarification (historical):** The public WorkOS bulletin carried its own assessment that there is no evidence of application-data access or production-service access/impact, and that current findings limit the incident to CRM and customer support data. This adds a direct company bulletin to the CEO’s earlier statement, rather than independently proving the absence of exposure. The undated addition was observed on November 3; exact revision timing is unknown. On November 6, the original bulletin instead linked the new investigation report, which supersedes this interim wording.
 
 
 **November 3 CEO follow-up:** At 20:38 UTC, the CEO said the attack vector had been identified and verified, with no indication of other compromise. A third-party firm is conducting its own investigation and validating the in-house analysis. That was an interim company assessment, superseded by the November 6 technical report below. Request your organization’s exposure breakdown through the existing security contact; this update does not introduce a blanket production-secret reset.
