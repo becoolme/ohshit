@@ -3,7 +3,7 @@ title: Reth trie bug can omit new state entries; upstream and Base fixes are ava
 level: 3
 date: 2026-11-03
 tags: [Reth, Ethereum, integrity]
-summary: Reth's trie iterator could skip a newly inserted leaf and compute an incorrect incremental state root. Upstream 2.10.0 and Base 1.5.3 include the fix; Celo and Mantle merged scoped backports. Full affected ranges and other downstream release coverage need verification. The fix records establish no exploitation or fund loss.
+summary: Reth's trie iterator could skip a new leaf and compute an incorrect incremental state root. Upstream 2.10.0, Base 1.5.3 and op-reth 2.8.1 contain the fix; Celo and Mantle merged scoped backports. Full affected ranges and other downstream releases need verification. The reviewed records do not establish exploitation or fund loss.
 splash: Nodes and applications using an affected Reth trie implementation; exposure depends on the actual fork and pinned revision.
 wipe: Upgrade to a chain-compatible build containing Reth fix 8572c88; verify downstream pins and validate node state after restarting.
 inTheWild: unknown
@@ -13,6 +13,9 @@ fixed:
   - product: Upstream Reth
     version: 2.10.0
     status: Contains the trie fix; use a build compatible with the operated chain
+  - product: OP Stack op-reth
+    version: 2.8.1
+    status: Tagged lockfile contains op-v2.6.0-2 backport; release notes mention only a separate RPC fix
   - product: Base Mainnet and Sepolia node release
     version: 1.5.3
     status: Base recommends upgrading; release notes explicitly link the state-root fix
@@ -24,15 +27,15 @@ timeline:
     title: Celo and Mantle merge scoped backports
     body: Celo updates its celo/reth-v1.0 fork pin; Mantle backports onto its production mantle-v1.6.2 line. Other branches require separate verification.
   - date: Nov 5, 2026
-    title: Reth 2.10.0 and Base 1.5.3 include the fix
-    body: Upstream lists the trie seek-boundary correction. Base recommends its new build for Mainnet and Sepolia and explicitly links the same fix.
+    title: Reth 2.10.0, op-reth 2.8.1 and Base 1.5.3 contain the fix
+    body: Upstream lists the trie correction; the op-reth release tag pins its backport despite RPC-only release notes. Base recommends its new build for Mainnet and Sepolia and links the same fix.
 checklist:
   - title: Identify the client and the actual Reth revision
     hint: Inventory the running binary or container, chain, fork, image digest and dependency lockfile. Look for upstream merge 8572c88fe04fb2213d86f020ed9e72e612abb097 or the vendor's equivalent backport. A version from another fork is not a reliable threshold; the complete affected range is not established here.
   - title: Install the matching released fix and restart the node
-    hint: Use official upstream Reth 2.10.0 or the Base 1.5.3 release as appropriate. Base's release covers Mainnet and Sepolia and gives no deadline. Verify published artifacts and signatures before replacing the binary or image, then confirm the running version after restart. Reth publishes signing fingerprint 50FB 7CC5 5B2E 8AFA 59FE 03B7 AA5E D56A 7FBF 253E.
+    hint: Use official upstream Reth 2.10.0 or the Base 1.5.3 release as appropriate. Upstream rates the release high priority for builders and non-builders; Base covers Mainnet and Sepolia and gives no deadline. OP Stack operators can use op-reth 2.8.1, whose tagged lockfile includes the backport. Verify published artifacts and signatures before replacing the binary or image, then confirm the running version after restart. Reth publishes signing fingerprint 50FB 7CC5 5B2E 8AFA 59FE 03B7 AA5E D56A 7FBF 253E.
   - title: Confirm Celo, Mantle and OP Stack backport coverage
-    hint: Celo PR 369 moves celo/reth-v1.0 to reth pin 74cc8bbce7631c3586ab446460590fef6630d258; it says main needs a separate cherry-pick. Mantle PR 237 targets production mantle-v1.6.2 and identifies dev/mantle-v1.6.3 and dev/mantle-v1.7.0 for follow-up. Ask each vendor for a released build carrying its patch. The reviewed op-reth 2.8.1 notes describe an eth_capabilities fix and do not establish trie-fix inclusion; verify the pinned source rather than assuming that release resolves this issue.
+    hint: Celo PR 369 moves celo/reth-v1.0 to reth pin 74cc8bbce7631c3586ab446460590fef6630d258; it says main needs a separate cherry-pick. Mantle PR 237 targets production mantle-v1.6.2 and identifies dev/mantle-v1.6.3 and dev/mantle-v1.7.0 for follow-up. Ask each vendor for a released build carrying its patch. For op-reth 2.8.1, rust/Cargo.lock pins reth-trie to op-v2.6.0-2 / 3c5f2f11c4e5a5647e6e911cd131ccf1bada4f25, the upstream-equivalent backport. PR 23924 and the release tag confirm inclusion even though its notes mention only eth_capabilities. Verify the running artifact, not just the release-note wording.
   - title: Check node integrity before relying on its responses
     hint: Preserve mismatch logs, affected block numbers and build identifiers. As a defensive validation step, compare synchronization and affected state roots against an independently trusted, patched provider; investigate persistent mismatches through the chain's official recovery procedure. The reviewed fix records do not prescribe a universal database deletion or resync procedure. Protocol and RPC operators should verify their own providers' build coverage before relying on state data.
 sources:
@@ -63,11 +66,23 @@ sources:
   - name: OP Stack op-reth 2.8.1 release notes
     url: https://github.com/ethereum-optimism/optimism/releases/tag/op-reth%2Fv2.8.1
     primary: true
-    says: Describes an eth_capabilities correction; these notes alone do not verify the separate trie fix.
+    says: Describes an eth_capabilities correction; trie-fix inclusion is independently established by the tagged lockfile and original backport records.
+  - name: OP Stack dependency backport PR API
+    url: https://api.github.com/repos/ethereum-optimism/optimism/pulls/23924
+    primary: true
+    says: Merged November5 as 7220729, the op-reth2.8.1 release commit; pins fork tag op-v2.6.0-2.
+  - name: OP Reth original trie backport API
+    url: https://api.github.com/repos/ethereum-optimism/reth/pulls/32
+    primary: true
+    says: Backports upstream8572c88 as 3c5f2f11, with only a test-import adjustment.
+  - name: op-reth 2.8.1 tagged dependency lockfile
+    url: https://raw.githubusercontent.com/ethereum-optimism/optimism/op-reth/v2.8.1/rust/Cargo.lock
+    primary: true
+    says: The published tag pins reth-trie to op-v2.6.0-2 and commit3c5f2f11c4e5a5647e6e911cd131ccf1bada4f25.
 ---
 
 The iterator combines stored trie branches with newly hashed state entries. Its previous shortcut could skip a seek when the stored branch was deeper than the seek prefix, leaving a newly inserted leaf out of the incremental root. The patch permits that shortcut only when the keys are equal. The upstream regression test and Celo's backport explanation describe this concrete correctness failure.
 
-Reth 2.10.0 lists PR 28264, and Base 1.5.3 explicitly says it prevents a state-root mismatch through that same patch. Celo and Mantle published narrower backports tied to their own dependency pins. A merged backport does not establish that every deployed node or every branch already runs it. Full vulnerable-version ranges and downstream packaged-release thresholds remain incomplete.
+Reth 2.10.0 lists PR 28264, and Base 1.5.3 explicitly says it prevents a state-root mismatch through that same patch. Celo and Mantle published narrower backports tied to their own dependency pins. A merged backport does not establish that every deployed node or every branch already runs it. The op-reth 2.8.1 tag also contains the backport: its release commit merges PR 23924 and rust/Cargo.lock pins the corrected fork revision. Its release notes only mention an unrelated RPC correction, so those notes alone would miss this fix. Full vulnerable-version ranges and other downstream packaged-release thresholds remain incomplete.
 
 L3 reflects an integrity bug in a widely used execution-client family and an actionable operator update. These original records do not establish an attacker stealing assets, remote code execution, a chain-wide compromise or confirmed user losses. Claims about paused bridges or incorrect proof responses require their own original evidence and are not used to expand the verified scope here.
