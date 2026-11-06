@@ -2,7 +2,7 @@
 title: BTCPay confirms old-flaw wallet thefts and requires fresh-server recovery
 level: 4
 date: 2026-11-01
-updated: '2026-11-03'
+updated: '2026-11-06'
 tags: [BTCPay, Bitcoin, hot wallets]
 ecosystems: [crypto]
 summary: BTCPay confirms thefts on 2.4.1 and older via a different method for the flaw fixed in August’s 2.4.2. Older or compromised installs need a clean VM, new wallet seed and replacement credentials, even after updating. Bitquery’s ~$1.63m/682 sweeps remain unverified transaction estimates, not victim counts.
@@ -10,8 +10,18 @@ splash: The identified attack path targets BTCPay Server 2.4.1 and older; hot wa
 wipe: For affected older or compromised installs, sweep to a new seed, rebuild on a clean VM and replace exposed credentials
 inTheWild: yes
 inTheWildNote: BTCPay confirms BTC/LTC thefts targeting 2.4.1 and earlier.
-cves: []
-fixed: []
+cves:
+  - id: CVE-2026-119757
+    score: 9.8
+    name: LND macaroon credential disclosure in the August-fixed vulnerability
+    description: VulnCheck published this identifier November 5 for unauthenticated LND credential-file retrieval before 2.4.2, including release candidates. CVSS 3.1 is 9.8 (CVSS 4.0 is 9.3); this does not independently explain the different November exploitation method.
+fixed:
+  - product: BTCPay Server minimum for the August LND disclosure
+    version: 2.4.2
+    status: Excludes 2.4.2 release candidates; use the current supported release, and rebuild compromised hosts
+  - product: LND in the August BTCPay update
+    version: 0.21.1
+    status: Verify deployment and regenerated macaroons; separately exposed routes need manual credential rotation
 timeline:
   - date: Nov 1, 13:46 UTC
     title: Later report dates one reported wallet drain
@@ -37,6 +47,9 @@ timeline:
   - date: Nov 2, 2026
     title: Full project report confirms old-flaw exploitation and recovery steps
     body: The project ties the attacks to a different exploitation method for the flaw fixed in August’s 2.4.2. It calls for a fresh server, new seed and credential replacement on affected older installs, even after an update or without visible theft.
+  - date: Nov 5, 2026
+    title: CVE record identifies the August LND credential-disclosure flaw
+    body: CVE-2026-119757 covers unauthenticated .macaroon retrieval before 2.4.2, including release candidates. The August advisory excludes ordinary BTCPay on-chain wallets from that specific path; the November report still requires broader old-server recovery for its different exploitation method.
 checklist:
   - title: Move affected installations to a fresh server and new wallet
     hint: If running 2.4.1 or earlier, or updated from those versions after the November 1 warning, use a trusted device/new seed to sweep remaining hot-wallet funds to a new wallet, then take the old instance offline and preserve evidence. For the official Docker deployment, run ./btcpay-down.sh from the existing btcpayserver-docker directory; for other deployments contact your operator. Shutdown interrupts payment processing. This also applies without a visible theft or with keys held elsewhere; any signs of compromise require the same response regardless of current version. Provision a clean VM, install the latest supported release from trusted sources, connect the new wallet and do not restore the whole old machine. Contact your hosting provider if it was automatically stopped. Never reuse the old seed.
@@ -49,6 +62,8 @@ checklist:
     hint: Log in and check the version at the page bottom, using preserved records if the server is offline. Review retained administrator login and wallet transaction records. The project observed no impact from these attacks on servers already at 2.4.2 or later when it warned on November 1; install the latest supported release on a clean machine rather than stopping at the old minimum. Send version/update history, incident time with timezone and public transaction IDs/addresses to security@btcpayserver.org; redact secrets and report stolen funds to local authorities.
   - title: Compare retained transactions with the published tracing record
     hint: Bitquery names BTC collector bc1p0f7wmcnesrapznymf9ljdn04pudgmh96sqtrm9vmgqxdh666fh8qvn63r7, LTC collector ltc1qp49tmfdueyaqrmgrx0uyx4uegyygt8yt02whee, associated BTC wallet bc1qqjynymlsxuanp5tavacqjz6588pt0n9nh6aru5, payout addresses bc1qn3fze9w3c0m38y84v76qr2z5dz9cjx0hz4aeva and bc1q8hyw6c47t4cskvn655csdc8ym7wc7tcnj6ws4j, and older onward recipient bc1qxy6r4hznukvwkavz7aq9rnresr53trx6zn644k. Its transaction references are 870ec7afc3792dc02e81718e8fbaaad7ccdfdc77dbd89f45523393427703b82c, 7a81bddd918af1fb49b323f56820491e9e4147355adca9a1a4418c9ec1bb1b1d and 8e25f0a572f562dd12514607eac4687408af09df8ccacd41e9acc66cea54ec11. The second wallet is behaviorally linked with moderate-high confidence, not independently labeled. These are research-assigned roles, not proof of who controls an onward recipient. A match alone does not prove your instance was compromised; preserve the transaction and server evidence for investigation.
+  - title: Verify LND credentials and independently exposed access paths
+    hint: The August advisory for the newly numbered CVE fixes BTCPay at 2.4.2 and bundles LND 0.21.1 with macaroon regeneration. In a standard deployment use Server Settings → Maintenance → Update, then verify the footer and LND version; use the latest supported release rather than treating the August minimum as current. Review unauthorized LND payments, channel closures, peers and balances. Rotate macaroons for custom reverse-proxy, Tor or forwarded-port exposure; an app update does not close those paths. The August Docker update temporarily removes public LND API access, affecting wallets such as Zeus. Keep the November fresh-VM/new-seed recovery above for older or compromised machines; the August LND-only scope must not narrow that later instruction.
 sources:
   - name: BTCPay Server original emergency alert
     url: https://x.com/BtcpayServer/status/2117020340815819262
@@ -93,6 +108,14 @@ sources:
     url: https://blog.btcpayserver.org/btcpay-server-security-incident-2-4-1-and-earlier/
     primary: true
     says: 'Resolves truncated-post gap: August flaw exploited differently; pre-warning2.4.2+ no observed impact; new seed/VM and secret replacement required for older or compromised installs. Collector history is not a confirmed loss total.'
+  - name: BTCPay August advisory for the LND credential risk
+    url: https://blog.btcpayserver.org/security-advisory-btcpay-server-2-4-2/
+    primary: true
+    says: August 7 advisory, last updated November 2, confirms exploitation, limits its credential path to LND, lists BTCPay 2.4.2/LND 0.21.1 and credential/API handling. The separate November report uses a different exploitation method and retains broader rebuilding instructions.
+  - name: VulnCheck CNA record for CVE-2026-119757
+    url: https://cveawg.mitre.org/api/cve/CVE-2026-119757
+    primary: true
+    says: Published November 5 at 21:44:41 UTC; August disclosure date, affected range, known-exploited tag and CVSS 3.1 9.8 / 4.0 9.3. It does not quantify the November losses or independently map every BTC/LTC sweep to LND.
 ---
 
 The project's November 1 warning is an actionable containment request for operators of a self-hosted payment system. Reports of actual wallet sweeps support L4, while the investigation remains preliminary. The initial alert did not establish how many instances were affected, how much was taken, whether every hot wallet is exposed, or whether the entry point is software, credentials or a deployment component.
@@ -108,3 +131,5 @@ Bitcoin coverage ends at block **974216 (November 2, 05:42 UTC)**; Litecoin cove
 The project separately confirms that some hosting providers automatically shut down older instances. Verify your own service state with the provider before any restart; that notice supplies no complete host-cleanup or funds-recovery procedure.
 
 **Full November 2 report, verified November 3:** This supersedes the earlier incomplete recovery guidance and uncertainty over linkage to the August flaw. BTCPay confirms a different method against the vulnerability fixed in 2.4.2. Servers already at 2.4.2 or later when the November 1 warning was issued showed no observed impact from these attacks. Older installs, including those upgraded only afterward, should move to a fresh VM and new-seed wallet even without visible theft; signs of compromise trigger the same response regardless of present version. Keys kept off the server were unaffected by these thefts, but older-server rebuilding still applies. The project publishes the same BTC/LTC collector addresses and explicitly warns that earlier activity and unresolved attribution prevent treating their balances/history as confirmed losses. Bitquery’s separate estimate above remains source- and time-bounded, not a vendor-confirmed total.
+
+**November 6 identifier and scope cross-check:** The November 5 CVE record adds an identifier for the August-fixed LND macaroon flaw. The August advisory says ordinary BTCPay on-chain hot wallets and other Lightning implementations are outside that specific credential path; LND’s own on-chain funds can still be exposed. The separate November 2 report explicitly describes a different exploitation method and BTC/LTC hot-wallet thefts. Do not use the August exclusion to declare those older servers safe or infer that all November sweeps were LND withdrawals. Preserve the fresh-VM, new-seed and credential-replacement instructions and the unverified tracing limits above.
