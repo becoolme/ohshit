@@ -2,7 +2,7 @@
 title: Binance preliminary report details signing-service intrusion and revises funding figures
 level: 4
 date: 2026-10-29
-updated: '2026-11-05'
+updated: '2026-11-06'
 tags:
   - Binance
   - crypto
@@ -127,6 +127,9 @@ timeline:
   - date: Nov 5, 2026
     title: Binance proposes Arbitrum release of frozen ETH and ARB
     body: The Constitutional AIP requests 8,425.997 ETH and 74,559,805.2 ARB. Discussion, Snapshot and on-chain governance remain pending; an estimated 49-day process may be extended by legal restraints. This is not completed recovery.
+  - date: Nov 6, 04:00 UTC
+    title: Update9 schedules a further withdrawal expansion
+    body: More asset/network pairs across nine named networks reopen progressively after checks, not all at once. Deposits stay open; live availability remains pair-specific.
   - date: Nov 1, 06:00–09:00 UTC (scheduled)
     title: First withdrawal phase is planned
 
@@ -151,6 +154,8 @@ checklist:
     hint: Read the original Polygon forum proposal, subsequent governance decision and official client release. Separate transaction blocking, proposed recovery, actual returned funds and customer compensation. It lists this case’s addresses 0x5227f603C1eE34CE3C06eFe6477003BDfCCB2f8c, with a historical reference total of 46,626,593.27 POL; roles are the proposal’s attribution and a match alone does not prove a new compromise. Only native POL would move; other tokens and Class B addresses are excluded. Recovery addresses must prove control. A PPGC discussion is planned for November 5 at 14:30 UTC; activation requires governance approval, Amoy rehearsal and a final release, with no client version or activation block decided yet. Do not transfer to unsolicited recovery addresses, connect a wallet or sign a claim. Existing reimbursement and security steps still apply.
   - title: Track Arbitrum recovery separately from customer reimbursement
     hint: Read the original AIP and its votes, not a recovery-message link. It names frozen address 0x0000000000000000000000000000000000000DA0 and proposed Binance recovery address 0xd9fd39103674cb061d64d9c3b73b878dbe610b80; these are proposal roles, not destinations for customer claims or proof of a new compromise. No wallet signature or transfer is required from customers. Release needs the constitutional process and legal/indemnification conditions; the 49-day estimate is not an execution promise. Do not add these frozen balances to losses or compensation paid.
+  - title: Check the Update9 table for your exact asset and network
+    hint: Read the official November6 Recovery Update9 and the live withdrawal/network-status page before submitting. The rollout begins at04:00 UTC across BSC, Base, ETH, Optimism, MATIC, Arbitrum, AVAXC, TRX and SUI; individual pairs are not simultaneous. If processing is delayed, retry after a short wait as instructed by Binance. Reopening is not proof that frozen funds were returned or the reserve proof completed.
 sources:
   - name: Binance investigation notice
     url: https://x.com/binance/status/2115915708504900039
@@ -323,6 +328,10 @@ sources:
     primary: true
     says: November 5 forum proposal requests frozen ETH/ARB release, estimates 49 days, specifies recovery/frozen addresses and legal conditions, and permits reserves replenishment where Binance already covered losses. Not an approved transfer.
 
+  - name: Binance original Recovery Update9 public CMS copy
+    url: https://www.binance.com/bapi/composite/v1/public/cms/article/detail/query?articleCode=a2dd10b860a14c35a856fe9d66d6032c
+    primary: true
+    says: Full November6 original lists nine networks and staged withdrawal pairs from04:00UTC; deposits remain open, live pair status governs and temporary delays are possible.
 ---
 
 Binance’s initial notice said it had not confirmed an impact on user funds. The exchange then edited that notice to state that user funds are safe, and subsequently said withdrawals would resume after the security issue is fully resolved. These are the vendor’s statements, not an independently audited reserve or loss assessment. No resumption time or technical containment report was supplied in those notices. The withdrawal notice does not specify affected networks or withdrawal routes; do not infer that every Binance product is affected. Those earlier notices supported L3 because they acknowledged disruption without confirming the suspected theft.
@@ -382,3 +391,5 @@ The researcher no longer says none of the traced money reached exchange deposit 
 **November 5 research follow-up:** Bitquery reports that a trading bot partially liquidated the attributed Aave position on November 4, repaying **9,884 WETH** and taking **24.4M USDT** from the pool. This is a lending liquidation, not a transfer of that sum back to Binance or a new issuer freeze: the USDT came from the pool, while the attacker retained previously borrowed ETH. At its **November 5 07:37 UTC** holdings snapshot, the researcher estimates about **$3.2bn** still in attributed wallets (previously $3.1bn at the November 4 snapshot), plus a remaining Aave deposit of **35.6M USDT** against **9,885 WETH** debt. The changed dollar valuation is not a newly established theft amount; the report excludes the deposited USDT from its wallet-holdings total. It also follows further Solana proceeds through CCTP and THORChain into Bitcoin. Amounts, linkage and completeness remain **unverified** research findings. Preserve the vendor’s separate loss, blocked-assets, replenishment and staged-withdrawal statements; none of these figures establishes recovery of stolen funds or compromise of Aave, a bridge or every user of those services.
 
 **November 5 Arbitrum recovery proposal:** Binance requests **8,425.997 ETH and 74,559,805.2 ARB** held at the frozen address. Its AIP anticipates forum discussion, a Snapshot temperature check, an on-chain vote and final execution over about 49 days, potentially longer if legal restraints apply. Submission/execution are conditional on the stated legal process and indemnification agreements. No new DAO treasury allocation is requested. Returned assets would address incident losses and costs, potentially replenishing SAFU/treasury reserves already used to cover users; they are not necessarily an additional user payment. This is separate from the Polygon native-POL proposal and does not prove approval, released funds or completed compensation.
+
+**November6 withdrawal expansion:** Recovery Update9 schedules additional pairs from **04:00 UTC** on **BSC, Base, ETH, Optimism, MATIC, Arbitrum, AVAXC, TRX and SUI**. Read its complete asset/network table: examples include USDE/PENDLE on BSC, ZRO/BREV on Base, U/XRP on ETH, ETH/WLD on Optimism and FDUSD on SUI. Each pair opens progressively after security/readiness checks; deposits remain open. Confirm the exact pair on the withdrawal page or official network-status page and allow for temporary delays. This is further service restoration, not an assertion that every withdrawal is available, stolen funds have been recovered or the new reserve proof has finished.
