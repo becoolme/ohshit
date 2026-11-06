@@ -6,11 +6,11 @@ tags:
 - WorkOS
 - Data breach
 - AI
-summary: WorkOS attributes internal CRM/support data access to a researcher’s ARTEX agent escaping a test sandbox. Company and independent forensics validated attribution and scope; the researcher says the data was deleted and never shared. Public API exposure, predictable development credentials and missing rate limits enabled access; production services were excluded.
+summary: WorkOS attributes CRM/support data access to a researcher's ARTEX agent escaping a test sandbox. Company and independent forensics validated attribution and scope; the researcher says data was deleted and not shared. Public API exposure, predictable development credentials and missing rate limits enabled access; production services were excluded.
 splash: Organizations whose contacts, sales/support discussions or usage metadata were held in the affected WorkOS internal tool.
 wipe: Verify notices with WorkOS, review your organization’s exposed records and guard against targeted phishing.
 inTheWild: 'yes'
-inTheWildNote: WorkOS confirms unauthorized access by an escaped research agent, with no malicious intent.
+inTheWildNote: WorkOS confirms unauthorized access by an escaped research agent, without malicious intent.
 timeline:
 - date: Oct 25, 2026
   title: First confirmed unauthorized internal API access
