@@ -127,6 +127,9 @@ timeline:
   - date: Nov 5, 2026
     title: Binance proposes Arbitrum release of frozen ETH and ARB
     body: The Constitutional AIP requests 8,425.997 ETH and 74,559,805.2 ARB. Discussion, Snapshot and on-chain governance remain pending; an estimated 49-day process may be extended by legal restraints. This is not completed recovery.
+  - date: Nov 5, 2026
+    title: SEAL estimates an extended intrusion window and distinguishes TraderTraitor
+    body: The research estimates roughly eight weeks of Binance access before the theft and publishes four front-company domains from broader TraderTraitor campaigns. This is a research estimate, not a precise vendor-confirmed first-access date or proof that each domain was used against Binance.
   - date: Nov 6, 04:00 UTC
     title: Update 9 schedules a further withdrawal expansion
     body: More asset/network pairs across nine named networks reopen progressively after checks, not all at once. Deposits stay open; live availability remains pair-specific.
@@ -156,6 +159,10 @@ checklist:
     hint: Read the original AIP and its votes, not a recovery-message link. It names frozen address 0x0000000000000000000000000000000000000DA0 and proposed Binance recovery address 0xd9fd39103674cb061d64d9c3b73b878dbe610b80; these are proposal roles, not destinations for customer claims or proof of a new compromise. No wallet signature or transfer is required from customers. Release needs the constitutional process and legal/indemnification conditions; the 49-day estimate is not an execution promise. Do not add these frozen balances to losses or compensation paid.
   - title: Check the Update 9 table for your exact asset and network
     hint: Read the official November 6 Recovery Update 9 and the live withdrawal/network-status page before submitting. The rollout begins at 04:00 UTC across BSC, Base, ETH, Optimism, MATIC, Arbitrum, AVAXC, TRX and SUI; individual pairs are not simultaneous. If processing is delayed, retry after a short wait as instructed by Binance. Reopening is not proof that frozen funds were returned or the reserve proof completed.
+  - title: Extend operator hunting beyond the initial recruitment lure
+    hint: SEAL lists citalab.net, citalab.com, bitfit.io and oddium.io as observed TraderTraitor front-company domains; its AFX example also uses git.oddium.io. Hunt these against recruiting, DNS/proxy, endpoint and repository logs, then correlate cloud sessions, lateral movement, privilege changes and signing-service activity. A match alone does not prove compromise, and these are campaign indicators, not confirmed Binance intrusion URLs. SEAL’s roughly eight-week estimate is not a safe log-retention cutoff. Preserve older evidence and independently validate withdrawal instructions against a trusted source.
+  - title: Isolate external coding tasks from signing-adjacent access
+    hint: Use a disposable VM without corporate credentials, SSH keys or cloud sessions for recruitment tasks and unfamiliar code. Report privileged-employee recruitment to security for independent company/domain/recruiter checks; real people and registered front companies do not establish safety. Review short-lived/device-bound sessions, alerts for new devices, integrity checks on wallet/RPC binaries and configurations, and patching/segmentation of privileged security appliances. Configure EDR to block suspicious behavior as one layer, not a guarantee; these are SEAL’s defensive recommendations, not proof Binance has deployed them.
 sources:
   - name: Binance investigation notice
     url: https://x.com/binance/status/2115915708504900039
@@ -332,6 +339,10 @@ sources:
     url: https://www.binance.com/bapi/composite/v1/public/cms/article/detail/query?articleCode=a2dd10b860a14c35a856fe9d66d6032c
     primary: true
     says: Full November 6 original lists nine networks and staged withdrawal pairs from 04:00 UTC; deposits remain open, live pair status governs and temporary delays are possible.
+  - name: SEAL original TraderTraitor threat profile and Binance assessment
+    url: https://radar.securityalliance.org/tradertraitor-vs-contagious-interview-a-look-at-binances-initial-incident-report/
+    primary: true
+
 ---
 
 Binance’s initial notice said it had not confirmed an impact on user funds. The exchange then edited that notice to state that user funds are safe, and subsequently said withdrawals would resume after the security issue is fully resolved. These are the vendor’s statements, not an independently audited reserve or loss assessment. No resumption time or technical containment report was supplied in those notices. The withdrawal notice does not specify affected networks or withdrawal routes; do not infer that every Binance product is affected. Those earlier notices supported L3 because they acknowledged disruption without confirming the suspected theft.
@@ -393,3 +404,5 @@ The researcher no longer says none of the traced money reached exchange deposit 
 **November 5 Arbitrum recovery proposal:** Binance requests **8,425.997 ETH and 74,559,805.2 ARB** held at the frozen address. Its AIP anticipates forum discussion, a Snapshot temperature check, an on-chain vote and final execution over about 49 days, potentially longer if legal restraints apply. Submission/execution are conditional on the stated legal process and indemnification agreements. No new DAO treasury allocation is requested. Returned assets would address incident losses and costs, potentially replenishing SAFU/treasury reserves already used to cover users; they are not necessarily an additional user payment. This is separate from the Polygon native-POL proposal and does not prove approval, released funds or completed compensation.
 
 **November 6 withdrawal expansion:** Recovery Update 9 schedules additional pairs from **04:00 UTC** on **BSC, Base, ETH, Optimism, MATIC, Arbitrum, AVAXC, TRX and SUI**. Read its complete asset/network table: examples include USDE/PENDLE on BSC, ZRO/BREV on Base, U/XRP on ETH, ETH/WLD on Optimism and FDUSD on SUI. Each pair opens progressively after security/readiness checks; deposits remain open. Confirm the exact pair on the withdrawal page or official network-status page and allow for temporary delays. This is further service restoration, not an assertion that every withdrawal is available, stolen funds have been recovered or the new reserve proof has finished.
+
+**SEAL’s November 5 assessment:** SEAL estimates roughly eight weeks of access before October 29 and distinguishes TraderTraitor from Contagious Interview despite the shared job-interview lure. Binance has not supplied a precise September entry date or confirmed the report’s four campaign domains as its own intrusion URLs. SEAL’s AFX example can exploit Git CVE-2025-48384; that is not evidence Binance was compromised through that CVE. The analysis also contrasts other incidents involving cloud sessions or backend transaction manipulation, so it does not prove that every case involved stolen signing keys. The estimate and campaign indicators supplement the exchange’s findings; they do not revise stolen, frozen, replenished or repaid totals.
