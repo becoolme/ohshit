@@ -43,6 +43,9 @@ timeline:
 - date: Nov 5, 2026
   title: Research expands chain coverage and Base deposit sweeps
   body: Bitquery now counts 11 chains and 308 Base deposit addresses (~$16k); its separate BitMart-linked estimate becomes ~$424k. Mercado Bitcoin remains ~$48.6M. Holdings were not refreshed beyond November 4; these are unverified research figures and address counts, not unique customers or confirmed exchange losses.
+- date: Nov 5, 2026
+  title: Corrected Teiten research separates wallet attribution confidence
+  body: Its unverified $49.1M estimate comprises $33.6M high-confidence, $10.7M medium-confidence and $4.8M timing-only attribution. Its ~$12M issuer freezes use a dated on-chain method, separate from the vendor’s later >$16M blocking claim.
 - date: Nov 6, 2026
   title: Official FAQ raises blocked assets and explains the staged return
   body: The FAQ reports over $16M blocked, with buybacks still being prepared. Pre-interruption limit orders will be cancelled and reserved funds returned without fees. Initial November 9 website access remains viewing-only; transfers and trading await security validation.
@@ -60,6 +63,8 @@ checklist:
   hint: Open the exchange through an existing bookmark or app. Do not follow refund links in replies or direct messages, disclose passwords, MFA codes or wallet recovery phrases, or send a payment to unlock a balance. Confirm any support request through the official channel. The November 4 company warning says password resets, biometric selfies and authentication occur only inside the official app/site; staff do not request codes, passwords, photos or deposits through WhatsApp, email, social media or telephone.
 - title: Review cancelled orders and pending investment payments
   hint: The November 6 FAQ says all limit orders open before the November 2 interruption will be cancelled, with reserved amounts returned in full without fees. Check your records when services resume and submit any new order deliberately at current market conditions. The company says fixed-income positions are updating retroactively, but interest, amortization and maturity proceeds will be credited only after transaction services fully return; retained balances do not mean funds can already move. Password/account changes are also unavailable during suspension; any requested update will appear inside the platform, never through a balance-release message.
+- title: Compare corrected tracing limits and attribution confidence
+  hint: Use Teiten’s corrected November 5 report alongside the existing Bitquery wallet record. Its trace follows three transfers from attributed attacker/parking wallets, with one manually added fourth-hop wallet; no labelled exchange/mixer within that limit does not exclude later cash-out. Its many wallet references are abbreviated in the prose, not a usable full-address blocklist. Do not expand partial addresses or label shared Mayan/Bridgers contracts as attacker wallets. Keep the existing complete-address research and vendor records; a match alone cannot establish ownership or compromise.
 sources:
 - name: Mercado Bitcoin official statement
   url: https://x.com/MercadoBitcoin/status/2117239507263132056
@@ -108,6 +113,10 @@ sources:
   url: https://central.ajuda.mercadobitcoin.com.br/wiki/rest/api/content/2968387585?expand=version,history
   primary: true
   says: Public version 7 was updated November 6 at 12:29:10 UTC; the FAQ was created November 3. The revision time does not date every individual freeze.
+- name: Teiten corrected original investigation, November 5
+  url: https://teiten.lat/analysis/inside-the-mercado-bitcoin-drain
+  primary: true
+  says: Corrected attribution, pricing and bounded tracing; unverified research estimates, not vendor-confirmed losses or recovery.
 updated: '2026-11-06'
 ---
 
@@ -140,3 +149,5 @@ The accompanying company post says each environment and transaction flow is unde
 The separate BitMart-linked research total is now about **$424k**, replacing the earlier $391k estimate, and must not be added to Mercado Bitcoin’s total. The readable opening of founder Sheldon Xia’s November 3 original confirms that BitMart was hacked the previous day and calls the amount small. This corrects the earlier statement here that no acknowledgment was verified. The public embed truncates later text; no quantified loss, customer-impact assessment or recovery promise is inferred. The original does not authenticate Bitquery’s specific wallet labels or shared-supplier hypothesis. Bitquery explicitly says it re-read missed sweeps on November 5 **without refreshing holdings**: its 8,678 ETH and other holdings remain a November 4 snapshot. The November 9 website-viewing plan, transfer pause and company replacement pledge remain unchanged.
 
 **November 6 official FAQ:** The exchange now reports **over $16M blocked**, superseding its $15M snapshot. Blocking is not repatriation or compensation. Preserved customer balance records establish entitlements; replacement assets and planned buybacks are separate, unfinished work. The FAQ gives the order-cancellation and investment-payment steps above. Initial November 9 access remains website viewing only; transaction modules and account changes are not yet restored. It describes only hot wallets as affected and BRL balances as preserved, without establishing the entry mechanism or a final loss total.
+
+**Corrected November 5 research:** Teiten prices transfers at their transfer-hour values and estimates $49.1M, with $33.6M high-confidence attribution, $10.7M medium-confidence and $4.8M assigned from timing alone. Its 36,104 Ethereum senders include 11 poisoning lookalikes and are not 36,104 confirmed customers. The ~$12M issuer-freeze calculation is separate from the company’s later >$16M blocked claim and from Bitquery’s $48.6M loss/$11.8M freeze snapshots; none should be added or subtracted to manufacture a net loss. The corrected report withdrew its November 3 version, which misclassified shared service contracts and understated sender/freeze totals. It cannot establish whether keys or a signing service were compromised, or confirm a shared supplier. Its three-transfer tracing limit, plus one manually added fourth hop, cannot rule out later cash-out.
