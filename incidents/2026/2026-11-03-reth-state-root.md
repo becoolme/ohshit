@@ -32,10 +32,10 @@ timeline:
     body: Upstream lists the trie correction; the op-reth release tag pins its backport despite RPC-only release notes. Base recommends its new build for Mainnet and Sepolia and links the same fix.
   - date: Nov 6, 02:19 UTC
     title: BNB Reth merges its main-line backport
-    body: PR254 merges as3b2bd020; it backports the same upstream iterator correction and regression test.
+    body: PR 254 merges as 3b2bd020; it backports the same upstream iterator correction and regression test.
   - date: Nov 6, 02:40 UTC
     title: BNB Reth merges a separate v2.8 integration backport
-    body: PR255 merges as141cc278 into fix/bsc-static-file-td-611. This establishes a branch-specific patch, not a released safe-version threshold.
+    body: PR 255 merges as 141cc278 into fix/bsc-static-file-td-611. This establishes a branch-specific patch, not a released safe-version threshold.
 checklist:
   - title: Identify the client and the actual Reth revision
     hint: Inventory the running binary or container, chain, fork, image digest and dependency lockfile. Look for upstream merge 8572c88fe04fb2213d86f020ed9e72e612abb097 or the vendor's equivalent backport. A version from another fork is not a reliable threshold; the complete affected range is not established here.
@@ -46,7 +46,7 @@ checklist:
   - title: Check node integrity before relying on its responses
     hint: Preserve mismatch logs, affected block numbers and build identifiers. As a defensive validation step, compare synchronization and affected state roots against an independently trusted, patched provider; investigate persistent mismatches through the chain's official recovery procedure. The reviewed fix records do not prescribe a universal database deletion or resync procedure. Protocol and RPC operators should verify their own providers' build coverage before relying on state data.
   - title: Verify both BNB Reth patch lines before selecting a build
-    hint: BNB Reth PR254 merged into main as3b2bd02006ef8970c862d2af5dbc98a92f58d57d; PR255 merged into fix/bsc-static-file-td-611 as141cc278068cb60d1045957709ad88d7bfdbed1f. Match your actual branch to the appropriate equivalent patch and ask BNB Chain for its released artifact. These PRs alone establish neither a fixed release number nor that all BNB validators or users were exposed.
+    hint: BNB Reth PR 254 merged into main as 3b2bd02006ef8970c862d2af5dbc98a92f58d57d; PR 255 merged into fix/bsc-static-file-td-611 as 141cc278068cb60d1045957709ad88d7bfdbed1f. Match your actual branch to the appropriate equivalent patch and ask BNB Chain for its released artifact. These PRs alone establish neither a fixed release number nor that all BNB validators or users were exposed.
 sources:
   - name: Reth original fix PR
     url: https://github.com/paradigmxyz/reth/pull/28264
@@ -91,11 +91,11 @@ sources:
   - name: BNB Reth main backport PR API
     url: https://api.github.com/repos/bnb-chain/reth/pulls/254
     primary: true
-    says: November6 02:19:15UTC merge3b2bd020 into main; same upstream correction and regression test.
+    says: November 6 02:19:15 UTC merge 3b2bd020 into main; same upstream correction and regression test.
   - name: BNB Reth v2.8 integration backport API
     url: https://api.github.com/repos/bnb-chain/reth/pulls/255
     primary: true
-    says: November6 02:40:58UTC merge141cc278 into fix/bsc-static-file-td-611; separate branch integration, not a packaged release.
+    says: November 6 02:40:58 UTC merge 141cc278 into fix/bsc-static-file-td-611; separate branch integration, not a packaged release.
 ---
 
 The iterator combines stored trie branches with newly hashed state entries. Its previous shortcut could skip a seek when the stored branch was deeper than the seek prefix, leaving a newly inserted leaf out of the incremental root. The patch permits that shortcut only when the keys are equal. The upstream regression test and Celo's backport explanation describe this concrete correctness failure.
@@ -104,4 +104,4 @@ Reth 2.10.0 lists PR 28264, and Base 1.5.3 explicitly says it prevents a state-r
 
 L3 reflects an integrity bug in a widely used execution-client family and an actionable operator update. These original records do not establish an attacker stealing assets, remote code execution, a chain-wide compromise or confirmed user losses. Claims about paused bridges or incorrect proof responses require their own original evidence and are not used to expand the verified scope here.
 
-**November6 BNB backports:** BNB Reth merged the upstream-equivalent correction on main and separately on its v2.8 integration branch. Verify the actual fork/commit in the deployed artifact; a merged source patch is not evidence of a released build or fleet-wide deployment. These technical records do not establish a chain-wide incident, confirmed user loss or the extent of BNB Chain exposure.
+**November 6 BNB backports:** BNB Reth merged the upstream-equivalent correction on main and separately on its v2.8 integration branch. Verify the actual fork/commit in the deployed artifact; a merged source patch is not evidence of a released build or fleet-wide deployment. These technical records do not establish a chain-wide incident, confirmed user loss or the extent of BNB Chain exposure.

@@ -24,10 +24,10 @@ timeline:
     body: 上游列出 trie 修正；op-reth 发布标签固定了回移补丁，尽管说明仅提 RPC。Base 建议 Mainnet 和 Sepolia 更新，并关联同一修复。
   - date: 11月6日 02:19 UTC
     title: BNB Reth 合并主线回移补丁
-    body: PR254 以 3b2bd020 合并，回移同一上游迭代修复及回归测试。
+    body: PR 254 以 3b2bd020 合并，回移同一上游迭代修复及回归测试。
   - date: 11月6日 02:40 UTC
     title: BNB Reth 单独合并 v2.8 集成回移
-    body: PR255 以 141cc278 合入 fix/bsc-static-file-td-611；确认分支补丁，不代表已发布安全版本下限。
+    body: PR 255 以 141cc278 合入 fix/bsc-static-file-td-611；确认分支补丁，不代表已发布安全版本下限。
 checklist:
   - title: 确认客户端和实际 Reth 源码版本
     hint: 盘点运行中的二进制或容器、链、分支、镜像摘要及依赖锁文件。核验是否包含上游合并提交 8572c88fe04fb2213d86f020ed9e72e612abb097 或厂商等效回移补丁。其他分支的版本号不能直接作为安全下限，本文未确立完整受影响范围。
@@ -38,7 +38,7 @@ checklist:
   - title: 依赖节点响应前核验完整性
     hint: 保留状态根不匹配日志、受影响区块号和构建标识。作为防御性验证，将同步情况及受影响状态根与独立可信、已修补的提供方对照；若持续不匹配，遵循该链官方恢复步骤调查。已核阅的修复记录没有统一的删库或重同步操作。协议和 RPC 运营者应先核验自己的提供方实际构建覆盖，再依赖其状态数据。
   - title: 选择构建前核验 BNB Reth 的两条补丁线
-    hint: BNB Reth PR254 以 3b2bd02006ef8970c862d2af5dbc98a92f58d57d 合入 main；PR255 以 141cc278068cb60d1045957709ad88d7bfdbed1f 合入 fix/bsc-static-file-td-611。按实际分支核验相应等效补丁，向 BNB Chain 确认正式产物。仅凭这些 PR 不能确定修复版本号，也不能认定全部 BNB 验证者或用户均受影响。
+    hint: BNB Reth PR 254 以 3b2bd02006ef8970c862d2af5dbc98a92f58d57d 合入 main；PR 255 以 141cc278068cb60d1045957709ad88d7bfdbed1f 合入 fix/bsc-static-file-td-611。按实际分支核验相应等效补丁，向 BNB Chain 确认正式产物。仅凭这些 PR 不能确定修复版本号，也不能认定全部 BNB 验证者或用户均受影响。
 sources:
   - name: Reth 原始修复 PR
     says: 11 月 3 日公开迭代边界修正及回归测试，以 8572c88 合并。
