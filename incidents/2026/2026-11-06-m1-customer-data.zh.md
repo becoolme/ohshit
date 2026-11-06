@@ -18,7 +18,7 @@ checklist:
 sourceException: M1 官方泄露公告返回 CAPTCHA，网页工具也无法打开；站点定向检索未找到可读原公告。CNA 与 AsiaOne 分别核阅客户邮件，The Business Times 另采访公司及监管机构。它们转述公司说明，不是独立取证。
 sources:
 - name: CNA 独立核阅客户邮件
-  says: 确认 10 月 30 日事件及六类身份、联系资料；M1 排除支付、银行及账户访问影响。
+  says: 确认 10 月 30 日事件及六类身份、联系资料；M1 称支付卡资料、银行资料及账户访问未受影响。
 - name: AsiaOne 独立核阅读者通知
   says: 另一位客户邮件列出相同字段及排除范围，未公布受影响总数。
 - name: The Business Times 公司及监管报道

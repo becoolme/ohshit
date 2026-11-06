@@ -26,7 +26,7 @@ sourceException: The official M1 breach release returned a CAPTCHA and the web r
 sources:
 - name: CNA independently reviewed customer email
   url: https://www.channelnewsasia.com/singapore/doctor-anywhere-data-breach-6530871
-  says: Confirms the October 30 event and six identity/contact categories; M1 excludes payment, banking and account access.
+  says: Confirms the October 30 event and six identity/contact categories; M1 says payment-card data, banking information and account access were unaffected.
 - name: AsiaOne independently reviewed a reader’s notification
   url: https://www.asiaone.com/singapore/m1-data-breach
   says: Separate customer email describes the same fields and exclusions; no published affected total.
