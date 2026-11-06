@@ -128,6 +128,9 @@ fixed:
   - product: Objective-C gRPC CocoaPod
     version: 1.84.1
     status: Rebuild applications; excludes standalone gRPC-Core/gRPC-C++ CocoaPods and grpc-ios SPM
+  - product: SonicOS 7.3.4 firmware
+    version: 7.3.4-7015
+    status: Removes the eMudhra trusted chain; platform and migration requirements apply
 timeline:
   - date: Apr 30, 2025
     title: The keys are generated, in a batch of 24 intermediates
@@ -210,6 +213,9 @@ timeline:
     body: Releases 1.78.2 and 1.80.1 include root-store fixes. The Python and Ruby advisories now list these alongside 1.82.3, 1.83.2 and 1.84.1. PHP Composer retains its separate 1.84.1 minimum.
   - date: ~Oct 27, 2026
     title: Chrome Root Store v43 removes the emSign ECC Root CA - G3
+  - date: ~Nov 2026
+    title: SonicWall removes the chain in SonicOS 7.3.4-7015
+    body: November release notes identify GEN7-59578 as removal of the eMudhra chain from the trusted certificate store; no exact release day is stated.
 checklist:
   - title: Update browsers and operating systems
     hint: Chrome, Firefox, Safari, Edge, Android and Windows have all shipped blocks
@@ -267,6 +273,8 @@ checklist:
     hint: Inspect Podfile.lock for gRPC, including transitive gRPC-ProtoRPC dependencies. Upgrade to 1.84.1 or later, rebuild and redistribute the application; an iOS/macOS update alone is insufficient. The advisory excludes standalone gRPC-Core/gRPC-C++ CocoaPods and grpc-ios Swift Package Manager; other products’ bundled stores still require their own checks. GRPC_DEFAULT_SSL_ROOTS_FILE_PATH does not work here.
   - title: Confirm the broader G1 replacement schedule with your issuer
     hint: eMudhra’s November 5 Update 8 reports Apple will remove trust for all G1-chained certificates on November 30, unlike the SCT-based rules it reports for Chrome and Mozilla on November 16. Obtain and test a replacement chain through established support before the applicable cutoff, including existing Apple-facing certificates. US migration remains in progress according to the issuer. Verify each browser root program; retain Chrome’s precise UTC rule above and never bypass validation.
+  - title: Update affected SonicOS trust stores with the vendor upgrade notes
+    hint: SonicOS 7.3.4-7015 removes the eMudhra chain (GEN7-59578). Verify platform support and upgrade prerequisites; downgrade is unsupported. NSv upgrading from 7.0.1 to 7.1 or later requires a fresh installation, and NSM On-Premises 4.4 is required for 7.3.4 management. If GeoIP was pinned to 204.212.170.21, use the default resolution or the new GeoIP address 204.212.170.31; do not set Botnet Remote Server Address to the latter. Check custom certificates and dependent connections separately.
 sources:
   - name: Mozilla Bugzilla 2083449
     url: https://bugzilla.mozilla.org/show_bug.cgi?id=2083449
@@ -441,6 +449,10 @@ sources:
     url: https://github.com/grpc/grpc/releases/tag/v1.80.1
     primary: true
     says: November 5 release includes the security update to repository roots.
+  - name: SonicWall SonicOS 7.3.4-7015 release notes
+    url: https://www.sonicwall.com/support/technical-documentation/docs/sonicos-7.3-release_notes/Content/sonicos-7-3-4-7015.htm
+    primary: true
+    says: November 2026 firmware removes the eMudhra trusted chain; includes platform, migration and GeoIP upgrade requirements.
 ---
 
 A certificate authority's private key is the thing that makes "this is really your bank" true. For eight
@@ -506,3 +518,5 @@ For an unpatched Oracle runtime, the [operational guide](https://ops.java/emudhr
 **November 5 issuer update:** eMudhra reports that migration to other providers is complete outside the US, with US customers still transitioning. It reports November 16 SCT constraints for Chrome/Mozilla and November 30 removal of all G1 certificates on Apple platforms, including earlier issuance. This is the issuer’s account of the schedules; Chrome’s independently read precise cutoff remains above. No completed US transition or universal continued trust of earlier certificates is established.
 
 **November 6 correction to older-line coverage:** The November 5 releases 1.78.2 and 1.80.1 also repair the bundled root store. The Python and Ruby advisories now list five patch paths. Use the patch matching the installed release line or migrate to 1.84.1 or later; versions 1.81.x need the 1.82.3 path. This extends the earlier three-version guidance without changing the PHP Composer or Objective-C minimums. The requirement to verify explicit/custom roots and rebuild or restart affected applications remains. It does not establish another CA compromise or new exploitation.
+
+**SonicOS trust-store follow-up:** November release notes identify 7.3.4-7015 as removing the eMudhra chain. This is product-specific remediation, not a new CA incident or confirmation that every SonicWall release has removed the chain. The source gives only the month, so no exact release day is inferred. Existing browser/runtime deadlines and certificate-replacement requirements remain.
