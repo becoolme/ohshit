@@ -83,6 +83,8 @@ fixed:
     status: 升级并重建应用；不涵盖独立 gRPC-Core／gRPC-C++ CocoaPod 或 grpc-ios SPM 包
   - product: SonicOS 7.3.4 固件
     status: 移除 eMudhra 可信链，须满足平台及迁移要求
+  - product: Rundeck／Runbook Automation／Runner 官方 Docker 镜像
+    status: 拉取更新镜像并重建容器；主机安装须分别更新系统及 Java 信任库
 timeline:
   - date: 2025年4月30日
     title: 私钥生成，同一批共 24 张中间证书
@@ -117,6 +119,9 @@ timeline:
   - date: 2026年10月22日
     title: eMudhra 宣布退出全球 SSL/TLS 证书签发业务
     body: 合作伙伴免费提供替换证书；吊销与状态服务持续到所有已签发证书过期或被替换。未给出退出日期。
+  - date: 2026年10月22日
+    title: Rundeck 发布 6.3.0，修正官方 Docker 镜像信任库
+    body: 自托管 Rundeck、Runbook Automation 及容器化 Runner 需更换镜像，主机管理的系统及 Java 信任库须另行更新。厂商将 Runbook Automation SaaS 排除在影响范围外。
   - date: 2026年10月23日
     title: Dart 公告和 Firebase 指南列出应用层修复
     body: SDK 更新后须重建并重新分发客户端；Gradle 插件只需在构建流水线中更新。
@@ -227,6 +232,8 @@ checklist:
     hint: eMudhra 11 月 5 日 Update 8 报告 Apple 将于 11 月 30 日移除所有 G1 链证书的信任，不同于其所述 Chrome 和 Mozilla 于 11 月 16 日实施的 SCT 规则。通过既有支持在适用期限前获取并测试替代链，包括面向 Apple 的既有证书。按颁发机构说法，美国迁移仍在进行。核实各浏览器根计划，保留上方 Chrome 精确 UTC 规则，不绕过验证。
   - title: 按厂商升级说明更新受影响 SonicOS 信任库
     hint: SonicOS 7.3.4-7015 移除 eMudhra 链（GEN7-59578）。核实平台支持及升级前提，版本不支持降级。NSv 从 7.0.1 升至 7.1 或更高版本需要全新安装；管理 7.3.4 需要 NSM On-Premises 4.4，GMS 无法管理 SonicOS 7.1.x 及更高版本。若 GeoIP 曾固定为 204.212.170.21，改用默认解析或新 GeoIP 地址 204.212.170.31；不要将 Botnet Remote Server Address 设为后者。若 DNS 不可用，按发布说明手动设置 Botnet 端点。另行检查自定义证书及依赖连接。
+  - title: 用修正信任库的镜像重建 Rundeck 和 Runner 容器
+    hint: 拉取官方 6.3.0 镜像，重建 Rundeck、Runbook Automation 及 Docker／Kubernetes Runner 容器。仅在运行中容器执行 apt-get upgrade 的更改会在重建时丢失。RPM／DEB／WAR 及主机安装的 Runner 使用主机管理的信任库，需更新系统 ca-certificates 包与 Java 运行时信任库，再重启 Rundeck。厂商称 Runbook Automation SaaS 未受影响。在容器内或主机执行 curl https://dv-g3b-emudhra.we-have-a-problem.com/，预期以证书错误拒绝；TLS 成功意味着仍保留受影响信任。curl 只检查其系统库，不能验证 Java 或全部自定义库，须分别核验。
 sources:
   - says: 私钥是小于 256 的整数；报告时间、OneCRL 条目，以及 10月18日的吊销
   - name: eMudhra 声明
@@ -314,6 +321,9 @@ sources:
     says: 11 月 5 日发布，包含仓库根证书的安全更新。
   - name: SonicWall SonicOS 7.3.4-7015 发布说明
     says: 2026 年 11 月固件移除 eMudhra 可信链，并列出平台、迁移和 GeoIP 升级要求。
+  - name: Rundeck eMudhra 信任库公告
+  - name: Rundeck 6.3.0 发布说明
+
 ---
 CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eMudhra 有八张中间证书，P-384 私钥都是**小于 256 的整数**。据研究人员 Scott Helme 说，其中一个就是数字 4。谁要是注意到了，就能给任意域名签证书，而所有信任这条链的客户端都会照单全收。
 
@@ -373,3 +383,5 @@ CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eM
 **11 月 6 日旧线覆盖修正：** 11 月 5 日发布的 1.78.2 和 1.80.1 也修复了内置根证书库。Python 和 Ruby 公告现列出五条补丁路径。选择安装发布线对应的补丁，或迁移至 1.84.1 及更高版本；1.81.x 须使用 1.82.3 路径。这是对先前三版本指引的扩充，不改变 PHP Composer 或 Objective-C 的最低版本。仍须核验显式、自定义根证书，并重建或重启受影响应用。这不代表又发生 CA 失陷或新增在野利用。
 
 **SonicOS 信任库跟进：** 11 月发布说明确认 7.3.4-7015 移除 eMudhra 链。这是具体产品的处置，不是新的 CA 事件，也不能证明所有 SonicWall 版本均已移除该链。来源只给出月份，不推断准确发布日期。原有浏览器、运行时期限及证书更换要求仍适用。
+
+**Rundeck 部署补充：** 厂商 10 月 23 日公告说明了 10 月 22 日发布的 6.3.0 官方 Docker 镜像对同一 CA 事件的修复。这里补上此前遗漏的下游处置路径，不是新的 CA 事件。SaaS 不受影响，主机管理的系统及 Java 信任库、容器化 Runner 则须按实际部署分别处理。curl 拒绝证书不能证明 Java 的独立信任库也已更新。

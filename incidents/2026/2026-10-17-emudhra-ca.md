@@ -131,6 +131,9 @@ fixed:
   - product: SonicOS 7.3.4 firmware
     version: 7.3.4-7015
     status: Removes the eMudhra trusted chain; platform and migration requirements apply
+  - product: Rundeck / Runbook Automation / Runner official Docker images
+    version: 6.3.0
+    status: Pull updated images and recreate containers; host installs require OS and Java trust-store updates
 timeline:
   - date: Apr 30, 2025
     title: The keys are generated, in a batch of 24 intermediates
@@ -165,6 +168,9 @@ timeline:
   - date: Oct 22, 2026
     title: eMudhra announces withdrawal from global SSL/TLS issuance
     body: Partner replacements are free; revocation and status services continue until all issued certificates expire or are replaced. No exit date is given.
+  - date: Oct 22, 2026
+    title: Rundeck releases 6.3.0 with corrected official Docker trust stores
+    body: Self-hosted Rundeck, Runbook Automation and containerized Runner need replacement images; host-managed OS and Java stores require separate updates. Runbook Automation SaaS is excluded by the vendor.
   - date: Oct 23, 2026
     title: Dart advisory and Firebase guidance identify application-level fixes
     body: SDK updates require rebuilt and redistributed clients; the Gradle plugin needs only an update in build pipelines.
@@ -275,6 +281,8 @@ checklist:
     hint: eMudhra’s November 5 Update 8 reports Apple will remove trust for all G1-chained certificates on November 30, unlike the SCT-based rules it reports for Chrome and Mozilla on November 16. Obtain and test a replacement chain through established support before the applicable cutoff, including existing Apple-facing certificates. US migration remains in progress according to the issuer. Verify each browser root program; retain Chrome’s precise UTC rule above and never bypass validation.
   - title: Update affected SonicOS trust stores with the vendor upgrade notes
     hint: SonicOS 7.3.4-7015 removes the eMudhra chain (GEN7-59578). Verify platform support and upgrade prerequisites; downgrade is unsupported. NSv upgrading from 7.0.1 to 7.1 or later requires a fresh installation, and NSM On-Premises 4.4 is required for 7.3.4 management; GMS cannot manage SonicOS 7.1.x or later. If GeoIP was pinned to 204.212.170.21, use the default resolution or the new GeoIP address 204.212.170.31; do not set Botnet Remote Server Address to the latter. If DNS is unavailable, configure the Botnet endpoint manually as the release notes direct. Check custom certificates and dependent connections separately.
+  - title: Recreate Rundeck and Runner containers with corrected trust stores
+    hint: "Pull the official 6.3.0 images and recreate Rundeck, Runbook Automation and Docker/Kubernetes Runner containers. An apt-get upgrade inside a running container is lost on recreation. RPM/DEB/WAR and host-installed Runner use host-managed stores: update the OS ca-certificates package and the Java runtime trust store, then restart Rundeck. The vendor excludes Runbook Automation SaaS. Run curl https://dv-g3b-emudhra.we-have-a-problem.com/ inside the container or host; a certificate error is the expected rejection. Successful TLS means the affected trust remains. This curl check covers its OS store, not Java or every custom store; verify those separately."
 sources:
   - name: Mozilla Bugzilla 2083449
     url: https://bugzilla.mozilla.org/show_bug.cgi?id=2083449
@@ -453,6 +461,13 @@ sources:
     url: https://www.sonicwall.com/support/technical-documentation/docs/sonicos-7.3-release_notes/Content/sonicos-7-3-4-7015.htm
     primary: true
     says: November 2026 firmware removes the eMudhra trusted chain; includes platform, migration and GeoIP upgrade requirements.
+  - name: Rundeck eMudhra trust-store advisory
+    url: https://docs.rundeck.com/docs/history/cves/2026-10-emudhra-ca.html
+    primary: true
+  - name: Rundeck 6.3.0 release notes
+    url: https://docs.rundeck.com/docs/history/6_x/version-6.3.0.html
+    primary: true
+
 ---
 
 A certificate authority's private key is the thing that makes "this is really your bank" true. For eight
@@ -520,3 +535,5 @@ For an unpatched Oracle runtime, the [operational guide](https://ops.java/emudhr
 **November 6 correction to older-line coverage:** The November 5 releases 1.78.2 and 1.80.1 also repair the bundled root store. The Python and Ruby advisories now list five patch paths. Use the patch matching the installed release line or migrate to 1.84.1 or later; versions 1.81.x need the 1.82.3 path. This extends the earlier three-version guidance without changing the PHP Composer or Objective-C minimums. The requirement to verify explicit/custom roots and rebuild or restart affected applications remains. It does not establish another CA compromise or new exploitation.
 
 **SonicOS trust-store follow-up:** November release notes identify 7.3.4-7015 as removing the eMudhra chain. This is product-specific remediation, not a new CA incident or confirmation that every SonicWall release has removed the chain. The source gives only the month, so no exact release day is inferred. Existing browser/runtime deadlines and certificate-replacement requirements remain.
+
+**Rundeck deployment follow-up:** The vendor’s October 23 advisory documents the October 22 6.3.0 official Docker-image release for this same CA compromise. This corrects a missing downstream remediation path in this article, not a new CA incident. SaaS is excluded; host-managed OS and Java stores and containerized Runner must be handled according to their actual deployment. A passing curl rejection does not verify Java’s separate trust store.
