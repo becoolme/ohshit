@@ -32,7 +32,7 @@ sources:
 - name: Gnosis Pay original November 6 breach notice
   url: https://gnosispay.com/blog/data-breach-legacy-system-gnosis-pay-branded-cards
   primary: true
-  says: Confirms November3 access and customer-information exposure in the legacy B2C card system; containment began within two hours, credentials replaced/vulnerability addressed, funds and enterprise platform unaffected according to the company, notices and additional safeguards.
+  says: Confirms November 3 access and customer-information exposure in the legacy B2C card system; containment began within two hours, credentials replaced/vulnerability addressed, funds and enterprise platform unaffected according to the company, notices and additional safeguards.
 ---
 
 The disclosure concerns customer information in the legacy consumer-card system. Gnosis Pay says its separate enterprise white-label card platform and user funds were unaffected. The public notice does not establish the exact fields, a victim total, confirmed fraudulent spending, stolen seed phrases or a wallet-draining attack. Ask about your own records; a customer’s public screenshot does not define every customer’s exposure.
