@@ -19,7 +19,7 @@ timeline:
   title: State regulators publish breach notices
   body: California publishes a sample letter, and Vermont lists 569 affected residents.
 - date: Nov 6, 2026
-  title: Texas publishes the national count reported by RevSpring
+  title: Texas publishes the overall count reported by RevSpring
   body: Report BR-0005491 lists 1,974,069 people overall, including 6,252 Texans.
 checklist:
 - title: Verify which patient and billing details were involved
@@ -40,7 +40,7 @@ sources:
 - name: Texas Attorney General public breach register
   url: https://oag.my.site.com/datasecuritybreachreport/apex/DataSecurityReportsPage
   primary: true
-  says: Public record BR-0005491 lists the national and Texas totals, mailed notice, four data categories and a September 9 discovery date.
+  says: Public record BR-0005491 lists the overall and Texas totals, mailed notice, four data categories and a September 9 discovery date.
 ---
 
 RevSpring provides back-end bill-payment services for healthcare providers. Its investigation found that an unauthorized person obtained patient data through its support tool between May 15 and June 1. Possible fields include names, addresses, email addresses, phone numbers, dates of birth, Social Security numbers and service locations. RevSpring says healthcare providers' systems and electronic medical records were outside the incident. The notice also excludes diagnosis and treatment details, card numbers and bank account information.
