@@ -6,7 +6,7 @@ wipe: 通过官方渠道安装 LibreOffice 26.2.6+ 或 26.8.1+，重新启动后
 inTheWildNote: 已读厂商及研究人员通知未确立在野攻击。
 cves:
   - name: dBASE 索引堆缓冲区溢出
-    description: 索引页条目数量未经检查，可使堆缓冲区溢出；循环页引用亦可造成失控递归。厂商 CVSS 4.0 为 5.4；ZDI 以 CVSS 3.0 给出 7.8，并描述在当前进程中执行代码。
+    description: 索引页条目数量未经检查，可使堆缓冲区溢出；循环页引用亦可造成失控递归。厂商 CVSS 4.0 为 5.4；ZDI 给出 7.8，并描述在当前进程中执行代码。
 fixed:
   - product: LibreOffice 26.2
   - product: LibreOffice 26.8
