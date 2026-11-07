@@ -3,11 +3,11 @@ title: Web3Auth pauses embedded wallets as Keplr investigates unauthorized socia
 level: 4
 date: '2026-11-06'
 tags: [Web3Auth, Keplr, Embedded wallets, Social login]
-summary: Web3Auth suspended its embedded wallet service. Keplr paused Google and Apple login after receiving reports of unauthorized transactions from some wallets created that way. Keplr’s co-founder estimates about 20% of that group may be affected, with a smaller fraction exploited. Total losses and the mechanism remain unknown.
+summary: Web3Auth suspended its embedded wallet service. Keplr paused Google and Apple login after receiving reports of unauthorized transactions from some wallets created that way. Keplr’s co-founder estimates about 20% of that group may be affected, with a smaller fraction apparently exploited. Total losses and the mechanism remain unknown.
 splash: Keplr wallets created using Google or Apple login. Keplr’s initial assessment excludes recovery-phrase and hardware wallets.
-wipe: Stop funding affected accounts or re-importing them. Track official guidance and report unrecognized transactions through Keplr support.
+wipe: Stop funding or re-importing potentially affected accounts. Track official guidance and report unrecognized transactions through Keplr support.
 inTheWild: 'yes'
-inTheWildNote: Keplr received unauthorized transaction reports and says some accounts were exploited.
+inTheWildNote: Keplr received unauthorized transaction reports. Its co-founder reports exploitation.
 timeline:
 - date: Nov 6, 21:13 UTC
   title: Web3Auth discloses an embedded wallet security issue
@@ -48,6 +48,8 @@ sources:
   says: Confirms the service pause and repeats the initial finding of no evidence of impact on MetaMask users.
 ---
 
-Web3Auth disclosed a security issue affecting its embedded wallet service used by some third parties. Keplr reported unauthorized transactions from some wallets created with Google or Apple login. Keplr’s initial assessment excludes wallets created with a recovery phrase or used with hardware wallets. The November 7 developer announcement gives the same initial assessment of MetaMask user impact as Web3Auth’s first notice.
+Web3Auth disclosed a security issue affecting its embedded wallet service used by some third parties. Keplr reported unauthorized transactions from some wallets created with Google or Apple login. Keplr’s initial assessment excludes wallets created with a recovery phrase or used with hardware wallets. Web3Auth’s initial investigation found no evidence of impact on MetaMask users. The November 7 developer announcement repeats that assessment.
 
 Keplr co-founder Josh Lee attributes the incident to Web3Auth and gives about 20% of Keplr’s Google or Apple login accounts as an early estimate of the potentially affected group. Lee says exploitation appears to involve a smaller share and recovery work is ongoing. No independently verified account count, final loss figure, attack mechanism or compensation plan was established in the reviewed disclosures.
+
+Public copies of the original statements are available for [Web3Auth](https://teapaw.org/Web3Auth/status/2118814067359969745), [Keplr](https://teapaw.org/keplrwallet/status/2118926087615045807) and [Josh Lee](https://teapaw.org/dogemos/status/2118984142151196677).
