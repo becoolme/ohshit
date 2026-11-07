@@ -2,7 +2,7 @@
 title: "Electrum fixes an exploited malicious-server trick that turns a fee bump into an attacker payment"
 level: 4
 date: 2026-10-24
-updated: 2026-10-28
+updated: '2026-11-07'
 tags: [Electrum, Bitcoin, exploited]
 ecosystems: [electrum]
 summary: "A malicious Electrum server can replace a pending payment with an invalid transaction. If the user fee-bumps it, the wallet signs a payment to the attacker. Maintainers report one user lost funds; upgrade to 4.8.3."
@@ -30,6 +30,9 @@ timeline:
   - date: Oct 28, 2026
     title: Review verifies the maintainer advisory now identifies CVE-2026-117601
     body: This is the same flaw as GHSA-6jp4-8v48-cc5v, not an additional vulnerability or a new disclosure date.
+  - date: Nov 4, 2026
+    title: SEAL reports a 1.2 BTC fee-bump loss
+    body: The response roundup describes one victim. Its relationship to the maintainer reports is unknown.
 checklist:
   - title: Upgrade before signing another transaction
     hint: "Use electrum.org and its GPG verification instructions; confirm the running application is 4.8.3 or newer"
@@ -56,6 +59,10 @@ sources:
     url: https://electrum.org/
     says: "Official 4.8.3 downloads and GPG verification instructions"
     primary: true
+  - name: Security Alliance incident-response roundup
+    url: https://radar.securityalliance.org/seal-weekly-stats-28-oct-3-nov-2026/
+    primary: true
+    says: Reports one 1.2 BTC loss tied to the fee-bump flaw. Overlap with maintainer reports is unknown.
 ---
 
 The malicious server withholds a newly broadcast payment and inserts a conflicting transaction with attacker-controlled outputs into the wallet's pending history. Its old signatures are invalid for those changed outputs. If the user then signs a replacement to increase the fee, the replacement authorizes the attacker payment.
@@ -67,3 +74,5 @@ Version 4.8.3 rejects invalid signatures on inputs belonging to the wallet befor
 The project received two reports and says one reporter lost money. It gives no total loss or wider victim count. Active exploitation in a widely used wallet warrants L4; no broader loss estimate is inferred.
 
 **Update, October 28:** The maintainer advisory now identifies this same vulnerability as **CVE-2026-117601**, also tracked as **GHSA-6jp4-8v48-cc5v**. The October 24 disclosure date and Electrum 4.8.3 fix are unchanged; the advisory does not specify when the CVE was added.
+
+SEAL’s November 4 incident-response roundup reports one victim lost 1.2 BTC to the malicious-server fee-bump flaw. The roundup does not establish whether this is the loss already reported by the maintainers. Keep the reported amount separate from any wider loss estimate. The 4.8.3 fix and output-verification steps still apply.
