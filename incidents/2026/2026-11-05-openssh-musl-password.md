@@ -36,6 +36,9 @@ timeline:
   - date: Nov 6, 2026
     title: Previdian detects attempts and reports root access on an Alpine honeypot
     body: The initial public sensor report records eight attempts from one IP. Its CEO separately reports a successful root session to The Hacker News.
+  - date: Nov 6, 2026
+    title: StepSecurity reproduces the failed first attempt in the same connection
+    body: An Alpine 3.24 VM and container both rejected an overlong first attempt. A later attempt could bypass authentication after a failure. The bypass failed after installing 10.3_p1-r2 and restarting sshd.
   - date: Nov 7, 2026
     title: Sensor dashboard shows more attempts
     body: Previdian’s updated snapshot lists 17 attempts across four sensors from 11 source IPs geolocated to eight countries.
@@ -47,7 +50,7 @@ checklist:
   - title: Check every account and cloud-image prerequisite
     hint: Locally inspect account password-field types without publishing hashes. The vulnerable target has '*' and another local account has a $5$ or $6$ hash. Include directory-service users resolved through musl-nscd (nslcd, winbind or sssd) that have no shadow entry, as the advisory warns. openssh-server-pam is still affected with UsePAM no. Default PermitRootLogin prohibit-password protects root but not other permitted key-only users. Tiny-cloud images 3.18.11–3.24.3 can become exposed when any such hash is added; their alpine user has passwordless doas. Containers without sshd, effective PasswordAuthentication no and PAM with UsePAM yes are excluded by the advisory.
   - title: Preserve authentication evidence and investigate unexpected logins
-    hint: Review /var/log/messages for sshd Accepted password entries naming accounts that have no password. Preserve logs and inspect doas use, new users, files and authorized_keys changes. A log match needs context and absence is not proof of safety. If unauthorized login cannot be ruled out, isolate and treat the host as compromised; patching does not remove established access. Previdian reported source IP 89.116.89[.]18 and the commands id, uname and hostname in its honeypot observations. Check both successful authentication and associated command execution. A match alone does not prove compromise.
+    hint: Review /var/log/messages for sshd Accepted password entries naming accounts that have no password. Correlate any preceding Failed password for the same account in the same session. A probe that attempts only one password per connection may miss the flaw. Preserve logs and inspect doas use, new users, files and authorized_keys changes. A log match needs context and absence is not proof of safety. If unauthorized login cannot be ruled out, isolate and treat the host as compromised; patching does not remove established access. Previdian reported source IP 89.116.89[.]18 and the commands id, uname and hostname in its honeypot observations. Check both successful authentication and associated command execution. A match alone does not prove compromise.
 sources:
   - name: Alpine original password-authentication-bypass advisory
     url: https://alpinelinux.org/posts/2026-11-05-openssh-password-authentication-bypass/
@@ -72,12 +75,22 @@ sources:
   - name: The Hacker News statement from Previdian’s CEO
     url: https://thehackernews.com/2026/11/hackers-exploited-openssh-sshole-flaw.html?m=1
     says: Relays the firm’s successful root access on an Alpine honeypot and quotes the source IP and reconnaissance commands.
+  - name: StepSecurity Alpine 3.24 lab reproduction
+    url: https://www.stepsecurity.io/blog/cve-2026-123158-sshhole-openssh-musl-password-bypass
+    primary: true
+    says: Verifies the before and after package revisions, authentication sequence, logs and client input limit.
+  - name: Original discoverer's reproduction notes
+    url: https://github.com/oz9un/sshole
+    primary: true
+    says: Documents two password prompts in the same connection.
 ---
 
-Alpine describes a failure when musl's crypt() returns an error marker for an overlong password and sshd compares it with an account's stored '*' field. A reachable attacker who knows the target username can authenticate with a 257–1024-byte password if password authentication is enabled, PAM is not used and another local account supplies a $5$ or $6$ password hash. This is not a universal OpenSSH or Alpine compromise. Accounts locked with '!' are excluded; root still needs PermitRootLogin yes for direct password entry, while another affected account may obtain root through its own privileges.
+Alpine describes a failure when musl's crypt() returns an error marker for an overlong password and sshd compares it with an account's stored '*' field. A reachable attacker who knows the target username can authenticate with a 257–1024-byte password if password authentication is enabled, PAM is not used and another local account supplies a $5$ or $6$ password hash. The discoverer’s reproduction requires a failed password attempt earlier in the same connection. This is not a universal OpenSSH or Alpine compromise. Accounts locked with '!' are excluded; root still needs PermitRootLogin yes for direct password entry, while another affected account may obtain root through its own privileges.
 
 Alpine lists affected releases 3.16–3.24 and edge. Its tiny-cloud images are safe initially but may become exposed after an administrator adds a qualifying password hash; the preconfigured alpine account has passwordless doas. Cloud-init images configured with password authentication disabled and containers with no sshd are outside that path. Upstream 10.6p2 is a workaround, while stable Alpine branches retain older upstream version numbers with patched package revisions. No version checker is supplied for these distribution-specific versions. The initial notices establish the flaw and remediation. They predate the sensor report below.
 
 **Identifier follow-up:** The CNA has now been checked and links this flaw to **CVE-2026-123158**. Its brief description gives 256–1024 characters; Alpine’s detailed explanation requires over 256 bytes and explicitly gives **257–1024 bytes**, retained above. The identifier does not change the account prerequisites, patched package revisions or restart requirement. Red Hat’s not-affected assessment applies to its product builds, not every Linux installation.
 
 **November 6 exploitation evidence.** Previdian’s initial public sensor report lists eight attempts from one source IP. Its CEO separately told The Hacker News that one reached root on a honeypot running Alpine and OpenSSH, and reported non-interactive reconnaissance. Observed attempts and successful access to the monitoring environment justify L4. On November 7 the public dashboard shows 17 attempts across four sensors from 11 source IPs geolocated to eight countries. The counts describe sensor observations. The findings establish neither production victims nor changes to vendor prerequisites or fix versions.
+
+StepSecurity independently reproduced that sequence in an Alpine 3.24 VM and container using `10.3_p1-r1`. The bypass failed after installing `10.3_p1-r2` and restarting sshd. Its client and askpass setup could deliver at most 1023 bytes. Alpine still documents a server range of 257–1024 bytes. GitHub tracks the same issue as [GHSA-4fcc-vm97-gx3x](https://github.com/advisories/GHSA-4fcc-vm97-gx3x).
