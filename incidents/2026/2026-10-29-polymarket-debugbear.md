@@ -2,7 +2,7 @@
 title: Polymarket confirms third-party breach; researchers find wallet-draining DebugBear script
 level: 4
 date: '2026-10-29'
-updated: '2026-11-04'
+updated: '2026-11-07'
 tags: [Polymarket, DebugBear, supply-chain, crypto]
 ecosystems: [web]
 summary: Polymarket's postmortem confirms session abuse through a compromised monitoring script. It reports $2.7m in drained funds plus $1.2m for pause-related losses, with 95% of affected wallets refunded as of October 30. Trading resumed and active sessions were reset; total affected users remain undisclosed.
@@ -30,6 +30,9 @@ timeline:
   - date: Oct 30, 23:11 UTC
     title: DebugBear reports DNS changes through its registrar
     body: Its preliminary investigation points to a specific customer website; it reports no evidence of an internal-system compromise so far.
+  - date: Nov 4, 2026
+    title: SEAL reports one asset freeze from two victim reports
+    body: The response roundup gives no frozen amount or evidence of funds being returned.
   - date: Nov 4, 2026
     title: Polygon forum proposes a native-POL recovery fork; approval is pending
     body: The proposal attributes 23,862,736.07 POL to this incident, within about 70.49M POL across two separate cases. It is a governance proposal with no decided client release or activation block, not completed recovery or additional user compensation.
@@ -77,6 +80,10 @@ sources:
     says: Author proposes moving about 70.49M native POL from five listed addresses; separates incident shares, approval/rehearsal conditions and undecided activation parameters. Not evidence of an executed fork or repayment.
     url: https://forum.polygon.technology/t/pip-proposal-recovery-of-funds-held-in-blocked-addresses-following-the-polymarket-and-binance-incidents/22497
     primary: true
+  - name: Security Alliance incident-response roundup
+    url: https://radar.securityalliance.org/seal-weekly-stats-28-oct-3-nov-2026/
+    primary: true
+    says: Reports two victim contacts and one completed asset freeze. Gives no amount or repayment result.
 ---
 
 Polymarket's international platform confirmed a compromised provider on October 29 and committed to compensating affected users. Its status page now records the outage as resolved. L4 reflects a real compromise, rather than a theoretical vulnerability.
@@ -92,3 +99,5 @@ The platform's notice does not name its provider; DebugBear separately acknowled
 **Dated on-chain scope:** Bitquery counts 737 drained accounts and 985 withdrawals on its main route, plus outcome-share transfers from 33 accounts, through October 29 at 19:49 UTC. These are research-defined accounts, not unique people; do not add the 33 to 737 without resolving overlap. Its approximately $2.73m is a route-specific estimate using dated conversion prices, not an extra loss to add to Polymarket’s reported $2.7m stolen or $3.9m compensation. The snapshot does not measure later refunds or establish today’s exposed population.
 
 **November 4 Polygon governance proposal:** The original forum proposal says five transaction-blocked addresses hold about 70.49M native POL associated with two separate incidents: four Polymarket addresses have a reference total of 23,862,736.07 POL and one Binance address 46,626,593.27 POL. It requests a one-time coordinated fork moving the specified balances to verified recovery addresses without changing supply; other tokens and Class B addresses are outside the transfer. Governance approval, balance reconciliation, proof of recovery-address control and an Amoy rehearsal are conditions. The client release, fork name and mainnet activation block are undecided. November 5 at 14:30 UTC is the planned discussion, not an activation promise. Address ownership and blocking are the author’s account, not an independent chain investigation here. This does not establish an approved fork, returned assets or additional customer reimbursement. Do not add the two incident shares to this event’s loss, or double-count them with frozen funds, replacement funding or compensation.
+
+SEAL’s November 4 roundup reports that two affected people contacted its responders and that it completed one asset freeze. The roundup gives no amount and does not connect the freeze to a specific Polygon address. Count the freeze separately from user refunds and the proposed native-POL recovery.
