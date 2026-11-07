@@ -1,7 +1,7 @@
 ---
 title: Babelfish TDS 握手漏洞可在认证前执行代码
 tags: [Babelfish, PostgreSQL, AWS, Aurora]
-summary: AWS 修复自管 Babelfish 和启用 Babelfish 的 Aurora PostgreSQL 中的两个 TDS 内存漏洞。CVE-2026-119923 可在无需认证的情况下以数据库进程用户身份执行操作系统命令。CVE-2026-119924 需要登录。应限制 TCP 1433 并按所用版本线升级。
+summary: AWS 修复自管 Babelfish 和启用 Babelfish 的 Aurora PostgreSQL 中的两个 TDS 内存漏洞。CVE-2026-119923 可能在无需认证的情况下以数据库进程用户身份执行操作系统命令。CVE-2026-119924 需要登录。应限制 TDS 端口并按所用版本线升级。
 splash: 可经 TDS 访问的受影响 Babelfish 部署。握手漏洞无需登录，RPC 漏洞需要认证。
 wipe: 将 TDS 监听端口限制到可信客户端，升级扩展或 Aurora 集群并应用待处理维护。
 inTheWildNote: AWS 说明漏洞影响及修复，公告未报告实际利用。
@@ -22,7 +22,7 @@ checklist:
 - title: 找出并限制可访问的 Babelfish TDS 监听端口
   hint: 确认哪些集群启用了 Babelfish，并核对扩展或引擎版本。检查防火墙或 RDS 安全组中默认的 TCP 1433 或实际配置的 TDS 端口，只允许必要客户端连接。修补前可通过网络限制减少暴露。
 - title: 按实际部署方式升级
-  hint: 自管部署按上游发布说明选择与 PostgreSQL 兼容的升级路径。Aurora 按下表选择匹配的引擎和捆绑 Babelfish 版本，并应用待处理维护。完成后核查运行版本，从可信客户端测试 TDS 连通性。
+  hint: 自管部署按上游发布说明选择与 PostgreSQL 兼容的升级路径。Aurora 按下表选择匹配的引擎和捆绑 Babelfish 版本，并应用待处理维护。较旧的自管版本线应按支持的路径迁移至已修复版本。完成后核查运行版本，从可信客户端测试 TDS 连通性。
 - title: 审查数据库主机的可疑活动
   hint: 变更前保留网络和数据库日志，排查异常 TDS 客户端、进程崩溃和数据库服务的异常子进程。若发现代码执行或内存访问证据，启动事件响应并核定可能暴露的凭据。
 sources:
