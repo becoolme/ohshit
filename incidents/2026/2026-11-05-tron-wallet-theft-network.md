@@ -19,6 +19,9 @@ timeline:
 - date: Oct 5–Nov 4, 2026
   title: Research traces TRON theft-pattern transfers
   body: The report bounds its wallet counts to this period; links are financial relationships, not proof of one operator or device exploit.
+- date: Nov 4, 2026
+  title: SEAL summarizes iOS wallet compromise reports
+  body: Six reports account for about $127,000 in reported losses. Overlap with the Bitquery cluster is unknown.
 - date: Nov 5, 2026
   title: Bitquery publishes its investigation and correction
   body: The fee wallet received its first money before becoming live 19 minutes later, correcting an earlier sequence. Other-chain valuations use October 25 closing prices; later transfers
