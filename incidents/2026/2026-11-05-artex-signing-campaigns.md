@@ -35,7 +35,7 @@ sources:
     says: Same research origin, not independent corroboration; confirms certificate validation and separate campaign boundaries.
 ---
 
-Check Point reports more than 300 certificates and passwords taken from signing shops; three passed its described usability checks. This compromises signing material, not Apple’s signing infrastructure. Names and final revocation status are undisclosed.
+Check Point reports more than 300 certificates and passwords taken from signing shops; three passed its described usability checks. This compromises signing material, not Apple’s signing infrastructure. These research counts are not independently verified; affected organizations and final revocation status are undisclosed.
 
 In a separate crypto operation, leaked AWS credentials enabled an app-distribution bucket rewrite; the owner later restored the manifest. The reported wallet stayed empty. Another operation extracted gaming credentials; its validity estimate came from sampling, not a confirmed count of newly compromised users.
 
