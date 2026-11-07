@@ -2,6 +2,7 @@
 title: Research links TRON wallet thefts to a shared fee network; iPhone cause remains unproven across victims
 level: 4
 date: '2026-11-05'
+updated: '2026-11-07'
 tags:
 - TRON
 - Wallet theft
@@ -22,6 +23,9 @@ timeline:
   title: Bitquery publishes its investigation and correction
   body: The fee wallet received its first money before becoming live 19 minutes later, correcting an earlier sequence. Other-chain valuations use October 25 closing prices; later transfers
     and TON losses are outside its measured scope.
+- date: Nov 6, 2026
+  title: Trust Wallet publishes iOS safety guidance
+  body: The company recommends current iOS and keeping recovery phrases and private keys out of phone notes and images. Its guidance gives no case-specific finding.
 checklist:
 - title: Respond to suspected seed exposure across all chains
   hint: From a trusted device, create a wallet with a new seed and secure any remaining assets on every chain using the exposed seed. Do not reuse an exposed seed on a reinstalled app.
@@ -42,6 +46,16 @@ sources:
   primary: true
   says: November 5 analysis, corrected funding sequence, wallet-level counts, bounded cross-chain tracing, full address/transaction record and explicit limits on iPhone/app attribution.
     Figures are not independently confirmed.
+- name: Security Alliance incident-response roundup
+  url: https://radar.securityalliance.org/seal-weekly-stats-28-oct-3-nov-2026/
+  primary: true
+  says: Reports six iOS wallet-compromise reports and approximately $127,000 in reported losses. Overlap with the Bitquery dataset is unknown.
+- name: Trust Wallet iOS safety guidance
+  url: https://trustwallet.com/blog/security/ios-update-crypto-wallet-security
+  primary: true
+  says: Recommends current iOS and keeping keys and recovery phrases out of phone notes and images. Provides no case-specific root-cause finding.
 ---
 
 The TRON count is 365 addresses, not 365 confirmed iPhone users; 276 lost USDT and 89 lost only TRX. A shared fee wallet ties transactions together but could serve multiple buyers of an attack kit. Three collectors have a weaker link: their 24 victims and 530,131 USDT are included in the estimate. The report correlates one theft with a published iPhone narrative by amount and timing, without device forensics proving the wider cause. It cannot establish a Trust Wallet flaw, general iPhone compromise or a link to the separate Poisoned Source campaign. Its at-least-$103K other-chain estimate uses a different valuation basis and is not a deduplicated additional-person count. Do not turn the traced $1.86M JustLend deposit or $1.51M LI.FI route into extra theft totals; not all routed balances are established stolen funds.
+
+SEAL’s November 4 report records six iOS wallet-compromise reports and about $127,000 in reported losses from October 28 through November 3, across multiple Trust Wallets and one Uniswap Wallet. The overlap with Bitquery’s cluster is unknown, so keep the estimates separate. Trust Wallet’s November 6 guidance discusses Coruna and DarkSword as risks for older iOS builds and recommends updating the device and keeping keys and recovery phrases out of notes and images. It gives no finding about the cause or operator of this theft network.
