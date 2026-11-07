@@ -2,12 +2,18 @@
 title: OpenSSH on musl Linux can accept long passwords for key-only accounts when PAM is disabled
 level: 3
 date: 2026-11-05
+updated: 2026-11-07
 tags: [OpenSSH, Alpine Linux, Authentication bypass]
 summary: Alpine confirms a password bypass in reachable sshd using musl without PAM. It requires password authentication, a target account with a '*' password field and another account with a $5$/$6$ hash. OpenSSH 10.6p2 and Alpine backports block it; restart sshd after updating or disabling password authentication.
 splash: Reachable musl Linux sshd without PAM, password logins enabled, target '*' account and another local $5$/$6$ password hash
 wipe: Install your Alpine branch's fixed OpenSSH package and restart sshd; otherwise disable PasswordAuthentication and verify the effective configuration.
 inTheWild: unknown
 inTheWildNote: Vendor confirms the bypass; the read notices do not establish attacks in the wild.
+cves:
+  - id: CVE-2026-123158
+    score: 8.1
+    name: musl password-hash error marker bypass
+    description: The CNA identifies the same conditional password bypass; this does not extend exposure to glibc or PAM-enabled builds.
 fixed:
   - { product: Portable OpenSSH upstream workaround, version: 10.6p2 }
   - { product: Alpine edge openssh, version: 10.6_p2-r0 }
@@ -24,6 +30,9 @@ timeline:
   - date: Nov 5, 2026
     title: OpenSSH releases 10.6p2 and Alpine publishes branch backports
     body: The workaround prevents password authentication bypass through sshd; Alpine documents precise account prerequisites, cloud-image exposure, package versions and mandatory daemon restart. No CVE is assigned in the read Alpine notice.
+  - date: Nov 5, 2026
+    title: CNA assigns CVE-2026-123158 to the same bypass
+    body: The published record identifies the musl/no-PAM flaw; Alpine’s earlier text still says no identifier had been assigned when written. Red Hat confirms its glibc/PAM product builds are unaffected.
 checklist:
   - title: Update the server package and restart the running daemon
     hint: On Alpine use apk upgrade -U -a and compare apk info -v openssh-server or openssh-server-pam with your branch's row above, then run rc-service sshd restart. Package installation alone leaves the old daemon running. Rebuild affected images and replace or update running instances; a newly fixed image does not patch an existing VM. Exceptional fixes for 3.21 and older do not restore general support.
@@ -42,8 +51,18 @@ sources:
     url: https://www.openssh.org/releasenotes.html
     primary: true
     says: November 5 release works around password authentication bypass in musl Linux with PAM disabled; considers the root cause outside sshd but exploitable through it.
+  - name: MITRE CNA record for CVE-2026-123158
+    url: https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/123xxx/CVE-2026-123158.json
+    primary: true
+    says: Published November 5; CVSS 3.1 8.1, Linux musl without PAM, upstream workaround before 10.6p2.
+  - name: Red Hat product applicability assessment
+    url: https://access.redhat.com/security/cve/cve-2026-123158
+    primary: true
+    says: Red Hat builds use glibc and PAM; listed products are not affected.
 ---
 
 Alpine describes a failure when musl's crypt() returns an error marker for an overlong password and sshd compares it with an account's stored '*' field. A reachable attacker who knows the target username can authenticate with a 257–1024-byte password if password authentication is enabled, PAM is not used and another local account supplies a $5$ or $6$ password hash. This is not a universal OpenSSH or Alpine compromise. Accounts locked with '!' are excluded; root still needs PermitRootLogin yes for direct password entry, while another affected account may obtain root through its own privileges.
 
 Alpine lists affected releases 3.16–3.24 and edge. Its tiny-cloud images are safe initially but may become exposed after an administrator adds a qualifying password hash; the preconfigured alpine account has passwordless doas. Cloud-init images configured with password authentication disabled and containers with no sshd are outside that path. Upstream 10.6p2 is a workaround, while stable Alpine branches retain older upstream version numbers with patched package revisions. No version checker is supplied for these distribution-specific versions. The notices establish the flaw and remediation, not observed exploitation or a victim count.
+
+**Identifier follow-up:** The CNA has now been checked and links this flaw to **CVE-2026-123158**. Its brief description gives 256–1024 characters; Alpine’s detailed explanation requires over 256 bytes and explicitly gives **257–1024 bytes**, retained above. The identifier does not change the account prerequisites, patched package revisions or restart requirement. Red Hat’s not-affected assessment applies to its product builds, not every Linux installation.
