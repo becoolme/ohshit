@@ -5,7 +5,7 @@ date: 2026-10-31
 updated: 2026-11-07
 tags: [b14g, Core, staking]
 ecosystems: [crypto]
-summary: b14g says about 97 million CORE staked through its service was withdrawn without authorization on October 31. It reports pausing affected contracts upon discovery. Bytecode research explains the zero-amount check and gives an unverified 68.15M CORE recovery estimate for a November 2 fork. Recovery is not user repayment; a verified staking fix remains unestablished.
+summary: b14g reports theft of about 97M staked CORE on October 31 and a contract pause upon discovery. Bytecode research explains the zero-amount check and gives an unverified 68.15M CORE recovery estimate for a November 2 fork. Recovery is not user repayment; a verified staking fix remains unestablished.
 splash: CORE staked through b14g; do not infer that the Core network or every asset supported by b14g was compromised
 wipe: Avoid new exposure to affected staking contracts; preserve position records and verify recovery guidance through established b14g channels
 inTheWild: yes
