@@ -8,7 +8,7 @@ timeline:
 - date: 2026年11月6日
   title: 研究人员披露更新劫持及排查指标
   body: 报告记录恶意安装包、DLL 侧载、持久化及控制服务器发现方式。
-- date: 约2026年10月31日
+- date: 约2026年10月下旬
   title: 红雨滴于 10 月底开始跟踪行动
   body: 报告只给出大致观察日期。
 checklist:
@@ -20,7 +20,7 @@ checklist:
     以及 m1m101010.fmcag[.]org、tg002.mmp-gep[.]org、img01.mmca-cdn[.]com、
     img21.mmca-cdn[.]com、img31.mmca-cdn[.]com、mp.mmca-cdn[.]com:443/install_v.exe.shell 和占位域名 ms.jsf[.]ink。
     检查 /wA8zS0xD8gT3-zzz/aaa_config_new.php 或同一前缀下的 /aaa_getjson.php，
-    以及非浏览器进程发出的 /dns-query?dns= 或 /resolve?name= 请求。
+    以及非浏览器进程发出的 /dns-query?dns= 或 /resolve?name= 请求。植入程序通过 ip-api[.]com 查地理位置，该服务只能作为结合上下文排查的线索。
     在主机上检查 Dsemanager Update 任务、以 _MyControlPipeaaa 结尾的命名管道，以及
     dsemanager.exe 从同一目录加载 atiadlxy.dll 的行为。原报告 IOC 一节列出 15 个完整 SHA-256、
     其他主机痕迹、请求头和 User-Agent，前文另有一个官网安装包样本的 MD5。
