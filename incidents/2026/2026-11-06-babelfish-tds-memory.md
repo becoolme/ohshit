@@ -4,7 +4,7 @@ level: 3
 date: '2026-11-06'
 tags: [Babelfish, PostgreSQL, AWS, Aurora]
 ecosystems: [postgresql]
-summary: AWS fixes two TDS memory bugs in self-managed Babelfish and Aurora PostgreSQL with Babelfish. CVE-2026-119923 permits unauthenticated OS command execution as the database process user. CVE-2026-119924 requires a login. Restrict TCP 1433 and upgrade on the correct release line.
+summary: AWS fixes two TDS memory bugs in self-managed Babelfish and Aurora PostgreSQL with Babelfish. CVE-2026-119923 can allow unauthenticated OS command execution as the database process user. CVE-2026-119924 requires a login. Restrict the TDS port and upgrade on the correct release line.
 splash: Affected Babelfish deployments reachable over TDS. The handshake flaw requires no login. The RPC flaw requires authentication.
 wipe: Restrict the TDS listener to trusted clients, upgrade the extension or Aurora cluster and apply pending maintenance.
 inTheWild: unknown
@@ -36,7 +36,7 @@ checklist:
 - title: Find and restrict reachable Babelfish TDS listeners
   hint: Identify clusters with Babelfish enabled and the exact extension or engine version. Check firewall or RDS security-group rules for TCP 1433 by default, or the configured TDS port. Allow only required clients. Network restriction reduces exposure while you patch.
 - title: Upgrade through the appropriate distribution
-  hint: Use the linked upstream release and PostgreSQL-compatible upgrade instructions on self-managed deployments. On Aurora, use the matching engine and bundled Babelfish versions in the table below and apply pending maintenance. Check the running versions afterward and test TDS connectivity from a trusted client.
+  hint: Use the linked upstream release and PostgreSQL-compatible upgrade instructions on self-managed deployments. On Aurora, match the engine and bundled Babelfish versions in the table below and apply pending maintenance. On older self-managed lines, plan a supported migration to a fixed release. Check the running versions afterward and test TDS connectivity from a trusted client.
 - title: Review suspicious database-host activity
   hint: Preserve network and database logs before changing the system. Look for unexpected TDS clients, crashes and unexpected child processes of the database service. Escalate evidence of code execution or memory access to incident response and scope any exposed credentials.
 sources:
