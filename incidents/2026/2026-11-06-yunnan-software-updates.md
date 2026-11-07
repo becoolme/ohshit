@@ -12,7 +12,7 @@ timeline:
 - date: Nov 6, 2026
   title: Researchers disclose the update hijacks and campaign indicators
   body: The report documents malicious installers, sideloading, persistence and command-server discovery.
-- date: '~Oct 31, 2026'
+- date: '~Late Oct 2026'
   title: RedDrip starts tracking the activity in late October
   body: The report gives only an approximate observation date.
 checklist:
@@ -24,7 +24,7 @@ checklist:
     m1m101010.fmcag[.]org, tg002.mmp-gep[.]org, img01.mmca-cdn[.]com, img21.mmca-cdn[.]com,
     img31.mmca-cdn[.]com, mp.mmca-cdn[.]com:443/install_v.exe.shell and the placeholder ms.jsf[.]ink.
     Look for /wA8zS0xD8gT3-zzz/aaa_config_new.php or /aaa_getjson.php under the same prefix, and non-browser
-    /dns-query?dns= or /resolve?name= requests. On hosts, inspect the Dsemanager Update task, pipes ending in
+    /dns-query?dns= or /resolve?name= requests. The implant uses ip-api[.]com for geolocation. Treat that service as a contextual lead. On hosts, inspect the Dsemanager Update task, pipes ending in
     _MyControlPipeaaa, and dsemanager.exe loading atiadlxy.dll from its own directory. The report's IOC section
     has the 15 full SHA-256 hashes, additional host artifacts, headers and user agents. It also gives one
     MD5 for the website-installer sample earlier in the report. Correlate matches with process, file and
