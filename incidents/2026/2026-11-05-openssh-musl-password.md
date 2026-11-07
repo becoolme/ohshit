@@ -5,7 +5,7 @@ date: 2026-11-05
 updated: 2026-11-07
 tags: [OpenSSH, Alpine Linux, Authentication bypass]
 summary: Previdian observed OpenSSH bypass attempts and reports root access on an Alpine honeypot. The flaw requires reachable musl sshd, password auth, no PAM, a '*' target and another local $5$/$6$ hash. Use OpenSSH 10.6p2 or the Alpine backport and restart sshd. No production compromise is established.
-splash: Reachable musl Linux sshd without PAM, password logins enabled, target '*' account and another local $5$/$6$ password hash
+splash: Reachable musl sshd, no PAM, password login, '*' target and local $5$/$6$ hash. Reproduced after a failure in the same connection.
 wipe: Install your Alpine branch's fixed OpenSSH package and restart sshd; otherwise disable PasswordAuthentication and verify the effective configuration.
 inTheWild: yes
 inTheWildNote: Previdian observed attempts and reports root access on its Alpine honeypot.

@@ -1,7 +1,7 @@
 ---
 title: 未使用 PAM 的 musl Linux OpenSSH 可接受超长密码，绕过纯密钥账户登录
 summary: Previdian 观察到 OpenSSH 绕过尝试，并报告 Alpine 蜜罐被以 root 权限登录。漏洞要求 musl sshd 网络可达、启用密码认证、未用 PAM，目标账户密码字段为 '*'，另有本地 $5$/$6$ 哈希。升级到 OpenSSH 10.6p2 或 Alpine 回补版本后重启 sshd。尚未证实生产环境失陷。
-splash: 网络可达的 musl Linux sshd，未用 PAM、启用密码登录，目标为 '*' 账户且另有本地 $5$/$6$ 哈希
+splash: 网络可达的 musl sshd，未用 PAM、启用密码认证，目标为 * 账户，另有本地 $5$/$6$ 哈希。复现需同一连接内先失败一次。
 wipe: 安装对应 Alpine 分支的修复 OpenSSH 包并重启 sshd；否则禁用 PasswordAuthentication 并验证实际配置。
 inTheWildNote: Previdian 观察到利用尝试，并报告其 Alpine 蜜罐被以 root 权限登录。
 cves:
