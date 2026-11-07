@@ -1,0 +1,41 @@
+---
+title: JNSA suspends security training service after intrusion puts up to 15,128 records at risk
+level: 3
+date: '2026-11-06'
+tags: [JNSA, data breach, security training]
+summary: The Japan Network Security Association confirmed unauthorized access to its security knowledge-check service. Up to 15,128 records may have been exposed, including administrator contact details, user IDs and hashed passwords. JNSA suspended the service and is investigating.
+splash: Registered administrators and users of JNSA's Information Security Knowledge Check service.
+wipe: Replace reused passwords through official sites, warn users about impersonation and wait for verified JNSA recovery instructions.
+inTheWild: 'yes'
+inTheWildNote: JNSA confirmed unauthorized access. It is still investigating possible data leakage.
+timeline:
+- date: Nov 4, 2026
+  title: JNSA confirms unauthorized access and suspends the service
+  body: External specialists assist with investigation of the cause and scope.
+- date: Nov 6, 2026
+  title: JNSA discloses the incident and its provisional scope
+  body: Up to 15,128 records may have been exposed. The association plans to notify users individually once they are identified.
+- date: '~Oct 30, 2026'
+  title: Possible start of unauthorized access
+  body: JNSA's investigation places the possible start around the evening of October 30.
+checklist:
+- title: Change passwords reused on other services
+  hint: Go directly to each affected service's official site or app. Replace any password shared with your JNSA training account with a unique one, starting with email and work accounts. Enable MFA where available. Report suspicious sign-ins to your organization's security team.
+- title: Warn staff about fake reset notices
+  hint: Use internal channels to tell registered users what is known and where to report suspicious messages. Avoid unexpected attachments and links. JNSA says it will not send a link asking you to enter or change your credentials. Verify notices at jnsa.org or use the incident contact sec@jnsa.org.
+- title: Follow JNSA recovery and notification instructions
+  hint: Keep a copy of any notice and ask JNSA or your organization's training administrator whether your account was included. The service is suspended. Use its official site for a recovery announcement and follow JNSA's reset instructions once available.
+sources:
+- name: JNSA November 6 first incident report (Japanese PDF)
+  url: https://www.jnsa.org/dl/annual/20261106.pdf
+  primary: true
+  says: Confirms unauthorized access and suspension, estimates the potentially affected records and describes fields, investigation and notification plans.
+- name: JNSA Information Security Knowledge Check service
+  url: https://slb.jnsa.org/
+  primary: true
+  says: Displays the service suspension notice.
+---
+
+The service lets organizations enroll staff in a security knowledge assessment and review their results. JNSA confirmed an intrusion on November 4. Its first report says **up to 15,128 records may have been exposed**. Possible fields include administrator names, company names and email addresses, organization location, headcount and industry, the number of participating users, and user IDs and hashed passwords. JNSA says organizations can use a participant ID in place of a name for non-administrator users.
+
+JNSA has engaged external specialists. The first report does not establish the intrusion path, hashing method or extent of any data transfer. JNSA plans individual notifications after identifying potentially affected users and said it planned to report to Japan's Personal Information Protection Commission on November 6.
