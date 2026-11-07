@@ -1,5 +1,6 @@
 ---
 date: 2026-10-27
+updated: '2026-11-07'
 title: Predict.fun reports unauthorized wallet transfers; research traces drains signed with owner keys
 level: 4
 tags:
@@ -22,6 +23,9 @@ timeline:
     title: A second wave becomes public; Predict.fun acknowledges unauthorized transfers
   - date: Oct 27, 2026
     title: Bitquery records a further drain after the platform statement
+  - date: Nov 4, 2026
+    title: SEAL reports injected code on a third-party documentation site
+    body: SEAL associates the documentation-site takeover and script injection with a reported $400,000 loss.
 checklist:
   - title: Replace exposed owner keys rather than only changing an API token
     hint: If you exported a Privy owner key for a trading bot or API experiment, stop that bot and treat the owner key as exposed. From a clean device, move remaining assets to a newly created wallet whose key has not been copied into the exposed environment. Never enter the old seed or key into a recovery website. A password reset, wallet disconnect or allowance revocation alone does not invalidate a copied owner key.
@@ -38,6 +42,10 @@ sources:
     url: https://www.bitquery.io/investigations/predict-fun-hack
     primary: true
     says: Traces owner-key-signed drains and distinguishes wallet theft from a market-contract exploit. Counts 397,708 USDT and 29 wallets; data ends October 27, not a current final loss audit.
+  - name: Security Alliance incident-response roundup
+    url: https://radar.securityalliance.org/seal-weekly-stats-28-oct-3-nov-2026/
+    primary: true
+    says: Attributes the incident to script injection after a third-party API documentation site takeover and reports approximately $400,000 in losses.
 ---
 
 Public disclosure was on October 27, although the researcher traces activity back to October 22. Bitquery reports 397,708 USDT taken from 29 wallets over two waves; the approximate monetary scale agrees with the platform acknowledgment. The exact wallet count and trace remain researcher-reported, unverified outside that investigation. Its observation window ends on October 27.
@@ -45,3 +53,5 @@ Public disclosure was on October 27, although the researcher traces activity bac
 The observed signatures establish use of owner-key authority, not how those keys were obtained. Bitquery found no market-contract calls in the drains it examined. Its proposed connection to exported owner keys used for API trading and a third-party documentation site is an explanation, not a demonstrated key-theft mechanism or evidence that Privy itself was breached. L4 reflects confirmed unauthorized transfers.
 
 A further drain after the statement illustrates why taking a documentation site offline cannot invalidate copied keys. The research reports a reimbursement pledge, not completed refunds. This is separate from the later Binance and Polymarket incidents; no shared attacker or root cause is established.
+
+SEAL’s November 4 incident-response roundup describes an injected script on a taken-over third-party API documentation site. This adds an incident responder’s account of the delivery channel. It does not specify how the site was taken over, how the script obtained each signing key or whether the operator completed reimbursement. The reported $400,000 describes the same incident and is not an additional amount.
