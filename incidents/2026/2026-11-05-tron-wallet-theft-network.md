@@ -7,7 +7,7 @@ tags:
 - TRON
 - Wallet theft
 - Seed phrases
-summary: Bitquery estimates at least 4.06M USDT was drained from 365 TRON wallets. PublicAML traces at least 734,424 USDT from 21 more addresses via a shared fee wallet. These are separate research estimates, and address counts do not identify people. One case matches an iPhone report. Other devices, apps and causes remain unknown.
+summary: Bitquery estimates at least 4.06M USDT was drained across a cluster of 365 TRON wallets. PublicAML links at least 734,424 USDT in outflows from 21 more addresses to the same fee wallet. These are separate research estimates, and address counts do not identify people. One case matches an iPhone report. Other devices, apps and causes remain unknown.
 splash: Self-custody wallets whose keys or seed phrases may be exposed; no platform-wide iPhone or Trust Wallet compromise is established.
 wipe: Use a trusted device and a new seed for exposed wallets; preserve evidence, report stolen transfers and keep mobile systems updated.
 inTheWild: 'yes'
@@ -67,7 +67,7 @@ sources:
   says: Independently reads chain data, documents November 5–7 transfers, its counting rule and 35 addresses with roles, and reports freeze requests. Does not verify devices, attack method, ownership or a completed freeze.
 ---
 
-The TRON count is 365 addresses, not 365 confirmed iPhone users; 276 lost USDT and 89 lost only TRX. A shared fee wallet ties transactions together but could serve multiple buyers of an attack kit. Three collectors have a weaker link: their 24 victims and 530,131 USDT are included in the estimate. The report correlates one theft with a published iPhone narrative by amount and timing, without device forensics proving the wider cause. It cannot establish a Trust Wallet flaw, general iPhone compromise or a link to the separate Poisoned Source campaign. Its at-least-$103K other-chain estimate uses a different valuation basis and is not a deduplicated additional-person count. Do not turn the traced $1.86M JustLend deposit or $1.51M LI.FI route into extra theft totals; not all routed balances are established stolen funds.
+The TRON count is 365 addresses, not 365 confirmed iPhone users; 276 lost USDT and 89 lost only TRX. A shared fee wallet ties transactions together but could serve multiple buyers of an attack kit. Three collectors have a weaker link: their 24 victims and 530,131 USDT are included in the estimate. The report correlates one theft with a published iPhone narrative by amount and timing, without device forensics proving the wider cause. It cannot establish a Trust Wallet flaw, general iPhone compromise or a link to the separate Poisoned Source campaign. Its separate estimate covers 65 wallets on eight other chains and at least $103K at a different valuation basis. That count does not establish 65 additional people. Do not turn the traced $1.86M JustLend deposit or $1.51M LI.FI route into extra theft totals; not all routed balances are established stolen funds.
 
 SEAL’s November 4 report records six iOS wallet-compromise reports and about $127,000 in reported losses from October 28 through November 3, across multiple Trust Wallets and one Uniswap Wallet. The overlap with Bitquery’s cluster is unknown, so keep the estimates separate. Trust Wallet’s November 6 guidance discusses Coruna and DarkSword as risks for older iOS builds and recommends updating the device and keeping keys and recovery phrases out of notes and images. It gives no finding about the cause or operator of this theft network.
 
