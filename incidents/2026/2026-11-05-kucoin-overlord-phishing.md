@@ -19,7 +19,7 @@ checklist:
 - title: Isolate any device that ran a download
   hint: Disconnect the device from Wi-Fi and wired networks. Keep the message with full headers, download details and activity records. Ask your security team to inspect the device and verify cleanup before reconnecting it.
 - title: Secure your KuCoin account from a clean device
-  hint: If you entered a password or code or ran a download, open KuCoin directly. Change the password, sign out other sessions, review account security and recent withdrawals, and report suspicious activity to official support. If the device held exchange API keys, revoke and replace exposed keys.
+  hint: If you entered a password or code or ran a download, open KuCoin directly. Change the password, sign out other sessions, verify two-factor authentication settings, review recent withdrawals, and report suspicious activity to official support. If the device held exchange API keys, revoke and replace exposed keys.
 - title: Verify alerts directly
   hint: Open your usual KuCoin app or bookmark to check any claimed account issue. Compare your anti-phishing code when configured. If you only opened the link, close the page without entering anything or downloading a file.
 - title: Hunt for related mail, downloads and callbacks
@@ -37,4 +37,4 @@ sources:
 
 The lure presented an urgent account warning from a supposed KuCoin security center. GCSA found that the visible sender was `security@ku.com`, while SPF and DKIM authenticated the attacker's `ku-security[.]com` domain. The missing DMARC record on `ku.com` meant the domain had published no quarantine or reject policy for mail that failed alignment. GCSA reports that KuCoin enabled quarantine after being notified.
 
-The fake site offered Windows and macOS downloads. GCSA confirmed the Windows sample as an Overlord client through static analysis. The Windows, macOS arm64 and macOS amd64 samples contained the same remote callback. GCSA's report establishes phishing delivery and malware distribution. Whether recipients ran the files, lost funds or had their accounts accessed remains unknown. The evidence concerns impersonation of KuCoin's sender identity. The report does not establish access to KuCoin infrastructure.
+The fake site offered Windows and macOS downloads. GCSA confirmed the Windows sample as an Overlord client through static analysis. The Windows, macOS arm64 and macOS amd64 samples contained the same remote callback. The remote-access risk comes from running the download. GCSA's report establishes phishing delivery and malware distribution. Whether recipients ran the files, lost funds or had their accounts accessed remains unknown. The evidence concerns impersonation of KuCoin's sender identity. The report does not establish access to KuCoin infrastructure.
