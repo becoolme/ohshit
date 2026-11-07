@@ -8,7 +8,7 @@ tags:
   - credentials
 ecosystems:
   - onamae
-summary: GMO confirms customer-data exfiltration alongside malware in Onamae Desktop Cloud. GMO began contacting customers about trading-loss claims on Nov 6. Migration is planned. IS6FX separately reports correcting verified trades. The 26,739-server figure remains potential scope, not an infection count.
+summary: GMO confirms customer-data exfiltration alongside malware in Onamae Desktop Cloud. GMO began contacting customers about trading-loss claims on Nov 6. Migration is planned. IS6FX separately reports correcting verified unauthorized trades. The 26,739-server figure remains potential scope, not an infection count.
 splash: Onamae Desktop Cloud customers; 26,739 servers potentially affected, not confirmed infected
 wipe: Back up, disconnect and power off customer PCs per GMO; rotate hosted-desktop secrets from a clean device and follow recovery notices
 inTheWild: yes
@@ -102,4 +102,4 @@ The vendor distinguishes possible exposure from proven misuse: the server total 
 
 IS6FX’s October 29 notice reports completed corrections and compensation for the unauthorized trades it verified. This is the broker’s account of its own response, not a statement that every Onamae customer has been reimbursed or that the original service has recovered. Investigation, individual data verification and GMO’s compensation procedures remain separate.
 
-**November 6 compensation update.** GMO began contacting contracted customers individually about losses from unauthorized trades directly attributable to the incident. The company says the eligible-customer count and qualifying trades are still being checked, so it cannot estimate total compensation. Its November 13 results briefing is expected to cover claim progress and the outlook for calculating financial impact. Check notices sent to your registered address and verify them with official support. The public notice confirms outreach. It does not establish completed payments, a universal claim deadline or restoration of the old desktop environment.
+**November 6 compensation update.** GMO began contacting contracted customers individually about losses from unauthorized trades directly attributable to the incident. The company says the eligible-customer count and qualifying trades are still being checked, so it cannot estimate total compensation. Its November 13 results briefing is expected to cover claim progress and the outlook for calculating financial impact. Check notices sent to your registered address and verify them with [GMO’s official support form](https://help.onamae.com/contact/). The public notice confirms outreach. It does not establish completed payments, a universal claim deadline or restoration of the old desktop environment.
