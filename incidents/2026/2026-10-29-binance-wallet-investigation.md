@@ -2,7 +2,7 @@
 title: Binance preliminary report details signing-service intrusion and revises funding figures
 level: 4
 date: 2026-10-29
-updated: '2026-11-06'
+updated: '2026-11-07'
 tags:
   - Binance
   - crypto
@@ -139,6 +139,9 @@ timeline:
   - date: Nov 6, 2026
     title: SEAL revises post-issuance session and production-access guidance
     body: The research warns that short-lived sessions can be stolen repeatedly from a persistently compromised endpoint; it expands detection exercises and scoped service/production identities. These are defensive recommendations, not newly confirmed Binance findings.
+  - date: Nov 7, 2026
+    title: Elliptic traces more stolen XRP into bitcoin
+    body: At about 08:00 UTC, the researcher estimates roughly 2,300 BTC converted from other stolen assets and more bitcoin entering coinjoins. The major original BTC and ETH holdings had yet to move in its analysis.
   - date: Nov 1, 06:00–09:00 UTC (scheduled)
     title: First withdrawal phase is planned
 
@@ -171,6 +174,8 @@ checklist:
     hint: Use a disposable VM without corporate credentials, SSH keys or cloud sessions for recruitment tasks and unfamiliar code. Report privileged-employee recruitment to security for independent company/domain/recruiter checks; real people and registered front companies do not establish safety. Review short-lived/device-bound sessions, alerts for new devices, integrity checks on wallet/RPC binaries and configurations, and patching/segmentation of privileged security appliances. Configure EDR to block suspicious behavior as one layer, not a guarantee; these are SEAL’s defensive recommendations, not proof Binance has deployed them.
   - title: Test post-issuance session theft and reduce standing access
     hint: SEAL’s November 6 revision notes that short-lived sessions and binding at issuance do not stop repeated theft or in-place use on a compromised endpoint. Reduce standing permissions, separate scoped service identities and retire abandoned services. Remove standing local administrator access where feasible. Exercise repository/CI-administrator and token abuse in a controlled environment and verify alerts actually fire. Move toward reviewed pipeline-mediated production changes with scoped identities; defend that concentrated repository/CI path first. These are operator recommendations, not an exchange-wide reset instruction or proof Binance has implemented them.
+  - title: Screen newly traced bitcoin payouts
+    hint: For deposit screening, compare XRP-to-BTC payouts and coinjoin exposure against Elliptic’s dated labels and the FBI list. Check the route, timestamps and wallet context before escalating. A match alone cannot establish who controls an address.
 sources:
   - name: Binance investigation notice
     url: https://x.com/binance/status/2115915708504900039
@@ -355,6 +360,10 @@ sources:
     url: https://blog.globalledger.io/research-investigations/six-days-after-the-binance-hack
     primary: true
     says: November 5 original research uses November 4 prices/holdings, distinguishes frozen balances from free holdings, and analyzes 132 stablecoin freezes across 12 issuers. Selected outflow coverage and address labels limit the estimates.
+  - name: Elliptic November 7 tracing update
+    url: https://www.elliptic.co/insights/how-north-korea-is-laundering-the-6-4-billion-stolen-from-binance/
+    primary: true
+    says: Traces XRP conversion through THORChain, linked bitcoin balances and mixing through about 08:00 UTC on November 7. Separates conversion, freezing and cash-out.
 ---
 
 Binance’s initial notice said it had not confirmed an impact on user funds. The exchange then edited that notice to state that user funds are safe, and subsequently said withdrawals would resume after the security issue is fully resolved. These are the vendor’s statements, not an independently audited reserve or loss assessment. No resumption time or technical containment report was supplied in those notices. The withdrawal notice does not specify affected networks or withdrawal routes; do not infer that every Binance product is affected. Those earlier notices supported L3 because they acknowledged disruption without confirming the suspected theft.
@@ -422,3 +431,5 @@ The researcher no longer says none of the traced money reached exchange deposit 
 **November 5 Global Ledger snapshot, verified November 6:** The researcher estimates **$5.99B** remained at linked addresses at November 4 prices: **$2.82B frozen** and **$3.16B freely held** in BTC, ETH and XRP. These rounded, unverified research figures differ in timing and scope from Binance’s approximately $3B freeze statement; do not add or subtract them to calculate final losses. Its **$1.28B selected outflow sample** covers $996.2M swaps and $176.6M bridges, not all stolen assets; swaps can return proceeds to attacker wallets, so flows are not additional thefts. It counts 132 stablecoin freeze transactions by 12 issuers, not 132 victims or repayments. The snapshot establishes neither returned funds nor completed recovery.
 
 **SEAL November 6 revision:** Session expiration and device binding at issuance remain useful but cannot by themselves protect a persistently compromised endpoint. The expanded guidance prioritizes least standing privilege, distinct service identities, adversarial alert verification and reducing direct human production access. Pipeline-mediated changes concentrate risk in repositories and CI, so those paths need explicit protection. This adds response guidance without changing losses, freezes or recovery claims.
+
+**November 7 tracing update.** Elliptic estimates that roughly **2,300 BTC ($175 million)** converted from other stolen assets sat in new Bitcoin addresses at about **08:00 UTC**, up from about **1,650 BTC ($124 million)** at **08:45 UTC on November 6**. It traces about **44 million additional XRP** leaving the linked XRP addresses overnight, mostly into BTC through THORChain, and estimates **88 BTC** had gone through Wasabi-style coinjoins in total. Elliptic says the major original BTC and ETH holdings had yet to move and estimates that little had been cashed out. These are its independently unverified tracing estimates. Conversions and mixing describe where portions of the existing proceeds moved. They do not establish additional theft, asset recovery or the identity of the controller of each onward wallet. The exchange’s freeze, replenishment and withdrawal statements remain separate.
