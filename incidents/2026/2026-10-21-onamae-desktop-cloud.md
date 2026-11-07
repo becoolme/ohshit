@@ -8,7 +8,7 @@ tags:
   - credentials
 ecosystems:
   - onamae
-summary: GMO confirms customer-data exfiltration alongside malware in Onamae Desktop Cloud. It announces compensation and migration arrangements; broker IS6FX reports correcting confirmed unauthorized trades. The 26,739-server figure remains potential scope, not an infection count.
+summary: GMO confirms customer-data exfiltration alongside malware in Onamae Desktop Cloud. GMO began contacting customers about trading-loss claims on Nov 6. Migration is planned. IS6FX separately reports correcting verified trades. The 26,739-server figure remains potential scope, not an infection count.
 splash: Onamae Desktop Cloud customers; 26,739 servers potentially affected, not confirmed infected
 wipe: Back up, disconnect and power off customer PCs per GMO; rotate hosted-desktop secrets from a clean device and follow recovery notices
 inTheWild: yes
@@ -32,6 +32,9 @@ timeline:
   - date: Oct 29, 2026
     title: IS6FX reports compensation and trading-history corrections for verified unauthorized trades
     body: The broker does not publish an affected-account count or total compensation amount.
+  - date: Nov 6, 2026
+    title: GMO begins individual contact about unauthorized trading losses
+    body: Eligible-customer and transaction checks remain open. GMO expects to discuss application progress at its November 13 results briefing.
 checklist:
   - title: Follow GMO’s customer-PC isolation guidance
     hint: The October 27 notice requests a full virus scan and backup, followed by network disconnection, shutdown and unplugging PC cables. This concerns customer PCs, beyond the vendor-hosted servers; do not reconnect solely because no ransomware has been confirmed.
@@ -44,7 +47,7 @@ checklist:
   - title: Follow official recovery notices and beware of phishing
     hint: Open official notices directly. Never give trading passwords, PINs or authentication codes to compensation callers. GMO describes possible read-only account verification; verify any such request against its separately announced official procedure. Do not visit or redistribute the alleged data dump.
   - title: Document losses and verify compensation through official channels
-    hint: Keep account numbers, trade times and evidence of losses; ask the broker about corrections and refunds. GMO plans to assess incident-related realized trading losses and deduct broker refunds. Its separate ¥5,000 goodwill payment is for current service customers regardless of monetary loss; conditional data-publication assistance is a different program. Market losses, hypothetical profits and indirect damages are outside the trading-loss scheme. GMO promised claim procedures by November 6; that promise is not confirmation that claims or payments are complete.
+    hint: Keep account numbers, trade times and evidence of losses; ask the broker about corrections and refunds. GMO plans to assess incident-related realized trading losses and deduct broker refunds. Its separate ¥5,000 goodwill payment is for current service customers regardless of monetary loss; conditional data-publication assistance is a different program. Market losses, hypothetical profits and indirect damages are outside the trading-loss scheme. GMO began contacting contracted customers individually on November 6. Check your registered inbox and verify the process through GMO’s official support form or its published 24-hour line, 03-5456-2560. The public notice gives no general filing deadline or payment date.
   - title: Verify replacement-service instructions before reconnecting
     hint: GMO plans migration to an independent cloud platform with customer consent and six free months, rather than simply restarting the compromised platform. Check official instructions and terms; the announcement alone does not establish that migration is available or the old environment is safe.
 sources:
@@ -79,8 +82,16 @@ sources:
     url: https://is6.com/news/en/notice/20261029-3/
     primary: true
     says: Reports compensation for verified unauthorized trades and explains password, session and evidence-preservation steps.
+  - name: GMO November 6 customer compensation notice
+    url: https://internet.gmo/news/article/264/
+    primary: true
+    says: Confirms individual outreach about unauthorized trading losses and provides the official support channels.
+  - name: GMO November 6 compensation disclosure
+    url: https://internet.gmo/ir/pdf/irlibrary/gmointernet_j_disclose_20261106.pdf
+    primary: true
+    says: Confirms outreach and outstanding checks of affected customers and trades. The next application-status update is planned for the November 13 results briefing.
 date: 2026-10-21
-updated: 2026-11-01
+updated: 2026-11-07
 ---
 
 The vendor distinguishes possible exposure from proven misuse: the server total is a potential scope, not an infection count. Its dated notice does not identify the access method or attacker. L4 reflects confirmed compromise of customer environments at a hosting provider.
@@ -90,3 +101,5 @@ The vendor distinguishes possible exposure from proven misuse: the server total 
 **Update, November 1:** GMO’s October 24 fourth notice confirms that customer information was taken outside the service. That finding is separate from verification of the subsequently published material. On October 27, GMO announced further assistance conditional on confirming that a customer’s data was published; the leak-site takedown announced October 28 cannot retract copies already obtained.
 
 IS6FX’s October 29 notice reports completed corrections and compensation for the unauthorized trades it verified. This is the broker’s account of its own response, not a statement that every Onamae customer has been reimbursed or that the original service has recovered. Investigation, individual data verification and GMO’s compensation procedures remain separate.
+
+**November 6 compensation update.** GMO began contacting contracted customers individually about losses from unauthorized trades directly attributable to the incident. The company says the eligible-customer count and qualifying trades are still being checked, so it cannot estimate total compensation. Its November 13 results briefing is expected to cover claim progress and the outlook for calculating financial impact. Check notices sent to your registered address and verify them with official support. The public notice confirms outreach. It does not establish completed payments, a universal claim deadline or restoration of the old desktop environment.
