@@ -11,7 +11,7 @@ inTheWildNote: JNSA confirmed unauthorized access. It is still investigating pos
 timeline:
 - date: Nov 4, 2026
   title: JNSA confirms unauthorized access and suspends the service
-  body: External specialists assist with investigation of the cause and scope.
+  body: The service page dates the suspension to the evening of November 4. External specialists assist the investigation.
 - date: Nov 6, 2026
   title: JNSA discloses the incident and its provisional scope
   body: Up to 15,128 records may have been exposed. The association plans to notify users individually once they are identified.
@@ -22,9 +22,9 @@ checklist:
 - title: Change passwords reused on other services
   hint: Go directly to each affected service's official site or app. Replace any password shared with your JNSA training account with a unique one, starting with email and work accounts. Enable MFA where available. Report suspicious sign-ins to your organization's security team.
 - title: Warn staff about fake reset notices
-  hint: Use internal channels to tell registered users what is known and where to report suspicious messages. Avoid unexpected attachments and links. JNSA says it will not send a link asking you to enter or change your credentials. Verify notices at jnsa.org or use the incident contact sec@jnsa.org.
+  hint: Use internal channels to tell registered users what is known and where to report suspicious messages. Avoid unexpected attachments and links. JNSA says it will not ask you to enter or change credentials through a link in an email. Verify notices at jnsa.org or use the incident contact sec@jnsa.org.
 - title: Follow JNSA recovery and notification instructions
-  hint: Keep a copy of any notice and ask JNSA or your organization's training administrator whether your account was included. The service is suspended. Use its official site for a recovery announcement and follow JNSA's reset instructions once available.
+  hint: Keep a copy of any notice and ask JNSA or your organization's training administrator whether your account was included. The service is suspended. Use its official site for a recovery announcement and use a unique password if JNSA announces an official reset process.
 sources:
 - name: JNSA November 6 first incident report (Japanese PDF)
   url: https://www.jnsa.org/dl/annual/20261106.pdf
