@@ -38,7 +38,7 @@ timeline:
     body: The initial public sensor report records eight attempts from one IP. Its CEO separately reports a successful root session to The Hacker News.
   - date: Nov 7, 2026
     title: Sensor dashboard shows more attempts
-    body: Previdian’s updated snapshot lists 17 attempts from 11 unique IPs in eight countries.
+    body: Previdian’s updated snapshot lists 17 attempts across four sensors from 11 source IPs geolocated to eight countries.
 checklist:
   - title: Update the server package and restart the running daemon
     hint: On Alpine use apk upgrade -U -a and compare apk info -v openssh-server or openssh-server-pam with your branch's row above, then run rc-service sshd restart. Package installation alone leaves the old daemon running. Rebuild affected images and replace or update running instances; a newly fixed image does not patch an existing VM. Exceptional fixes for 3.21 and older do not restore general support.
@@ -68,7 +68,7 @@ sources:
   - name: Previdian first-party sensor report
     url: https://previdian.com/CVE-2026-123158
     primary: true
-    says: The initial public report lists eight attempts from one IP. The November 7 snapshot shows 17 attempts from 11 unique IPs in eight countries. The dashboard does not establish their outcomes.
+    says: The initial public report lists eight attempts from one IP. The November 7 snapshot shows 17 attempts across four sensors from 11 source IPs geolocated to eight countries. The dashboard does not establish their outcomes.
   - name: The Hacker News statement from Previdian’s CEO
     url: https://thehackernews.com/2026/11/hackers-exploited-openssh-sshole-flaw.html?m=1
     says: Relays the firm’s successful root access on an Alpine honeypot and quotes the source IP and reconnaissance commands.
@@ -80,4 +80,4 @@ Alpine lists affected releases 3.16–3.24 and edge. Its tiny-cloud images are s
 
 **Identifier follow-up:** The CNA has now been checked and links this flaw to **CVE-2026-123158**. Its brief description gives 256–1024 characters; Alpine’s detailed explanation requires over 256 bytes and explicitly gives **257–1024 bytes**, retained above. The identifier does not change the account prerequisites, patched package revisions or restart requirement. Red Hat’s not-affected assessment applies to its product builds, not every Linux installation.
 
-**November 6 exploitation evidence.** Previdian’s initial public sensor report lists eight attempts from one source IP. Its CEO separately told The Hacker News that one reached root on a honeypot running Alpine and OpenSSH, and reported non-interactive reconnaissance. Observed attempts and successful access to the monitoring environment justify L4. On November 7 the public dashboard shows 17 attempts from 11 unique IPs in eight countries. The counts describe sensor observations. The findings establish neither production victims nor changes to vendor prerequisites or fix versions.
+**November 6 exploitation evidence.** Previdian’s initial public sensor report lists eight attempts from one source IP. Its CEO separately told The Hacker News that one reached root on a honeypot running Alpine and OpenSSH, and reported non-interactive reconnaissance. Observed attempts and successful access to the monitoring environment justify L4. On November 7 the public dashboard shows 17 attempts across four sensors from 11 source IPs geolocated to eight countries. The counts describe sensor observations. The findings establish neither production victims nor changes to vendor prerequisites or fix versions.
