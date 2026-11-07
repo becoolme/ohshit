@@ -10,7 +10,7 @@ tags:
 ecosystems:
   - cloud
   - crypto
-summary: Allium confirms unauthorized access detected October 25. Its October 28 recovery notice revokes existing API keys and requires a new password. Datashares and Assistant were restored November 2; MCP is restored November 5. Uploaded-data access remains separate. On Nov 6 Allium reports independently validated containment. Customer-data impact remains under investigation.
+summary: Allium detected unauthorized access Oct 25 and revoked API keys and required a new password Oct 28. Datashares and Assistant recovered Nov 2, and MCP Nov 5. Uploaded-data access remains separate. On Nov 6 Allium reports independently validated containment. Customer-data impact is under investigation.
 splash: Allium application and API customers, especially integrations using existing keys or uploaded tables
 wipe: Replace revoked API keys as instructed, set a new password, enable MFA and check affected workflows before restarting
 inTheWild: yes
