@@ -34,6 +34,6 @@ sources:
   says: Confirms the November 5 reopening after repairs and assessment by an external specialist.
 ---
 
-THS says an attacker exploited a flaw in its uniform retailer’s online store on October 18 and obtained member data. The **19,468** figure is the maximum number of customers registered at that point. Fields vary by customer and can include name and kana spelling, member ID, email, date of birth, telephone, postal code, address, mailing-list preference, company name and its kana spelling, individual or corporate classification, industry, and employer. THS excludes passwords, credit card information and the data of customers who had already withdrawn.
+THS says an attacker exploited a flaw in its online uniform store on October 18 and obtained member data. The **19,468** figure is the maximum number of customers registered at that point. Fields vary by customer and can include name and kana spelling, member ID, email, date of birth, telephone, postal code, address, mailing-list preference, company name and its kana spelling, individual or corporate classification, industry, and employer. THS excludes passwords, credit card information and the data of customers who had already withdrawn.
 
 THS says it reported the incident to Japan’s Personal Information Protection Commission and is notifying affected members. Its reopening notice confirms ordering resumed November 5 after remediation and an external security assessment. The notice gives no public patch version or detailed description of the exploited flaw.
