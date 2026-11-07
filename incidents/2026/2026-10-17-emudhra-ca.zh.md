@@ -83,6 +83,8 @@ fixed:
     status: 升级并重建应用；不涵盖独立 gRPC-Core／gRPC-C++ CocoaPod 或 grpc-ios SPM 包
   - product: SonicOS 7.3.4 固件
     status: 移除 eMudhra 可信链，须满足平台及迁移要求
+  - product: SonicOS Gen8 固件
+    status: 从内置信任证书库移除 eMudhra 证书链
   - product: Rundeck／Runbook Automation／Runner 官方 Docker 镜像
     status: 拉取更新镜像并重建容器；主机安装 Rundeck 须分别更新系统及 Java 信任库
   - product: New Relic Synthetics job manager
@@ -184,6 +186,9 @@ timeline:
   - date: 2026年11月前后
     title: SonicWall 在 SonicOS 7.3.4-7015 移除该证书链
     body: 11 月发布说明将 GEN7-59578 列为从可信证书库移除 eMudhra 链，未注明准确发布日期。
+  - date: 2026年11月前后
+    title: SonicWall 确认 Gen8 固件 8.2.3-8015 移除该证书链
+    body: 11 月发布说明将 GEN8-19795 列为移除 eMudhra 证书链。
 checklist:
   - title: 更新浏览器和操作系统
     hint: Chrome、Firefox、Safari、Edge、Android 和 Windows 都已发布拦截
@@ -242,7 +247,7 @@ checklist:
   - title: 向颁发机构核实更广的 G1 替换计划
     hint: eMudhra 11 月 5 日 Update 8 报告 Apple 将于 11 月 30 日移除所有 G1 链证书的信任，不同于其所述 Chrome 和 Mozilla 于 11 月 16 日实施的 SCT 规则。通过既有支持在适用期限前获取并测试替代链，包括面向 Apple 的既有证书。按颁发机构说法，美国迁移仍在进行。核实各浏览器根计划，保留上方 Chrome 精确 UTC 规则，不绕过验证。
   - title: 按厂商升级说明更新受影响 SonicOS 信任库
-    hint: SonicOS 7.3.4-7015 移除 eMudhra 链（GEN7-59578）。核实平台支持及升级前提，版本不支持降级。NSv 从 7.0.1 升至 7.1 或更高版本需要全新安装；管理 7.3.4 需要 NSM On-Premises 4.4，GMS 无法管理 SonicOS 7.1.x 及更高版本。若 GeoIP 曾固定为 204.212.170.21，改用默认解析或新 GeoIP 地址 204.212.170.31；不要将 Botnet Remote Server Address 设为后者。若 DNS 不可用，按发布说明手动设置 Botnet 端点。另行检查自定义证书及依赖连接。
+    hint: SonicOS 7.3.4-7015 移除 eMudhra 链（GEN7-59578）。核实平台支持及升级前提，版本不支持降级。NSv 从 7.0.1 升至 7.1 或更高版本需要全新安装；管理 7.3.4 需要 NSM On-Premises 4.4，GMS 无法管理 SonicOS 7.1.x 及更高版本。若 GeoIP 曾固定为 204.212.170.21，改用默认解析或新 GeoIP 地址 204.212.170.31；不要将 Botnet Remote Server Address 设为后者。若 DNS 不可用，按发布说明手动设置 Botnet 端点。支持的 Gen8 机型应先核实该机型的升级路径，再安装 8.2.3-8015（GEN8-19795）。另行检查自定义证书并测试依赖的 TLS 连接。
   - title: 用修正信任库的镜像重建 Rundeck 和 Runner 容器
     hint: 拉取官方 6.3.0 镜像，重建 Rundeck、Runbook Automation 及 Docker／Kubernetes Runner 容器。仅在运行中容器执行 apt-get upgrade 的更改会在重建时丢失。RPM／DEB／WAR 安装的 Rundeck 或 Runbook Automation 需更新主机系统 ca-certificates 包与 Java 运行时信任库，再重启 Rundeck。主机安装的 Runner 使用主机信任库，按主机厂商指引更新该库。厂商称 Runbook Automation SaaS 未受影响。在容器内或主机执行 curl https://dv-g3b-emudhra.we-have-a-problem.com/，预期以证书错误拒绝；TLS 成功意味着仍保留受影响信任。curl 只检查其系统库，不能验证 Java 或全部自定义库，须分别核验。
   - title: 重新部署 New Relic Synthetics 并迁移 Node 16 监测
@@ -334,6 +339,8 @@ sources:
     says: 11 月 5 日发布，包含仓库根证书的安全更新。
   - name: SonicWall SonicOS 7.3.4-7015 发布说明
     says: 2026 年 11 月固件移除 eMudhra 可信链，并列出平台、迁移和 GeoIP 升级要求。
+  - name: SonicWall SonicOS 8.2.3-8015 发布说明
+    says: 列出适用的 Gen8 机型及移除 eMudhra 信任链的 GEN8-19795。
   - name: Rundeck eMudhra 信任库公告
   - name: Rundeck 6.3.0 发布说明
 
@@ -397,7 +404,7 @@ CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eM
 
 **11 月 6 日旧线覆盖修正：** 11 月 5 日发布的 1.78.2 和 1.80.1 也修复了内置根证书库。Python 和 Ruby 公告现列出五条补丁路径。选择安装发布线对应的补丁，或迁移至 1.84.1 及更高版本；1.81.x 须使用 1.82.3 路径。这是对先前三版本指引的扩充，不改变 PHP Composer 或 Objective-C 的最低版本。仍须核验显式、自定义根证书，并重建或重启受影响应用。这不代表又发生 CA 失陷或新增在野利用。
 
-**SonicOS 信任库跟进：** 11 月发布说明确认 7.3.4-7015 移除 eMudhra 链。这是具体产品的处置，不是新的 CA 事件，也不能证明所有 SonicWall 版本均已移除该链。来源只给出月份，不推断准确发布日期。原有浏览器、运行时期限及证书更换要求仍适用。
+**SonicOS 信任库跟进：** 11 月发布说明确认 Gen7 7.3.4-7015（GEN7-59578）和 Gen8 8.2.3-8015（GEN8-19795）均从信任库移除 eMudhra 链。这是具体产品的处置，不是新的 CA 事件，也不能证明所有 SonicWall 版本均已移除该链。两份发布说明都只给出月份，不推断准确发布日期。原有浏览器、运行时期限及证书更换要求仍适用。
 
 **Rundeck 部署补充：** 厂商 10 月 23 日公告说明了 10 月 22 日发布的 6.3.0 官方 Docker 镜像对同一 CA 事件的修复。这里补上此前遗漏的下游处置路径，不是新的 CA 事件。SaaS 不受影响，主机管理的系统及 Java 信任库、容器化 Runner 则须按实际部署分别处理。curl 拒绝证书不能证明 Java 的独立信任库也已更新。
 

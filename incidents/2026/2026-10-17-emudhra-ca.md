@@ -3,7 +3,7 @@ title: "eMudhra CA intermediate private keys were so weak that every one was a n
 headline: "eMudhra: eight CA keys you could guess on a pocket calculator"
 level: 4
 date: 2026-10-17
-updated: '2026-11-06'
+updated: '2026-11-07'
 tags: [PKI, CA, TLS]
 ecosystems: [go, python, node, browsers]
 summary: Eight emSign ECC G3 intermediates (six TLS/two code signing, Sectigo-cross-signed) had P-384 keys below 256, enabling forged certificates. Update Dart/Flutter/Firestore and CA bundles. Chrome 153+ will distrust G1 TLS certificates with earliest SCT after Nov 16, 23:59:59 UTC; earlier SCTs are unaffected by this new rule.
@@ -131,6 +131,9 @@ fixed:
   - product: SonicOS 7.3.4 firmware
     version: 7.3.4-7015
     status: Removes the eMudhra trusted chain; platform and migration requirements apply
+  - product: SonicOS Gen8 firmware
+    version: 8.2.3-8015
+    status: Removes the eMudhra chain from the built-in trusted certificate store
   - product: Rundeck / Runbook Automation / Runner official Docker images
     version: 6.3.0
     status: Pull updated images and recreate containers; Rundeck host installs require separate OS and Java trust-store updates
@@ -237,6 +240,9 @@ timeline:
   - date: ~Nov 2026
     title: SonicWall removes the chain in SonicOS 7.3.4-7015
     body: November release notes identify GEN7-59578 as removal of the eMudhra chain from the trusted certificate store; no exact release day is stated.
+  - date: ~Nov 2026
+    title: SonicWall lists the trust-store removal in Gen8 firmware 8.2.3-8015
+    body: The November release notes identify GEN8-19795 as removal of the eMudhra chain.
 checklist:
   - title: Update browsers and operating systems
     hint: Chrome, Firefox, Safari, Edge, Android and Windows have all shipped blocks
@@ -295,7 +301,7 @@ checklist:
   - title: Confirm the broader G1 replacement schedule with your issuer
     hint: eMudhra’s November 5 Update 8 reports Apple will remove trust for all G1-chained certificates on November 30, unlike the SCT-based rules it reports for Chrome and Mozilla on November 16. Obtain and test a replacement chain through established support before the applicable cutoff, including existing Apple-facing certificates. US migration remains in progress according to the issuer. Verify each browser root program; retain Chrome’s precise UTC rule above and never bypass validation.
   - title: Update affected SonicOS trust stores with the vendor upgrade notes
-    hint: SonicOS 7.3.4-7015 removes the eMudhra chain (GEN7-59578). Verify platform support and upgrade prerequisites; downgrade is unsupported. NSv upgrading from 7.0.1 to 7.1 or later requires a fresh installation, and NSM On-Premises 4.4 is required for 7.3.4 management; GMS cannot manage SonicOS 7.1.x or later. If GeoIP was pinned to 204.212.170.21, use the default resolution or the new GeoIP address 204.212.170.31; do not set Botnet Remote Server Address to the latter. If DNS is unavailable, configure the Botnet endpoint manually as the release notes direct. Check custom certificates and dependent connections separately.
+    hint: SonicOS 7.3.4-7015 removes the eMudhra chain (GEN7-59578). Verify platform support and upgrade prerequisites; downgrade is unsupported. NSv upgrading from 7.0.1 to 7.1 or later requires a fresh installation, and NSM On-Premises 4.4 is required for 7.3.4 management; GMS cannot manage SonicOS 7.1.x or later. If GeoIP was pinned to 204.212.170.21, use the default resolution or the new GeoIP address 204.212.170.31; do not set Botnet Remote Server Address to the latter. If DNS is unavailable, configure the Botnet endpoint manually as the release notes direct. On supported Gen8 models, install 8.2.3-8015 (GEN8-19795) after checking its model-specific upgrade path. Check custom certificates and test dependent TLS connections separately.
   - title: Recreate Rundeck and Runner containers with corrected trust stores
     hint: "Pull the official 6.3.0 images and recreate Rundeck, Runbook Automation and Docker/Kubernetes Runner containers. An apt-get upgrade inside a running container is lost on recreation. For RPM/DEB/WAR Rundeck or Runbook Automation, update the host OS ca-certificates package and the Java runtime trust store, then restart Rundeck. A host-installed Runner uses its host trust store; update that store according to the host vendor. The vendor excludes Runbook Automation SaaS. Run curl https://dv-g3b-emudhra.we-have-a-problem.com/ inside the container or host; a certificate error is the expected rejection. Successful TLS means the affected trust remains. This curl check covers its OS store, not Java or every custom store; verify those separately."
   - title: Redeploy New Relic Synthetics and migrate Node 16 monitors
@@ -478,6 +484,10 @@ sources:
     url: https://www.sonicwall.com/support/technical-documentation/docs/sonicos-7.3-release_notes/Content/sonicos-7-3-4-7015.htm
     primary: true
     says: November 2026 firmware removes the eMudhra trusted chain; includes platform, migration and GeoIP upgrade requirements.
+  - name: SonicWall SonicOS 8.2.3-8015 release notes
+    url: https://www.sonicwall.com/support/technical-documentation/docs/sonicos8-release_notes/Content/SonicOS-8-2-3-8015.htm
+    primary: true
+    says: Lists the Gen8 models on this build and GEN8-19795, the eMudhra trust-store removal.
   - name: Rundeck eMudhra trust-store advisory
     url: https://docs.rundeck.com/docs/history/cves/2026-10-emudhra-ca.html
     primary: true
@@ -555,7 +565,7 @@ For an unpatched Oracle runtime, the [operational guide](https://ops.java/emudhr
 
 **November 6 correction to older-line coverage:** The November 5 releases 1.78.2 and 1.80.1 also repair the bundled root store. The Python and Ruby advisories now list five patch paths. Use the patch matching the installed release line or migrate to 1.84.1 or later; versions 1.81.x need the 1.82.3 path. This extends the earlier three-version guidance without changing the PHP Composer or Objective-C minimums. The requirement to verify explicit/custom roots and rebuild or restart affected applications remains. It does not establish another CA compromise or new exploitation.
 
-**SonicOS trust-store follow-up:** November release notes identify 7.3.4-7015 as removing the eMudhra chain. This is product-specific remediation, not a new CA incident or confirmation that every SonicWall release has removed the chain. The source gives only the month, so no exact release day is inferred. Existing browser/runtime deadlines and certificate-replacement requirements remain.
+**SonicOS trust-store follow-up:** November release notes identify the eMudhra trust-store removal in Gen7 7.3.4-7015 (GEN7-59578) and Gen8 8.2.3-8015 (GEN8-19795). This is product-specific remediation, not a new CA incident or confirmation that every SonicWall release has removed the chain. Both sets of release notes give only the month, so no exact release day is inferred. Existing browser/runtime deadlines and certificate-replacement requirements remain.
 
 **Rundeck deployment follow-up:** The vendor’s October 23 advisory documents the October 22 6.3.0 official Docker-image release for this same CA compromise. This corrects a missing downstream remediation path in this article, not a new CA incident. SaaS is excluded; host-managed OS and Java stores and containerized Runner must be handled according to their actual deployment. A passing curl rejection does not verify Java’s separate trust store.
 
