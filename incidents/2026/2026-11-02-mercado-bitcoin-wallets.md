@@ -49,9 +49,12 @@ timeline:
 - date: Nov 6, 2026
   title: Official FAQ raises blocked assets and explains the staged return
   body: The FAQ reports over $16M blocked, with buybacks still being prepared. Pre-interruption limit orders will be cancelled and reserved funds returned without fees. Initial November 9 website access remains viewing-only; transfers and trading await security validation.
+- date: Nov 6, 23:33 UTC
+  title: FAQ narrows the initial viewing list
+  body: Revision 8 removes statements from both descriptions of the November 9 first stage. It still lists balances, assets and investments; this omission does not establish a separate statement-service reopening date.
 - date: Nov 9, 2026 (scheduled)
   title: Staged website access is planned to begin
-  body: First stage permits viewing balances, statements, assets and investments. Transfers, withdrawals and trading are to follow only after each module’s final security checks; this is not a promised date for full reopening.
+  body: The latest FAQ lists balances, assets and investments for the first stage; statements were removed from its list in revision 8. Transfers, withdrawals and trading are to follow only after each module’s final security checks; this is not a promised date for full reopening.
 checklist:
 - title: Keep deposits paused and recheck saved addresses
   hint: Do not send funds to a saved Mercado Bitcoin deposit address while transfers are suspended. Check the established exchange app and official channels for explicit recovery and address instructions before restarting automated payouts or exchange integrations. Bitquery reports signed transfers from deposit addresses; changing your login password alone does not secure exchange-controlled keys. The November 3 original confirms that the platform/app remain paused and says reinstalling the app or changing devices is unnecessary. The recovery plan requires feature-specific security checks; confirm each service and limitation in subsequent official announcements, rather than treating the plan as completed reopening. The November 4 company update now targets November 9 for initial website viewing only. Transfers, withdrawals and trading have no confirmed restart date; verify each module before enabling automation. The November 5 research also identifies Base deposit-address sweeps; include Base in the saved-address review and do not assume an address is safe because it was absent from the earlier ten-chain list.
@@ -62,7 +65,7 @@ checklist:
 - title: Reject unsolicited recovery requests
   hint: Open the exchange through an existing bookmark or app. Do not follow refund links in replies or direct messages, disclose passwords, MFA codes or wallet recovery phrases, or send a payment to unlock a balance. Confirm any support request through the official channel. The November 4 company warning says password resets, biometric selfies and authentication occur only inside the official app/site; staff do not request codes, passwords, photos or deposits through WhatsApp, email, social media or telephone.
 - title: Review cancelled orders and pending investment payments
-  hint: The November 6 FAQ says all limit orders open before the November 2 interruption will be cancelled, with reserved amounts returned in full without fees. Check your records when services resume and submit any new order deliberately at current market conditions. The company says fixed-income positions are updating retroactively, but interest, amortization and maturity proceeds will be credited only after transaction services fully return; retained balances do not mean funds can already move. Password/account changes are also unavailable during suspension; any requested update will appear inside the platform, never through a balance-release message.
+  hint: "Before relying on November 9 access to export statements, recheck the official FAQ: revision 8 no longer lists statements in the initial viewing stage. The November 6 FAQ says all limit orders open before the November 2 interruption will be cancelled, with reserved amounts returned in full without fees. Check your records when services resume and submit any new order deliberately at current market conditions. The company says fixed-income positions are updating retroactively, but interest, amortization and maturity proceeds will be credited only after transaction services fully return; retained balances do not mean funds can already move. Password/account changes are also unavailable during suspension; any requested update will appear inside the platform, never through a balance-release message."
 - title: Compare corrected tracing limits and attribution confidence
   hint: Use Teiten’s corrected November 5 report alongside the existing Bitquery wallet record. Its trace follows three transfers from attributed attacker/parking wallets, with one manually added fourth-hop wallet; no labelled exchange/mixer within that limit does not exclude later cash-out. Its many wallet references are abbreviated in the prose, not a usable full-address blocklist. Do not expand partial addresses or label shared Mayan/Bridgers contracts as attacker wallets. Keep the existing complete-address research and vendor records; a match alone cannot establish ownership or compromise.
 sources:
@@ -112,12 +115,12 @@ sources:
 - name: Public FAQ revision metadata
   url: https://central.ajuda.mercadobitcoin.com.br/wiki/rest/api/content/2968387585?expand=version,history
   primary: true
-  says: Public version 7 was updated November 6 at 12:29:10 UTC; the FAQ was created November 3. The revision time does not date every individual freeze.
+  says: Version 7 was updated November 6 at 12:29:10 UTC; revision 8 at 23:33:33 UTC removes statements from the initial access list. The FAQ was created November 3. The revision time does not date every individual freeze.
 - name: Teiten corrected original investigation, November 5
   url: https://teiten.lat/analysis/inside-the-mercado-bitcoin-drain
   primary: true
   says: Corrected attribution, pricing and bounded tracing; unverified research estimates, not vendor-confirmed losses or recovery.
-updated: '2026-11-06'
+updated: '2026-11-07'
 ---
 
 Mercado Bitcoin’s public acknowledgement establishes a platform security incident, rather than just an unexplained transfer or an individual customer account theft. The November 2–3 statements did not disclose how the intruder entered, a compromised software version, the final financial impact or a recovery deadline; the November 4 plan below now sets a website-viewing target. No published patch or user password-reset requirement is established by the statements read.
@@ -151,3 +154,5 @@ The separate BitMart-linked research total is now about **$424k**, replacing the
 **November 6 official FAQ:** The exchange now reports **over $16M blocked**, superseding its $15M snapshot. Blocking is not repatriation or compensation. Preserved customer balance records establish entitlements; replacement assets and planned buybacks are separate, unfinished work. The FAQ gives the order-cancellation and investment-payment steps above. Initial November 9 access remains website viewing only; transaction modules and account changes are not yet restored. It describes only hot wallets as affected and BRL balances as preserved, without establishing the entry mechanism or a final loss total.
 
 **Corrected November 5 research:** Teiten prices transfers at their transfer-hour values and estimates $49.1M, with $33.6M high-confidence attribution, $10.7M medium-confidence and $4.8M assigned from timing alone. Its 36,104 Ethereum senders include 11 poisoning lookalikes and are not 36,104 confirmed customers. The ~$12M issuer-freeze calculation is separate from the company’s later >$16M blocked claim and from Bitquery’s $48.6M loss/$11.8M freeze snapshots; none should be added or subtracted to manufacture a net loss. The corrected report withdrew its November 3 version, which misclassified shared service contracts and understated sender/freeze totals. It cannot establish whether keys or a signing service were compromised, or confirm a shared supplier. Its three-transfer tracing limit, plus one manually added fourth hop, cannot rule out later cash-out.
+
+**November 6 FAQ scope revision:** Version 8, timestamped **23:33:33 UTC**, removes statements from both first-stage viewing lists. The earlier November 4 announcement is retained above as historical guidance; the current November 9 list is **balances, assets and investments**. Do not promise statement exports or infer a separate reopening date from the omission. Transfers, trading and account changes remain suspended as described above.
