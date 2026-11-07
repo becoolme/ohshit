@@ -22,13 +22,13 @@ timeline:
   title: Microsoft 365 access is blocked for TUM accounts without existing MFA
   body: Those users need an alternative reset route.
 - date: Nov 7, 12:00 UTC
-  title: TUM publishes reset options for all TUM IDs
+  title: TUM updates reset instructions for all TUM IDs
   body: The instructions apply even to people who did not use myTUM. A password changed since the published November 5 cutoff remains valid under current guidance.
 checklist:
 - title: Reset your TUM password through the university's official IT page
-  hint: 'If you have not changed it since midnight at the start of November 5, follow the TUM IT reset instructions even if you never used myTUM. Try Microsoft 365 first, then the online ID (eID). If neither works, use the email option on campus or via EduVPN if you already have access. Without VPN or an eID, reset on campus. Contact TUM IT support if none of the routes works. TUM had not announced a final reset deadline in the reviewed guidance.'
+  hint: 'If you have not changed it since midnight at the start of November 5, follow the TUM IT reset instructions even if you never used myTUM. Try Microsoft 365 first, then the online ID (eID). If neither works, use the email option on campus or via EduVPN if you already have access. Without VPN or an eID, reset on campus. If the reset email does not arrive, check your TUM inbox, any configured forwarding address and spam. Contact TUM IT support if none of the routes works. TUM had not announced a final reset deadline in the reviewed guidance.'
 - title: Update saved credentials and protect other accounts
-  hint: Replace saved TUM passwords for eduroam, mail and other devices, and change the password anywhere outside TUM you reused it. Allow up to 15 minutes for the new password to propagate to other services. Enroll in TUM MFA when TUMonline login returns.
+  hint: Replace saved TUM passwords for eduroam, mail and other devices, and change the password anywhere outside TUM you reused it. The new password applies to central TUM and LRZ services that use your TUM ID. Propagation to other services generally takes up to 15 minutes. Enroll in TUM MFA when TUMonline login returns.
 - title: Verify reset requests and report suspicious activity
   hint: 'Start from the TUM IT or status site. Use an emailed reset link only if you just requested it yourself through the official email option. TUM does not ask for your password by email, phone or letter. Report suspicious messages or unexpected resets to it-sicherheit@tum.de; direct exposure questions to datenschutz-vorfall@tum.de.'
 sources:
