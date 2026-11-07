@@ -2,7 +2,6 @@
 title: SMBC Consumer Finance confirms loan-guarantee data theft affecting up to 320,118 customers
 level: 4
 date: '2026-11-05'
-updated: '2026-11-07'
 tags: [SMBC Consumer Finance, data breach, consumer lending]
 summary: SMBC Consumer Finance confirms personal data was sent out of its loan-guarantee system. The upper bound is 320,118 customers. Exposed fields include driver's license numbers, income and loan-guarantee details. The company blocked access and suspended the system while it investigates.
 splash: Customers whose loan or application data was handled by SMBC Consumer Finance's guarantee system for partner lenders.
@@ -23,9 +22,9 @@ checklist:
 - title: Confirm whether your loan data was involved
   hint: Check your lender's official incident notice or ask SMBC Consumer Finance at 0120-362-167 or 03-5677-9228, daily from 09:00 to 18:00 Japan time. The company plans individual email or SMS notices after it identifies affected customers and coordinates with partner lenders. Keep any notice and verify its contents through a channel you open yourself.
 - title: Verify any message about a loan, debt or guarantee
-  hint: Open your lender's app or website directly. Avoid links and requests for personal information in unexpected calls, email or SMS. Tsukuba Bank says it never requests PINs, internet banking passwords or one-time codes through those channels.
+  hint: Open your lender's app or website directly. Ignore requests for personal information in unexpected calls, email or SMS. Leave any links unopened. Tsukuba Bank says it never requests PINs, internet banking passwords or one-time codes through those channels.
 - title: Report suspected identity misuse
-  hint: If you see a loan, credit inquiry or account activity you do not recognize, preserve the record and contact your lender through its established fraud channel. The guarantor also directs suspicious contacts to its dedicated line or the police. Tsukuba Asjoy applicants should check the bank's official notice before applying.
+  hint: If you see a loan, credit inquiry or account activity you do not recognize, preserve the record and contact your lender through its established fraud channel. Report suspicious contact to the guarantor's hotline or the police. Tsukuba Asjoy applicants should check the bank's notice or call its customer desk at 029-859-8111 on weekdays from 09:00 to 17:00 Japan time, excluding year-end holidays.
 sources:
 - name: SMBC Consumer Finance November 5 incident disclosure (Japanese PDF)
   url: https://www.smbc-cf.com/news/data/2026/11/news_20261105_1.pdf
