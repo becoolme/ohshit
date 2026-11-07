@@ -18,9 +18,9 @@ timeline:
   body: Texas lists 67,487 affected people overall and 656 in Texas. Vermont lists 16 affected residents.
 checklist:
 - title: Verify the letter and the fields specific to you
-  hint: Use the contact details from your existing banking app, account statement or the credit union’s official website. Ask which identifiers and financial records were involved and whether the letter offers account-specific protections. Keep the letter and ignore unsolicited requests for passwords or codes.
+  hint: Use the contact details from your existing banking app, account statement or the credit union’s official website. The official member line is 888-843-8328. Ask which identifiers and financial records were involved and whether the letter offers account-specific protections. Keep the letter and ignore unsolicited requests for passwords or codes.
 - title: Review activity and report unauthorized transactions
-  hint: Check account and card statements and enable transaction alerts. If you find an unfamiliar transfer or payment, contact the institution’s fraud team through a verified channel to dispute it and ask whether account or card credentials need replacement.
+  hint: Check account and card statements and enable transaction alerts. If you find an unfamiliar transfer or payment, contact the institution’s fraud team through a verified channel to dispute it and ask whether account or card credentials need replacement. Insight lists option 2 on its member line for debit-card disputes.
 - title: Review your credit if government identifiers were involved
   hint: Request your credit reports at AnnualCreditReport.com. Consider a credit freeze with Equifax, Experian and TransUnion. If you find identity theft, keep evidence and report it through IdentityTheft.gov.
 sources:
@@ -32,6 +32,10 @@ sources:
   url: https://ago.vermont.gov/categories/security-breach-notices?page=1
   primary: true
   says: November 6 entry lists 16 Vermont residents and includes financial account codes and credit or debit account information.
+- name: Insight Credit Union official contact page
+  url: https://www.insightcreditunion.com/contact-us
+  primary: true
+  says: Publishes its general member line and the debit-card dispute menu option.
 ---
 
 Insight Credit Union’s Texas filing lists names, Social Security numbers, driver’s license numbers, other government-issued ID numbers and financial information. It gives bank account or payment card numbers as examples of the financial category. The filings give no universal list of fields for every affected person and no confirmed total of financial losses. The Texas and Vermont resident figures are subsets of the overall count. The public registers do not identify the affected system, initial access method or specific technical remediation.
