@@ -5,7 +5,7 @@ date: 2026-10-31
 updated: 2026-11-07
 tags: [b14g, Core, staking]
 ecosystems: [crypto]
-summary: b14g says about 97 million CORE staked through its service was withdrawn without authorization on October 31. It reports pausing affected contracts upon discovery. New bytecode research explains the zero-amount check and reports 68.15M CORE moved to recovery by a November 2 fork. Recovery is not user repayment; a verified staking fix remains unestablished.
+summary: b14g says about 97 million CORE staked through its service was withdrawn without authorization on October 31. It reports pausing affected contracts upon discovery. Bytecode research explains the zero-amount check and gives an unverified 68.15M CORE recovery estimate for a November 2 fork. Recovery is not user repayment; a verified staking fix remains unestablished.
 splash: CORE staked through b14g; do not infer that the Core network or every asset supported by b14g was compromised
 wipe: Avoid new exposure to affected staking contracts; preserve position records and verify recovery guidance through established b14g channels
 inTheWild: yes
@@ -26,7 +26,7 @@ timeline:
     body: The company reports about 20M CORE potentially lost and remaining staked tokens locked. Its PLN6.05M full carrying-value write-down is not an additional theft amount.
   - date: Nov 2, 2026
     title: Fermi fork moves three account balances to a recovery address
-    body: November 6 research reports 68,146,177.22 CORE, roughly 70% of the drain, moved at the November 2 fork. The published Core implementation confirms the three-account balance adjustment, not user payouts.
+    body: November 6 research estimates an unverified 68,146,177.22 CORE, roughly 70% of the drain, moved at the November 2 fork. The published Core implementation confirms the three-account balance adjustment, not user payouts.
   - date: Nov 6, 2026
     title: Bytecode research explains why the stake comparison accepts zero
     body: SigIntZero reconstructs an amount-versus-recorded-stake comparison that accepts zero for an unfunded recipient. Its present-state simulation is not a historical exploit replay or vendor-approved fix.
@@ -58,7 +58,7 @@ sources:
   - name: SigIntZero original bytecode and recovery analysis
     url: https://sigintzero.com/blog/b14g-1-47m-zero-amount-withdrawal-drain
     primary: true
-    says: November 6 reconstruction and present-state simulation; reported recovery amount remains a research figure, not audited customer repayment.
+    says: November 6 reconstruction and present-state simulation; recovery amount is an unverified research figure, not audited customer repayment.
   - name: Core Fermi adjustment implementation at v1.0.27
     url: https://raw.githubusercontent.com/coredao-org/core-chain/v1.0.27/consensus/misc/fermi.go
     primary: true
@@ -71,4 +71,4 @@ The operator describes unauthorized withdrawals and attacker-controlled recipien
 
 **November 2 affected-company disclosure:** BTCS’s ESPI report 32/2026, read as an issuer-authored filing publicly republished by Bankier, says it holds about 68.3M CORE, around 90% staked through b14g. Preliminary information from the protocol operator suggests about 30% (~20M CORE) may have been lost; BTCS is verifying this. Remaining staked tokens are locked with no known withdrawal-restoration date. This is one holder’s exposure within the ~97M CORE incident, not an additive loss. The company writes down the full CORE carrying value by about PLN6.05M to zero, also citing liquidity and its exit decision. That non-cash impairment does not change token quantities and is neither a confirmed theft total nor compensation. BTCS says its own 202.27 BTC (September 30 snapshot) was unaffected and it has no Binance exposure; this does not establish safety or recovery of all b14g assets. It reported its positions to the operator; final losses and recovery arrangements remain pending.
 
-**November 6 research follow-up:** SigIntZero’s bytecode reconstruction identifies a check that still allows the drain: zero passes an amount-versus-stake comparison, then requests the full downstream stake. It reports **68,146,177.22 CORE** moved to recovery, not users. The Core implementation corroborates the adjustment mechanism, but code alone cannot prove execution, balances or distributions. This supersedes the earlier absence of readable recovery evidence; vendor root cause, a verified fix and customer repayment remain unresolved.
+**November 6 research follow-up:** SigIntZero’s bytecode reconstruction identifies a check that still allows the drain: zero passes an amount-versus-stake comparison, then requests the full downstream stake. It reports an **unverified 68,146,177.22 CORE** moved to recovery, not users. The Core implementation corroborates the adjustment mechanism, but code alone cannot prove execution, balances or distributions. This supersedes the earlier absence of readable recovery evidence; vendor root cause, a verified fix and customer repayment remain unresolved.
