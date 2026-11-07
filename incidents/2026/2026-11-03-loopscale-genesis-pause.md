@@ -27,7 +27,7 @@ timeline:
   body: Deposits and withdrawals across all vaults and full loan management have resumed, according to Loopscale. A full technical postmortem is still pending.
 checklist:
 - title: Verify restored functions and available liquidity
-  hint: Open the app through the established Loopscale website and confirm your vault, loan and collateral records. The November 7 announcement covers all vaults, including USDC Genesis. Withdrawals can still depend on liquidity and may involve a queue or fee under normal vault rules.
+  hint: Open the app through the established Loopscale website and confirm your vault, loan and collateral records. The November 7 announcement covers all vaults, including USDC Genesis. Check the available liquidity and any fee or queue shown for your withdrawal. Reopening does not guarantee immediate withdrawal at every size.
 - title: Verify repayment access and liquidation handling
   hint: Verify the amount due and the collateral release shown by the official interface before signing. Contact established support if a transaction fails or the pause affected repayment or liquidation. Keep loan identifiers, hashes and failed repayment records. Reject emergency repayment or recovery requests sent by direct message.
 - title: Preserve and report relevant address activity
@@ -60,7 +60,7 @@ sources:
   url: https://teapaw.org/Loopscale/status/2119183228011422122
   says: Provides the same statement and its UTC timestamp.
 - name: Loopscale vault documentation
-  url: https://docs.loopscale.com/using-loopscale/earn
+  url: https://docs.loopscale.com/using-loopscale/lend/lend
   primary: true
   says: Explains normal withdrawal liquidity constraints, queues and possible fees.
 ---
