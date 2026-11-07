@@ -12,7 +12,7 @@ cves:
   - id: CVE-2026-76181
     score: 5.4
     name: dBASE index heap buffer overflow
-    description: Unchecked index-page entry counts can overflow a heap buffer; cyclic page references can also cause uncontrolled recursion. Vendor CVSS 4.0 is 5.4; ZDI uses 7.8 and describes code execution in the current process.
+    description: Unchecked index-page entry counts can overflow a heap buffer; cyclic page references can also cause uncontrolled recursion. Vendor CVSS 4.0 is 5.4; ZDI gives a separate 7.8 score and describes code execution in the current process.
 fixed:
   - { product: LibreOffice 26.2, branch: '26.2', version: 26.2.6 }
   - { product: LibreOffice 26.8, branch: '26.8', version: 26.8.1 }
