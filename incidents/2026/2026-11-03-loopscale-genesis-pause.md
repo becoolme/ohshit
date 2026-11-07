@@ -1,12 +1,12 @@
 ---
-title: Loopscale pauses protocol activity after attacks targeting SOL and USDC Genesis vaults
+title: Loopscale reopens vaults and loans after attacks on SOL and USDC Genesis
 level: 4
 date: '2026-11-03'
 updated: '2026-11-07'
 tags: [Loopscale, Solana, DeFi]
-summary: Loopscale confirms two attack paths against SOL and USDC Genesis vaults. Collateral top-ups resumed for all loans. Repayment and collateral withdrawal remain blocked for USDC Genesis-funded loans, and vault withdrawals remain restricted. Loopscale says depositors will incur no loss, while a researcher disputes replenishment.
+summary: Loopscale says deposits, withdrawals and full loan management have resumed across all vaults, including USDC Genesis. The team confirmed two attack paths against Genesis vaults and says depositors will incur no loss. Replenishment remains disputed and a full technical report is pending.
 splash: Loopscale users, especially SOL/USDC Genesis vault depositors and borrowers needing repayment access
-wipe: Check your loan's funding vault before repaying or withdrawing collateral. Verify positions through Loopscale and reject unsolicited recovery requests.
+wipe: Verify your position and available liquidity in the official app before depositing, withdrawing or managing a loan.
 inTheWild: 'yes'
 inTheWildNote: Loopscale confirms two attack paths. Deposit replenishment is not independently verified.
 timeline:
@@ -22,11 +22,14 @@ timeline:
 - date: Nov 6, 00:34 UTC
   title: Loopscale confirms two attack paths and restores some loan functions
   body: All loans can add collateral. USDC Genesis-funded loans still cannot repay or withdraw collateral. Vault withdrawals and other protocol functions remain restricted.
+- date: Nov 7, 21:40 UTC
+  title: Loopscale announces full vault and loan functionality
+  body: Deposits and withdrawals across all vaults and full loan management have resumed, according to Loopscale. A full technical postmortem is still pending.
 checklist:
-- title: Check the pause and your positions through official channels
-  hint: Read Loopscale’s latest recovery update from its verified account and reach the app through the established project website. Check your vault, loan and collateral records when the interface is available. The affected-vault statement concerns SOL and USDC Genesis vaults; do not assume all products were exploited or all operations have resumed.
+- title: Verify restored functions and available liquidity
+  hint: Open the app through the established Loopscale website and confirm your vault, loan and collateral records. The November 7 announcement covers all vaults, including USDC Genesis. Withdrawals can still depend on liquidity and may involve a queue or fee under normal vault rules.
 - title: Verify repayment access and liquidation handling
-  hint: As of November 6, top-ups are available on all loans. Repayment and collateral release after full repayment are available except for loans funded by USDC Genesis. Vault withdrawals remain restricted. Check the official interface and established support for the status of your loan and repayment route; retain loan identifiers, transaction hashes and any failed repayment records. Do not assume a pause stops interest or liquidations, or sign a purported emergency repayment from a direct message. No fixed reopening time or universal user transaction is published.
+  hint: Verify the amount due and the collateral release shown by the official interface before signing. Contact established support if a transaction fails or the pause affected repayment or liquidation. Keep loan identifiers, hashes and failed repayment records. Reject emergency repayment or recovery requests sent by direct message.
 - title: Preserve and report relevant address activity
   hint: 'The vendor links four addresses to the activity: 247Lk5YNH9URfBBvxVUtDruz8GvGX8gKGuYHVCZThpiR, AzPh2dUV3duK9n8PWV6CxKMwWr9Rk7fxPNBZuv1CiwMr, 0xb8959Aca4e4C796A3BaDA66833eAe60b1BC0bfb2, 0xB7Ec7eF24FD73f3000C651CA9D0Fa45b61DcF854. Compare relevant transactions and preserve hashes/times for official support or your response team. A match alone does not prove compromise or establish an address owner, exploit cause or loss total. Do not send funds to these addresses.'
 sources:
@@ -49,12 +52,25 @@ sources:
 - name: Full public mirror of Loopscale's November 6 statement
   url: https://teapaw.org/Loopscale/status/2118502123705159769
   says: Readable copy of the same original disclosure and its timestamp.
+- name: Loopscale November 7 reopening announcement
+  url: https://x.com/Loopscale/status/2119183228011422122
+  primary: true
+  says: Confirms deposits and withdrawals across all vaults and full loan management. A technical postmortem is pending.
+- name: Full public copy of the November 7 announcement
+  url: https://teapaw.org/Loopscale/status/2119183228011422122
+  says: Provides the same statement and its UTC timestamp.
+- name: Loopscale vault documentation
+  url: https://docs.loopscale.com/using-loopscale/earn
+  primary: true
+  says: Explains normal withdrawal liquidity constraints, queues and possible fees.
 ---
 
 Loopscale reports a sustained campaign during the preceding week and says a detected escalation triggered its protocol pause. Its over-30,000 daily malicious-request figure is a vendor estimate, not a count of successful attacks or affected users. The notice identifies SOL and USDC Genesis vaults as targets and says affected vaults have been made whole without loss to user deposits. The November 5 notice did not quantify either path or identify how the replacement was funded.
 
-Full operations are conditional on establishing the complete scope and further security hardening. The November 5 notice outlined plans to restore the interface and repayments. The November 6 update confirms the partial restoration below. It is cooperating with federal law enforcement and security professionals. The November 6 confirmation of actual exploitation warrants L4. No CVE, patched software version or Solana-wide compromise is established.
+Loopscale initially tied reopening to confirming the scope and applying further security measures. It announced partial restoration on November 6 and full vault and loan functionality on November 7. It says it is cooperating with federal law enforcement and security professionals. The November 6 confirmation of actual exploitation warrants L4. No CVE, patched software version or Solana-wide compromise is established.
 
 **Earlier reporting and disputed replacement:** On November 3, Andrew Seb alleged that a November 1 loan of 4,597 SOL (about $431,000 at the researcher's valuation) used one kySOL misidentified/priced as zBTC, with a decimal mismatch; the loan allegedly expired unpaid on November 2. On November 5, the researcher separately claimed a 586,000-USDC withdrawal after a 65,000-USDC deposit, about $520,000 net, and no return visible by 11:50 UTC. These figures and mechanisms are **unverified researcher claims**, not vendor-confirmed losses, and are not added together. The later post disputes replenishment, but a token-account snapshot does not settle off-account replacement commitments or customer-wide compensation. The vendor's statement is retained as its claim, not independently established recovery. The public disclosure date follows the earlier November 3 report, not the alleged theft date or later vendor acknowledgment.
 
 **November 6 attack paths and recovery.** Loopscale attributes the SOL vault attack to a combination of pricing settings that valued collateral as a different asset, allowing an undercollateralized loan of about $412,000. It says an atomic bundle sold an extreme-interest loan into the USDC vault and inflated its net asset value. Loopscale reports about $521,000 in disproportionate redemption and says its systems halted the activity within 30 seconds of transaction generation and that depositors will incur no loss. These are distinct vendor-reported amounts. The announcement does not reconcile them with the researcher's earlier figures or independently establish net losses, how replacement was funded or repayment to individual users.
+
+**November 7 reopening.** Loopscale says the November 6 restrictions have been lifted, including those on loans funded by USDC Genesis. Normal vault liquidity rules still apply. The reopening notice does not provide a final loss or replenishment accounting, detail the hardening measures or give a date for the technical postmortem.
