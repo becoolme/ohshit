@@ -7,7 +7,7 @@ tags:
 - M1
 - Data breach
 - Singapore
-summary: M1 confirms it detected a breach on October 30 exposing names, NRIC/FIN details, birth dates, phone numbers, emails and addresses. M1 says card, financial and banking data and account access were unaffected. Customer count and entry mechanism remain undisclosed; notifications and investigation continue.
+summary: M1 confirms it detected a breach on October 30 exposing names, NRIC/FIN numbers, dates of birth, mobile numbers, email addresses and addresses. M1 says payment-card data, financial or banking information, and account access were unaffected. Customer count and entry mechanism remain undisclosed; notifications and investigation continue.
 splash: M1 customers whose identity and contact details were involved; individual notices define exposure, not every subscriber.
 wipe: Verify your notice through M1, guard against targeted impersonation and check unexpected account or banking activity.
 inTheWild: 'yes'
@@ -16,7 +16,7 @@ timeline:
 - date: Oct 30, 2026
   title: M1 detects the breach
 - date: Nov 6, 2026
-  title: M1 notifies customers and publicly acknowledges exposure
+  title: M1 publicly acknowledges exposure and announces notifications
   body: The public release confirms the six exposed fields, containment, uninterrupted operations and planned notices by email or letter. Neither the entry mechanism nor the start of unauthorized access is given.
 checklist:
 - title: Confirm the specific information involved
