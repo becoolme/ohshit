@@ -56,6 +56,9 @@ timeline:
 - date: 2026年11月6日
   title: 作者说明 cookie 输出方式及额外可读的登录票据
   body: 后续作者回复解释 browserscan 会序列化选定 cookie 字段，而非上传原始 SQLite 数据库；任意文件读取还可复制启动器日志中的 login_ticket 及 biz_ticket。票据有效期及每台电脑执行过的命令仍不明。
+- date: 2026年11月7日
+  title: 作者提醒系统还原可能恢复持久化
+  body: 新回复说明无 Chrome 也能安装 DLL、重建前只读检查变更日志、在代理内阻断，以及核实旧会话是否真正结束。流量大小仍不能确定哪些数据被窃取。
 checklist:
 - title: 停止启动器，清理前先保留证据
   hint: 关闭启动器及托盘进程，将疑似感染电脑断网。删除或重装前，保留 Launcher/intl_service/debug.log、Launcher/log/tinyget 及启动器缓存。研究报告指出，更新或服务器关闭不能撤销之前的远程访问。 私下保留未改动的证据副本。公开日志前，遮盖 tinyget.mem.log 及按日期保存的 tinyget API 请求中的 Cookie 行，以及 login_ticket、biz_ticket、uid、openid 和 sig 的值；path= 可能暴露 Windows 用户名。 同时关闭 Google Play Games 变体的 nikke_launcher_google.exe。 若启动时输入了另一账户的管理员凭据，也检查该账户的 %APPDATA%、%TEMP% 和 HKCU 持久化键，不能只查日常账户。 官方手动说明还要求关闭 NIKKE 游戏及 Chrome。ACE 清理会删除关联日志；研究人员另转述一台更新后的干净安装未询问便删除 debug.log。任何重开前均须保留证据，不只是同意 ACE 前。文件已丢失时，可取证检查有保留期限的 NTFS 变更日志，查找 tinyget.<time>.log.cdt→.log 及 k2f-bcreds 创建、删除；日志轮转及 Firefox 原位读取限制阴性结论。
@@ -73,6 +76,10 @@ checklist:
   hint: 从官方 PC Launcher Security Incident and Follow-up Measures 公告查看 ACE 使用步骤。厂商宣布自 11 月 5 日 08:00 UTC+9 起提供；保留证据并关闭浏览器后，再决定是否允许删除相关日志、DLL 和注册表项。未弹窗不等于主机安全。也可按官方手动说明处理 Launcher\log\tinyget 中已识别的恶意下载文件：官方举例为 205,135 字节的 tinyget.<date>-<time>.log；研究报告另有较早 165,108 字节 k2f.lua，不能只凭一个大小排除感染，先取证再删确认的恶意文件。更新可信杀毒并执行全盘和 Defender 离线扫描。外部账户或资金疑受影响时，从已知游戏内客服入口提交记录；逐案调查不代表已承诺或完成损失赔付。
 - title: 拒绝陌生清理脚本
   hint: 研究人员识别 kernelscv[.]cfd?t=nikke 为另一项假管理员 PowerShell 清理诱饵，不属于原始 NIKKE 基础设施，不要执行。其声称的 45.153.*:4444、nikke_bootstrap.dll、NikkeUpdate 和 NIKKE_Helper 并非本事件已验证指标。若运行过，隔离并按另一项入侵处置。即使注册商据报暂停域名，仍阻断既有 NIKKE 域名及 IP；匹配须结合上下文，暂停也可能解除。
+- title: 检查现存证据，不要回滚 Windows
+  hint: '不要用系统还原查感染日期：作者提醒这可能恢复 HKCU 键及 DLL，使 Chrome 或 Steam 再次加载。全新安装会建立新日志，应在重建前由管理员只读运行 fsutil usn readjournal C: csv | findstr /i "platform_experience_helper.dll"。保留 .dll 后缀，排除 Chrome 的正常 .exe。File create／delete 记录可在日志保留范围内辅助判断 DLL 日期；记录已轮转时，没有结果不代表安全。启用系统保护时，可打开（不要还原）%LOCALAPPDATA%\Google\Chrome\User Data 的合适 Previous Versions，查看 PlatformExperienceHelper 及 DLL 修改时间，不要打开或复制 DLL。缺少 Chrome 不能排除风险：已分析安装器会自行创建目录，基于 Chromium 的程序也可能加载 DLL。'
+- title: 在代理内阻断，并核实会话吊销
+  hint: 使用 Clash 或 mihomo 的 fake-IP 模式时，应在代理配置内为 insightjs.com、analytics.insightjs.com、insightjs.org、89.127.233.127、89.126.250.172 添加拒绝规则；hosts 文件未必控制代理侧 DNS。作者指出 nslookup 跳过 hosts 文件，因此 198.18.x.x 结果不证明恶意解析。保留上述指标背景，命中本身不是入侵证据。从干净设备更换密码后，检查各服务活跃会话或使用全部退出功能。新浏览器或 Thunderbird 要求密码，不能证明旧会话已结束。保存在受影响电脑上的密码，即使对应服务当时未登录，也应更换。
 sources:
 - name: MotherSphere 原始技术报告及指标清单
   says: 通过公开 GitHub Gist API 阅读完整原文，区分自身主机、静态分析及评论者报告，列出 CDN 缓存观察、指标与清理更正。 11 月 4 日 12:11 GMT 修订新增 11:20 UTC 四节点干净复查、较晚历史旧缓存观察、旧载荷指标及压缩 .ldb 证据。 23:18 GMT 修订补充 Google Play Games 用户报告、变体缓存路径、重建前端及 UTF-8 启动失败边界。
@@ -127,3 +134,5 @@ sources:
 **11 月 6 日作者进一步说明：** `browserscan` 读取 cookie 的站点、名称及加密值，返回附带路径、配置文件和密钥的条目，而非原始 SQLite 文件。`l.js` 以 base64url 分块读取这些 JSON，默认每块最多 2 MiB；最初操控代理的 `l.js` 未被捕获，可能存在的传输压缩、加密及 SRUM 字节统计，均不能说明哪些资料已外传。Opera GX 的 `%APPDATA%\Opera Software\Opera GX Stable` 不在已分析的内置列表中，但任意文件命令仍可读取。浏览器锁只影响当时的 cookie 复制，不能保护后续启动、已保存密码或未经分析的浏览器 DLL。
 
 作者还指出，`tinyget.mem.log` 及按日期保存的 `Launcher/log/tinyget` 日志含有 `login_ticket`、`biz_ticket`，可通过 `cat` 或 `download` 读取；尚未测试其权限及有效期。已分析代理没有手机、路由器专用代码或网络扫描器，但可以读取 Phone Link 存于电脑上的资料，任意执行也可能触及局域网管理入口或操作已连接的手机。这些是可能路径，并非已观察到的传播。向支持核实票据吊销方式，按上文保留及遮盖日志，检查关联设备和已保存的路由器凭据，不要据此声称它们已被入侵。
+
+**11 月 7 日作者指引：** 已分析的 `chrome_install` 即使没有 Chrome，也会创建 Chrome 命名目录。持久化键仍生效时，其他基于 Chromium 的应用也可加载 DLL；作者引用一台电脑上 Steam 网页辅助进程及 Alt1 的观察。因此没有 Chrome 不能排除持久化。不要为调查回滚 Windows：系统还原可能恢复注册表键及 DLL，使其再次执行。重建前读取现存变更日志，或仅查看历史版本目录，不要还原或执行其中内容。SRUM 大致按小时统计进程流量，即使出现大流量，也不能确定传出了哪些数据。在代理内拒绝连接及检查实际旧会话列表，是对既有清理、干净设备凭据处置的补充，不能替代它们。
