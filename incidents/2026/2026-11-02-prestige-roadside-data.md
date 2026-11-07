@@ -2,12 +2,12 @@
 title: Prestige confirms roadside-assistance data theft involving up to 5.5 million records
 level: 4
 date: '2026-11-02'
-updated: '2026-11-06'
+updated: '2026-11-07'
 tags:
 - Prestige
 - data breach
 - roadside assistance
-summary: Prestige’s roadside-assistance breach involves up to 5.5 million records including duplicates, not people. Contact, vehicle, accident and some bank details were exposed; a November 6 report adds three cases of card-number leakage. The system remains stopped; assistance continues through alternative operations.
+summary: Prestige’s roadside-assistance breach involves up to 5.5 million records including duplicates, not people. Contact, vehicle, accident and some bank details were exposed; a November 6 report adds three cases of card-number leakage. Assistance continues through alternative operations. Zurich Japan confirms exposure and BMW Japan is checking its scope.
 splash: Users of roadside assistance handled by Prestige Core Solution for client companies
 wipe: Verify notices through your assistance provider; reject unexpected credential requests and monitor affected accounts
 inTheWild: 'yes'
@@ -27,9 +27,14 @@ timeline:
 - date: Nov 6, 2026
   title: Second report confirms card numbers in three cases
   body: Some call-intake records contained card numbers that were exfiltrated. Issuers have been informed; customer measures are being coordinated. No resulting unauthorized use is confirmed.
+- date: Nov 6, 2026
+  title: BMW Japan and Zurich Japan publish customer notices
+  body: BMW Japan is checking fields and customer counts. Zurich Japan confirms that records from earlier outsourced assistance cases were included.
 checklist:
 - title: Confirm whether your assistance records are affected
   hint: Use your insurer or roadside-assistance provider’s established app, website or support number. Ask whether Prestige Core Solution handled your case and what fields are involved. Prestige says it will coordinate affected-customer notices with client companies; the maximum record count is not the number of people affected.
+- title: Use the affected provider’s published incident line
+  hint: BMW Japan customers can call 0120-269-437 from 09:00 to 19:00 on weekdays or 09:00 to 18:00 on weekends and holidays, Japan time. Zurich Japan customers can call 0120-860-697 from 09:00 to 17:00 on weekdays, excluding holidays and year-end closures, Japan time.
 - title: Reject impersonated support and credential requests
   hint: The company warns of calls, email and SMS impersonating Prestige, group companies or insurers. Do not follow unexpected URLs or disclose passwords, bank PINs or card numbers. Confirm any request through a known provider contact; the company says it will not ask for those credentials by phone or email in connection with this incident.
 - title: Preserve notices and check affected financial accounts
@@ -49,6 +54,14 @@ sources:
   url: https://www.prestigein.com/Portals/0/pdf/NEWS/news_20261106_01_en.pdf
   primary: true
   says: Same disclosure, not independent corroboration; Japanese original prevails.
+- name: BMW Japan and BMW Japan Finance November 6 customer notice
+  url: https://www.bmw.co.jp/ja/topics/announcement/202611-01.html
+  primary: true
+  says: Confirms the intrusion at its roadside-assistance provider, investigation of BMW-specific fields and counts, and its customer contact.
+- name: Zurich Japan November 6 customer notice
+  url: https://www.zurich.co.jp/aboutus/news/news/2026/1106/
+  primary: true
+  says: Confirms data from previously outsourced roadside-assistance cases was included and gives the contract cutoff and contact details.
 ---
 
 Prestige International confirms that an intruder accessed its group business system and removed customer information handled by subsidiary Prestige Core Solution (PCS). The affected system receives and arranges roadside assistance for client companies. This is confirmed exfiltration, rather than merely an allegation of an exposed server.
@@ -58,3 +71,5 @@ The maximum is roughly **5.5 million records including duplicates**; the number 
 Misused credentials were invalidated after detection on October 29. Access continued, prompting the October 30 shutdown. The company is investigating cause and scope with external specialists; reporting to Japan’s Personal Information Protection Commission and consultation with police are underway. It plans system changes and stronger monitoring, and will coordinate affected-customer notices with client companies. No initial-access vulnerability, final unique-person count or restoration deadline is disclosed. Roadside-assistance work continues through alternative operations despite the affected system being stopped. The confirmed mass disclosure supports L4.
 
 **November 6 scope correction:** The November 2 notice had not confirmed credit-card leakage. The second report now confirms **three cases of card-number leakage**, recorded in some call-intake records and included in exfiltrated information. This does not establish three unique people, a new additive incident total, or exposure of card security codes. Issuers have been notified; customer contact and protective measures will be coordinated with them. The company still reports no confirmed secondary misuse and continues roadside assistance through alternative operations while the affected system is suspended.
+
+**November 6 customer notices.** BMW Japan and BMW Japan Finance identify PCS as the contractor for their affected roadside-assistance and related operations. Their notice lists possible fields for the supplier’s system overall. The fields and count specific to BMW customers remain under investigation. BMW Japan says it reported to Japan’s Personal Information Protection Commission on November 2. Zurich Japan confirms its customer data was included and limits the affected scope to roadside-assistance cases outsourced to PCS through January 31, 2026. The supplier has yet to publish separate customer counts for the two companies or identify which client companies were involved in the three card-number cases.
