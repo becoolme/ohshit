@@ -3,6 +3,7 @@ title: "MSP Process 遭入侵，Microsoft Entra 集成凭据暴露"
 summary: >-
   MSP Process 确认遭到入侵，并表示已通知受影响的合作伙伴。一名客户转贴的通知称，
   攻击者访问的存储中有 Entra 应用机密、管理员刷新令牌和委派租户信息。通知称已有客户租户遭到凭据滥用。
+  MSP Process 向 Overe 表示，Phishr 和 Triggr 未受影响。
 splash: "使用 MSP Process 连接 Microsoft Partner Center 的托管服务商，以及启用了 Entra 委派集成的客户。"
 wipe: "删除已连接应用的机密，撤销授权管理员的会话，并排查合作伙伴和客户租户中的持久化访问。"
 inTheWildNote: "MSP Process 确认遭到入侵。客户转贴的通知称已有租户遭到凭据滥用。"
@@ -16,9 +17,13 @@ timeline:
   - date: "2026 年 11 月 8 日"
     title: "客户通知公开，MSP Process 确认遭到入侵"
     body: "创办人 Patrick Leonard 表示，公司已通知受影响的合作伙伴，调查仍在继续。"
+  - date: "11 月 8 日 16:00 UTC"
+    title: "MSP Process 向 Overe 确认 Phishr 和 Triggr 未受影响"
+    body: "Overe 转述厂商说明，两项服务使用独立的 AWS 基础设施、承载应用注册的 Microsoft 租户和管理身份。"
 checklist:
   - title: "切断受影响的集成"
     hint: >-
+      如已收到通知，或使用 Authenticator、密码重置或联系人同步，请向 MSP Process 确认受影响的集成并按通知处置。
       在合作伙伴租户中打开 Entra ID → 应用注册 → 证书和机密，删除每个连接到 MSP Process 的应用的全部客户端机密。
       与客户租户管理员协调，在 Entra ID → 企业应用 → 属性中将「已启用用户登录」设为「否」，
       阻止向受影响的应用签发新令牌。等待厂商指引后再重新连接。
@@ -52,6 +57,8 @@ sources:
     says: "说明租户管理员如何阻止向企业应用签发新令牌。"
   - name: "Microsoft Purview 审计活动参考"
     says: "列出邮件规则变更、邮件访问和文件下载的审计事件名称。"
+  - name: "Overe 记录 MSP Process 直接说明的影响范围"
+    says: "记录厂商在 16:00 UTC 直接确认 Phishr 和 Triggr 未受影响，并说明两项服务与受影响集成的隔离方式。"
 ---
 
 客户转贴的通知称，攻击者在侵入内部服务器后访问了一个 MSP Process 存储账户。受影响的集成使用
@@ -67,3 +74,8 @@ Microsoft Partner Center 的细粒度委派管理员权限（GDAP），用于 Au
 MSP Process 创办人 Patrick Leonard 公开确认公司已发送通知，调查仍在继续。初始入侵途径和完整影响范围尚不明确。
 移除原有机密可阻止攻击者继续用它获取新令牌。攻击者另行添加的凭据和权限仍然有效，因此应同时排查合作伙伴租户
 及每个已连接的客户租户。
+
+
+Overe 表示，MSP Process 直接确认 Phishr 和 Triggr 客户未受影响。MSP Process 解释，这两项服务使用
+独立的 AWS 基础设施、承载应用注册的 Microsoft 租户和管理身份。同时使用 MSP Process Authenticator、
+密码重置或联系人同步的客户仍应遵循这些 Microsoft 集成的通知。如不确定是否受影响，请向 MSP Process 核实。

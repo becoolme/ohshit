@@ -2,12 +2,14 @@
 title: "MSP Process intrusion exposes Microsoft Entra integration credentials"
 level: 4
 date: 2026-11-08
+updated: 2026-11-08
 tags: [msp, entra, gdap, credentials, breach]
 ecosystems: [microsoft-365, entra]
 summary: >-
   MSP Process confirmed an intrusion and says it notified affected partners. A customer-posted copy of its
   notice says an attacker reached storage holding Entra application secrets, an administrator refresh token
-  and delegated tenant information. The notice reports credential abuse in customer tenants.
+  and delegated tenant information, with abuse in client tenants. MSP Process told Overe that Phishr and
+  Triggr were unaffected.
 splash: "MSPs using MSP Process with Microsoft Partner Center and their clients with delegated Entra integrations."
 wipe: "Delete connected app secrets, revoke the consenting admin's sessions, and hunt for persistence in partner and client tenants."
 inTheWild: "yes"
@@ -22,10 +24,14 @@ timeline:
   - date: "Nov 8, 2026"
     title: "Customer notice surfaces and MSP Process confirms the intrusion"
     body: "Founder Patrick Leonard says the company notified affected partners and is still investigating."
+  - date: "Nov 8, 16:00 UTC"
+    title: "MSP Process tells Overe that Phishr and Triggr were unaffected"
+    body: "Overe reports that the vendor identified separate AWS infrastructure, Microsoft tenants for app registrations, and management identities."
 checklist:
   - title: "Cut off the affected integration"
     hint: >-
-      In the partner tenant, go to Entra ID → App registrations → Certificates & secrets and delete every
+      If you received a notice or use Authenticator, Password Reset or Contacts Sync, confirm which
+      integrations are affected with MSP Process and act on the notice. In the partner tenant, go to Entra ID → App registrations → Certificates & secrets and delete every
       client secret on each app connected to MSP Process. Coordinate with client tenant admins to disable
       affected enterprise apps under Entra ID → Enterprise apps → Properties. Set Enabled for users to
       sign-in to No to stop new tokens from being issued for the app. Wait for vendor guidance before reconnecting.
@@ -73,6 +79,10 @@ sources:
     url: https://learn.microsoft.com/en-us/purview/audit-log-activities
     primary: true
     says: "Lists event names for mail rule changes, mailbox access and file downloads."
+  - name: "Overe report on direct MSP Process scope clarification"
+    url: https://www.overe.io/threat-bulletins/msp-process-triggr-security-incident-nov-2026
+    primary: true
+    says: "Reports a direct vendor clarification at 16:00 UTC that Phishr and Triggr were unaffected and explains their separation from the affected integration."
 ---
 
 The customer-posted notice describes an attacker reaching an MSP Process storage account after entering
@@ -92,3 +102,10 @@ MSP Process founder Patrick Leonard publicly confirmed that the company sent not
 investigating. The initial entry method and full scope remain unknown. Removing the original secret
 stops its use for new tokens. It leaves any credentials or permissions the attacker added in place,
 so check both the partner tenant and each connected client tenant.
+
+
+Overe says MSP Process told it directly that Phishr and Triggr customers were unaffected. MSP Process
+attributed that separation to distinct AWS infrastructure, Microsoft tenants that hold their app
+registrations, and management identities. Customers who also use MSP Process Authenticator, Password
+Reset or Contacts Sync should follow the notice for those Microsoft integrations and ask MSP Process
+to confirm their exposure if they are unsure.
