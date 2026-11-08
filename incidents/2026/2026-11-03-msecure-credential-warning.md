@@ -41,7 +41,7 @@ sources:
     primary: true
     says: Acknowledges the Cloud breach email and names the support mailbox. Gives no database, encryption or victim-count details.
   - name: Customer repost of a follow-up email
-    url: https://support.msecure.com/en/support/discussions/topics/36000039003/page/last#post-36000102404
+    url: https://support.msecure.com/en/support/discussions/topics/36000039003/page/8#post-36000102404
     says: A customer reproduces text claiming an encrypted database copy and describing the scope as mSecure Cloud sync. The repost attributes to mSeven a statement that it had no evidence of access to the confidential contents.
 ---
 
