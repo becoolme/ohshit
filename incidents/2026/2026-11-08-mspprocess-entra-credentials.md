@@ -27,7 +27,8 @@ checklist:
     hint: >-
       In the partner tenant, go to Entra ID → App registrations → Certificates & secrets and delete every
       client secret on each app connected to MSP Process. Coordinate with client tenant admins to disable
-      affected enterprise apps during containment. Wait for vendor guidance before reconnecting.
+      affected enterprise apps under Entra ID → Enterprise apps → Properties. Set Enabled for users to
+      sign-in to No to stop new tokens from being issued for the app. Wait for vendor guidance before reconnecting.
   - title: "Revoke the consenting administrator's sessions"
     hint: >-
       In Entra ID → Users, select the account that granted consent and choose Revoke sessions. For accounts
@@ -38,7 +39,8 @@ checklist:
       Export Entra audit and sign-in logs from Nov 7, 09:00 UTC onward. Search service principal sign-ins by
       the connected app IDs and review privileged user sign-ins, unexpected password resets, authentication
       changes including Temporary Access Passes, new app or service principal credentials, new users,
-      directory role assignments and app consents. Check Exchange audit logs for inbox rules and forwarding.
+      directory role assignments and app consents. In the Microsoft Purview audit log, check Exchange inbox
+      rules and forwarding, and review file and mailbox access by the app for possible data exposure.
       Petra reported activity from shared Azure IP 172.169.63[.]30. A match alone does not prove compromise.
   - title: "Remove attacker access and coordinate recovery"
     hint: >-
@@ -62,6 +64,10 @@ sources:
     url: https://learn.microsoft.com/en-us/entra/identity/users/users-revoke-access
     primary: true
     says: "Explains user session revocation and why some access may persist until tokens or sessions expire."
+  - name: "Microsoft Entra enterprise application containment guidance"
+    url: https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/disable-user-sign-in-portal
+    primary: true
+    says: "Shows how a tenant administrator can prevent new tokens from being issued for an enterprise application."
 ---
 
 The customer-posted notice describes an attacker reaching an MSP Process storage account after entering
@@ -72,8 +78,9 @@ a list of client tenants and their delegated roles.
 
 With a stolen client secret, an attacker can obtain an app token without signing in as a user or
 passing user MFA. The possible actions depend on which application permissions the MSP granted.
-The notice lists permissions to manage applications, grant app roles, write user records, reset
-passwords and change authentication methods. The notice reports use against client tenants of at least
+The notice lists `Application.ReadWrite.All` and `AppRoleAssignment.ReadWrite.All` for Authenticator,
+and `User.ReadWrite.All`, `User-PasswordProfile.ReadWrite.All` and
+`UserAuthenticationMethod.ReadWrite.All` for Password Reset. The notice reports use against client tenants of at least
 two MSPs and does not establish the total number of affected tenants or what was copied for each partner.
 
 MSP Process founder Patrick Leonard publicly confirmed that the company sent notices and was still
