@@ -20,18 +20,18 @@ timeline:
     body: The notices identify the affected groups and data fields, describe containment and give reporting instructions.
 checklist:
   - title: Change your brokerage login password and check account activity
-    hint: Open the official Mirae Asset Securities site directly and change your Cyber ID password. In the official MAPS app, check recent orders, executions, deposits, withdrawals and transfers. Call the broker at 1588-6800 immediately if you spot an unrecognized transaction or disclosed authentication information to an impersonator.
+    hint: Open the official Mirae Asset Securities site directly and change your Cyber ID password. In the official MAPS app, check recent orders, executions, deposits, withdrawals and transfers. Report an unrecognized transaction or disclosed authentication information promptly via the official notice. The notice lists the regular hotline at 1588-6800, weekdays 08:00–18:00 Korea time from November 9 after the temporary November 7 desk.
   - title: Verify workforce requests through known contacts
     hint: Confirm work requests using contact details you already had. Skip suspicious links, attachments and software. Keep passwords and verification codes private. For groupware exposure details, contact the broker through the channels in the workforce notice. Report suspicious contact or harm to 1588-6800. If you reused a potentially exposed password, replace it on the other services with unique passwords.
   - title: Verify the sender before acting on an account message
-    hint: A caller or message may quote your account number, name or employee ID. Go directly to the broker’s website or app. Keep your password, OTP and SMS verification code private. The two notices also point affected people to Korea’s Personal Information Dispute Mediation Committee for assistance with disputes.
+    hint: A caller or message may quote your account number, name or employee ID. Go directly to the broker’s website or app. Keep your password, OTP and SMS verification code private. The two notices also point affected people to Korea’s Personal Information Dispute Mediation Committee at kopico.go.kr or 1833-6972 for dispute mediation.
 sources:
   - name: Mirae Asset Securities customer breach notice
-    url: https://securities.miraeasset.com/bbs/board/message/view.do?categoryId=66&messageCategoryId=0&messageId=2344058&messageNumber=442
+    url: https://trading.securities.miraeasset.com/bbs/board/message/view.do?categoryId=66&messageCategoryId=0&messageId=2344058&messageNumber=442
     primary: true
     says: Confirms the mobile-web login incident, about 3,800 affected customers, the account-number-only scope and steps for customers.
   - name: Mirae Asset Securities workforce breach notice
-    url: https://securities.miraeasset.com/bbs/board/message/view.do?categoryId=66&messageCategoryId=0&messageId=2344060&messageNumber=444
+    url: https://trading.securities.miraeasset.com/bbs/board/message/view.do?categoryId=66&messageCategoryId=0&messageId=2344060&messageNumber=444
     primary: true
     says: Confirms the groupware incident, about 35,255 affected people, the variable field exposure, isolation and reporting guidance.
 ---
