@@ -30,9 +30,10 @@ timeline:
 checklist:
   - title: "Cut off the affected integration"
     hint: >-
-      If you received a notice or use Authenticator, Password Reset or Contacts Sync, confirm which
-      integrations are affected with MSP Process and act on the notice. In the partner tenant, go to Entra ID → App registrations → Certificates & secrets and delete every
-      client secret on each app connected to MSP Process. Coordinate with client tenant admins to disable
+      If you received a notice, act on it immediately. If you use Authenticator, Password Reset or
+      Contacts Sync and are unsure of your exposure, contact MSP Process. In the partner tenant, go to
+      Entra ID → App registrations → Certificates & secrets and delete every client secret on each app
+      connected to the affected integrations. Coordinate with client tenant admins to disable
       affected enterprise apps under Entra ID → Enterprise apps → Properties. Set Enabled for users to
       sign-in to No to stop new tokens from being issued for the app. Wait for vendor guidance before reconnecting.
   - title: "Revoke the consenting administrator's sessions"
@@ -102,7 +103,6 @@ MSP Process founder Patrick Leonard publicly confirmed that the company sent not
 investigating. The initial entry method and full scope remain unknown. Removing the original secret
 stops its use for new tokens. It leaves any credentials or permissions the attacker added in place,
 so check both the partner tenant and each connected client tenant.
-
 
 Overe says MSP Process told it directly that Phishr and Triggr customers were unaffected. MSP Process
 attributed that separation to distinct AWS infrastructure, Microsoft tenants that hold their app

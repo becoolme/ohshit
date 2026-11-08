@@ -23,8 +23,9 @@ timeline:
 checklist:
   - title: "切断受影响的集成"
     hint: >-
-      如已收到通知，或使用 Authenticator、密码重置或联系人同步，请向 MSP Process 确认受影响的集成并按通知处置。
-      在合作伙伴租户中打开 Entra ID → 应用注册 → 证书和机密，删除每个连接到 MSP Process 的应用的全部客户端机密。
+      如已收到通知，请立即按通知处置。若使用 Authenticator、密码重置或联系人同步且不确定是否受影响，
+      请联系 MSP Process。在合作伙伴租户中打开 Entra ID → 应用注册 → 证书和机密，
+      删除每个连接到受影响集成的应用的全部客户端机密。
       与客户租户管理员协调，在 Entra ID → 企业应用 → 属性中将「已启用用户登录」设为「否」，
       阻止向受影响的应用签发新令牌。等待厂商指引后再重新连接。
   - title: "撤销授权管理员的会话"
@@ -74,7 +75,6 @@ Microsoft Partner Center 的细粒度委派管理员权限（GDAP），用于 Au
 MSP Process 创办人 Patrick Leonard 公开确认公司已发送通知，调查仍在继续。初始入侵途径和完整影响范围尚不明确。
 移除原有机密可阻止攻击者继续用它获取新令牌。攻击者另行添加的凭据和权限仍然有效，因此应同时排查合作伙伴租户
 及每个已连接的客户租户。
-
 
 Overe 表示，MSP Process 直接确认 Phishr 和 Triggr 客户未受影响。MSP Process 解释，这两项服务使用
 独立的 AWS 基础设施、承载应用注册的 Microsoft 租户和管理身份。同时使用 MSP Process Authenticator、
