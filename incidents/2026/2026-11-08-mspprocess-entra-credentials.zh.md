@@ -20,7 +20,8 @@ checklist:
   - title: "切断受影响的集成"
     hint: >-
       在合作伙伴租户中打开 Entra ID → 应用注册 → 证书和机密，删除每个连接到 MSP Process 的应用的全部客户端机密。
-      与客户租户管理员协调，在遏制期间禁用受影响的企业应用。等待厂商指引后再重新连接。
+      与客户租户管理员协调，在 Entra ID → 企业应用 → 属性中将「已启用用户登录」设为「否」，
+      阻止向受影响的应用签发新令牌。等待厂商指引后再重新连接。
   - title: "撤销授权管理员的会话"
     hint: >-
       在 Entra ID → 用户中找到为集成授权的账户，选择撤销会话。对于有失陷迹象的账户，调查期间阻止登录、
@@ -29,7 +30,8 @@ checklist:
     hint: >-
       导出从 11 月 7 日 09:00 UTC 起的 Entra 审计和登录日志。按已连接的应用 ID 查找服务主体登录，
       检查特权用户登录、异常密码重置、临时访问通行证等身份验证变更、新增应用或服务主体凭据、
-      新建用户、目录角色分配和应用同意。另查 Exchange 审计日志中的收件箱规则和转发。
+      新建用户、目录角色分配和应用同意。在 Microsoft Purview 审计日志中查看 Exchange 收件箱规则和转发，
+      并排查应用对文件和邮箱的访问，确认是否可能有数据暴露。
       Petra 报告共享 Azure IP 172.169.63[.]30 出现活动。单独命中不能证明遭到入侵。
   - title: "移除攻击者的访问权限并协调恢复"
     hint: >-
@@ -45,14 +47,18 @@ sources:
     says: "观察到来自共享 Azure IP 的异常服务主体活动，归因尚无定论。"
   - name: "Microsoft Entra 紧急撤销访问指南"
     says: "说明如何撤销用户会话，以及为何部分访问会持续到令牌或会话过期。"
+  - name: "Microsoft Entra 企业应用遏制指南"
+    says: "说明租户管理员如何阻止向企业应用签发新令牌。"
 ---
 
 客户转贴的通知称，攻击者在侵入内部服务器后访问了一个 MSP Process 存储账户。受影响的集成使用
-Microsoft Partner Center 的细粒度委派管理员权限（GDAP），用于身份验证、密码重置和联系人同步。
+Microsoft Partner Center 的细粒度委派管理员权限（GDAP），用于 Authenticator、密码重置和联系人同步。
 存储中包含 Entra 应用 ID 和客户端机密、连接集成的管理员刷新令牌，以及客户租户和委派角色清单。
 
 攻击者可使用被盗客户端机密获取应用令牌，无需以用户身份登录或通过用户 MFA。能执行哪些操作取决于托管服务商
-授予的应用权限。通知列出的权限包括管理应用、授予应用角色、写入用户资料、重置密码和更改身份验证方法。
+授予的应用权限。通知列出的 Authenticator 权限包括 `Application.ReadWrite.All` 和 `AppRoleAssignment.ReadWrite.All`，
+密码重置权限包括 `User.ReadWrite.All`、`User-PasswordProfile.ReadWrite.All` 和
+`UserAuthenticationMethod.ReadWrite.All`。
 通知称至少两家托管服务商的客户租户遭到滥用。受影响租户的总数，以及每家合作伙伴有哪些数据被复制，仍未确定。
 
 MSP Process 创办人 Patrick Leonard 公开确认公司已发送通知，调查仍在继续。初始入侵途径和完整影响范围尚不明确。
