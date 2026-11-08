@@ -34,19 +34,19 @@ sources:
     url: https://www.bleepingcomputer.com/news/security/msecure-password-manager-hack-prompts-password-reset-warnings/
     says: Separately inspected notice; traces encrypted-cloud-database claims to customer-shared support replies rather than independent forensic confirmation.
   - name: Customer posts claimed support response on mSecure forum
-    url: https://support.msecure.com/en/support/discussions/topics/36000039016
+    url: https://support.msecure.com/en/support/discussions/topics/36000039016#post-36000102133-description
     says: The customer who opened the thread relays a support claim that the incident concerns mSecure Cloud sync users.
   - name: mSecure staff reply on the support forum
     url: https://support.msecure.com/en/support/discussions/topics/36000039016#post-36000102390
     primary: true
     says: Acknowledges the Cloud breach email and names the support mailbox. Gives no database, encryption or victim-count details.
   - name: Customer repost of a follow-up email
-    url: https://support.msecure.com/en/support/discussions/topics/36000039003/page/last
-    says: A customer reproduces text claiming an encrypted database copy and describing the scope as mSecure Cloud sync. The post is customer-authored.
+    url: https://support.msecure.com/en/support/discussions/topics/36000039003/page/last#post-36000102404
+    says: A customer reproduces text claiming an encrypted database copy and describing the scope as mSecure Cloud sync. The repost attributes to mSeven a statement that it had no evidence of access to the confidential contents.
 ---
 
 The November 3 notification is established by two outlets that separately inspected it. It warns current and former customers to protect confidential information stored in mSecure while mSeven investigates suspicious activity. L3 reflects actionable credential guidance for a password manager; a mass plaintext leak is not established.
 
-An encrypted cloud-database theft and cloud-sync-only scope appear in customer transcriptions of support replies. These remain attributed claims. An affected count, fixed application version, attack mechanism and proof of decrypted vault contents remain unavailable. Do not assume other sync modes are cleared. The two media inspections corroborate the warning, not independent forensic findings about theft.
+An encrypted cloud-database theft and cloud-sync-only scope appear in customer transcriptions of support replies. In the reposted email, mSeven says it had no evidence of access to the confidential contents. The material reviewed does not establish an affected count, a fixed app version, the attack mechanism or access to decrypted vault contents. Do not assume other sync modes are cleared. The two media inspections corroborate the warning, not independent forensic findings about theft.
 
 **November 7 support update.** A staff reply on mSecure’s own support forum acknowledges the Cloud breach email and directs incident questions to `support@msevensoftware.com`. Support says high ticket volume may delay responses. The public reply confirms the notification and support route. The encrypted-copy description and narrower sync scope still come from customer reposts.
