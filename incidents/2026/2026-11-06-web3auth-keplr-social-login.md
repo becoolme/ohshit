@@ -2,11 +2,11 @@
 title: Web3Auth pauses embedded wallets as Keplr investigates unauthorized social-login transactions
 level: 4
 date: '2026-11-06'
-updated: '2026-11-07'
+updated: '2026-11-08'
 tags: [Web3Auth, Keplr, Embedded wallets, Social login]
-summary: Web3Auth suspended its embedded wallet service. Keplr paused Google and Apple login after receiving reports of unauthorized transactions from some wallets created that way. Bitquery estimates collectors on eight chains held about $6.01M as of Nov 7, 15:38 UTC. The estimate is unverified. The entry mechanism and final loss remain unknown.
-splash: Keplr wallets created using Google or Apple login. Keplr’s initial assessment excludes recovery-phrase and hardware wallets.
-wipe: Stop funding or re-importing potentially affected accounts. Track official guidance and report unrecognized transactions through Keplr support.
+summary: Keplr confirmed that some Google or Apple login wallet keys were exposed through a Web3Auth infrastructure vulnerability. Web3Auth and its partners moved assets to protect vulnerable wallets. Bitquery estimated $6.01M at collector addresses on eight chains as of November 7, 15:38 UTC. The final loss remains unknown.
+splash: Some Keplr wallets created with Google or Apple login. Keplr says recovery-phrase and hardware wallets are unaffected.
+wipe: Stop deposits and avoid re-importing the affected account. Move remaining liquid assets to a separate recovery-phrase or hardware wallet.
 inTheWild: 'yes'
 inTheWildNote: Keplr received unauthorized transaction reports. Its co-founder reports exploitation.
 timeline:
@@ -25,9 +25,22 @@ timeline:
 - date: Nov 7, 16:00 UTC
   title: Bitquery publishes an eight-chain trace
   body: The collectors held an estimated $6.01M as of the 15:38 UTC read. Cosmos Hub sweeps were still ongoing at that cutoff. Wallet counts represent keys and cannot be read as a count of people.
+- date: Nov 7, 16:53 UTC
+  title: Web3Auth confirms an infrastructure security issue
+  body: The provider identifies certain Keplr embedded wallets as affected and says it is working with Keplr to secure assets.
+- date: Nov 7, 17:06 UTC
+  title: Web3Auth discloses protective transfers
+  body: Web3Auth says it and its partners began moving assets from vulnerable wallets that had yet to be hit, using the same path as the attacker. It says assets it secured this way are safe and a verified list of recovery addresses is being prepared.
+- date: Nov 7, 17:17 UTC
+  title: Keplr confirms private-key exposure and issues transfer guidance
+  body: Keplr advises users to move remaining liquid assets to a wallet secured by a recovery phrase or hardware wallet. It says staked and locked assets will take longer to secure and an account checker is in development.
 checklist:
 - title: Stop new deposits and keep the existing wallet setup
   hint: If you created the account using Google or Apple login, Keplr asks you to stop sending new funds and to avoid re-importing or recreating that account anywhere while it investigates.
+- title: Move remaining liquid assets to a separate wallet
+  hint: Follow Keplr’s guidance to send remaining liquid assets to a separate wallet secured by a recovery phrase or hardware wallet. Verify the destination before sending. For staked or locked assets, follow official Keplr and Web3Auth updates for further steps.
+- title: Check balance changes through official channels
+  hint: An empty or reduced balance may reflect a protective transfer. Save the transaction hashes and check Keplr and Web3Auth for the account checker and verified recovery addresses when available. Ignore unsolicited recovery messages and links.
 - title: Preserve and report unexpected activity
   hint: Save the public wallet address, chain, transaction hashes, times and amounts. Reach support through the official Keplr website. Follow Keplr’s official account for updates and ignore unsolicited recovery links. Keep keys and recovery phrases private.
 - title: Check upstream status before restoring login integrations
@@ -43,6 +56,18 @@ sources:
   url: https://x.com/keplrwallet/status/2118926087615045807
   primary: true
   says: Original public post read in a public copy. Reports unauthorized transactions, affected wallet creation methods, the login pause and immediate user precautions.
+- name: Web3Auth infrastructure update
+  url: https://x.com/Web3Auth/status/2119110953975635985
+  primary: true
+  says: Confirms an infrastructure security issue affecting certain embedded wallets used by Keplr users.
+- name: Web3Auth protective transfer thread
+  url: https://x.com/Web3Auth/status/2119114303907196932
+  primary: true
+  says: Describes protective transfers using the attack path, says the secured funds are safe and announces work on a verified list of recovery addresses.
+- name: Keplr private-key exposure and user guidance
+  url: https://x.com/keplrwallet/status/2119117067500806350
+  primary: true
+  says: Confirms private-key exposure for some social-login wallets and gives guidance for liquid, staked and locked assets.
 - name: Keplr co-founder’s initial findings
   url: https://x.com/dogemos/status/2118984142151196677
   primary: true
@@ -69,4 +94,8 @@ Public copies of the original statements are available for [Web3Auth](https://te
 
 Bitquery counted **44,041 wallets** across seven chains where it could deduplicate by key. It separately counted **7,603 Injective addresses** with overlap and estimated that Injective adds 440 to 934 distinct wallets based on a sample of 299. Adding the raw counts would double-count wallets. Bitquery used **15:27 UTC** spot prices and tracked transactions through **15:38 UTC on November 7**, when it still observed sweeps on Cosmos Hub. Its **$6.01M** valuation excludes unpriced and suspected spam tokens and has not been independently verified. On the seven chains deduplicated by key, Bitquery found that about 86% of the affected wallets were first swept after Keplr’s 04:38 UTC warning. The ledger does not reveal how each wallet was created or how signing keys were compromised.
 
-The researchers traced about **1.96 million staked ATOM** moved as tokenized shares. Normal unbonding takes 21 days, but the share tokens can be transferred before then. Bitquery saw no outgoing transfers from the collectors at its cutoff. The vendors have not confirmed a freeze or return. Pausing social login does not revoke signing capability already obtained. Continue to follow Keplr’s instructions to stop funding the accounts and avoid re-importing them.
+The researchers traced about **1.96 million staked ATOM** moved as tokenized shares. Normal unbonding takes 21 days, but the share tokens can be transferred before then. Bitquery saw no outgoing transfers from the collectors at its cutoff. The later disclosures do not establish which traced transfers were protective or how much the attacker ultimately obtained.
+
+Web3Auth says the assets secured by its protective transfers are safe. The vendors have yet to confirm returns or publish the verified recovery addresses and account checker in the cited updates. A balance change alone cannot determine whether funds were stolen or moved for protection. Pausing social login does not revoke signing capability already obtained. Keep deposits paused, avoid re-importing affected accounts, and follow Keplr’s guidance to move any remaining liquid assets to a separate wallet.
+
+Public copies of the later statements are available. [Web3Auth infrastructure update](https://teapaw.org/Web3Auth/status/2119110953975635985), [protective transfers](https://teapaw.org/Web3Auth/status/2119114303907196932), [secured funds](https://teapaw.org/Web3Auth/status/2119114305475854345), [recovery address list update](https://teapaw.org/Web3Auth/status/2119114423239647375), [Keplr guidance](https://teapaw.org/keplrwallet/status/2119117067500806350).
