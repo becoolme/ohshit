@@ -20,7 +20,7 @@ timeline:
     title: b14g pauses affected contracts
   - date: Oct 31, 16:38 UTC
     title: b14g publicly confirms the incident
-  - date: Oct 31, 2026
+  - date: Oct 31, 21:00 UTC
     title: Bitquery publishes a zero-amount withdrawal analysis
     body: The researcher reports 99 zero-amount requests draining 91 orders and an on-chain pause 66 minutes later; source code and discovery time were not established.
   - date: Nov 2, 2026
@@ -82,7 +82,7 @@ sources:
 
 In its October 31 disclosure, b14g said it paused affected contracts upon discovery, reported an initial estimate of about 9M CORE frozen and said staked BTC was unaffected. The operator’s later timeline places the withdrawal at 09:29:51 UTC and the pause at 10:35:51 UTC, about 66 minutes later. The discovery time remains unspecified. [Public copy of the October 31 disclosure](https://teapaw.org/b14g_network/status/2116570456245596580).
 
-**November 1 research update:** Bitquery reports that a wallet with no funded orders submitted 99 requests for zero CORE, emptying 91 orders. Its analysis says the downstream staking contract interprets zero as full withdrawal. This is a transaction-based finding, not a source-code audit or final vendor root cause. The researcher places the pause at 10:35:51 UTC on October 31, about 66 minutes after the drain; that does not establish when b14g discovered it. The vendor’s pause statement remains valid. Its 19:43 UTC balance snapshot is historical and cannot prove exchange freezes or repayments. The verified-fix and exit-procedure gaps remain.
+**October 31 Bitquery analysis:** Bitquery reports that a wallet with no funded orders submitted 99 requests for zero CORE, emptying 91 orders. Its analysis says the downstream staking contract interprets zero as full withdrawal. This is a transaction-based finding, not a source-code audit or final vendor root cause. The researcher places the pause at 10:35:51 UTC on October 31, about 66 minutes after the drain; that does not establish when b14g discovered it. The vendor’s pause statement remains valid. Its 19:43 UTC balance snapshot is historical and cannot prove exchange freezes or repayments. The verified-fix and exit-procedure gaps remain.
 
 **November 2 affected-company disclosure:** BTCS’s ESPI report 32/2026, read as an issuer-authored filing publicly republished by Bankier, says it holds about 68.3M CORE, around 90% staked through b14g. Preliminary information from the protocol operator suggests about 30% (~20M CORE) may have been lost; BTCS is verifying this. Remaining staked tokens are locked with no known withdrawal-restoration date. This is one holder’s exposure within the ~97M CORE incident, not an additive loss. The company writes down the full CORE carrying value by about PLN6.05M to zero, also citing liquidity and its exit decision. That non-cash impairment does not change token quantities and is neither a confirmed theft total nor compensation. BTCS says its own 202.27 BTC (September 30 snapshot) was unaffected and it has no Binance exposure; this does not establish safety or recovery of all b14g assets. It reported its positions to the operator; final losses and recovery arrangements remain pending.
 
