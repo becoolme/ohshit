@@ -18,6 +18,8 @@ timeline:
 checklist:
   - title: Rotate Tensorlake API keys
     hint: Sign in directly to the Tensorlake console, replace API keys, update secret stores and workloads using TENSORLAKE_API_KEY, verify the replacements work, and revoke the old keys. Apply the same rotation to CI and scheduled jobs.
+  - title: Check build and deployment records if you integrate Tensorlake
+    hint: Compare CI runs and deployed artifacts against expected commits and releases. Check when Tensorlake keys were used and investigate unexplained runs. Preserve relevant logs before changing affected automation.
   - title: Review usage and watch for vendor follow-up
     hint: Compare recent API usage and sandbox activity with your own deployment and job records. Save timestamps and identifiers for unexpected activity and contact Tensorlake through its official site. Check official customer email and the trust center for further incident details.
 sources:
@@ -41,6 +43,6 @@ sources:
 
 Tensorlake says an internal automation app running on an upstream provider started sandboxes under engineering team accounts. Those sandboxes had access to Tensorlake GitHub repositories. An attacker pushed malicious code to branches and triggered GitHub Actions to probe for build and deployment secrets. Tensorlake says it found no evidence of access to critical systems beyond the probing and reports that customer API keys and sandboxes were unaffected. The company has not published affected branch names, workflow identifiers or evidence that particular secrets were retrieved.
 
-The founder’s initial public post named Railway as the app host. The follow-up described an upstream provider breach. The initial post and follow-up are available in [the disclosure’s public copy](https://teapaw.org/diptanu/status/2119228351978328379) and [the reply’s public copy](https://teapaw.org/diptanu/status/2119244751178551446). The relationship to [Railway’s October incident](/incidents/railway-env-vars/) has not been independently verified. The earlier Tensorlake npm advisory covers a different event.
+The founder’s initial public post named Railway as the app host. In the edited statement, Choudhury referred to an upstream provider and said a prior breach there had exposed environment variables that Tensorlake had left unrotated for the internal app. The follow-up also attributes the exposure to the upstream breach. The initial post and follow-up are available in [the disclosure’s public copy](https://teapaw.org/diptanu/status/2119228351978328379) and [the reply’s public copy](https://teapaw.org/diptanu/status/2119244751178551446). A [public copy of the edited statement](https://pwn.watch/i/tensorlake-vendor-sandbox-github-access-nov-2026) preserves the later wording. The relationship to [Railway’s October incident](/incidents/railway-env-vars/) has not been independently verified. The earlier Tensorlake npm advisory covers a different event.
 
 Tensorlake says it rotated its secrets and removed the app from the upstream host. It emailed paying customers and asked customers to rotate Tensorlake API keys as a precaution. Further details are expected by email and in the [Tensorlake trust center](https://trust.tensorlake.ai/).
