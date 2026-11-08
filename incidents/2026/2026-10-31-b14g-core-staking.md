@@ -5,7 +5,7 @@ date: 2026-10-31
 updated: 2026-11-08
 tags: [b14g, Core, staking]
 ecosystems: [crypto]
-summary: b14g says one transaction stole about 97.05 million CORE from 91 staking orders via zero-amount withdrawals. It reports 68.15 million CORE recovered through a Core fork and about 12 million reported frozen. Recovered stake is due back to orders at about 70.2%. Distribution and a verified fix remain pending.
+summary: b14g says one transaction stole about 97.05 million CORE from 91 staking orders via zero-amount withdrawals. It reports 68.15 million CORE recovered through a Core fork and about 12 million reported frozen. b14g plans to restore about 70.2% of each affected order as staked balance. Distribution and a verified fix remain pending.
 splash: CORE staked through b14g. The operator says BTC staked through b14g was unaffected.
 wipe: Pause new deposits into the affected contracts. Save order records, check restored stake against the official allocation and verify any claim instructions.
 inTheWild: yes
@@ -13,11 +13,13 @@ inTheWildNote: b14g directly confirms unauthorized withdrawals to attacker-contr
 cves: []
 fixed: []
 timeline:
-  - date: Oct 31, 09:29 UTC
+  - date: Oct 31, 09:29:51 UTC
     title: Unauthorized withdrawal of staked CORE
-    body: b14g gives this explicit UTC time for the withdrawal of approximately 97 million CORE.
-  - date: Oct 31, 2026
-    title: b14g publicly confirms the incident and reports pausing affected contracts
+    body: The operator’s postmortem gives this time for a single transaction that withdrew 97,045,563 CORE.
+  - date: Oct 31, 10:35:51 UTC
+    title: b14g pauses affected contracts
+  - date: Oct 31, 16:38 UTC
+    title: b14g publicly confirms the incident
   - date: Oct 31, 2026
     title: Bitquery publishes a zero-amount withdrawal analysis
     body: The researcher reports 99 zero-amount requests draining 91 orders and an on-chain pause 66 minutes later; source code and discovery time were not established.
@@ -50,13 +52,13 @@ sources:
     primary: true
     says: Gives the integration failure, affected order count, recovery amounts, planned safeguards and two-stage repayment.
   - name: Core native staking code
-    url: https://github.com/coredao-org/core-genesis-contract/blame/master/contracts/CoreAgent.sol#L347
+    url: https://github.com/coredao-org/core-genesis-contract/blob/bc9dfa2d239937a94ca937efd9f350ac0c0c77be/contracts/CoreAgent.sol#L345-L348
     primary: true
     says: Shows the zero-amount branch substituting the delegator’s real-time stake.
   - name: b14g original security update
     url: https://x.com/b14g_network/status/2116570456245596580
     primary: true
-    says: Public embed confirms the amount in CORE, withdrawal time and contract pause; the remainder is truncated.
+    says: The full public copy confirms the pause, initial asset scope and an earlier estimate for frozen funds.
   - name: Official public embed of b14g's update
     url: https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fb14g_network%2Fstatus%2F2116570456245596580&omit_script=true
     primary: true
@@ -78,7 +80,7 @@ sources:
     says: Three debited accounts, one recovery recipient, one-time transition and conserved supply.
 ---
 
-The operator describes unauthorized withdrawals and attacker-controlled recipients, rather than an unexplained transfer. That confirmed asset theft supports L4. Approximately 97 million CORE must not be reported as $97 million. The readable opening of the vendor's October 31 notice confirms the pause but does not establish when discovery occurred or how quickly the pause followed the withdrawal. Its later text could not be read in full, so it did not establish later tracing, frozen-fund, unaffected-asset or compensation claims. The November 6 research and operator postmortem below add recovery evidence. Frozen or traced assets would not by themselves prove that users have been repaid.
+In its October 31 disclosure, b14g said it paused affected contracts upon discovery, reported an initial estimate of about 9M CORE frozen and said staked BTC was unaffected. The operator’s later timeline places the withdrawal at 09:29:51 UTC and the pause at 10:35:51 UTC, about 66 minutes later. The discovery time remains unspecified. [Public copy of the October 31 disclosure](https://teapaw.org/b14g_network/status/2116570456245596580).
 
 **November 1 research update:** Bitquery reports that a wallet with no funded orders submitted 99 requests for zero CORE, emptying 91 orders. Its analysis says the downstream staking contract interprets zero as full withdrawal. This is a transaction-based finding, not a source-code audit or final vendor root cause. The researcher places the pause at 10:35:51 UTC on October 31, about 66 minutes after the drain; that does not establish when b14g discovered it. The vendor’s pause statement remains valid. Its 19:43 UTC balance snapshot is historical and cannot prove exchange freezes or repayments. The verified-fix and exit-procedure gaps remain.
 
