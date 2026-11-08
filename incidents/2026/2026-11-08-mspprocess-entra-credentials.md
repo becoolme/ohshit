@@ -40,7 +40,8 @@ checklist:
       the connected app IDs and review privileged user sign-ins, unexpected password resets, authentication
       changes including Temporary Access Passes, new app or service principal credentials, new users,
       directory role assignments and app consents. In the Microsoft Purview audit log, check Exchange inbox
-      rules and forwarding, and review file and mailbox access by the app for possible data exposure.
+      rules and forwarding, and look for `FileDownloaded` and `MailItemsAccessed` by app ID to assess
+      possible data exposure. Record gaps where audit data is unavailable.
       Petra reported activity from shared Azure IP 172.169.63[.]30. A match alone does not prove compromise.
   - title: "Remove attacker access and coordinate recovery"
     hint: >-
@@ -68,6 +69,10 @@ sources:
     url: https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/disable-user-sign-in-portal
     primary: true
     says: "Shows how a tenant administrator can prevent new tokens from being issued for an enterprise application."
+  - name: "Microsoft Purview audit activity reference"
+    url: https://learn.microsoft.com/en-us/purview/audit-log-activities
+    primary: true
+    says: "Lists event names for mail rule changes, mailbox access and file downloads."
 ---
 
 The customer-posted notice describes an attacker reaching an MSP Process storage account after entering
