@@ -82,13 +82,16 @@ sources:
     url: https://www.unrealircd.org/docs/FAQ#hot-patch-failed
     primary: true
     says: "Explains how to diagnose a failed hot-patch and when to upgrade the daemon."
+  - name: "GitHub Advisory Database alias"
+    url: https://github.com/advisories/GHSA-237f-p9h6-wq4r
+    says: "Lists GHSA-237f-p9h6-wq4r as an alias of CVE-2026-114713."
 ---
 
 A client connected to a vulnerable IRC network can send a crafted IRCv3 `label` tag. The
 `labeled-response` module carries unescaped delimiters into a reply passed between servers, where
 the receiving server interprets them as additional IRC commands. This path requires at least two
-linked servers. The commands run with server authority, allowing the client to disconnect other
-users with KILL or apply network-wide bans with GLINE. The advisory describes IRC protocol commands.
+linked servers. The injected IRC commands run with server authority. A client can disconnect other
+users with KILL or apply network-wide bans with GLINE.
 
 The project calls the injection critical, while the MITRE record scores it 8.6 under CVSS 3.1.
 The maintainer confirmed exploitation on November 8 without publishing a victim count or attack
