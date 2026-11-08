@@ -2,7 +2,7 @@
 title: Binance preliminary report details signing-service intrusion and revises funding figures
 level: 4
 date: 2026-10-29
-updated: '2026-11-07'
+updated: '2026-11-08'
 tags:
   - Binance
   - crypto
@@ -145,12 +145,15 @@ timeline:
   - date: Nov 7, 2026
     title: Bitquery revises its freeze and laundering estimates
     body: Its updated analysis estimates about $2.8bn frozen or rescued, identifies about $7.7M in SOL sent to Privacy Cash and reclassifies 19,762 ETH as borrowed on Aave. These are research estimates, not a recovery total.
+  - date: Nov 8, 08:52 UTC
+    title: Binance confirms HYPE and APT withdrawals reopened
+    body: The exchange also lists previously restored ETH and SOL pairs and says it will reopen further pairs in phases after security checks.
   - date: Nov 1, 06:00–09:00 UTC (scheduled)
     title: First withdrawal phase is planned
 
 checklist:
   - title: Use official channels and reject recovery messages
-    hint: Open Binance through your existing bookmark or official app and check its announcements for deposit and withdrawal restoration. The November 1 notice schedules the first withdrawal phase for 06:00–09:00 UTC; check your exact asset/network pair on the withdrawal or network-status page. The subsequent official update names Bitcoin as the first batch; a later update confirms Ethereum withdrawals for USDC, USDT and ETH, and BSC withdrawals for USDC, USDT and BNB. Later original posts also confirm XRP on XRP; ETH and USDC on Base; DOGE on DOGE; ETH, USDT and USDC on Optimism; ZEC on ZEC; USDT and GRAM on TON; and SUI on SUI. The linked intermediate updates also confirm ARB, ETH, USDT and USDC on Arbitrum; TRX and USDT on TRX; SOL, USDT and USDC on Solana; POL, USDT and USDC on Polygon; and AVAX, USDT and USDC on Avalanche C-Chain. Verify the exact pair live; these statements do not establish that every asset on these networks is available. Binance says future withdrawals use new wallets in its updated reserve-address list. Verify destination addresses and device security; congestion remains possible. The notice advises retrying later if needed. Verify unsolicited communications with Binance Verify or official support. Do not share passwords or 2FA codes, follow recovery links, or send money to purported support agents. Update 8 announces more pairs from November 5 04:00 UTC on ETH, BSC, Base, TRX, MATIC and SUI. Use its exact table and check the selected pair live; listing an asset does not mean all its networks are open. Deposits remain open, and delays/retries may occur during rollout.
+    hint: Open Binance through your existing bookmark or official app and check its announcements for deposit and withdrawal restoration. The November 1 notice schedules the first withdrawal phase for 06:00–09:00 UTC; check your exact asset/network pair on the withdrawal or network-status page. The subsequent official update names Bitcoin as the first batch; a later update confirms Ethereum withdrawals for USDC, USDT and ETH, and BSC withdrawals for USDC, USDT and BNB. Later original posts also confirm XRP on XRP; ETH and USDC on Base; DOGE on DOGE; ETH, USDT and USDC on Optimism; ZEC on ZEC; USDT and GRAM on TON; and SUI on SUI. The linked intermediate updates also confirm ARB, ETH, USDT and USDC on Arbitrum; TRX and USDT on TRX; SOL, USDT and USDC on Solana; POL, USDT and USDC on Polygon; and AVAX, USDT and USDC on Avalanche C-Chain. Verify the exact pair live; these statements do not establish that every asset on these networks is available. Binance says future withdrawals use new wallets in its updated reserve-address list. Verify destination addresses and device security; congestion remains possible. The notice advises retrying later if needed. Verify unsolicited communications with Binance Verify or official support. Do not share passwords or 2FA codes, follow recovery links, or send money to purported support agents. Update 8 announces more pairs from November 5 04:00 UTC on ETH, BSC, Base, TRX, MATIC and SUI. Use its exact table and check the selected pair live; listing an asset does not mean all its networks are open. Deposits remain open, and delays/retries may occur during rollout. Binance confirmed HYPE and APT withdrawals reopened on November 8. Check the live page for the network and asset you intend to use.
   - title: Inspect your own account and respond to unauthorized activity
     hint: Review Security and Account Activity for unfamiliar logins, transactions or security-setting changes. If found, Binance instructs users to disable the account and contact official support. In the app, its guide uses Account Info → Security → Manage Account → Disable Account. Read the consequences before confirming; reopening may require support. This account control does not fix a possible exchange-wallet compromise.
   - title: Check Aave status before planning deposits or borrowing
@@ -371,6 +374,10 @@ sources:
     url: https://bitquery.io/investigations/binance-hack-laundering
     primary: true
     says: Tracks an estimated $333M crossing chains, reaching mixers or entering exchanges through November 6 at 10:00 UTC. The figure does not establish conversion to fiat.
+  - name: Binance November 8 withdrawal update
+    url: https://x.com/binance/status/2119352231732580574
+    primary: true
+    says: Confirms HYPE and APT withdrawals reopened and lists the previously restored ETH and SOL pairs.
 ---
 
 Binance’s initial notice said it had not confirmed an impact on user funds. The exchange then edited that notice to state that user funds are safe, and subsequently said withdrawals would resume after the security issue is fully resolved. These are the vendor’s statements, not an independently audited reserve or loss assessment. No resumption time or technical containment report was supplied in those notices. The withdrawal notice does not specify affected networks or withdrawal routes; do not infer that every Binance product is affected. Those earlier notices supported L3 because they acknowledged disruption without confirming the suspected theft.
@@ -444,3 +451,5 @@ The researcher no longer says none of the traced money reached exchange deposit 
 **November 7 Bitquery correction.** Bitquery revised its estimate of frozen or rescued assets from about **$2.7bn to $2.8bn**, including roughly **$75M** in wBETH it says Binance blacklisted on the night of the theft. It reports that linked wallets sent about **$7.7M** in SOL to Privacy Cash on November 3–4, a route missed in its earlier reports. It also attributes **19,762 ETH** to borrowing against stolen USDT on Aave rather than purchases. These are unverified estimates and tracing judgments. A freeze, a transfer into a mixer or a lending position is not evidence of a refund, and the $2.8bn estimate must not be added to Binance’s separate ~$2.85bn frozen-or-blocked figure.
 
 In a companion analysis, Bitquery estimates that by **November 6 at 10:00 UTC**, about **$333M** had crossed chains, reached mixers or entered exchanges, valued at theft-time prices. That category includes transfers and does not establish conversion to fiat, recovery or additional theft. Do not add it to other tracing estimates.
+
+**November 8 withdrawal update.** At 08:52 UTC, Binance announced that HYPE and APT withdrawals had reopened. It separately listed ETH and SOL asset pairs that were already available. Binance plans to reopen more pairs after security checks. Check the exact asset and network in the live withdrawal interface. This update provides no new accounting of stolen, frozen or returned funds.
