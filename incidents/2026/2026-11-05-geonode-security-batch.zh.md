@@ -36,6 +36,8 @@ checklist:
     hint: "限制 /proxy/、资产链接下载及不可信用户的上传，尽可能禁用远程文档导入。使用出站网络规则阻止对内网服务和云元数据端点的不必要访问。"
   - title: "排查利用迹象"
     hint: "检查代理请求中的异常编码 URL 和内网目的地址、发往 /api/v2/assets/<pk>/link/<path> 的请求中的编码路径穿越，以及上传工作进程日志中的异常子进程。单个匹配项不足以证明入侵。"
+  - title: "检查已存储内容"
+    hint: "恢复正常访问前检查可疑的文档摘要、GeoStory 和上传文件。保留副本供调查，再隔离或移除恶意内容。"
   - title: "处置已确认的入侵"
     hint: "隔离受影响主机，保全日志及上传文件，再用可信镜像重建。吊销受影响进程可访问的凭据，包括涉及的数据库或云凭据。"
 sources:
@@ -53,6 +55,8 @@ sources:
 
 GeoNode 用于发布地图、数据集和文档。代理转发请求前会检查允许列表。公开示例把一个获准的主机名嵌入特制 URL，使代理连接到其他目标并返回其 HTTP 响应。攻击者需要能够访问代理，并知道该部署允许的一个主机名。另一项缩略图抓取漏洞可让有权上传远程文档的已登录用户向内网目标发起请求。
 
-有权上传矢量数据的用户可以通过图层名改变导入进程执行的命令。[CNA 记录](https://www.cve.org/CVERecord?id=CVE-2026-33050)列出了 5.1.0，[5.0.3 标签中的导入代码](https://github.com/GeoNode/geonode/blob/5.0.3/geonode/upload/handlers/common/vector.py)也已改用参数列表启动转换进程，并禁用 shell 执行。项目仓库的原始公告仍未列出该漏洞的修复版本。
+有权上传矢量数据的用户可以通过图层名改变导入进程执行的命令。[CNA 记录](https://cveawg.mitre.org/api/cve/CVE-2026-33050)列出了 5.1.0，[5.0.3 标签中的导入代码](https://github.com/GeoNode/geonode/blob/5.0.3/geonode/upload/handlers/common/vector.py)也已改用参数列表启动转换进程，并禁用 shell 执行。项目仓库的原始公告仍未列出该漏洞的修复版本。
 
-这批公告还包括跨用户读取本地资产文件、两项浏览器脚本漏洞和上传校验绕过。文档存储型 XSS 的仓库公告列出 5.0.1，[CNA 记录](https://www.cve.org/CVERecord?id=CVE-2026-55649)和元数据清理的回移补丁则支持以 5.0.3 为升级目标。GeoStory 公告列出的 4.4.5 和 5.0.2 只修复该客户端漏洞。运行旧版本或独立打包客户端的站点应核实已部署客户端是否包含 GeoStory 修复，并计划升级 GeoNode 以修补服务器漏洞。
+这批公告还包括跨用户读取本地资产文件、两项浏览器脚本漏洞和上传校验绕过。文档存储型 XSS 的仓库公告列出 5.0.1，[CNA 记录](https://cveawg.mitre.org/api/cve/CVE-2026-55649)和元数据清理的回移补丁则支持以 5.0.3 为升级目标。GeoStory 公告列出的 4.4.5 和 5.0.2 只修复该客户端漏洞。运行旧版本或独立打包客户端的站点应核实已部署客户端是否包含 GeoStory 修复，并计划升级 GeoNode 以修补服务器漏洞。
+
+上述 CVE 对应的厂商公告为 [GHSA-9fpx-fr6j-2vh6](https://github.com/GeoNode/geonode/security/advisories/GHSA-9fpx-fr6j-2vh6)、[GHSA-q88x-rvm8-wxp4](https://github.com/GeoNode/geonode/security/advisories/GHSA-q88x-rvm8-wxp4)、[GHSA-r4hm-p9f9-fj9v](https://github.com/GeoNode/geonode/security/advisories/GHSA-r4hm-p9f9-fj9v)和 [GHSA-fqpv-mq26-pr4j](https://github.com/GeoNode/geonode/security/advisories/GHSA-fqpv-mq26-pr4j)。
