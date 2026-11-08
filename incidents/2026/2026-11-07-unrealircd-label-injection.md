@@ -39,13 +39,15 @@ checklist:
     hint: >-
       With all linked servers on 6.0.4 or later, run
       `/SPAMFILTER add -regex T block - Invalid_label ^label=(?![^\r\n;\x20]*\z)`
-      once as an IRCOp. The network-wide filter covers CVE-2026-114713 only. Proceed with the full fix.
+      once as an IRCOp. The network-wide filter covers CVE-2026-114713 only. If any linked server is
+      older than 6.0.4, proceed directly to patching or upgrading the vulnerable nodes.
   - title: "Hot-patch or upgrade every affected server"
     hint: >-
       On Unix-like systems running 6.0.0 through 6.2.7, run `./unrealircd hot-patch bundle-20261107`
       on every affected server and check that installation and rehash succeeded. On Windows, or if hot-patching
       fails, upgrade to 6.2.7.1 or later and restart. On Unix-like systems use `./unrealircd upgrade` or install
-      the official release. On Windows use the project's installer.
+      the official release. On Windows use the project's installer. The project FAQ under Hot-patching failed
+      covers build failures after a system upgrade.
   - title: "Verify each node and investigate unexpected privileged commands"
     hint: >-
       On 6.0.2 or later, run `./unrealircd module-status | grep labeled-response`. Check for
@@ -76,16 +78,22 @@ sources:
     url: https://seclists.org/oss-sec/2026/q4/576
     primary: true
     says: "Explains how unescaped newlines in the label tag allow IRC commands to cross the server link."
+  - name: "UnrealIRCd hot-patch troubleshooting"
+    url: https://www.unrealircd.org/docs/FAQ#hot-patch-failed
+    primary: true
+    says: "Explains how to diagnose a failed hot-patch and when to upgrade the daemon."
 ---
 
 A client connected to a vulnerable IRC network can send a crafted IRCv3 `label` tag. The
 `labeled-response` module carries unescaped delimiters into a reply passed between servers, where
 the receiving server interprets them as additional IRC commands. This path requires at least two
 linked servers. The commands run with server authority, allowing the client to disconnect other
-users with KILL or apply network-wide bans with GLINE.
+users with KILL or apply network-wide bans with GLINE. The advisory describes IRC protocol commands.
 
 The project calls the injection critical, while the MITRE record scores it 8.6 under CVSS 3.1.
 The maintainer confirmed exploitation on November 8 without publishing a victim count or attack
-indicators. The other eight fixes in the same batch cover user IP disclosure and availability
-problems, including crashes and hangs. The temporary filter addresses the command injection.
+indicators. The other eight fixes address two ways to expose users' IP addresses,
+a hang during blacklist rechecks, a crash involving services' CHGIDENT, incorrect full-server
+responses to new connections, excessive bans set by services, potential TLS renegotiation flooding
+and a possible crash in the WHOWAS database. The temporary filter addresses the command injection.
 Use the full hot-patch or release for the rest of the batch.
