@@ -24,11 +24,11 @@ timeline:
   body: The researcher documents collection of Swarm Desktop key material and a persistent Linux remote-access agent.
 checklist:
 - title: Find and block the affected version
-  hint: Check lockfiles, npm logs, CI build logs and registry proxy caches for @ethersphere/bee-js 13.3.0, including transitive dependencies. Block that exact version, regenerate affected lockfiles to pin verified 13.2.0 and rebuild on clean runners. Purge cached copies of 13.3.0 and affected build outputs.
+  hint: Check lockfiles, npm logs, CI build logs and registry proxy caches for @ethersphere/bee-js 13.3.0, including transitive dependencies. Block that exact version and identify every host and runner that may have installed it.
 - title: Isolate systems that ran the install hook
-  hint: Disconnect affected machines and retire exposed runners. Preserve logs, package artifacts and systemd state. Inspect other hosts built from the same images. Rebuild from trusted inputs because removing the package alone leaves any separately installed agent behind.
+  hint: Disconnect affected machines and retire exposed runners. Preserve logs, package artifacts and systemd state. Inspect other hosts built from the same images. After collecting evidence, purge cached copies of 13.3.0 and affected build outputs. Regenerate lockfiles to pin 13.2.0 and rebuild from trusted inputs on clean runners. Removing the package alone leaves any separately installed agent behind.
 - title: Replace exposed keys and credentials
-  hint: From a clean system, replace exposed Swarm node keys and review the associated wallet activity. Follow Swarm's official guidance for moving assets if a wallet key was exposed. Revoke and rotate other credentials readable by the install user, including developer and CI tokens, and review their use.
+  hint: Check for exposure of the Swarm Desktop node configuration and key at ~/.local/share/Swarm Desktop/data-dir/keys/swarm.key. From a clean system, replace exposed node keys and review associated wallet activity. Follow Swarm's official guidance for moving assets if a wallet key was exposed. Revoke and rotate other credentials readable by the install user, including developer and CI tokens, and review their use.
 - title: Hunt for the loader and observed Linux persistence
   hint: 'Review DNS and proxy logs for frameworkmetrics[.]xyz and api.frameworkmetrics[.]xyz, including /v1/analytics, /v1/swarm/report, /v1/assets/linux_amd64 and /v1/assets/linux_arm64. The initial request uses the Node platform as User-Agent and X-Ethersphere: 1. Check package/scripts/generate-version.cjs (SHA-256 ee2f762e9ed3fd89f106e0b80c2e923bf1aed9a280277d3d998a5902c4d9ec0f), ~/.solidity/linux_amd64, ~/.solidity/linux_arm64, ~/.solidity/.run.py and ~/.config/systemd/user/solidity-langsupport-runner.service. A match alone does not prove compromise.'
 sources:
