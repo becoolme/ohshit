@@ -18,11 +18,11 @@ timeline:
   body: 研究人员记录了 Swarm Desktop 密钥收集行为和可持久运行的 Linux 远程访问代理。
 checklist:
 - title: 查找并拦截受影响版本
-  hint: 检查锁文件、npm 日志、CI 构建日志及软件仓库代理缓存中的 @ethersphere/bee-js 13.3.0，包括传递依赖。拦截该确切版本，重新生成受影响的锁文件并锁定经核验的 13.2.0，然后在干净的运行器上重建。清除缓存中的 13.3.0 和受影响的构建产物。
+  hint: 检查锁文件、npm 日志、CI 构建日志及软件仓库代理缓存中的 @ethersphere/bee-js 13.3.0，包括传递依赖。拦截该确切版本，并找出可能安装过它的所有主机和运行器。
 - title: 隔离执行过安装钩子的系统
-  hint: 断开受影响主机的网络连接并停用暴露的运行器。保留日志、软件包产物和 systemd 状态。检查用同一镜像构建的其他主机。使用可信输入重建，因为单独卸载软件包无法清除另行安装的远程代理。
+  hint: 断开受影响主机的网络连接并停用暴露的运行器。保留日志、软件包产物和 systemd 状态。检查用同一镜像构建的其他主机。保全证据后，清除缓存中的 13.3.0 及受影响的构建产物。重新生成锁文件并锁定 13.2.0，再用可信输入在干净的运行器上重建。单独卸载软件包无法清除另行安装的远程代理。
 - title: 更换暴露的密钥和凭据
-  hint: 从干净系统更换暴露的 Swarm 节点密钥，并检查关联钱包的活动。若钱包密钥暴露，按 Swarm 官方指引转移资产。吊销并轮换安装用户可读的其他凭据，包括开发和 CI 令牌，并审计其使用记录。
+  hint: 检查 Swarm Desktop 节点配置和 ~/.local/share/Swarm Desktop/data-dir/keys/swarm.key 密钥是否暴露。从干净系统更换暴露的节点密钥，并检查关联钱包的活动。若钱包密钥暴露，按 Swarm 官方指引转移资产。吊销并轮换安装用户可读的其他凭据，包括开发和 CI 令牌，并审计其使用记录。
 - title: 排查加载器和已观察到的 Linux 持久化
   hint: '查看 DNS 和代理日志中是否出现 frameworkmetrics[.]xyz 或 api.frameworkmetrics[.]xyz，以及 /v1/analytics、/v1/swarm/report、/v1/assets/linux_amd64 和 /v1/assets/linux_arm64。初始请求以 Node 平台名作为 User-Agent，并带有 X-Ethersphere: 1。检查 package/scripts/generate-version.cjs（SHA-256 ee2f762e9ed3fd89f106e0b80c2e923bf1aed9a280277d3d998a5902c4d9ec0f）、~/.solidity/linux_amd64、~/.solidity/linux_arm64、~/.solidity/.run.py 和 ~/.config/systemd/user/solidity-langsupport-runner.service。单条命中无法证明系统失陷。'
 sources:
