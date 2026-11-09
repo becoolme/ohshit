@@ -26,9 +26,11 @@ checklist:
 - title: 排查加载器和已观察到的 Linux 持久化
   hint: '查看 DNS 和代理日志中是否出现 frameworkmetrics[.]xyz 或 api.frameworkmetrics[.]xyz，以及 /v1/analytics、/v1/swarm/report、/v1/assets/linux_amd64 和 /v1/assets/linux_arm64。初始请求以 Node 平台名作为 User-Agent，并带有 X-Ethersphere: 1。检查 package/scripts/generate-version.cjs（SHA-256 ee2f762e9ed3fd89f106e0b80c2e923bf1aed9a280277d3d998a5902c4d9ec0f）、~/.solidity/linux_amd64、~/.solidity/linux_arm64、~/.solidity/.run.py 和 ~/.config/systemd/user/solidity-langsupport-runner.service。单条命中无法证明系统失陷。'
 sources:
+- name: Ethersphere GitHub v13.3.0 发布页
+  says: 发布 API 记录 GitHub 发布时间为 00:06 UTC。
 - name: npm 软件包及版本历史
   says: 记录发布时间、受影响版本的安装钩子和来源证明元数据。13.2.0 的清单不含该钩子。
-- name: Ethersphere 发布版本的源码提交
+- name: Ethersphere 源码提交
   says: 展示清单的变更及加载器如何以安装用户权限执行 HTTPS 响应。
 - name: Bitbison 软件包分析
   says: 记录已观察到的 Swarm 密钥收集、Linux 二进制文件及持久化指标。
@@ -40,4 +42,4 @@ sources:
 
 Bitbison 观察到一份载荷读取 Swarm Desktop 配置和节点密钥，上传到同一域名，并安装 Linux 用户服务来运行远程访问代理。这是研究期间服务器返回的载荷。服务器可以改变响应，因此缺少这些 Linux 文件也无法排除代码已运行。npm 来源证明指向项目工作流，源码提交本身含有加载器。攻击者如何进入发布流程仍不清楚。
 
-事件日期采用 11 月 9 日 UTC，以软件仓库的发布时间和 Bitbison 带时间戳的报告为准。StepSecurity 的初步公告标注 11 月 8 日，未注明时区。其披露的 3,560 次下载覆盖 13.3.0 发布前一周的所有版本，无法用来计算受影响的安装数。受害者人数和被盗金额均未核实。
+核查时软件仓库仍将 13.3.0 列为 latest。处置期间请精确锁定此前版本。事件日期采用 11 月 9 日 UTC，以软件仓库的发布时间和 Bitbison 带时间戳的报告为准。StepSecurity 的初步公告标注 11 月 8 日，未注明时区。其披露的 3,560 次下载覆盖 13.3.0 发布前一周的所有版本，无法用来计算受影响的安装数。受害者人数和被盗金额均未核实。

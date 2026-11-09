@@ -32,11 +32,15 @@ checklist:
 - title: Hunt for the loader and observed Linux persistence
   hint: 'Review DNS and proxy logs for frameworkmetrics[.]xyz and api.frameworkmetrics[.]xyz, including /v1/analytics, /v1/swarm/report, /v1/assets/linux_amd64 and /v1/assets/linux_arm64. The initial request uses the Node platform as User-Agent and X-Ethersphere: 1. Check package/scripts/generate-version.cjs (SHA-256 ee2f762e9ed3fd89f106e0b80c2e923bf1aed9a280277d3d998a5902c4d9ec0f), ~/.solidity/linux_amd64, ~/.solidity/linux_arm64, ~/.solidity/.run.py and ~/.config/systemd/user/solidity-langsupport-runner.service. A match alone does not prove compromise.'
 sources:
+- name: Ethersphere GitHub release v13.3.0
+  url: https://github.com/ethersphere/bee-js/releases/tag/v13.3.0
+  primary: true
+  says: The release API records the GitHub publication at 00:06 UTC.
 - name: npm registry package and version history
   url: https://registry.npmjs.org/@ethersphere%2fbee-js
   primary: true
   says: Records publication time, the affected install hook and provenance metadata. The 13.2.0 manifest lacks that hook.
-- name: Ethersphere release and source commit
+- name: Ethersphere source commit
   url: https://github.com/ethersphere/bee-js/commit/de2f74e784b2eafa0d66fbb6d88b42ea11ee34cf
   primary: true
   says: Shows the manifest change and loader executing the HTTPS response with the install user's privileges.
@@ -54,4 +58,4 @@ Version 13.3.0 changes a version-generation script into an npm postinstall loade
 
 Bitbison observed a payload reading the Swarm Desktop configuration and node key, posting them to the same domain and installing a Linux user service that runs a remote-access agent. These observations describe a payload served during research. Its server can vary the response, so missing Linux files do not rule out execution. npm's provenance points to the project workflow, and the source commit itself contains the loader. The entry point into the release process remains unknown.
 
-The November 9 UTC incident date follows the registry publication and Bitbison's timestamped report. StepSecurity labels its initial notice November 8 without a timezone. Its 3,560-download figure covers all releases in the week before 13.3.0 and gives no count of affected installations. No victim count or stolen amount has been verified.
+The registry still listed 13.3.0 as latest when checked. Pin the exact prior version during containment. The November 9 UTC incident date follows the registry publication and Bitbison's timestamped report. StepSecurity labels its initial notice November 8 without a timezone. Its 3,560-download figure covers all releases in the week before 13.3.0 and gives no count of affected installations. No victim count or stolen amount has been verified.
