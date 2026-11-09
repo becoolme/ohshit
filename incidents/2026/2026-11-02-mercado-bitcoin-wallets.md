@@ -1,16 +1,17 @@
 ---
-title: Mercado Bitcoin reports over $16M blocked; staged website return planned for November 9
+title: Mercado Bitcoin details read-only return and account revalidation after wallet theft
 level: 4
 date: '2026-11-02'
+updated: '2026-11-09'
 tags:
 - Mercado Bitcoin
 - exchange
 - wallets
 ecosystems:
 - crypto
-summary: Mercado Bitcoin plans website viewing Nov 9, reports >$16M blocked, pledges its own replacement funds and says no customer loss/data leak. Its prior valuation was $36.3M; Bitquery estimates $48.6M across 11 chains, 36,042 Ethereum addresses and $11.8M frozen (unverified). Blocking is not repayment; entry unknown.
+summary: Mercado Bitcoin plans phased read-only access and will require in-app account revalidation and a new password before transactions resume. It reports over 33% of diverted assets blocked and replacement with its own funds under way. It previously reported over $16M blocked. Bitquery’s $48.6M estimate across 11 chains remains unverified.
 splash: Mercado Bitcoin customers and integrations using its deposit addresses; exchange hot wallets are implicated
-wipe: Respect the deposit/withdrawal pause; do not reuse saved deposit addresses until official recovery guidance confirms them
+wipe: Keep deposits and withdrawals paused. Verify balances on the official site. Use the app for revalidation and await deposit-address confirmation.
 inTheWild: 'yes'
 inTheWildNote: Exchange confirms an incident; Bitquery reports unauthorized wallet transfers.
 cves: []
@@ -52,22 +53,27 @@ timeline:
 - date: Nov 6, 23:33 UTC
   title: FAQ narrows the initial viewing list
   body: Revision 8 removes statements from both descriptions of the November 9 first stage. It still lists balances, assets and investments; this omission does not establish a separate statement-service reopening date.
+- date: Nov 9, 00:30 UTC
+  title: FAQ gives read-only access and account revalidation instructions
+  body: Revision 9 says the website will offer detailed viewing and the app will show a summary. API access will follow later. Transactions will require revalidation and a new password in the official app. The exchange reports over 33% of diverted assets blocked and own-funds replacement under way.
 - date: Nov 9, 2026 (scheduled)
   title: Staged website access is planned to begin
-  body: The latest FAQ lists balances, assets and investments for the first stage; statements were removed from its list in revision 8. Transfers, withdrawals and trading are to follow only after each module’s final security checks; this is not a promised date for full reopening.
+  body: Revision 9 describes a phased rollout of detailed balance and asset views on the website and a summary in the app. Trading, deposits, withdrawals, transfers and the API remain pending.
 checklist:
 - title: Keep deposits paused and recheck saved addresses
   hint: Do not send funds to a saved Mercado Bitcoin deposit address while transfers are suspended. Check the established exchange app and official channels for explicit recovery and address instructions before restarting automated payouts or exchange integrations. Bitquery reports signed transfers from deposit addresses; changing your login password alone does not secure exchange-controlled keys. The November 3 original confirms that the platform/app remain paused and says reinstalling the app or changing devices is unnecessary. The recovery plan requires feature-specific security checks; confirm each service and limitation in subsequent official announcements, rather than treating the plan as completed reopening. The November 4 company update now targets November 9 for initial website viewing only. Transfers, withdrawals and trading have no confirmed restart date; verify each module before enabling automation. The November 5 research also identifies Base deposit-address sweeps; include Base in the saved-address review and do not assume an address is safe because it was absent from the earlier ten-chain list.
 - title: Verify balances and preserve transaction evidence
-  hint: Record your account statement, affected network, deposit address, transaction hash, amount and time. Contact Mercado Bitcoin through its established support channel about missing credits or pending withdrawals. The exchange’s no-customer-loss statement is not independent verification that every balance or transfer is settled; address counts are not customer counts.
+  hint: Record your visible balance, affected network, deposit address, transaction hash, amount and time. Contact Mercado Bitcoin through its established support channel about missing credits or pending withdrawals. The exchange’s no-customer-loss statement is not independent verification that every balance or transfer is settled; address counts are not customer counts.
 - title: Monitor the published wallet set with its attribution limits
   hint: 'Bitquery’s wallet record lists 18 addresses, including source wallets, suspected recipients, later destinations and a separate unconfirmed BitMart-labelled source. Main reported recipients: EVM 0xe485e7a70b1131216cb47ca4555c4bbb2c742478; Bitcoin 19qGpsHvzh1t6pVi526XNNkh6hW6prDZp; Solana 3YX6WHncP1Ra4AotE9YLawFt4nPmxyux288FWXkEW97J; Tron TEX3HuDRHRa3tnYpy96M4UfSx62VhDyA5L; Stellar GDXYRI6IONQA5YTGRLQ6O3FGJ2BWXPJTTQPUXFPSEXSRKBZLFKMZSOLP. Use the full research record for the other thirteen and each role. A match alone does not establish compromise, wallet ownership or attribution. The November 4 revision adds 0x4d5f3758938df94a76bfd19652f118ccd7a72c9d, 0x469189223f286b51198163b4eb5a1e532669523d and 0xf666e184bb8d7b9724c1746e3621e72df4d3ce08 as Ethereum sale/consolidation destinations; they are hunting pivots, not proven actor identities.'
 - title: Reject unsolicited recovery requests
   hint: Open the exchange through an existing bookmark or app. Do not follow refund links in replies or direct messages, disclose passwords, MFA codes or wallet recovery phrases, or send a payment to unlock a balance. Confirm any support request through the official channel. The November 4 company warning says password resets, biometric selfies and authentication occur only inside the official app/site; staff do not request codes, passwords, photos or deposits through WhatsApp, email, social media or telephone.
 - title: Review cancelled orders and pending investment payments
-  hint: "Before relying on November 9 access to export statements, recheck the official FAQ: revision 8 no longer lists statements in the initial viewing stage. The November 6 FAQ says all limit orders open before the November 2 interruption will be cancelled, with reserved amounts returned in full without fees. Check your records when services resume and submit any new order deliberately at current market conditions. The company says fixed-income positions are updating retroactively, but interest, amortization and maturity proceeds will be credited only after transaction services fully return; retained balances do not mean funds can already move. Password/account changes are also unavailable during suspension; any requested update will appear inside the platform, never through a balance-release message."
+  hint: "Before relying on November 9 access to export statements, recheck the official FAQ: revision 8 no longer lists statements in the initial viewing stage. The November 6 FAQ says all limit orders open before the November 2 interruption will be cancelled, with reserved amounts returned in full without fees. Check your records when services resume and submit any new order deliberately at current market conditions. The company says fixed-income positions are updating retroactively, but interest, amortization and maturity proceeds will be credited only after transaction services fully return; retained balances do not mean funds can already move. Revision 9 confirms the open limit orders were cancelled. Before transactions resume, initiate revalidation and set a new password in the official app."
 - title: Compare corrected tracing limits and attribution confidence
   hint: Use Teiten’s corrected November 5 report alongside the existing Bitquery wallet record. Its trace follows three transfers from attributed attacker/parking wallets, with one manually added fourth-hop wallet; no labelled exchange/mixer within that limit does not exclude later cash-out. Its many wallet references are abbreviated in the prose, not a usable full-address blocklist. Do not expand partial addresses or label shared Mayan/Bridgers contracts as attacker wallets. Keep the existing complete-address research and vendor records; a match alone cannot establish ownership or compromise.
+- title: Use official sign-in and prepare for account revalidation
+  hint: Type www.mercadobitcoin.com.br and use the code sent to your registered email to sign in. The website shows asset details and the app shows a summary. The first stage excludes the API, trading, deposits, withdrawals, transfers, card, Pix and TED. For the later phase, start revalidation and set a new password in the official app. Keep passwords and codes private.
 sources:
 - name: Mercado Bitcoin official statement
   url: https://x.com/MercadoBitcoin/status/2117239507263132056
@@ -115,12 +121,11 @@ sources:
 - name: Public FAQ revision metadata
   url: https://central.ajuda.mercadobitcoin.com.br/wiki/rest/api/content/2968387585?expand=version,history
   primary: true
-  says: Version 7 was updated November 6 at 12:29:10 UTC; revision 8 at 23:33:33 UTC removes statements from the initial access list. The FAQ was created November 3. The revision time does not date every individual freeze.
+  says: Version 7 was updated November 6 at 12:29:10 UTC; revision 8 at 23:33:33 UTC removes statements from the initial access list. Revision 9 was published November 9 at 00:30:17 UTC. The FAQ was created November 3. The revision time does not date every individual freeze.
 - name: Teiten corrected original investigation, November 5
   url: https://teiten.lat/analysis/inside-the-mercado-bitcoin-drain
   primary: true
   says: Corrected attribution, pricing and bounded tracing; unverified research estimates, not vendor-confirmed losses or recovery.
-updated: '2026-11-07'
 ---
 
 Mercado Bitcoin’s public acknowledgement establishes a platform security incident, rather than just an unexplained transfer or an individual customer account theft. The November 2–3 statements did not disclose how the intruder entered, a compromised software version, the final financial impact or a recovery deadline; the November 4 plan below now sets a website-viewing target. No published patch or user password-reset requirement is established by the statements read.
@@ -156,3 +161,7 @@ The separate BitMart-linked research total is now about **$424k**, replacing the
 **Corrected November 5 research:** Teiten prices transfers at their transfer-hour values and estimates $49.1M, with $33.6M high-confidence attribution, $10.7M medium-confidence and $4.8M assigned from timing alone. Its 36,104 Ethereum senders include 11 poisoning lookalikes and are not 36,104 confirmed customers. The ~$12M issuer-freeze calculation is separate from the company’s later >$16M blocked claim and from Bitquery’s $48.6M loss/$11.8M freeze snapshots; none should be added or subtracted to manufacture a net loss. The corrected report withdrew its November 3 version, which misclassified shared service contracts and understated sender/freeze totals. It cannot establish whether keys or a signing service were compromised, or confirm a shared supplier. Its three-transfer tracing limit, plus one manually added fourth hop, cannot rule out later cash-out.
 
 **November 6 FAQ scope revision:** Version 8, timestamped **23:33:33 UTC**, removes statements from both first-stage viewing lists. The earlier November 4 announcement is retained above as historical guidance; the current November 9 list is **balances, assets and investments**. Do not promise statement exports or infer a separate reopening date from the omission. Transfers, trading and account changes remain suspended as described above.
+
+**November 9 FAQ revision 9.** The exchange says read-only access will roll out during the day. The website shows balance and asset details, the app shows a portfolio summary, and API access will follow later. Displayed crypto balances and their BRL valuations use a November 2 snapshot from before the incident. The exchange says valuations will update when trading resumes. Trading, deposits, withdrawals, transfers, card use, Pix and TED are unavailable in the first stage. Before transactions resume, customers will need to confirm account details and set new passwords in the official app.
+
+The exchange reports blocking over **33%** of diverted assets and says the unrecovered portion amounts to about **3%** of all assets in its custody. It says it has started replacing the affected assets from its own funds. The two percentages have different denominators and do not establish an individual customer’s loss. The prior over-$16M blocking figure and Bitquery estimates use their own measures. Blocking, replacement and the return of transaction access remain separate milestones.
