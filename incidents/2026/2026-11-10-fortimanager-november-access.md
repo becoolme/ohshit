@@ -1,12 +1,12 @@
 ---
-title: FortiManager and FortiAnalyzer fix separate management-plane access flaws
+title: Fortinet discloses separate FortiManager and FortiAnalyzer access flaws
 tags:
 - Fortinet
 - FortiManager
 - FortiAnalyzer
 - RCE
-summary: A reachable FortiManager FGFM port allows unauthenticated code execution on affected builds. A separate crafted HTTP request can execute code across FortiManager and FortiAnalyzer variants. Fortinet lists 8.0.3 as upcoming for that HTTP flaw.
-splash: FortiManager with reachable FGFM, plus affected FortiManager and FortiAnalyzer variants reachable over HTTP.
+summary: A reachable FortiManager FGFM port allows unauthenticated code execution on affected builds. A separate flaw allows code execution through an enabled JSON API on FortiManager and FortiAnalyzer variants. Fortinet lists 8.0.3 as upcoming for that HTTP flaw.
+splash: Affected FortiManager with reachable FGFM, or FortiManager and FortiAnalyzer variants with reachable, enabled JSON API.
 wipe: Restrict FGFM and management HTTP to trusted peers. Match fixes to each CVE and verify upcoming builds with Fortinet.
 level: 3
 date: '2026-11-10'
@@ -19,7 +19,7 @@ cves:
 - id: CVE-2026-126170
   score: 9.8
   name: HTTP output encoding flaw
-  description: A crafted HTTP request can allow unauthenticated code or command execution in affected FortiManager and FortiAnalyzer products, including cloud variants and FortiAnalyzer-BigData.
+  description: When the JSON API is enabled, a crafted HTTP request can allow unauthenticated code or command execution in affected FortiManager and FortiAnalyzer products, including cloud variants and FortiAnalyzer-BigData.
 - id: CVE-2026-126229
   score: 9.1
   name: Cross-VDOM authorization bypass
@@ -27,14 +27,14 @@ cves:
 fixed: []
 timeline:
 - date: Nov 10, 2026
-  title: Fortinet publishes FGFM and cross-VDOM advisories
-  body: The two advisories describe different access paths and patch targets.
+  title: Fortinet publishes FGFM, JSON API and cross-VDOM advisories
+  body: The advisories describe different access paths and patch targets.
 - date: Nov 11, 2026
   title: Fortinet publishes the separate HTTP code execution CVE record
   body: It lists affected 8.0 and 7.6 lines, and an affected FortiAnalyzer-BigData 7.6 line. Some fixes are listed as upcoming.
 checklist:
 - title: Restrict management access while arranging the upgrade
-  hint: Allow FGFM only from required managed devices. Inspect TCP/541 and the IPv6 FGFM port in use, including TCP/542 where configured. Limit HTTP management to approved networks and confirm access through your upstream firewall. For hosted products, ask Fortinet to confirm the deployed build and remediation.
+  hint: Allow FGFM only from required managed devices. Inspect TCP/541 and the IPv6 FGFM port in use, including TCP/542 where configured. Limit HTTP management to approved networks and confirm access through your upstream firewall. For CVE-2026-126170, check JSON API access on administrator profiles. Disable it using Fortinet’s workaround below where enabled, and confirm that required integrations can tolerate the change. For hosted products, ask Fortinet to confirm the deployed build and remediation.
 - title: Check the fix for each affected product and CVE
   hint: Inventory the installed product, edition and branch. Back up the configuration and use Fortinet’s supported upgrade path. Use the per-CVE versions below, verify every node after upgrading, and test managed-device connectivity and administrator isolation. Keep access restricted while a required fix is pending.
 - title: Check for unexpected device registrations and management changes
@@ -56,6 +56,14 @@ sources:
   primary: true
   name: Fortinet CNA CVE-2026-126229
   says: Affected cloud and self-managed variants and per-branch fixes.
+- url: https://filestore.fortinet.com/fortiguard/psirt/csaf_json-injection-in-jrpc-api_fg-ir-26-219.json
+  primary: true
+  name: Fortinet FG-IR-26-219 CSAF
+  says: Confirms the JSON API prerequisite, default and profile-level workaround.
+- url: https://docs.fortinet.com/document/fortimanager/7.6.0/fortimanager-ports/465971/incoming-ports
+  primary: true
+  name: FortiManager incoming port reference
+  says: Lists FGFM listener ports for IPv4 and IPv6.
 ---
 
 The November advisories describe separate paths. Compare the exact CVE, product and branch before upgrading.
@@ -63,5 +71,14 @@ The November advisories describe separate paths. Compare the exact CVE, product 
 - **CVE-2026-126261 (FGFM):** FortiManager 8.0.0, 7.6.0–7.6.7, 7.4.0–7.4.5 and 7.2.0–7.2.8 are affected. The corresponding fixes are **8.0.1**, **7.6.8**, **7.4.6** and **7.2.9**. The attacker must reach the FGFM service.
 - **CVE-2026-126170 (HTTP code execution):** FortiManager and FortiAnalyzer 8.0.0–8.0.2, and their Cloud variants 8.0.1–8.0.2, are affected. For all four products, 7.6.0–7.6.7 are affected and **7.6.8** is the fix. The vendor lists **8.0.3** as upcoming for their 8.0 lines. FortiAnalyzer-BigData 7.6.0–7.6.2 is affected and **7.6.3** is listed as upcoming. Confirm availability with the vendor or your hosted service.
 - **CVE-2026-126229 (cross-VDOM authorization):** For FortiManager and FortiAnalyzer, the CNA lists 8.0.0–8.0.1, 7.6.0–7.6.7, 7.4.0–7.4.11, 7.2.0–7.2.12 and all 7.0. For the two Cloud variants, the ranges are 8.0.1, 7.6.0–7.6.7, 7.4.1–7.4.11, 7.2.1–7.2.12 and all 7.0. The published targets are **8.0.2**, **7.6.8**, **7.4.12** and **7.2.13**. Ask Fortinet for a migration path from 7.0. This issue requires an authenticated administrator.
+
+Fortinet says the HTTP code execution path requires the JSON API, which is off by default. Use the vendor CLI workaround on each administrator profile with API access enabled while waiting for a fix. Check whether disabling it affects automation and verify the effective permissions after applying the change.
+
+```text
+config system admin profile
+  edit <profile name>
+    set rpc-permit none
+end
+```
 
 The [October hardening notice](/incidents/fortinet-security-hardening/) gave product-level guidance before the detailed advisories. In particular, the 8.0.2 target from that notice is still in the affected ranges for CVE-2026-126170. No verified exploitation or victim data was identified for these three CVEs.
