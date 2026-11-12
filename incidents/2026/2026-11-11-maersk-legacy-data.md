@@ -27,4 +27,4 @@ sources:
   primary: true
 ---
 
-Maersk expects no disruption to its operations and advised customers to continue booking and shipping. It reported no indication of impact to its other systems or to customer and partner integrations. Its initial assessment of sensitive data may change as the investigation proceeds. The notice gives no affected-record count or intrusion method.
+Maersk says it took steps to secure the local system and began an investigation. It expects no disruption to its operations and advised customers to continue booking and shipping. It reported no indication of impact to its other systems or to customer and partner integrations. Its initial assessment of sensitive data may change as the investigation proceeds. The notice gives no affected-record count or intrusion method.
