@@ -1,7 +1,7 @@
 ---
 title: Leaked CROSS POINT API key exposed one customer’s membership data
 summary: I’LL confirmed unauthorized retrieval of member records through a customer-specific API key. It blocked the source and reissued API keys for all customers. The affected member count is unknown.
-splash: Members of one affected CROSS POINT customer and all integrations that used keys revoked during the response.
+splash: One CROSS POINT customer’s member records were accessible through its leaked API key. Integrations using revoked keys require updates.
 wipe: Update integration secrets, verify synchronization and review member API requests.
 inTheWildNote: I’LL confirmed that a third party used a leaked key to retrieve member data.
 level: 3
@@ -20,10 +20,10 @@ timeline:
   body: The vendor gives 22:15 Japan time and says it strengthened detection.
 - date: Nov 9, 23:31 UTC
   title: Vendor publishes its investigation and response
-  body: The announcement is dated November 10 in Japan and names one affected customer organization.
+  body: The announcement is dated November 10 in Japan and confirms that one customer organization was affected.
 checklist:
 - title: Update integrations with reissued credentials
-  hint: Get the replacement through your established I’LL support channel. Update the secret store and dependent POS, ecommerce and membership jobs. Confirm approved requests succeed, old keys are rejected, and review failures for work that needs replay.
+  hint: Get the replacement through your established I’LL support channel. Update the secret store and dependent POS, ecommerce and membership jobs. Confirm approved requests succeed, old keys are rejected, and reconcile failed operations before replaying them to avoid duplicating member or points changes.
 - title: Scope unauthorized retrieval
   hint: Preserve member API and integration logs. Review calls using the old key for unexpected sources, unusual volume or member lookups. Coordinate with I’LL to confirm which records were retrieved and notify affected members through established channels.
 - title: Limit and monitor replacement keys
