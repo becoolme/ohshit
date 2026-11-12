@@ -2,7 +2,7 @@
 title: Poisoned Source mobile exploit campaign uses compromised sites, lookalikes and Plerdy analytics
 level: 4
 date: '2026-11-04'
-updated: '2026-11-06'
+updated: 2026-11-12
 tags:
 - Plerdy
 - Mobile
@@ -49,13 +49,16 @@ timeline:
 - date: Nov 6, 2026
   title: Plerdy updates its public response
   body: It confirms stolen administrator credentials, customer contact-data access and prior resets, says no visitor compromise is known, and offers technical indicators to customers.
+- date: Nov 11, 2026
+  title: Report URI publishes another delivery domain and follow-up observations
+  body: The researcher finds the loader in a Polish WordPress plugin and in CMS content on a separate organization’s site.
 checklist:
 - title: Update mobile operating systems and browsers
   hint: Use official device and browser update channels. Sekoia’s observed profiles are iOS 16.7, iOS 18.5 and Android Chrome 139–145 except 143; these are delivery profiles, not universal affected/fixed ranges. Its recovered chains use already-patched flaws. Escalate suspected exploitation to your security team, preserve device evidence and revoke exposed sessions/credentials from a clean device; do not infer a visit alone stole data.
 - title: Verify website scripts and the Plerdy response
-  hint: Preserve served HTML/JavaScript, hashes, timestamps, CDN/proxy logs and device/network evidence for August 27–September 3 before cleanup. Plerdy says its current build is verified and removal is unnecessary; inspect actual requests in browser developer tools and obtain its technical report/domain list through official support. It reset all passwords and ended sessions September 4; change reused passwords elsewhere and enable its email-code two-step login.
+  hint: Preserve served HTML/JavaScript, hashes, timestamps, CDN/proxy logs and device/network evidence for August 27–September 3 before cleanup. Check CMS content blocks and served plugin JavaScript in addition to the code repository. Plerdy says its current build is verified and removal is unnecessary; inspect actual requests in browser developer tools and obtain its technical report/domain list through official support. It reset all passwords and ended sessions September 4; change reused passwords elsewhere and enable its email-code two-step login.
 - title: Hunt all public network indicators and both hash sets
-  hint: 'Public attacker domains/IPs: static.flux-telemetry.com (109.104.106.107), edge-ord.clouds-stacks.com (95.133.231.28), ad.starx-net.com (195.58.140.105), america250.holiday (192.121.46.25), theowo.club (188.190.17.232), adsprism-stat.com, ads-it-assets.com, cdn.adv-static.com, wpvortex-mod.com, assets-int.com. The legitimate compromised source was a.plerdy.com/public/js/click/main.js, not an attacker-owned Plerdy domain. Check /module/5b4c8fea5cbcee273e8d830f52-temfp.js, /api/uGmlx2pmMHU1jq7wZU2QWgeC28vbXalf/v1, /api/<NONCE>/v1–v3, port 8881 /telemetry/v12 and VDGH_TOKEN_REF. The full report publishes 13 distinct SHA256 values: nine in its IoC table plus four different body variants. Use both sets; not all stages share one hash. Additional indicators are withheld, so this is the complete public set, not complete campaign coverage. A match or tracker load alone does not prove exploitation.'
+  hint: 'Public attacker domains/IPs: static.flux-telemetry.com (109.104.106.107), edge-ord.clouds-stacks.com (95.133.231.28), ad.starx-net.com (195.58.140.105), america250.holiday (192.121.46.25), theowo.club (188.190.17.232), adsprism-stat.com, ads-it-assets.com, cdn.adv-static.com, wpvortex-mod.com, assets-int.com and uismart-asset[.]com. The legitimate compromised source was a.plerdy.com/public/js/click/main.js, not an attacker-owned Plerdy domain. Check /module/5b4c8fea5cbcee273e8d830f52-temfp.js, /api/uGmlx2pmMHU1jq7wZU2QWgeC28vbXalf/v1, /api/<NONCE>/v1–v3, port 8881 /telemetry/v12 and VDGH_TOKEN_REF. The full report publishes 13 distinct SHA256 values: nine in its IoC table plus four different body variants. Use both sets; not all stages share one hash. Additional indicators are withheld, so this is the complete public set, not complete campaign coverage. A match or tracker load alone does not prove exploitation.'
 sources:
 - name: Sekoia original Poisoned Source investigation
   url: https://www.sekoia.com/blog/poisoned-source-apt29-watering-holes-targets-mobile-devices-with-n-day-exploits
@@ -65,6 +68,12 @@ sources:
   url: https://www.plerdy.com/blog/security-incident/
   primary: true
   says: Confirms August–September server/script compromise, client contacts, September 4 password/session reset, no known visitor compromise, verified current build and technical-report availability.
+- name: Report URI follow-up investigation
+  url: https://report-uri.ghost.io/one-hijacked-analytics-script-and-russian-iphone-exploits-on-thousands-of-websites/
+  primary: true
+  says: Publishes the additional delivery domain, the WordPress and CMS observations, and reporting to CISA.
 ---
 
 The November 4 disclosure covers the wider campaign; Plerdy’s earlier component notice is not a new November intrusion. Its script was one vector alongside direct injections and lookalike reverse proxies. Sekoia inferred the Plerdy fingerprinting link from matching filenames and redirects because that host was offline; Plerdy says no visitor compromise is known. Hundreds/thousands of tracker-loading sites are exposure estimates, not infected-device counts. Attribution remains Sekoia’s assessment. No final victim total or confirmed card theft is established. L4 reflects documented operational exploit delivery; a fully updated device is outside the recovered n-day chains, not immune to every attack.
+
+Report URI found an October archive of a modified plugin file on a Polish WordPress site loading the same fingerprinting path from uismart-asset[.]com. The researcher says that site has been cleaned. Its scan records also showed the same fingerprinting script on a U.S. chemical-sector organization’s site on September 2, September 21 and October 31. On November 5 the loader was still present in CMS content, and the researcher notified CISA. This documents another delivery domain and continuing site exposure. It does not confirm device infections or extend the earlier Plerdy script-compromise window.
