@@ -45,8 +45,8 @@ Nextcloud Docker 的第 2675 次运行在自托管运行器上执行了植入后
 
 ### 应核查的发布制品
 
-- Packagist 的 `digitalelvis/neuronai-studio` **3.14.3** 带有脚本及 npm postinstall 钩子。仅运行 Composer 安装不会触发此钩子，但在包目录中运行 npm 安装可以触发。StepSecurity 建议固定到 **3.14.2** 或更早版本。
-- Go 模块 `github.com/onuragtas/docker-env` **v1.0.278** 和 **v1.0.280**，以及 `github.com/vkuznet/gocurl` **v0.0.0-20261111095532-8d5aad0cb0da** 将载荷放在工作流文件里。常规 Go 构建不会执行 GitHub 工作流文件。核查锁文件或校验数据，用独立验证的输入替换上述版本。
+- Packagist 的 `digitalelvis/neuronai-studio` **3.14.3** 带有脚本及 npm postinstall 钩子。在包目录中用 npm 安装依赖且启用生命周期脚本时，该钩子可执行。Composer 本身不会调用它。StepSecurity 建议固定到 **3.14.2** 或更早版本。
+- Go 模块 `github.com/onuragtas/docker-env` **v1.0.278** 和 **v1.0.280**，以及 `github.com/vkuznet/gocurl` **v0.0.0-20261111095532-8d5aad0cb0da** 将载荷放在工作流文件里。常规 Go 构建不会执行 GitHub 工作流文件。检查 go.mod 和 go.sum 中的直接及间接依赖，用独立验证的输入替换上述版本。
 - StepSecurity 报告没有 WebdriverIO 发布包受影响。对其他在植入与清理之间生成的发布包，用干净源码和构建记录核对。
 
 ### 需要关联核查的指标

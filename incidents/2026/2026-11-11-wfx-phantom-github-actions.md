@@ -60,8 +60,8 @@ Nextcloud Docker’s run 2675 executed the injected commit on a self-hosted runn
 
 ### Release artifacts to check
 
-- Packagist `digitalelvis/neuronai-studio` **3.14.3** contains the script and npm postinstall hook. Composer installation alone does not invoke that hook; npm installation in the package directory can. StepSecurity recommends pinning **3.14.2** or earlier.
-- Go module `github.com/onuragtas/docker-env` **v1.0.278** and **v1.0.280**, and `github.com/vkuznet/gocurl` **v0.0.0-20261111095532-8d5aad0cb0da**, carry the payload in workflow files. Normal Go builds do not execute GitHub workflow files. Check lock or checksum data and replace those versions with independently verified inputs.
+- Packagist `digitalelvis/neuronai-studio` **3.14.3** contains the script and npm postinstall hook. The hook can execute if npm installs dependencies in the package directory with lifecycle scripts enabled. Composer does not invoke it on its own. StepSecurity recommends pinning **3.14.2** or earlier.
+- Go module `github.com/onuragtas/docker-env` **v1.0.278** and **v1.0.280**, and `github.com/vkuznet/gocurl` **v0.0.0-20261111095532-8d5aad0cb0da**, carry the payload in workflow files. Normal Go builds do not execute GitHub workflow files. Check go.mod and go.sum, including direct and transitive dependencies, and replace those versions with independently verified inputs.
 - StepSecurity reports no affected WebdriverIO package release. Verify other releases produced between an injected commit and cleanup using clean source and build records.
 
 ### Indicators to correlate
