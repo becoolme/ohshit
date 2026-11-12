@@ -19,7 +19,7 @@ checklist:
 - title: Isolate and preserve evidence
   hint: Disconnect endpoints that ran the installer or show multiple related signals. Preserve the download, process and registry telemetry, DNS and outbound connections. Check the HKCU Run value SystemKKfile and Microsoft.exe in %TEMP%, and inspect scheduled tasks.
 - title: Hunt and contain across the fleet
-  hint: Search endpoint and egress telemetry for the defanged indicators below and the related lookalike domains in the report. Block campaign infrastructure at egress and run a full endpoint scan. Correlate shared infrastructure matches with host activity.
+  hint: Search endpoint and egress telemetry for the defanged indicators below and the additional infrastructure indicators below. Block campaign infrastructure at egress and run a full endpoint scan. Correlate shared infrastructure matches with host activity.
 - title: Recover from trusted media and secure accounts
   hint: Remove malicious artifacts and persistence. Reimage endpoints with confirmed remote control from trusted media. From a clean device, reset credentials used on affected hosts, revoke sessions, and review brokerage account activity. Obtain the replacement installer directly from the vendor or a trusted store.
 sources:
@@ -85,4 +85,28 @@ cchen.sxkj999[.]vip
 ae4697dc3688a45299a038e4b3d08df55a25dd4484273f63ae8922d80f765d35
 c7fc37bc64f00c3aaf8422737a4c11ccb2d682ad283c0191e40c3b0fe7861279
 413bbbcb3d3a0a97da6fbdbb71a92ce048c1016acfaf3cafbd5e58b1c6cb1008
+```
+
+Additional domains, paths, hashes and endpoint context from the infrastructure and sample tables. Correlate shared CDN IPs with hostnames, paths and endpoint behavior before acting on a match.
+
+```text
+10jqkaapp[.]com
+10jqkapc[.]com
+l0jqka[.]com
+l0jqka[.]ai
+https[:]//lojqka[.]com/download
+/skin/images/texiao1.png
+53b7e792ab43ba2d529772c18f133dc62fd6d54e0139cf6cd7847eac8ddf07ee
+736da9b2cab1ef70c2973cc211c5636a
+134.122.204[.]71:443
+134.122.155[.]157:443
+143.92.40[.]155:443
+134.122.155[.]140:443
+172.67.136[.]42
+13.113.93[.]176
+104.21.80[.]194
+172.67.153[.]78
+104.21.59[.]154
+172.67.159[.]215
+104.21.62[.]131
 ```
