@@ -15,12 +15,15 @@ inTheWild: unknown
 inTheWildNote: The Fortinet records reviewed here provide no evidence of exploitation.
 cves:
 - id: CVE-2026-126253
+  score: 9.3
   name: OSPF authentication bypass
   description: An unauthenticated attacker with adjacent OSPF access can send crafted requests that broadcast link-state advertisements.
 - id: CVE-2026-126254
+  score: 9.6
   name: iBGP propagation of malformed attributes
   description: A configured iBGP neighbor can send crafted input that propagates malicious or malformed attributes to connected routers.
 - id: CVE-2026-126259
+  score: 9.0
   name: HA authentication bypass
   description: An unauthenticated attacker who can reach affected HA traffic can send crafted packets to run commands as super admin when FGSP with standalone-config-sync or autoscale is in use.
 fixed:
@@ -72,6 +75,6 @@ sources:
   primary: true
 ---
 
-These CVEs are part of the detailed advisories following [Fortinet’s October priority upgrade notice](/incidents/fortinet-security-hardening/). The vendor lists CVSS scores of 9.3 for OSPF, 9.6 for iBGP and 9.0 for HA.
+These CVEs are part of the detailed advisories following [Fortinet’s October priority upgrade notice](/incidents/fortinet-security-hardening/). The OSPF path requires adjacent access, the BGP path requires a configured iBGP peer, and the HA path requires access to HA packets on an affected FGSP deployment with standalone-config-sync or an autoscale deployment.
 
-For the routing flaws, FortiOS 8.0.0–8.0.1, 7.6.0–7.6.7, 7.4.0–7.4.12 and 7.2.0–7.2.13 are affected. The HA flaw affects only 8.0.0 in the 8.0 branch and uses the same ranges in the 7.6, 7.4 and 7.2 branches. The Fortinet CNA records additionally list 7.0.1–7.0.19 for OSPF and 7.0.0–7.0.19 for HA in their structured version tables, without a 7.0 fix. Fortinet’s OSPF advisory also references FortiSASE. Managed-service customers should check their tenant status with Fortinet.
+For the routing flaws, FortiOS 8.0.0–8.0.1, 7.6.0–7.6.7, 7.4.0–7.4.12 and 7.2.0–7.2.13 are affected. FortiOS 8.0.1 fixes the HA flaw on the 8.0 branch. Install 8.0.2 for the routing fixes. The affected HA versions in the 7.6, 7.4 and 7.2 branches match the routing ranges. The Fortinet CNA records additionally list 7.0.1–7.0.19 for OSPF and 7.0.0–7.0.19 for HA in their structured version tables, without a 7.0 fix. Fortinet’s OSPF advisory also references FortiSASE. Managed-service customers should check their tenant status with Fortinet.

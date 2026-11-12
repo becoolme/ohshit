@@ -43,6 +43,6 @@ sources:
 - says: HA 漏洞的前提、受影响版本及仅针对 HA 漏洞的 8.0.1 修复。
 ---
 
-这些 CVE 属于 [Fortinet 10 月优先升级通知](/zh/incidents/fortinet-security-hardening/) 之后发布的详细公告。厂商给出的 CVSS 评分分别为 OSPF 9.3、iBGP 9.6、HA 9.0。
+这些 CVE 属于 [Fortinet 10 月优先升级通知](/zh/incidents/fortinet-security-hardening/) 之后发布的详细公告。OSPF 漏洞要求能访问相邻网络，BGP 漏洞要求攻击方是已配置的 iBGP 对等设备，HA 漏洞则要求能接触启用了 standalone-config-sync 的受影响 FGSP 部署或自动扩缩容部署中的 HA 数据包。
 
-路由漏洞影响 FortiOS 8.0.0–8.0.1、7.6.0–7.6.7、7.4.0–7.4.12 和 7.2.0–7.2.13。HA 漏洞在 8.0 分支仅影响 8.0.0，在 7.6、7.4 和 7.2 分支的受影响范围与路由漏洞相同。Fortinet CNA 记录的结构化版本表还列出 OSPF 漏洞影响 7.0.1–7.0.19，HA 漏洞影响 7.0.0–7.0.19，均未列出 7.0 分支的修复版本。Fortinet 的 OSPF 公告也提及 FortiSASE，使用托管服务的客户应向 Fortinet 核实租户状态。
+路由漏洞影响 FortiOS 8.0.0–8.0.1、7.6.0–7.6.7、7.4.0–7.4.12 和 7.2.0–7.2.13。FortiOS 8.0.1 修复了 8.0 分支的 HA 漏洞。修复路由漏洞需升级到 8.0.2。HA 漏洞在 7.6、7.4 和 7.2 分支的受影响范围与路由漏洞相同。Fortinet CNA 记录的结构化版本表还列出 OSPF 漏洞影响 7.0.1–7.0.19，HA 漏洞影响 7.0.0–7.0.19，均未列出 7.0 分支的修复版本。Fortinet 的 OSPF 公告也提及 FortiSASE，使用托管服务的客户应向 Fortinet 核实租户状态。
