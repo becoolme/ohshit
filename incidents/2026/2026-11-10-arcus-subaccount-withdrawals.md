@@ -40,7 +40,7 @@ checklist:
   hint: Users should never send funds, sign transactions or share credentials in response to messages about this offer. Exchange teams should corroborate addresses and transfers with official Arcus information and current on-chain records before acting.
 sources:
 - name: Arcus Labs incident report
-  says: Confirms the accounting path, withdrawn funds, blocked requests, recovery and the initial address.
+  says: Confirms the accounting path, withdrawn funds, blocked requests, service restoration, treasury coverage and initial address.
   url: https://arcus.xyz/blog/arcus-incident-report-november-9-2026
   primary: true
 - name: Ethereum Safe transaction carrying the return offer
@@ -55,4 +55,4 @@ sources:
 
 Arcus attributes the incident to an accounting error in transfers between a user’s own subaccounts. It has not published the exact triggering conditions or a user-side patch. The 2,234,391 USDG was paid out. The other roughly $3 million was only requested. Treasury coverage made up the shortfall while the withdrawn funds were still being tracked. Arcus says trading and withdrawals are operating normally and that other users’ balances, positions and orders were unaffected.
 
-**November 11 recovery offer.** A message claiming to be from the Arcus team appeared on Ethereum and was repeated in a successful Safe transaction at **01:24 UTC**. It offered the recipient the option to return **90%** of the withdrawn funds and keep **10%**, with a deadline of **November 13 at 01:00 UTC**. The transaction establishes that the message was relayed, and Arcus’s incident report remains the source for the amount paid out and treasury coverage. There is no confirmed return in the sources reviewed. The offer is addressed to wallets linked to the withdrawn funds. Arcus users should verify any recovery notice through the official interface.
+**November 11 recovery offer.** A message claiming to be from the Arcus team appeared on Ethereum and was repeated in a successful Safe transaction at **01:24 UTC**. It offered the recipient the option to return **90%** of the withdrawn funds and keep **10%**, with a deadline of **November 13 at 01:00 UTC**. The transaction establishes that the message was relayed, and Arcus’s incident report remains the source for the amount paid out and treasury coverage. There is no confirmed return in the sources reviewed. The Safe call addressed the wallet Arcus disclosed and two additional addresses. Receipt of that message alone does not establish the addresses’ ownership. Arcus users should verify any recovery notice through the official interface.
