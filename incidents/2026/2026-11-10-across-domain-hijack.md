@@ -12,7 +12,7 @@ tags:
 - DNS
 inTheWild: 'yes'
 timeline:
-- date: Nov 10, 2026
+- date: Nov 10, 22:13 UTC
   title: Across reports the registrar takeover
   body: Across dates the takeover to approximately 18:45 UTC. The team says Cloudflare pulled DNS records after the site was flagged.
 - date: Nov 11, 01:16 UTC
@@ -23,15 +23,19 @@ timeline:
   body: It attributes about $348,000 across nine wallets based on the timing and shared recipient split.
 checklist:
 - title: Check every connected wallet and chain
-  hint: Use a trusted wallet interface or the approval checker named in Across’s official notice. Inspect recent permits, approvals and transfers on each network you used during the hijack. Revoke suspicious spending permissions promptly. Revocation does not reverse completed transfers.
+  hint: Use a trusted wallet interface or Revoke.cash, the checker named by Across. Inspect recent permits, approvals and transfers on each network you used during the hijack. Revoke suspicious spending permissions promptly. Revocation does not reverse completed transfers.
 - title: Preserve evidence and report through official channels
   hint: Save wallet addresses, timestamps, chain names and transaction hashes. Initiate contact through the verified Across account named in the notice. Keep recovery phrases and private keys private and ignore unsolicited recovery offers.
 - title: Correlate tracing indicators
-  hint: Bitquery’s address record lists 13 wallet addresses and two transaction hashes. The reported recipient pair is 0x2846e69d3298e99eddf2fd8116e952844da11fde and 0x0c7c656126aa62625fdd8051eb69dc14aee8d37b. Use the full record for chain-specific onward addresses. Check full addresses and event logs. A match alone does not establish compromise.
+  hint: Bitquery’s address record lists 13 wallet addresses and two transaction hashes. The reported recipient pair is 0x2846e69d3298e99eddf2fd8116e952844da11fde and 0x0c7c656126aa62625fdd8051eb69dc14aee8d37b. The complete address and transaction record appears below. Check full addresses and event logs. A match alone does not establish compromise.
 sources:
 - name: Across initial notice, public copy
   says: Reproduces the official account’s registrar, containment and API/integration scope statement and links its follow-up approval guidance.
   url: https://teapawt.org/AcrossProtocol/status/2120278803318489362
+  primary: true
+- name: Across user action notice, public copy
+  says: Names the approval checker, revocation guide and official reporting channel.
+  url: https://teapawt.org/AcrossProtocol/status/2120278805084295328
   primary: true
 - name: Across restoration notice, public copy
   says: Reproduces the team’s restoration and reimbursement commitment.
@@ -43,6 +47,26 @@ sources:
   primary: true
 ---
 
-The official [initial notice](https://x.com/AcrossProtocol/status/2120278803318489362) says the registrar attack gave a third party control of the domain. Across says its API and third-party integration users were outside the affected scope, although the team temporarily took the frontend and API offline during containment. The [restoration notice](https://x.com/AcrossProtocol/status/2120324818385912082) pledges to make affected users whole. The notices provide no completed compensation or final victim total.
+The official [initial notice](https://x.com/AcrossProtocol/status/2120278803318489362) says the registrar attack gave a third party control of the domain. Across says its API and third-party integration users were outside the affected scope, although the team temporarily took the frontend and API offline during containment. The [restoration notice](https://x.com/AcrossProtocol/status/2120324818385912082) pledges to make affected users whole. The [user action notice](https://teapawt.org/AcrossProtocol/status/2120278805084295328) explains how to revoke permissions and report affected wallets. The notices provide no completed compensation or final victim total.
 
 Bitquery identified transfers between 19:02 and 21:53 UTC on Ethereum, Arbitrum, Base, BNB Chain and Optimism, with about $348,000 valued at transfer time. Its estimate uses a common 80/20 split and excludes transfers outside its data or method, including unpriced tokens in the dollar figure. A separate $294,000 figure matches the fee wallet balance, which includes older proceeds. Neither amount establishes the number of people affected or a compromise of the bridge contracts.
+
+Bitquery’s reported addresses and transaction hashes, in report order. Addresses include downstream services and are evidence for correlation.
+
+```text
+0x2846e69d3298e99eddf2fd8116e952844da11fde
+0x0c7c656126aa62625fdd8051eb69dc14aee8d37b
+0x38d7e8b3c9561caf096c06c62c7561f8ab6e514c
+0xa490cde73adcd40475025ee8710f3a5ab7393194
+0xf10a482fbc02195f2dafca5d9dfd19c871b0f4a5
+0x0f67a21780699bb5c5e6b5f986c0bab26bfffe5c
+0x09360fe2e18fdfa49beb7592b9f24f94c5465533
+0xf229f808fe21911f8bcc24ebb30a85bd2e4c00f0
+G47n6dbUor1WFweLvKPrUi5beW4yjRoFG3cJZU6a4uSa
+2K7fueB3tqYBb5Z2Ubnnpf2rF3sJr1fJDKXtsocTAWmk
+5HQZd9ovzAF1TLnHRAq1zcSnXC9HAp3EwhoxMHvo8rxB
+0xbca05d20dbb271fd607e69fdc8d955be3bfc8120
+3EQ9Rqrtvco4nKmskv2jQRXvWKkpUGfAQs
+0x2610f11fd3cde7113f83e7137853972ba98d8360b3d91eed6d5807f947a8bd38
+0x19c5460db37f5cc2bde6f8f644892a5348a1519d2aa97f720091e982134a8ae1
+```
