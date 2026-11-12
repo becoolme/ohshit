@@ -34,7 +34,7 @@ checklist:
 - title: Review affected transcripts inside Notion
   hint: If notified, a workspace owner can open the sidebar, select ? and then Security incident review to review and export affected transcripts. Share the review link with affected members. Treat affected chats as exposed and rotate passwords, API keys and other credentials they contain.
 - title: Verify RECEPTIONIST notices through the company
-  hint: The company says individual notices will come from @receptionist.co.jp. For an unexpected message, start with the contact listed in the company’s November 12 filing. Watch for impersonation using inquiry details.
+  hint: The company says individual notices will come from @receptionist.co.jp. For an unexpected message, verify through pr@receptionist.co.jp as published in the November 12 filing. Watch for impersonation using inquiry details.
 sources:
 - name: Fireworks November 9 bulletin
   says: Describes the October cloud-provider intrusion, data categories, mitigation and ongoing investigation.
@@ -56,7 +56,7 @@ sources:
 
 Fireworks says an October 23 incident at its R&D cloud host enabled access to its development machines on October 24. Its investigation found affected resource metadata and billing details, including addresses, payment history, balances and credit usage. Fireworks says payment card numbers were outside scope. It temporarily disabled self-serve dataset uploads and downloads for Batch Inference and dataset-based training. It reports no detected impact to Inference, Training SDK or Nexus in its investigation to date.
 
-Notion says it disconnected from Fireworks by November 3 following a notification about synthetic test data. Fireworks notified Notion again on November 6 and confirmed a separate dataset on November 8. Notion says most affected workspaces’ transcripts lacked author or workspace labels and contained no tool-call results. The chat text itself could contain identifying information or secrets. Notion disabled Insights and continues investigating. The sources do not establish a count of affected people.
+Notion says it disconnected from Fireworks by November 3 following a notification about synthetic test data. Fireworks notified Notion again on November 6 and confirmed a separate dataset on November 8. Notion says most affected workspaces’ transcripts lacked author or workspace labels and contained no tool-call results. The chat text itself could contain identifying information or secrets. Notion disabled Insights and continues investigating. The sources do not establish an incident-wide count of affected people.
 
 In its November 11 notice, Japanese security company LRM says Notion notified it the day before. The company is reviewing a subset of its October 5–24 Insights records and found names of business contacts in the text. It is notifying those contacts individually and reports no system credentials in its reviewed records. That finding applies to LRM’s records. Other notified workspace owners should review their own exports, notify people whose information appears, and rotate any exposed credentials. LRM says its own services were outside the intrusion. The record count and whether outsiders obtained LRM’s records remain under investigation.
 
