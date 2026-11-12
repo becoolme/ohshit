@@ -2,7 +2,7 @@
 title: Mercado Bitcoin details read-only return and account revalidation after wallet theft
 level: 4
 date: '2026-11-02'
-updated: '2026-11-09'
+updated: '2026-11-12'
 tags:
 - Mercado Bitcoin
 - exchange
@@ -59,6 +59,12 @@ timeline:
 - date: Nov 9, 2026 (scheduled)
   title: Staged website access is planned to begin
   body: Revision 9 describes a phased rollout of detailed balance and asset views on the website and a summary in the app. Trading, deposits, withdrawals, transfers and the API remain pending.
+- date: Nov 9, 16:53 UTC
+  title: Official FAQ removes its per-customer percentage inference
+  body: Revision 10 retains the figures of over 33% of diverted assets blocked and about 3% of total assets in custody unrecovered. It removes the statement that about 3% of every customer’s assets were affected.
+- date: Nov 11, 2026
+  title: Hypernative publishes its ten-chain trace
+  body: It reports a smaller Bitcoin deposit-address sweep starting at 02:15 UTC on November 2, followed by the main outflows. It priced about $12.2M of observed outflows live on Ethereum, Polygon and Arbitrum, a subset of its reported $48.99M gross estimate. The signing access method remains unknown.
 checklist:
 - title: Keep deposits paused and recheck saved addresses
   hint: Do not send funds to a saved Mercado Bitcoin deposit address while transfers are suspended. Check the established exchange app and official channels for explicit recovery and address instructions before restarting automated payouts or exchange integrations. Bitquery reports signed transfers from deposit addresses; changing your login password alone does not secure exchange-controlled keys. The November 3 original confirms that the platform/app remain paused and says reinstalling the app or changing devices is unnecessary. The recovery plan requires feature-specific security checks; confirm each service and limitation in subsequent official announcements, rather than treating the plan as completed reopening. The November 4 company update now targets November 9 for initial website viewing only. Transfers, withdrawals and trading have no confirmed restart date; verify each module before enabling automation. The November 5 research also identifies Base deposit-address sweeps; include Base in the saved-address review and do not assume an address is safe because it was absent from the earlier ten-chain list.
@@ -74,6 +80,8 @@ checklist:
   hint: Use Teiten’s corrected November 5 report alongside the existing Bitquery wallet record. Its trace follows three transfers from attributed attacker/parking wallets, with one manually added fourth-hop wallet; no labelled exchange/mixer within that limit does not exclude later cash-out. Its many wallet references are abbreviated in the prose, not a usable full-address blocklist. Do not expand partial addresses or label shared Mayan/Bridgers contracts as attacker wallets. Keep the existing complete-address research and vendor records; a match alone cannot establish ownership or compromise.
 - title: Use official sign-in and prepare for account revalidation
   hint: Type www.mercadobitcoin.com.br and use the code sent to your registered email to sign in. The website shows asset details and the app shows a summary. The first stage excludes the API, trading, deposits, withdrawals, transfers, card, Pix and TED. For the later phase, start revalidation and set a new password in the official app. Keep passwords and codes private.
+- title: Review withdrawal controls before signing
+  hint: If you operate an exchange or custody signing system, preserve signing-service approvals, identity logs and transfer records. Check destinations, amounts and aggregate transfers across chains over short windows. Hold large outflows to new recipients or outflows that depart from normal wallet activity for independent review before signing. On-chain anomalies can guide the investigation but cannot substitute for signing-system access evidence.
 sources:
 - name: Mercado Bitcoin official statement
   url: https://x.com/MercadoBitcoin/status/2117239507263132056
@@ -130,6 +138,14 @@ sources:
   url: https://central.ajuda.mercadobitcoin.com.br/wiki/rest/api/content/2968387585?expand=body.storage,version&version=9
   primary: true
   says: Details phased access, revalidation, planned Pix and investment credits, and the updated blocking and custody figures.
+- name: Mercado Bitcoin FAQ revision 10 content
+  url: https://central.ajuda.mercadobitcoin.com.br/wiki/rest/api/content/2968387585?expand=body.storage,version&version=10
+  primary: true
+  says: Removes the per-customer inference while retaining the aggregate blocking and custody figures.
+- name: Hypernative November 11 original transaction analysis
+  url: https://www.hypernative.io/insights/blog/the-49m-mercado-bitcoin-hot-wallet-drain
+  primary: true
+  says: Documents an earlier Bitcoin sweep, signed transfers across five chain types, and the three-chain subset priced in real time.
 ---
 
 Mercado Bitcoin’s public acknowledgement establishes a platform security incident, rather than just an unexplained transfer or an individual customer account theft. The November 2–3 statements did not disclose how the intruder entered, a compromised software version, the final financial impact or a recovery deadline; the November 4 plan below now sets a website-viewing target. Those initial statements did not describe an account-reset requirement. Revision 9 gives the later revalidation instructions below.
@@ -169,3 +185,5 @@ The separate BitMart-linked research total is now about **$424k**, replacing the
 **November 9 FAQ revision 9.** The exchange says read-only access will roll out during the day. The website shows balance and asset details, the app shows a portfolio summary, and API access will follow later. Displayed crypto balances and their BRL valuations use a November 2 snapshot from before the incident. The exchange says valuations will update when trading resumes. Trading, deposits, withdrawals, transfers, card use, Pix and TED are unavailable in the first stage. Before customers can move funds again, they will need to confirm account details and set new passwords in the official app. The planned next stage includes Pix and crediting pending digital fixed-income payments in BRL. Initially, Pix withdrawals will be limited to accounts in the customer’s own name and CPF.
 
 The exchange reports blocking over **33%** of diverted assets and says the unrecovered portion amounts to about **3%** of all assets in its custody. It says it has started replacing the affected assets from its own funds. The two percentages have different denominators and do not establish an individual customer’s loss. The prior over-$16M blocking figure and Bitquery estimates use their own measures. Blocking, replacement and the return of transaction access remain separate milestones.
+
+Hypernative’s November 11 analysis traces about 0.37 BTC swept from deposit addresses between 02:15 and 02:30 UTC on November 2. It places the main wave on nine additional chains between 06:24 and 06:49 UTC and reports a single 104.43 BTC transfer at 06:41 UTC. Its $48.99M gross estimate uses its own ten-chain scope and is not additive to Bitquery’s estimate. The valid transfers across Bitcoin, Solana, Stellar, Tron and EVM networks point to abuse of the signing path. They do not establish how the attacker gained access or whether signing keys were stolen. The trace does not update the exchange’s recovery status or establish a final loss.
