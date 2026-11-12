@@ -34,4 +34,4 @@ sources:
 
 受影响模板可能执行某些标签、`mteval` 修饰符或错误页处理产生的 PHP。该请求路径适用于动态发布。JVN 列出各自分支中的 Movable Type 8.8.6、8.0.13 及更早版本（含 Advanced），以及 Premium 2.x 中的 2.18 及更早版本（含 Advanced Edition）。已停止支持的 8.4 和 7 同样受影响。两份公告均未确认在野利用。
 
-Six Apart 在 8.8.7 及以该版为基础的 Premium 构建中说明了例外。通过 `MTInclude`、`MTIncludeBlock`、`MTWidgetSet` 或 `MTWidgetManager` 加载的内容，在启用对应的服务端包含设置时仍可执行其中的 PHP。若站点的包含方式为 PHP，且 `MTInclude` 或 `MTIncludeBlock` 使用 `ssi="1"`，同样适用。即使设置 `DynamicTemplateAllowPHP 0`，这些例外仍可能生效。更新也保留了直接写入模板的 PHP 的原有处理方式。请在实际部署的构建上核查设置和行为。
+Six Apart 在 8.8.7 和 8.0.14 的发布说明中均列出包含例外。这两个版本也是 Premium 2.19 的构建基础。通过 `MTInclude`、`MTIncludeBlock`、`MTWidgetSet` 或 `MTWidgetManager` 加载的内容，在启用对应的服务端包含设置时仍可执行其中的 PHP。若站点的包含方式为 PHP，且 `MTInclude` 或 `MTIncludeBlock` 使用 `ssi="1"`，同样适用。8.8.7 发布说明特别提醒，更新后即使设置 `DynamicTemplateAllowPHP 0`，这些例外仍可能执行 PHP。更新也保留了直接写入模板的 PHP 的原有处理方式。请在实际部署的构建上核查设置和行为。
