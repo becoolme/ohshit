@@ -35,6 +35,10 @@ sources:
   says: The standalone repository is archived; the maintainer points users to Apache httpd.
   url: https://github.com/icing/mod_h2
   primary: true
+- name: Red Hat CVE-2026-119618 analysis
+  says: Describes the reachable HTTP/2 prerequisite and the thread-safety failure.
+  url: https://access.redhat.com/security/cve/cve-2026-119618
+  primary: true
 cves:
 - name: HTTP/2 heap corruption
   description: A race in mod_http2 assign_headers() can lead to remote code execution.
@@ -50,6 +54,6 @@ fixed:
   version: 2.4.71
 ---
 
-CVE-2026-119618 is a race in the HTTP/2 header handling code. A remote client that can reach an affected HTTP/2 listener can trigger memory corruption, with potential code execution in the server process. Apache lists httpd 2.4.55 through 2.4.70 and standalone mod_h2 2.0.8 through 2.0.42. The standalone project is archived. Use the patched module shipped with Apache httpd, or a downstream build whose vendor confirms the fix.
+CVE-2026-119618 is a race in the HTTP/2 header handling code. A remote client that can reach an affected HTTP/2 listener can trigger memory corruption, with potential code execution in the server process. Apache lists httpd 2.4.55 through 2.4.70 and standalone mod_h2 2.0.8 through 2.0.42. Red Hat identifies servers with h2 or h2c enabled as exposed to this flaw. The standalone project is archived. Use the patched module shipped with Apache httpd, or a downstream build whose vendor confirms the fix.
 
 Apache also fixed a mod_md child-process crash affecting 2.4.30 through 2.4.70 and a mod_vhost_alias one-byte stack overwrite affecting 2.4.69 and 2.4.70. These flaws depend on their respective modules. A downstream backport can retain an older-looking version number, so verify the package release against its advisory.
