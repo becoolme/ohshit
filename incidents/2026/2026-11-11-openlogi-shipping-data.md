@@ -6,6 +6,7 @@ wipe: Verify delivery messages through the seller or carrier. Merchants should r
 inTheWildNote: OPENLOGI confirms unauthorized access and extraction of shipping data.
 level: 4
 date: '2026-11-11'
+updated: 2026-11-12
 tags:
 - OPENLOGI
 - logistics
@@ -21,6 +22,9 @@ timeline:
 - date: Nov 11, 2026
   title: OPENLOGI and merchants disclose the incident
   body: The provider confirms data extraction. HUMAN MADE identifies its CURRY UP shipping records as potentially affected. SKIYAKI is checking Bitfan records.
+- date: Nov 11, 2026
+  title: Nittobo identifies potentially affected nekoPro orders
+  body: The merchant says customers who bought its nekoPro urine test kit through its online store from April 8 to November 8 may be affected.
 checklist:
 - title: Verify delivery messages independently
   hint: Use the order page or an established carrier channel to verify tracking, address changes and delivery fees. Ignore unsolicited links and attachments, and avoid providing credentials, personal details or payment in response.
@@ -41,8 +45,14 @@ sources:
   says: Confirms its use of OPENLOGI for some Bitfan fulfillment and says it is checking its own scope.
   url: https://skiyaki.com/contents/1126864
   primary: true
+- name: Nittobo nekoPro customer notice
+  url: https://www.nittobo.co.jp/news/pdf/20261111_newsrelease.pdf
+  primary: true
+  says: Names the possibly affected orders, fields, customer contact and resumption of dispatch.
 ---
 
 OPENLOGI says the extracted records include recipient names, addresses, phone numbers, email addresses where registered, and product details such as names and quantities. OPENLOGI does not store credit card numbers. The shipment request window identifies records under investigation. The provider has not published the number of affected records or people.
 
 HUMAN MADE says OPENLOGI blocked the attack source, restricted access from outside Japan and reset login sessions for all users. HUMAN MADE identifies only its CURRY UP brand as potentially affected and reports no unauthorized access to its own systems. SKIYAKI says some Bitfan shipping data it provided may be involved. The provider reported no known misuse as of November 11. Warehouse receipt and dispatch continued as usual, with some system operations affected by emergency maintenance. External specialists are investigating the entry route and scope.
+
+**Nittobo customer notice.** Nittobo says recipients who bought the nekoPro urine test kit on its online store between April 8 and November 8 may have had names, addresses, email addresses, phone numbers and product information exposed. It excludes credit card information and reports no known misuse. Nittobo says work to fix the affected system was complete and dispatch had resumed for these orders. It plans individual notifications as it identifies potentially affected customers. For a scope check, contact Nittobo at nekopro-contact@nittobogrp.com.
