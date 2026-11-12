@@ -18,7 +18,7 @@ timeline:
   body: Vendor investigation dates the first access to this day.
 - date: Oct 29, 2026
   title: Attacker reaches parts of production
-  body: Chainstack does not identify the third-party component used for entry.
+  body: The November 10 update traces access back to an exposed test Grafana instance.
 - date: Oct 31, 2026
   title: Chainstack detects the intrusion and cuts access
   body: Customer-facing services continued operating, according to the vendor.
@@ -45,7 +45,7 @@ checklist:
 sources:
 - name: Chainstack incident report
   url: https://chainstack.com/security-incident-nov-2026/
-  says: Created and updated November 3; intrusion dates, possible exposed categories, service integrity claims and customer actions.
+  says: First published November 3; intrusion dates, possible exposed categories, service integrity claims and customer actions.
   primary: true
 - name: Chainstack node credential rotation guide
   url: https://docs.chainstack.com/docs/manage-your-node#rotate-node-credentials
