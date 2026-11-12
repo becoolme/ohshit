@@ -3,14 +3,14 @@ title: "eMudhra CA intermediate private keys were so weak that every one was a n
 headline: "eMudhra: eight CA keys you could guess on a pocket calculator"
 level: 4
 date: 2026-10-17
-updated: '2026-11-07'
+updated: 2026-11-12
 tags: [PKI, CA, TLS]
 ecosystems: [go, python, node, browsers]
 summary: Eight emSign ECC G3 intermediates (six TLS/two code signing, Sectigo-cross-signed) had P-384 keys below 256, enabling forged certificates. Update Dart/Flutter/Firestore and CA bundles. Chrome 153+ will distrust G1 TLS certificates with earliest SCT after Nov 16, 23:59:59 UTC; earlier SCTs are unaffected by this new rule.
 splash: "Clients trusting ECC G3/Sectigo on attacker-controlled network paths; G1 TLS sites issuing certificates past Chrome’s SCT cutoff."
 wipe: "Update OSes, browsers and app CA bundles (certifi 2026.10.19; Go 1.27.3/1.26.10; Node 22.23.4+). Replace affected certificates now."
 inTheWild: "no"
-inTheWildNote: No end-entity certs found in CT logs; blocked within hours
+inTheWildNote: No observed misuse of the weak ECDSA keys. RSA confidentiality remains unverified.
 oneLiner: >-
   A certificate authority's key is supposed to be a 384-bit secret; these were numbers you could count to on
   your fingers and toes, so anyone could sign “trusted” certificates for any website.
@@ -235,6 +235,12 @@ timeline:
   - date: Nov 6, 2026
     title: New Relic requires manual Synthetics image updates and legacy-runtime migration
     body: NR26-12 lists four Private-location image minimums and restart for every runtime; latest Public locations are patched, but Node 16.10 monitors on either location type must migrate to vendor runtime 22.23.0 before November 18 EOL.
+  - date: Nov 7, 2026
+    title: eMudhra revokes eight additional RSA intermediates
+    body: The issuer subsequently reports the G2B/G2C revocations and states that it used cessationOfOperation.
+  - date: Nov 10, 18:35 UTC
+    title: eMudhra publishes its full incident report
+    body: The issuer adds eight RSA intermediates revoked on November 7 and explains how the same key handling ceremony affected them.
   - date: ~Oct 27, 2026
     title: Chrome Root Store v43 removes the emSign ECC Root CA - G3
   - date: ~Nov 2026
@@ -243,6 +249,7 @@ timeline:
   - date: ~Nov 2026
     title: SonicWall lists the trust-store removal in Gen8 firmware 8.2.3-8015
     body: The November release notes identify GEN8-19795 as removal of the eMudhra chain.
+
 checklist:
   - title: Update browsers and operating systems
     hint: Chrome, Firefox, Safari, Edge, Android and Windows have all shipped blocks
@@ -499,6 +506,10 @@ sources:
     url: https://docs.newrelic.com/docs/security/new-relic-security/security-bulletins/security-bulletin-nr26-12/
     primary: true
     says: Published November 6; four Private-location image thresholds, restart for all runtimes, Public-location exceptions, Node 16.10 migration/EOL November 18, discovery query, no observed image tampering and no blanket secure-credential rotation.
+  - name: eMudhra full incident report in Mozilla Bugzilla
+    url: https://bugzilla.mozilla.org/show_bug.cgi?id=2083449#c82
+    primary: true
+    says: Describes the April 2025 ceremony, distinct ECDSA and RSA findings, November 7 revocations and continuing independent review.
 ---
 
 A certificate authority's private key is the thing that makes "this is really your bank" true. For eight
@@ -570,3 +581,5 @@ For an unpatched Oracle runtime, the [operational guide](https://ops.java/emudhr
 **Rundeck deployment follow-up:** The vendor’s October 23 advisory documents the October 22 6.3.0 official Docker-image release for this same CA compromise. This corrects a missing downstream remediation path in this article, not a new CA incident. SaaS is excluded; host-managed OS and Java stores and containerized Runner must be handled according to their actual deployment. A passing curl rejection does not verify Java’s separate trust store.
 
 **November 6 New Relic downstream advisory:** NR26-12 requires the four Private-location images above to be pulled and redeployed manually, followed by container restarts. There is no automatic Private-location image update. Public Scripted API monitors using Node 22, browser runtimes and ping monitors need no action for this CA issue because infrastructure images are patched; monitors pinned to Node 16.10 are the exception and require migration on either location type. The stated 22.23.0 is New Relic’s Synthetics migration runtime, not a replacement for the standalone Node security minimums in the separate October release incident. Test before the November 18 EOL and planned Public automatic migration. New Relic reports no evidence of synthetic-image tampering and requires secure-credential rotation only when there is a specific reason to suspect network/infrastructure compromise.
+
+**November 10 issuer report.** eMudhra traces both sets of keys to one April 30, 2025 cross-HSM migration ceremony. Host-side import code truncated the ECDSA P-384 private values, leaving the eight G3B/G3C keys recoverable from their public keys. For eight RSA-4096 G2B/G2C keys, signatures still verify against the certified public keys. Private components were present in host process memory during re-import, and the issuer could not demonstrate compliant handling. The issuer revoked all eight RSA intermediates on November 7 using cessationOfOperation. That reason and the verified signatures do not establish RSA key confidentiality. The issuer reports completed migration of affected G2C subscribers and no end-entity issuance under G2B. The report lists the affected chains and links the end-entity appendix. The wider G1 transition remains scheduled before November 16, and the independent review has a December 4 milestone. Recheck deployed chains and replace any remaining certificates chaining to a revoked issuer.

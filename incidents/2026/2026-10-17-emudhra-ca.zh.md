@@ -4,7 +4,7 @@ headline: "eMudhra：八个 CA 私钥，计算器按几下就猜出来了"
 summary: emSign ECC G3 下八张中间证书（六张 TLS、两张代码签名，带 Sectigo 交叉签名）的 P-384 私钥均小于 256，可用于伪造证书。须更新 Dart、Flutter、Firestore 及 CA 包。Chrome 153 及更高版本将取消对 G1 根下最早 SCT 晚于 11 月 16 日 23:59:59 UTC 的 TLS 证书的默认信任；更早 SCT 不受这项新规则影响。
 splash: "信任 ECC G3/Sectigo 且经过攻击者控制网络路径的客户端；在 Chrome SCT 截止时间后签发证书的 G1 TLS 网站。"
 wipe: "更新系统、浏览器及应用 CA 证书包（certifi 2026.10.19、Go 1.27.3 / 1.26.10、Node 22.23.4+），立即更换受影响证书。"
-inTheWildNote: CT 日志里没发现终端实体证书；几小时内就被拦截
+inTheWildNote: 未观察到弱 ECDSA 密钥被滥用。RSA 私钥的机密性仍无法核实。
 oneLiner: >-
   CA 的私钥本该是一个 384 位的秘密；这几个却小到掰着手指脚趾就能数过来，谁都能给任意网站签出“受信任”的证书。
 cves:
@@ -181,6 +181,12 @@ timeline:
   - date: 2026年11月6日
     title: New Relic 要求手动更新 Synthetics 镜像并迁移旧运行时
     body: NR26-12 列出四项 Private location 镜像下限，任何运行时均须更新并重启；最新版 Public location 已修补，但两种位置的 Node 16.10 监测均须在 11 月 18 日停止支持前迁至厂商运行时 22.23.0。
+  - date: 2026年11月7日
+    title: eMudhra 再吊销八张 RSA 中间证书
+    body: 颁发机构随后披露 G2B／G2C 吊销情况，称使用 cessationOfOperation 原因。
+  - date: 11月10日 18:35 UTC
+    title: eMudhra 发布完整事件报告
+    body: 颁发机构补充 11 月 7 日吊销的八张 RSA 中间证书，并说明同一次密钥操作流程如何影响这些证书。
   - date: 2026年10月27日前后
     title: Chrome Root Store v43 移除 emSign ECC Root CA - G3
   - date: 2026年11月前后
@@ -189,6 +195,7 @@ timeline:
   - date: 2026年11月前后
     title: SonicWall 确认 Gen8 固件 8.2.3-8015 移除该证书链
     body: 11 月发布说明将 GEN8-19795 列为移除 eMudhra 证书链。
+
 checklist:
   - title: 更新浏览器和操作系统
     hint: Chrome、Firefox、Safari、Edge、Android 和 Windows 都已发布拦截
@@ -346,6 +353,8 @@ sources:
 
   - name: New Relic NR26-12 Synthetics 公告
     says: 11 月 6 日发布，列明四项 Private location 镜像下限、全部运行时重启、Public location 例外、Node 16.10 迁移及 11 月 18 日停止支持、排查查询、未发现镜像篡改及无统一 secure credentials 轮换要求。
+  - name: eMudhra 在 Mozilla Bugzilla 发布的完整报告
+    says: 说明 2025 年 4 月密钥操作流程、ECDSA 和 RSA 的不同问题、11 月 7 日吊销情况及仍在进行的独立审查。
 ---
 CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eMudhra 有八张中间证书，P-384 私钥都是**小于 256 的整数**。据研究人员 Scott Helme 说，其中一个就是数字 4。谁要是注意到了，就能给任意域名签证书，而所有信任这条链的客户端都会照单全收。
 
@@ -409,3 +418,5 @@ CA 的私钥，是“这真的是你的银行”这句话能成立的根本。eM
 **Rundeck 部署补充：** 厂商 10 月 23 日公告说明了 10 月 22 日发布的 6.3.0 官方 Docker 镜像对同一 CA 事件的修复。这里补上此前遗漏的下游处置路径，不是新的 CA 事件。SaaS 不受影响，主机管理的系统及 Java 信任库、容器化 Runner 则须按实际部署分别处理。curl 拒绝证书不能证明 Java 的独立信任库也已更新。
 
 **11 月 6 日 New Relic 下游公告：** NR26-12 要求手动拉取并重新部署上方四项 Private location 镜像，随后重启容器；Private location 镜像不会自动更新。Public location 使用 Node 22 的 Scripted API、浏览器运行时及 ping 监测，其基础设施镜像已修补，针对本 CA 问题无需操作；固定在 Node 16.10 的监测属于例外，两种位置均须迁移。所列 22.23.0 是 New Relic 的 Synthetics 迁移运行时，不替代另一篇 10 月 Node 发布事件中的独立 Node 安全版本下限。应在 11 月 18 日停止支持及计划 Public 自动迁移前测试。New Relic 称未发现合成监测镜像篡改证据，仅在有具体理由怀疑网络或基础设施失陷时要求轮换 secure credentials。
+
+**11 月 10 日颁发机构报告。** eMudhra 将两组密钥追溯至 2025 年 4 月 30 日同一次跨 HSM 迁移流程。主机端导入代码截断了 ECDSA P-384 私有值，导致八个 G3B／G3C 密钥可从公开密钥恢复。八个 RSA-4096 G2B／G2C 密钥的签名仍可用证书中的公钥验证，但重新导入期间私有组件曾在主机进程内存中，颁发机构无法证明处理合规。颁发机构于 11 月 7 日以 cessationOfOperation 为由吊销全部八张 RSA 中间证书。该原因及签名验证不能证明 RSA 私钥的机密性。颁发机构称已完成受影响 G2C 用户迁移，G2B 未签发终端实体证书。报告列出受影响的证书链，并链接终端实体附录。更广泛的 G1 迁移仍计划在 11 月 16 日前完成，独立审查计划于 12 月 4 日达到里程碑。请核验已部署的证书链，更换仍链接至已吊销颁发者的证书。
