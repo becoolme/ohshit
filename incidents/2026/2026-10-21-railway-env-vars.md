@@ -3,24 +3,22 @@ title: "Railway says an intruder reached the store holding customer environment 
 headline: "Railway: your .env went for a ride without you"
 level: 4
 date: 2026-10-21
-updated: 2026-10-27
+updated: 2026-11-12
 tags: [PaaS, secrets, credentials, supply chain]
 ecosystems: [railway]
-summary: >-
-  Railway's preliminary report says variables were potentially compromised in at most 1.85% of workspaces (about 100,000).
-  Precautionary provider resets affected more users. Services are restored for existing users; rotate stored secrets and recreate revoked deployment credentials.
+summary: Railway says at most 1.85% of workspaces (~100,000) could have had variables decrypted. It confirms 353 build histories were read and linked-account tokens for 1,852 users were decrypted. Estimated unauthorized AI spend is ~$740,000. Rotate stored secrets and replace revoked deploy credentials.
 splash: "Secrets stored before Oct 21; vendor upper bound is 1.85% of workspaces (~100,000), with broader precautionary resets"
 wipe: "Rotate/revoke stored secrets, audit logs from Oct 20, recreate deploy tokens, reconnect GitHub and redeploy"
 inTheWild: "n/a"
-inTheWildNote: "An intrusion; the October 26 update gives a claims process, not verified misuse totals"
+inTheWildNote: Railway estimates about $740,000 in unauthorized spend on stolen keys.
 oneLiner: >-
   Your hosting provider keeps a locked box of all your passwords so your apps can use them. Someone got into
   the room with the box, and for some customers they got it open.
 cves: []
 timeline:
   - date: Oct 20, 13:58 UTC
-    title: Preliminary report dates the first abnormal activity
-    body: This revises the initial notice's October 21 discovery account.
+    title: Anomalous registry calls trigger a Railway alert
+    body: The November report dates the initial build-isolation exploit to 07:28 UTC on October 20.
   - date: Oct 21, 07:24 UTC
     title: Railway starts investigating a platform outage
     body: >-
@@ -42,13 +40,16 @@ timeline:
     body: Pro, Hobby, then Free and Trial follow in stages.
   - date: Oct 22, 2026
     title: Railway publishes preliminary scope and containment findings
-    body: At most 1.85% of workspaces, about 100,000, potentially affected; attacker access ended by 03:32 UTC. The report says all plan tiers resumed builds by 22:49 UTC.
+    body: At most 1.85% of workspaces, about 100,000, potentially affected; the preliminary report gave 03:32 UTC on October 22 as the end of access. The November report revises that endpoint. All plan tiers resumed builds by 22:49 UTC on October 22.
   - date: Oct 23, 2026
     title: Login and deployment recovery guides published
     body: Missed commits were not queued; revoked CLI and CI credentials must be replaced before retrying deployments.
   - date: Oct 26, 2026
     title: Railway reports existing-user restoration and adds AI-spend guidance
     body: "New signups remain paused. Ask the AI provider about refunds first, then submit supporting evidence to Railway for escalation."
+  - date: Nov 10, 18:02 UTC
+    title: Railway publishes the forensic report and reimbursement steps
+    body: The report revises containment timing and describes the build, CI and key-store access chain. It gives confirmed build-history and token exposure counts and estimated unauthorized AI spend.
 checklist:
   - title: Rotate every secret stored in Railway variables, starting with the expensive ones
     hint: AI provider keys, cloud (AWS/GCP) keys, Stripe, DB passwords, OAuth client secrets, webhook signing secrets. If it's in Variables, assume it's gone
@@ -61,7 +62,7 @@ checklist:
   - title: Check provider audit logs and billing from Oct 20 or earlier
     hint: Unknown IPs in AWS CloudTrail / GCP audit logs, new GitHub tokens or deploy keys, odd Stripe API calls, surprise AI token bills
   - title: Escalate suspected fraudulent AI charges
-    hint: "Contact the AI provider directly first: Railway cannot refund third-party AI spend. Then submit timestamps, prompts and supporting proof through station.railway.com so Railway can escalate the request; a refund is not guaranteed."
+    hint: "Submit unauthorized charges through the form in Railway’s November report. Preserve provider billing records and timestamps. Follow the provider-specific instructions below, including passing the OpenAI Case ID to Railway support."
   - title: Reconnect GitHub, replace deploy credentials and redeploy
     hint: "Builds are accepted again. Missed commits were not queued: trigger Deploy Latest Commit. Reconnect the GitHub app, run railway logout then railway login, and replace revoked RAILWAY_TOKEN / RAILWAY_API_TOKEN CI secrets. Redeploy to load rotated variables and bucket keys"
   - title: Review your Railway account and deploy history
@@ -103,6 +104,10 @@ sources:
     url: https://blog.railway.com/p/security-disclosure-recommendation-recover-account-access
     says: Log in with the original account identity; an empty dashboard can indicate a different account
     primary: true
+  - name: Railway November incident report
+    url: https://blog.railway.com/p/incident-report-october-security-incident
+    primary: true
+    says: Details the attack chain, revised scope and containment, provider-specific claims and Railway’s reimbursement commitment.
 ---
 
 Railway, a popular platform-as-a-service, initially said that on the morning of **October 21, 2026** it detected
@@ -145,3 +150,9 @@ system. That is L4. It would move up if large-scale abuse of the stolen keys wer
 **Correction, October 24:** Railway's October 22 preliminary report supersedes the earlier unknown-scope account: at most 1.85% of workspaces (about 100,000) potentially had variables compromised. This is an upper bound, not a confirmed-victim total. It dates the attack window to October 20, 13:58 UTC through October 22, 03:32 UTC, and says existing workloads stayed online. All plan tiers accept builds again. The October 23 guides explain how to catch up missed deployments and replace revoked access; use the original login identity if projects appear missing.
 
 **Update, October 27:** Railway’s October 26 update says services are fully restored for existing users, while new signups remain paused. Recovery does not replace the credential rotation and deployment-recovery steps above. For suspected fraudulent AI charges, contact the AI provider first, then submit timestamps, prompts and supporting proof at [Railway Station](https://station.railway.com/) for escalation. Railway cannot refund third-party AI spend, and its escalation offer is not a refund guarantee. No verified downstream-abuse total or broader victim count is established by this update.
+
+**November 10 report.** Railway now dates the partial build filesystem escape to October 20 at 07:28 UTC. A stolen build credential reached internal Temporal build histories and enabled retrieval of Railway’s own monorepo. An overly broad OIDC binding then yielded a short-lived cloud credential. The attacker used that access to reach orchestration infrastructure and decrypt some retrieved environment variables. Railway dates eviction to October 21 at 09:24 UTC and found no access to customer data beyond 09:25 UTC that day. This supersedes its preliminary October 22 endpoint. New signups reopened November 2.
+
+Railway found 353 build histories read, including sealed variables, and reset decrypted linked-account tokens for 1,852 users, including GitHub OAuth and bring-your-own-key agent credentials. It reports no Railway account logins using credentials stolen in this incident and no indications that customer repositories or snapshots were downloaded or customer databases accessed. The 1.85% estimate remains an upper bound on workspaces that could have had variables decrypted. The counts measure different things and cannot be added.
+
+Railway estimates about $740,000 in unauthorized spend and asks customers to submit charges through the form linked in its report. AWS Bedrock and Google Gemini began refunding under their fraud policies. For OpenAI, open a provider case and share the Case ID with Railway support. Submit SpaceXSI claims to Railway. Railway says it will cover affected Anthropic and OpenRouter charges and backstop losses that upstream providers will not cover.
