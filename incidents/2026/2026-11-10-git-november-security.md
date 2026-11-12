@@ -17,7 +17,7 @@ cves:
   description: A crafted path can overwrite the submodule gitfile with a symlink to attacker-controlled Git configuration or hooks. The maintainer describes an attacker-hosted repository cloned with --recurse-submodules.
 - id: CVE-2026-113408
   name: Path traversal through an unborn HEAD
-  description: Cloning from a malicious protocol v2 server with the files reference backend can leave a malformed unborn HEAD target. A later branch update can write outside the reference directory.
+  description: When cloning an empty repository from a malicious protocol v2 server with the files reference backend, Git can store a malformed unborn HEAD target. A later branch update can write outside the reference directory.
 - id: CVE-2026-114467
   name: Stack corruption when merging signed tags
   description: Merging a crafted tag with more than two GPG signatures can corrupt the stack and crash Git, including on a service that performs that merge.
@@ -62,7 +62,7 @@ checklist:
 - title: Update GitHub Enterprise Server and verify CI images
   hint: For GitHub Enterprise Server install 3.19.15, 3.20.11, 3.21.9 or 3.22.4 for your release line. On managed CI check the image or job log for the actual installed Git version.
 - title: Restrict untrusted Git operations while patching
-  hint: Clone only from trusted servers. Disable recursive clones and automatic submodule checkout for untrusted repositories. Hold untrusted merges, tags, binary patches and fast-import streams. Do not enable --allow-unsafe-features for an untrusted generator.
+  hint: Clone only from trusted servers. Disable recursive clones and automatic submodule checkout for untrusted repositories. Inspect .gitmodules and verify the submodule remotes before fetching them. Hold untrusted merges, tags, binary patches and fast-import streams. Do not enable --allow-unsafe-features for an untrusted generator.
 - title: Investigate suspicious prior operations
   hint: Correlate checkout or import logs with the remote URL, job identity and any unexpected processes. Preserve runner logs and isolate affected hosts if suspicious execution is found. Rebuild from trusted images and revoke exposed credentials at their issuers.
 sources:
@@ -80,7 +80,7 @@ sources:
   primary: true
 ---
 
-Git's November release addresses a code execution path where a very long index entry passes path validation under one name and is written under a truncated name. In the recursive-clone path the write can replace a submodule's gitfile with a symlink. The code then runs with the privileges of the user or job performing the clone. The maintainer describes a repository hosted by the attacker and a recursive clone using `--recurse-submodules`.
+Git's November release addresses a code execution path where a very long index entry passes path validation under one name and is written under a truncated name. In the recursive-clone path the write can replace a submodule's gitfile with a symlink. The code then runs with the privileges of the user or job performing the clone. The maintainer describes a repository hosted by the attacker and a recursive clone using `--recurse-submodules`. A top-level repository on a familiar forge can still point to a malicious submodule on a different host through `.gitmodules`.
 
 GitHub reports fixes on GitHub.com and GitHub Enterprise Cloud, including data residency. Its November 10 announcement lists GitHub Enterprise Server updates separately and describes patched Git for Actions, Codespaces, GitHub Desktop and the Copilot app as forthcoming. Verify the installed version in the environment where Git actually runs. Distribution packages may carry backported fixes under different package versions. The maintainers identify affected releases back to 2.27.0 and provide no upstream maintenance releases for branches below 2.50. Migrate older installations or verify a fix with the distributor that maintains your build.
 
