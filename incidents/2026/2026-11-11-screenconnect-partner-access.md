@@ -29,14 +29,14 @@ checklist:
 - title: Verify maintenance across the remote-access stack
   hint: Check the current vendor guidance for servers, technician clients and endpoint agents. Run compromise triage and remediation independently of the software update.
 - title: Hunt the vendor indicators
-  hint: Correlate the 25 entries below with network, process, scheduled-task, registry Run and ScreenConnect logs. Check whether TrapWatch runs as SYSTEM and review client fingerprints and API configuration. A filename, account name or legitimate utility alone does not establish compromise.
+  hint: Correlate the 25 entries below with network, process, scheduled-task, registry Run and ScreenConnect logs. Check for TrapWatch running as SYSTEM, reportedly every 10 seconds, then review client fingerprints and API configuration. A filename, account name or legitimate utility alone does not establish compromise.
 sources:
 - name: ConnectWise November 11 ScreenConnect advisory
   says: Lists the five disabled extensions, approximately 400 environments with one or more installed, suspected behavior and partner actions.
-  url: https://www.connectwise.com/company/trust/advisories
+  url: https://www.connectwise.com/company/trust/advisories#screenconnect-original-advisory-2026-11-11
   primary: true
 - name: ConnectWise November 12 investigation update
-  url: https://www.connectwise.com/company/trust/advisories
+  url: https://www.connectwise.com/company/trust/advisories#screenconnect-investigation-update
   says: Details the remote-command API, evidence limitations, partner actions and indicators in the November 12 02:45 UTC update.
   primary: true
 ---

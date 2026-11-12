@@ -21,7 +21,7 @@ checklist:
 - title: 核验远程访问组件维护状态
   hint: 按厂商当前指引核查服务器、技术人员客户端和终端 Agent。更新软件后仍需独立排查及处置疑似失陷。
 - title: 按厂商指标排查
-  hint: 结合网络、进程、计划任务、注册表 Run 键及 ScreenConnect 日志核对正文中的 25 项指标。重点检查 TrapWatch 是否以 SYSTEM 运行、客户端指纹和 API 配置。文件名、账户名或正常工具单独命中无法证明失陷。
+  hint: 结合网络、进程、计划任务、注册表 Run 键及 ScreenConnect 日志核对正文中的 25 项指标。重点检查 TrapWatch 是否以 SYSTEM 运行。厂商收到其每 10 秒运行一次的报告。另核查客户端指纹和 API 配置。文件名、账户名或正常工具单独命中无法证明失陷。
 sources:
 - name: ConnectWise 11 月 11 日 ScreenConnect 公告
   says: 列出五款停用扩展、装有至少一款的约 400 个环境、疑似攻击行为及合作伙伴处置步骤。
