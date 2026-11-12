@@ -9,7 +9,7 @@ tags:
 ecosystems:
 - fortinet
 summary: Fortinet disclosed critical flaws affecting OSPF, iBGP and some FortiOS high-availability deployments. Upgrade to 8.0.2, 7.6.8, 7.4.13 or 7.2.14 or later in the corresponding branch to cover all three.
-splash: Affected FortiOS devices using OSPF, configured iBGP neighbors, FGSP with standalone-config-sync or autoscale. FortiSASE routing.
+splash: OSPF and iBGP on FortiOS and FortiSASE. FortiOS FGSP with standalone-config-sync or autoscale.
 wipe: Inventory exposed routing and HA interfaces, follow the applicable upgrade path, and verify routing and cluster health.
 inTheWild: unknown
 inTheWildNote: The Fortinet records reviewed here provide no evidence of exploitation.
@@ -64,7 +64,7 @@ sources:
   primary: true
 - name: Fortinet PSIRT FG-IR-26-268 CSAF
   url: https://filestore.fortinet.com/fortiguard/psirt/csaf_numeric-truncation-error_fg-ir-26-268.json
-  says: Original iBGP advisory date and FortiOS fixes.
+  says: Original iBGP advisory date and FortiOS and FortiSASE fixes.
   primary: true
 - name: Fortinet CNA CVE-2026-126253
   url: https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/126xxx/CVE-2026-126253.json

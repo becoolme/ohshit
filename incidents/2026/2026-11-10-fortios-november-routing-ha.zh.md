@@ -5,7 +5,7 @@ tags:
 - 路由
 - HA
 summary: Fortinet 披露了影响 OSPF、iBGP 和部分 FortiOS 高可用部署的严重漏洞。升级至对应分支的 8.0.2、7.6.8、7.4.13、7.2.14 或更新版本，可修复全部三项漏洞。
-splash: FortiOS 和 FortiSASE 的路由功能，以及启用了带 standalone-config-sync 的 FGSP 或自动扩缩容的 FortiOS 部署。
+splash: FortiOS 和 FortiSASE 上的 OSPF 和 iBGP，以及启用了带 standalone-config-sync 的 FGSP 或自动扩缩容的 FortiOS 部署。
 wipe: 盘点暴露的路由和 HA 接口，按适用的升级路径更新，并验证路由和集群健康状态。
 inTheWildNote: 查阅的 Fortinet 记录未提供在野利用证据。
 cves:
@@ -40,7 +40,7 @@ checklist:
   hint: 发现无法解释的路由通告、对等连接重置或配置变更时，保全路由、HA 和管理日志。将路由与配置快照同可信基线比对。如果证据指向特权访问，隔离受影响设备、排查横向访问，并在可信系统上轮换暴露的凭据。
 sources:
 - says: OSPF 原始公告的日期与 FortiOS 修复版本。
-- says: iBGP 原始公告的日期与 FortiOS 修复版本。
+- says: iBGP 原始公告的日期，以及 FortiOS 和 FortiSASE 修复版本。
 - says: OSPF 漏洞的前提、评分和结构化记录中的 7.0 版本范围。
 - says: 须为已配置的 iBGP 邻居这一前提及受影响版本。
 - says: HA 漏洞的前提、受影响版本及仅针对 HA 漏洞的 8.0.1 修复。
