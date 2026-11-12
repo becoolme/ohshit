@@ -29,7 +29,7 @@ checklist:
 - title: Review the data named in Fireworks notices
   hint: Use your incident notice or the contact listed on the security bulletin. Identify affected datasets, model material, metadata or billing records. Revoke and rotate exposed secrets at their issuers and review associated activity.
 - title: Review affected transcripts inside Notion
-  hint: If notified, retrieve the impacted data inside your workspace using Notion’s instructions. Treat it as exposed and rotate passwords, API keys and other credentials pasted into affected chats.
+  hint: If notified, a workspace owner can open the sidebar, select ? and then Security incident review to review and export affected transcripts. Share the review link with affected members. Treat affected chats as exposed and rotate passwords, API keys and other credentials they contain.
 sources:
 - name: Fireworks November 9 bulletin
   says: Describes the October cloud-provider intrusion, data categories, mitigation and ongoing investigation.
