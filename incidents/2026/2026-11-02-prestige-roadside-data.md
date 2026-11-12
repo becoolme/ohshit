@@ -7,8 +7,8 @@ tags:
 - Prestige
 - data breach
 - roadside assistance
-summary: The suspended roadside-assistance system held up to 5.5 million affected records, including duplicates. Exposed data includes contact, vehicle, accident and some bank details, plus three cases of card-number leakage. Mitsui Sumitomo Insurance reports about 228,000 records within the same breach. NX·TC confirms exposure and is checking its scope.
-splash: Users of roadside assistance handled by Prestige Core Solution for client companies
+summary: The suspended roadside-assistance system held up to 5.5 million affected records, including duplicates. Exposed data includes contact, vehicle, accident and some bank details, plus three cases of card-number leakage. Assistance continues through alternative procedures. Mitsui Sumitomo Insurance reports about 228,000 records within the same breach. Zurich Japan and NX·TC confirm exposure. BMW Japan is checking its scope.
+splash: Customers whose data was handled by Prestige Core Solution, including roadside assistance and related outsourced work.
 wipe: Verify notices through your assistance provider; reject unexpected credential requests and monitor affected accounts
 inTheWild: 'yes'
 inTheWildNote: Prestige confirms unauthorized access and external removal of customer data.
