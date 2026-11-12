@@ -2,12 +2,12 @@
 title: NIKKE confirms PC launcher tampering; client fix does not clean infected PCs
 level: 3
 date: '2026-11-03'
-updated: '2026-11-08'
+updated: '2026-11-12'
 tags:
 - NIKKE
 - Supply chain
 - Credentials
-summary: Level Infinite confirms third-party tampering in NIKKE Windows launcher files and asks users who launched since September 27 to check their PCs. Official manual and ACE cleanup guidance is available. Mobile is unaffected according to the vendor; its malware-start date differs from researcher logs, and victim scope remains unknown.
+summary: Level Infinite confirms third-party tampering in NIKKE Windows launcher files and asks users who launched since September 27 to check their PCs. Official manual and multilingual ACE cleanup guidance is available. Mobile is unaffected according to the vendor; its malware-start date differs from researcher logs, and victim scope remains unknown.
 splash: NIKKE Windows launcher users since September 27; researchers also report Proton exposure. Vendor says mobile is unaffected.
 wipe: Keep the launcher closed while checking exposure; verify official remediation, preserve evidence, clear stale cache and replace exposed secrets.
 inTheWild: 'yes'
@@ -76,6 +76,9 @@ timeline:
 - date: Nov 8, 00:08 UTC
   title: Disassembly confirms the DLL sample's Chrome host checks
   body: It starts only inside chrome.exe with chrome.dll loaded. The DLL sends data to /px/ and does not read the response body.
+- date: Nov 10, 2026
+  title: NIKKE updates its PC cleanup guidance and schedules launcher hardening
+  body: The regional operator says November 4 containment blocked further launcher distribution. The official cleanup prompt now supports multiple languages. The integrity and source checks were scheduled for November 12 (UTC+9).
 checklist:
 - title: Stop the launcher and preserve evidence before cleanup
   hint: Close the launcher, including its tray process; disconnect a suspected infected machine. Preserve Launcher/intl_service/debug.log, Launcher/log/tinyget and the launcher cache before deleting or reinstalling anything. The report says updates and server shutdown do not undo prior remote access. Keep an untouched private evidence copy. Before publicly sharing logs, redact Cookie lines and login_ticket, biz_ticket, uid, openid and sig values in tinyget.mem.log and dated tinyget API requests; path= may expose your Windows username. Also close nikke_launcher_google.exe for the Google Play Games variant. If the launcher used another account’s administrator credentials, also check that account’s %APPDATA%, %TEMP% and HKCU persistence key, not only the everyday account. The official manual also asks users to close the NIKKE game and Chrome. ACE cleanup deletes associated logs; the researcher also relays one updated clean install deleting debug.log without asking. Preserve evidence before any relaunch, not only before consenting to ACE. If files are missing, forensic review can use the bounded NTFS change journal for tinyget.<time>.log.cdt→.log and k2f-bcreds creation/deletion; journal rollover and Firefox in-place reads limit negative findings.
@@ -158,6 +161,10 @@ sources:
   url: https://gist.github.com/MotherSphere/d6c049a09ba8ac3085c51ee9df24a4e5#gistcomment-6464047
   primary: true
   says: Reports a detection label for decompressed launcher scripts on one PC. The compressed originals were not flagged.
+- name: NIKKE regional operator’s PC launcher security addendum
+  says: Updates the cleanup instructions, confirms the operator’s containment assessment and announces planned hardening.
+  url: https://nikke.hotcool.tw/m/News_detail-242
+  primary: true
 ---
 
 The November 3 original analysis reports four altered JavaScript files on Level Infinite’s official CDN loading an external script, which used the PC launcher’s embedded Chromium bridge to download a LuaJIT remote-access agent. The researcher analyzed one affected machine and static payload code, and labels additional users’ observations as reported evidence. Commands could read files, execute programs and capture screenshots; the analysis also identifies browser/credential theft capabilities and a Windows Chrome persistence path. Capability is not proof that every secret was stolen. No victim total or confirmed aggregate wallet loss is established.
@@ -197,3 +204,5 @@ The author also identifies `login_ticket` and `biz_ticket` in `tinyget.mem.log` 
 **November 8 DLL analysis.** MotherSphere disassembled one copy of `platform_experience_helper.dll`. It starts its collection logic only when the host is `chrome.exe` and `chrome.dll` is loaded. Steam, Alt1 or Jagex Launcher can load this sample without activating that logic. In Chrome the DLL uses DevTools hooks to inspect passwords entered on pages and capture secrets when targeted wallet extensions unlock. The author found 28 extension IDs, including MetaMask and Phantom. The sample sends data to `https://analytics.insightjs.com/px/<agent id>` without reading the response body. This narrows what was established for this DLL sample. The researcher found no mechanism in this sample to recreate its files or registry key. The launcher agent still had arbitrary command execution, and other DLL builds remain unverified.
 
 The optional checker now recognizes a ninth known agent upload, `6ae4f146-3214f`, associated with October 30 at 19:34:30 UTC. The researcher reports an agent run on one PC with that build. A separate affected user reported an SRUM upload outlier near an activation. SRUM aggregates application traffic and cannot identify the destination or contents. These observations do not establish a victim total or confirmed theft of any particular credential.
+
+**November 10 operator addendum.** The operator says its November 4 03:09 UTC containment blocked further launcher distribution and that the official launcher can be used. If you are investigating a potentially exposed PC, preserve evidence before opening it. Close browsers before launching the official client. The localized check takes about 30 seconds to two minutes. If you consent to cleanup, relaunch afterward and check for another prompt. If you decline, use the official manual procedure or return to the client cleanup. A missing prompt means the incident-specific scan found no matching malware. Continue the broader host and account checks, including revoking keys and tokens used on the PC, and use a clean device for credential changes. Download no unsolicited cleanup tools. The operator scheduled end-to-end integrity and source validation for November 12 (UTC+9). The notice gives no version or confirmation of release.
