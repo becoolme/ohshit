@@ -28,7 +28,7 @@ checklist:
 - title: Contain suspicious GitHub access and runs
   hint: Pause affected workflows and releases, cancel active suspect runs, isolate affected self-hosted runners and preserve audit logs, run IDs, commit SHAs and network evidence. Revoke affected PATs, OAuth or GitHub App user authorizations and bot credentials. Remove unnecessary branch bypass and review where each token had write access.
 - title: Correlate repository and network evidence
-  hint: Use the indicator list below to inspect Git history, PR metadata, Actions audit trails and runner egress. Correlate missing run numbers with the specific commit and actor. A probe or isolated indicator is a lead. If execution is confirmed or likely, assume the job’s reachable credentials were exposed.
+  hint: Inspect Git history, PR metadata and Actions audit trails. Search runner egress from November 10 for 194.150.166[.]244:8080/exfil, 18.143.168[.]96:8080/exfil, 153.75.82[.]159:8080/exfil, the legacy GhostAction endpoint 193.32.204[.]199 and api.telegram.org sendDocument. The body and StepSecurity report give the full indicator list. Correlate missing run numbers with the specific commit and actor. A probe or isolated indicator is a lead. If execution is confirmed or likely, assume the job’s reachable credentials were exposed.
 - title: Remove cloud persistence before replacing secrets
   hint: Suspend affected OIDC trusts and revoke sessions where supported. Check AWS CloudTrail and IAM for altered role trusts, new access keys and wfx-* sessions. Check Azure audit logs for unauthorized federated credentials and GCP logs for service-account impersonation. Remove unauthorized access, then rotate all reachable repository, organization, environment, registry and cloud secrets. For self-hosted runners, include credentials and tokens accessible on the host.
 - title: Restore from trusted source and verify outputs
@@ -46,11 +46,17 @@ sources:
   says: Shows the injected change to update.sh.
   url: https://github.com/nextcloud/docker/commit/b4353fc0b709226943b19e9793509be4a2c3a278
   primary: true
+- name: Nextcloud Docker workflow run 2675
+  says: Records the run of update.sh on the injected commit at 12:52 UTC on November 11.
+  url: https://github.com/nextcloud/docker/actions/runs/43024116166
+  primary: true
 ---
 
 The campaign requires a valid token with repository write access and a path to execute the code. It modifies an existing workflow, creates a new workflow, appends to a script CI already calls, or adds a hidden script and hooks it into an npm lifecycle or build/test command. Workflow variants can explicitly pass secrets to the script. Script variants can read runner memory and credential stores when the job has access. Cloud escalation depends on the runner’s credentials and the permissions and trust attached to them. Required-check forgery exists in the payload but was disabled in the samples StepSecurity examined.
 
 StepSecurity found some probe PRs attributed by GitHub to Fly.io’s GitHub App and identified the credentials as user-to-server tokens. It did not establish how they were obtained or find evidence of compromise of Fly.io infrastructure. The research identified overlaps with [October GhostAction](/incidents/ghostaction-returns/) without attributing both campaigns to one actor.
+
+Nextcloud Docker’s run 2675 executed the injected commit on a self-hosted runner and finished successfully. StepSecurity interpreted the log as evidence of a successful upload. The log does not enumerate the contents of the uploaded archive.
 
 ### Release artifacts to check
 
