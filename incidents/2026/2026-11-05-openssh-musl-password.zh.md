@@ -3,7 +3,7 @@ title: 未使用 PAM 的 musl Linux OpenSSH 可接受超长密码，绕过纯密
 summary: Previdian 观察到 OpenSSH 绕过尝试，并报告 Alpine 蜜罐被以 root 权限登录。漏洞要求 musl sshd 网络可达、启用密码认证、未用 PAM，目标账户密码字段为 '*'，另有本地 $5$/$6$ 哈希。升级到 OpenSSH 10.6p2 或 Alpine 回补版本后重启 sshd。尚未证实生产环境失陷。
 splash: 网络可达的 musl sshd，未用 PAM、启用密码认证，目标为 * 账户，另有本地 $5$/$6$ 哈希。复现需同一连接内先失败一次。
 wipe: 安装对应 Alpine 分支的修复 OpenSSH 包并重启 sshd；否则禁用 PasswordAuthentication 并验证实际配置。
-inTheWildNote: Previdian 观察到利用尝试，并报告其 Alpine 蜜罐被以 root 权限登录。
+inTheWildNote: CISA 于 11 月 9 日将该漏洞列入 KEV。Previdian 报告蜜罐遭入侵并被取得 root 权限。
 cves:
   - name: musl 密码哈希错误标记绕过
     description: CNA 确认相同的有条件密码绕过，并未将影响扩大至 glibc 或启用 PAM 的构建。
@@ -35,6 +35,9 @@ timeline:
   - date: 2026年11月7日
     title: 传感器仪表板显示更多尝试
     body: Previdian 的更新快照列出四个传感器记录的 17 次尝试，涉及定位在八个国家的 11 个来源 IP。
+  - date: 2026年11月9日
+    title: CISA 将 CVE-2026-123158 列入 KEV
+    body: 目录确认已知在野利用。适用的美国联邦民事机构应在 2026 年 11 月 12 日前完成处置，并遵循厂商指引及 CISA BOD 26-04 取证排查要求。
 checklist:
   - title: 更新服务端包并重启运行中的守护进程
     hint: Alpine 使用 apk upgrade -U -a，以 apk info -v openssh-server 或 openssh-server-pam 对照上方对应分支版本，然后执行 rc-service sshd restart。仅安装包仍会保留旧进程。重建受影响镜像，替换或更新运行中的实例；新修复镜像不会自动修补现有 VM。3.21 及更早的特殊修复不代表恢复全面支持。
@@ -61,6 +64,8 @@ sources:
     says: 核对修复前后的包版本、同连接内的认证尝试顺序、日志及客户端长度限制。
   - name: 发现者公开的复现说明
     says: 说明同一连接内有两次密码提示。
+  - name: CISA 已知被利用漏洞目录
+    says: 11 月 9 日收录 CVE-2026-123158，处置期限为 11 月 12 日。
 ---
 
 Alpine 描述，超长密码使 musl 的 crypt() 返回错误标记，sshd 将其与账户保存的 '*' 字段比较而产生错误。可经网络访问服务、知道用户名的攻击者，在启用密码认证、未使用 PAM 且另有本地账户提供 $5$ 或 $6$ 密码哈希时，可用 257–1024 字节密码登录。发现者的复现要求同一连接内先有一次失败的密码尝试。这不代表所有 OpenSSH 或 Alpine 均遭入侵。以 '!' 锁定的账户不受此路径影响；直接以密码登录 root 仍需 PermitRootLogin yes，但其他受影响账户可能通过自身权限提权至 root。
@@ -72,3 +77,5 @@ Alpine 列出 3.16–3.24 及 edge 受影响。其 tiny-cloud 镜像初始安全
 **11 月 6 日利用证据。** Previdian 初版公开传感器报告列出同一来源 IP 发起的八次尝试。其 CEO 另向 The Hacker News 表示，其中一次在运行 Alpine 和 OpenSSH 的蜜罐中取得 root 权限，并报告了非交互式侦察。实际尝试及成功访问监测环境支持 L4。11 月 7 日公开仪表板显示四个传感器记录了 17 次尝试，涉及定位在八个国家的 11 个来源 IP。这些数字来自传感器观测。尚未证实生产环境受害者，厂商给出的前提及修复版本未变。
 
 StepSecurity 在 Alpine 3.24 的虚拟机与容器中用 `10.3_p1-r1` 独立复现这一顺序，并在安装 `10.3_p1-r2`、重启 sshd 后确认绕过失效。它的客户端及 askpass 测试只能向服务端送达最多 1023 字节。Alpine 公告所列服务端范围仍为 257–1024 字节。GitHub 的 [GHSA-4fcc-vm97-gx3x](https://github.com/advisories/GHSA-4fcc-vm97-gx3x) 与该 CVE 指向同一漏洞。
+
+目录确认已知在野利用。适用的美国联邦民事机构应在 2026 年 11 月 12 日前完成处置，并遵循厂商指引及 CISA BOD 26-04 取证排查要求。
