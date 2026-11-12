@@ -20,7 +20,7 @@ timeline:
   body: The company says it will contact the affected or potentially affected plans individually.
 checklist:
 - title: Confirm whether your plan was affected
-  hint: Contact your existing employer or share plan administrator. Ask which fields were involved and follow the broker’s official reopening notice before retrying stalled operations.
+  hint: Contact your existing employer or share plan administrator. The broker’s notice also lists 0120-715-250 for members in Japan. Ask which fields were involved and follow the broker’s official reopening notice before retrying stalled operations.
 - title: Verify changes to transfer instructions
   hint: Confirm unfamiliar transfers or destination-account changes through a known contact. Review plan statements and account records when available, preserve evidence of discrepancies and report them to the administrator and broker.
 - title: Reconcile member records before issuing notices
@@ -32,6 +32,6 @@ sources:
   primary: true
 ---
 
-The broker says some members’ data leaked and puts the potentially affected population at up to 56,487. The fields vary by member and may include the plan name, investment securities, member ID, name, address, dividends and taxes, holdings balance and destination account details. The system did not store phone numbers or email addresses.
+The broker says some members’ data leaked and puts the potentially affected population at up to 56,487. The fields vary by member and may include the plan name, investment securities, member ID, name, address, dividends and taxes, holdings balance and destination account details. The system did not store phone numbers or email addresses. The broker reported no known secondary harm when it issued the notice.
 
 The disclosure covers the system used to administer employee share plans, including member holdings calculations. SMBC Nikko is investigating the entry route and detailed scope. It plans to notify affected or potentially affected plans directly and announce reopening through direct notices or its website.
