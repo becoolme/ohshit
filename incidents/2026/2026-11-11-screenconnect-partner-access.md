@@ -1,9 +1,9 @@
 ---
 title: ScreenConnect disables five extensions after attacks on partner environments
-summary: ConnectWise is investigating unauthorized partner access and rogue remote-access software. It disabled five third-party extensions in about 400 environments as a precaution and published indicators for partners to investigate. Initial access and scope remain open.
-splash: ScreenConnect partners with the five named extensions, including on-premises installs. Investigate potentially affected technician devices.
+summary: ConnectWise disabled five third-party extensions in about 400 partner environments as a precaution. Huntress observed rogue ScreenConnect deployments on at least 288 endpoints across 48 organizations. Initial access remains under investigation.
+splash: ScreenConnect partners and managed Windows endpoints. Review deployments with or without the five listed extensions.
 wipe: Disable the five extensions, investigate through separate tooling and revoke sessions from a trusted device.
-inTheWildNote: ConnectWise reports unauthorized partner access and rogue remote-access deployments.
+inTheWildNote: Huntress observed unauthorized Run Commands and rogue clients on managed endpoints.
 level: 4
 date: '2026-11-11'
 updated: 2026-11-12
@@ -13,9 +13,15 @@ tags:
 - supply chain
 inTheWild: 'yes'
 timeline:
+- date: Nov 11, 2026
+  title: Huntress observes malicious commands on managed endpoints
+  body: Suspicious activity began around 17:47 UTC. Huntress observed 288 affected hosts in 90 minutes.
 - date: Nov 11, 22:45 UTC
   title: ConnectWise publishes precautionary guidance
   body: The vendor lists five extensions and steps for hosted and on-premises partners.
+- date: Nov 12, 02:00 UTC
+  title: Huntress publishes SCKit analysis
+  body: It confirms rogue clients and bulk panel commands across 48 organizations in its telemetry. The console-takeover path failed in the host logs examined.
 - date: Nov 12, 02:45 UTC
   title: ConnectWise publishes the first indicator set
   body: The vendor describes a passphrase-protected remote-command API in the extension family and publishes network, file, persistence and ScreenConnect indicators.
@@ -23,13 +29,13 @@ checklist:
 - title: Verify and disable the five extensions
   hint: Check Labtech Plus, RMM Plus, RMM+, RMM Plus Password Link and RMM+ Password Link. Preserve their installation and activity records. On-premises partners must act on their own installs. Keep the extensions disabled pending further guidance.
 - title: Use separate tooling and secure administrative access
-  hint: Avoid opening interactive ScreenConnect sessions to suspected devices. Use an independent response tool and a trusted device to revoke active ScreenConnect and identity-provider sessions, reset relevant passwords and enforce MFA.
+  hint: Avoid interactive ScreenConnect sessions to suspected hosts. Use EDR live response or another trusted out-of-band tool. Investigate technician workstations that already connected. From a clean device, revoke ScreenConnect, browser and identity-provider sessions, rotate affected credentials and enforce MFA.
 - title: Preserve evidence and contain affected devices
-  hint: Retain authentication, extension-installation, admin, Run Command and Toolbox logs. Investigate unexpected users, permission changes, deployments and commands. Isolate suspected endpoints and technician workstations, preserve evidence before removing software, and verify remediation before reconnecting.
+  hint: Retain authentication, extension-installation, admin, Run Command and Toolbox logs. Investigate unexpected users, permission changes, deployments and commands. Isolate suspected hosts and preserve evidence. Identify the legitimate client separately. Remove the rogue service, TrapWatch task, RelayTrap directory and Run value. Check for reinfection and validate access before reconnecting.
 - title: Verify maintenance across the remote-access stack
   hint: Check the current vendor guidance for servers, technician clients and endpoint agents. Run compromise triage and remediation independently of the software update.
 - title: Hunt the vendor indicators
-  hint: Correlate the 25 entries below with network, process, scheduled-task, registry Run and ScreenConnect logs. Check for TrapWatch running as SYSTEM, reportedly every 10 seconds, then review client fingerprints and API configuration. A filename, account name or legitimate utility alone does not establish compromise.
+  hint: Correlate both published indicator sets below with network, process, scheduled-task, registry Run and ScreenConnect logs. Check for TrapWatch running as SYSTEM, reportedly every 10 seconds, then review client fingerprints and API configuration. A filename, account name or legitimate utility alone does not establish compromise.
 sources:
 - name: ConnectWise November 11 ScreenConnect advisory
   says: Lists the five disabled extensions, approximately 400 environments with one or more installed, suspected behavior and partner actions.
@@ -39,6 +45,10 @@ sources:
   url: https://www.connectwise.com/company/trust/advisories#screenconnect-investigation-update
   says: Details the remote-command API, evidence limitations, partner actions and indicators in the November 12 02:45 UTC update.
   primary: true
+- name: Huntress original SCKit analysis
+  url: https://www.huntress.com/blog/sckit-worm-rogue-screenconnect
+  primary: true
+  says: Describes observed endpoints, affected versions, unsuccessful console takeover in recovered logs, indicators and cleanup.
 ---
 
 ConnectWise says the extensions may be associated with the campaign. The roughly 400 environments had one or more of them installed. The vendor has not established the number of compromised environments, the initial access method or a CVE. It is investigating whether attackers used extensions to deploy additional remote access and whether interactive connections exposed technician workstations. Treat extension disabling as containment and check separately for persistence. This is distinct from the [Cloud Backup incident](/incidents/connectwise-cloud-backup/).
@@ -73,4 +83,48 @@ RelayTrapLiteAlert
 ed630cc2c873b091
 Addmin
 rmmserver
+```
+
+Huntress observed an operator use Run Command on cloud-hosted panels to install rogue clients and SCKit on managed Windows endpoints. It reports that 26.6.6.9747 and 26.7.6.9783 were in scope. Updating alone does not remove persistence, and no incident-specific fixed version has been published in these reports. The toolkit is built to intercept browser session cookies and spread through interactive technician sessions. The researchers found failed console-takeover attempts in the host logs they examined, so successful self-propagation remains unconfirmed. Their 288 hosts across 48 organizations describe their own observations. ConnectWise’s roughly 400 environments are the extension-installation count.
+
+Additional Huntress indicators, including 16 sample hashes. Per-host values vary. Correlate hits with logs and execution evidence.
+
+```text
+hxxps://ns[.]mo7sen[.]dev/EadF.php?p=1
+hxxps://ns[.]mo7sen[.]dev/EadF.php?p=5
+hxxps://ns[.]mo7sen[.]dev/EadF.php?p=6
+soxnewwork[.]homedns[.]org:81
+/Bin/ScreenConnect.ClientSetup.msi?...&c=Exploited<N>
+C:\Windows\TEMP\sc.msi
+C:\Windows\Temp\sckit-run.bat
+C:\Windows\Temp\sckit-decoder.ps1
+%TEMP%\sckit-loader.ps1
+%TEMP%\k<guid>.ps1
+C:\ProgramData\RelayTrap\install.ps1
+C:\ProgramData\RelayTrap\trapbins\<client id>\RelayTrap.exe
+HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\RelayTrapLiteAlert
+%PUBLIC%\RELAY-TRAP-PROOF.txt
+CWInstall_<8 hex>-c1\Installer.ps1
+lab-trap-cleanup-embedded.ps1
+Stop-LabTrap.ps1
+WithUninstall.ps1
+desktop-vmc0ifs
+send
+sc-observation-lab
+94b93c649b0ae0281352da9d01761fa9195ab1e6ac7010af3b9ba1646355eb11  Panel-Lateral-free.ps1
+7a9aca9fdd4dcc13fe497cabdb13ca1e5d6a529271c8aa495e5ca1c1c80271ec  Panel-Lateral.ps1
+b93f10f30ee453d1e1c046fec9d141c41d7680be5cd46c3aeb3febe0f4953b4d  LabConfig.ps1
+3c7a98f0fdb6235b8076319c74dc1085f7b349b6d750416dd0cadb07d7972ec4  SCKit/trapkit/RelayTrap.cs
+d2ed7a7bf4f8ac9c7969e9b3a07ebd4dda0d858f372c876ac0a041611698de9a  SCKit/trapkit/TrapWatch.ps1
+4a1dd3cd2ea14368afadf7e9dfdd63b104e3981ef8c85bbb6510919b810af04b  SCKit/trapkit/install.ps1
+8cb5f48bbe70b5248db7f327f3d1ad6649df5c767d2a7e0711ee147fd92e06af  ToolboxRelayUploader.exe
+cf50d73fa8117a758093b1344de41cd6a6ccddc645cdda1fa91a9264efe93956  SCKit/trapkit/Lite-Alert.ps1
+81cc2baa35b798d6084bd078662fa29ff28df02c46c6ccdb2b43bde97d19f781  Stage0Loader.ps1
+c31e6f075cd77e01839aebce32ed35659a9ee962d102aca53040bb5e297410a9  SCKit/Release-Machine.cmd
+deda7c30d798a19b6699a45fbcba503cf778594df9163c61c2f96bb2d2b9fb45  SCKit/Recover-ExecutionPolicy.cmd
+0bd84c776dc01f784a617e73fc77b269f847fc4a062ffd489e4692869724bf08  Lab-context.json
+454c43d296b1276bde9a4f6ff1da2221cb35ccdb2fc7991bdd572e45bce12a8a  SCKit/trapkit/payload/TRAP-PROOF.bat
+5dd3a6ba806ac472663e243cfc1c034c534d5d9a42ec362c3dbf0f8d950148d0  Stop-LabTrap.bat
+43b7a5e56f9e6c7b74e1ce2b7b5af63f383084625fcc2d3a5985fa1059e2db95  Run-Lateral-Full.bat
+50659748723e906c8b3d3c0386bd4cf692f693a3e23639398c1a14d0c31fed61  runnew.cmd
 ```
