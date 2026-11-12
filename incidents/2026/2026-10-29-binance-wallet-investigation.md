@@ -2,7 +2,7 @@
 title: Binance preliminary report details signing-service intrusion and revises funding figures
 level: 4
 date: 2026-10-29
-updated: '2026-11-08'
+updated: 2026-11-12
 tags:
   - Binance
   - crypto
@@ -148,8 +148,15 @@ timeline:
   - date: Nov 8, 08:52 UTC
     title: Binance confirms HYPE and APT withdrawals reopened
     body: The exchange also lists previously restored ETH and SOL pairs and says it will reopen further pairs in phases after security checks.
+  - date: Nov 9, 08:16 UTC
+    title: Arbitrum Foundation confirms the proposed recovery destination
+    body: The Foundation confirms Binance’s control of the destination and that the proposal was posted on its behalf.
+  - date: Nov 10, 11:00 UTC
+    title: Elliptic publishes a newer tracing snapshot
+    body: The firm estimates about 3,350 BTC converted from other assets and around $3.0 billion remaining at addresses linked to the theft.
   - date: Nov 1, 06:00–09:00 UTC (scheduled)
     title: First withdrawal phase is planned
+
 
 checklist:
   - title: Use official channels and reject recovery messages
@@ -378,6 +385,10 @@ sources:
     url: https://x.com/binance/status/2119352231732580574
     primary: true
     says: Confirms HYPE and APT withdrawals reopened and lists the previously restored ETH and SOL pairs.
+  - name: Arbitrum Foundation confirmation of the proposal destination
+    url: https://forum.arbitrum.foundation/t/constitutional-aip-approve-release-of-frozen-eth-and-arb/31655/7
+    primary: true
+    says: November 9 confirmation from the Foundation that Binance controls the proposal destination and authorized the filing.
 ---
 
 Binance’s initial notice said it had not confirmed an impact on user funds. The exchange then edited that notice to state that user funds are safe, and subsequently said withdrawals would resume after the security issue is fully resolved. These are the vendor’s statements, not an independently audited reserve or loss assessment. No resumption time or technical containment report was supplied in those notices. The withdrawal notice does not specify affected networks or withdrawal routes; do not infer that every Binance product is affected. Those earlier notices supported L3 because they acknowledged disruption without confirming the suspected theft.
@@ -453,3 +464,5 @@ The researcher no longer says none of the traced money reached exchange deposit 
 In a companion analysis, Bitquery estimates that by **November 6 at 10:00 UTC**, about **$333M** had crossed chains, reached mixers or entered exchanges, valued at theft-time prices. That category includes transfers and does not establish conversion to fiat, recovery or additional theft. Do not add it to other tracing estimates.
 
 **November 8 withdrawal update.** At 08:52 UTC, Binance announced that HYPE and APT withdrawals had reopened. It separately listed ETH and SOL asset pairs that were already available. Binance plans to reopen more pairs after security checks. Check the exact asset and network in the live withdrawal interface. This update provides no new accounting of stolen, frozen or returned funds.
+
+**November 9–10 follow-up.** The Arbitrum Foundation says Binance confirmed control of the proposed recovery address 0xd9fd39103674cb061d64d9c3b73b878dbe610b80 and authorized the proposal. This confirmation concerns the destination and authorship. Approval and execution still require the governance process. At 11:00 UTC on November 10 Elliptic estimated about 3,350 BTC (roughly $250 million) converted from other stolen assets and about $3.0 billion still held at linked addresses, mostly ETH and BTC. It estimated around 150 BTC routed through Wasabi-style coinjoins and 11,000 ETH into Tornado Cash. These are Elliptic’s tracing estimates and have not been independently verified here. Its flows and balance estimates measure different things from the exchange’s replenishment, frozen assets and user repayments.
