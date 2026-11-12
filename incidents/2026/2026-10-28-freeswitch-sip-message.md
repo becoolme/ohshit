@@ -1,13 +1,14 @@
 ---
 title: FreeSWITCH patches exploited SIP MESSAGE command execution
 date: 2026-10-28
+updated: 2026-11-12
 level: 4
 tags: [FreeSWITCH, SIP, RCE]
 summary: FreeSWITCH confirms exploitation of a SIP MESSAGE path that selects its API command interface. Versions through 1.11.2 are affected; 1.11.3 closes the route by default. Authentication can still leave ordinary registered users able to exploit it.
 splash: SIP profiles accepting MESSAGE with mod_dptools loaded; stock passwordless users can remove the account prerequisite
 wipe: Upgrade to 1.11.3; disable unused inbound chat and keep enable-chat-api-proto off
 inTheWild: yes
-inTheWildNote: SignalWire confirms exploitation of this command-execution path.
+inTheWildNote: SignalWire confirms exploitation. CISA added the flaw to KEV on November 9.
 cves:
   - id: CVE-2026-116779
     score: 9.8
@@ -19,6 +20,9 @@ fixed:
 timeline:
   - date: Oct 28, 2026
     title: Advisory confirms exploitation and publishes patched version
+  - date: Nov 9, 2026
+    title: CISA adds CVE-2026-116779 to KEV
+    body: The catalog confirms known exploitation. The catalog due date for applicable U.S. federal civilian agencies is November 12, 2026. Follow vendor remediation and CISA BOD 26-04 forensic triage guidance.
 checklist:
   - title: Patch and verify each SIP profile
     hint: Check fs_cli -x version. Upgrade, keep enable-chat-api-proto disabled, and set enable-chat=false wherever inbound chat is unnecessary. Review configuration management before restarting affected services.
@@ -28,6 +32,12 @@ sources:
   - name: SignalWire FreeSWITCH advisory
     url: https://github.com/signalwire/freeswitch/security/advisories/GHSA-mg63-h38w-8p9p
     primary: true
+  - name: CISA Known Exploited Vulnerabilities Catalog
+    url: https://www.cisa.gov/known-exploited-vulnerabilities-catalog
+    primary: true
+    says: CISA adds CVE-2026-116779 to KEV on November 9, with a November 12 due date.
 ---
 
 mod_dptools registers the API chat interface; inbound chat is enabled by default. Where MESSAGE authentication is enforced, one ordinary profile account suffices; stock users without passwords can permit accountless access. The fix rejects the API selector by default. No victim count or static indicators are published. L4 reflects confirmed exploitation.
+
+The catalog confirms known exploitation. The catalog due date for applicable U.S. federal civilian agencies is November 12, 2026. Follow vendor remediation and CISA BOD 26-04 forensic triage guidance.
