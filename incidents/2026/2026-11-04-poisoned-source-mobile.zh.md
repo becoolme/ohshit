@@ -40,9 +40,9 @@ checklist:
 - title: 更新移动操作系统及浏览器
   hint: 通过设备及浏览器官方渠道更新。Sekoia 观察到的投递配置为 iOS 16.7、iOS 18.5 和 Android Chrome 139–145（不含 143），不是通用影响／修复版本范围；取得的利用链均使用已修补漏洞。怀疑利用时联系安全团队，保留设备证据，从干净设备吊销暴露会话及凭据；不要推断仅访问即已窃密。
 - title: 核验网站脚本及 Plerdy 回应
-  hint: 清理前保留 8 月 27 日至 9 月 3 日的 HTML／JavaScript、哈希、时间、CDN／代理日志及设备网络证据。Plerdy 称当前构建已验证、无需移除；从浏览器开发工具检查实际请求，通过官方支持索取技术报告及域名清单。厂商于 9 月 4 日重置全部密码并结束会话；更改其他服务复用的密码，启用其邮箱验证码两步登录。
+  hint: 清理前保留 8 月 27 日至 9 月 3 日的 HTML／JavaScript、哈希、时间、CDN／代理日志及设备网络证据。也请检查 CMS 内容块及实际下发的插件 JavaScript。Plerdy 称当前构建已验证、无需移除；从浏览器开发工具检查实际请求，通过官方支持索取技术报告及域名清单。厂商于 9 月 4 日重置全部密码并结束会话；更改其他服务复用的密码，启用其邮箱验证码两步登录。
 - title: 核查全部公开网络指标及两组哈希
-  hint: 公开攻击者域名／IP：static.flux-telemetry.com (109.104.106.107), edge-ord.clouds-stacks.com (95.133.231.28), ad.starx-net.com (195.58.140.105), america250.holiday (192.121.46.25), theowo.club (188.190.17.232), adsprism-stat.com, ads-it-assets.com, cdn.adv-static.com, wpvortex-mod.com, assets-int.com，以及 uismart-asset[.]com。a.plerdy.com/public/js/click/main.js 是遭篡改的合法来源，不是攻击者拥有的 Plerdy 域名。核查 /module/5b4c8fea5cbcee273e8d830f52-temfp.js、/api/uGmlx2pmMHU1jq7wZU2QWgeC28vbXalf/v1、/api/<NONCE>/v1–v3、8881 端口 /telemetry/v12 及 VDGH_TOKEN_REF。完整报告公开 13 个不同 SHA256：指标表九个及正文另四个不同变体，两组均须使用，不能假设每阶段只有一个哈希。另有未公开指标，因此这是完整公开集，不是完整活动覆盖；命中或载入跟踪脚本不证明已利用。
+  hint: 公开攻击者域名／IP：static.flux-telemetry.com (109.104.106.107), edge-ord.clouds-stacks.com (95.133.231.28), ad.starx-net.com (195.58.140.105), america250.holiday (192.121.46.25), theowo.club (188.190.17.232), adsprism-stat.com, ads-it-assets.com, cdn.adv-static.com, wpvortex-mod.com, assets-int.com，以及 uismart-asset[.]com。Report URI 另列出 flux-telemetry[.]com、clouds-stacks[.]com、starx-net[.]com 和 adv-static[.]com 四个父域。a.plerdy.com/public/js/click/main.js 是遭篡改的合法来源，不是攻击者拥有的 Plerdy 域名。核查 /module/5b4c8fea5cbcee273e8d830f52-temfp.js、/api/uGmlx2pmMHU1jq7wZU2QWgeC28vbXalf/v1、/api/<NONCE>/v1–v3、8881 端口 /telemetry/v12 及 VDGH_TOKEN_REF。完整报告公开 13 个不同 SHA256：指标表九个及正文另四个不同变体，两组均须使用，不能假设每阶段只有一个哈希。另有未公开指标，因此这是完整公开集，不是完整活动覆盖；命中或载入跟踪脚本不证明已利用。
 sources:
 - name: Sekoia 的 Poisoned Source 原始调查
   says: 11 月 4 日更广活动报告：三类路径、八个实际使用的 CVE、观察到的配置、全部公开网络／13 个哈希指标及归因置信度；部分基础设施未公开。
