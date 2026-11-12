@@ -95,7 +95,7 @@ Addmin
 rmmserver
 ```
 
-Huntress 观察到攻击者利用云托管控制台的 Run Command，在受管理 Windows 终端安装非授权客户端及 SCKit。观测到的合作伙伴环境运行 26.6.6.9747 和 26.7.6.9783。仅升级无法清除持久化。工具包可拦截浏览器会话 Cookie，并设计为通过技术人员的交互会话传播。研究人员在已核查的主机日志中看到控制台接管均告失败，因此尚未确认成功自传播。48 家组织的 288 台主机是 Huntress 的观测范围。ConnectWise 所说的约 400 个环境是扩展安装数量。
+Huntress 观察到攻击者利用云托管控制台的 Run Command，在受管理 Windows 终端安装非授权客户端及 SCKit。Huntress 将 26.6.6.9747 和 26.7.6.9783 列为此次攻击影响的版本。26.6.5 是技术人员客户端阻断所观测传播手法的最低版本。仅升级无法清除持久化。工具包可拦截浏览器会话 Cookie，并设计为通过技术人员的交互会话传播。研究人员在已核查的主机日志中看到控制台接管均告失败，因此尚未确认成功自传播。48 家组织的 288 台主机是 Huntress 的观测范围。ConnectWise 所说的约 400 个环境是扩展安装数量。
 
 Sophos 独立观察到一条部署链。curl.exe 从 185.99.255[.]28 下载 ScreenConnect.ClientSetup.msi 到 C:\Windows\TEMP\sc.msi，随后 ScreenConnect 生成的命令文件调用 msiexec.exe 静默安装。Sophos 还观察到批处理文件落地，以及 PowerShell 绕过执行策略后从 hxxps://ns[.]mo7sen[.]dev/EadF.php?p=4 下载第二阶段脚本。将三项疑似遭滥用的来源实例 ID d905b2b1b165d0a9、4b8f4089ddaac6a9、df1f7ef0cfacd0d8，与两项非授权目标实例 ID 2588ef5c15954b10、ed630cc2c873b091 分开核对。结合命令历史、进程及网络日志判断，单独命中无法证明失陷。
 
