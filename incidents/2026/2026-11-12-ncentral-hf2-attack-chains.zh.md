@@ -5,11 +5,11 @@ splash: 启用 Legacy API 且可被访问的 N-central HF2，以及满足已披�
 wipe: 关闭 Legacy API，限制不可信网络访问设备，检查服务器和终端日志，并分别跟踪两类路径的修复。
 inTheWildNote: Previdian 在传感器上观察到利用尝试，尚未确认成功入侵。
 timeline:
-- date: 11月12日 03:58 UTC
+- date: 2026年11月12日
   title: 研究者发布新的服务器及 Windows 终端攻击链
   body: 公开测试使用 N-central Appliance 2026.4.1.26 HF2。
 - date: 11月12日 07:48 UTC
-  title: 研究者补充服务器攻击的前提
+  title: 研究仓库记录服务器攻击前提
   body: 4EverAble2Shell 测试时启用了 Legacy API。
 - date: 11月12日 08:24 UTC
   title: Previdian 传感器观测到利用尝试
@@ -24,7 +24,7 @@ checklist:
 sources:
 - says: 记录测试服务器构建、SOAP 端点、root 攻击链及 Legacy API 前提。
 - says: 记录测试构建、设备标识符，以及 Windows Agent 和 Probe 攻击链各自的利用前提。
-- says: 记录首次公开提交及 Legacy API 补充说明的时间。
+- says: 记录仓库的初始提交及 Legacy API 补充说明。
 - says: 说明重新启用旧版 API 的设置位置。
 - says: 确认 HF2 构建号为 2026.4.1.26，并说明先前修复中 Agent 和 Probe 的部署方法。
 - says: 第一方传感器记录了来自同一源 IP 的两次尝试，未证明成功。
