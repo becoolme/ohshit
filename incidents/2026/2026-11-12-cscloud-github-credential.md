@@ -15,7 +15,7 @@ timeline:
 - date: Nov 5, 2026
   title: Company confirms earlier suspicious GitHub activity
   body: An outside party had reported that one work credential leaked. The company found access it believes involved that credential.
-- date: Nov 12, 2026
+- date: Nov 12, 04:00 UTC
   title: Company discloses possible development data exposure
   body: The company describes credential revocation, rotation and isolation. It is investigating affected records and the exposure route.
 checklist:
@@ -34,4 +34,4 @@ sources:
 
 Cyber Security Cloud says an external tip identified one leaked employee credential. On November 5, a review of available GitHub logs found earlier suspicious access the company believes involved a third party using it. The logs cannot cover the credential’s entire period of validity. The company is investigating the exposure route and has not published a count of affected records or people. It says company names, names and email addresses of some customers, and communications information tied to service use may have been viewed or obtained.
 
-The provider revoked the credential, checked and changed other service credentials stored in GitHub, reviewed related access rights, isolated relevant development devices and suspended related accounts. It reports no confirmed unauthorized activity in its services, secondary harm or impact to service delivery or security functions. It plans to contact customers as it confirms the scope and coordinate notices with the customers whose data it processes.
+The provider revoked the credential, checked and changed other service credentials stored in GitHub, reviewed related access rights, isolated relevant development devices and suspended related accounts. It reports no confirmed unauthorized activity in its services, secondary harm or impact to service delivery or security functions. It reported the matter to Japanese authorities, including the Personal Information Protection Commission. It plans to contact customers as it confirms the scope and coordinate notices with the customers whose data it processes.
