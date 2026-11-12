@@ -1,5 +1,5 @@
 ---
-title: FortiOS fixes three critical flaws in routing and high availability
+title: Fortinet fixes critical FortiOS routing and HA flaws
 date: '2026-11-10'
 level: 3
 tags:
@@ -9,7 +9,7 @@ tags:
 ecosystems:
 - fortinet
 summary: Fortinet disclosed critical flaws affecting OSPF, iBGP and some FortiOS high-availability deployments. Upgrade to 8.0.2, 7.6.8, 7.4.13 or 7.2.14 or later in the corresponding branch to cover all three.
-splash: Affected FortiOS devices using OSPF, configured iBGP neighbors, FGSP with standalone-config-sync or autoscale.
+splash: Affected FortiOS devices using OSPF, configured iBGP neighbors, FGSP with standalone-config-sync or autoscale. FortiSASE routing.
 wipe: Inventory exposed routing and HA interfaces, follow the applicable upgrade path, and verify routing and cluster health.
 inTheWild: unknown
 inTheWildNote: The Fortinet records reviewed here provide no evidence of exploitation.
@@ -38,6 +38,9 @@ fixed:
 - product: FortiOS 7.0
   version: none
   status: Migrate to a supported fixed branch
+- product: FortiSASE 26.3
+  version: 26.3.2
+  status: Vendor-applied iBGP fix
 timeline:
 - date: Nov 10, 2026
   title: Fortinet publishes routing advisories
@@ -50,6 +53,8 @@ checklist:
   hint: Run get system status on every unit. Check which interfaces run OSPF, which neighbors use iBGP, and whether FGSP with standalone-config-sync or autoscale is enabled. Restrict routing and HA traffic to trusted links or peers using your existing network controls while planning the upgrade.
 - title: Back up and upgrade the affected branches
   hint: Back up configurations and follow Fortinet’s model-specific upgrade path for all cluster members. For all three flaws, use FortiOS 8.0.2, 7.6.8, 7.4.13 or 7.2.14 or later in the respective branch. If you run 7.0, plan migration to a supported fixed branch. Verify the installed versions, routing adjacencies, route tables and HA health after the change.
+- title: Check your FortiSASE service version
+  hint: Fortinet applied the iBGP fix in 26.3.2 for the 26.3 line. Coordinate migration with Fortinet if you use an affected older line, and verify OSPF remediation with Fortinet.
 - title: Investigate unexpected routing or admin changes
   hint: Preserve routing, HA and admin logs if you find unexplained route advertisements, peer resets or configuration changes. Compare route and config snapshots with your known-good baseline. If evidence points to privileged access, isolate the affected unit, investigate lateral access and rotate exposed credentials from a trusted system.
 sources:
@@ -77,4 +82,6 @@ sources:
 
 These CVEs are part of the detailed advisories following [Fortinet’s October priority upgrade notice](/incidents/fortinet-security-hardening/). The OSPF path requires adjacent access, the BGP path requires a configured iBGP peer, and the HA path requires access to HA packets on an affected FGSP deployment with standalone-config-sync or an autoscale deployment.
 
-For the routing flaws, FortiOS 8.0.0–8.0.1, 7.6.0–7.6.7, 7.4.0–7.4.12 and 7.2.0–7.2.13 are affected. FortiOS 8.0.1 fixes the HA flaw on the 8.0 branch. Install 8.0.2 for the routing fixes. The affected HA versions in the 7.6, 7.4 and 7.2 branches match the routing ranges. The Fortinet CNA records additionally list 7.0.1–7.0.19 for OSPF and 7.0.0–7.0.19 for HA in their structured version tables, without a 7.0 fix. Fortinet’s OSPF advisory also references FortiSASE. Managed-service customers should check their tenant status with Fortinet.
+For the routing flaws, FortiOS 8.0.0–8.0.1, 7.6.0–7.6.7, 7.4.0–7.4.12 and 7.2.0–7.2.13 are affected. FortiOS 8.0.1 fixes the HA flaw on the 8.0 branch. Install 8.0.2 for the routing fixes. The affected HA versions in the 7.6, 7.4 and 7.2 branches match the routing ranges. The Fortinet CNA records additionally list 7.0.1–7.0.19 for OSPF and 7.0.0–7.0.19 for HA in their structured version tables, without a 7.0 fix.
+
+Fortinet’s iBGP advisory lists FortiSASE 26.3.1 and 26.3.1_a as affected and says Fortinet applied the fix in 26.3.2. It directs customers on 26.2, 26.1, 25.4, 25.3, 25.2, 25.1.a and 25.1 to migrate to a fixed release. The OSPF advisory also names FortiSASE. Its machine-readable vulnerability record gives FortiOS fixes, so check the OSPF remediation for your tenant with Fortinet.
