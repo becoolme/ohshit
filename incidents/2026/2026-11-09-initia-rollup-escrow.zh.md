@@ -30,6 +30,6 @@ sources:
   says: 转载初步入侵链、托管资产流转、转出资产及恢复意向。
 ---
 
-Initia 先发布 [Rollup 异常公告](https://x.com/initia/status/2119875372183703612)，随后发布 [L1 暂停公告](https://x.com/initia/status/2120050740626628972)。Initia 在[技术更新](https://x.com/initia/status/2120195620442910943)中称，涉及已失陷私有节点配置 GCP 密钥的命令注入暴露了环境变量。攻击者随后利用凭据进入 GitHub、GCP 及 Rollup 托管平台 Anvil。伪造提现解锁了 L1 IBC 托管资产。Initia 报告约 327 万美元转至攻击者的 L1 地址，约 216 万美元仍留在该地址及暂停的链上，转出资产包括 13,400 TIA、8,000 USDC.inj 和 597,000 Noble USDC。团队称攻击者未将 INIT 转出链外。
+Initia 先发布 [Rollup 异常公告](https://x.com/initia/status/2119875372183703612)，随后发布 [L1 暂停公告](https://x.com/initia/status/2120050740626628972)。Initia 在[技术更新](https://x.com/initia/status/2120195620442910943)中称，涉及已失陷私有节点配置 GCP 密钥的命令注入暴露了环境变量。攻击者随后利用凭据进入 GitHub、GCP 及 Rollup 托管平台 Anvil。伪造提现解锁了 L1 IBC 托管资产。Initia 报告约 327 万美元转至攻击者的 L1 地址，约 216 万美元仍留在暂停的 L1 上，跨链转出达到 IBC 速率上限，转出资产包括 13,400 TIA、8,000 USDC.inj 和 597,000 Noble USDC。团队称攻击者未将 INIT 转出链外。
 
 已转移价值、暂停链上留存资产、跨链转出以及未来补偿各有不同口径。Initia 计划恢复受影响资产的足额支持，并称正隔离重建相关基础设施。这些公告尚未公布最终追回金额或重启时间表。所述机制与 10 月的 MoveVM 事件不同。
