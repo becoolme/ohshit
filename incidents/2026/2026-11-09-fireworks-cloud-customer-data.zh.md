@@ -1,0 +1,31 @@
+---
+title: Fireworks 云环境遭入侵，客户资料及部分 Notion AI 对话记录暴露
+summary: Fireworks 披露后续入侵经研发云服务商进入，确认部分客户数据集及未完成的模型权重被访问。Notion 发现不足 1% 的工作区涉及 Insights 对话记录，已通知受影响客户。
+splash: 收到暴露通知的 Fireworks 客户，以及 Insights 对话记录受影响并已获通知的 Notion 工作区。
+wipe: 核查厂商通知及暴露资料。吊销并轮换受影响数据集或对话中包含的凭据。
+inTheWildNote: Fireworks 与 Notion 确认受影响客户资料遭未经授权访问。
+timeline:
+- date: 2026年10月9日
+  title: Fireworks 发布先前事件公告
+  body: Fireworks 最初确认用于评估任务等工作流程的存储密钥被访问。
+- date: 2026年10月23日至24日
+  title: 云服务商事件波及 Fireworks 开发环境
+  body: Fireworks 于 10 月 24 日发现未经授权的工作负载并开始遏制。
+- date: 2026年11月9日
+  title: Fireworks 与 Notion 公布影响范围
+  body: Fireworks 公布新增受影响资料类别。Notion 说明 Insights 对话记录暴露及通知流程。
+checklist:
+- title: 核查 Fireworks 通知列出的资料
+  hint: 查看事件通知，或通过安全公告所列渠道联系厂商。识别受影响的数据集、模型资料、元数据或账单记录。在签发方吊销并轮换暴露密钥，排查相关活动。
+- title: 在 Notion 工作区内核查受影响记录
+  hint: 若收到通知，按 Notion 指引在工作区内获取受影响资料。将其视为已暴露，轮换曾粘贴进受影响对话的密码、API 密钥及其他凭据。
+sources:
+- name: Fireworks 11 月 9 日公告
+  says: 说明 10 月云服务商相关入侵、资料类别、处置和持续调查。
+- name: Notion 安全公告
+  says: 说明受影响的 Insights 对话记录、工作区通知和凭据处置。
+---
+
+Fireworks 称，研发云主机服务商于 10 月 23 日发生安全事件，攻击者于 10 月 24 日进入其开发机器。调查确认受影响资料包括资源元数据及账单资料，涉及地址、付款记录、余额和额度用量。Fireworks 表示银行卡号不在影响范围。公司暂时关闭用于 Batch Inference 和基于数据集的训练的自助数据集上传与下载。其目前调查未发现 Inference、Training SDK 或 Nexus 受影响。
+
+Notion 称，收到合成测试资料相关通知后，在 11 月 3 日前切断与 Fireworks 的连接。Fireworks 于 11 月 6 日再次通知 Notion，并于 11 月 8 日确认另有一份数据集。Notion 称，大多数受影响工作区的对话记录没有作者或工作区标签，也没有工具调用结果。对话正文可能包含身份信息或密钥。Notion 已停用 Insights 并继续调查。现有来源未确定受影响人数。
