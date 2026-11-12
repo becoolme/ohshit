@@ -2,6 +2,7 @@
 title: Amplifon Americas confirms file theft, with 1,332,826 people listed in its Texas filing
 level: 4
 date: '2026-11-05'
+updated: 2026-11-12
 tags: [Amplifon, healthcare, data breach]
 summary: Amplifon Americas confirms that an unauthorized party obtained files from its network. The Texas filing lists 1,332,826 people. The company says hearing, medical and insurance data may be involved, and financial data or Social Security numbers may be involved for a limited group.
 splash: People whose personal or hearing-care records were held on the affected Amplifon Americas systems.
@@ -24,6 +25,9 @@ timeline:
 - date: Nov 6, 2026
   title: Texas posts the overall count
   body: Amplifon USA’s filing BR-0005495 lists 1,332,826 people overall and 85,804 in Texas.
+- date: Nov 9, 2026
+  title: Massachusetts records its state-specific scope
+  body: Entry 2026-1968 lists 19,276 affected Massachusetts residents and flags Social Security numbers, medical records and driver’s license data.
 checklist:
 - title: Verify your notice and ask about the affected fields
   hint: Open Amplifon’s official incident page directly or call its incident line at 844-971-8634 on weekdays from 08:00 to 17:30 Central time, excluding major U.S. holidays. Amplifon says it will mail notices to potentially affected people for whom it has valid addresses.
@@ -44,8 +48,14 @@ sources:
   url: https://oag.my.site.com/datasecuritybreachreport/apex/DataSecurityReportsPage
   primary: true
   says: November 6 public record BR-0005495 lists 1,332,826 people overall and 85,804 in Texas.
+- name: Massachusetts 2026 breach notification report
+  url: https://www.mass.gov/doc/data-breach-report-2026/download
+  primary: true
+  says: Entry 2026-1968 lists 19,276 Massachusetts residents and the data category flags.
 ---
 
 Amplifon says it disabled affected accounts and increased monitoring. Its investigation found files had been obtained from certain systems. Depending on the person, the records may contain names, contact details, dates of birth, driver’s license or other government identifiers, hearing and medical information, medical record numbers, dates of service, and health insurance identifiers or other insurance information. Financial data and Social Security numbers may be involved for a limited group. The state counts are parts of the overall total.
 
 Amplifon reports that it is unaware of fraudulent use. The public notice gives no initial access mechanism and no field-by-field totals.
+
+Massachusetts’s November 9 entry lists 19,276 state residents and flags Social Security numbers, medical records and driver’s license data. Those flags describe the reporting categories. Check the individual notice to learn which fields apply. The state count is within the scope of the incident and should not be added to the reported overall total.
