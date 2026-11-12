@@ -51,6 +51,6 @@ sources:
   primary: true
 ---
 
-AWS disclosed two issues in deployments of the open-source mcp-gateway-registry. CVE-2026-100307 (GHSA-rxf3-qgpv-wxvr) affects 1.0.9 through 1.24.7. An authenticated low-privileged caller can use the management API to map an identity-provider group to a privileged scope. The fix in 1.25.0 blocks the write path. Existing mappings remain active until reviewed and removed, and the upgrade does not invalidate any credentials already read.
+AWS disclosed two issues in deployments of the open-source mcp-gateway-registry. CVE-2026-100307 (GHSA-rxf3-qgpv-wxvr) affects 1.0.9 through 1.24.7. An authenticated low-privileged caller can use the management API to map an identity-provider group to a privileged scope. Version 1.25.0 enforces authorization when these endpoints write changes. Existing mappings remain active until reviewed and removed, and the upgrade does not invalidate any credentials already read.
 
 CVE-2026-125926 (GHSA-fc39-fwh3-wv5r) affects 1.0.3 through 1.34.0. An authenticated user who can register or change a server can point its upstream address at services reachable from the gateway. Depending on network configuration and response handling, the path can expose internal data or cloud metadata credentials. Version 1.35.0 validates new or changed addresses and leaves existing configuration in place. Upgrade, audit historical state and confirm that management routes and outbound connections are restricted.
