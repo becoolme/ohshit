@@ -53,6 +53,6 @@ sources:
 
 Git 的 11 月更新修复了一条代码执行路径。超长索引条目使用完整名称通过路径校验，写入时却使用截断的名称。递归克隆过程中，这可能用符号链接替换子模块的 gitfile，随后以执行克隆的用户或任务权限运行代码。维护者描述的前提是仓库由攻击者托管，且通过 `--recurse-submodules` 进行递归克隆。
 
-GitHub 表示已在 GitHub.com、GitHub Enterprise Cloud 及其数据驻留服务部署修复。11 月 10 日公告单独列出了 GitHub Enterprise Server 更新，并称 Actions、Codespaces、GitHub Desktop 和 Copilot 应用将获得包含修复的 Git。请在实际运行 Git 的环境中核对版本。发行版软件包可能用不同的包版本提供回移补丁。
+GitHub 表示已在 GitHub.com、GitHub Enterprise Cloud 及其数据驻留服务部署修复。11 月 10 日公告单独列出了 GitHub Enterprise Server 更新，并称 Actions、Codespaces、GitHub Desktop 和 Copilot 应用将获得包含修复的 Git。请在实际运行 Git 的环境中核对版本。发行版软件包可能用不同的包版本提供回移补丁。维护者确认受影响版本可追溯至 2.27.0，并未为低于 2.50 的分支提供上游维护版本。请迁移旧安装，或向维护当前构建的发行方核实修复。
 
 其他五个漏洞各有不同的触发输入。例如，若服务使用拟合并树中的属性检查能否合并，攻击者可以借该服务触发三方合并漏洞。在相关服务完成更新前应避免处理不可信输入。
