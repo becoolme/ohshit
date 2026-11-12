@@ -2,13 +2,13 @@
 title: OpenSSH on musl Linux can accept long passwords for key-only accounts when PAM is disabled
 level: 4
 date: 2026-11-05
-updated: 2026-11-07
+updated: 2026-11-12
 tags: [OpenSSH, Alpine Linux, Authentication bypass]
 summary: Previdian observed OpenSSH bypass attempts and reports root access on an Alpine honeypot. The flaw requires reachable musl sshd, password auth, no PAM, a '*' target and another local $5$/$6$ hash. Use OpenSSH 10.6p2 or the Alpine backport and restart sshd. No production compromise is established.
 splash: Reachable musl sshd, no PAM, password login, '*' target and local $5$/$6$ hash. Reproduced after a failure in the same connection.
 wipe: Install your Alpine branch's fixed OpenSSH package and restart sshd; otherwise disable PasswordAuthentication and verify the effective configuration.
 inTheWild: yes
-inTheWildNote: Previdian observed attempts and reports root access on its Alpine honeypot.
+inTheWildNote: CISA listed the bypass in KEV on November 9. Previdian reported honeypot root access.
 cves:
   - id: CVE-2026-123158
     score: 8.1
@@ -42,6 +42,9 @@ timeline:
   - date: Nov 7, 2026
     title: Sensor dashboard shows more attempts
     body: Previdian’s updated snapshot lists 17 attempts across four sensors from 11 source IPs geolocated to eight countries.
+  - date: Nov 9, 2026
+    title: CISA adds CVE-2026-123158 to KEV
+    body: The catalog confirms known exploitation. The catalog due date for applicable U.S. federal civilian agencies is November 12, 2026. Follow vendor remediation and CISA BOD 26-04 forensic triage guidance.
 checklist:
   - title: Update the server package and restart the running daemon
     hint: On Alpine use apk upgrade -U -a and compare apk info -v openssh-server or openssh-server-pam with your branch's row above, then run rc-service sshd restart. Package installation alone leaves the old daemon running. Rebuild affected images and replace or update running instances; a newly fixed image does not patch an existing VM. Exceptional fixes for 3.21 and older do not restore general support.
@@ -83,6 +86,10 @@ sources:
     url: https://github.com/oz9un/sshole
     primary: true
     says: Documents two password prompts in the same connection.
+  - name: CISA Known Exploited Vulnerabilities Catalog
+    url: https://www.cisa.gov/known-exploited-vulnerabilities-catalog
+    primary: true
+    says: CISA adds CVE-2026-123158 to KEV on November 9, with a November 12 due date.
 ---
 
 Alpine describes a failure when musl's crypt() returns an error marker for an overlong password and sshd compares it with an account's stored '*' field. A reachable attacker who knows the target username can authenticate with a 257–1024-byte password if password authentication is enabled, PAM is not used and another local account supplies a $5$ or $6$ password hash. The discoverer’s reproduction requires a failed password attempt earlier in the same connection. This is not a universal OpenSSH or Alpine compromise. Accounts locked with '!' are excluded; root still needs PermitRootLogin yes for direct password entry, while another affected account may obtain root through its own privileges.
@@ -94,3 +101,5 @@ Alpine lists affected releases 3.16–3.24 and edge. Its tiny-cloud images are s
 **November 6 exploitation evidence.** Previdian’s initial public sensor report lists eight attempts from one source IP. Its CEO separately told The Hacker News that one reached root on a honeypot running Alpine and OpenSSH, and reported non-interactive reconnaissance. Observed attempts and successful access to the monitoring environment justify L4. On November 7 the public dashboard shows 17 attempts across four sensors from 11 source IPs geolocated to eight countries. The counts describe sensor observations. The findings establish neither production victims nor changes to vendor prerequisites or fix versions.
 
 StepSecurity independently reproduced that sequence in an Alpine 3.24 VM and container using `10.3_p1-r1`. The bypass failed after installing `10.3_p1-r2` and restarting sshd. Its client and askpass setup could deliver at most 1023 bytes. Alpine still documents a server range of 257–1024 bytes. GitHub tracks the same issue as [GHSA-4fcc-vm97-gx3x](https://github.com/advisories/GHSA-4fcc-vm97-gx3x).
+
+The catalog confirms known exploitation. The catalog due date for applicable U.S. federal civilian agencies is November 12, 2026. Follow vendor remediation and CISA BOD 26-04 forensic triage guidance.
