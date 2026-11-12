@@ -17,7 +17,7 @@ timeline:
   title: Guardio publishes CartJacked measurements
   body: The report separates crawl estimates, live storefront observations and sealed checkout testing.
 - date: "Nov 12, 2026"
-  title: "Ohey details the RTCGnaw checkout skimmer"
+  title: "Ohey counts 26 sites serving RTCGnaw"
   body: "The November 12 snapshot counts 26 affected sites observed since September 4 and identifies overlap with two hosts in the CartJacked appendix."
 checklist:
 - title: Inspect and contain payment-page modifications

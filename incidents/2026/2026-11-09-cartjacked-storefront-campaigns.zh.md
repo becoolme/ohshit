@@ -9,7 +9,7 @@ timeline:
   title: Guardio 发布 CartJacked 调查
   body: 报告分别给出爬取样本估算、实际访问观察及隔离结账测试。
 - date: "2026年11月12日"
-  title: "Ohey 披露 RTCGnaw 支付窃取脚本细节"
+  title: "Ohey 统计到 26 个站点提供 RTCGnaw 脚本"
   body: "11 月 12 日的统计记录了自 9 月 4 日起观测到的 26 个受影响站点，其中两个相关主机也出现在 CartJacked 的附录中。"
 checklist:
 - title: 检查并遏制支付页面改动
