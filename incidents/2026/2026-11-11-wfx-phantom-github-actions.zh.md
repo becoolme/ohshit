@@ -17,11 +17,14 @@ timeline:
 - date: 2026年11月12日
   title: StepSecurity 发布攻击活动分析
   body: 研究人员从约 05:30 UTC 开始观察到仅通过 Telegram 上传的样本，并在 07:40 UTC 报告搜索结果中有超过 6.3 万个探测 PR。搜索结果数量并不代表成功入侵数量。
+- date: 2026年11月12日
+  title: Aikido 发布同一攻击活动的账号和仓库数据
+  body: Aikido 识别出 4,837 个失陷账号探测了 61,764 个仓库。报告对载荷执行仓库数量给出两个不同的下限。
 checklist:
 - title: 遏制可疑的 GitHub 访问和运行
   hint: 暂停受影响的工作流和发布，取消正在运行的可疑任务，隔离受影响的自托管运行器，保留审计日志、运行编号、提交 SHA 和网络证据。撤销受影响的 PAT、OAuth 或 GitHub App 用户授权及机器人凭据。移除不必要的分支保护绕过权限，并核查每个令牌的写入范围。
 - title: 关联仓库与网络证据
-  hint: 检查 Git 历史、PR 元数据和 Actions 审计记录。从 11 月 10 日起在运行器出站记录中查找 194.150.166[.]244:8080/exfil、18.143.168[.]96:8080/exfil、153.75.82[.]159:8080/exfil、GhostAction 旧端点 193.32.204[.]199，以及 api.telegram.org 的 sendDocument。正文与 StepSecurity 报告列出完整指标。把缺失的运行编号与具体提交和操作者关联。探测 PR 或单项指标只是线索。若确认或很可能已执行，应按该任务可访问的凭据已暴露处理。
+  hint: 检查 Git 历史、PR 元数据和 Actions 审计记录。从 11 月 10 日起在运行器出站记录中查找 194.150.166[.]244:8080/exfil、18.143.168[.]96:8080/exfil、153.75.82[.]159:8080/exfil、GhostAction 旧端点 193.32.204[.]199，以及 api.telegram.org 的 sendDocument。正文链接完整指标清单。核查 Aikido 公布的脚本哈希，并把命中的文件与 GitHub 操作者和执行证据关联。把缺失的运行编号与具体提交和操作者关联。探测 PR 或单项指标只是线索。若确认或很可能已执行，应按该任务可访问的凭据已暴露处理。
 - title: 先清除云端持久访问，再更换密钥
   hint: 暂停受影响的 OIDC 信任关系，并在支持时撤销会话。在 AWS CloudTrail 和 IAM 检查角色信任变更、新访问密钥和 wfx-* 会话，在 Azure 审计日志检查未授权的联合凭据，并在 GCP 日志检查服务账号模拟。移除未授权访问后，轮换可触及的仓库、组织、环境、软件包仓库及云端密钥。自托管运行器还应轮换主机可访问的凭据和令牌。
 - title: 从可信来源恢复并验证产物
@@ -35,6 +38,8 @@ sources:
   says: 展示植入 update.sh 的改动。
 - name: Nextcloud Docker 工作流运行 2675
   says: 记录 11 月 11 日 12:52 UTC 植入提交中的 update.sh 被执行。
+- name: Aikido wfx-loot 原始分析
+  says: 公布账号和仓库数量、两个不同的执行数量下限、云端持久访问技术和脚本的 SHA-256。
 ---
 
 攻击要求有可写入仓库的有效令牌，以及一条可执行载荷的路径。攻击者可修改现有工作流、新建工作流、在 CI 已调用的脚本末尾追加代码，或添加隐藏脚本并挂到 npm 生命周期、构建或测试命令上。工作流变体可显式传入密钥。脚本变体可在任务有权限时读取运行器内存和凭据存储。云端权限扩展取决于运行器所持凭据及对应权限和信任。载荷具备伪造必需检查结果的功能，但 StepSecurity 检查的样本均未启用该功能。
@@ -58,3 +63,11 @@ Nextcloud Docker 的第 2675 次运行在自托管运行器上执行了植入后
 - 分支模式 `chore/[a-z0-9]{8}`、`ci-check-[0-9]{4}`，路径模式 `.ci-[a-z0-9]{6}.sh`、`.github/workflows/build-audit-[a-z0-9]{6}.yml`，以及现有工作流、shell 脚本或 `package.json` 的改动。
 - 步骤名 `Pass runtime`、`Restore cache <4 characters>` 或 `Run audit`，变量 `WF_CALLBACK`、`WF_CTOKEN`、`WF_EXFIL_*`、`WF_TG_BOTS`，暂存路径 `.wfx-$$`，日志字符串 `memscan_files`、`archive_bytes`、`deliver_retry`。
 - Azure 中名为 `wfx-ci-*` 的联合凭据，AWS 中授予通配 AWS 主体权限的信任变更及名为 `wfx-*` 的会话。
+
+### Aikido 11 月 12 日公布的影响范围
+
+Aikido 将同一 `wfx-docs` 探测手法和 CI 载荷称为 wfx-loot。它识别出 **4,837 个失陷的 GitHub 账号**，这些账号在 **61,764 个仓库**发起探测。Aikido 另外报告 GitHub 搜索匹配 **61,839 个 PR**。StepSecurity 较晚统计的是其核查当时命中的 PR 数量。这些数字的统计口径不同，不应相加。
+
+Aikido 报告的详细部分称，至少 **1,806 个仓库**有载荷执行迹象。开头则称，至少 **1,835 个仓库**执行了载荷且凭据被外传。报告未解释两处数字的差异，也未给出最终总数。应根据各仓库的执行和暴露证据开展调查。Aikido 公布的脚本 SHA-256 为 `89695abb392d5cfd4972672961e644bb46baa98aa1ed7173c2a2816c762735cf`。该哈希对应一个样本。发现命中时，应结合操作者、提交和运行记录核查。
+
+该报告记录了所见配置通过 HTTP 传输，并提到后续样本添加了 Telegram 传输。StepSecurity 关于 Telegram 和第三个 HTTP 端点的观测仍适用。

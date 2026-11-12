@@ -6,6 +6,7 @@ wipe: Contain suspect runs, revoke compromised tokens, rotate reachable secrets 
 inTheWildNote: StepSecurity observed execution. WebdriverIO recorded unauthorized bot commits.
 level: 4
 date: '2026-11-11'
+updated: 2026-11-12
 tags:
 - GitHub Actions
 - CI/CD
@@ -24,11 +25,14 @@ timeline:
 - date: Nov 12, 2026
   title: StepSecurity publishes its campaign analysis
   body: It saw Telegram-only delivery from about 05:30 UTC and reported over 63,000 probe PR search results at 07:40 UTC. The search count does not measure successful compromises.
+- date: Nov 12, 2026
+  title: Aikido publishes account and repository counts for the same campaign
+  body: Aikido identifies 4,837 compromised accounts probing 61,764 repositories. The report gives two different lower bounds for payload execution.
 checklist:
 - title: Contain suspicious GitHub access and runs
   hint: Pause affected workflows and releases, cancel active suspect runs, isolate affected self-hosted runners and preserve audit logs, run IDs, commit SHAs and network evidence. Revoke affected PATs, OAuth or GitHub App user authorizations and bot credentials. Remove unnecessary branch bypass and review where each token had write access.
 - title: Correlate repository and network evidence
-  hint: Inspect Git history, PR metadata and Actions audit trails. Search runner egress from November 10 for 194.150.166[.]244:8080/exfil, 18.143.168[.]96:8080/exfil, 153.75.82[.]159:8080/exfil, the legacy GhostAction endpoint 193.32.204[.]199 and api.telegram.org sendDocument. The body and StepSecurity report give the full indicator list. Correlate missing run numbers with the specific commit and actor. A probe or isolated indicator is a lead. If execution is confirmed or likely, assume the job’s reachable credentials were exposed.
+  hint: Inspect Git history, PR metadata and Actions audit trails. Search runner egress from November 10 for 194.150.166[.]244:8080/exfil, 18.143.168[.]96:8080/exfil, 153.75.82[.]159:8080/exfil, the legacy GhostAction endpoint 193.32.204[.]199 and api.telegram.org sendDocument. The body links the full indicator lists. Check the Aikido script hash and correlate matching files with a GitHub actor and execution evidence. Correlate missing run numbers with the specific commit and actor. A probe or isolated indicator is a lead. If execution is confirmed or likely, assume the job’s reachable credentials were exposed.
 - title: Remove cloud persistence before replacing secrets
   hint: Suspend affected OIDC trusts and revoke sessions where supported. Check AWS CloudTrail and IAM for altered role trusts, new access keys and wfx-* sessions. Check Azure audit logs for unauthorized federated credentials and GCP logs for service-account impersonation. Remove unauthorized access, then rotate all reachable repository, organization, environment, registry and cloud secrets. For self-hosted runners, include credentials and tokens accessible on the host.
 - title: Restore from trusted source and verify outputs
@@ -49,6 +53,10 @@ sources:
 - name: Nextcloud Docker workflow run 2675
   says: Records the run of update.sh on the injected commit at 12:52 UTC on November 11.
   url: https://github.com/nextcloud/docker/actions/runs/43024116166
+  primary: true
+- name: Aikido original wfx-loot analysis
+  says: Reports the account and repository counts, two different minimum execution figures, cloud persistence techniques and a script SHA-256.
+  url: https://www.aikido.dev/blog/compromised-github-accounts-push-ci-secret-stealer-to-tens-of-thousands-of-repositories
   primary: true
 ---
 
@@ -73,3 +81,11 @@ Nextcloud Docker’s run 2675 executed the injected commit on a self-hosted runn
 - Branch patterns `chore/[a-z0-9]{8}` and `ci-check-[0-9]{4}`; paths matching `.ci-[a-z0-9]{6}.sh` and `.github/workflows/build-audit-[a-z0-9]{6}.yml`, or changes to existing workflow files, shell scripts or `package.json`.
 - Steps `Pass runtime`, `Restore cache <4 characters>` or `Run audit`; variables `WF_CALLBACK`, `WF_CTOKEN`, `WF_EXFIL_*`, `WF_TG_BOTS`; staging path `.wfx-$$`; log strings `memscan_files`, `archive_bytes`, `deliver_retry`.
 - Azure federated credentials named `wfx-ci-*`; AWS trust changes granting a wildcard AWS principal, and AWS sessions named `wfx-*`.
+
+### Aikido's November 12 scope findings
+
+Aikido tracks the same `wfx-docs` probe and CI payload as wfx-loot. It identifies **4,837 compromised GitHub accounts** that opened probes in **61,764 repositories**. Aikido separately reports **61,839** matching PRs from GitHub search. StepSecurity's later search count measures PR hits at its own check time. Treat these as different measurements rather than adding them together.
+
+Aikido's report gives at least **1,806** repositories with signs of payload execution in the detailed section. Its opening section claims at least **1,835** repositories ran the payload and had credentials exfiltrated. The report does not reconcile those figures or publish a final count. Investigate repositories for execution and exposure independently of the probe totals. Aikido publishes script SHA-256 `89695abb392d5cfd4972672961e644bb46baa98aa1ed7173c2a2816c762735cf`. The hash identifies one sample. Correlate hits with the actor, commit and run evidence.
+
+The report documents HTTP delivery in the observed configuration and notes Telegram edits in later samples. StepSecurity's Telegram and third HTTP endpoint observations remain applicable.
