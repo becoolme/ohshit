@@ -2,12 +2,12 @@
 title: Prestige confirms roadside-assistance data theft involving up to 5.5 million records
 level: 4
 date: '2026-11-02'
-updated: '2026-11-07'
+updated: '2026-11-12'
 tags:
 - Prestige
 - data breach
 - roadside assistance
-summary: The suspended roadside-assistance system held up to 5.5 million affected records, including duplicates. Exposed data includes contact, vehicle, accident and some bank details, plus three cases of card-number leakage. Assistance continues through alternative procedures. Zurich Japan confirms exposure. BMW Japan is checking its scope.
+summary: The suspended roadside-assistance system held up to 5.5 million affected records, including duplicates. Exposed data includes contact, vehicle, accident and some bank details, plus three cases of card-number leakage. Mitsui Sumitomo Insurance reports about 228,000 records within the same breach. NX·TC confirms exposure and is checking its scope.
 splash: Users of roadside assistance handled by Prestige Core Solution for client companies
 wipe: Verify notices through your assistance provider; reject unexpected credential requests and monitor affected accounts
 inTheWild: 'yes'
@@ -30,6 +30,9 @@ timeline:
 - date: Nov 6, 2026
   title: BMW Japan and Zurich Japan publish customer notices
   body: BMW Japan is checking fields and customer counts. Zurich Japan confirms that records from earlier outsourced assistance cases were included.
+- date: Nov 9, 2026
+  title: Mitsui Sumitomo Insurance and NX·TC disclose customer exposure
+  body: Mitsui Sumitomo Insurance reports about 228,000 auto insurance records. NX·TC confirms its customers’ data was among the information taken and is checking fields and counts.
 checklist:
 - title: Confirm whether your assistance records are affected
   hint: Use your insurer or roadside-assistance provider’s established app, website or support number. Ask whether Prestige Core Solution handled your case and what fields are involved. Prestige says it will coordinate affected-customer notices with client companies; the maximum record count is not the number of people affected.
@@ -41,6 +44,8 @@ checklist:
   hint: 'If your provider confirms bank-account information was included, monitor statements and contact the bank through its official channel about unfamiliar activity. Preserve suspicious messages and records for your provider or security team. The November 6 report confirms card numbers in three cases and says issuers have been notified. Check card statements for unfamiliar charges and contact the issuer through its established channel about suspicious activity. Customer communications and measures are being coordinated with issuers; no resulting unauthorized use has been confirmed.'
 - title: Confirm assistance availability through your provider
   hint: The affected IT system was stopped, while roadside services continue through alternative operations. Ask your provider how to request assistance now; the notice gives no system-restoration date or customer software patch.
+- title: Check the November 9 notices if you used Mitsui Sumitomo Insurance or NX·TC
+  hint: Mitsui Sumitomo Insurance plans individual notices. For leakage questions, call PCS at 03-5213-0826 on weekdays 10:00–18:00, excluding holidays. For policy questions, call the insurer at 0120-560-571 on weekdays 09:00–17:00, excluding holidays and year-end closures. NX·TC lists 03-6734-8100. Times are Japan time. Verify links and requests through these established contacts.
 sources:
 - name: Prestige International original company notice (Japanese PDF)
   url: https://www.prestigein.com/Portals/0/pdf/NEWS/news_20261102_01.pdf
@@ -62,6 +67,14 @@ sources:
   url: https://www.zurich.co.jp/aboutus/news/news/2026/1106/
   primary: true
   says: Confirms data from previously outsourced roadside-assistance cases was included and gives the contract cutoff and contact details.
+- name: Mitsui Sumitomo Insurance November 9 roadside-assistance disclosure (Japanese PDF)
+  url: https://www.ms-ins.com/news/fy2026/pdf/1109_1.pdf
+  primary: true
+  says: Reports approximately 228,000 records and specifies the affected auto insurance data fields, individual notices and official phone lines.
+- name: NX·TC Lease & Finance November 9 notice (Japanese PDF)
+  url: https://www.nxtclf.co.jp/doc/news/20261109.pdf
+  primary: true
+  says: Confirms its customer information was included in the material taken from the PCS system and identifies Nalnet Communications as the intermediate contractor.
 ---
 
 Prestige International confirms that an intruder accessed its group business system and removed customer information handled by subsidiary Prestige Core Solution (PCS). The affected system receives and arranges roadside assistance for client companies. This is confirmed exfiltration, rather than merely an allegation of an exposed server.
@@ -73,3 +86,7 @@ Misused credentials were invalidated after detection on October 29. Access conti
 **November 6 scope correction:** The November 2 notice had not confirmed credit-card leakage. The second report now confirms **three cases of card-number leakage**, recorded in some call-intake records and included in exfiltrated information. This does not establish three unique people, a new additive incident total, or exposure of card security codes. Issuers have been notified; customer contact and protective measures will be coordinated with them. The company still reports no confirmed secondary misuse and continues roadside assistance through alternative operations while the affected system is suspended.
 
 **November 6 customer notices.** BMW Japan and BMW Japan Finance identify PCS as the contractor for their affected roadside-assistance and related operations. Their notice lists possible fields for the supplier’s system overall. The fields and count specific to BMW customers remain under investigation. BMW Japan says it reported to Japan’s Personal Information Protection Commission on November 2. Zurich Japan confirms its customer data was included and limits the affected scope to roadside-assistance cases outsourced to PCS through January 31, 2026. Neither customer notice gives a separate count. BMW’s notice repeats the supplier’s November 2 assessment on cards, when no card leakage had been confirmed. Prestige’s second report confirms three cases across the supplier incident and does not identify the client companies involved.
+
+**November 9 customer notices.** Mitsui Sumitomo Insurance says PCS notified it on November 4. Its November 9 assessment covers approximately **228,000 records** for some auto insurance customers. The leaked fields include names, addresses, telephone numbers, vehicle registration or chassis information, and accident or breakdown intake details. The insurer excludes card and bank-account details from its own affected data, plans individual notices and reports no confirmed misuse at the time of disclosure.
+
+NX·TC Lease & Finance confirms that the data taken from PCS included information about its customers. It outsourced work to Nalnet Communications, which in turn used PCS. NX·TC is checking the specific fields, customer scope and count. It says Nalnet had not confirmed exposure of NX·TC customers’ credit-card information or resulting misuse. Mitsui Sumitomo Insurance’s number describes records within this supplier incident. Neither notice provides a new incident-wide total or a deduplicated count of affected people.
