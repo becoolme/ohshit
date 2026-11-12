@@ -48,6 +48,6 @@ sources:
   - name: Fortinet 发布的 CVE-2026-126170 CNA 记录
 ---
 
-**L3：** 广泛部署的边缘设备和身份产品需要优先更新。各平台可用时间不同，请核对下载与升级路径。CVE、具体技术影响及利用情况尚未说明。Fortinet 称漏洞源于主动进行的 AI 辅助发现，10 月公告原定 11 月 10 日公布详情。
+**L3：** 广泛部署的边缘设备和身份产品需要优先更新。各平台可用时间不同，请核对下载与升级路径。10 月公告未说明单项 CVE、具体技术影响或利用情况。Fortinet 称漏洞源于主动进行的 AI 辅助发现，10 月公告原定 11 月 10 日公布详情。
 
-11 月详细公告分别说明 [FortiAuthenticator](/zh/incidents/fortiauthenticator-november-security/)、[FortiMail](/zh/incidents/fortimail-november-critical/) 和 [FortiManager 与 FortiAnalyzer](/zh/incidents/fortimanager-november-access/) 的漏洞。版本表保留 10 月公告所列目标。在后续 CVE-2026-126170 记录中，两种自管管理产品的 8.0.2 仍受影响，Fortinet 将 8.0.3 标为即将发布。请核实可用性，并在等待所需补丁期间限制管理访问。
+11 月详细公告分别说明 [FortiAuthenticator](/zh/incidents/fortiauthenticator-november-security/)、[FortiMail](/zh/incidents/fortimail-november-critical/) 和 [FortiManager 与 FortiAnalyzer](/zh/incidents/fortimanager-november-access/) 的漏洞。版本表保留 10 月公告所列目标。在后续 CVE-2026-126170 记录中，两种自管管理产品的 8.0.2 仍受影响，Fortinet 将 8.0.3 标为即将发布。请核实可用性，并在等待所需补丁期间限制管理访问。详细条目列出了 Fortinet 针对已启用 JSON API 的临时措施。
