@@ -1,7 +1,7 @@
 ---
 title: Nitori says up to 37.62 million customer records may have been exposed
 summary: Nitori confirmed unauthorized access to a system it manages. It says up to 37.62 million records may have been exposed, including member and order data. The count is an upper bound on records. Nitori excludes login passwords and card data.
-splash: Nitori individual and corporate members, purchasers and users of Nitori’s official online marketplace shops whose records were on the servers.
+splash: Individual and corporate members, purchasers and official marketplace shop customers whose records Nitori stored.
 wipe: Verify messages through Nitori’s official support and watch for impersonation of the retailer, marketplaces or carriers.
 inTheWildNote: Nitori confirms unauthorized access. The exposure scope remains under investigation.
 level: 4
@@ -20,7 +20,7 @@ timeline:
   body: The company reports the possible record scope and plans individual notices by email or post.
 checklist:
 - title: Verify exposure through official support
-  hint: Reach the customer inquiry channel published in the investor notice through a known Nitori website. Keep any direct notice and check which fields were involved.
+  hint: Use the official customer inquiry form linked below. Keep any direct notice and check which fields were involved.
 - title: Treat unexpected delivery and account messages carefully
   hint: Open the known Nitori or marketplace site directly. Avoid unexpected links and attachments. If contacted for passwords, card numbers or PINs, use official support to verify and report the request.
 sources:
@@ -31,3 +31,5 @@ sources:
 ---
 
 The company says the affected combinations differ by customer. Individual member and purchaser data may include membership number, name and phonetic spelling, email, address, phone, birth date and gender. Corporate records may include member number, company and department, representative name, company address and phone, and contact name, email and phone. The announcement also covers Nitori Net and orders placed through official Nitori shops on other marketplaces. Nitori says it blocked attacker access, addressed weaknesses and strengthened monitoring. It continues to reconcile logs and data with outside experts and has not confirmed the total number of people or secondary misuse.
+
+[Official Nitori customer inquiry form](https://www.nitori-net.jp/ec/input-inquiry?inquiryRecordCode=04000000)
