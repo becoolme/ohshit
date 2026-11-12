@@ -25,7 +25,7 @@ checklist:
 - title: Follow the university’s current service guidance
   hint: Use the university FAQ to confirm approved applications before accessing them. Keep MFA enabled for Okta. Follow current VUIT instructions about university devices and use only approved alternatives for critical work.
 - title: Report device symptoms through VUIT
-  hint: If a university-issued device shows unexpected pop-ups, unusual files or startup problems, file a VUIT help desk ticket from a trusted device. Preserve relevant details and wait for instructions before bringing in equipment or attempting cleanup.
+  hint: If a university-issued device shows unexpected pop-ups, unusual files or startup problems, file a VUIT help desk ticket from a trusted device through the university FAQ. Preserve relevant details and wait for instructions before bringing in equipment or attempting cleanup.
 - title: Verify security messages and credential instructions
   hint: Start from Vanderbilt News and official VUIT links. Follow any credential-reset instruction verified through VUIT, and report suspicious messages rather than using unexpected login links.
 sources:
@@ -39,4 +39,4 @@ sources:
   primary: true
 ---
 
-The university confirmed a cybersecurity incident affecting devices, systems and cloud services. It has not disclosed the entry method, a verified attacker identity, a count of impacted users or what data was taken. The FAQ says Vanderbilt University Medical Center is a separate entity and is monitoring the event, with known issues affecting employees shared by both organizations being addressed. The university believes device impacts are limited to its issued equipment. The temporary restrictions are a containment and recovery measure.
+The university confirmed a cybersecurity incident affecting devices, systems and cloud services. It has not disclosed the entry method, a verified attacker identity, a count of impacted users or what data was taken. The FAQ says Vanderbilt University Medical Center is a separate entity and is monitoring the event, with known issues affecting employees shared by both organizations being addressed. The university believes device impacts are limited to its issued equipment. The FAQ lists Box, Oracle Cloud, Salesforce, PeopleSoft, SharePoint, Teams and OneDrive among restricted services. Check the live FAQ before use because the list can change during restoration.
