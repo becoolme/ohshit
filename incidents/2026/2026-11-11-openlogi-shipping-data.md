@@ -25,9 +25,9 @@ checklist:
 - title: Verify delivery messages independently
   hint: Use the order page or an established carrier channel to verify tracking, address changes and delivery fees. Ignore unsolicited links and attachments, and avoid providing credentials, personal details or payment in response.
 - title: Reconcile affected shipments with the provider
-  hint: If you use OPENLOGI, ask for your affected shipment IDs and fields. Compare them with shipments requested from April 8 through November 8, preserve relevant exports and access logs, and contact affected recipients using established channels once scope is confirmed.
+  hint: If you use OPENLOGI, ask for your affected shipment IDs and fields. Compare them with shipments requested from April 8 through November 8, preserve relevant exports and access logs, and warn potentially affected recipients about delivery impersonation through established channels. Follow up with individual scope once confirmed.
 - title: Review account access after the reset
-  hint: For merchant accounts, verify expected active users and sessions, and check shipment exports or address changes around November 8–9. Report unexplained activity to OPENLOGI through its official contact.
+  hint: For merchant accounts, verify expected active users and sessions, and check shipment exports or address changes around November 8–9. Report unexplained activity to OPENLOGI at cs@openlogi.com, as listed in its notice.
 sources:
 - name: OPENLOGI incident notice
   says: Confirms extraction, the shipment window, data fields, containment and continued warehouse operations.
