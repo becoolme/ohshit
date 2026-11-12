@@ -84,7 +84,7 @@ Nextcloud Docker’s run 2675 executed the injected commit on a self-hosted runn
 
 ### Aikido's November 12 scope findings
 
-Aikido tracks the same `wfx-docs` probe and CI payload as wfx-loot. It identifies **4,837 compromised GitHub accounts** that opened probes in **61,764 repositories**. Aikido separately reports **61,839** matching PRs from GitHub search. StepSecurity separately reports PR search hits from its 07:40 UTC check. Treat these as different measurements rather than adding them together.
+Aikido tracks the same `wfx-docs` probe and CI payload as wfx-loot. It identifies **4,837 compromised GitHub accounts** that opened probes in **61,764 repositories**. Aikido also identifies at least **50** compromised users who appear to publish packages. This is a count of accounts with apparent publishing activity. Aikido separately reports **61,839** matching PRs from GitHub search. StepSecurity separately reports PR search hits from its 07:40 UTC check. Treat these as different measurements rather than adding them together.
 
 Aikido's report gives at least **1,806** repositories with signs of payload execution in the detailed section. Its opening section claims at least **1,835** repositories ran the payload and had credentials exfiltrated. The report does not reconcile those figures or publish a final count. Investigate repositories for execution and exposure independently of the probe totals. Aikido publishes script SHA-256 `89695abb392d5cfd4972672961e644bb46baa98aa1ed7173c2a2816c762735cf`. The hash identifies one sample. Correlate hits with the actor, commit and run evidence.
 
