@@ -2,7 +2,7 @@
 title: ScreenConnect disables five extensions after attacks on partner environments
 summary: ConnectWise disabled five third-party extensions in about 400 partner environments as a precaution. Huntress observed rogue ScreenConnect deployments on at least 288 endpoints across 48 organizations. Initial access remains under investigation.
 splash: ScreenConnect partners and managed Windows endpoints. Review deployments with or without the five listed extensions.
-wipe: Keep the extensions disabled, update technician clients to 26.6.5 or later, and investigate through separate tooling.
+wipe: Keep the extensions disabled, update technician clients to 26.6.5 or later, revoke sessions from a trusted device and investigate out of band.
 inTheWildNote: Huntress observed unauthorized Run Commands and rogue clients on managed endpoints.
 level: 4
 date: '2026-11-11'
@@ -52,7 +52,7 @@ checklist:
 - title: Use separate tooling and secure administrative access
   hint: Avoid interactive ScreenConnect sessions to suspected hosts. Use EDR live response or another trusted out-of-band tool. Investigate technician workstations that already connected. From a clean device, revoke ScreenConnect, browser and identity-provider sessions, rotate affected credentials and enforce MFA.
 - title: Preserve evidence and contain affected devices
-  hint: Retain authentication, extension-installation, admin, Run Command and Toolbox logs. Investigate unexpected users, permission changes, deployments and commands. Isolate suspected hosts and preserve evidence. Identify the legitimate client separately. Remove the rogue service, TrapWatch task, RelayTrap directory and Run value. Check for reinfection and validate access before reconnecting.
+  hint: Retain authentication, extension-installation, admin, Run Command and Toolbox logs. Investigate unexpected users, permission changes, deployments and commands. Isolate suspected hosts and preserve evidence. Identify the legitimate client separately. Clear unauthorized queued commands and tools on the server. Remove the rogue service, TrapWatch task, RelayTrap directory and Run value. Check for reinfection and validate access before reconnecting.
 - title: Verify maintenance across the remote-access stack
   hint: Verify version 26.6.5 or later on each technician workstation for hosted and on-premises deployments. Reinstall the technician client following vendor instructions where needed. While updating, remove unnecessary Transfer Files permissions from session-group roles. Keep endpoint agents current and investigate potential compromise separately.
 - title: Hunt the published indicators
@@ -120,7 +120,7 @@ Addmin
 rmmserver
 ```
 
-Huntress observed an operator use Run Command on cloud-hosted panels to install rogue clients and SCKit on managed Windows endpoints. It reports that 26.6.6.9747 and 26.7.6.9783 were in scope. Updating alone does not remove persistence. The toolkit is built to intercept browser session cookies and spread through interactive technician sessions. The researchers found failed console-takeover attempts in the host logs they examined, so successful self-propagation remains unconfirmed. Their 288 hosts across 48 organizations describe their own observations. ConnectWise’s roughly 400 environments are the extension-installation count.
+Huntress observed an operator use Run Command on cloud-hosted panels to install rogue clients and SCKit on managed Windows endpoints. Its observed partner environments ran 26.6.6.9747 and 26.7.6.9783. Updating alone does not remove persistence. The toolkit is built to intercept browser session cookies and spread through interactive technician sessions. The researchers found failed console-takeover attempts in the host logs they examined, so successful self-propagation remains unconfirmed. Their 288 hosts across 48 organizations describe their own observations. ConnectWise’s roughly 400 environments are the extension-installation count.
 
 Sophos independently observed curl.exe downloading ScreenConnect.ClientSetup.msi from 185.99.255[.]28 to C:\Windows\TEMP\sc.msi. A ScreenConnect-generated command file then launched msiexec.exe for a silent installation. Sophos also observed batch-file staging and PowerShell bypassing execution policy to fetch a second-stage script from hxxps://ns[.]mo7sen[.]dev/EadF.php?p=4. Check the three suspected abused source instance IDs d905b2b1b165d0a9, 4b8f4089ddaac6a9 and df1f7ef0cfacd0d8 separately from the rogue destination IDs 2588ef5c15954b10 and ed630cc2c873b091. Correlate with command, process and network logs. A match alone does not establish compromise.
 

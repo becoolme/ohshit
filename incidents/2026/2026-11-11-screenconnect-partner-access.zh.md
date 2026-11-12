@@ -2,7 +2,7 @@
 title: ScreenConnect 合作伙伴环境遭攻击，厂商停用五款扩展
 summary: ConnectWise 预防性停用了约 400 个合作伙伴环境中的五款第三方扩展。Huntress 在 48 家组织的至少 288 台终端观察到非授权 ScreenConnect 部署。初始访问方式仍在调查。
 splash: ScreenConnect 合作伙伴及受管理的 Windows 终端。无论是否安装所列五款扩展，均应核查部署。
-wipe: 保持五款扩展停用，将技术人员客户端更新至 26.6.5 或更高版本，并使用独立工具调查。
+wipe: 保持五款扩展停用，将技术人员客户端更新至 26.6.5 或更高版本，从可信设备吊销会话，并通过带外工具调查。
 inTheWildNote: Huntress 在受管理终端观察到非授权运行命令及非授权客户端。
 cves:
 - name: RMM+ 默认 API 密钥
@@ -39,7 +39,7 @@ checklist:
 - title: 使用独立工具并保护管理访问
   hint: 避免通过 ScreenConnect 交互连接疑似失陷主机。改用 EDR 实时响应或其他可信带外工具。调查已连接过的技术人员工作站。从干净设备吊销 ScreenConnect、浏览器及身份提供商会话，轮换受影响凭据，并启用 MFA。
 - title: 保留证据并遏制受影响设备
-  hint: 保留认证、扩展安装、管理操作、Run Command 及 Toolbox 日志，排查异常账号、权限变更、部署及命令。隔离疑似主机并保全证据。单独核实合法客户端，清除非授权服务、TrapWatch 任务、RelayTrap 目录及 Run 值。重新连接前检查是否再次感染并验证访问。
+  hint: 保留认证、扩展安装、管理操作、Run Command 及 Toolbox 日志，排查异常账号、权限变更、部署及命令。隔离疑似主机并保全证据。单独核实合法客户端。清除服务器上排队的非授权命令和工具，并移除非授权服务、TrapWatch 任务、RelayTrap 目录及 Run 值。重新连接前检查是否再次感染并验证访问。
 - title: 核验远程访问组件维护状态
   hint: 托管和本地部署均应逐台核验技术人员工作站的客户端是否达到 26.6.5，必要时按厂商指引重新安装。升级期间，移除会话组角色不需要的 Transfer Files 权限。保持终端 Agent 更新，并单独调查疑似失陷。
 - title: 按公开指标排查
@@ -95,7 +95,7 @@ Addmin
 rmmserver
 ```
 
-Huntress 观察到攻击者利用云托管控制台的 Run Command，在受管理 Windows 终端安装非授权客户端及 SCKit。报告列出受影响版本 26.6.6.9747 和 26.7.6.9783。仅升级无法清除持久化。工具包可拦截浏览器会话 Cookie，并设计为通过技术人员的交互会话传播。研究人员在已核查的主机日志中看到控制台接管均告失败，因此尚未确认成功自传播。48 家组织的 288 台主机是 Huntress 的观测范围。ConnectWise 所说的约 400 个环境是扩展安装数量。
+Huntress 观察到攻击者利用云托管控制台的 Run Command，在受管理 Windows 终端安装非授权客户端及 SCKit。观测到的合作伙伴环境运行 26.6.6.9747 和 26.7.6.9783。仅升级无法清除持久化。工具包可拦截浏览器会话 Cookie，并设计为通过技术人员的交互会话传播。研究人员在已核查的主机日志中看到控制台接管均告失败，因此尚未确认成功自传播。48 家组织的 288 台主机是 Huntress 的观测范围。ConnectWise 所说的约 400 个环境是扩展安装数量。
 
 Sophos 独立观察到一条部署链。curl.exe 从 185.99.255[.]28 下载 ScreenConnect.ClientSetup.msi 到 C:\Windows\TEMP\sc.msi，随后 ScreenConnect 生成的命令文件调用 msiexec.exe 静默安装。Sophos 还观察到批处理文件落地，以及 PowerShell 绕过执行策略后从 hxxps://ns[.]mo7sen[.]dev/EadF.php?p=4 下载第二阶段脚本。将三项疑似遭滥用的来源实例 ID d905b2b1b165d0a9、4b8f4089ddaac6a9、df1f7ef0cfacd0d8，与两项非授权目标实例 ID 2588ef5c15954b10、ed630cc2c873b091 分开核对。结合命令历史、进程及网络日志判断，单独命中无法证明失陷。
 
