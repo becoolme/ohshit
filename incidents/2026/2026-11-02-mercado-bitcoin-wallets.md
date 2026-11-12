@@ -56,15 +56,15 @@ timeline:
 - date: Nov 9, 00:30 UTC
   title: FAQ gives read-only access and account revalidation instructions
   body: Revision 9 says the website will offer detailed viewing and the app will show a summary. API access will follow later. Transactions will require revalidation and a new password in the official app. The exchange reports over 33% of diverted assets blocked and own-funds replacement under way.
-- date: Nov 9, 2026 (scheduled)
-  title: Staged website access is planned to begin
-  body: Revision 9 describes a phased rollout of detailed balance and asset views on the website and a summary in the app. Trading, deposits, withdrawals, transfers and the API remain pending.
 - date: Nov 9, 16:53 UTC
   title: Official FAQ removes its per-customer percentage inference
   body: Revision 10 retains the figures of over 33% of diverted assets blocked and about 3% of total assets in custody unrecovered. It removes the statement that about 3% of every customer’s assets were affected.
 - date: Nov 11, 2026
   title: Hypernative publishes its ten-chain trace
-  body: It reports a smaller Bitcoin deposit-address sweep starting at 02:15 UTC on November 2, followed by the main outflows. It priced about $12.2M of observed outflows live on Ethereum, Polygon and Arbitrum, a subset of its reported $48.99M gross estimate. The signing access method remains unknown.
+  body: It reports a smaller Bitcoin deposit-address sweep starting at 02:15 UTC on November 2, followed by the main outflows. It priced about $12.2M of observed outflows live on Ethereum, Polygon and Arbitrum, a subset of its reported $48.99M gross estimate. The researchers did not establish how signing access was obtained.
+- date: Nov 9, 2026 (scheduled)
+  title: Staged website access is planned to begin
+  body: Revision 9 describes a phased rollout of detailed balance and asset views on the website and a summary in the app. Trading, deposits, withdrawals, transfers and the API remain pending.
 checklist:
 - title: Keep deposits paused and recheck saved addresses
   hint: Do not send funds to a saved Mercado Bitcoin deposit address while transfers are suspended. Check the established exchange app and official channels for explicit recovery and address instructions before restarting automated payouts or exchange integrations. Bitquery reports signed transfers from deposit addresses; changing your login password alone does not secure exchange-controlled keys. The November 3 original confirms that the platform/app remain paused and says reinstalling the app or changing devices is unnecessary. The recovery plan requires feature-specific security checks; confirm each service and limitation in subsequent official announcements, rather than treating the plan as completed reopening. The November 4 company update now targets November 9 for initial website viewing only. Transfers, withdrawals and trading have no confirmed restart date; verify each module before enabling automation. The November 5 research also identifies Base deposit-address sweeps; include Base in the saved-address review and do not assume an address is safe because it was absent from the earlier ten-chain list.
