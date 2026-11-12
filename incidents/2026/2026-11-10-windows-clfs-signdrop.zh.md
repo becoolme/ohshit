@@ -10,7 +10,7 @@ timeline:
   body: 公开仓库历史记录显示材料于 11 月 10 日 UTC 发布。研究者报告一条本地提权至 SYSTEM 的路径。
 checklist:
 - title: 无需运行概念验证即可清点 CLFS 模式
-  hint: 通过终端资产清单或 reg query 读取 HKLM\SYSTEM\CurrentControlSet\Services\CLFS\Authentication 下的 Mode。Microsoft 定义 0 为强制、1 为学习，研究者报告这两种模式相关。缺少该值、其他值和其他构建需单独评估。
+  hint: 通过终端资产清单或运行 reg query HKLM\SYSTEM\CurrentControlSet\Services\CLFS\Authentication /v Mode 读取当前模式。Microsoft 定义 0 为强制、1 为学习，研究者报告这两种模式相关。缺少该值、其他值和其他构建需单独评估。
 - title: 减少本地执行暴露并调查可疑权限变化
   hint: 用现有应用控制限制不可信程序运行。检查 EDR 进程和文件遥测，寻找异常 SYSTEM 执行、相关 CLFS 日志及 .cnpf 验证文件及安全工具变更。关联事件序列后再判定是否失陷，并保留可疑活动证据。
 - title: 保留 CLFS 保护并跟踪 Microsoft 指引

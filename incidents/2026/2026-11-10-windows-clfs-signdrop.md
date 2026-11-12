@@ -17,7 +17,7 @@ timeline:
   body: The public repository history records publication on November 10 UTC. The researcher reports a local path to SYSTEM.
 checklist:
 - title: Inventory the configured CLFS mode without running the proof of concept
-  hint: Read Mode under HKLM\SYSTEM\CurrentControlSet\Services\CLFS\Authentication using endpoint inventory or reg query. Microsoft defines 0 as enforcement and 1 as learning; the researcher reports those modes as relevant. Missing or different values and other builds need separate assessment.
+  hint: Use endpoint inventory or run reg query HKLM\SYSTEM\CurrentControlSet\Services\CLFS\Authentication /v Mode to read the current mode. Microsoft defines 0 as enforcement and 1 as learning; the researcher reports those modes as relevant. Missing or different values and other builds need separate assessment.
 - title: Reduce local execution exposure and investigate suspicious privilege changes
   hint: Restrict untrusted executable launches with existing application controls. Review EDR process and file telemetry for unexpected SYSTEM execution, related CLFS log and .cnpf authentication files, and security-tool changes. Correlate the sequence before declaring compromise and preserve evidence if it is suspicious.
 - title: Keep CLFS protections and track Microsoft guidance
