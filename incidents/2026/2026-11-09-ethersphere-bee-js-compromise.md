@@ -1,18 +1,21 @@
 ---
-title: Compromised Bee JavaScript client runs a remote payload during npm installation
-level: 3
+title: Compromised Bee JS and Swarm Desktop releases stole node keys and installed remote access
+level: 4
 date: '2026-11-09'
+updated: 2026-11-12
 tags: [npm, Swarm, Supply chain]
 ecosystems: [node]
-summary: '@ethersphere/bee-js 13.3.0 runs remote JavaScript during installation. Researchers observed payloads targeting Swarm Desktop keys and installing persistent remote access on Linux. Block 13.3.0, isolate hosts that ran the hook, and rebuild from a trusted version.'
-splash: Developer systems and CI runners that installed @ethersphere/bee-js 13.3.0 with lifecycle scripts enabled.
-wipe: Block 13.3.0, pin verified 13.2.0, isolate and rebuild exposed hosts, and replace exposed credentials from a clean system.
-inTheWild: unknown
-inTheWildNote: The malicious release and served payload were verified. Victim installations are unknown.
+summary: Swarm confirms @ethersphere/bee-js 13.3.0 and Swarm Desktop 0.56.2 were malicious and removed. The payload stole node keys and installed remote access. Pin npm 13.2.0, use Desktop 0.56.3, isolate affected hosts and protect funds from a clean device.
+splash: Systems that ran Swarm Desktop 0.56.2 or installed @ethersphere/bee-js 13.3.0 with lifecycle scripts enabled.
+wipe: Block npm 13.3.0 and Desktop 0.56.2. Use verified 13.2.0 and 0.56.3 on clean hosts. Move funds and stake from exposed keys.
+inTheWild: 'yes'
+inTheWildNote: Swarm confirms the published releases stole node keys and installed remote access.
 fixed:
 - product: '@ethersphere/bee-js'
   version: '13.2.0'
-  status: Prior release without this install hook. Pin exactly while awaiting maintainer guidance.
+  status: Prior release without this install hook. Pin this exact version.
+- product: Swarm Desktop
+  version: 0.56.3
 timeline:
 - date: Nov 9, 00:06 UTC
   title: The project's GitHub release for v13.3.0 goes public
@@ -22,9 +25,12 @@ timeline:
 - date: Nov 9, 00:51 UTC
   title: Bitbison publishes its artifact and payload analysis
   body: The researcher documents collection of Swarm Desktop key material and a persistent Linux remote-access agent.
+- date: Nov 9, 12:52 UTC
+  title: Swarm Desktop publishes replacement 0.56.3
+  body: Swarm confirms the compromised Desktop and npm releases were removed.
 checklist:
 - title: Find and block the affected version
-  hint: Check lockfiles, npm logs, CI build logs and registry proxy caches for @ethersphere/bee-js 13.3.0, including transitive dependencies. Block that exact version and identify every host and runner that may have installed it.
+  hint: Check lockfiles, npm logs, CI build logs and registry proxy caches for @ethersphere/bee-js 13.3.0, including transitive dependencies. Check application inventories and auto-update logs for Swarm Desktop 0.56.2. Block that exact version and identify every host and runner that may have installed it.
 - title: Isolate systems that ran the install hook
   hint: Disconnect affected machines and retire exposed runners. Preserve logs, package artifacts and systemd state. Inspect other hosts built from the same images. After collecting evidence, purge cached copies of 13.3.0 and affected build outputs. Regenerate lockfiles to pin 13.2.0 and rebuild from trusted inputs on clean runners. Removing the package alone leaves any separately installed agent behind.
 - title: Replace exposed keys and credentials
@@ -35,7 +41,7 @@ sources:
 - name: Ethersphere GitHub release v13.3.0
   url: https://github.com/ethersphere/bee-js/releases/tag/v13.3.0
   primary: true
-  says: The release API records the GitHub publication at 00:06 UTC.
+  says: The release API recorded the GitHub publication at 00:06 UTC before removal.
 - name: npm registry package and version history
   url: https://registry.npmjs.org/@ethersphere%2fbee-js
   primary: true
@@ -52,10 +58,20 @@ sources:
   url: https://www.stepsecurity.io/blog/ethersphere-bee-js-13-3-0-compromise
   primary: true
   says: Confirms the install-time loader and wallet targeting. Weekly download data covers all versions.
+- name: Swarm Desktop replacement release
+  url: https://github.com/ethersphere/swarm-desktop/releases/tag/v0.56.3
+  primary: true
+  says: 0.56.3 replaces compromised Desktop 0.56.2. The release API dates publication to 12:52 UTC.
+- name: Swarm official security notice (public embed)
+  url: https://publish.twitter.com/oembed?url=https://x.com/ethswarm/status/2119764040008491491
+  primary: true
+  says: Confirms both malicious releases were removed, describes key theft and remote access, and tells Desktop users to move funds and stake.
 ---
 
 Version 13.3.0 changes a version-generation script into an npm postinstall loader. Installing the package with lifecycle scripts enabled can execute server-supplied code as the install user before an application imports the dependency. The loader sends an HTTPS request and executes the response. It does not need Swarm Desktop installed to start. Swarm Desktop key collection depends on the files being present and readable.
 
 Bitbison observed a payload reading the Swarm Desktop configuration and node key, posting them to the same domain and installing a Linux user service that runs a remote-access agent. These observations describe a payload served during research. Its server can vary the response, so missing Linux files do not rule out execution. npm's provenance points to the project workflow, and the source commit itself contains the loader. The entry point into the release process remains unknown.
 
-The registry still listed 13.3.0 as latest when checked. Pin the exact prior version during containment. The November 9 UTC incident date follows the registry publication and Bitbison's timestamped report. StepSecurity labels its initial notice November 8 without a timezone. Its 3,560-download figure covers all releases in the week before 13.3.0 and gives no count of affected installations. No victim count or stolen amount has been verified.
+The registry now lists 13.2.0 as latest and no longer serves 13.3.0 in the package metadata. Check internal caches and lockfiles for copies. The November 9 UTC incident date follows the registry publication and Bitbison's timestamped report. StepSecurity labels its initial notice November 8 without a timezone. Its 3,560-download figure covers all releases in the week before 13.3.0 and gives no count of affected installations. No victim count or stolen amount has been verified.
+
+Swarm’s notice confirms that both release channels carried malicious code and directs users who updated Desktop to move funds and stake immediately. Use a separate clean system and follow verified Swarm instructions. Replace Desktop 0.56.2 with 0.56.3 after investigating and cleaning or rebuilding the host. The maintainer’s confirmation of key theft and remote access warrants L4. The scope and amount of any losses remain unverified.
