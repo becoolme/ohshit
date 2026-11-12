@@ -6,7 +6,7 @@ date: 2026-10-21
 updated: 2026-11-12
 tags: [PaaS, secrets, credentials, supply chain]
 ecosystems: [railway]
-summary: Railway says at most 1.85% of workspaces (~100,000) could have had variables decrypted. It confirms 353 build histories were read and linked-account tokens for 1,852 users were decrypted. Estimated unauthorized AI spend is ~$740,000. Rotate stored secrets and replace revoked deploy credentials.
+summary: Railway says at most 1.85% of workspaces (~100,000) could have had variables decrypted. It confirms 353 build histories were read and linked-account tokens for 1,852 users were decrypted. Estimated unauthorized AI spend is ~$740,000. Builds are restored. Rotate stored secrets and replace revoked deploy credentials.
 splash: "Secrets stored before Oct 21; vendor upper bound is 1.85% of workspaces (~100,000), with broader precautionary resets"
 wipe: "Rotate/revoke stored secrets, audit logs from Oct 20, recreate deploy tokens, reconnect GitHub and redeploy"
 inTheWild: "n/a"
@@ -138,18 +138,18 @@ startup, any rotation needs a redeploy, which was impossible while builds were p
 Railway says the impact "may be limited to a subset of users", yet tells **all** users to rotate. It
 confirms that decrypted secrets were obtained for at least some customers. A breach of a multi-tenant
 secrets store at a large PaaS is a mass credential leak, and each leaked key opens a different downstream
-system. That is L4. It would move up if large-scale abuse of the stolen keys were confirmed.
+system. That is L4. The forensic report now estimates downstream abuse at about $740,000.
 
 ## What's still unclear
 
-- Initial entry and exact exploit details remain undisclosed. The preliminary report describes privilege escalation and compromised CI credentials.
+- Railway identifies the initial build filesystem escape and later OIDC misconfiguration. It has not published the full exploit mechanics.
 - Exactly which variables were decrypted remains unknown; the workspace upper bound does not answer that. Broad provider revocations do not establish compromise of every reset credential.
-- Railway says individual user accounts were not accessed; source-code access is still not ruled out.
+- Railway found no logins to Railway accounts using the stolen credentials and no indication of customer repository downloads. Its own monorepo was retrieved.
 - **Misuse.** Railway now gives a process for customers seeking refunds for fraudulent AI spend. That guidance does not publish a verified misuse count or attribute every suspicious charge to this intrusion; check your own provider logs.
 
 **Correction, October 24:** Railway's October 22 preliminary report supersedes the earlier unknown-scope account: at most 1.85% of workspaces (about 100,000) potentially had variables compromised. This is an upper bound, not a confirmed-victim total. It dates the attack window to October 20, 13:58 UTC through October 22, 03:32 UTC, and says existing workloads stayed online. All plan tiers accept builds again. The October 23 guides explain how to catch up missed deployments and replace revoked access; use the original login identity if projects appear missing.
 
-**Update, October 27:** Railway’s October 26 update says services are fully restored for existing users, while new signups remain paused. Recovery does not replace the credential rotation and deployment-recovery steps above. For suspected fraudulent AI charges, contact the AI provider first, then submit timestamps, prompts and supporting proof at [Railway Station](https://station.railway.com/) for escalation. Railway cannot refund third-party AI spend, and its escalation offer is not a refund guarantee. No verified downstream-abuse total or broader victim count is established by this update.
+**October 27 guidance, superseded by the reimbursement steps below:** Railway’s October 26 update says services are fully restored for existing users, while new signups remain paused. Recovery does not replace the credential rotation and deployment-recovery steps above. For suspected fraudulent AI charges, contact the AI provider first, then submit timestamps, prompts and supporting proof at [Railway Station](https://station.railway.com/) for escalation. Railway cannot refund third-party AI spend, and its escalation offer is not a refund guarantee. No verified downstream-abuse total or broader victim count is established by this update.
 
 **November 10 report.** Railway now dates the partial build filesystem escape to October 20 at 07:28 UTC. A stolen build credential reached internal Temporal build histories and enabled retrieval of Railway’s own monorepo. An overly broad OIDC binding then yielded a short-lived cloud credential. The attacker used that access to reach orchestration infrastructure and decrypt some retrieved environment variables. Railway dates eviction to October 21 at 09:24 UTC and found no access to customer data beyond 09:25 UTC that day. This supersedes its preliminary October 22 endpoint. New signups reopened November 2.
 
