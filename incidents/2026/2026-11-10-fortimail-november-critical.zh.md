@@ -5,7 +5,7 @@ tags:
 - FortiMail
 - RCE
 summary: Fortinet 11 月公告修复三条未认证代码执行路径，以及两个基于身份的加密邮件账号或会话接管漏洞。请更新自管 FortiMail。厂商称 FortiMail Cloud 已于 10 月 5 日修复这五项问题。
-splash: 受影响构建中网络可达的 FortiMail HTTP 或 HA 服务。HA 加入漏洞只影响 8.0 和 7.6 系列。
+splash: 受影响构建中网络可达的 FortiMail 请求处理服务或 HA 服务。HA 加入漏洞只影响 8.0 和 7.6 系列。
 wipe: 按当前系列升级至 8.0.2、7.6.7、7.4.9 或更高版本。7.2 用户应迁移至已修复版本。
 cves:
 - name: 路径穿越
@@ -48,6 +48,8 @@ sources:
   says: 厂商说明 CVE-2026-126155 的范围、评分及修复方法。
 - name: Fortinet CSAF FG-IR-26-208
   says: 厂商说明 CVE-2026-126156 的范围、评分及修复方法。
+- name: FortiMail 维护指南
+  says: 固件菜单与配置备份说明。
 ---
 
 FortiMail 的五项严重漏洞涉及不同路径。路径穿越和 SQL 注入可通过特制请求执行代码或命令。HA 漏洞要求能够发送特制的集群加入请求。两项 IBE 漏洞使用 HTTP，影响收件人账号或 Web 邮件会话处理。

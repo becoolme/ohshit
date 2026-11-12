@@ -5,7 +5,7 @@ tags:
 - FortiMail
 - RCE
 summary: Fortinet’s November batch fixes three unauthenticated code execution paths and two identity-based encryption account or session takeovers. Update self-managed FortiMail. Fortinet says it fixed these five issues in FortiMail Cloud on October 5.
-splash: Reachable FortiMail HTTP or HA services on affected builds. The HA join bug applies to 8.0 and 7.6 only.
+splash: Affected FortiMail builds with reachable request handlers or HA services. The HA join bug applies to 8.0 and 7.6 only.
 wipe: Upgrade to 8.0.2, 7.6.7 or 7.4.9 or later on the matching line. Migrate 7.2 to a fixed release.
 level: 3
 date: '2026-11-10'
@@ -79,6 +79,10 @@ sources:
   primary: true
   name: Fortinet CSAF FG-IR-26-208
   says: Vendor scope, score and remediation for CVE-2026-126156.
+- url: https://docs.fortinet.com/document/fortimail/latest/administration-guide/988966/system-maintenance
+  primary: true
+  name: FortiMail maintenance guide
+  says: Firmware menu and configuration backup instructions.
 ---
 
 The five critical FortiMail advisories cover different paths. The path traversal and SQL injection allow code or command execution through crafted requests. The HA issue requires access to send crafted cluster join requests. The two IBE issues use HTTP and affect recipient account or webmail session handling.
