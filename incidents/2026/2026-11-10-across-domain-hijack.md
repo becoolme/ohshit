@@ -1,7 +1,7 @@
 ---
 title: Across domain takeover exposed visitors to a wallet drainer
 summary: Across says a registrar social-engineering attack redirected its website to a wallet drainer. Bitquery estimates about $348,000 taken from nine wallets on five chains. Across regained control and pledged to cover affected users.
-splash: Visitors who signed malicious approvals or transactions on the compromised Across frontend on November 10.
+splash: Visitors who connected a wallet or signed an approval, message or transaction on the compromised Across frontend on November 10.
 wipe: From a trusted wallet interface, revoke suspicious approvals on each affected chain and report transaction hashes to Across.
 inTheWildNote: Across confirmed the takeover. Bitquery traced transfers during the phishing window.
 level: 4
@@ -23,7 +23,7 @@ timeline:
   body: It attributes about $348,000 across nine wallets based on the timing and shared recipient split.
 checklist:
 - title: Check every connected wallet and chain
-  hint: Use a trusted wallet interface or Revoke.cash, the checker named by Across. Inspect recent permits, approvals and transfers on each network you used during the hijack. Revoke suspicious spending permissions promptly. Revocation does not reverse completed transfers.
+  hint: Open Revoke.cash directly and load the wallet used on Across. Select each network, search by the spenders below, and check direct approvals and Permit2 allowances. Revoke matching rows, confirm the on-chain transactions with the network’s gas token, then verify zero or removed allowances. Unused signed permits may be invisible. If you signed during the incident, Across recommends moving remaining assets to a fresh wallet after revoking visible approvals. Direct transfers are final.
 - title: Preserve evidence and report through official channels
   hint: Save wallet addresses, timestamps, chain names and transaction hashes. Initiate contact through the verified Across account named in the notice. Keep recovery phrases and private keys private and ignore unsolicited recovery offers.
 - title: Correlate tracing indicators
@@ -36,6 +36,10 @@ sources:
 - name: Across user action notice, public copy
   says: Names the approval checker, revocation guide and official reporting channel.
   url: https://teapawt.org/AcrossProtocol/status/2120278805084295328
+  primary: true
+- name: Across detailed wallet recovery guide
+  says: Lists spender contracts, receiving addresses, Permit2 checks and how to verify revocation.
+  url: https://docs.google.com/document/d/1IW3_cSr9fANfxHSXgVnzQ89Bitqv00Xbk-8bhx3L3kM/export?format=txt
   primary: true
 - name: Across restoration notice, public copy
   says: Reproduces the team’s restoration and reimbursement commitment.
@@ -69,4 +73,26 @@ G47n6dbUor1WFweLvKPrUi5beW4yjRoFG3cJZU6a4uSa
 3EQ9Rqrtvco4nKmskv2jQRXvWKkpUGfAQs
 0x2610f11fd3cde7113f83e7137853972ba98d8360b3d91eed6d5807f947a8bd38
 0x19c5460db37f5cc2bde6f8f644892a5348a1519d2aa97f720091e982134a8ae1
+```
+
+Across’s wallet recovery guide lists the following spenders by network. The guide says these addresses can be reused on other chains. Check Permit2 allowances on Ink and both direct and Permit2 approvals on BNB Chain.
+
+```text
+Ethereum  0x46a2a474d4c22bf1ae4f8fa55da7a58673472be2
+Ethereum  0xdbd7fbe5b7cd56f99c059dc24052009d2626125c
+Base  0x5ff35703c22533398d5c7ce7acd32a04ac8462da
+Arbitrum  0x2ff67cddd9ff45e0b47957d9d7c19b0732f9c514
+Arbitrum  0x373c415ef034bb620e8d720afd2ace26bca13529
+Ink  0xdcd65e3a8f3b73c7e2f40dbab1fb95dbef871d6c
+Plasma  0x3ef438c34ce51a697a24247fe033c4562c94f0fd
+BNB Chain  0x0c894c253c62eda066197011efd73b632dc96263
+
+Receiving addresses listed by Across
+0x2846e69d3298e99eddf2fd8116e952844da11fde
+0x0c7c656126aa62625fdd8051eb69dc14aee8d37b
+0x3ef438c34ce51a697a24247fe033c4562c94f0fd
+0xa0e6c7d79b74d1a6d366dd11309b6faafda05ac5
+
+Permit2 contract for context
+0x000000000022d473030f116ddee9f6b43ac78ba3
 ```
