@@ -32,6 +32,8 @@ checklist:
   hint: If you use OPENLOGI, ask for your affected shipment IDs and fields. Compare them with shipments requested from April 8 through November 8, preserve relevant exports and access logs, and warn potentially affected recipients about delivery impersonation through established channels. Follow up with individual scope once confirmed.
 - title: Review account access after the reset
   hint: For merchant accounts, verify expected active users and sessions, and check shipment exports or address changes around November 8–9. Report unexplained activity to OPENLOGI at cs@openlogi.com, as listed in its notice.
+- title: Check the Nittobo order window
+  hint: Compare your nekoPro urine test kit purchases from April 8 through November 8, 2026 against the notice. Confirm any contact or scope with Nittobo at nekopro-contact@nittobogrp.com.
 sources:
 - name: OPENLOGI incident notice
   says: Confirms extraction, the shipment window, data fields, containment and continued warehouse operations.
@@ -55,4 +57,4 @@ OPENLOGI says the extracted records include recipient names, addresses, phone nu
 
 HUMAN MADE says OPENLOGI blocked the attack source, restricted access from outside Japan and reset login sessions for all users. HUMAN MADE identifies only its CURRY UP brand as potentially affected and reports no unauthorized access to its own systems. SKIYAKI says some Bitfan shipping data it provided may be involved. The provider reported no known misuse as of November 11. Warehouse receipt and dispatch continued as usual, with some system operations affected by emergency maintenance. External specialists are investigating the entry route and scope.
 
-**Nittobo customer notice.** Nittobo says recipients who bought the nekoPro urine test kit on its online store between April 8 and November 8 may have had names, addresses, email addresses, phone numbers and product information exposed. It excludes credit card information and reports no known misuse. Nittobo says work to fix the affected system was complete and dispatch had resumed for these orders. It plans individual notifications as it identifies potentially affected customers. For a scope check, contact Nittobo at nekopro-contact@nittobogrp.com.
+**Nittobo customer notice.** Nittobo says customers who bought the nekoPro urine test kit on its online store between April 8 and November 8 may have had names, addresses, email addresses, phone numbers and product information exposed. It excludes credit card information and reports no known misuse. Nittobo says work to fix the affected system was complete and dispatch had resumed for these orders. It plans individual notifications as it identifies potentially affected customers. For a scope check, contact Nittobo at nekopro-contact@nittobogrp.com.
