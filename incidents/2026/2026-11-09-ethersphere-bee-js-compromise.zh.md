@@ -33,7 +33,7 @@ checklist:
 - title: 排查加载器和已观察到的 Linux 持久化
   hint: '查看 DNS 和代理日志中是否出现 frameworkmetrics[.]xyz 或 api.frameworkmetrics[.]xyz，以及 /v1/analytics、/v1/swarm/report、/v1/assets/linux_amd64 和 /v1/assets/linux_arm64。初始请求以 Node 平台名作为 User-Agent，并带有 X-Ethersphere: 1。检查 package/scripts/generate-version.cjs（SHA-256 ee2f762e9ed3fd89f106e0b80c2e923bf1aed9a280277d3d998a5902c4d9ec0f）、~/.solidity/linux_amd64、~/.solidity/linux_arm64、~/.solidity/.run.py 和 ~/.config/systemd/user/solidity-langsupport-runner.service。单条命中无法证明系统失陷。'
 - title: 调查 macOS 和 Windows 的持久化
-  hint: 在 macOS 上检查 ~/.solidity/ 及名为 com.solidity.langsupport.runner 的 LaunchAgent。在 Windows 上检查 ScreenConnect Client (5cbe79c9c25524df)、中继 185[.]232[.]84[.]169:8041 以及 invoke.ps1 和 %TEMP% 下的 .stuffed-* 暂存痕迹。先保留证据，再移除未经授权的代理和持久化机制；若无法确认清理完整，应从可信镜像重建。结合实例 ID 和中继核验，不要把正常的 ScreenConnect 客户端视为失陷。对照两份分析中的完整指标，并在镜像、代理、开发缓存及留存的源码归档中排查已移除版本。
+  hint: "在 macOS 上检查 ~/.solidity/ 及名为 com.solidity.langsupport.runner 的 LaunchAgent。在 Windows 上检查 ScreenConnect Client (5cbe79c9c25524df)、中继 185[.]232[.]84[.]169:8041 以及 invoke.ps1 和 %TEMP% 下的 .stuffed-* 暂存痕迹。先保留证据，再移除未经授权的代理和持久化机制；若无法确认清理完整，应从可信镜像重建。在 bee-desktop.log 中查找 Bee Desktop version: 0.56.2 (production)，并在代理日志中查找 /v1/electron 及 193[.]57[.]9[.]155:4912。对照完整指标清单；单条命中无法证明失陷。结合实例 ID 和中继排除正常的 ScreenConnect 客户端。也在镜像、代理、开发缓存及留存的源码归档中排查已移除版本。"
 sources:
 - name: Ethersphere GitHub v13.3.0 发布页
   says: 发布 API 记录 GitHub 发布时间为 00:06 UTC。
@@ -64,3 +64,5 @@ Bitbison 观察到一份载荷读取 Swarm Desktop 配置和节点密钥，上�
 Swarm 公告确认两个发布渠道都分发了恶意代码，并要求更新过 Desktop 的用户立即转移资金及质押。请使用另一台干净设备并遵循经核实的 Swarm 指引。在调查并清理或重建主机后，用 0.56.3 替换 Desktop 0.56.2。维护方确认密钥被窃及远程访问，故上调至 L4。损失范围和金额仍未核实。
 
 SafeDep 报告 Swarm Desktop 0.56.2 的九个安装包均含加载器。macOS 应用经过签名及公证。Socket 发现更新程序可能向 Apple Silicon 和 Windows x64 安装推送该版本。收到更新或下载不等于已执行。SafeDep 在 GitHub 活动日志中发现 11 月 6 日归于一个维护者账户的 13 次推送，其中注入工作流窃取 CI 凭据的尝试未成功；研究人员还将恶意发布与发布机器人关联。账户如何被入侵仍未知。两家研究团队依据相同的以太坊配置合约、控制钱包及匹配的植入程序，将这些发布与先前的 SleepyDuck Open VSX 攻击关联。这不能确定感染主机数或被盗金额。
+
+完整排查清单见 [SafeDep 的第一阶段指标](https://safedep.io/blog/ethersphere-bee-js-npm-compromise#indicators-of-compromise)、[其 65 项后续指标 CSV](https://safedep.io/data/blogs/ethersphere-bee-js-stage2-3-iocs.csv)和 [Socket 的 43 项公开指标](https://socket.dev/blog/bee-js-compromise#Indicators-of-Compromise-%28IOCs%29)。两份清单有重叠，历史中继和未核实哈希需按原报告标注核对。
