@@ -31,8 +31,8 @@ timeline:
 checklist:
 - title: Find and block the affected version
   hint: Check lockfiles, npm logs, CI build logs and registry proxy caches for @ethersphere/bee-js 13.3.0, including transitive dependencies. Check application inventories and auto-update logs for Swarm Desktop 0.56.2. Block that exact version and identify every host and runner that may have installed it.
-- title: Isolate systems that ran the install hook
-  hint: Disconnect affected machines and retire exposed runners. Preserve logs, package artifacts and systemd state. Inspect other hosts built from the same images. After collecting evidence, purge cached copies of 13.3.0 and affected build outputs. Regenerate lockfiles to pin 13.2.0 and rebuild from trusted inputs on clean runners. Removing the package alone leaves any separately installed agent behind.
+- title: Isolate systems that ran either compromised release
+  hint: Disconnect affected machines and retire exposed runners. Preserve logs, package artifacts and systemd state. Inspect other hosts built from the same images. After collecting evidence, purge cached copies of 13.3.0 and affected build outputs. Regenerate lockfiles to pin 13.2.0 and rebuild from trusted inputs on clean runners. Inspect Desktop 0.56.2 hosts as well and replace the client with 0.56.3 after containment. A separately installed agent can persist after package removal.
 - title: Replace exposed keys and credentials
   hint: Check for exposure of the Swarm Desktop node configuration and key at ~/.local/share/Swarm Desktop/data-dir/keys/swarm.key. From a clean system, replace exposed node keys and review associated wallet activity. Follow Swarm's official guidance for moving assets if a wallet key was exposed. Revoke and rotate other credentials readable by the install user, including developer and CI tokens, and review their use.
 - title: Hunt for the loader and observed Linux persistence
