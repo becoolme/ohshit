@@ -20,7 +20,7 @@ checklist:
 - title: 恢复可信结账并处置用户暴露
   hint: 用可信代码重建，移除注入资源，调查入口及异常账户，轮换相关管理及部署凭据，核验外发请求后再开放。遵循支付服务商的事件指引。若在确认受影响的结账页输入过银行卡资料，请通过可信渠道联系发卡行。
 - title: "排查支付流量中的 RTCGnaw"
-  hint: "查阅 Ohey 公布的完整指标，包括 14 个在链上存放载荷的合约和浏览器指标。网络指标包括 systmshield[.]com · threatblck[.]com · defendsstm[.]com · guardsstm[.]com · contentprotectiongate[.]com · cdn[.]api-middle-connect[.]com/metrics · tawoauth[.]com/chat · scomper[.]store/sslsocket · mouseflow[.]nexus/connection · woocompay[.]com/assets · wpguarding[.]com/system · api[.]cloudservicecon[.]com · cloud[.]protectionflare[.]com · 185[.]141[.]27[.]56:3479 · 103[.]141[.]13[.]26:3479。检查结账流量中的 WebRTC 数据通道和信标请求，再结合报告列出的脚本特征和支付日志核对。信标载荷按敏感数据处理，确认失陷前需有其他证据印证。"
+  hint: "查阅 Ohey 公布的完整指标，包括 14 个在链上存放载荷的合约和浏览器指标。网络指标包括 systmshield[.]com · threatblck[.]com · defendsstm[.]com · guardsstm[.]com · contentprotectiongate[.]com · cdn[.]api-middle-connect[.]com/metrics · tawoauth[.]com/chat · scomper[.]store/sslsocket · mouseflow[.]nexus/connection · woocompay[.]com/assets · wpguarding[.]com/system · api[.]cloudservicecon[.]com · cloud[.]protectionflare[.]com · 185[.]141[.]27[.]56:3479 · 103[.]141[.]13[.]26:3479。检查已部署 JavaScript 中的 0xe2179b8e、0xd62aa7b8、__S_INITED 和 __OWE_EARLY，并检查结账流量中的 WebRTC 数据通道及带 p 和 t 的图片请求，再结合报告列出的脚本特征和支付日志核对。信标载荷按敏感数据处理，确认失陷前需有其他证据印证。"
 sources:
 - name: Guardio Labs CartJacked 报告
   says: 提供爬取样本估算、实际访问检查、受控测试卡抓取及指标。
@@ -29,4 +29,4 @@ sources:
 
 这是多起实际观察到的攻击活动。约 12,200 家是根据 Common Crawl 10 月约 238 万家商店样本校正后的估算。63 家来自用 10 月样本代码运行的隔离测试，衡量测试资料被抓取，不能用来计算客户损失。Guardio 记录了伪造输入框替换正规支付框架、通过外部主机或浏览器存储收集资料，以及将命令复制到剪贴板的伪造验证提示。部分工具包会对已登录管理员隐藏伪造表单，应以访客身份测试。
 
-Ohey 截至 11 月 12 日观测到自 9 月 4 日起共有 26 个站点提供 RTCGnaw 脚本，其中 16 个出现在此前 30 天内。这批观测与 Guardio 的爬取估算和受控测试分别统计。两份报告列出了两个相同的主机。Ohey 在不同店铺记录到了仿 Stripe 和仿 Poynt 的表单。伪造的付款失败提示可让窃取脚本暂停 15 分钟，用户重试时可能通过正常流程付款。排查时将用户报告的失败与支付处理商的交易记录对照，并检查 WebRTC 数据通道，或部分变种所用的带 p 和 t 参数的图片信标。
+Ohey 截至 11 月 12 日观测到自 9 月 4 日起共有 26 个站点提供 RTCGnaw 脚本，其中 16 个出现在此前 30 天内。这批观测与 Guardio 的爬取估算和受控测试分别统计。两份报告列出了两个相同的主机。观测到的脚本从链上合约加载载荷，目标包括 WooCommerce 和 Magento 店铺。Ohey 在不同店铺记录到了仿 Stripe 和仿 Poynt 的表单。窃取脚本可收集银行卡和账单资料，显示伪造的付款失败提示，随后暂停 15 分钟。用户重试时可能通过正常流程付款。排查时将用户报告的失败与支付处理商的交易记录对照，并检查 WebRTC 数据通道，或部分变种所用的带 p 和 t 参数的图片信标。
