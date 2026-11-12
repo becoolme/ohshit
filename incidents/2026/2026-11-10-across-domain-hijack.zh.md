@@ -1,7 +1,7 @@
 ---
 title: Across 域名遭劫持，访问者被引向钱包盗币脚本
 summary: Across 称，针对注册商的社会工程攻击将其网站重定向到钱包盗币脚本。Bitquery 估计五条链上的九个钱包被提走约 34.8 万美元。Across 已重新控制域名，并承诺补偿受影响用户。
-splash: 11 月 10 日在遭劫持的 Across 前端签署恶意授权或交易的访问者。
+splash: 11 月 10 日在遭劫持的 Across 前端连接钱包或签署授权、消息或交易的访问者。
 wipe: 通过可信钱包界面逐链撤销可疑授权，并向 Across 报告交易哈希。
 inTheWildNote: Across 确认域名遭劫持。Bitquery 追踪了与钓鱼窗口相关的转账。
 timeline:
@@ -16,7 +16,7 @@ timeline:
   body: 研究机构依据时间及相同的收款分成方式，将约 34.8 万美元与九个钱包关联。
 checklist:
 - title: 核查每个连接过的钱包及网络
-  hint: 使用可信钱包界面或 Across 公告指定的 Revoke.cash。逐链核对劫持期间的签名授权、批准及转账，立即撤销可疑支出授权。撤销授权无法撤回已完成转账。
+  hint: 直接打开 Revoke.cash 并载入用于 Across 的钱包。逐链选择网络，按下列支出地址搜索，检查直接授权及 Permit2 额度。撤销匹配项目，用各链的 Gas 代币确认链上交易，再核实额度归零或消失。已签署但未提交的许可可能不可见。Across 建议在事发期间签过名的用户撤销可见授权后，将剩余资产转至新钱包。直接转账无法撤回。
 - title: 保留证据并通过官方渠道报告
   hint: 保存钱包地址、时间、链名和交易哈希。通过公告所列经核实的 Across 账户主动联系。保护助记词及私钥，忽略主动上门的追回服务。
 - title: 关联追踪指标
@@ -26,6 +26,8 @@ sources:
   says: 转载官方账户关于注册商、遏制及 API／集成范围的声明，并关联后续授权处置指引。
 - name: Across 用户处置公告公开副本
   says: 列出授权检查工具、撤销指引及官方报告渠道。
+- name: Across 钱包恢复详细指南
+  says: 列出支出合约、收款地址、Permit2 排查方法及撤销验证步骤。
 - name: Across 恢复公告公开副本
   says: 转载团队关于恢复及补偿承诺的公告。
 - name: Bitquery 原始链上调查
@@ -54,4 +56,26 @@ G47n6dbUor1WFweLvKPrUi5beW4yjRoFG3cJZU6a4uSa
 3EQ9Rqrtvco4nKmskv2jQRXvWKkpUGfAQs
 0x2610f11fd3cde7113f83e7137853972ba98d8360b3d91eed6d5807f947a8bd38
 0x19c5460db37f5cc2bde6f8f644892a5348a1519d2aa97f720091e982134a8ae1
+```
+
+以下为 Across 钱包恢复指南按网络列出的支出地址。指南称同一地址也可能用于其他链。Ink 需检查 Permit2 额度，BNB Chain 需同时检查直接授权和 Permit2 额度。
+
+```text
+Ethereum  0x46a2a474d4c22bf1ae4f8fa55da7a58673472be2
+Ethereum  0xdbd7fbe5b7cd56f99c059dc24052009d2626125c
+Base  0x5ff35703c22533398d5c7ce7acd32a04ac8462da
+Arbitrum  0x2ff67cddd9ff45e0b47957d9d7c19b0732f9c514
+Arbitrum  0x373c415ef034bb620e8d720afd2ace26bca13529
+Ink  0xdcd65e3a8f3b73c7e2f40dbab1fb95dbef871d6c
+Plasma  0x3ef438c34ce51a697a24247fe033c4562c94f0fd
+BNB Chain  0x0c894c253c62eda066197011efd73b632dc96263
+
+Across 列出的收款地址
+0x2846e69d3298e99eddf2fd8116e952844da11fde
+0x0c7c656126aa62625fdd8051eb69dc14aee8d37b
+0x3ef438c34ce51a697a24247fe033c4562c94f0fd
+0xa0e6c7d79b74d1a6d366dd11309b6faafda05ac5
+
+用于识别授权类型的 Permit2 合约
+0x000000000022d473030f116ddee9f6b43ac78ba3
 ```
