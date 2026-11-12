@@ -1,7 +1,7 @@
 ---
 title: TradeWaltz confirms theft of 130 trade documents after contractor key abuse
 summary: TradeWaltz says an attacker abused an administrative access key stored on a compromised contractor server. The provider stopped production and training, confirmed 130 trade documents were taken and completed direct notices to identified customers.
-splash: TradeWaltz customers whose files were in the affected production or training environments.
+splash: TradeWaltz customers with documents in production or training, both breached through an abused administrative key.
 wipe: Verify any notice with TradeWaltz and review exposed documents and related trade instructions.
 inTheWildNote: TradeWaltz confirms unauthorized access and acquisition of 130 trade documents.
 level: 4
@@ -37,4 +37,4 @@ sources:
 
 The provider first disclosed the intrusion and service suspension on November 10. It says the attacker used a system administration key stored on a server operated by an external contractor. TradeWaltz confirmed intrusions into both production and training, shut those environments down and submitted an initial report to Japan’s Personal Information Protection Commission.
 
-In its November 12 update, the company says 130 trade documents were taken and that the documents included names and initials. The number describes documents. It has not published a distinct count of people or customers. The provider completed individual contact with identified affected customers. TradeWaltz for Grain Importers and TradeWaltz for Export Documentary remained available. The provider expects production and training to remain suspended through November 13 and plans an update on restart timing by 17:00 Japan time that day.
+In its November 12 update, the company says 130 trade documents were taken and that the documents included names and initials. The number describes documents. It has not published a distinct count of people or customers. The provider completed individual contact with identified affected customers. TradeWaltz for Grain Importers and TradeWaltz for Export Documentary remained available. The provider considers reopening through November 13 unlikely. It scheduled an incident update for November 13 at 13:00 Japan time and expects to give an outlook for reopening from November 14 onward by 17:00 Japan time on November 13.
