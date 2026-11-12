@@ -13,11 +13,11 @@ wipe: Disable Legacy API, restrict untrusted appliance access, review server and
 inTheWild: disputed
 inTheWildNote: Previdian observed attempts against sensors. Successful compromise is unconfirmed.
 timeline:
-- date: Nov 12, 03:58 UTC
+- date: Nov 12, 2026
   title: Researcher posts new server and Windows endpoint chains
   body: The published tests name N-central Appliance 2026.4.1.26 HF2.
 - date: Nov 12, 07:48 UTC
-  title: Researcher clarifies the server prerequisite
+  title: Research repository records the server prerequisite
   body: The 4EverAble2Shell test had Legacy API enabled.
 - date: Nov 12, 08:24 UTC
   title: Previdian records attempts against its sensors
@@ -40,7 +40,7 @@ sources:
   primary: true
 - name: Researcher’s publication and correction history
   url: https://github.com/MSPNightmare/CVEs/commits/main/
-  says: Dates the initial public commits and the Legacy API clarification.
+  says: Records the initial repository commits and the Legacy API clarification.
   primary: true
 - name: N-able Legacy APIs documentation
   url: https://documentation.n-able.com/N-central/Release_Notes/GA/Content/N-central_2025.4_Release_Notes.htm
