@@ -19,6 +19,9 @@ timeline:
 - date: Nov 11, 22:45 UTC
   title: ConnectWise publishes precautionary guidance
   body: The vendor lists five extensions and steps for hosted and on-premises partners.
+- date: Nov 11, 2026
+  title: Sophos publishes independent deployment telemetry
+  body: Sophos identifies three source instances, two rogue destination instances and the installer and follow-on script activity.
 - date: Nov 12, 02:00 UTC
   title: Huntress publishes SCKit analysis
   body: It confirms rogue clients and bulk panel commands across 48 organizations in its telemetry. The console-takeover path failed in the host logs examined.
@@ -34,8 +37,8 @@ checklist:
   hint: Retain authentication, extension-installation, admin, Run Command and Toolbox logs. Investigate unexpected users, permission changes, deployments and commands. Isolate suspected hosts and preserve evidence. Identify the legitimate client separately. Remove the rogue service, TrapWatch task, RelayTrap directory and Run value. Check for reinfection and validate access before reconnecting.
 - title: Verify maintenance across the remote-access stack
   hint: Check the current vendor guidance for servers, technician clients and endpoint agents. Run compromise triage and remediation independently of the software update.
-- title: Hunt the vendor indicators
-  hint: Correlate both published indicator sets below with network, process, scheduled-task, registry Run and ScreenConnect logs. Check for TrapWatch running as SYSTEM, reportedly every 10 seconds, then review client fingerprints and API configuration. A filename, account name or legitimate utility alone does not establish compromise.
+- title: Hunt the published indicators
+  hint: Correlate the three published indicator sets below with network, process, scheduled-task, registry Run and ScreenConnect logs. Check for TrapWatch running as SYSTEM, reportedly every 10 seconds, then review client fingerprints and API configuration. A filename, account name or legitimate utility alone does not establish compromise.
 sources:
 - name: ConnectWise November 11 ScreenConnect advisory
   says: Lists the five disabled extensions, approximately 400 environments with one or more installed, suspected behavior and partner actions.
@@ -49,6 +52,10 @@ sources:
   url: https://www.huntress.com/blog/sckit-worm-rogue-screenconnect
   primary: true
   says: Describes observed endpoints, affected versions, unsuccessful console takeover in recovered logs, indicators and cleanup.
+- name: Sophos X-Ops independent deployment telemetry
+  url: https://www.sophos.com/en-us/blog/malicious-screenconnect-deployments-observed
+  primary: true
+  says: Documents command-source and rogue instance IDs, MSI installation and subsequent script activity.
 ---
 
 ConnectWise says the extensions may be associated with the campaign. The roughly 400 environments had one or more of them installed. The vendor has not established the number of compromised environments, the initial access method or a CVE. It is investigating whether attackers used extensions to deploy additional remote access and whether interactive connections exposed technician workstations. Treat extension disabling as containment and check separately for persistence. This is distinct from the [Cloud Backup incident](/incidents/connectwise-cloud-backup/).
@@ -86,6 +93,8 @@ rmmserver
 ```
 
 Huntress observed an operator use Run Command on cloud-hosted panels to install rogue clients and SCKit on managed Windows endpoints. It reports that 26.6.6.9747 and 26.7.6.9783 were in scope. Updating alone does not remove persistence, and no incident-specific fixed version has been published in these reports. The toolkit is built to intercept browser session cookies and spread through interactive technician sessions. The researchers found failed console-takeover attempts in the host logs they examined, so successful self-propagation remains unconfirmed. Their 288 hosts across 48 organizations describe their own observations. ConnectWise’s roughly 400 environments are the extension-installation count.
+
+Sophos independently observed curl.exe downloading ScreenConnect.ClientSetup.msi from 185.99.255[.]28 to C:\Windows\TEMP\sc.msi. A ScreenConnect-generated command file then launched msiexec.exe for a silent installation. Sophos also observed batch-file staging and PowerShell bypassing execution policy to fetch a second-stage script from hxxps://ns[.]mo7sen[.]dev/EadF.php?p=4. Check the three suspected abused source instance IDs d905b2b1b165d0a9, 4b8f4089ddaac6a9 and df1f7ef0cfacd0d8 separately from the rogue destination IDs 2588ef5c15954b10 and ed630cc2c873b091. Correlate with command, process and network logs. A match alone does not establish compromise.
 
 Additional Huntress indicators, including 16 sample hashes. Per-host values vary. Correlate hits with logs and execution evidence.
 
