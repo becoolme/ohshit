@@ -22,7 +22,7 @@ cves:
   name: Cross-tenant robot token exposure
   description: An authenticated user able to create a namespace can use an underscore as a wildcard to retrieve robot account tokens from matching namespaces.
 timeline:
-- date: Nov 11, 14:00 UTC
+- date: Nov 11, 2026
   title: Red Hat discloses two Quay vulnerabilities
   body: The two advisories describe abuse of signing-key rotation and theft of robot tokens across tenants.
 - date: Nov 11, 2026
@@ -32,7 +32,7 @@ checklist:
 - title: Restrict access to the key service
   hint: At the reverse proxy or load balancer, allow only trusted internal components to reach /keys. Verify from an untrusted network that the route is blocked and from internal services that required access still works.
 - title: Upgrade and verify coverage for both CVEs
-  hint: Match the installed release and image digest to the Red Hat erratum listing each CVE. For CVE-2026-110697 Red Hat lists 3.9.28, 3.10.28, 3.12.24, 3.14.10, 3.15.9, 3.16.7, 3.17.7 and 3.18.3. Use the signing-key errata or ask Red Hat for a confirmed build for your deployment.
+  hint: Match the release and image digest to the erratum for CVE-2026-123710. Red Hat’s separate CVE-2026-110697 bulletin names these same Quay 3 releases as fixed: 3.9.28, 3.10.28, 3.12.24, 3.14.10, 3.15.9, 3.16.7, 3.17.7 and 3.18.3. Ask Red Hat to confirm coverage for other streams.
 - title: Audit service signing keys and image changes
   hint: Preserve audit logs and inventory approved keys. Check service_key_rotate and service_key_delete events for a null expiration_date and correlate with expected key management. Remove unrecognized approved keys after closing the route. Investigate unusual pulls, pushes, digest changes and replaced tags. Redeploy affected workloads from verified digests if image integrity was compromised.
 - title: Limit namespace creation and rotate exposed robot tokens
