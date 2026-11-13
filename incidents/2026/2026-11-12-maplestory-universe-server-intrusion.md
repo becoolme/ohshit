@@ -19,10 +19,10 @@ timeline:
     body: The operator found unauthorized off-chain access, blocked the route used, revoked access credentials it confirmed the intruder had obtained, and denied subsequent reuse attempts.
   - date: Nov 12, 21:40 UTC
     title: Listed services return except OpenAPI
-    body: The operator replaced affected servers and rotated all operation keys before resuming services. The maintenance notice expected OpenAPI to return the following week.
+    body: The game client, website, marketplace and Builder were among the services restored. The maintenance notice expected OpenAPI to return the following week.
   - date: Nov 13, 2026
     title: Operator details the records accessed and its asset review
-    body: The report identifies affected user records and data from 328 Builder apps. The operator plans to email potentially affected users who registered an address and publish separate API key reissue instructions.
+    body: The report identifies affected user records and data from 328 Builder apps. The operator plans to email potentially affected users who registered an email address and publish separate API key reissue instructions.
 checklist:
   - title: Confirm OpenAPI recovery before replaying requests
     hint: Check OpenAPI status separately from the game and marketplace in the official maintenance notice. Pause retries during the outage and reconcile queued requests against your own records before replaying them.
@@ -47,4 +47,4 @@ sources:
 
 The operator identified accessed records dated after **November 4, 2026 at 23:26 UTC**. It has not disclosed the initial entry point or a count of affected users. Exposure varies by user and activity. The confirmed records include account profiles and wallet addresses, login history with IP addresses, approximate locations, device and browser details and session keys, the first 12 characters of email addresses, linked social-account identifiers, OpenAPI call metadata and request and response content, shop consent records, and transaction and service activity. The confirmed records exclude real names, phone numbers, physical addresses, identity verification data and payment card information. These records can link public wallet activity to account information and make phishing more convincing.
 
-The 328 Builder apps had their developer wallet addresses, nicknames, API keys and OAuth client IDs accessed. According to the operator, the exposed API keys cannot move or otherwise affect assets. The operator says it never stores users’ wallet private keys. It says the encrypted operation keys that can move assets remained protected, attempts to access the key management system were blocked, and smart contract permissions remained intact. After checking on-chain records and service wallets, it reported no asset movement or theft attributable to the incident and said users need not change wallets or move assets based on its findings.
+The 328 Builder apps had their developer wallet addresses, nicknames, API keys and OAuth client IDs accessed. According to the operator, the exposed API keys cannot move or otherwise affect assets. The operator says it never stores users’ wallet private keys. The operator says the blockchain and smart contracts were unaffected. It says the encrypted operation keys that can move assets were unexposed, access attempts against its key management system were blocked, and contract permissions stayed the same. It replaced affected servers and rotated all operation keys before reopening services. After checking on-chain records and service wallets, it reported no asset movement or theft attributable to the incident and said users need not change wallets or move assets based on its findings.
