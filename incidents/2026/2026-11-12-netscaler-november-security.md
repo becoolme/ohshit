@@ -68,7 +68,7 @@ cves:
 - id: CVE-2026-111343
   score: 6.9
   name: Authentication request overflow
-  description: Requires a Gateway or AAA virtual server.
+  description: Requires a Gateway or AAA virtual server. The vendor’s CVSS vector specifies a local attack vector.
 - id: CVE-2026-111344
   score: 9.3
   name: Endpoint Analysis overflow
