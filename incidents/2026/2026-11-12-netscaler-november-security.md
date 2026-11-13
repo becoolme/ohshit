@@ -2,6 +2,7 @@
 title: Citrix fixes 28 NetScaler ADC and Gateway flaws and a Console authentication bypass
 level: 3
 date: '2026-11-12'
+updated: '2026-11-13'
 tags:
 - Citrix
 - NetScaler
