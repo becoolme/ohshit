@@ -18,7 +18,7 @@ timeline:
     body: The incident notice attributes the service maintenance to access to part of its off-chain server infrastructure.
   - date: Nov 12, 21:40 UTC
     title: Listed services return except OpenAPI
-    body: The operator says OpenAPI maintenance continues and expects service to resume the following week.
+    body: The operator says OpenAPI maintenance continues and expects service to resume the following week. Check the notice for any revised target.
 checklist:
   - title: Check service status before replaying requests
     hint: Open the official maintenance notice and verify OpenAPI status separately from the game and marketplace. Hold retries while the API is unavailable and reconcile queued requests against your own records before replaying them.
