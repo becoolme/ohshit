@@ -6,7 +6,7 @@ wipe: Review vendor notices and exposed data. Revoke and rotate credentials incl
 inTheWildNote: Fireworks and Notion confirmed unauthorized access to affected customer data.
 level: 4
 date: '2026-11-09'
-updated: 2026-11-12
+updated: 2026-11-13
 tags:
 - AI
 - SaaS
@@ -28,6 +28,9 @@ timeline:
 - date: Nov 12, 2026
   title: Notion customer RECEPTIONIST describes its own possible exposure
   body: The company identified information about 53 people outside the company and employee data in the affected records. It plans individual emails and a regulatory report.
+- date: Nov 13, 2026
+  title: Notion reports action on exposed API keys
+  body: Notion says it revoked exposed Notion API keys on November 11 and reported exposed third-party keys to their issuers on November 12.
 checklist:
 - title: Review the data named in Fireworks notices
   hint: Use your incident notice or the contact listed on the security bulletin. Identify affected datasets, model material, metadata or billing records. Revoke and rotate exposed secrets at their issuers and review associated activity.
@@ -61,3 +64,5 @@ Notion says it disconnected from Fireworks by November 3 following a notificatio
 In its November 11 notice, Japanese security company LRM says Notion notified it the day before. The company is reviewing a subset of its October 5–24 Insights records and found names of business contacts in the text. It is notifying those contacts individually and reports no system credentials in its reviewed records. That finding applies to LRM’s records. Other notified workspace owners should review their own exports, notify people whose information appears, and rotate any exposed credentials. LRM says its own services were outside the intrusion. The record count and whether outsiders obtained LRM’s records remain under investigation.
 
 RECEPTIONIST says Notion notified it on November 10. Its November 12 filing identifies records from October 5–23 containing information about **53 people outside the company**, plus employee information. Depending on the person, the records may include names, company names, phone numbers, email addresses and inquiry details. The company excludes credit card and bank account information from those records. It is treating the records as exposed while it has yet to establish that a third party obtained them. The company plans individual emails and a report to Japan's Personal Information Protection Commission and reports no known misuse. RECEPTIONIST says its own services and customer data stored in them were outside this incident.
+
+Notion’s update confirms it found API keys in affected messages. It revoked exposed Notion API keys it found on November 11 and reported the third-party API keys it found to their issuers on November 12. A report to an issuer does not establish revocation. Workspace owners should verify revocation with each issuer, replace the keys and check usage logs between exposure and revocation.
