@@ -65,31 +65,31 @@ cves:
   score: 8.7
   name: LDAP authentication overflow
   description: Requires a Gateway or AAA virtual server.
-- id: CVE-2026-111343
+- id: CVE-2026-111333
   score: 6.9
   name: Authentication request overflow
   description: Requires a Gateway or AAA virtual server. The vendor’s CVSS vector specifies a local attack vector.
-- id: CVE-2026-111344
+- id: CVE-2026-111334
   score: 9.3
   name: Endpoint Analysis overflow
   description: Requires a VPN or AAA virtual server with Endpoint Analysis.
-- id: CVE-2026-111345
+- id: CVE-2026-111335
   score: 6.9
   name: Request handling reboot loop
-  description: Requires reachability to the ADC or Gateway on the data path.
-- id: CVE-2026-111346
+  description: Requires reachability to the ADC or Gateway on the data path. The vendor’s CVSS vector specifies a local attack vector.
+- id: CVE-2026-111336
   score: 8.3
   name: HTTP/2 overflow
   description: Requires an HTTP or SSL virtual server with HTTP/2 enabled in its profile.
-- id: CVE-2026-111347
+- id: CVE-2026-111337
   score: 8.7
   name: Base64 policy overflow
   description: Applies to bound B64DECODE policy expressions or Application Firewall configurations.
-- id: CVE-2026-111348
+- id: CVE-2026-111338
   score: 6.9
   name: Authentication data in logs
   description: Requires local read access to /var/log/httperror.log after a logout occurred.
-- id: CVE-2026-111349
+- id: CVE-2026-111339
   score: 6.9
   name: Application Firewall inspection overflow
   description: Requires an AppFW profile with one of the affected inspection protections.
@@ -144,6 +144,9 @@ timeline:
 - date: Nov 12, 2026
   title: Citrix publishes firmware and Console advisories
   body: CERT-EU recommends prioritizing internet-facing Gateway and AAA appliances.
+- date: Nov 12, 2026
+  title: Citrix corrects seven ADC and Gateway CVE identifiers
+  body: CTX697305 now lists CVE-2026-111333 through CVE-2026-111339. Update inventory and detection references that were based on the initial bulletin; the affected configurations and fixed builds for these seven entries did not change.
 checklist:
 - title: Patch ADC and Gateway first
   hint: Prioritize internet-facing Gateway and AAA appliances. Install 14.1-73.57 or 13.1-64.39, or the applicable FIPS/NDcPP build below. Apply updates across all affected nodes and plan for ICA sessions to reconnect.
@@ -156,7 +159,7 @@ checklist:
 sources:
 - name: Citrix ADC and Gateway bulletin CTX697305
   url: https://support.citrix.com/external/article/CTX697305/citrix-netscaler-adc-and-citrix-netscale.html
-  says: Lists the 28 CVEs, feature prerequisites and firmware builds.
+  says: Lists the 28 CVEs, the identifier correction, feature prerequisites and firmware builds.
   primary: true
 - name: Citrix Console bulletin CTX697320
   url: https://support.citrix.com/external/article/CTX697320/citrix-netscaler-console-security-bullet.html
