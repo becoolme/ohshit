@@ -2,6 +2,7 @@
 title: AllUnited registration form flaw exposed club member data and credentials
 level: 4
 date: '2026-11-10'
+updated: '2026-11-13'
 tags: [AllUnited, SaaS, data breach]
 summary: AllUnited says an attacker used a club registration form to reach a server and copy membership data, including IBANs and credentials. The provider fixed the flaw and announced a password reset. It has not published a count of affected individuals.
 splash: Clubs, federations and communities using AllUnited, including their members, administrators and website registrants.
@@ -21,18 +22,21 @@ timeline:
 - date: Nov 12, 2026
   title: AllUnited updates the coordinated reporting process
   body: It gives clubs separate November 13 cutoffs for authorizing its joint filing or submitting their own report.
+- date: Nov 13, 2026
+  title: AllUnited extends joint reporting and restores the KNHB connection
+  body: The provider says confirmation emails are delayed. Links to KNLTB, KNGU, KNSB and Atletiekunie are still disabled.
 checklist:
 - title: Reset passwords from a trusted address
   hint: Open the official club portal or ClubApp directly and request a reset. Use the latest reset email you requested and check spam if needed. Change any reused password on other services and enable MFA where available. Contact the official support desk if a reset does not arrive; never send your password.
 - title: Verify payment and account requests
   hint: Independently confirm requests for fees, bank changes or codes with the club using contact details you already trust. Watch for tailored phishing using addresses, birth dates or IBANs and report suspicious activity to the club or bank.
 - title: Verify reporting and member notification arrangements
-  hint: Check AllUnited’s incident page. The provider gave November 13 local deadlines of 10:00 for authorization of its joint filing and 19:15 for an organization’s own report. Confirm filing and member notification separately, including former members and other affected contacts. Use the affected-member selection in the Relations wizard and keep confirmation records.
+  hint: Check AllUnited’s incident page. It extended the original November 13 10:00 local deadline for joint filing authorization without publishing a new cutoff. If you already sent the form, wait for the delayed confirmation email instead of submitting it again. The published cutoff for filing directly with the Dutch Data Protection Authority was November 13 at 19:15 local time. Confirm filing and member notification separately, including former members and other affected contacts. Use the affected-member selection in the Relations wizard and keep confirmation records.
 sources:
 - name: AllUnited incident timeline and FAQ
   url: https://www.allunited.nl/artikelen/datalek/
   primary: true
-  says: Confirms the entry point, data copied, password handling and organization notification process.
+  says: Confirms the entry point, data copied, password handling and the November 13 reporting extension and federation API status.
 - name: AllUnited Customer Care Center notice
   url: https://support.allunited.nl/support/solutions/articles/103000425650-beveiligingsincident-allunited-wat-er-is-gebeurd-en-wat-je-moet-doen
   primary: true
