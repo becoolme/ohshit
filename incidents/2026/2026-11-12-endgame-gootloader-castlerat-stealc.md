@@ -22,7 +22,7 @@ checklist:
   - title: Contain and investigate potentially infected endpoints
     hint: Isolate affected hosts and preserve endpoint telemetry. Review downloads from unfamiliar sites, especially supposed legal documents, and trace what ran afterward. Investigate follow-on access and ransomware before returning machines to service.
   - title: Revoke exposed access from a clean device
-    hint: Check affected email addresses at Have I Been Pwned and review any verified notification from your security team or provider. Use Pwned Passwords for a separate password check and never send a password to someone offering help. Revoke browser and account sessions, rotate stored or reused credentials, and enable MFA where supported. Check sign-in and recovery settings for unexpected changes.
+    hint: Check affected email addresses at Have I Been Pwned and review any verified notification from your security team or provider. Treat stored passwords on a confirmed infected system as exposed even if your email does not appear. Never send a password to someone offering help. Revoke browser and account sessions, rotate stored or reused credentials, and enable MFA where supported. Check sign-in and recovery settings for unexpected changes.
   - title: Clean compromised websites before serving traffic
     hint: For affected WordPress sites, inspect access logs and unauthorized changes to site files and administrator accounts. Remove malicious content, update WordPress and its extensions, rotate administrative credentials and enable MFA before restoring service.
 sources:
