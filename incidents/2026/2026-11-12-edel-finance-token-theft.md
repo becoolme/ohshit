@@ -2,9 +2,10 @@
 title: Edel Finance reports theft and sale of roughly $300,000 in EDEL tokens
 level: 4
 date: '2026-11-12'
+updated: '2026-11-13'
 tags: [Edel Finance, token theft, DeFi]
 ecosystems: [crypto]
-summary: Edel Finance says roughly $300,000 worth of EDEL tokens were stolen and sold. The team says it is investigating with authorities and exchanges. The public statement gives no technical cause or customer loss total.
+summary: Edel Finance says roughly $300,000 worth of EDEL tokens were stolen and sold. Edel later said the stolen tokens had been sold or blocked by exchanges and promised a postmortem.
 splash: EDEL token holders and integrations monitoring the incident. Edel has yet to identify which wallets or systems were affected.
 wipe: Verify incident notices through Edel’s established channels and keep records of suspicious transactions or messages.
 inTheWild: 'yes'
@@ -13,6 +14,9 @@ timeline:
   - date: Nov 12, 2026
     title: Edel Finance confirms theft and sale of EDEL tokens
     body: The team values the tokens at roughly $300,000 and says it is coordinating with authorities and exchanges.
+  - date: Nov 12, 2026
+    title: Edel reports exchanges blocked some stolen tokens
+    body: Edel said all stolen tokens had either been sold or blocked by exchanges. It credited MEXC and BloFin for their response and said a postmortem would follow.
 checklist:
   - title: Verify notices through Edel’s established channels
     hint: Open Edel’s official site or the established edeldotfinance account directly for scope and response updates. Ignore unsolicited recovery offers and never share a private key or seed phrase.
@@ -23,6 +27,10 @@ sources:
     url: https://publish.twitter.com/oembed?omit_script=true&url=https%3A%2F%2Fx.com%2Fedeldotfinance%2Fstatus%2F2120902181104611616
     says: Confirms the approximate value, sale and investigation with authorities and exchanges.
     primary: true
+  - name: Edel Finance follow-up via X’s public embed
+    url: https://publish.twitter.com/oembed?omit_script=true&url=https%3A%2F%2Fx.com%2Fedeldotfinance%2Fstatus%2F2120908165168422923
+    says: Reports the tokens were sold or blocked, credits two exchanges and promises a postmortem.
+    primary: true
 ---
 
-Edel Finance’s public statement gives a roughly **$300,000** valuation for the stolen EDEL tokens. It leaves the number of tokens, source wallets, affected systems, attacker access and recoveries unspecified. The amount describes the theft reported by Edel. Customer balances and any returned funds remain unverified.
+Edel Finance’s public statement gives a roughly **$300,000** valuation for the stolen EDEL tokens. It leaves the number of tokens, source wallets, affected systems, attacker access and recoveries unspecified. The amount describes the theft reported by Edel. In its follow-up, Edel did not give a breakdown of how many tokens were sold or blocked. The value of any customer losses and whether any blocked tokens have been returned remain unverified.
