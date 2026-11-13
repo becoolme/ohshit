@@ -19,7 +19,7 @@ checklist:
 - title: Confirm the status of the service you need
   hint: Open Gov.pl and the receiving office’s site directly. Check ePUAP, Trusted Profile and e-Doręczenia separately. A restored electronic delivery service does not mean ePUAP is back.
 - title: Confirm an alternative before sending an urgent filing
-  hint: Ask the receiving office which submission routes it accepts for your case and keep the acknowledgement. The Inowrocław office lists telephone, email and in-person contact. Confirm whether any of these is valid for the actual filing, rather than assuming a deadline has moved.
+  hint: Ask the receiving office which submission routes it accepts for your case and keep the acknowledgement. The Inowrocław office lists telephone, email, post and in-person contact. Confirm whether any of these is valid for the actual filing, rather than assuming a deadline has moved.
 - title: Verify recovery notices
   hint: Use government or office websites for status and contact details. Avoid unsolicited restoration links or requests for credentials. When the mailbox returns, check for confirmation before resubmitting an item.
 sources:
