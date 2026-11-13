@@ -4,11 +4,11 @@ level: 4
 date: '2026-11-12'
 tags: [Edel Finance, token theft, DeFi]
 ecosystems: [crypto]
-summary: Edel Finance says roughly $300,000 worth of its EDEL tokens were stolen and sold. The team says it is investigating with authorities and exchanges. The public statement gives no technical cause or customer loss total.
+summary: Edel Finance says roughly $300,000 worth of EDEL tokens were stolen and sold. The team says it is investigating with authorities and exchanges. The public statement gives no technical cause or customer loss total.
 splash: EDEL token holders and integrations monitoring the incident. Edel has yet to identify which wallets or systems were affected.
 wipe: Verify incident notices through Edel’s established channels and keep records of suspicious transactions or messages.
 inTheWild: 'yes'
-inTheWildNote: Edel Finance confirms its EDEL tokens were stolen and sold.
+inTheWildNote: Edel Finance confirms EDEL tokens were stolen and sold.
 timeline:
   - date: Nov 12, 2026
     title: Edel Finance confirms theft and sale of EDEL tokens

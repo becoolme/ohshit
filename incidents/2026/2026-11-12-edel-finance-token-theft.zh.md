@@ -3,7 +3,7 @@ title: Edel Finance 称价值约 30 万美元的 EDEL 代币被盗并售出
 summary: Edel Finance 称，价值约 30 万美元的 EDEL 代币被盗并售出，团队正与执法机构及交易所调查。公开声明未披露技术原因或客户损失总额。
 splash: 关注事件的 EDEL 持有者和集成方。Edel 尚未说明涉及哪些钱包或系统。
 wipe: 通过 Edel 既有官方渠道核实公告，保留异常交易或可疑消息的记录。
-inTheWildNote: Edel Finance 确认其 EDEL 代币被盗并售出。
+inTheWildNote: Edel Finance 确认 EDEL 代币被盗并售出。
 timeline:
   - date: 2026年11月12日
     title: Edel Finance 确认 EDEL 代币被盗并售出
