@@ -33,7 +33,7 @@ timeline:
   body: The message proposes returning 90% and keeping 10%, with a deadline of November 13 at 01:00 UTC. The transaction documents an offer.
 - date: Nov 12, 2026
   title: CertiK reconstructs payouts and finds an accounting anomaly
-  body: Nine on-chain payments total 2,234,391 USDG. The saved account records show signed 64-bit wraparound, with the production component responsible still unknown.
+  body: Nine on-chain payments total 2,234,391 USDG. The saved account records show a pattern consistent with signed 64-bit wraparound. The layer responsible remains unknown.
 checklist:
 - title: Review account activity through the official interface
   hint: Compare balances, positions, orders and withdrawals with your records. If anything differs, preserve the transaction identifiers and contact official Arcus support.
@@ -64,4 +64,4 @@ Arcus attributes the incident to an accounting error in transfers between a user
 
 **November 11 recovery offer.** A message claiming to be from the Arcus team appeared on Ethereum and was repeated in a successful Safe transaction at **01:24 UTC**. It offered the recipient the option to return **90%** of the withdrawn funds and keep **10%**, with a deadline of **November 13 at 01:00 UTC**. The transaction establishes that the message was relayed, and Arcus’s incident report remains the source for the amount paid out and treasury coverage. There is no confirmed return in the sources reviewed. The Safe call addressed the wallet Arcus disclosed and two additional addresses. Receipt of that message alone does not establish the addresses’ ownership. Arcus users should verify any recovery notice through the official interface.
 
-**November 12 technical analysis.** CertiK matched nine BridgeVault payouts on Robinhood Chain totaling **2,234,391 USDG**. Six other applied requests totaling **3,000,000 USDG** had no matching payout through finalized block **111,322,906**. It identified three exact signed 64-bit wraparound discrepancies in saved account records. The records establish the accounting anomaly and actual payments. Which production component performed the wrapping and what value the collateral check used remain unknown. CertiK also traces Relay refunds back to the incident wallet. Those transfers do not establish a return to Arcus.
+**November 12 technical analysis.** CertiK matched nine BridgeVault payouts on Robinhood Chain totaling **2,234,391 USDG**. Six other applied requests totaling **3,000,000 USDG** had no matching payout through finalized block **111,322,906**. It identified three exact signed 64-bit wraparound discrepancies in saved account records. The records establish the accounting anomaly and actual payments. The layer where the wrapping occurred and the value used by the collateral check remain unknown. CertiK also traces Relay refunds back to the incident wallet. Those transfers do not establish a return to Arcus.
