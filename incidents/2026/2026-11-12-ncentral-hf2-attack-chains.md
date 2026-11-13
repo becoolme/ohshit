@@ -34,7 +34,7 @@ checklist:
     still check in.
 - title: Hunt on servers and downstream Windows systems
   hint: Preserve proxy, appliance, task and endpoint logs. Hunt 157.20.241[.]16 (TCP 8080 and 19202–19418), 139.99.69[.]109:10128 and 79.76.51[.]56:39100. Correlate /dms/services/ServerUI requests, unexpected processes and Windows Agent or Probe tasks. Huntback lists 12 indicator groups and host artifacts
-    at the end of its report. A match alone does not establish compromise.
+    at the end of its report, including /tmp/.xvd, /var/tmp/.xvd, xvd.service and the jline.internal.TerminalLineSettings SOAP class. A match alone does not establish compromise.
 - title: Track separate fixes for the appliance and Windows chains
   hint: Keep the earlier HF2 security update in place and check N-able’s official notices for remediation of these new paths. Confirm guidance for your hosted or on-premises deployment and the Agent and Probe builds before relaxing network controls. If compromise is found, isolate affected appliances
     and managed systems, revoke exposed credentials and restore from verified clean systems.
@@ -70,12 +70,16 @@ sources:
 - name: Apache Software Foundation Axis advisory
   url: https://lists.apache.org/thread/8slf0j9gz35z56t0glt5h0ncwlbn4bdz
   primary: true
-  says: Documents class instantiation while processing an inbound SOAP fault in Apache Axis 1.x.
+  says: Documents class instantiation while processing an inbound SOAP fault in Apache Axis 1.x. The Apache notice is also available at mail-archive.com.
 updated: 2026-11-13
 cves:
 - id: CVE-2026-90436
   name: Apache Axis SOAP class instantiation
   description: A reachable Axis 1.x SOAP path can instantiate classes for an unauthenticated caller. In N-central the reported server chain needs Legacy API and a separate weakness to reach root.
+- name: Apache Axis mailing-list notice (readable archive)
+  url: https://www.mail-archive.com/java-user@axis.apache.org/msg05810.html
+  primary: true
+  says: Preserves the original Apache advisory and links its patch commit.
 ---
 
 The researcher behind [the earlier Able2Shell disclosure](/incidents/ncentral-able2shell/) published additional chains tested on N-central Appliance 2026.4.1.26 HF2. In the server test, the attacker could reach a SOAP endpoint while Legacy API was enabled. The chain ran commands as the appliance service account and then used privileged helpers to reach root.
