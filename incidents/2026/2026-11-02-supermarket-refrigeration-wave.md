@@ -50,7 +50,7 @@ checklist:
 - title: Isolate exposed management while preserving safe refrigeration
   hint: 'Follow CERT-FR: remove public IP exposure, coordinate with the refrigeration contractor and check insurance/monitoring obligations before cutting provider telemetry. Keep safe local operation under qualified supervision; do not turn off cooling blindly.'
 - title: Verify the complete controller configuration
-  hint: Check defrost schedules, temperature settings, alarm thresholds and notification delivery, and remote-access permissions and user accounts against approved values. Have refrigeration and food-safety staff independently check temperatures and the safety of stored stock before returning it to sale.
+  hint: Check defrost schedules, temperature settings, alarm thresholds and notification delivery, and remote-access permissions and user accounts against approved values. Check management and firewall logs for /xml.cgi requests from 178.83.226[.]215 or 37.16.75[.]128 and correlate with account or configuration changes. A match alone does not prove compromise. Have refrigeration and food-safety staff independently check temperatures and the safety of stored stock before returning it to sale.
 - title: Recover compromised controllers with the maintainer
   hint: CERT-FR recommends restarting affected Danfoss equipment, or a factory reset if needed, then reconfiguring for service. Preserve available logs/configuration before destructive recovery when safe. A reset alone does not patch a vulnerability.
 - title: Restore remote access through a protected network
