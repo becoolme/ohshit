@@ -36,7 +36,7 @@ cves:
 - name: 端点分析溢出
   description: 需要启用端点分析的 VPN 或 AAA 虚拟服务器。
 - name: 请求处理可导致反复重启
-  description: 前提是能够通过数据路径访问 ADC 或 Gateway。
+  description: 前提是能够通过数据路径访问 ADC 或 Gateway。厂商 CVSS 向量将攻击向量标为本地。
 - name: HTTP/2 溢出
   description: 需要在 HTTP 或 SSL 虚拟服务器的配置文件中启用 HTTP/2。
 - name: Base64 策略溢出
@@ -73,6 +73,9 @@ timeline:
 - date: 2026年11月12日
   title: Citrix 发布固件和 Console 安全公告
   body: CERT-EU 建议优先更新面向互联网的 Gateway 和 AAA 设备。
+- date: 2026年11月12日
+  title: Citrix 更正 ADC 和 Gateway 的七个 CVE 编号
+  body: CTX697305 现列为 CVE-2026-111333 至 CVE-2026-111339。请更新依据初版公告建立的资产清单及检测引用；这七项的受影响配置和修复构建不变。
 checklist:
 - title: 先更新 ADC 和 Gateway
   hint: 优先处理面向互联网的 Gateway 和 AAA 设备。安装 14.1-73.57、13.1-64.39 或下列对应的 FIPS/NDcPP 构建。更新所有受影响节点，并安排 ICA 会话重新连接。
@@ -83,7 +86,7 @@ checklist:
 - title: 验证业务流量并保留诊断日志
   hint: 确认各节点实际运行的构建。变更后测试 Gateway 登录、ICA 重连、负载均衡服务和 Console 管理。如果异常持续，保留崩溃、重启和访问日志供调查。
 sources:
-- says: 列出 28 个 CVE、功能前提和固件构建。
+- says: 列出 28 个 CVE、编号更正、功能前提和固件构建。
 - says: 说明 Console 认证绕过及其独立修复。
 - says: 说明升级顺序、LAS 许可证、ICA 会话中断和已知利用情况。
 - says: 建议优先更新面向互联网的 Gateway 和 AAA 设备。
