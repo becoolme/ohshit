@@ -2,6 +2,7 @@
 title: "UnrealIRCd label injection lets ordinary users run privileged IRC commands"
 level: 4
 date: 2026-11-07
+updated: 2026-11-13
 tags: [unrealircd, irc, injection, exploited]
 summary: >-
   Attackers are exploiting CVE-2026-114713 to inject server-to-server commands from ordinary client
@@ -34,6 +35,9 @@ timeline:
   - date: "Nov 8, 2026"
     title: "Maintainer reports active exploitation"
     body: "The project updates the advisory and urges administrators to deploy protection immediately."
+  - date: Nov 13, 2026
+    title: CISA adds the command injection to KEV
+    body: The federal civilian remediation deadline is November 16 and the entry flags forensic triage.
 checklist:
   - title: "Deploy the temporary filter if every server supports it"
     hint: >-
@@ -61,6 +65,8 @@ checklist:
       For UnrealIRCd 5, add `blacklist-module "labeled-response";` to the configuration on every server
       and restart each process. A rehash alone leaves the module active. Move unsupported releases to
       6.2.7.1 or later. The maintainer did not test other end-of-life series.
+  - title: Preserve evidence and follow KEV remediation guidance
+    hint: Preserve IRC server logs and configuration from each node and review unexplained KILL or GLINE events. Covered federal civilian agencies must remediate by November 16 and follow the BOD 26-04 forensic-triage guidance.
 sources:
   - name: "UnrealIRCd maintainer advisory and exploitation update"
     url: https://forums.unrealircd.org/viewtopic.php?t=9487
@@ -85,6 +91,10 @@ sources:
   - name: "GitHub Advisory Database alias"
     url: https://github.com/advisories/GHSA-237f-p9h6-wq4r
     says: "Lists GHSA-237f-p9h6-wq4r as an alias of CVE-2026-114713."
+  - name: CISA KEV catalog
+    url: https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json
+    primary: true
+    says: Lists November 13 addition, November 16 federal civilian deadline and forensic triage.
 ---
 
 A client connected to a vulnerable IRC network can send a crafted IRCv3 `label` tag. The
@@ -100,3 +110,5 @@ a hang during blacklist rechecks, a crash involving services' CHGIDENT, incorrec
 responses to new connections, excessive bans set by services, potential TLS renegotiation flooding
 and a possible crash in the WHOWAS database. The temporary filter addresses the command injection.
 Use the full hot-patch or release for the rest of the batch.
+
+CISA added CVE-2026-114713 to KEV on November 13 with a November 16 deadline for covered federal civilian agencies and a forensic-triage flag.
