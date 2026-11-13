@@ -35,6 +35,9 @@ timeline:
   - date: Nov 6, 2026
     title: GMO begins individual contact about unauthorized trading losses
     body: Eligible-customer and transaction checks remain open. GMO expects to discuss application progress at its November 13 results briefing.
+  - date: Nov 13, 2026
+    title: GMO reports applications for unauthorized trading losses
+    body: As of November 12, GMO had received claims involving 2,943 accounts and about ¥2.99 billion, pending verification.
 checklist:
   - title: Follow GMO’s customer-PC isolation guidance
     hint: The October 27 notice requests a full virus scan and backup, followed by network disconnection, shutdown and unplugging PC cables. This concerns customer PCs, beyond the vendor-hosted servers; do not reconnect solely because no ransomware has been confirmed.
@@ -47,7 +50,7 @@ checklist:
   - title: Follow official recovery notices and beware of phishing
     hint: Open official notices directly. Never give trading passwords, PINs or authentication codes to compensation callers. GMO describes possible read-only account verification; verify any such request against its separately announced official procedure. Do not visit or redistribute the alleged data dump.
   - title: Document losses and verify compensation through official channels
-    hint: Keep account numbers, trade times and evidence of losses; ask the broker about corrections and refunds. GMO plans to assess incident-related realized trading losses and deduct broker refunds. Its separate ¥5,000 goodwill payment is for current service customers regardless of monetary loss; conditional data-publication assistance is a different program. Market losses, hypothetical profits and indirect damages are outside the trading-loss scheme. GMO began contacting contracted customers individually on November 6. Check your registered inbox and verify the process through GMO’s official support form or its published 24-hour line, 03-5456-2560. The public notice gives no general filing deadline or payment date.
+    hint: Keep account numbers, trade times and evidence of losses; ask the broker about corrections and refunds. GMO plans to assess incident-related realized trading losses and deduct broker refunds. Its separate ¥5,000 goodwill payment is for current service customers regardless of monetary loss; conditional data-publication assistance is a different program. Market losses, hypothetical profits and indirect damages are outside the trading-loss scheme. GMO began contacting contracted customers individually on November 6. Check your registered inbox and verify the process through GMO’s official support form or its published 24-hour line, 03-5456-2560. The November 13 briefing gives November 12 as the initial trading-loss cutoff and November 30 as the deadline for the separate ¥5,000 goodwill application. Confirm with GMO whether and how trading-loss applications can still be filed. GMO has not announced a payment date.
   - title: Verify replacement-service instructions before reconnecting
     hint: GMO plans migration to an independent cloud platform with customer consent and six free months, rather than simply restarting the compromised platform. Check official instructions and terms; the announcement alone does not establish that migration is available or the old environment is safe.
 sources:
@@ -90,8 +93,12 @@ sources:
     url: https://internet.gmo/ir/pdf/irlibrary/gmointernet_j_disclose_20261106.pdf
     primary: true
     says: Confirms outreach and outstanding checks of affected customers and trades. The next application-status update is planned for the November 13 results briefing.
+  - name: GMO November 13 earnings briefing
+    url: https://internet.gmo/pdf/presen/gmointernet_fy2026q3_j_presentation.pdf
+    primary: true
+    says: Page 6 reports application counts, separate application deadlines and projected direct costs.
 date: 2026-10-21
-updated: 2026-11-07
+updated: 2026-11-13
 ---
 
 The vendor distinguishes possible exposure from proven misuse: the server total is a potential scope, not an infection count. Its dated notice does not identify the access method or attacker. L4 reflects confirmed compromise of customer environments at a hosting provider.
@@ -103,3 +110,5 @@ The vendor distinguishes possible exposure from proven misuse: the server total 
 IS6FX’s October 29 notice reports completed corrections and compensation for the unauthorized trades it verified. This is the broker’s account of its own response, not a statement that every Onamae customer has been reimbursed or that the original service has recovered. Investigation, individual data verification and GMO’s compensation procedures remain separate.
 
 **November 6 compensation update.** GMO began contacting contracted customers individually about losses from unauthorized trades directly attributable to the incident. The company says the eligible-customer count and qualifying trades are still being checked, so it cannot estimate total compensation. Its November 13 results briefing is expected to cover claim progress and the outlook for calculating financial impact. Check notices sent to your registered address and verify them with [GMO’s official support form](https://help.onamae.com/contact/). The public notice confirms outreach. It does not establish completed payments, a universal claim deadline or restoration of the old desktop environment.
+
+**November 13 compensation update.** As of November 12, GMO had received trading-loss claims covering **2,943 accounts and about ¥2.99 billion**, subject to review. Separately, it received **10,976** flat-rate goodwill applications totaling **¥54.88 million**. GMO estimates about **¥3.05 billion** in direct costs across the compensation programs and is still assessing investigation and security costs. The application amounts and cost estimate do not establish payments made or a final loss total.
