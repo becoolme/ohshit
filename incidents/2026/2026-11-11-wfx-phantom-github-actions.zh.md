@@ -56,12 +56,12 @@ Nextcloud Docker 的第 2675 次运行在自托管运行器上执行了植入后
 ### 应核查的发布制品
 
 - Packagist 的 `digitalelvis/neuronai-studio` **3.14.3** 带有脚本及 npm postinstall 钩子。在包目录中用 npm 安装依赖且启用生命周期脚本时，该钩子可执行。Composer 本身不会调用它。StepSecurity 建议固定到 **3.14.2** 或更早版本。
-- Go 模块 `github.com/onuragtas/redock`（旧路径 `github.com/onuragtas/docker-env`）的 **v1.0.278**、**v1.0.280** 和 **v1.0.282**，以及 `github.com/vkuznet/gocurl` 的 **v0.0.0-20261111095532-8d5aad0cb0da**，仅在工作流文件中包含载荷。普通 Go 下载与构建不会执行工作流；若相应工作流在含植入的提交上触发，仍可执行载荷。检查 `go.mod` 和 `go.sum`，用独立验证的版本替换；SafeDep 将 redock 的 **v1.0.279**、**v1.0.281** 和 **v1.0.283** 识别为干净的回退版本。
+- Go 模块 `github.com/onuragtas/redock`（旧路径 `github.com/onuragtas/docker-env`）的 **v1.0.278**、**v1.0.280** 和 **v1.0.282**，以及 `github.com/vkuznet/gocurl` 的 **v0.0.0-20261111095532-8d5aad0cb0da**，仅在工作流文件中包含载荷。普通 Go 下载与构建不会执行工作流；若相应工作流在含植入的提交上触发，仍可执行载荷。检查 `go.mod` 和 `go.sum` 中的直接及间接依赖，用独立验证的版本替换；SafeDep 将 redock 的 **v1.0.279**、**v1.0.281** 和 **v1.0.283** 识别为干净的回退版本。
 - StepSecurity 报告没有 WebdriverIO 发布包受影响。对其他在植入与清理之间生成的发布包，用干净源码和构建记录核对。
 
 ### 需要关联核查的指标
 
-- HTTP 端点 `194.150.166[.]244:8080/exfil`、`18.143.168[.]96:8080/exfil` 和 `153.75.82[.]159:8080/exfil`。此前被植入的部分 GhostAction 工作流仍含旧端点 `193.32.204[.]199`。HTTP 回调参数值包括 `b42d70a7aab9140ca19e8249` 、`15f44heehnax8jdf41yx` 和 `e6ny5telf3pht81qk5zv`。
+- HTTP 端点 `194.150.166[.]244:8080/exfil`、`18.143.168[.]96:8080/exfil` 和 `153.75.82[.]159:8080/exfil`。此前被植入的部分 GhostAction 工作流仍含旧端点 `193.32.204[.]199`。HTTP 回调参数值包括 `b42d70a7aab9140ca19e8249`、`15f44heehnax8jdf41yx` 和 `e6ny5telf3pht81qk5zv`。
 - Telegram 的 `api.telegram.org` 和 `sendDocument`，聊天编号 `-1004340163187`，机器人 ID 为 `8708988906`、`9196217635`、`9180059428`、`8902935164`、`8876515636`。仅使用 Telegram 的样本将 HTTP 回调指向回环地址。
 - 探测 PR 标题 `docs: dependency audit notes`，正文 `Routine dependency audit notes`，分支 `wfx-docs`，文件 `docs/wfx-audit.md`，Git blob `ee6e5addfe591923fc385553cb66cf0d25634a6b`。
 - 提交信息 `ci: refresh build cache`、`ci: restore`、`ci: cleanup`、`chore: add ci helper`、`chore: add dependency audit workflow`，以及空仓库中工作流之前的 `chore: initial commit`。
