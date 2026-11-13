@@ -6,7 +6,7 @@ inTheWild: unknown
 tags: [MCP, Git, Filesystem, Fetch]
 summary: "MCP reference release v2.4.0 fixes six issues across Git, Filesystem and Fetch. An untrusted Git repository can make a read-only tool run code with server privileges. Filesystem protections still have Windows limits."
 splash: "Installations of the affected MCP reference servers, particularly Git tools pointed at untrusted repositories."
-wipe: "Upgrade Git and Fetch to 2026.11.11 and Filesystem to 2.3.0. Keep untrusted workloads isolated."
+wipe: "Upgrade mcp-server-git and mcp-server-fetch to 2026.11.11 and Filesystem to 2.3.0. Keep untrusted workloads isolated."
 fixed:
 - { product: "mcp-server-git", version: "2026.11.11" }
 - { product: "mcp-server-fetch", version: "2026.11.11" }
@@ -37,7 +37,7 @@ checklist:
 - title: "Upgrade the actual server packages"
   hint: "Check the command, pin and environment each MCP client launches. Set mcp-server-git and mcp-server-fetch to 2026.11.11 or later. Explicitly install @modelcontextprotocol/server-filesystem@2.3.0 if moving from a date version, then restart the MCP processes and verify the installed versions. Git must be 2.31 or newer."
 - title: "Isolate untrusted Git and filesystem inputs"
-  hint: "Run as a dedicated low-privilege account with only required files mounted. Disable Git or filesystem tools for untrusted users if you cannot isolate them. On Windows do not rely on --repository against clients that can create junctions or on allowed directories against an untrusted process that can race filesystem changes."
+  hint: "Until upgraded, point the Git server only at repositories whose .git directory you trust. Run as a dedicated low-privilege account with only required files mounted. Disable Git or filesystem tools for untrusted users if you cannot isolate them. On Windows do not rely on --repository against clients that can create junctions or on allowed directories against an untrusted process that can race filesystem changes."
 - title: "Limit Fetch network access"
   hint: "Restrict the worker’s outbound network access to destinations it needs. Check proxy and DNS settings before relying on application-layer filtering."
 sources:
@@ -64,6 +64,6 @@ sources:
   primary: true
 ---
 
-The Git configuration issue lets an untrusted repository trigger program execution when an older server runs a status or diff tool inside it. The update overrides program-launching settings and refuses Git versions older than 2.31. A separate Git confinement fix covers alternate object stores and linked worktrees. Windows directory junctions remain open.
+The Git configuration issue lets an untrusted repository trigger program execution when an older server runs a status or diff tool inside it. The update overrides program-launching settings and refuses Git versions older than 2.31. A separate Git confinement fix covers alternate object stores and linked worktrees. Windows directory junctions remain a path around that confinement.
 
-Both Filesystem issues require a local directory swap and a successful race. The maintainers say the Windows read race was narrowed and remains possible. The Fetch fixes cover address classification and crawler policy. Bypassing robots.txt does not bypass origin authentication. The advisories document reproduction details without reporting confirmed attacks. The reproducible Git code execution path warrants L3.
+Both Filesystem issues require a local directory swap and a successful race. The release identifies Filesystem versions before 2.3.0, including date releases 2025.1.14 through 2026.8.31, as affected. The maintainers say the Windows read race was narrowed and remains possible. The Fetch fixes cover address classification and crawler policy. Bypassing robots.txt does not bypass origin authentication. The advisories document reproduction details without reporting confirmed attacks. The reproducible Git code execution path warrants L3.
