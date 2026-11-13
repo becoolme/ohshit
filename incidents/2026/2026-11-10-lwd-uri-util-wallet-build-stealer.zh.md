@@ -13,7 +13,7 @@ fixed:
 timeline:
 - date: 2026年11月10日
   title: 恶意 PR 瞄准 Chainapsis 和 Zingo Labs 仓库
-  body: OpenSourceMalware 记录了上传 CI 凭据、试图指示审查者忽略上传的文档、植入依赖及伪造的维护者登录页面。
+  body: OpenSourceMalware 记录了试图上传 CI 凭据的 PR、试图指示审查者忽略上传的文档、植入依赖及伪造的维护者登录页面。
 - date: 2026年11月10日
   title: GitHub 发布恶意软件公告
   body: GHSA-8mh3-cf36-7xxq 列出八个受影响版本，无修补版本。OpenSourceMalware 当天稍后报告下架处置。

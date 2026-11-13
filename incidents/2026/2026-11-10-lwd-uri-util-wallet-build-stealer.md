@@ -19,7 +19,7 @@ fixed:
 timeline:
 - date: Nov 10, 2026
   title: Malicious PRs target Chainapsis and Zingo Labs repositories
-  body: OpenSourceMalware documented CI credential uploads, a reviewer instruction meant to conceal the uploads, an injected dependency and a fake maintainer sign-in.
+  body: OpenSourceMalware documented PRs designed to upload CI credentials, a reviewer instruction meant to conceal the uploads, an injected dependency and a fake maintainer sign-in.
 - date: Nov 10, 2026
   title: GitHub publishes the malware advisory
   body: GHSA-8mh3-cf36-7xxq lists eight affected versions and no patched release. OpenSourceMalware reports takedowns later that day.
