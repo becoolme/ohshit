@@ -37,8 +37,12 @@ sources:
   url: https://support.allunited.nl/support/solutions/articles/103000425650-beveiligingsincident-allunited-wat-er-is-gebeurd-en-wat-je-moet-doen
   primary: true
   says: Directs customers to the official incident and response page.
+- name: Royal Dutch Cricket Association (KNCB) member notice
+  url: https://kncb.nl/nieuws-belangrijk-je-via-de-kncb-bij-allunited-opgeslagen-gegevens-door-een-datalek-mogelijk-in-verkeerde-handen
+  primary: true
+  says: Confirms that the records of all players in its AllUnited system were copied.
 ---
 
 AllUnited says an attacker exploited its software through a club website registration form on November 9. The attacker reached one server and copied database data for clubs and federations on the platform. The provider says it found and fixed the flaw on November 10. It did not identify a CVE or publish an affected software version.
 
-Administrative records included names, emails, phone numbers and passwords the provider describes as encrypted. AllUnited says the attacker also obtained information about how that protection worked. Unchanged temporary passwords were stored in readable form. Member records could include addresses, dates of birth, contact details, IBANs and free-text notes. Website registrations included contact and birth details and IBANs. The fields vary by record. AllUnited said hundreds of organizations authorized a joint filing by November 12; that is not a count of individuals. The published notices do not establish account takeovers or financial losses.
+Administrative records included names, emails, phone numbers and passwords the provider describes as encrypted. AllUnited says the attacker also obtained information about how that protection worked. Unchanged temporary passwords were stored in readable form. Member records could include addresses, dates of birth, contact details, IBANs and free-text notes. Website registrations included contact and birth details and IBANs. The fields vary by record. The Dutch cricket association says the records of all players in its AllUnited system were copied and that it reported the breach to the regulator. AllUnited said hundreds of organizations authorized a joint filing by November 12; that is not a count of individuals. The published notices do not establish account takeovers or financial losses.
