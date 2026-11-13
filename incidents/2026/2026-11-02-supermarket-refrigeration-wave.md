@@ -2,7 +2,7 @@
 title: European supermarkets hit by a new wave of refrigeration-controller attacks
 level: 4
 date: '2026-11-02'
-updated: '2026-11-07'
+updated: '2026-11-13'
 tags:
 - OT
 - cold chain
@@ -40,6 +40,12 @@ timeline:
 - date: Nov 5, 2026
   title: Censys measures remaining public controller exposure
   body: Censys counted 3,124 distinct internet-visible hosts across two product families, down from 6,695 on October 9. These are measurements of exposure, not attack or victim counts.
+- date: Nov 9, 2026
+  title: France attributes the October attack to Shahid Kaveh
+  body: The attribution covers October 11–12 in France and does not attribute the November wave.
+- date: Nov 10, 2026
+  title: Sekoia publishes honeypot findings from the November wave
+  body: Four honeypots blocked an unauthenticated attempt to rename an administrator account on November 1. Researchers did not capture a follow-on password reset request.
 checklist:
 - title: Isolate exposed management while preserving safe refrigeration
   hint: 'Follow CERT-FR: remove public IP exposure, coordinate with the refrigeration contractor and check insurance/monitoring obligations before cutting provider telemetry. Keep safe local operation under qualified supervision; do not turn off cooling blindly.'
@@ -48,9 +54,9 @@ checklist:
 - title: Recover compromised controllers with the maintainer
   hint: CERT-FR recommends restarting affected Danfoss equipment, or a factory reset if needed, then reconfiguring for service. Preserve available logs/configuration before destructive recovery when safe. A reset alone does not patch a vulnerability.
 - title: Restore remote access through a protected network
-  hint: Use a secure VPN or protected network. Source-IP filtering limited to the refrigeration provider is an emergency measure, not a durable fix. Verify all other controllers sharing public exposure too.
+  hint: Use a secure VPN or protected network. Source-IP filtering limited to the refrigeration provider is an emergency measure, not a durable fix. Check all controllers for public exposure, including those behind integrators’ 4G modems. A private APN is another option.
 - title: Apply model-specific hardening and replace unsupported equipment
-  hint: Install vendor firmware, change defaults and, for applicable Danfoss controllers, configure Strict security mode. Confirm the right procedure with the manufacturer. Keep unpatchable EOL systems off the public internet; factory reset leaves them open to reinfection.
+  hint: Install vendor firmware, change defaults and, for applicable Danfoss controllers, configure Strict security mode. Confirm the right procedure with the manufacturer. Strict mode still has a pre-authentication crash path, so keep network isolation in place. Keep unpatchable EOL systems off the public internet; factory reset leaves them open to reinfection.
 sources:
 - name: CERT-FR CERTFR-2026-ALE-012
   url: https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/
@@ -84,14 +90,30 @@ sources:
   url: https://censys.com/blog/european-refrigeration-controller-exposure-sitrep/
   primary: true
   says: Original host measurements for Danfoss StoreView and Copeland/Dixell XWEB, with limits on causal inference.
+- name: Sekoia cold-chain investigation
+  url: https://www.sekoia.com/blog/the-cold-chain-on-fire-unpatched-danfoss-controllers-exploited
+  primary: true
+  says: Records a blocked administrator rename attempt on November 1 and explains the limits of the honeypot evidence.
+- name: CERT-FR CERTFR-2026-CTI-009
+  url: https://cert.cyber.gouv.fr/uploads/CERTFR-2026-CTI-009.pdf
+  primary: true
+  says: Attributes the October 11–12 attack in France.
+- name: Midnight Blue Danfoss AK-SM800A firmware research
+  url: https://www.midnightblue.nl/blog/multiple-rce-danfoss-aksm800a
+  primary: true
+  says: Reports separate firmware flaws and a crash reproduced in Strict mode.
 ---
 
 This is a new November wave, distinct from the French attacks covered by the October CERT-FR alert. Belga’s direct interview with Sabcobel describes attackers switching evaporators into defrost mode at Belgian supermarkets, including Delhaize, Carrefour and Spar. In a separate interview, Ahold Delhaize confirmed refrigeration disruption to Supermarket News. Broader country and store counts remain provisional; this article does not treat installer estimates as a final victim count or quantify losses.
 
-Kevin Beaumont’s original November 2 post says he confirmed internet-facing management on affected systems with contacts, and that many systems have no patch because they are end of life. That is a researcher’s attributed observation, not a published forensic demonstration of one exploit across all stores. No specific CVE, shared attacker or connection to other retail/US incidents has been established here.
+Kevin Beaumont’s original November 2 post says he confirmed internet-facing management on affected systems with contacts, and that many systems have no patch because they are end of life. That is a researcher’s attributed observation, not a published forensic demonstration of one exploit across all stores. No specific CVE, shared attacker or connection to other retail or US incidents has been established for the November wave.
 
 The earlier CERT-FR alert names Danfoss AK-SM and AK-SC, Copeland xweb and Dixell xweb. It confirms previous compromises and supplies actionable isolation and recovery guidance, but does not establish that every November victim uses those models. Apply its steps with the device manufacturer and refrigeration contractor; there is no verified universal firmware threshold for this new wave.
 
 The case is rated L4 because reported attacks are already disrupting physical refrigeration and putting food stock at risk. Changing a controller password or resetting it while leaving an unpatched management interface public does not remove the exposure.
 
 The November 4 joint EU statement confirms a second wave on November 1–2 and directs operators to [national advisories collected by ENISA](https://github.com/enisaeu/CNW/blob/main/advisories/2026/CNW-2026-05_retail-incidents.md). Ireland's NCSC recommends checking all remotely accessible equipment, including alarms and their notification routes. In a separate measurement, Censys found 3,124 distinct hosts visible on the internet across Danfoss StoreView and Copeland/Dixell XWEB on November 5, versus 6,695 on October 9, a 53% decline. Its dataset cannot show which hosts were attacked or why a host stopped appearing.
+
+Sekoia blocked requests attempting to rename the administrator account on November 1. Its firmware analysis found that a rename could succeed without authentication and might be the first step in an account takeover. The honeypots did not see a follow-on password reset and cannot establish use of this technique on victims or exploitation of CVE-2025-41450. France’s November 9 attribution covers the October 11–12 attacks in France.
+
+Separately, Midnight Blue reported six unauthenticated stack overflows in AK-SM800A firmware through **5.3.2**. It demonstrated root code execution on **3.3.0**, and triggered a crash in a separate pre-authentication path with Strict mode enabled on **5.3.2**. Coordinated disclosure is ongoing and CVEs are pending; no evidence ties these six flaws to the observed attacks. Remove public access even if the controller is updated and Strict mode is enabled.
