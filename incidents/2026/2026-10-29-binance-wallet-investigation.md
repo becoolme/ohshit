@@ -9,7 +9,7 @@ tags:
   - investigation
 ecosystems:
   - crypto
-summary: Binance reports signing-service intrusion and EIP-7702 abuse. FBI blames TraderTraitor. Binance cites ~$6.34bn affected, ~$2.85bn frozen/blocked and 98% replacement by Oct 31 (UTC+8). DOJ has court approval for seizure or restraint of >$1.2bn. Some withdrawals and the 10-token proof are live. 44-token proof, final review and full reopening pending.
+summary: Binance reports signing-service intrusion and EIP-7702 abuse. The FBI attributes the theft to TraderTraitor. Binance now says it fully covered impacted assets and published a 198-token reserve snapshot. The new proof and full withdrawal reopening remain pending. DOJ has court authorization to seize or restrain over $1.2bn.
 splash: Binance.com withdrawal users; Aave reports a precautionary freeze of DAO-operated V3/V4 markets
 wipe: Follow official updates, inspect account activity, and use Binance's account-lock procedure if you find unauthorized actions
 inTheWild: yes
@@ -157,6 +157,9 @@ timeline:
   - date: Nov 12, 2026
     title: DOJ announces court-authorized action on stolen assets
     body: Government and private-sector efforts froze over $2.7 billion, of which more than $1.2 billion is subject to court authorization for seizure or restraint. Tracing and forfeiture efforts continue.
+  - date: Nov 12, 2026
+    title: Binance says it completed coverage of affected assets
+    body: The exchange reports more than $6.34 billion committed and a new reserve snapshot covering 198 tokens. Proof generation and the phased reopening of withdrawals continue.
   - date: Nov 1, 06:00–09:00 UTC (scheduled)
     title: First withdrawal phase is planned
 
@@ -396,6 +399,14 @@ sources:
     url: https://www.justice.gov/opa/pr/justice-department-announces-actions-disrupt-north-koreas-massive-theft-cryptocurrency
     says: Reports the joint freeze total and the court-authorized subset for seizure or restraint.
     primary: true
+  - name: Binance asset coverage and reserve announcement
+    url: https://www.binance.com/en/support/announcement/detail/0729ad59cde74700b4eaa96c33441e71
+    says: Reports full coverage, funding sources, the 198-token snapshot and phased withdrawals.
+    primary: true
+  - name: Binance public announcement metadata
+    url: https://www.binance.com/bapi/composite/v1/public/cms/article/detail/query?articleCode=0729ad59cde74700b4eaa96c33441e71
+    says: The publication timestamp falls on November 12 UTC. The release carries a November 13 dateline.
+    primary: true
 ---
 
 Binance’s initial notice said it had not confirmed an impact on user funds. The exchange then edited that notice to state that user funds are safe, and subsequently said withdrawals would resume after the security issue is fully resolved. These are the vendor’s statements, not an independently audited reserve or loss assessment. No resumption time or technical containment report was supplied in those notices. The withdrawal notice does not specify affected networks or withdrawal routes; do not infer that every Binance product is affected. Those earlier notices supported L3 because they acknowledged disruption without confirming the suspected theft.
@@ -475,3 +486,5 @@ In a companion analysis, Bitquery estimates that by **November 6 at 10:00 UTC**,
 **November 9–10 follow-up.** The Arbitrum Foundation says Binance confirmed control of the proposed recovery address 0xd9fd39103674cb061d64d9c3b73b878dbe610b80 and authorized the proposal. This confirmation concerns the destination and authorship. Approval and execution still require the governance process. At 11:00 UTC on November 10 Elliptic estimated about 3,350 BTC (roughly $250 million) converted from other stolen assets and about $3.0 billion still held at linked addresses, mostly ETH and BTC. It estimated around 150 BTC routed through Wasabi-style coinjoins and 11,000 ETH into Tornado Cash. These are Elliptic’s tracing estimates and have not been independently verified here. Its flows and balance estimates measure different things from the exchange’s replenishment, frozen assets and user repayments.
 
 **November 12 law enforcement update.** DOJ says US government and private-sector efforts froze over **$2.7 billion** in stolen assets. It has court authorization to seize or restrain over **$1.2 billion** within that total. Tracing, freezing, seizure and forfeiture efforts continue. The announcement gives no confirmation of returned funds or additional customer payments. Binance’s earlier blocked-asset and replacement-funding figures retain their separate scopes. The same announcement covers the [separate FaceStealer campaign](/incidents/facestealer-video-lures/).
+
+**November 12 UTC reserve update.** Binance says it completed coverage of the impacted assets and committed more than **$6.34 billion** from part of SAFU, surplus Futures insurance funds and company treasury. It sourced tokens through market and OTC purchases and pledged to restore SAFU to about **$1 billion**. The earlier 95% and 98% notices describe previous stages. The November 12 **00:00 UTC** reserve snapshot covers **198 tokens**, with a full zero-knowledge proof expected to take approximately **40–50 hours**. Check the matching snapshot in the official reserve portal once its proof is available. Withdrawals still reopen in phases, so confirm your exact asset and network before relying on a transfer. Binance says affected tokens it no longer supports will be handled through its delisting process. The coverage figure is Binance’s account of replacement funding. Law-enforcement seizure and restraint figures track the stolen assets separately.
