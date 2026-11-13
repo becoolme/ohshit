@@ -25,13 +25,16 @@ timeline:
 - date: Nov 13, 2026
   title: AllUnited extends joint reporting and restores the KNHB connection
   body: The provider says it has started sending confirmation emails delayed by a Microsoft outage. Links to KNLTB, KNGU, KNSB and Atletiekunie are still disabled.
+- date: Nov 13, 2026
+  title: AllUnited sets weekend approval and final filing arrangements
+  body: Organizations can accept the confirmation email by November 16 at 07:00 local time. AllUnited plans the final filing for Monday and weekend notices where requested and authorized.
 checklist:
 - title: Reset passwords from a trusted address
   hint: Open the official club portal or ClubApp directly and request a reset. Use the latest reset email you requested and check spam if needed. Change any reused password on other services and enable MFA where available. Contact the official support desk if a reset does not arrive; never send your password.
 - title: Verify payment and account requests
   hint: Independently confirm requests for fees, bank changes or codes with the club using contact details you already trust. Watch for tailored phishing using addresses, birth dates or IBANs and report suspicious activity to the club or bank.
 - title: Verify reporting and member notification arrangements
-  hint: Check AllUnited’s incident page. It extended the original November 13 10:00 local deadline for joint filing authorization without publishing a new cutoff. If you already sent the form, watch for a confirmation from info@allunited.nl and avoid duplicate submissions. An authorized board member can use the form on the incident page and choose whether AllUnited also notifies affected people. Keep the filing reference when AllUnited sends it. The published cutoff for filing directly with the Dutch Data Protection Authority was November 13 at 19:15 local time. Confirm filing and member notification separately, including former members and other affected contacts. Use the affected-member selection in the Relations wizard and keep confirmation records.
+  hint: Open AllUnited’s incident page. The provider says organizations that accepted the confirmation email before 19:00 local time on November 13 will be included in the joint filing. Others can accept by 07:00 local time on November 16. Have an authorized board member use the official form and select whether AllUnited should notify affected people. Watch for the email from info@allunited.nl and accept as instructed. Avoid duplicate submissions. The previously stated direct-filing cutoff was November 13 at 19:15 local time. If a cutoff was missed or inclusion is unclear, check next steps with AllUnited and the Dutch Data Protection Authority. Confirm filing and notifications separately, retain the filing reference and use the affected-member selection in the Relations wizard.
 sources:
 - name: AllUnited incident timeline and FAQ
   url: https://www.allunited.nl/artikelen/datalek/
@@ -50,3 +53,5 @@ sources:
 AllUnited says an attacker exploited its software through a club website registration form on November 9. The attacker reached one server and copied database data for clubs and federations on the platform. The provider says it found and fixed the flaw on November 10. It did not identify a CVE or publish an affected software version.
 
 Administrative records included names, emails, phone numbers and passwords the provider describes as encrypted. AllUnited says the attacker also obtained information about how that protection worked. Unchanged temporary passwords were stored in readable form. Member records could include addresses, dates of birth, contact details, IBANs and free-text notes. Website registrations included contact and birth details and IBANs. The fields vary by record. The Dutch cricket association says the records of all players in its AllUnited system were copied and that it reported the breach to the regulator. AllUnited said hundreds of organizations authorized a joint filing by November 12; that is not a count of individuals. The published notices do not establish account takeovers or financial losses.
+
+The November 13 evening update clarifies that authorization requires accepting the confirmation email. AllUnited says organizations that accepted before 19:00 local time that day will be included. The remaining organizations can accept by 07:00 local time on November 16. AllUnited plans to file the final report on Monday and send weekend notices where organizations both authorized and requested them. The update does not establish that filing or notification has finished.
