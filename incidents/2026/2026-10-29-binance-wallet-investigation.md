@@ -2,14 +2,14 @@
 title: Binance preliminary report details signing-service intrusion and revises funding figures
 level: 4
 date: 2026-10-29
-updated: 2026-11-12
+updated: 2026-11-13
 tags:
   - Binance
   - crypto
   - investigation
 ecosystems:
   - crypto
-summary: Binance reports signing-service intrusion and persistent EIP-7702 delegation; FBI blames TraderTraitor. Its revised figures are ~$6.34bn affected, ~$2.85bn frozen/blocked and 98% replacement by Oct 31 (UTC+8), not recovery. Selected withdrawals and the ten-token proof are available; a new 44-token snapshot awaits its proof. Final review/reopening pending.
+summary: Binance reports a signing-service intrusion, ~$6.34bn affected, ~$2.85bn frozen or blocked and 98% replacement by Oct 31 (UTC+8). The FBI blames TraderTraitor. DOJ has court approval to seize or restrain over $1.2bn of jointly frozen assets. Some withdrawals and the ten-token proof are live. The 44-token proof, final review and full reopening are pending.
 splash: Binance.com withdrawal users; Aave reports a precautionary freeze of DAO-operated V3/V4 markets
 wipe: Follow official updates, inspect account activity, and use Binance's account-lock procedure if you find unauthorized actions
 inTheWild: yes
@@ -154,6 +154,9 @@ timeline:
   - date: Nov 10, 11:00 UTC
     title: Elliptic publishes a newer tracing snapshot
     body: The firm estimates about 3,350 BTC converted from other assets and around $3.0 billion remaining at addresses linked to the theft.
+  - date: Nov 12, 2026
+    title: DOJ announces court-authorized action on stolen assets
+    body: Government and private-sector efforts froze over $2.7 billion, of which more than $1.2 billion is subject to court authorization for seizure or restraint. Tracing and forfeiture efforts continue.
   - date: Nov 1, 06:00–09:00 UTC (scheduled)
     title: First withdrawal phase is planned
 
@@ -389,6 +392,10 @@ sources:
     url: https://forum.arbitrum.foundation/t/constitutional-aip-approve-release-of-frozen-eth-and-arb/31655/7
     primary: true
     says: November 9 confirmation from the Foundation that Binance controls the proposal destination and authorized the filing.
+  - name: US Department of Justice announcement
+    url: https://www.justice.gov/opa/pr/justice-department-announces-actions-disrupt-north-koreas-massive-theft-cryptocurrency
+    says: Reports the joint freeze total and the court-authorized subset for seizure or restraint.
+    primary: true
 ---
 
 Binance’s initial notice said it had not confirmed an impact on user funds. The exchange then edited that notice to state that user funds are safe, and subsequently said withdrawals would resume after the security issue is fully resolved. These are the vendor’s statements, not an independently audited reserve or loss assessment. No resumption time or technical containment report was supplied in those notices. The withdrawal notice does not specify affected networks or withdrawal routes; do not infer that every Binance product is affected. Those earlier notices supported L3 because they acknowledged disruption without confirming the suspected theft.
@@ -466,3 +473,5 @@ In a companion analysis, Bitquery estimates that by **November 6 at 10:00 UTC**,
 **November 8 withdrawal update.** At 08:52 UTC, Binance announced that HYPE and APT withdrawals had reopened. It separately listed ETH and SOL asset pairs that were already available. Binance plans to reopen more pairs after security checks. Check the exact asset and network in the live withdrawal interface. This update provides no new accounting of stolen, frozen or returned funds.
 
 **November 9–10 follow-up.** The Arbitrum Foundation says Binance confirmed control of the proposed recovery address 0xd9fd39103674cb061d64d9c3b73b878dbe610b80 and authorized the proposal. This confirmation concerns the destination and authorship. Approval and execution still require the governance process. At 11:00 UTC on November 10 Elliptic estimated about 3,350 BTC (roughly $250 million) converted from other stolen assets and about $3.0 billion still held at linked addresses, mostly ETH and BTC. It estimated around 150 BTC routed through Wasabi-style coinjoins and 11,000 ETH into Tornado Cash. These are Elliptic’s tracing estimates and have not been independently verified here. Its flows and balance estimates measure different things from the exchange’s replenishment, frozen assets and user repayments.
+
+**November 12 law enforcement update.** DOJ says US government and private-sector efforts froze over **$2.7 billion** in stolen assets. It has court authorization to seize or restrain over **$1.2 billion** within that total. Tracing, freezing, seizure and forfeiture efforts continue. The announcement gives no confirmation of returned funds or additional customer payments. Binance’s earlier blocked-asset and replacement-funding figures retain their separate scopes. The same announcement covers the [separate FaceStealer campaign](/incidents/facestealer-video-lures/).
