@@ -91,6 +91,6 @@ sources:
 
 Cloud Software Group 在同一批更新中发布了两份 NetScaler 公告。CTX697305 列出了客户自管 ADC 和 Gateway 设备的 28 个 CVE。数据包处理溢出 CVE-2026-120868（CVSS 4.0 评分 9.3）影响默认配置，无需认证即可触发。CVE-2026-107412（9.5）影响配置了 Gateway 或 AAA 虚拟服务器的设备，涵盖 SSL VPN、ICA Proxy、CVPN 或 RDP Proxy 等场景。厂商称这两处溢出可能导致设备行为异常或拒绝服务。CTX697320 单独修复 Console 认证绕过 CVE-2026-120869（9.4），触发前提是能通过网络访问 Console IP。
 
-ADC/Gateway 公告也适用于 Secure Private Access Hybrid 部署中的 NetScaler 实例。Citrix 表示，这批公告涉及的 Citrix 托管云服务已完成更新。厂商未公布指标，也未发现这批新披露漏洞存在已知利用。此次更新与[九月遭在野利用的 NetScaler 漏洞]（https://support.citrix.com/external/article/CTX697096）分属不同批次。
+ADC/Gateway 公告也适用于 Secure Private Access Hybrid 部署中的 NetScaler 实例。Citrix 表示，这批公告涉及的 Citrix 托管云服务已完成更新。厂商未公布指标，也未发现这批新披露漏洞存在已知利用。此次更新与[九月遭在野利用的 NetScaler 漏洞](https://support.citrix.com/external/article/CTX697096)分属不同批次。
 
 默认配置下的数据包处理路径受影响，VPN 网关又常面向外部网络，因此定为 L3。即使未启用其他漏洞所需的功能，也应更新设备。[厂商升级指南](https://community.citrix.com/techzone-blogs/110_security-updates/security-updates-for-netscaler-adc-netscaler-gateway-and-netscaler-console/)列出了顺序及旧版许可证的例外流程。
