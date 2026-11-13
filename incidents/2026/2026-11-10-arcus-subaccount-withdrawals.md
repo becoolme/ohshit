@@ -38,7 +38,7 @@ checklist:
 - title: Review account activity through the official interface
   hint: Compare balances, positions, orders and withdrawals with your records. If anything differs, preserve the transaction identifiers and contact official Arcus support.
 - title: Monitor the address disclosed by Arcus
-  hint: Exchanges and service providers should review transfers linked to 0xeFbf442599310E5CeE1A4EDd5c66334c5f30b3Dd. Follow your incident process and corroborate a match before taking action.
+  hint: Exchanges and service providers should review transfers linked to 0xeFbf442599310E5CeE1A4EDd5c66334c5f30b3Dd. Use the Key Addresses and Key Transactions tables in the CertiK report to compare bridge contracts and transaction hashes. Confirm an executed payout and its recipient before taking action. A match alone does not establish wallet ownership.
 - title: Verify any recovery claim through Arcus
   hint: Users should never send funds, sign transactions or share credentials in response to messages about this offer. Exchange teams should corroborate addresses and transfers with official Arcus information and current on-chain records before acting.
 sources:
