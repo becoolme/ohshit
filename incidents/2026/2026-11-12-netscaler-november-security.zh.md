@@ -32,7 +32,7 @@ cves:
 - name: LDAP 认证溢出
   description: 需要配置 Gateway 或 AAA 虚拟服务器。
 - name: 认证请求溢出
-  description: 需要配置 Gateway 或 AAA 虚拟服务器。
+  description: 需要配置 Gateway 或 AAA 虚拟服务器。 厂商 CVSS 向量将攻击向量标为本地。
 - name: 端点分析溢出
   description: 需要启用端点分析的 VPN 或 AAA 虚拟服务器。
 - name: 请求处理可导致反复重启
