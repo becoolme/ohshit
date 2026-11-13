@@ -24,7 +24,7 @@ checklist:
 - title: 立即关闭 Legacy API 并限制暴露
   hint: 在系统级打开 Administration → Mail and Network Settings → Network Security → Legacy APIs，确认已停用旧版 API。限制不可信网络访问设备，通过受控路径保留 Agent 和 Probe 所需的连接，并确认受管设备仍能报到。
 - title: 排查服务器和下游 Windows 活动
-  hint: 保全代理、设备、任务和终端日志。排查 157.20.241[.]16（TCP 8080 和 19202–19418）、139.99.69[.]109:10128、79.76.51[.]56:39100，并关联 /dms/services/ServerUI 请求、异常进程及 Windows Agent 或 Probe 任务。Huntback 的报告末尾列出 12 组指标和主机痕迹。单条命中无法证明失陷。
+  hint: 保全代理、设备、任务和终端日志。排查 157.20.241[.]16（TCP 8080 和 19202–19418）、139.99.69[.]109:10128、79.76.51[.]56:39100，并关联 /dms/services/ServerUI 请求、异常进程及 Windows Agent 或 Probe 任务。Huntback 的报告末尾列出 12 组指标和主机痕迹，包括 /tmp/.xvd、/var/tmp/.xvd、xvd.service 和 SOAP 类 jline.internal.TerminalLineSettings。单条命中无法证明失陷。
 - title: 分别跟踪设备和 Windows 攻击链的修复
   hint: 保留先前的 HF2 安全更新，并查阅 N-able 官方公告了解新攻击路径的处置进展。放宽网络限制前，核对托管或自管部署以及 Agent 和 Probe 构建的适用指导。若确认失陷，隔离受影响的设备和受管系统，吊销暴露的凭据，并从核验过的干净系统恢复。
 sources:
@@ -35,10 +35,12 @@ sources:
 - says: 确认 HF2 构建号为 2026.4.1.26，并说明先前修复中 Agent 和 Probe 的部署方法。
 - says: 第一方传感器记录了来自同一源 IP 的两次尝试，未证明成功。
 - says: 将诱捕系统中的完整攻击链和矿池遥测与 21 台实际 N-central 服务器关联，提供排查指标。
-- says: 记录 Apache Axis 1.x 处理入站 SOAP 故障时的类实例化漏洞。
+- says: 记录 Apache Axis 1.x 处理入站 SOAP 故障时的类实例化漏洞。也可通过 mail-archive.com 阅读 Apache 公告。
 cves:
 - name: Apache Axis SOAP 类实例化
   description: 可达的 Axis 1.x SOAP 路径允许未认证调用者实例化类。在 N-central 中，已披露的服务器链要求启用 Legacy API，并利用另一处缺陷提权至 root。
+- name: Apache Axis 邮件列表公告（可读存档）
+  says: 保留 Apache 原公告并链接补丁提交。
 ---
 
 [先前披露 Able2Shell 的研究者](/zh/incidents/ncentral-able2shell/) 又公开了在 N-central Appliance 2026.4.1.26 HF2 上测试的新攻击链。服务器测试中，启用 Legacy API 后，攻击者可以访问 SOAP 端点。攻击链先以设备服务账户执行命令，再借特权辅助程序取得 root 权限。
