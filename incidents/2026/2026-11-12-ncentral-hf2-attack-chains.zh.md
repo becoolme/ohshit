@@ -36,11 +36,11 @@ sources:
 - says: 第一方传感器记录了来自同一源 IP 的两次尝试，未证明成功。
 - says: 将诱捕系统中的完整攻击链和矿池遥测与 21 台实际 N-central 服务器关联，提供排查指标。
 - says: 记录 Apache Axis 1.x 处理入站 SOAP 故障时的类实例化漏洞。也可通过 mail-archive.com 阅读 Apache 公告。
+- name: Apache Axis 邮件列表公告（可读存档）
+  says: 保留 Apache 原公告并链接补丁提交。
 cves:
 - name: Apache Axis SOAP 类实例化
   description: 可达的 Axis 1.x SOAP 路径允许未认证调用者实例化类。在 N-central 中，已披露的服务器链要求启用 Legacy API，并利用另一处缺陷提权至 root。
-- name: Apache Axis 邮件列表公告（可读存档）
-  says: 保留 Apache 原公告并链接补丁提交。
 ---
 
 [先前披露 Able2Shell 的研究者](/zh/incidents/ncentral-able2shell/) 又公开了在 N-central Appliance 2026.4.1.26 HF2 上测试的新攻击链。服务器测试中，启用 Legacy API 后，攻击者可以访问 SOAP 端点。攻击链先以设备服务账户执行命令，再借特权辅助程序取得 root 权限。

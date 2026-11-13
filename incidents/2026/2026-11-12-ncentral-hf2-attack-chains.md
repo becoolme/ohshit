@@ -71,15 +71,15 @@ sources:
   url: https://lists.apache.org/thread/8slf0j9gz35z56t0glt5h0ncwlbn4bdz
   primary: true
   says: Documents class instantiation while processing an inbound SOAP fault in Apache Axis 1.x. The Apache notice is also available at mail-archive.com.
+- name: Apache Axis mailing-list notice (readable archive)
+  url: https://www.mail-archive.com/java-user@axis.apache.org/msg05810.html
+  primary: true
+  says: Preserves the original Apache advisory and links its patch commit.
 updated: 2026-11-13
 cves:
 - id: CVE-2026-90436
   name: Apache Axis SOAP class instantiation
   description: A reachable Axis 1.x SOAP path can instantiate classes for an unauthenticated caller. In N-central the reported server chain needs Legacy API and a separate weakness to reach root.
-- name: Apache Axis mailing-list notice (readable archive)
-  url: https://www.mail-archive.com/java-user@axis.apache.org/msg05810.html
-  primary: true
-  says: Preserves the original Apache advisory and links its patch commit.
 ---
 
 The researcher behind [the earlier Able2Shell disclosure](/incidents/ncentral-able2shell/) published additional chains tested on N-central Appliance 2026.4.1.26 HF2. In the server test, the attacker could reach a SOAP endpoint while Legacy API was enabled. The chain ran commands as the appliance service account and then used privileged helpers to reach root.
