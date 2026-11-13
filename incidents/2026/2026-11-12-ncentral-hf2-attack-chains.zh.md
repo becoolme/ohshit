@@ -23,6 +23,9 @@ timeline:
 - date: 11月12日 16:00 UTC
   title: N-able 限制 Intune 集成并发布分环境指引
   body: 厂商在托管环境部署临时防护，并要求自管客户确认 Legacy API 已禁用。此前更新 Agent 和 Probe 的指引继续适用。
+- date: 11月13日 03:50 UTC
+  title: N-able 开始与相关客户核查新增指标
+  body: 厂商称正在与这些客户评估风险并采取缓解措施。
 - date: 11月13日 13:40 UTC
   title: N-able 公布 Legacy API 相关指标
   body: 厂商提供下载和回连路径，供未禁用 Legacy API 的客户排查。安全评估和修复工作继续。
@@ -34,7 +37,7 @@ checklist:
 - title: 分别跟踪设备和 Windows 攻击链的修复
   hint: 保留先前的 HF2 安全更新，并查阅 N-able 官方公告了解新攻击路径的处置进展。放宽网络限制前，核对托管或自管部署以及 Agent 和 Probe 构建的适用指导。若确认失陷，隔离受影响的设备和受管系统，吊销暴露的凭据，并从核验过的干净系统恢复。
 - title: 按部署方式核查临时防护和 Intune 状态
-  hint: 托管客户按 N-able 指引更新 Agent 和 Probe，厂商已部署临时服务端防护。自管客户核实 Legacy API 已禁用，并继续执行 HF2 和端点更新。N-able 暂停托管环境的 Intune 集成，并尝试暂停已启用该集成的自管环境。联系支持团队核实例外及恢复安排。
+  hint: 托管客户按 N-able 指引更新 Agent 和 Probe，厂商已部署临时服务端防护。自管客户核实 Legacy API 已禁用，并继续执行 HF2 和端点更新。N-able 暂停托管环境的 Intune 集成，并尝试暂停已启用该集成的自管环境。若无法暂停自管环境中的集成，N-able 支持团队会联系客户。请通过支持团队核实恢复安排。
 - title: 对照厂商的 Legacy API 指标排查
   hint: '检查到 157.20.241[.]16（TCP 8080、19202–19418）、139.99.69[.]109:10128 和 79.76.51[.]56:39100 的出站流量。在 157.20.241[.]16:8080 上查找 /jup.sh、/xvgz、/xmrig.tgz、/ob/cronhit?h=jup_start_<rig>&persist=<method> 和 /ob/fcheck。将命中项与历史配置和主机活动关联，单项命中不能证明已失陷。'
 sources:
@@ -57,7 +60,7 @@ cves:
 
 [先前披露 Able2Shell 的研究者](/zh/incidents/ncentral-able2shell/) 又公开了在 N-central Appliance 2026.4.1.26 HF2 上测试的新攻击链。服务器测试中，启用 Legacy API 后，攻击者可以访问 SOAP 端点。攻击链先以设备服务账户执行命令，再借特权辅助程序取得 root 权限。
 
-Agent2Shell 报告另行记录了 Windows 攻击路径。Reactive 路径需要设备 ID，以及已启用 Reactive 且在线的 Agent。研究者演示了以 SYSTEM 身份执行命令。Probe 路径还需要设备和任务数据、在线的 Probe，以及一个受攻击者控制并用作输出载体的现有任务。关闭 Legacy API 可消除服务器链已披露的利用前提。应单独核对 Windows 路径的处置指导，再判断受管终端是否受到保护。
+Agent2Shell 报告另行记录了 Windows 攻击路径。Reactive 路径需要设备管理平台 ID，以及已启用 Reactive 且在线的 Agent。研究者演示了以 SYSTEM 身份执行命令。Probe 路径还需要设备和任务数据、在线的 Probe，以及一个受攻击者控制并用作输出载体的现有任务。关闭 Legacy API 可消除服务器链已披露的利用前提。应单独核对 Windows 路径的处置指导，再判断受管终端是否受到保护。
 
 Previdian 在传感器上记录了两次利用尝试。Huntback 随后在诱捕系统上记录了完整攻击链，其最后一步是安装 XMRig。研究人员按矿工名称中的 IP，将 21 个刚提交份额的矿工与可访问的 N-central 生产服务器关联，其中 19 台报告的构建是 2026.4.1.26。这是 Huntback 根据矿池遥测和服务器响应得出的结论，支持将服务器链的在野利用定为 L4。它既未给出受影响组织或下游设备的数量，也未证实 Windows 链已在野利用。
 
