@@ -26,7 +26,7 @@ checklist:
 - title: 检查执行情况并保留证据
   hint: 在 CI 任务日志、终端遥测及代理记录中核查下列仓库、文件和目的地。安全保存有关制品，尤其是含有明文密钥的 lwd_uri_build_context.json。单独命中指标不能证明数据已外传。
 - title: 遏制凭据暴露并核验发布完整性
-  hint: 隔离受影响的开发机和运行器。从干净设备撤销在伪造页面输入的凭据并重置会话；如运行过不可信代码，更换其可访问的 GitHub、云端及软件包仓库令牌、SSH 密钥、钱包凭据及签名材料。恢复前检查审计日志、签名制品及包上传记录，并用验证过的依赖锁文件在干净运行器上重建。
+  hint: 隔离受影响的开发机和运行器。从干净设备撤销在伪造页面输入的凭据并重置会话；如运行过不可信代码，更换其可访问的 GitHub、云端及软件包仓库令牌、SSH 密钥、钱包凭据及签名材料。若 Keplr MCP 钱包保险库或其解密凭据可能暴露，从干净设备将剩余资金转移到用新密钥创建的钱包。恢复前检查审计日志、签名制品及包上传记录，并用验证过的依赖锁文件在干净运行器上重建。
 sources:
 - name: OpenSourceMalware 的 sapho11 原始调查
   says: 记录 PR、源码分析、配套 Git 依赖、钓鱼及下架处置。
@@ -36,7 +36,7 @@ sources:
   says: 确认已下架、无修补版本及未发现实际使用证据。
 ---
 
-Cargo 在执行 `cargo build`、`cargo check`、`cargo test` 或 IDE 自动检查检出代码时，可运行该 crate 的 `build.rs`。脚本搜集环境密钥、凭据和签名材料。各变体发送数据的条件不同。OpenSourceMalware 还在 `sapho11/zip321-uri` 找到配套的 Node.js 窃取代码，将其作为 Git 依赖安装时可通过生命周期钩子触发。
+Cargo 在执行 `cargo build`、`cargo check`、`cargo test` 或 IDE 自动检查检出代码时，可运行该 crate 的 `build.rs`。脚本搜集环境密钥、凭据和签名材料。各变体发送数据的条件不同。OpenSourceMalware 还在 `sapho11/zip321-uri` 找到配套的 Node.js 窃取代码，将其作为 Git 依赖安装时可通过生命周期钩子尝试执行；研究人员指出，现行 Node.js 版本可能因模块格式不匹配而报错。
 
 这些 PR 无法证明钱包平台失陷，也不能证明凭据或资金被盗。Chainapsis 关闭了四个 PR。OpenSourceMalware 未能在后续的 `sapho11/zec-uri` 仓库下架前检查其代码，其行为尚未确认。
 
@@ -45,3 +45,16 @@ Cargo 在执行 `cargo build`、`cargo check`、`cargo test` 或 IDE 自动检�
 - GitHub 账号 `sapho11`（ID `354695800`）；仓库 `sapho11/lwd-uri-util`、`sapho11/zip321-uri` 和待核实的 `sapho11/zec-uri`。
 - PR `chainapsis/vizor-wallet#1199` 至 `#1202`、`zingolabs/zingo-common#85` 和 `zingolabs/zingolib#3148`。Rust 脚本输出可能位于 `target/*/build/lwd-uri-util-*/out/lwd_uri_build_context.json`。
 - `api.sdklfghaljksdhfkjasdfhlkasdhfjklasdf[.]xyz/v1/tipcheck` 和 `api.sdklfghaljksdhfkjasdfhlasdhfjklasdf[.]xyz/v1/tipcheck`；`session-check.sapho11.workers[.]dev` 的 `/v1/tipcheck`、`/auth`、`/auth/login`；`webhook[.]site` 的 `/0a60608b-63de-480c-a441-38a8d107a9ea` 和 `/14b3cc9b-3275-4b63-8b93-f4d2669fbdc1`。
+- 提交作者邮箱 `sapho11@wp.pl`；变量 `LWD_URI_NO_METRICS`、`LWD_URI_METRICS_URL`、`ZIP321_NO_TELEMETRY`、`VIZOR_DIAG_ENDPOINT`、`VIZOR_TIP_MIRROR`。
+- Vizor 中包含原始代码的提交：`c675b967588f370a1eace7c73b81f82343b29486`、`716e01d64b36c40b0cd4e6f7e4e813ed792388da`、`a1762b9db1a4207ab0d823556c50fe86ea1dfd43`。
+- SHA-256 (`.crate`):
+  - `0.1.0`: `129be19ca4d1d997d168af561e5cea12b0a401716a05720daf48072e470d7db5`
+  - `0.1.1`: `10304aa2c167bb0d66800020fb1f983bc62bb5bec89239de9fddb129b523149a`
+  - `0.1.2`: `6d35f023e3d87f8d4bc91a3bc670ae4681e9d85937146b9b0683d0f33eb0f55a`
+  - `0.1.3`: `80c54ff4fe231c363db0c75cbb81f566ea4d10c266ec594165d840df13ab0973`
+  - `0.1.4`: `476a207e057ec463ff045a2c0115c8a34ea8eab70e0abe4c1efd90ceb8b5161c`
+  - `0.1.5`: `3b290a899d741be14f9bb9f3545279911f774608362f348654f10823774c2f87`
+  - `0.1.6`: `5c848823a78313c47596bdf3c260e8862a02c7e48fa8ce718aca332f7b80c4fd`
+  - `0.1.7`: `7c0fbaf582b9b4e674c108ed5b0cb2835b11369fbdb1ce7ac29d63e9321a6981`
+- SHA-256 (0.1.7): `build.rs` `f466d5621525a4cf229e4a8377cd7285da5797eee77384253f1040a722765953`; `src/lib.rs` `ac82fd28228bfb55acbb9bfdd2f3a4b926c6d65e2965db5a34c11d1a76fbd762`; `Cargo.toml` `c469240c313d7da0d40b901e51e642b4efd61906e28849c1059b70451065ccca`.
+- 钓鱼页面 SHA-256 (`/auth`): `d8671b8aed8771dba6b57bd51d2e42914c0df87bd9e9d148478a0fbc121e81e6`.
