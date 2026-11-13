@@ -9,7 +9,7 @@ tags:
   - investigation
 ecosystems:
   - crypto
-summary: Binance reports signing-service intrusion and EIP-7702 abuse. FBI blames TraderTraitor. Binance cites ~$6.34bn affected, ~$2.85bn frozen/blocked and 98% replacement by Oct 31 (UTC+8). DOJ can seize or restrain >$1.2bn of frozen assets. Some withdrawals and the 10-token proof are live. The 44-token proof, final review and full reopening remain pending.
+summary: Binance reports signing-service intrusion and EIP-7702 abuse. FBI blames TraderTraitor. Binance cites ~$6.34bn affected, ~$2.85bn frozen/blocked and 98% replacement by Oct 31 (UTC+8). DOJ has court approval for seizure or restraint of >$1.2bn. Some withdrawals and the 10-token proof are live. 44-token proof, final review and full reopening pending.
 splash: Binance.com withdrawal users; Aave reports a precautionary freeze of DAO-operated V3/V4 markets
 wipe: Follow official updates, inspect account activity, and use Binance's account-lock procedure if you find unauthorized actions
 inTheWild: yes
