@@ -23,4 +23,4 @@ sources:
   primary: true
   says: Confirms the unauthorized posting, cloud record match and notification effort.
 ---
-TSMC says its investigation found no evidence that its own systems were compromised and says the information was unrelated to operations or customer data. The match to records at a cloud provider establishes the data relationship. The filing does not establish which system or credential gave someone access. It also gives no verified number of records or people. L3 reflects confirmed external exposure at a major employer with the scale still unknown.
+TSMC says its investigation found no evidence that its own systems were compromised and says the information was unrelated to operations or customer data. The filing identifies where matching records were held. The provider and the route used to obtain the records remain unknown. It also gives no verified number of records or people. L3 reflects confirmed external exposure at a major employer with the scale still unknown.
