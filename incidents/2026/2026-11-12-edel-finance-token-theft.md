@@ -15,7 +15,7 @@ timeline:
     title: Edel Finance confirms theft and sale of EDEL tokens
     body: The team values the tokens at roughly $300,000 and says it is coordinating with authorities and exchanges.
   - date: Nov 12, 2026
-    title: Edel reports exchanges blocked some stolen tokens
+    title: Edel updates the status of the stolen tokens
     body: Edel said all stolen tokens had either been sold or blocked by exchanges. It credited MEXC and BloFin for their response and said a postmortem would follow.
 checklist:
   - title: Verify notices through Edel’s established channels
