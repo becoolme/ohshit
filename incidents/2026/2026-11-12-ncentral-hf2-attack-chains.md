@@ -28,6 +28,12 @@ timeline:
 - date: Nov 12, 12:50 UTC
   title: Huntback links 21 active miners to N-central servers
   body: It cross-checks mining pool labels and recent shares against N-central services at the corresponding addresses. Nineteen report build 2026.4.1.26.
+- date: Nov 12, 16:00 UTC
+  title: N-able restricts Intune integration and issues deployment-specific guidance
+  body: The vendor applies temporary controls to hosted environments and asks on-premises customers to verify that Legacy API is disabled. Earlier Agent and Probe upgrade guidance still applies.
+- date: Nov 13, 13:40 UTC
+  title: N-able publishes indicators for Legacy API exposure
+  body: The vendor provides download and callback paths for customers who have not disabled Legacy API. Assessment and remediation continue.
 checklist:
 - title: Disable Legacy API and restrict exposure now
   hint: At the system level, open Administration → Mail and Network Settings → Network Security → Legacy APIs and verify that the deprecated APIs are disabled. Restrict appliance access from untrusted networks. Preserve required Agent and Probe access through controlled paths and verify managed devices
@@ -38,6 +44,10 @@ checklist:
 - title: Track separate fixes for the appliance and Windows chains
   hint: Keep the earlier HF2 security update in place and check N-able’s official notices for remediation of these new paths. Confirm guidance for your hosted or on-premises deployment and the Agent and Probe builds before relaxing network controls. If compromise is found, isolate affected appliances
     and managed systems, revoke exposed credentials and restore from verified clean systems.
+- title: Check temporary protections and Intune status for your deployment
+  hint: Hosted customers should update Agents and Probes per N-able guidance. The vendor applied temporary server-side protections. On-premises customers should verify Legacy API is disabled and continue the HF2 and endpoint updates. N-able disabled the hosted Intune integration and attempted to deactivate it for on-premises customers using it. Contact support for exceptions and restoration guidance.
+- title: Hunt using the vendor’s Legacy API indicators
+  hint: 'Review outbound traffic to 157.20.241[.]16 (TCP 8080 and 19202–19418), 139.99.69[.]109:10128 and 79.76.51[.]56:39100. On 157.20.241[.]16:8080, look for /jup.sh, /xvgz, /xmrig.tgz, /ob/cronhit?h=jup_start_<rig>&persist=<method> and /ob/fcheck. Correlate matches with past configuration and host activity. A match alone does not establish compromise.'
 sources:
 - name: Researcher’s 4EverAble2Shell report
   url: https://raw.githubusercontent.com/MSPNightmare/CVEs/ac2c37497f5d19639ec2f9a996a5c186a43dd8d7/0-Days/N-Central%20N-Able/4EverAble2Shell/README.md
@@ -75,6 +85,10 @@ sources:
   url: https://www.mail-archive.com/java-user@axis.apache.org/msg05810.html
   primary: true
   says: Preserves the original Apache advisory and links its patch commit.
+- name: N-able public incident record 202613
+  url: https://uptime.n-able.com/event/202613/
+  primary: true
+  says: Provides deployment-specific guidance, Intune restrictions and indicators for customers who have not disabled Legacy API.
 updated: 2026-11-13
 cves:
 - id: CVE-2026-90436
@@ -89,3 +103,5 @@ The separate Agent2Shell report documents Windows paths. The Reactive path needs
 Previdian recorded two attempts against sensors. Huntback later captured the full chain against its decoys, ending in an attempt to install XMRig. It matched the IP addresses encoded in the names of 21 recently active miners to live N-central production servers. Nineteen reported build 2026.4.1.26. This is Huntback’s assessment from mining-pool telemetry and server responses. It supports L4 for in-the-wild exploitation of the server chain. The observations establish neither a count of affected organizations or downstream devices nor exploitation of the Windows chain.
 
 The server chain uses Apache Axis CVE-2026-90436 to execute commands as the N-central service account, then abuses a privileged helper to reach root. Apache says Axis 1.x has reached end of life. The full affected-version range for N-central and fixed builds for these new paths remain unverified. Keep the earlier HF2 update in place and apply the network and configuration controls. Evidence of root access warrants treating the appliance as fully compromised, investigating managed endpoints for unauthorized activity and restoring from trusted systems.
+
+**Vendor response update.** N-able applied temporary protections to hosted environments and asks on-premises customers to verify that Legacy API is disabled. The November 13 download and callback indicators apply to customers who have not disabled Legacy API. Review historical exposure as well. The vendor is still assessing and remediating the incident and does not name a fixed build for the new chains in this update.
