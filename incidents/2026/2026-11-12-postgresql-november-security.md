@@ -45,7 +45,7 @@ checklist:
 - title: Review SQL privileges, logical replication and restore inputs
   hint: Prioritize servers where untrusted roles can create objects and subscribers that use superuser-owned subscriptions. Inspect subscription ownership and publisher trust. Restrict database network access and avoid restoring untrusted archives. Treat a suspected execution path as an incident on the corresponding server or restore host.
 - title: Refresh backups and apply the release’s maintenance steps
-  hint: If you use incremental backups, take a fresh full backup after the update, use it as the next baseline and verify a restore. Check the release notes for affected GIN indexes, pg_trgm GiST indexes using gist_trgm_ops, B-tree indexes on lengthless bpchar, TOAST errors and partition constraints. Review any skipped releases for additional steps.
+  hint: If you use incremental backups, take a fresh full backup after the update, use it as the next baseline and verify a restore. Use REINDEX INDEX on suspect GIN indexes, GiST indexes using gist_trgm_ops and B-tree indexes on bpchar without a length. Run REINDEX TABLE when reads report missing chunk number. Use the release announcement’s query to find NOT NULL NO INHERIT constraints on partitioned tables. Drop unwanted constraints or repair them with INHERIT after checking partitions for NULL values. Review any skipped releases for additional steps.
 - title: Schedule the PostgreSQL 14 major upgrade
   hint: Apply 14.25 to existing 14 instances and plan a supported-major migration. Test the upgrade and rollback using a verified backup and the target version’s upgrade guide.
 sources:
