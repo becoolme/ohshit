@@ -31,6 +31,9 @@ timeline:
 - date: Nov 12, 16:00 UTC
   title: N-able restricts Intune integration and issues deployment-specific guidance
   body: The vendor applies temporary controls to hosted environments and asks on-premises customers to verify that Legacy API is disabled. Earlier Agent and Probe upgrade guidance still applies.
+- date: Nov 13, 03:50 UTC
+  title: N-able begins checking additional indicators with specific customers
+  body: The vendor says it is working with those customers to assess and mitigate risk.
 - date: Nov 13, 13:40 UTC
   title: N-able publishes indicators for Legacy API exposure
   body: The vendor provides download and callback paths for customers who have not disabled Legacy API. Assessment and remediation continue.
@@ -45,7 +48,7 @@ checklist:
   hint: Keep the earlier HF2 security update in place and check N-able’s official notices for remediation of these new paths. Confirm guidance for your hosted or on-premises deployment and the Agent and Probe builds before relaxing network controls. If compromise is found, isolate affected appliances
     and managed systems, revoke exposed credentials and restore from verified clean systems.
 - title: Check temporary protections and Intune status for your deployment
-  hint: Hosted customers should update Agents and Probes per N-able guidance. The vendor applied temporary server-side protections. On-premises customers should verify Legacy API is disabled and continue the HF2 and endpoint updates. N-able disabled the hosted Intune integration and attempted to deactivate it for on-premises customers using it. Contact support for exceptions and restoration guidance.
+  hint: Hosted customers should update Agents and Probes per N-able guidance. The vendor applied temporary server-side protections. On-premises customers should verify Legacy API is disabled and continue the HF2 and endpoint updates. N-able disabled the hosted Intune integration and attempted to deactivate it for on-premises customers using it. N-able says support will contact customers where it could not deactivate the integration. Check restoration guidance with support.
 - title: Hunt using the vendor’s Legacy API indicators
   hint: 'Review outbound traffic to 157.20.241[.]16 (TCP 8080 and 19202–19418), 139.99.69[.]109:10128 and 79.76.51[.]56:39100. On 157.20.241[.]16:8080, look for /jup.sh, /xvgz, /xmrig.tgz, /ob/cronhit?h=jup_start_<rig>&persist=<method> and /ob/fcheck. Correlate matches with past configuration and host activity. A match alone does not establish compromise.'
 sources:
