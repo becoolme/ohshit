@@ -81,7 +81,7 @@ Nextcloud Docker’s run 2675 executed the injected commit on a self-hosted runn
 
 ### Indicators to correlate
 
-- HTTP endpoints at `194.150.166[.]244:8080/exfil`, `18.143.168[.]96:8080/exfil` and `153.75.82[.]159:8080/exfil`. The older `193.32.204[.]199` endpoint was still present in some previously implanted GhostAction workflows. HTTP callback values included `b42d70a7aab9140ca19e8249` and `15f44heehnax8jdf41yx`.
+- HTTP endpoints at `194.150.166[.]244:8080/exfil`, `18.143.168[.]96:8080/exfil` and `153.75.82[.]159:8080/exfil`. The older `193.32.204[.]199` endpoint was still present in some previously implanted GhostAction workflows. HTTP callback values included `b42d70a7aab9140ca19e8249` `15f44heehnax8jdf41yx`, and `e6ny5telf3pht81qk5zv`.
 - Telegram `api.telegram.org` with `sendDocument`, chat `-1004340163187` and bot IDs `8708988906`, `9196217635`, `9180059428`, `8902935164`, `8876515636`. Telegram-only samples set the HTTP callback to loopback.
 - Probe PR `docs: dependency audit notes`, body `Routine dependency audit notes`, branch `wfx-docs`, file `docs/wfx-audit.md` and blob `ee6e5addfe591923fc385553cb66cf0d25634a6b`.
 - Commit messages `ci: refresh build cache`, `ci: restore`, `ci: cleanup`, `chore: add ci helper`, `chore: add dependency audit workflow`, and `chore: initial commit` before the workflow in empty repositories.

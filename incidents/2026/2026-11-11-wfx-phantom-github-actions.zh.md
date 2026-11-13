@@ -61,7 +61,7 @@ Nextcloud Docker 的第 2675 次运行在自托管运行器上执行了植入后
 
 ### 需要关联核查的指标
 
-- HTTP 端点 `194.150.166[.]244:8080/exfil`、`18.143.168[.]96:8080/exfil` 和 `153.75.82[.]159:8080/exfil`。此前被植入的部分 GhostAction 工作流仍含旧端点 `193.32.204[.]199`。HTTP 回调参数值包括 `b42d70a7aab9140ca19e8249` 和 `15f44heehnax8jdf41yx`。
+- HTTP 端点 `194.150.166[.]244:8080/exfil`、`18.143.168[.]96:8080/exfil` 和 `153.75.82[.]159:8080/exfil`。此前被植入的部分 GhostAction 工作流仍含旧端点 `193.32.204[.]199`。HTTP 回调参数值包括 `b42d70a7aab9140ca19e8249` 、`15f44heehnax8jdf41yx` 和 `e6ny5telf3pht81qk5zv`。
 - Telegram 的 `api.telegram.org` 和 `sendDocument`，聊天编号 `-1004340163187`，机器人 ID 为 `8708988906`、`9196217635`、`9180059428`、`8902935164`、`8876515636`。仅使用 Telegram 的样本将 HTTP 回调指向回环地址。
 - 探测 PR 标题 `docs: dependency audit notes`，正文 `Routine dependency audit notes`，分支 `wfx-docs`，文件 `docs/wfx-audit.md`，Git blob `ee6e5addfe591923fc385553cb66cf0d25634a6b`。
 - 提交信息 `ci: refresh build cache`、`ci: restore`、`ci: cleanup`、`chore: add ci helper`、`chore: add dependency audit workflow`，以及空仓库中工作流之前的 `chore: initial commit`。
