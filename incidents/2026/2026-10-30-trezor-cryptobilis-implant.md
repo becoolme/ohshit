@@ -8,7 +8,7 @@ summary: Trezor found implants in three Safe 5 devices bought from CryptoBilis b
 splash: Confirmed in three CryptoBilis Safe 5 devices. The precaution covers every Trezor model CryptoBilis supplied from March 2026.
 wipe: Move funds to a secure wallet with a fresh seed and arrange a replacement with Trezor Support.
 inTheWild: 'yes'
-inTheWildNote: Trezor confirmed implants in three devices. It reports no customer reports of lost funds.
+inTheWildNote: Trezor confirmed implants in three devices. No customer has reported lost funds.
 fixed:
 - { product: Trezor Safe 5 firmware, version: '2.13.1', status: Blocks capture by known implants }
 timeline:
@@ -27,7 +27,7 @@ checklist:
 - title: Check the seller and move funds
   hint: Check receipts for CryptoBilis supply, including Tokopedia and Shopee. Move funds to a secure replacement wallet using a newly generated seed. If needed, Trezor suggests a familiar software wallet or exchange temporarily. Verify the entire receiving address. A firmware update cannot revoke a previously captured backup.
 - title: Stop using a suspected device
-  hint: Keep the device for support. Do not set it up, use it or enter a recovery phrase until Trezor advises you. Weighing or opening it cannot reliably establish safety.
+  hint: Keep the device for support. Do not set it up, use it or enter a recovery phrase until Trezor advises you. Weighing or opening it cannot reliably establish safety. If support confirms the device is safe to keep using, install official firmware through Trezor Suite.
 - title: Arrange a replacement safely
   hint: Buyers from March 2026 onward can contact trezor.io/support for replacement. Shipping restrictions can lead to an alternate model with a price adjustment, another delivery country or a refund. Never share recovery words or a passphrase.
 sources:
@@ -41,4 +41,4 @@ sources:
 ---
 Trezor examined the first Safe 5 and analyzed the implant firmware. A board between the main board and display records displayed recovery words and passphrases, encrypts them and sends them over a cellular connection. It retries if it cannot connect. Trezor says the board does not modify the wallet firmware or Secure Element.
 
-The three confirmed units were bought between August 20 and September 23, 2026, via CryptoBilis directly or its Tokopedia and Shopee stores. Trezor found no implants in the other models or other resellers' devices it checked. The 48 people who contacted Trezor are inquiries, and the manufacturer says no customer has reported losing funds. The broader precaution applies to all models from that seller since March. Trezor also reduced its reseller network by about 80% and tightened sourcing, storage and access controls. L3 reflects a confirmed hardware supply-chain issue with a narrow observed scope.
+The three confirmed units were bought between August 20 and September 23, 2026, via CryptoBilis directly or its Tokopedia and Shopee stores. Trezor found no implants in the other models or other resellers' devices it checked. Forty-eight customers had contacted Trezor. The manufacturer says it has received no reports of customer funds being lost. The broader precaution applies to all models from that seller since March. Trezor also reduced its reseller network by about 80% and tightened sourcing, storage and access controls. L3 reflects a confirmed hardware supply-chain issue with a narrow observed scope.
