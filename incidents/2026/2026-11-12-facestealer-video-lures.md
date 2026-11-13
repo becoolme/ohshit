@@ -27,7 +27,7 @@ checklist:
 - title: Notify contacts, employers and the FBI
   hint: Warn contacts through a separate trusted channel that your account or video may be used to impersonate you. Alert your employer if work access was exposed. Preserve invite links, messages, timestamps and logs and report at IC3.gov with the keyword FaceStealer.
 - title: Verify invitations independently
-  hint: Confirm unexpected meetings by phone or another known channel. Open the official client and enter the meeting code, keep your camera off until you verify the participants, and update the client through its official updater.
+  hint: Confirm unexpected meetings by phone or another known channel. Inspect the scheduling invite and treat a new link sent just before the call as unverified. Open the official client, enter the meeting code, keep your camera off until you verify the participants, and update through the official updater.
 sources:
 - name: FBI FLASH AC-111226-MS
   url: https://www.ic3.gov/CSA/2026/261112.pdf
