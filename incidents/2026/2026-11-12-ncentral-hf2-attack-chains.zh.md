@@ -38,7 +38,7 @@ checklist:
 - title: 排查服务器和下游 Windows 活动
   hint: 保全代理、设备、任务和终端日志。排查 157.20.241[.]16（TCP 8080 和 19202–19418）、139.99.69[.]109:10128、79.76.51[.]56:39100，并关联 /dms/services/ServerUI 请求、异常进程及 Windows Agent 或 Probe 任务。Huntback 的报告末尾列出 12 组指标和主机痕迹，包括 /tmp/.xvd、/var/tmp/.xvd、xvd.service 和 SOAP 类 jline.internal.TerminalLineSettings。单条命中无法证明失陷。
 - title: 分别跟踪设备和 Windows 攻击链的修复
-  hint: 保留先前的 HF2 安全更新，并留意 HF3 正式发布说明，并在升级前盘点依赖 Legacy API 的集成。放宽网络限制前，核对托管或自管部署以及 Agent 和 Probe 构建的适用指导。若确认失陷，隔离受影响的设备和受管系统，吊销暴露的凭据，并从核验过的干净系统恢复。
+  hint: 保留先前的 HF2 安全更新，留意 HF3 正式发布说明。升级前盘点依赖 Legacy API 的集成。放宽网络限制前，核对托管或自管部署以及 Agent 和 Probe 构建的适用指导。若确认失陷，隔离受影响的设备和受管系统，吊销暴露的凭据，并从核验过的干净系统恢复。
 - title: 按部署方式核查临时防护和 Intune 状态
   hint: 托管客户按 N-able 指引更新 Agent 和 Probe，厂商已部署临时服务端防护。自管客户核实 Legacy API 已禁用，并继续执行 HF2 和端点更新。N-able 暂停托管环境的 Intune 集成，并尝试暂停已启用该集成的自管环境。若无法暂停自管环境中的集成，N-able 支持团队会联系客户。请通过支持团队核实恢复安排。
 - title: 对照厂商的 Legacy API 指标排查
@@ -56,6 +56,8 @@ sources:
   says: 保留 Apache 原公告并链接补丁提交。
 - name: N-able 事件 202613 公开记录
   says: 提供分部署方式的指引、Intune 暂停措施，以及适用于 Legacy API 仍启用环境的排查指标。
+- name: N-able 11 月 13 日安全更新
+  says: 公布 Legacy API 相关指标及托管和自管环境分别应采取的措施。
 - name: N-able 漏洞修复进展
   says: 说明 HF3 计划移除 Legacy API，并加强 Agent、Probe 和设备的认证与通信。
 cves:
@@ -73,4 +75,4 @@ Previdian 在传感器上记录了两次利用尝试。Huntback 随后在诱捕�
 
 **厂商处置更新。** N-able 已在托管环境部署临时防护，并要求自管客户确认 Legacy API 已禁用。11 月 13 日的下载和回连指标适用于未禁用 Legacy API 的客户。应同时核查历史暴露。厂商仍在评估和处置，尚未在这份更新中公布新攻击链的修复版本。
 
-11 月 13 日，N-able 公布了 HF3 计划。厂商拟永久移除 Legacy API，并加强 Agent、Probe 和设备的认证与通信，以降低 Agent 冒用风险。查阅更新公告时，核对正式发布说明中的构建号和适用范围。
+11 月 13 日，N-able 公布了 HF3 计划。厂商拟永久移除 Legacy API，并加强 Agent、Probe 和设备的认证与通信，以降低 Agent 冒用风险。N-able 表示，其描述的 Agent 冒用需要攻击者已在终端上取得立足点。HF3 发布后，核对发布说明中的构建号及修复范围。
