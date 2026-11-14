@@ -55,20 +55,22 @@ checklist:
   - title: 取消控制设备的直连访问
     hint: 与设施人员和制冷维护商协作。从资产清单或管理界面确认 EVO 型号和固件。移除公网端口转发，在专用网络中限制出入站通信。仅允许经受控远程访问的授权主机进行 HTTPS 管理及必要的 SSH 访问。验证告警和制冷监测仍正常运行。
   - title: 排查 VulnCheck 记录的请求
-    hint: 检查防火墙、代理和设备日志中的 202.61.138.117（AS152194）、对 config.lua 含 action=set 的未认证 POST，以及 177.4.12.11（AS140227）、对 /cgi-bin/xwconsole.cgi 含 sh=id 的未认证 GET 和 User-Agent Mozilla/5.0。两条诱捕检测规则见研究报告。将 /etc/xwebconfig.json 与可信基线比对，检查异常管理员会话、SSH 启用、除霜或告警变更。单凭命中无法证明入侵。
+    hint: 检查防火墙、代理和设备日志中的 202.61.138.117（AS152194）、对 config.lua 含 action=set 的未认证 POST，以及 177.4.12.11（AS140227）、对 /cgi-bin/xwconsole.cgi 含 sh=id 的未认证 GET 和 User-Agent Mozilla/5.0。两条检测规则分别为 VULNCHECK CVE-2026-124014 Copeland XWEB EVO Unauthenticated config.lua Configuration Write Attempt 和 VULNCHECK CVE-2026-124010 Copeland XWEB EVO xwconsole.cgi Unauthenticated Root Command Execution Attempt。将 /etc/xwebconfig.json 与可信基线比对，检查异常管理员会话、SSH 启用、除霜或告警变更。单凭命中无法证明入侵。
   - title: 恢复并替换受影响的 EVO 设备
-    hint: 保留可用日志和设置。怀疑入侵时，与制冷维护商协调安全隔离，并从确认可信的配置恢复。在干净系统上轮换操作员和远程访问凭据。Copeland 建议改用仍受支持的 XWEB PRO 型号。重连前核对替换型号的现行固件和安全公告。
+    hint: 保留可用日志和设置。怀疑入侵时，与制冷维护商协调安全隔离，并按厂商指引使用可信固件和配置恢复，或直接更换设备。在干净系统上轮换操作员和远程访问凭据。Copeland 建议改用仍受支持的 XWEB PRO 型号。重连前核对替换型号的现行固件和安全公告。
 sources:
   - name: VulnCheck 对 XWEB EVO 的原始研究
     says: 报告 14 项发现、实验室复现及观察到的两种请求特征。
   - name: VulnCheck 发布的 CVE-2026-124014 CNA 记录
     says: 将 4.3.0 至 5.8.8 列为受配置写入漏洞影响的版本。
+  - name: VulnCheck 发布的 CVE-2026-124015 CNA 记录
+    says: 将 5.6.2 至 5.8.8 列为受密码重置绕过影响的版本。
   - name: Copeland XWEB EVO 停止支持公告
     says: 软件支持于 2026 年 3 月 16 日结束，并建议迁移和采取临时管控措施。
   - name: Copeland 网络安全指南
     says: 建议取消互联网访问、过滤流量并限制 SSH。
 ---
 
-若旧版 XWEB EVO 的管理界面网络可达，攻击者无需账号即可写入配置或执行 root 命令。本批漏洞还包括截至 5.8.8 固件上的可预测凭据，以及取得管理员或 root 访问权限的路径。研究正文将部分 Lua 路径归为旧版特有，而 CNA 记录将 CVE-2026-124014 的影响范围列为截至 5.8.8，将 CVE-2026-124015 列为 5.6.2 至 5.8.8。排查时请参考 CNA 范围，并向 Copeland 确认具体型号和构建版本。根据公告，5.6.2 已去除 xwconsole.cgi 的特定风险，但这批漏洞仍影响较新的固件。
+若旧版 XWEB EVO 的管理界面网络可达，攻击者无需账号即可写入配置或执行 root 命令。本批漏洞还包括截至 5.8.8 固件上的可预测凭据，以及取得管理员或 root 访问权限的路径。研究正文将部分 Lua 路径归为旧版特有，但 CNA 记录仍将 CVE-2026-124008、CVE-2026-124009、CVE-2026-124014 和 CVE-2026-124015 的影响上限列为 5.8.8，其中 CVE-2026-124015 的下限为 5.6.2。排查时请参考 CNA 范围，并向 Copeland 确认具体型号和构建版本。根据公告，5.6.2 已去除 xwconsole.cgi 的特定风险，但这批漏洞仍影响较新的固件。
 
 VulnCheck 将诱捕流量描述为机会式探测。记录证实有人发起利用尝试，生产设备实际失陷数量及运营损失仍待确认。CERT-FR 曾将 Copeland 和 Dixell XWEB 列入[制冷攻击](/zh/incidents/supermarket-refrigeration-wave/)中遭入侵的控制设备。11 月的探测不能确定那次攻击使用了哪些漏洞。
