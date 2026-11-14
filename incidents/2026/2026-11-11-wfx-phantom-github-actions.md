@@ -6,13 +6,16 @@ wipe: Contain suspect runs, revoke compromised tokens, rotate reachable secrets 
 inTheWildNote: StepSecurity observed execution. WebdriverIO recorded unauthorized bot commits.
 level: 4
 date: '2026-11-11'
-updated: 2026-11-13
+updated: 2026-11-14
 tags:
 - GitHub Actions
 - CI/CD
 - credential theft
 inTheWild: 'yes'
 timeline:
+- date: Oct 25–29, 2026
+  title: Trial variants appear in public repositories
+  body: Mate Security later traces 27 trial commits across seven repositories.
 - date: Nov 10, 2026
   title: StepSecurity dates the start of the campaign
   body: Stolen GitHub tokens are used to probe repositories and push malicious changes.
@@ -31,13 +34,17 @@ timeline:
 - date: Nov 12, 2026
   title: SafeDep publishes malicious commit counts and affected releases
   body: The report counts about 8,100 public repositories that received malicious commits and identifies redock v1.0.282 as another release containing the payload.
+- date: Nov 13, 2026
+  title: Mate Security publishes additional campaign evidence
+  body: The researchers document the October trials, distinguish deleted runs from started jobs and identify the first AWS session name.
 checklist:
 - title: Contain suspicious GitHub access and runs
   hint: Pause affected workflows and releases, cancel active suspect runs, isolate affected self-hosted runners and preserve audit logs, run IDs, commit SHAs and network evidence. Revoke affected PATs, OAuth or GitHub App user authorizations and bot credentials. Remove unnecessary branch bypass and review where each token had write access.
 - title: Correlate repository and network evidence
-  hint: Inspect Git history, PR metadata and Actions audit trails. Search runner egress from November 10 for 194.150.166[.]244:8080/exfil, 18.143.168[.]96:8080/exfil, 153.75.82[.]159:8080/exfil, the legacy GhostAction endpoint 193.32.204[.]199 and api.telegram.org sendDocument. The body and research reports list the remaining indicators. Check for the script SHA-256 89695abb392d5cfd4972672961e644bb46baa98aa1ed7173c2a2816c762735cf. Tie matches or missing run numbers to the commit, actor and execution evidence. A probe or isolated indicator is a lead. If execution is confirmed or likely, assume the job’s reachable credentials were exposed.
+  hint: >-
+    Inspect Git history, PR metadata and Actions audit trails. Search runner egress from October 25 for 45.61.182[.]54 on TCP 8080 or 8081 at /exfil, 194.150.166[.]244:8080/exfil, 18.143.168[.]96:8080/exfil, 153.75.82[.]159:8080/exfil, the legacy GhostAction endpoint 193.32.204[.]199 and api.telegram.org sendDocument. The body and research reports list the remaining indicators. Check for the script SHA-256 89695abb392d5cfd4972672961e644bb46baa98aa1ed7173c2a2816c762735cf. Tie matches or missing run numbers to the commit, actor and execution evidence. A probe or isolated indicator is a lead. If the suspect run is gone, check whether the immediately following ci: restore run started a job and corroborate with runner and network logs. If execution is confirmed or likely, assume the job’s reachable credentials were exposed.
 - title: Remove cloud persistence before replacing secrets
-  hint: Suspend affected OIDC trusts and revoke sessions where supported. Check AWS CloudTrail and IAM for altered role trusts, new access keys and wfx-* sessions. Check Azure audit logs for unauthorized federated credentials, GCP logs for service-account impersonation from the GitHub workload identity pool, and Vault audit logs for JWT logins from GitHub’s OIDC issuer. Remove unauthorized access, then rotate all reachable repository, organization, environment, registry and cloud secrets. For self-hosted runners, include credentials and tokens accessible on the host.
+  hint: Suspend affected OIDC trusts and revoke sessions where supported. Check AWS CloudTrail and IAM for altered role trusts, new access keys, initial ci-<pid> OIDC sessions and chained wfx-<pid> sessions. Check Azure audit logs for unauthorized federated credentials, GCP logs for service-account impersonation from the GitHub workload identity pool, and Vault audit logs for JWT logins from GitHub’s OIDC issuer. Remove unauthorized access, then rotate all reachable repository, organization, environment, registry and cloud secrets. For self-hosted runners, include credentials and tokens accessible on the host.
 - title: Restore from trusted source and verify outputs
   hint: Remove the payload, restore protected branches and CI from verified commits, rebuild affected runners and verify releases, artifacts and caches against known-good outputs. If a developer ran the injected npm install hook on an affected commit, isolate the workstation, treat it as compromised and revoke or rotate credentials it could access from a clean device. Block the listed package versions and regenerate lockfiles from verified inputs. Resume release automation only after clean runs and audit checks. Restrict runner egress to required destinations and bind required checks to trusted sources where supported.
 sources:
@@ -65,6 +72,14 @@ sources:
   says: Documents malicious commit counts, published artifacts, execution triggers and workstation and cloud response guidance.
   url: https://safedep.io/blog/github-actions-wfx-credential-stealer
   primary: true
+- name: Mate Security original investigation
+  says: Documents the October trials, release variants, cloud indicators and run-level evidence.
+  url: https://mate.security/labs/the-wfx-github-stealer-an-october-rehearsal-and-what-a-deleted-run-proves
+  primary: true
+- name: Packagist malware filter
+  says: Lists versions 3.14.2, 3.14.3 and 3.14.4 as flagged.
+  url: https://packagist.org/packages/digitalelvis/neuronai-studio/filter-lists/malware/
+  primary: true
 ---
 
 The campaign requires a valid token with repository write access and a path to execute the code. It modifies an existing workflow, creates a new workflow, appends to a script CI already calls, or adds a hidden script and hooks it into an npm lifecycle or build/test command. Workflow variants can explicitly pass secrets to the script. Script variants can read runner memory and credential stores when the job has access. Cloud escalation depends on the runner’s credentials and the permissions and trust attached to them. Required-check forgery exists in the payload but was disabled in the samples StepSecurity examined.
@@ -75,7 +90,7 @@ Nextcloud Docker’s run 2675 executed the injected commit on a self-hosted runn
 
 ### Release artifacts to check
 
-- Packagist `digitalelvis/neuronai-studio` **3.14.3** contains the script and npm postinstall hook. The hook can execute if npm installs dependencies in the package directory with lifecycle scripts enabled. Composer does not invoke it on its own. StepSecurity recommends pinning **3.14.2** or earlier.
+- Packagist `digitalelvis/neuronai-studio` **3.14.3** contains the script and npm postinstall hook. The hook can execute if npm installs dependencies in the package directory with lifecycle scripts enabled. Composer does not invoke it on its own. Mate Security also identifies **3.14.4**. Packagist flags **3.14.2**, **3.14.3** and **3.14.4** as malware; its flag alone does not establish that 3.14.2 contains this WFX payload. Block all three versions and verify the source and archive of any replacement before installing it.
 - Go module `github.com/onuragtas/redock` (formerly `github.com/onuragtas/docker-env`) **v1.0.278**, **v1.0.280** and **v1.0.282**, and `github.com/vkuznet/gocurl` **v0.0.0-20261111095532-8d5aad0cb0da**, contain the payload only in workflow files. Ordinary Go downloads and builds do not run workflows; triggering the affected workflow on an injected commit can run the payload. Check direct and transitive dependencies in `go.mod` and `go.sum` and replace affected versions with independently verified inputs. SafeDep identifies redock **v1.0.279**, **v1.0.281** and **v1.0.283** as clean reverts.
 - StepSecurity reports no affected WebdriverIO package release. Verify other releases produced between an injected commit and cleanup using clean source and build records.
 
@@ -100,3 +115,9 @@ The report documents HTTP delivery in the observed configuration and notes Teleg
 ### SafeDep’s November 12 repository investigation
 
 SafeDep identified about 8,100 public repositories that received malicious commits between November 10 at 12:46 UTC and November 12 at 04:36 UTC. Its search covered public default branches and excluded repositories that only received probes. This count does not show where the payload ran or credentials were sent. SafeDep also checked published releases from injected repositories in npm, the Go module proxy and Packagist and found no payload outside the three packages above. Its review did not cover PyPI or other registries.
+
+### Mate Security’s November 13 follow-up
+
+In a sample of 150 repositories, Mate found 115 missing runs. The immediately following revert run did not start a job in 82 of those 115 cases. A missing record cannot establish that the payload ran; treat a started revert job as a reason to investigate and rotate credentials in scope when execution is likely. Mate also found configurations set to forge passing checks in 16 repositories. That finding establishes configuration, not a forged result.
+
+The October trial samples use `45.61.182[.]54:8080/exfil` and `45.61.182[.]54:8081/exfil`. In AWS, look for GitHub OIDC `AssumeRoleWithWebIdentity` calls with `ci-<pid>` session names and chained `AssumeRole` calls with `wfx-<pid>` sessions. Correlate these with source, time, role trust changes and credentials created by the session.
