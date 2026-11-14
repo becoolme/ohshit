@@ -42,6 +42,9 @@ timeline:
   - date: 11月10日 18:02 UTC
     title: Railway 发布取证报告及补偿指引
     body: 报告修订遏制时间并说明构建、CI 及密钥存储访问链，给出已确认的构建历史及令牌暴露数量，以及未授权 AI 费用估算。
+  - date: 2026年11月12日
+    title: Railway 公布未授权 AI 费用补偿规则
+    body: 公告列明受理范围、申报所需材料、建议提交日期，以及各服务商的处理流程。
 checklist:
   - title: 轮换 Railway 变量里存的每一个密钥，先从最值钱的开始
     hint: AI 服务商密钥、云（AWS/GCP）密钥、Stripe、数据库密码、OAuth 客户端密钥、Webhook 签名密钥。只要放在 Variables 里，就当它已经丢了
@@ -54,7 +57,7 @@ checklist:
   - title: 检查 10月20日及更早的服务商审计日志和账单
     hint: AWS CloudTrail / GCP 审计日志里的陌生 IP、新冒出来的 GitHub 令牌或部署密钥、可疑的 Stripe API 调用、莫名其妙的 AI token 账单
   - title: 提交可疑 AI 费用的申诉
-    hint: "通过 Railway 11 月报告中的表单提交未授权费用。保留服务商账单及时间戳。遵循下文对应服务商的指引，包括将 OpenAI Case ID 提交给 Railway 支持。"
+    hint: 建议于 2026 年 11 月 18 日前通过 Railway 补偿公告中的表单申报，提供服务商、费用日期范围及账单或用量报告。AWS Bedrock、Google Gemini 和 OpenAI 用户也应向服务商开工单，并在申报中附上工单编号。
   - title: 重新连接 GitHub、替换部署凭据并部署
     hint: 已重新接受构建。错过的提交未排队，应手动触发 Deploy Latest Commit。重新连接 GitHub 应用，依次运行 railway logout 和 railway login，并替换 CI 中已吊销的 RAILWAY_TOKEN / RAILWAY_API_TOKEN。重新部署才能加载新变量和存储桶密钥
   - title: 检查 Railway 账号和部署历史
@@ -78,6 +81,8 @@ sources:
     says: 使用原账号身份登录；空控制台可能表示登录了另一个账号
   - name: Railway 11 月事件报告
     says: 说明攻击链、修订后的影响范围和遏制时间、按服务商划分的申诉及 Railway 补偿承诺。
+  - name: Railway 补偿公告
+    says: 说明受理范围、所需材料、建议提交日期、服务商退款流程及 Railway 的兜底承诺。
 ---
 Railway 是一个很流行的 PaaS 平台。最初通知称在 **2026年10月21日**上午，存放客户**环境变量**的系统中出现了异常活动。通知还称，未经授权的一方可能访问了加密后的变量，而且**其中一部分的解密内容也被拿到了**。在 Railway 上，应用的 API 密钥、数据库密码和镜像仓库凭据都放在环境变量里，所以这实际上就是一个密钥库。
 
@@ -111,4 +116,6 @@ Railway 说影响“可能仅限于部分用户”，却要求**所有**用户�
 
 Railway 发现 353 次构建的历史被读取，其中包括密封变量。公司为 1,852 名用户重置了遭解密的关联账户令牌，包括 GitHub OAuth 和自带密钥的代理凭据。公司称未发现本案被盗凭据用于登录 Railway 账户，也未发现客户仓库或快照被下载，或客户数据库被访问。1.85% 仍是变量可能遭解密的工作区上限。这些数字衡量不同对象，不能相加。
 
-Railway 估计未授权用量约为 74 万美元，请客户通过报告链接的表单提交费用。AWS Bedrock 和 Google Gemini 已按各自欺诈政策启动退款。OpenAI 用户先向服务商开工单，再把 Case ID 提交给 Railway 支持。SpaceXSI 用户向 Railway 申诉。Railway 表示将承担受影响的 Anthropic 和 OpenRouter 费用，并补偿上游服务商未覆盖的损失。
+**11 月 12 日补偿公告。** Railway 受理存放在平台上、于 10 月 20 日 13:50 UTC 至 10 月 21 日 09:25 UTC 期间失陷的 AI 服务商密钥所产生的未授权费用。该范围适用于所有 AI 服务商。Railway 会协助向服务商申请退款，并承担服务商未退还的合格费用。公告将未授权 AI 费用估为至少约 74 万美元，尚未给出已支付的补偿总额。
+
+建议于 11 月 18 日前提交申报。Railway 表示仍会尽力处理逾期申报，并力争在 15 个工作日内审核。AWS Bedrock 和 Google Gemini 用户通过各自服务商的欺诈退款流程办理，OpenAI 个案由 OpenAI 与 Railway 共同审核。OpenRouter 按善意退款协议处理，通过 Railway 申报。SpaceXSI 也通过 Railway 提交并逐案审核。Railway 暂时承担 Anthropic 的合格费用，其他服务商的未退款费用也应向 Railway 申报。
