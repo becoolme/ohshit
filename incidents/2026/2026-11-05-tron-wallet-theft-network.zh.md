@@ -57,9 +57,9 @@ SEAL 于 11 月 4 日发布报告，记录 10 月 28 日至 11 月 3 日期间�
 | --- | --- |
 | `TUYFAa8hHjeEW6bPqBJ4v3RjQR2uKM1Svk` | 手续费钱包，10 月 5 日首次收到资金 |
 | `TNJPXRWEptdSzbC1pYGp8suyTao4qddJe6` | cpa.rip 案例的归集地址 |
-| `TEDjNzXWsTrRcHmRnGPPqGRmqCmrA1vvGZ` | 最大归集地址，974,487 USDT |
+| `TEDjNzXWsTrRcHmRnGPPqGRmqCmrA1vvGZ` | 初始数据集中最大的归集地址，974,487 USDT |
 | `TXgDHFfNia3PmJKM5u5U35ePDku7TUV6Xo` | 10 月 5 日首个归集地址 |
-| `TEdbrs5teWWyzAtP639fRAX2yKNPCSMqJe` | 11 月 3 日至 4 日最后一个归集地址 |
+| `TEdbrs5teWWyzAtP639fRAX2yKNPCSMqJe` | 初始数据集中 11 月 3 日至 4 日时段的最后一个归集地址 |
 | `FF1625CB54E87A93E5051C53EB8999AEDE30C81E7B7FA5DA474681E44D085967` | 519,093 USDT 的盗币交易 |
 | `TWUPpTF63yevhZ55eoN6CbDodZzgp856n4` | 共用钱包，JustLend 路径 |
 | `TZ7soEw5nn5mvC9k5pNszB74261Hjotfbf` | JustLend 追踪终点 |
