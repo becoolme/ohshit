@@ -62,7 +62,7 @@ checklist:
 - title: Verify maintenance across the remote-access stack
   hint: Verify version 26.6.5 or later on each technician workstation for hosted and on-premises deployments. Reinstall the technician client following vendor instructions where needed. While updating, remove unnecessary Transfer Files permissions from session-group roles. Keep endpoint agents current and investigate potential compromise separately.
 - title: Hunt the published indicators
-  hint: Correlate the three published indicator sets below with network, process, scheduled-task, registry Run and ScreenConnect logs. Check for TrapWatch running as SYSTEM, reportedly every 10 seconds, then review client fingerprints and API configuration. A filename, account name or legitimate utility alone does not establish compromise.
+  hint: Correlate the three published indicator sets below with network, process, scheduled-task, registry Run and ScreenConnect logs. Check for TrapWatch running as SYSTEM, reportedly every 10 seconds, then review client fingerprints and API configuration. A filename, account name or legitimate utility alone does not establish compromise. See the Microsoft report for 18 file hashes and Defender queries. Check for added antivirus path exclusions.
 sources:
 - name: ConnectWise November 11 ScreenConnect advisory
   says: Lists the five disabled extensions, approximately 400 environments with one or more installed, suspected behavior and partner actions.
