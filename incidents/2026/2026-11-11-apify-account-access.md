@@ -38,13 +38,17 @@ checklist:
 - title: Contain suspicious Apify account activity
   hint: Preserve records of unexpected sign-ins, Actor runs, integration changes and API activity. Revoke or rotate exposed or suspicious credentials in the official console, replace them in CI secrets, scripts and dependent services, and test with the replacements. Review associated services for unexpected access.
 - title: Restrict access to Apify storage
-  hint: In Apify Console, open Settings, find General resource access and select Restricted. Review workflows that rely on open storage access and check that authorized callers can still read the resources they need.
+  hint: In Apify Console, go to Settings → Login & Privacy (Security & Privacy for organizations) and set General resource access to Restricted. Check each storage resource’s share settings for overrides, and test dependent workflows with a valid token that has access.
 - title: Reconnect private GitHub repositories
   hint: Open an Actor built from GitHub in Apify, choose Change provider, select GitHub and authorize once per account and organization. Reconnect other integrations when prompted and verify scheduled runs.
 sources:
 - name: Apify security incident updates
   url: https://status.apify.com/incidents/sxd1dj5j6749
   says: Official timeline, credential misuse, OAuth revocations, customer notifications, token storage changes and advice to restrict storage access.
+  primary: true
+- name: Apify general resource access documentation
+  url: https://docs.apify.com/account/collaboration/general-resource-access
+  says: Documents the Console paths, per-resource overrides and API authentication requirements.
   primary: true
 ---
 
