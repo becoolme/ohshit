@@ -16,7 +16,7 @@ timeline:
   body: Snow Peak dates some store or app account logins to October 29–30 and some event and community access to October 30.
 - date: Nov 8–12, 2026
   title: Further access and investigation
-  body: The resale service was accessed November 9. Snow Peak detected suspicious store access on November 9 and identified the community, event and resale cases on November 10, 11 and 12, respectively.
+  body: The event and community services were accessed again November 8–9. Resale access and further unauthorized store or app logins occurred November 9. Snow Peak detected suspicious store access that day and identified the community, event and resale cases on November 10, 11 and 12, respectively.
 - date: Nov 13, 2026
   title: Snow Peak discloses four cases
   body: It plans individual notices and announces that the store will reopen that day with stronger security. Other suspended services are to resume after safeguards are applied.
