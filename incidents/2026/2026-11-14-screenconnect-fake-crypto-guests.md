@@ -7,7 +7,7 @@ tags:
 - ScreenConnect
 - Remote access
 summary: Huntress observed emulated ScreenConnect guests with exchange-themed names on at least 118 self-hosted servers in 109 protected organizations. The guests could lure technicians into opening sessions.
-splash: Self-hosted ScreenConnect with reachable relays. File execution requires an unpatched technician client and an active session.
+splash: Reachable self-hosted ScreenConnect relays known to the operator. File execution needs a vulnerable client and active session.
 wipe: Patch technician clients, avoid unverified sessions, and retain and review session evidence before removing the entries.
 inTheWildNote: Huntress confirmed unauthorized registrations and saw no guest-to-host exploitation.
 timeline:
@@ -24,7 +24,7 @@ checklist:
 - title: Patch the clients and restrict access
   hint: Upgrade every technician client to 26.6.5 or later and update affected Access agents. Verify client versions in server history. Where upgrades must wait, follow ConnectWise guidance on removing TransferFiles permissions for every role under Administration > Security > Roles, checking each session group. Keep installer links private and restrict installer and web access where supported.
 - title: Preserve and hunt before removal
-  hint: Copy App_Data\Session.db and its WAL. In Access and server logs, use the signals below together and correlate to an approved device inventory. An indicator match alone does not establish compromise. Quarantine unfamiliar entries from technicians and delete confirmed fakes after preserving evidence.
+  hint: Copy App_Data\Session.db and its WAL. Search Access and server logs for 74.208.158[.]106 and 197.47.160[.]252. Treat 87.106.111[.]220 as an infrastructure lead. Huntress lists 14 indicators, detailed below and in its report. Correlate them with your approved device inventory. An indicator match alone does not establish compromise. Quarantine unfamiliar entries from technicians and delete confirmed fakes after preserving evidence.
 - title: Check who joined and contain affected workstations
   hint: Review session history for text, file transfers and commands in each direction. For an unpatched technician client that joined, examine its ScreenConnect Temp and Startup directories and process history. If credentials may have been typed, rotate them from a clean system and revoke relevant sessions. Isolate workstations with evidence of execution and follow incident response procedures.
 sources:
