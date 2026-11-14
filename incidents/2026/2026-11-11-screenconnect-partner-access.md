@@ -1,12 +1,12 @@
 ---
-title: ScreenConnect disables five extensions after attacks on partner environments
-summary: ConnectWise disabled five third-party extensions in about 400 partner environments as a precaution. Huntress observed rogue ScreenConnect deployments on at least 288 endpoints across 48 organizations. Initial access remains under investigation.
-splash: ScreenConnect partners and managed Windows endpoints. Review deployments with or without the five listed extensions.
+title: ScreenConnect expands extension disablement after attacks on partner environments
+summary: ConnectWise added three extensions to its disablement guidance after reports of on-premises activity. It initially disabled five extensions in about 400 environments. Huntress observed rogue deployments on at least 288 endpoints across 48 organizations. The entry path remains under investigation.
+splash: ScreenConnect partners and managed Windows endpoints. Review deployments with or without the listed extensions.
 wipe: Keep the extensions disabled, update technician clients to 26.6.5 or later, revoke sessions from a trusted device and investigate out of band.
 inTheWildNote: Huntress observed unauthorized Run Commands and rogue clients on managed endpoints.
 level: 4
 date: '2026-11-11'
-updated: 2026-11-12
+updated: 2026-11-14
 tags:
 - ScreenConnect
 - RMM
@@ -46,9 +46,12 @@ timeline:
 - date: Nov 12, 18:45 UTC
   title: ConnectWise identifies extension CVE and confirms technician client protection
   body: The vendor identifies CVE-2026-127063 in RMM+ and says technician client 26.6.5 or later blocks SCKit’s attempted spread from infected endpoints. Initial access is still under investigation.
+- date: Nov 13, 21:15 UTC
+  title: ConnectWise reports on-premises activity and expands extension disablement
+  body: The original five should stay disabled. ConnectWise disabled three more in cloud environments and the marketplace and advises partners to do the same.
 checklist:
-- title: Verify and disable the five extensions
-  hint: Check Labtech Plus, RMM Plus, RMM+, RMM Plus Password Link and RMM+ Password Link. Preserve their installation and activity records. On-premises partners must act on their own installs. Keep the extensions disabled pending further guidance.
+- title: Verify and disable the listed extensions
+  hint: Check Labtech Plus, RMM Plus, RMM+, RMM Plus Password Link and RMM+ Password Link. Also disable ITBoost Integration, RepairShopr Integration and Guest Session Starter per the latest guidance. Preserve their installation and activity records. On-premises partners must act on their own installs. Keep the extensions disabled pending further guidance.
 - title: Use separate tooling and secure administrative access
   hint: Avoid interactive ScreenConnect sessions to suspected hosts. Use EDR live response or another trusted out-of-band tool. Investigate technician workstations that already connected. From a clean device, revoke ScreenConnect, browser and identity-provider sessions, rotate affected credentials and enforce MFA.
 - title: Preserve evidence and contain affected devices
@@ -81,6 +84,10 @@ sources:
 - name: ConnectWise September 8 ScreenConnect bulletin
   url: https://www.connectwise.com/company/trust/security-bulletins/2026-09-08-screenconnect-bulletin
   says: Documents the client patch and interim file-transfer permission controls.
+  primary: true
+- name: ConnectWise November 13 investigation update
+  url: https://www.connectwise.com/company/trust/advisories
+  says: Reports on-premises activity and three more precautionary extension disablements.
   primary: true
 ---
 
@@ -165,3 +172,5 @@ deda7c30d798a19b6699a45fbcba503cf778594df9163c61c2f96bb2d2b9fb45  SCKit/Recover-
 43b7a5e56f9e6c7b74e1ce2b7b5af63f383084625fcc2d3a5985fa1059e2db95  Run-Lateral-Full.bat
 50659748723e906c8b3d3c0386bd4cf692f693a3e23639398c1a14d0c31fed61  runnew.cmd
 ```
+
+**November 13, 21:15 UTC.** ConnectWise relays reports of additional targeting of on-premises environments that still had the previously listed extensions enabled. The vendor disabled ITBoost Integration, RepairShopr Integration and Guest Session Starter in cloud environments and its marketplace and advises all partners to disable them. The expanded list is precautionary. ConnectWise has yet to confirm that those extensions provided initial access. Update every technician client and disable the extensions to address their separate risks.

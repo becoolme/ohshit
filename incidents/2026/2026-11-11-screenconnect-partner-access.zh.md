@@ -1,7 +1,7 @@
 ---
-title: ScreenConnect 合作伙伴环境遭攻击，厂商停用五款扩展
-summary: ConnectWise 预防性停用了约 400 个合作伙伴环境中的五款第三方扩展。Huntress 在 48 家组织的至少 288 台终端观察到非授权 ScreenConnect 部署。初始访问方式仍在调查。
-splash: ScreenConnect 合作伙伴及受管理的 Windows 终端。无论是否安装所列五款扩展，均应核查部署。
+title: ScreenConnect 合作伙伴环境遭攻击，厂商扩大扩展停用范围
+summary: 接获自托管环境出现攻击的报告后，ConnectWise 新增三款建议停用的扩展。厂商先前已在约 400 个环境停用五款扩展。Huntress 在 48 个组织的至少 288 个端点发现恶意部署。入侵入口仍在调查。
+splash: ScreenConnect 合作伙伴及受管理的 Windows 端点。无论是否使用所列扩展，都应核查部署。
 wipe: 保持五款扩展停用，将技术人员客户端更新至 26.6.5 或更高版本，从可信设备吊销会话，并通过带外工具调查。
 inTheWildNote: Huntress 在受管理终端观察到非授权运行命令及非授权客户端。
 cves:
@@ -33,9 +33,12 @@ timeline:
 - date: 11月12日 18:45 UTC
   title: ConnectWise 公布扩展 CVE 并确认技术人员客户端的防护措施
   body: 厂商公布 RMM+ 的 CVE-2026-127063，并确认 26.6.5 或更高版本的技术人员客户端可阻断 SCKit 尝试从受感染终端传播。初始入口仍在调查。
+- date: 11月13日 21:15 UTC
+  title: ConnectWise 通报针对自托管环境的活动并扩大停用范围
+  body: 原五款扩展应继续停用。厂商另将三款扩展从云环境及市场停用，建议所有合作伙伴同样处理。
 checklist:
-- title: 核验并停用五款扩展
-  hint: 核查 Labtech Plus、RMM Plus、RMM+、RMM Plus Password Link 和 RMM+ Password Link。保留安装及活动记录。本地部署合作伙伴须自行停用，后续指引发布前保持停用。
+- title: 核查并停用所列扩展
+  hint: 检查 Labtech Plus、RMM Plus、RMM+、RMM Plus Password Link 和 RMM+ Password Link。按厂商最新指引，再检查并停用 ITBoost Integration、RepairShopr Integration 和 Guest Session Starter。保留安装及活动记录。自托管合作伙伴须自行执行，等待厂商进一步指引。
 - title: 使用独立工具并保护管理访问
   hint: 避免通过 ScreenConnect 交互连接疑似失陷主机。改用 EDR 实时响应或其他可信带外工具。调查已连接过的技术人员工作站。从干净设备吊销 ScreenConnect、浏览器及身份提供商会话，轮换受影响凭据，并启用 MFA。
 - title: 保留证据并遏制受影响设备
@@ -57,6 +60,8 @@ sources:
   says: 说明默认密钥前提、API 暴露及停用指引。
 - name: ConnectWise 9 月 8 日 ScreenConnect 公告
   says: 说明客户端补丁与文件传输权限的临时控制措施。
+- name: ConnectWise 11 月 13 日调查更新
+  says: 通报自托管环境出现更多活动，新增三款作为预防措施停用的扩展。
 ---
 
 ConnectWise 称这些扩展可能与攻击有关。约 400 个环境装有至少一款扩展。厂商尚未确定实际失陷环境数量和初始入口。公司正在调查攻击者是否利用扩展部署额外远程访问，以及交互连接是否使技术人员工作站暴露。停用扩展属于遏制措施，仍需排查持久化。本事件与 [Cloud Backup 事件](/zh/incidents/connectwise-cloud-backup/)不同。
@@ -140,3 +145,5 @@ deda7c30d798a19b6699a45fbcba503cf778594df9163c61c2f96bb2d2b9fb45  SCKit/Recover-
 43b7a5e56f9e6c7b74e1ce2b7b5af63f383084625fcc2d3a5985fa1059e2db95  Run-Lateral-Full.bat
 50659748723e906c8b3d3c0386bd4cf692f693a3e23639398c1a14d0c31fed61  runnew.cmd
 ```
+
+**11 月 13 日 21:15 UTC。** ConnectWise 转述研究人员在仍启用先前所列扩展的自托管环境中发现的更多攻击活动。厂商在云环境及扩展市场停用了 ITBoost Integration、RepairShopr Integration 和 Guest Session Starter，并建议所有合作伙伴停用。新增名单属于预防措施，厂商尚未确认这些扩展是入侵入口。更新每台技术人员客户端和停用扩展是两项各自需要执行的措施。
