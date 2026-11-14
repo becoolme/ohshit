@@ -15,10 +15,10 @@ timeline:
     title: Amicus Lex informs the startup program agency
     body: The Korea Institute of Startup and Entrepreneurship Development works with the operator to identify affected users and data.
   - date: Nov 13, 2026
-    title: Affected users are notified and the ministry discloses the breach
+    title: Operator sends individual notices and the ministry discloses the breach
     body: The operator sends individual notices. The ministry and startup agency separately send guidance to affected participants.
   - date: Nov 14, 2026
-    title: Ministry publishes the overall count and planned oversight
+    title: Ministry posts its briefing on the policy portal
     body: The ministry confirms that 818 participants are included in the total of 20,028 and says it will continue checking suppliers’ access and data retention practices.
 checklist:
   - title: Verify any breach notice independently
@@ -35,6 +35,10 @@ sources:
   - name: Kyunghyang Shinmun
     url: https://www.khan.co.kr/en/article/202611131742007
     says: Reports the ministry’s November 13 disclosure.
+  - name: Ministry press briefing PDF
+    url: https://www.korea.kr/common/download.do?fileId=198590199&tblKey=PMN
+    primary: true
+    says: Official briefing document describing the scope, notices and response.
 ---
 
 Amicus Lex operates LawForm on its own systems. It was one of 50 AI solution providers for the second round of South Korea’s startup support program. The ministry says the attacker obtained users’ names, phone numbers and email addresses from the operator’s systems. The 818 program participants are part of the 20,028 affected users.
