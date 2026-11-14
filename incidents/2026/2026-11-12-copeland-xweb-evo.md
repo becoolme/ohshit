@@ -89,9 +89,9 @@ checklist:
   - title: Remove direct access to the controller
     hint: Work with facilities staff and the refrigeration contractor. Identify EVO model and firmware from inventory or its management console. Remove public port forwards and restrict inbound and outbound traffic on a dedicated network. Allow HTTPS management and necessary SSH access only from approved hosts via controlled remote access. Verify alarms and refrigeration monitoring still function.
   - title: Hunt for the requests recorded by VulnCheck
-    hint: Search firewall, proxy and device logs for 202.61.138.117 (AS152194), unauthenticated POST to config.lua with action=set, and 177.4.12.11 (AS140227), unauthenticated GET to /cgi-bin/xwconsole.cgi with sh=id and User-Agent Mozilla/5.0. See the research report for both canary detection rules. Compare /etc/xwebconfig.json with a trusted baseline and check for unexpected administrator sessions, SSH enablement and defrost or alarm changes. A match alone does not prove compromise.
+    hint: Search firewall, proxy and device logs for 202.61.138.117 (AS152194), unauthenticated POST to config.lua with action=set, and 177.4.12.11 (AS140227), unauthenticated GET to /cgi-bin/xwconsole.cgi with sh=id and User-Agent Mozilla/5.0. The canary rules are VULNCHECK CVE-2026-124014 Copeland XWEB EVO Unauthenticated config.lua Configuration Write Attempt and VULNCHECK CVE-2026-124010 Copeland XWEB EVO xwconsole.cgi Unauthenticated Root Command Execution Attempt. Compare /etc/xwebconfig.json with a trusted baseline and check for unexpected administrator sessions, SSH enablement and defrost or alarm changes. A match alone does not prove compromise.
   - title: Recover and replace affected EVO devices
-    hint: Preserve available logs and settings. If compromise is suspected, coordinate safe isolation and restoration from a known-good configuration with the refrigeration contractor. Rotate operator and remote-access credentials from a clean system. Copeland recommends moving to a supported XWEB PRO model. Verify current firmware and advisories for the replacement model before reconnecting it.
+    hint: Preserve available logs and settings. If compromise is suspected, coordinate safe isolation with the refrigeration contractor. Follow vendor guidance to recover with known-good firmware and configuration or replace the device. Rotate operator and remote-access credentials from a clean system. Copeland recommends moving to a supported XWEB PRO model. Verify current firmware and advisories for the replacement model before reconnecting it.
 sources:
   - name: VulnCheck original XWEB EVO research
     url: https://www.vulncheck.com/blog/copeland-xweb-evo-unauthenticated-root
@@ -100,6 +100,10 @@ sources:
   - name: VulnCheck CNA record for CVE-2026-124014
     url: https://cveawg.mitre.org/api/cve/CVE-2026-124014
     says: Lists 4.3.0 through 5.8.8 as affected by configuration write.
+    primary: true
+  - name: VulnCheck CNA record for CVE-2026-124015
+    url: https://cveawg.mitre.org/api/cve/CVE-2026-124015
+    says: Lists 5.6.2 through 5.8.8 as affected by password-reset bypass.
     primary: true
   - name: Copeland XWEB EVO end-of-support bulletin
     url: https://webapps.copeland.com/dixell/Content/Pages/AdvertisingMaterials/ProductNews/XWEB%20EVO%20EoS%20-%20Product_Bulletin_March_2026.pdf
@@ -111,6 +115,6 @@ sources:
     primary: true
 ---
 
-A reachable legacy XWEB EVO management interface can expose configuration writes or root command execution without an account. On firmware up to 5.8.8, the batch also includes predictable credentials and routes to administrative or root access. The research narrative describes some Lua paths as legacy-only, while the CNA records list CVE-2026-124014 through 5.8.8 and CVE-2026-124015 from 5.6.2 through 5.8.8. Use the CNA ranges for triage and ask Copeland about the exact model and build. Version 5.6.2 removes the specific xwconsole.cgi exposure according to its advisory, while the batch still affects newer builds.
+A reachable legacy XWEB EVO management interface can expose configuration writes or root command execution without an account. On firmware up to 5.8.8, the batch also includes predictable credentials and routes to administrative or root access. The research narrative describes some Lua paths as legacy-only, while the CNA records list CVE-2026-124008, CVE-2026-124009, CVE-2026-124014 and CVE-2026-124015 through 5.8.8. The published range for CVE-2026-124015 starts at 5.6.2. Use the CNA ranges for triage and ask Copeland about the exact model and build. Version 5.6.2 removes the specific xwconsole.cgi exposure according to its advisory, while the batch still affects newer builds.
 
 VulnCheck describes opportunistic traffic against its canaries. This establishes attempts, while the number of compromised production units and any operational damage remain unknown. CERT-FR previously named Copeland and Dixell XWEB among controllers compromised in the [refrigeration attacks](/incidents/supermarket-refrigeration-wave/). The November probes do not identify which vulnerabilities were used in that operation.
