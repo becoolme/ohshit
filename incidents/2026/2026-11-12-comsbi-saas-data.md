@@ -1,0 +1,62 @@
+---
+title: Stolen Sonicmoov support credentials expose customer data in COMSBI SaaS
+summary: Sonicmoov says an attacker used internal support accounts with access to multiple customers of COMSBI SaaS, a LINE integration service. The attacker obtained customer data and also accessed the cloud environment, taking configuration data and credentials. The vendor is rotating integration credentials.
+splash: Organizations using the affected COMSBI SaaS tenants, their end users and followers of connected LINE Official Accounts.
+wipe: Confirm tenant scope and credential rotation with Sonicmoov. Review LINE activity and verify unexpected messages through a known channel.
+tags:
+- SaaS
+- LINE
+- Data breach
+date: '2026-11-12'
+level: 4
+inTheWild: 'yes'
+timeline:
+- date: Nov 9–10, 2026
+  title: Internal accounts are used to obtain tenant data
+  body: Sonicmoov says it detected abnormal cloud activity on November 10, blocked the abused permissions and attack traffic, reset internal passwords and forced logouts.
+- date: Nov 12, 2026
+  title: Sonicmoov discloses the SaaS compromise
+  body: The company confirms exfiltration and says LINE integration credential rotation is in progress. The SaaS remains available.
+- date: Nov 13, 2026
+  title: Tokyo Tatemono and Human Adjust disclose their scope
+  body: Tokyo Tatemono confirms exposure involving up to 490 people. Human Adjust reports two potential exposure categories, up to 58,510 service users and up to 116,518 LINE followers.
+- date: Nov 14, 2026
+  title: Keihan Holdings reports scope across four subsidiaries
+  body: The group lists potentially affected LINE followers and other customer data by account and warns that counts can overlap.
+checklist:
+- title: Confirm exposure and containment for your tenant
+  hint: Use support@sonicmoov.com or a known Sonicmoov support channel. Ask which tenant data and integrations were involved, whether vendor sessions and cloud permissions were revoked, and which integration credentials have been replaced.
+- title: Check connected LINE Official Accounts
+  hint: Coordinate credential reissue and invalidation with Sonicmoov for affected integrations. Verify that only expected credentials work, review outbound messages and integration changes, and preserve access and delivery logs. Notify affected users through established channels.
+- title: Verify messages through a channel you already trust
+  hint: If you follow an affected LINE account or receive a notice, verify unusual messages, calls, links or attachments with the organization using a known contact. Sonicmoov says it will not ask for your password or credentials.
+sources:
+- name: Sonicmoov SaaS incident notice
+  says: Confirms the entry path, affected data categories, containment and ongoing credential rotation.
+  url: https://sonicmoov.com/news/5ttj9ndzh
+  primary: true
+- name: Tokyo Tatemono customer notice
+  says: Confirms exposure and gives the current upper bound for its Nihonbashi building workers LINE account.
+  url: https://tatemono.com/news/images/8e3fa062877536ef406dc45520e09dc9.pdf
+  primary: true
+- name: Human Adjust disclosure
+  says: Lists separate upper bounds for service users and followers.
+  url: https://human-adjust.co.jp/system/wp-content/uploads/2026/11/2bc5fe7b03948188b21ef5e120684a70.pdf
+  primary: true
+- name: Sonicmoov Enterprise Infrastructure follow-up
+  says: Describes a separate event and its credential response.
+  url: https://sonicmoov.com/news/t_ujy0ugk
+  primary: true
+- name: Keihan Holdings November 14 customer notice
+  says: Lists affected LINE accounts, upper bounds by data category and possible double counting.
+  url: https://www.keihan.co.jp/corporate/info/release/assets/261114_keihan-holdings.pdf
+  primary: true
+---
+
+The compromised Sonicmoov accounts could administer multiple customers. How the attacker obtained the credentials remains under investigation. Sonicmoov says affected fields varied by customer and included names, phone numbers, email addresses, postal addresses, birth dates and gender. LINE follower data included display names, profile images, status messages and system-assigned LINE user IDs. The SaaS does not store credit card data.
+
+Tokyo Tatemono’s notices apply to its Nihonbashi building workers account. Human Adjust’s two figures are preliminary upper bounds. Overlap is unknown and Sonicmoov has published no aggregate affected count.
+
+Sonicmoov says this compromise affected the SaaS environment. Its separately hosted Enterprise Infrastructure had its own earlier incident and credential response. For the SaaS, Sonicmoov says it restricted bulk data access and plans mandatory two-step authentication and source restrictions for the admin interface. Its notice does not confirm completion of every LINE credential rotation.
+
+Keihan Holdings published upper bounds by account. Potential exposure at Keihan Railway’s fan account covers 26,914 follower profiles. Kyoto Tower Sando lists 90,550 follower profiles and nine people’s names or addresses. Hirakata Mall lists 46,957 follower profiles and 35,025 people’s birth dates or gender. Keihan Department Store lists 51,223 follower profiles and 28,000 people’s other personal details. THE THOUSAND KYOTO and Kyoto Century Hotel together list 8,742 follower profiles and 1,298 people’s other personal details. Keihan says the counts can overlap both across accounts and between data categories within an account.
