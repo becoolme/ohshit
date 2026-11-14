@@ -42,7 +42,7 @@ sources:
   url: https://www.n-able.com/it/blog/update-on-n-central-2026-4-hf2-and-ongoing-security-response
   primary: true
 - name: N-able Vulnerability Remediation Update
-  url: https://www.n-able.com/fr/blog/n-able-vulnerability-remediation-update
+  url: https://www.n-able.com/blog/n-able-vulnerability-remediation-update
   primary: true
   says: Identifies the seven CVEs addressed in HF2 and the planned HF3 scope for the November 9 disclosure.
 cves:
@@ -74,4 +74,4 @@ fixed:
 
 N-able says HF2 addresses all unauthenticated paths it had identified. The remaining disclosed paths require an account, often with elevated access, or other conditions. The company lists CVE-2026-125883, CVE-2026-125878 through CVE-2026-125882, and CVE-2026-91000 in its November 11 response. Consult the vendor for per-flaw status as follow-up patches are published. Scanning of public PoCs supports L3. The vendor has not established exploitation in an individual customer environment in this update.
 
-On November 13, N-able confirmed that HF2 addresses the seven listed CVEs. The vendor says remaining data exposure issues from the first disclosure require authenticated access, with some requiring Product Admin privileges. It says the forthcoming HF3 will address flaws reachable with ordinary authenticated access. The notice gives no fixed build for the issues requiring Product Admin privileges. See [the new chains tested on HF2](/incidents/ncentral-hf2-attack-chains/) for their separate prerequisites.
+On November 13, N-able confirmed that HF2 addresses the seven listed CVEs. The vendor says remaining data exposure issues from the first disclosure require authenticated access with two-factor authentication, with some also requiring Product Admin privileges. It says the forthcoming HF3 will address flaws reachable with ordinary authenticated access. The notice gives no fixed build for the issues requiring Product Admin privileges. See [the new chains tested on HF2](/incidents/ncentral-hf2-attack-chains/) for their separate prerequisites.
