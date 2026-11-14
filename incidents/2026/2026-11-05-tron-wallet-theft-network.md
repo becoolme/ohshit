@@ -76,3 +76,28 @@ SEAL’s November 4 report records six iOS wallet-compromise reports and about $
 **November 12 revised analysis.** Bitquery linked 55 collectors to its fee-wallet cluster, including 12 added after November 4. It estimates at least 5.42 million USDT taken from 454 TRON addresses from October 5 to November 11, of which 1.36 million USDT was taken after November 4. The new period counts USDT and excludes TRX losses. Its last observed fee-wallet payment for the campaign was at 15:43 UTC on November 11. The November 7 transfer of roughly 601,752 USDT appears in both Bitquery’s revised total and PublicAML’s November 5–7 report. Keep the totals separate to avoid double counting. The update provides further transaction evidence while leaving device, app and attack attribution unresolved for most affected addresses.
 
 [Bitquery’s updated address and transaction record](https://www.bitquery.io/investigations/iphone-wallet-drain-tron-usdt) adds the November 7 victim, the collector, the transaction hash and an Ethereum recipient reached over USDT0. Use the role labels when comparing a transaction with the published evidence.
+
+| Address or transaction hash | Role in Bitquery’s report |
+| --- | --- |
+| `TUYFAa8hHjeEW6bPqBJ4v3RjQR2uKM1Svk` | Fee wallet, first money 5 October |
+| `TNJPXRWEptdSzbC1pYGp8suyTao4qddJe6` | Collector in the cpa.rip report |
+| `TEDjNzXWsTrRcHmRnGPPqGRmqCmrA1vvGZ` | Biggest collector, 974,487 USDT |
+| `TXgDHFfNia3PmJKM5u5U35ePDku7TUV6Xo` | First collector, 5 October |
+| `TEdbrs5teWWyzAtP639fRAX2yKNPCSMqJe` | Last collector, 3 to 4 November |
+| `FF1625CB54E87A93E5051C53EB8999AEDE30C81E7B7FA5DA474681E44D085967` | The 519,093 USDT drain |
+| `TWUPpTF63yevhZ55eoN6CbDodZzgp856n4` | Shared wallet, JustLend route |
+| `TZ7soEw5nn5mvC9k5pNszB74261Hjotfbf` | Where that trail stops |
+| `TMXawuHt4RoYUQ9pynNsyzqpTxxxLKZHsY` | CCE Cash hot wallet (our label) |
+| `TX5XiRXdyz7sdFwF5mnhT1QoGCpbkncpke` | NEAR Intents hot wallet (our label) |
+| `TXsDYB9ovFEFg4cja6gn1t1tpmrnSbYhHA` | Butter Network bridge (our label) |
+| `TU4vEruvZwLLkSfV9bNw12EJTPvNr7Pvaa` | Bybit hot wallet (our label) |
+| `TJtEySoVuAkk3xwXghLgrUFVKSMq9JkE18` | HitBTC hot wallet (our label) |
+| `TSUYvQ5tdd3DijCD1uGunGLpftHuSZ12sQ` | USDD mint contract (our label) |
+| `0x007147f598748749486041f5798b0b1379e13097` | Ethereum hub, paid a deBridge receiver |
+| `0x3579c70e5d8cfbb0f5303029a1eb8fb903360ea5` | Ethereum and BNB Chain collector |
+| `0xbece605be3abdfa57fc36f52bdb139a52e22c93d` | deBridge receiver on Ethereum |
+| `TS9BPC4zvtxbQNRHdahnQ3GqQajdo5BkBN` | First new TRON address after LI.FI |
+| `TXPryvpXUqruHnx4hbgXrDYKN8wTkfMq73` | Wallet held since 2021, drained 7 November |
+| `TJCY7r7shYmy3yWncGB9MvwWa8QS6du2C5` | Biggest new collector, 7 November |
+| `0cd0f9f1a5526f222f74fd3c50879e260b78b2c61c90bb5bbe58d5a753ad618b` | The 601,752 USDT theft |
+| `0x774a59948c17dc159727601c411113b838e1bbee` | Ethereum wallet that got it over USDT0 |

@@ -52,3 +52,28 @@ SEAL 于 11 月 4 日发布报告，记录 10 月 28 日至 11 月 3 日期间�
 **11 月 12 日修订分析。** Bitquery 将 55 个归集地址与手续费钱包关联，其中 12 个在 11 月 4 日之后新增。它估算 10 月 5 日至 11 月 11 日，至少 542 万 USDT 从 454 个 TRON 地址被转走，其中 136 万 USDT 在 11 月 4 日之后转出。新增时段统计 USDT，未计入 TRX 损失。该机构最后一次观察到手续费钱包为这批盗币支付手续费是在 11 月 11 日 15:43 UTC。11 月 7 日约 601,752 USDT 的转账同时出现在 Bitquery 修订总额和 PublicAML 11 月 5 日至 7 日的报告中，两者应分开保留以免重复计算。更新补充了交易证据，多数受影响地址所用设备、应用及攻击成因仍未核实。
 
 [Bitquery 更新后的地址及交易记录](https://www.bitquery.io/investigations/iphone-wallet-drain-tron-usdt)补充了 11 月 7 日受害地址、归集地址、交易哈希和经 USDT0 收款的以太坊地址。比对交易和公开证据时，请核对各地址角色。
+
+| 地址或交易哈希 | Bitquery 标注的角色 |
+| --- | --- |
+| `TUYFAa8hHjeEW6bPqBJ4v3RjQR2uKM1Svk` | 手续费钱包，10 月 5 日首次收到资金 |
+| `TNJPXRWEptdSzbC1pYGp8suyTao4qddJe6` | cpa.rip 案例的归集地址 |
+| `TEDjNzXWsTrRcHmRnGPPqGRmqCmrA1vvGZ` | 最大归集地址，974,487 USDT |
+| `TXgDHFfNia3PmJKM5u5U35ePDku7TUV6Xo` | 10 月 5 日首个归集地址 |
+| `TEdbrs5teWWyzAtP639fRAX2yKNPCSMqJe` | 11 月 3 日至 4 日最后一个归集地址 |
+| `FF1625CB54E87A93E5051C53EB8999AEDE30C81E7B7FA5DA474681E44D085967` | 519,093 USDT 的盗币交易 |
+| `TWUPpTF63yevhZ55eoN6CbDodZzgp856n4` | 共用钱包，JustLend 路径 |
+| `TZ7soEw5nn5mvC9k5pNszB74261Hjotfbf` | JustLend 追踪终点 |
+| `TMXawuHt4RoYUQ9pynNsyzqpTxxxLKZHsY` | CCE Cash 热钱包，研究者标签 |
+| `TX5XiRXdyz7sdFwF5mnhT1QoGCpbkncpke` | NEAR Intents 热钱包，研究者标签 |
+| `TXsDYB9ovFEFg4cja6gn1t1tpmrnSbYhHA` | Butter Network 跨链桥，研究者标签 |
+| `TU4vEruvZwLLkSfV9bNw12EJTPvNr7Pvaa` | Bybit 热钱包，研究者标签 |
+| `TJtEySoVuAkk3xwXghLgrUFVKSMq9JkE18` | HitBTC 热钱包，研究者标签 |
+| `TSUYvQ5tdd3DijCD1uGunGLpftHuSZ12sQ` | USDD 铸币合约，研究者标签 |
+| `0x007147f598748749486041f5798b0b1379e13097` | 向 deBridge 接收地址付款的以太坊中枢 |
+| `0x3579c70e5d8cfbb0f5303029a1eb8fb903360ea5` | 以太坊和 BNB Chain 归集地址 |
+| `0xbece605be3abdfa57fc36f52bdb139a52e22c93d` | 以太坊上的 deBridge 接收地址 |
+| `TS9BPC4zvtxbQNRHdahnQ3GqQajdo5BkBN` | 经 LI.FI 后的首个新 TRON 地址 |
+| `TXPryvpXUqruHnx4hbgXrDYKN8wTkfMq73` | 2021 年启用、11 月 7 日被清空的钱包 |
+| `TJCY7r7shYmy3yWncGB9MvwWa8QS6du2C5` | 11 月 7 日最大的新增归集地址 |
+| `0cd0f9f1a5526f222f74fd3c50879e260b78b2c61c90bb5bbe58d5a753ad618b` | 约 601,752 USDT 的盗币交易 |
+| `0x774a59948c17dc159727601c411113b838e1bbee` | 经 USDT0 收款的以太坊钱包 |
