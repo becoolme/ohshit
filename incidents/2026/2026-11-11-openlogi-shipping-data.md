@@ -6,7 +6,7 @@ wipe: Verify delivery messages through the seller or carrier. Merchants should r
 inTheWildNote: OPENLOGI confirms unauthorized access and extraction of shipping data.
 level: 4
 date: '2026-11-11'
-updated: 2026-11-12
+updated: 2026-11-14
 tags:
 - OPENLOGI
 - logistics
@@ -25,6 +25,12 @@ timeline:
 - date: Nov 11, 2026
   title: Nittobo identifies potentially affected nekoPro orders
   body: The merchant says customers who bought its nekoPro urine test kit through its online store from April 8 to November 8 may be affected.
+- date: Nov 12, 2026
+  title: United Arrows identifies two affected international storefronts
+  body: The notice names United Arrows Global Online and TABAYA United Arrows.
+- date: Nov 13, 2026
+  title: Brave group and TSI identify affected merchant records
+  body: Brave group confirms theft of group shipment data and lists potentially affected stores. TSI confirms that SMOKEY SUNDAY was affected.
 checklist:
 - title: Verify delivery messages independently
   hint: Use the order page or an established carrier channel to verify tracking, address changes and delivery fees. Ignore unsolicited links and attachments, and avoid providing credentials, personal details or payment in response.
@@ -51,6 +57,18 @@ sources:
   url: https://www.nittobo.co.jp/news/pdf/20261111_newsrelease.pdf
   primary: true
   says: Names the possibly affected orders, fields, customer contact and resumption of dispatch.
+- name: United Arrows customer notice
+  url: https://www.united-arrows.co.jp/news/16713/
+  primary: true
+  says: Names two affected international storefronts, the data categories and the customer contact.
+- name: Brave group customer notice
+  url: https://bravegroup.co.jp/news/12429/
+  primary: true
+  says: Confirms extraction of some group shipment data, lists potentially affected stores and reports its credential reset.
+- name: TSI Holdings customer notice
+  url: https://www.tsi-holdings.com/topics/topics_detail004919.html
+  primary: true
+  says: Confirms that SMOKEY SUNDAY customer data was included in the extraction.
 ---
 
 OPENLOGI says the extracted records include recipient names, addresses, phone numbers, email addresses where registered, and product details such as names and quantities. OPENLOGI does not store credit card numbers. The shipment request window identifies records under investigation. The provider has not published the number of affected records or people.
@@ -58,3 +76,5 @@ OPENLOGI says the extracted records include recipient names, addresses, phone nu
 HUMAN MADE says OPENLOGI blocked the attack source, restricted access from outside Japan and reset login sessions for all users. HUMAN MADE identifies only its CURRY UP brand as potentially affected and reports no unauthorized access to its own systems. SKIYAKI says some Bitfan shipping data it provided may be involved. The provider reported no known misuse as of November 11. Warehouse receipt and dispatch continued as usual, with some system operations affected by emergency maintenance. External specialists are investigating the entry route and scope.
 
 **Nittobo customer notice.** Nittobo says customers who bought the nekoPro urine test kit on its online store between April 8 and November 8 may have had names, addresses, email addresses, phone numbers and product information exposed. It excludes credit card information and reports no known misuse. Nittobo says work to fix the affected system was complete and dispatch had resumed for these orders. It plans individual notifications as it identifies potentially affected customers. For a scope check, contact Nittobo at nekopro-contact@nittobogrp.com.
+
+**Additional merchant notices.** United Arrows confirmed exposure involving its international storefronts United Arrows Global Online and TABAYA United Arrows. It excluded its domestic official online store. Customers can contact privacy-support@united-arrows.co.jp. Brave group confirmed extraction of some group shipment data, reset credentials and named 11 potentially affected stores in its notice. TSI Holdings confirmed exposure of SMOKEY SUNDAY orders shipped through OPENLOGI and excluded the rest of its brands and online stores. The three notices did not give a count of affected people.
