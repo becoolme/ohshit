@@ -23,7 +23,7 @@ checklist:
   - title: Check the card and contact its issuer
     hint: Review statements for unfamiliar charges and promptly report any to the issuer using the number on your card or its official app. Ask whether to lock or replace the card and set alerts for new transactions.
   - title: Use the support described in your notice
-    hint: Fandango offers recipients 24 months of IDX monitoring. If you received a notice, use its enrollment instructions and code by February 13, 2027. Verify messages about your ticket purchases or the incident before sharing information.
+    hint: Fandango offers recipients 24 months of IDX monitoring. If you received a notice, follow Exhibit A and use its enrollment code by February 13, 2027. The published notice lists 1-866-200-0940 for questions and enrollment. Verify messages about your ticket purchases or the incident before sharing information.
 sources:
   - name: Fandango customer notice filed in California
     url: https://oag.ca.gov/system/files/Fandango%20-%20Individual%20Notice%20Template_Redacted.pdf
