@@ -7,7 +7,7 @@ summary: Pool Party says an attacker manipulated recorded positions in pool snap
 splash: Liquidity providers in the affected Pool Party pools on Arbitrum and Base.
 wipe: Verify your positions and transaction history through official Pool Party channels. Keep the records for the team’s forthcoming response plan.
 inTheWild: 'yes'
-inTheWildNote: The Pool Party team reports that an attacker exploited the snapshot contract and withdrew funds from 15 pools.
+inTheWildNote: Pool Party reports exploitation of its snapshot contract across 15 pools.
 timeline:
   - date: Nov 13, 01:34–03:38 UTC
     title: Attacker drains 15 pools
