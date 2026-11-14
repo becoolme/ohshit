@@ -4,7 +4,7 @@ tags: [DeFi, 智能合约, Arbitrum, Base]
 summary: Pool Party 称攻击者篡改资金池快照合约中的仓位记录，清空 Arbitrum 上 12 个资金池和 Base 上 3 个资金池。团队估计损失约 21.5 万美元，并称已在公告列出的四条链上部署修复。
 splash: Arbitrum 和 Base 上受影响 Pool Party 资金池的流动性提供者。
 wipe: 通过 Pool Party 官方渠道核对仓位和交易记录，保留证据以便按团队后续公布的方案处理。
-inTheWildNote: Pool Party 团队报告，攻击者利用快照合约漏洞从 15 个资金池提取了资金。
+inTheWildNote: Pool Party 报告快照合约漏洞遭利用，涉及 15 个资金池。
 timeline:
   - date: 11 月 13 日 01:34 至 03:38 UTC
     title: 攻击者清空 15 个资金池
