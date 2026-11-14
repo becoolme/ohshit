@@ -24,7 +24,7 @@ timeline:
     body: The earlier bounty sender used a message signed Pool Party team to ask about a transfer of around 115,056.36 DAI and renew the return offer.
 checklist:
   - title: Record any affected positions
-    hint: Check your pool addresses, chain and balances against your own on-chain history. Save deposit and withdrawal transaction hashes and share them through independently verified Pool Party support if requested.
+    hint: Check your pool addresses, chain and balances against your own on-chain history. Save deposit and withdrawal transaction hashes. Compare the November 14 message using the recipient address and both hashes below. A match alone does not establish ownership or compromise. Share your records through independently verified Pool Party support if requested.
   - title: Verify official recovery instructions
     hint: The team said it would publish a postmortem and a plan for affected users. Verify future instructions through the project’s known channels before connecting a wallet or signing anything. Keep seed phrases private.
   - title: Verify the reported fix before adding funds
@@ -41,10 +41,10 @@ sources:
     url: https://arbiscan.io/tx/0x991c1766f529d44de7700e06b7e219cd07612faae76b1c64eedfc6dcf195f950
     primary: true
     says: Records the send time, recipient and return offer signed Pool Party team.
-  - name: Ethereum follow-up message and public JSON-RPC verification
-    url: https://etherscan.io/tx/0x7dee32d62b118e29865d1886b2dda5e64ba8594c6415195201434459ff431bc5
+  - name: Blockscout transaction data for the Ethereum follow-up
+    url: https://eth.blockscout.com/api/v2/transactions/0x7dee32d62b118e29865d1886b2dda5e64ba8594c6415195201434459ff431bc5
     primary: true
-    says: The Ethereum transaction carries the signed message. The public RPC supplied its input and the DAI transfer log after explorer access failed.
+    says: Provides the time, sender, recipient and transaction input. Separate token transfer logs corroborate the amount and receipt time.
 ---
 
 Pool Party says a flaw in the snapshot contract that records user positions let an attacker alter their recorded position. The team describes a 10 USDC deposit followed by withdrawal of the pool’s funds. It reports no losses on Polygon or Robinhood Chain and says the snapshot fix is live on all four chains. The statement provides no deployment transactions or independent verification.
