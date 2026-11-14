@@ -24,7 +24,7 @@ checklist:
   - title: Verify any breach notice independently
     hint: Open LawForm or the startup program through a known address and use its existing support channel. Ask whether your account is in the affected set if you have yet to receive an individual notice.
   - title: Watch for phishing using your contact details
-    hint: Confirm messages about startup funding or LawForm activity through a known support channel before opening links or sharing credentials or one-time codes. Report suspicious messages to the relevant service.
+    hint: Verify unexpected messages about startup funding or LawForm through a known support channel. Avoid links in suspicious messages and keep credentials and one-time codes private. Report suspicious messages to the relevant service.
   - title: Check how your program integrations handle contact data
     hint: Review account provisioning, permissions and stored participant data at each provider. Remove access and delete copies when their retention period ends, and preserve relevant access records if you are investigating exposure.
 sources:
