@@ -17,7 +17,7 @@ timeline:
   title: Trial variants appear in public repositories
   body: Mate Security later traces 27 trial commits across seven repositories.
 - date: Nov 10, 2026
-  title: StepSecurity dates the start of the campaign
+  title: StepSecurity dates the start of the November wave
   body: Stolen GitHub tokens are used to probe repositories and push malicious changes.
 - date: Nov 11, 12:30 UTC
   title: WebdriverIO contributor publicly documents two malicious bot commits
@@ -90,7 +90,7 @@ Nextcloud Docker’s run 2675 executed the injected commit on a self-hosted runn
 
 ### Release artifacts to check
 
-- Packagist `digitalelvis/neuronai-studio` **3.14.3** contains the script and npm postinstall hook. The hook can execute if npm installs dependencies in the package directory with lifecycle scripts enabled. Composer does not invoke it on its own. Mate Security also identifies **3.14.4**. Packagist flags **3.14.2**, **3.14.3** and **3.14.4** as malware; its flag alone does not establish that 3.14.2 contains this WFX payload. Block all three versions and verify the source and archive of any replacement before installing it.
+- Packagist `digitalelvis/neuronai-studio` **3.14.3** contains the script and npm postinstall hook. The hook can execute if npm installs dependencies in the package directory with lifecycle scripts enabled. Composer does not invoke it on its own. Mate Security also identifies **3.14.4**. This supersedes StepSecurity’s earlier rollback advice: Packagist flags **3.14.2**, **3.14.3** and **3.14.4** as malware; its flag alone does not establish that 3.14.2 contains this WFX payload. Block all three versions and verify the source and archive of any replacement before installing it.
 - Go module `github.com/onuragtas/redock` (formerly `github.com/onuragtas/docker-env`) **v1.0.278**, **v1.0.280** and **v1.0.282**, and `github.com/vkuznet/gocurl` **v0.0.0-20261111095532-8d5aad0cb0da**, contain the payload only in workflow files. Ordinary Go downloads and builds do not run workflows; triggering the affected workflow on an injected commit can run the payload. Check direct and transitive dependencies in `go.mod` and `go.sum` and replace affected versions with independently verified inputs. SafeDep identifies redock **v1.0.279**, **v1.0.281** and **v1.0.283** as clean reverts.
 - StepSecurity reports no affected WebdriverIO package release. Verify other releases produced between an injected commit and cleanup using clean source and build records.
 
@@ -118,6 +118,6 @@ SafeDep identified about 8,100 public repositories that received malicious commi
 
 ### Mate Security’s November 13 follow-up
 
-In a sample of 150 repositories, Mate found 115 missing runs. The immediately following revert run did not start a job in 82 of those 115 cases. A missing record cannot establish that the payload ran; treat a started revert job as a reason to investigate and rotate credentials in scope when execution is likely. Mate also found configurations set to forge passing checks in 16 repositories. That finding establishes configuration, not a forged result.
+In a sample of 150 repositories, Mate found 115 missing runs. The immediately following revert run did not start a job in 82 of those 115 cases. A missing record cannot establish that the payload ran; if the revert job started, treat the malicious run as likely to have started too and rotate the credentials it could read. If the revert did not start, continue looking for direct execution evidence in other runs, installs and runner logs. Mate also found configurations set to forge passing checks in 16 repositories. That finding establishes configuration, not a forged result.
 
 The October trial samples use `45.61.182[.]54:8080/exfil` and `45.61.182[.]54:8081/exfil`. In AWS, look for GitHub OIDC `AssumeRoleWithWebIdentity` calls with `ci-<pid>` session names and chained `AssumeRole` calls with `wfx-<pid>` sessions. Correlate these with source, time, role trust changes and credentials created by the session.
