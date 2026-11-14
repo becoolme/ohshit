@@ -34,11 +34,12 @@ checklist:
 - title: 遏制可疑的 Apify 账户活动
   hint: 保全异常登录、Actor 运行、集成变更和 API 活动的记录。在官方控制台吊销或轮换已暴露或可疑的凭据，更新 CI 密钥、脚本及依赖服务，并用新凭据验证工作流。检查关联服务有无异常访问。
 - title: 限制 Apify 存储的访问权限
-  hint: 在 Apify 控制台打开 Settings，找到 General resource access 并选择 Restricted。检查依赖开放存储的工作流，确认获授权的调用方仍能读取所需资源。
+  hint: 在 Apify 控制台前往 Settings → Login & Privacy（组织账户为 Security & Privacy），将 General resource access 设为 Restricted。在各存储资源的分享设置中检查是否有覆盖默认值的权限，并用具备访问权限的有效令牌验证依赖工作流。
 - title: 重新连接 GitHub 私有仓库
   hint: 在 Apify 中打开从 GitHub 构建的 Actor，选择 Change provider，再选择 GitHub 并授权。每个账户和组织各操作一次。收到提示后重连其他集成，并验证定时任务。
 sources:
 - says: 官方披露的事件时间线、凭据滥用、OAuth 连接吊销、客户通知、令牌存储改动及限制存储访问的建议。
+- says: 说明控制台设置路径、单项资源权限覆盖规则及 API 身份验证要求。
 ---
 
 Apify 表示，未经授权的第三方进入了部分内部系统，并使用失陷的凭据取得部分账户凭据，随后访问相关账户。截至 11 月 12 日，Apify 已通知个人信息或存储数据遭访问的客户。各账户涉及哪些数据，以发给该客户的通知为准。公开通报尚未披露受影响客户数量和完整数据范围。
