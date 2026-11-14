@@ -51,4 +51,4 @@ SEAL 于 11 月 4 日发布报告，记录 10 月 28 日至 11 月 3 日期间�
 
 **11 月 12 日修订分析。** Bitquery 将 55 个归集地址与手续费钱包关联，其中 12 个在 11 月 4 日之后新增。它估算 10 月 5 日至 11 月 11 日，至少 542 万 USDT 从 454 个 TRON 地址被转走，其中 136 万 USDT 在 11 月 4 日之后转出。新增时段统计 USDT，未计入 TRX 损失。该机构最后一次观察到手续费钱包为这批盗币支付手续费是在 11 月 11 日 15:43 UTC。11 月 7 日约 601,752 USDT 的转账同时出现在 Bitquery 修订总额和 PublicAML 11 月 5 日至 7 日的报告中，两者应分开保留以免重复计算。更新补充了交易证据，多数受影响地址所用设备、应用及攻击成因仍未核实。
 
-[Bitquery 更新后的地址及交易记录](https://www.bitquery.io/investigations/iphone-wallet-drain-tron-usdt#addresses)补充了 11 月 7 日受害地址、归集地址、交易哈希和经 USDT0 收款的以太坊地址。比对交易和公开证据时，请核对各地址角色。
+[Bitquery 更新后的地址及交易记录](https://www.bitquery.io/investigations/iphone-wallet-drain-tron-usdt)补充了 11 月 7 日受害地址、归集地址、交易哈希和经 USDT0 收款的以太坊地址。比对交易和公开证据时，请核对各地址角色。
