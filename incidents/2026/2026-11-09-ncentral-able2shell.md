@@ -6,6 +6,7 @@ wipe: Keep on-premises servers off the internet until HF2 build 2026.4.1.26 is i
 inTheWildNote: N-able reports scanning linked to the PoC and no indications of hosted-server compromise.
 level: 3
 date: '2026-11-09'
+updated: '2026-11-14'
 tags:
 - N-able
 - N-central
@@ -21,13 +22,16 @@ timeline:
 - date: Nov 11, 2026
   title: N-able reports hosted servers back online
   body: N-able says it patched hosted servers and is preparing another hotfix.
+- date: Nov 13, 2026
+  title: N-able details authentication and permission fixes planned for HF3
+  body: The vendor plans tighter authentication and permission checks for flaws from the November 9 disclosure that require ordinary authenticated access.
 checklist:
 - title: Isolate and update the management server
   hint: Follow the vendor upgrade path for your deployed build. Keep on-premises N-central inaccessible from the internet until HF2 is installed and the build is verified. Hosted server upgrades are handled by N-able.
 - title: Upgrade Agents before Probes
   hint: Install the Agent packages first, verify the Patch Management Engine update pushed automatically, and then update Probes. Confirm Agent-to-Probe communication and functions such as offline patch caching.
 - title: Investigate possible exposure and track further fixes
-  hint: Preserve server access, authentication and endpoint activity logs. Review unexpected requests and changes with N-able support where exposure is suspected. Monitor the official status and hotfix notes for follow-up patches.
+  hint: Preserve server access, authentication and endpoint activity logs. Review unexpected requests and changes with N-able support where exposure is suspected. Watch for the HF3 release notes and verify the applicable builds and per-flaw fix status.
 sources:
 - name: N-able HF2 release notes
   says: Gives the server build, supported upgrade path and Agent/Probe compatibility requirements.
@@ -37,6 +41,10 @@ sources:
   says: Describes public PoCs, scanning, hosted recovery and remaining work.
   url: https://www.n-able.com/it/blog/update-on-n-central-2026-4-hf2-and-ongoing-security-response
   primary: true
+- name: N-able Vulnerability Remediation Update
+  url: https://www.n-able.com/fr/blog/n-able-vulnerability-remediation-update
+  primary: true
+  says: Identifies the seven CVEs addressed in HF2 and the planned HF3 scope for the November 9 disclosure.
 cves:
 - name: Multiple XXE issues
   description: Multiple XML external entity issues.
@@ -65,3 +73,5 @@ fixed:
 ---
 
 N-able says HF2 addresses all unauthenticated paths it had identified. The remaining disclosed paths require an account, often with elevated access, or other conditions. The company lists CVE-2026-125883, CVE-2026-125878 through CVE-2026-125882, and CVE-2026-91000 in its November 11 response. Consult the vendor for per-flaw status as follow-up patches are published. Scanning of public PoCs supports L3. The vendor has not established exploitation in an individual customer environment in this update.
+
+On November 13, N-able confirmed that HF2 addresses the seven listed CVEs. The vendor says remaining data exposure issues from the first disclosure require authenticated access, with some requiring Product Admin privileges. It says the forthcoming HF3 will address flaws reachable with ordinary authenticated access. The notice gives no fixed build for the issues requiring Product Admin privileges. See [the new chains tested on HF2](/incidents/ncentral-hf2-attack-chains/) for their separate prerequisites.
