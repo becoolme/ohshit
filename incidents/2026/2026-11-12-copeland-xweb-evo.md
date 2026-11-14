@@ -89,7 +89,7 @@ checklist:
   - title: Remove direct access to the controller
     hint: Work with facilities staff and the refrigeration contractor. Identify EVO model and firmware from inventory or its management console. Remove public port forwards and restrict inbound and outbound traffic on a dedicated network. Allow HTTPS management and necessary SSH access only from approved hosts via controlled remote access. Verify alarms and refrigeration monitoring still function.
   - title: Hunt for the requests recorded by VulnCheck
-    hint: Search firewall, proxy and device logs for 202.61.138.117 (AS152194), unauthenticated POST to config.lua with action=set, and 177.4.12.11 (AS140227), unauthenticated GET to /cgi-bin/xwconsole.cgi with sh=id and User-Agent Mozilla/5.0. The canary rules are VULNCHECK CVE-2026-124014 Copeland XWEB EVO Unauthenticated config.lua Configuration Write Attempt and VULNCHECK CVE-2026-124010 Copeland XWEB EVO xwconsole.cgi Unauthenticated Root Command Execution Attempt. Compare /etc/xwebconfig.json with a trusted baseline and check for unexpected administrator sessions, SSH enablement and defrost or alarm changes. A match alone does not prove compromise.
+    hint: Search firewall, proxy and device logs for 202.61.138.117 (AS152194), unauthenticated POST to config.lua with action=set, and 177.4.12.11 (AS140227), unauthenticated GET to /cgi-bin/xwconsole.cgi with a sh parameter. The observed GETs used sh=id and User-Agent Mozilla/5.0. The canary rules are VULNCHECK CVE-2026-124014 Copeland XWEB EVO Unauthenticated config.lua Configuration Write Attempt and VULNCHECK CVE-2026-124010 Copeland XWEB EVO xwconsole.cgi Unauthenticated Root Command Execution Attempt. Compare /etc/xwebconfig.json with a trusted baseline and check for unexpected administrator sessions, SSH enablement and defrost or alarm changes. A match alone does not prove compromise.
   - title: Recover and replace affected EVO devices
     hint: Preserve available logs and settings. If compromise is suspected, coordinate safe isolation with the refrigeration contractor. Follow vendor guidance to recover with known-good firmware and configuration or replace the device. Rotate operator and remote-access credentials from a clean system. Copeland recommends moving to a supported XWEB PRO model. Verify current firmware and advisories for the replacement model before reconnecting it.
 sources:
@@ -112,6 +112,10 @@ sources:
   - name: Copeland network security guidance
     url: https://webapps.copeland.com/Dixell/Content/Pages/Manuals/XWEB/SECURITYBESTPRACTICES/Product_Bulletin.pdf
     says: Advises removing internet access, filtering traffic and restricting SSH.
+    primary: true
+  - name: CERT-FR refrigeration controller alert
+    url: https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/
+    says: Documents earlier compromises of controllers including Copeland and Dixell XWEB, with safe restoration guidance.
     primary: true
 ---
 
