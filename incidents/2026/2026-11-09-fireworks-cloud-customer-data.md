@@ -6,7 +6,7 @@ wipe: Review vendor notices and exposed data. Revoke and rotate credentials incl
 inTheWildNote: Fireworks and Notion confirmed unauthorized access to affected customer data.
 level: 4
 date: '2026-11-09'
-updated: 2026-11-13
+updated: 2026-11-14
 tags:
 - AI
 - SaaS
@@ -31,6 +31,9 @@ timeline:
 - date: Nov 13, 2026
   title: Notion reports action on exposed API keys
   body: Notion says it revoked exposed Notion API keys on November 11 and reported exposed third-party keys to their issuers on November 12.
+- date: Nov 14, 2026
+  title: Sankei Shimbun reports a possible exposure and restores Sankei iD
+  body: The publisher paused its membership service on November 13 and restored it the next morning after safety checks.
 checklist:
 - title: Review the data named in Fireworks notices
   hint: Use your incident notice or the contact listed on the security bulletin. Identify affected datasets, model material, metadata or billing records. Revoke and rotate exposed secrets at their issuers and review associated activity.
@@ -55,6 +58,10 @@ sources:
   says: Identifies possible exposure in the customer’s own Notion AI records and describes notifications, excluded data and unaffected services.
   url: https://tdnet-pdf.kabutan.jp/20261112/140120261112577184.pdf
   primary: true
+- name: Sankei Shimbun November 14 incident notice
+  says: Connects the potential exposure to a contractor’s use of Notion and documents the temporary Sankei iD suspension and restoration.
+  url: https://www.sankei.jp/wp-content/uploads/2026/11/%E5%BD%93%E7%A4%BE%E3%81%AE%E5%8F%96%E5%BC%95%E5%85%88%E3%81%8C%E5%88%A9%E7%94%A8%E3%81%99%E3%82%8B%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%83%84%E3%83%BC%E3%83%AB%E3%81%A7%E3%81%AE%E4%B8%8D%E6%AD%A3%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%81%8A%E3%82%88%E3%81%B3%E7%94%A3%E7%B5%8CiD%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E3%81%AE%E4%B8%80%E6%99%82%E5%81%9C%E6%AD%A2%EF%BC%88%E7%8F%BE%E5%9C%A8%E3%81%AF%E5%86%8D%E9%96%8B%EF%BC%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6.pdf
+  primary: true
 ---
 
 Fireworks says an October 23 incident at its R&D cloud host enabled access to its development machines on October 24. Its investigation found affected resource metadata and billing details, including addresses, payment history, balances and credit usage. Fireworks says payment card numbers were outside scope. It temporarily disabled self-serve dataset uploads and downloads for Batch Inference and dataset-based training. It reports no detected impact to Inference, Training SDK or Nexus in its investigation to date.
@@ -66,3 +73,7 @@ In its November 11 notice, Japanese security company LRM says Notion notified it
 RECEPTIONIST says Notion notified it on November 10. Its November 12 filing identifies records from October 5–23 containing information about **53 people outside the company**, plus employee information. Depending on the person, the records may include names, company names, phone numbers, email addresses and inquiry details. The company excludes credit card and bank account information from those records. It is treating the records as exposed while it has yet to establish that a third party obtained them. The company plans individual emails and a report to Japan's Personal Information Protection Commission and reports no known misuse. RECEPTIONIST says its own services and customer data stored in them were outside this incident.
 
 Notion’s update confirms it found API keys in affected messages. It revoked exposed Notion API keys it found on November 11 and reported the third-party API keys it found to their issuers on November 12. A report to an issuer does not establish revocation. Workspace owners should verify revocation with each issuer, replace the keys and check usage logs between exposure and revocation.
+
+Sankei Shimbun says a contractor used Notion on one of its projects and reported that information about Sankei’s systems might have been exposed through Fireworks. Sankei suspended its membership service, Sankei iD, on November 13 and resumed it on November 14 after checking its safety. The notice does not confirm external disclosure, access to member records or an affected count. Use the [official Sankei iD inquiry form](https://id.sankei.jp/inquiry.html) to verify unexpected messages about the incident.
+
+[Cursor’s separate downstream incident](/incidents/cursor-claude-extension/) involved a key that Cursor had issued to Fireworks. Cursor’s investigation explains how the exposed key led to copying historical traces and eventually to the tampered extension builds.
