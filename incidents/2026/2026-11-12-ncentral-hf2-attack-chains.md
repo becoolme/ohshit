@@ -37,6 +37,9 @@ timeline:
 - date: Nov 13, 13:40 UTC
   title: N-able publishes indicators for Legacy API exposure
   body: The vendor provides download and callback paths for customers who have not disabled Legacy API. Assessment and remediation continue.
+- date: Nov 13, 2026
+  title: N-able outlines Legacy API removal and endpoint hardening for HF3
+  body: The vendor plans to remove Legacy API permanently and strengthen authentication and communication for Agents, Probes and appliances.
 checklist:
 - title: Disable Legacy API and restrict exposure now
   hint: At the system level, open Administration → Mail and Network Settings → Network Security → Legacy APIs and verify that the deprecated APIs are disabled. Restrict appliance access from untrusted networks. Preserve required Agent and Probe access through controlled paths and verify managed devices
@@ -45,7 +48,7 @@ checklist:
   hint: Preserve proxy, appliance, task and endpoint logs. Hunt 157.20.241[.]16 (TCP 8080 and 19202–19418), 139.99.69[.]109:10128 and 79.76.51[.]56:39100. Correlate /dms/services/ServerUI requests, unexpected processes and Windows Agent or Probe tasks. Huntback lists 12 indicator groups and host artifacts
     at the end of its report, including /tmp/.xvd, /var/tmp/.xvd, xvd.service and the jline.internal.TerminalLineSettings SOAP class. A match alone does not establish compromise.
 - title: Track separate fixes for the appliance and Windows chains
-  hint: Keep the earlier HF2 security update in place and check N-able’s official notices for remediation of these new paths. Confirm guidance for your hosted or on-premises deployment and the Agent and Probe builds before relaxing network controls. If compromise is found, isolate affected appliances
+  hint: Keep the earlier HF2 security update in place and watch for the HF3 release notes. Inventory integrations that depend on Legacy API before upgrading. Confirm guidance for your hosted or on-premises deployment and the Agent and Probe builds before relaxing network controls. If compromise is found, isolate affected appliances
     and managed systems, revoke exposed credentials and restore from verified clean systems.
 - title: Check temporary protections and Intune status for your deployment
   hint: Hosted customers should update Agents and Probes per N-able guidance. The vendor applied temporary server-side protections. On-premises customers should verify Legacy API is disabled and continue the HF2 and endpoint updates. N-able disabled the hosted Intune integration and attempted to deactivate it for on-premises customers using it. N-able says support will contact customers where it could not deactivate the integration. Check restoration guidance with support.
@@ -92,7 +95,11 @@ sources:
   url: https://uptime.n-able.com/event/202613/
   primary: true
   says: Provides deployment-specific guidance, Intune restrictions and indicators for customers who have not disabled Legacy API.
-updated: 2026-11-13
+- name: N-able Vulnerability Remediation Update
+  url: https://www.n-able.com/fr/blog/n-able-vulnerability-remediation-update
+  primary: true
+  says: Outlines planned Legacy API removal and stronger authentication and communication for Agents, Probes and appliances in HF3.
+updated: 2026-11-14
 cves:
 - id: CVE-2026-90436
   name: Apache Axis SOAP class instantiation
@@ -108,3 +115,5 @@ Previdian recorded two attempts against sensors. Huntback later captured the ful
 The server chain uses Apache Axis CVE-2026-90436 to execute commands as the N-central service account, then abuses a privileged helper to reach root. Apache says Axis 1.x has reached end of life. The full affected-version range for N-central and fixed builds for these new paths remain unverified. Keep the earlier HF2 update in place and apply the network and configuration controls. Evidence of root access warrants treating the appliance as fully compromised, investigating managed endpoints for unauthorized activity and restoring from trusted systems.
 
 **Vendor response update.** N-able applied temporary protections to hosted environments and asks on-premises customers to verify that Legacy API is disabled. The November 13 download and callback indicators apply to customers who have not disabled Legacy API. Review historical exposure as well. The vendor is still assessing and remediating the incident and does not name a fixed build for the new chains in this update.
+
+On November 13, N-able outlined plans for HF3. The vendor intends to remove Legacy API permanently and harden authentication and communication for Agents, Probes and appliances to reduce the risk of agent impersonation. Check the release notes for the build and its scope when HF3 ships.
