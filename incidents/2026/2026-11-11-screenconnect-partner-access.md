@@ -46,6 +46,9 @@ timeline:
 - date: Nov 12, 18:45 UTC
   title: ConnectWise identifies extension CVE and confirms technician client protection
   body: The vendor identifies CVE-2026-127063 in RMM+ and says technician client 26.6.5 or later blocks SCKit’s attempted spread from infected endpoints. Initial access is still under investigation.
+- date: Nov 13, 2026
+  title: Microsoft publishes a SCKit technical analysis
+  body: The report documents antivirus exclusion changes and a cleanup mode that can redeploy the toolkit.
 - date: Nov 13, 21:15 UTC
   title: ConnectWise reports on-premises activity and expands extension disablement
   body: The original five should stay disabled. ConnectWise disabled three more in cloud environments and the marketplace and advises partners to do the same.
@@ -89,6 +92,10 @@ sources:
   url: https://www.connectwise.com/company/trust/advisories
   says: Reports on-premises activity and three more precautionary extension disablements.
   primary: true
+- name: Microsoft SCKit technical analysis
+  says: Provides Defender hunting queries, network indicators, 18 file hashes and cleanup guidance.
+  url: https://www.microsoft.com/en-us/security/blog/2026/11/13/sckit-abuses-screenconnect-deploy-remote-access-target-technician-sessions/
+  primary: true
 ---
 
 ConnectWise says the extensions may be associated with the campaign. The roughly 400 environments had one or more of them installed. The vendor has yet to establish the number of compromised environments or the initial access method. It is investigating whether attackers used extensions to deploy additional remote access and whether interactive connections exposed technician workstations. Treat extension disabling as containment and check separately for persistence. This is distinct from the [Cloud Backup incident](/incidents/connectwise-cloud-backup/).
@@ -97,7 +104,7 @@ ConnectWise says the extensions may be associated with the campaign. The roughly
 
 **November 12, 18:45 UTC.** ConnectWise disclosed CVE-2026-127063 in the independently developed RMM+ extension. Its default API secret can allow unauthenticated commands to managed agents if the administrator has kept that value. The company continues to investigate whether the flaw was the initial entry point. ConnectWise verified that technician client 26.6.5 and later blocks SCKit’s attempted spread from infected hosts through CVE-2026-84869 during a live remote session. That protection applies to the propagation step. Investigate endpoints already accessed or running unauthorized software separately.
 
-Vendor-reported investigation indicators. The filename Panel-Lateral.ps1 still needs confirmation. sqlite3.exe is a legitimate utility that was reportedly abused.
+Vendor-reported investigation indicators. ConnectWise initially listed Panel-Lateral.ps1 as unconfirmed. Microsoft later published a sample hash for that filename. sqlite3.exe is a legitimate utility that was reportedly abused.
 
 ```text
 185.99.255[.]28 (screen)
@@ -174,3 +181,5 @@ deda7c30d798a19b6699a45fbcba503cf778594df9163c61c2f96bb2d2b9fb45  SCKit/Recover-
 ```
 
 **November 13, 21:15 UTC.** ConnectWise relays reports of additional targeting of on-premises environments that still had the previously listed extensions enabled. The vendor disabled ITBoost Integration, RepairShopr Integration and Guest Session Starter in cloud environments and its marketplace and advises all partners to disable them. The expanded list is precautionary. ConnectWise has yet to confirm that those extensions provided initial access. Update every technician client and disable the extensions to address their separate risks.
+
+Microsoft published 18 file hashes and Defender hunting queries. Review Defender path exclusions for Windows Temp, ConnectWiseControl_, CWInstall_, or RelayTrap. Verify their authorization and effective policy. Microsoft found that the toolkit’s cleanup mode can restart its dropper. Remove persistence with approved out-of-band tools and avoid running cleanup scripts recovered from the toolkit.
