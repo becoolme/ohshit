@@ -118,4 +118,4 @@ Railway 发现 353 次构建的历史被读取，其中包括密封变量。公�
 
 **11 月 12 日补偿公告。** Railway 受理存放在平台上、于 10 月 20 日 13:50 UTC 至 10 月 21 日 09:25 UTC 期间失陷的 AI 服务商密钥所产生的未授权费用。该范围适用于所有 AI 服务商。Railway 会协助向服务商申请退款，并承担服务商未退还的合格费用。公告将未授权 AI 费用估为至少约 74 万美元，尚未给出已支付的补偿总额。
 
-建议于 11 月 18 日前提交申报。Railway 表示仍会尽力处理逾期申报，并力争在 15 个工作日内审核。AWS Bedrock 和 Google Gemini 用户通过各自服务商的欺诈退款流程办理，OpenAI 个案由 OpenAI 与 Railway 共同审核。OpenRouter 按善意退款协议处理，通过 Railway 申报。SpaceXSI 也通过 Railway 提交并逐案审核。Railway 暂时承担 Anthropic 的合格费用，其他服务商的未退款费用也应向 Railway 申报。
+建议于 11 月 18 日前提交申报。Railway 表示仍会尽力处理逾期申报，并力争在 15 个工作日内审核。AWS Bedrock 和 Google Gemini 用户通过各自服务商的欺诈退款流程办理。Railway 的 11 月 10 日报告称，两家已开始退款。OpenAI 个案由 OpenAI 与 Railway 共同审核。OpenRouter 按善意退款协议处理，通过 Railway 申报。SpaceXSI 也通过 Railway 提交并逐案审核。Railway 暂时承担 Anthropic 的合格费用，其他服务商的未退款费用也应向 Railway 申报。
