@@ -3,7 +3,7 @@ title: Fireworks 密钥泄露后，Cursor 数据遭窃并出现恶意 Claude Cod
 tags: [Cursor, Claude Code, 供应链]
 summary: Cursor 称，攻击者使用在 Fireworks 泄露的密钥复制历史编程代理记录，随后进入内部工具，通过 Cursor 扩展缓存发布遭篡改的 Claude Code 2.1.312 和 2.1.313。Cursor 已通知受影响客户，并称事件已得到遏制。
 splash: 接获通知的 Cursor 用户及团队，以及从 Cursor 安装遭篡改的 2.1.312 或 2.1.313 的 macOS 或 Windows 用户。
-wipe: 隔离受影响主机，清除持久化并评估是否重建。从可信设备轮换 Cursor 通知所列的凭据。
+wipe: 隔离受影响主机，清除持久化并评估是否重建。从可信设备轮换主机可访问的凭据和通知所列密钥。
 inTheWildNote: Cursor 确认恶意分发，不代表每台主机均成功遭远程访问。
 cves: []
 fixed: []
@@ -24,7 +24,7 @@ checklist:
   - title: 清除持久化并轮换凭据
     hint: 保留证据，隔离存在执行迹象的主机。审阅 Cursor 链接的脚本后，以受影响用户运行 remediate-macos.sh，或在管理员 PowerShell 中运行 remediate-windows.ps1。验证清理成功，重新使用前评估重建。从可信设备轮换可访问的凭据及会话。仅卸载扩展不能移除独立持久化。
   - title: 轮换通知列出的凭据
-    hint: 查看 Cursor 应用内通知，或通过已知的 Cursor 渠道核实邮件。团队管理员应按受影响密钥清单在各签发方吊销并替换密钥，检查吊销前的使用情况。疑似滥用请报告 security@cursor.com。
+    hint: 查看 Cursor 应用内通知，或通过已知的 Cursor 渠道核实邮件。团队管理员应按受影响密钥清单在各签发方吊销并替换密钥，检查从暴露到吊销期间的使用日志。疑似滥用请报告 security@cursor.com。
 sources:
   - name: Cursor 安全通知及完整 IoC 表
     says: 10 月 30 日更新确认两个受影响版本并修订哈希；不代表 Anthropic 官方分发渠道已失陷。
@@ -34,11 +34,11 @@ sources:
     says: 说明 Fireworks 密钥、数据暴露、缓存植入、客户通知及遏制情况。
 ---
 
-遭修改的包并非由 Anthropic 开发。Cursor 通知列出 macOS arm64 和 Windows x64 包。启用 SSH 服务通常需要管理员权限，因此远程登录往往失败；SSH 密钥、持久化及主机数据上报仍需调查。范围为已识别的分发包，并非所有 Claude Code 安装。L4 反映已确认的开发工具供应链失陷。
+Cursor 称已让攻击者的服务器下线。遭修改的包并非由 Anthropic 开发。Cursor 通知列出 macOS arm64 和 Windows x64 包。启用 SSH 服务通常需要管理员权限，因此远程登录往往失败；SSH 密钥、持久化及主机数据上报仍需调查。范围为已识别的分发包，并非所有 Claude Code 安装。L4 反映已确认的开发工具供应链失陷。
 
 Anthropic 的 Felix Rieseberg 表示，该事件未使其系统或员工笔记本失陷。David Dworken 称，2.1.313 从未通过 Open VSX、Microsoft VS Code Marketplace 或 Anthropic 官方主机发布；Anthropic 跳至 2.1.314，以区分下一次正式发布。这些声明缩小了分发范围，但不免除恶意 Cursor 包受影响设备的清理要求。
 
-**范围修正：** Cursor 在 10 月 30 日更新中，将此前仅涉及 2.1.313 的通知扩大至其市场中的恶意 2.1.312 包。应对照修订后的厂商哈希表重新检查两个版本；仅凭版本号不能把官方渠道的 2.1.312 包认定为恶意。修订通知未重申此前 5,000 名用户的上限。
+**范围修正：** Cursor 在 10 月 30 日更新中，将此前仅涉及 2.1.313 的通知扩大至其市场中的恶意 2.1.312 包。应对照修订后的厂商哈希表重新检查两个版本；仅凭版本号不能把官方渠道的 2.1.312 包认定为恶意。10 月 30 日修订未提及此前 5,000 名用户的上限；11 月 13 日的调查报告再次给出这个上限。
 
 ### 11 月 13 日调查结果
 
