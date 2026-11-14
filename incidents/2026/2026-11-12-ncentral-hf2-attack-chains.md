@@ -95,8 +95,12 @@ sources:
   url: https://uptime.n-able.com/event/202613/
   primary: true
   says: Provides deployment-specific guidance, Intune restrictions and indicators for customers who have not disabled Legacy API.
+- name: N-able November 13 security update
+  url: https://www.n-able.com/blog/new-security-update-on-n-central
+  primary: true
+  says: Publishes Legacy API indicators and the actions for hosted and on-premises deployments.
 - name: N-able Vulnerability Remediation Update
-  url: https://www.n-able.com/fr/blog/n-able-vulnerability-remediation-update
+  url: https://www.n-able.com/blog/n-able-vulnerability-remediation-update
   primary: true
   says: Outlines planned Legacy API removal and stronger authentication and communication for Agents, Probes and appliances in HF3.
 updated: 2026-11-14
@@ -116,4 +120,4 @@ The server chain uses Apache Axis CVE-2026-90436 to execute commands as the N-ce
 
 **Vendor response update.** N-able applied temporary protections to hosted environments and asks on-premises customers to verify that Legacy API is disabled. The November 13 download and callback indicators apply to customers who have not disabled Legacy API. Review historical exposure as well. The vendor is still assessing and remediating the incident and does not name a fixed build for the new chains in this update.
 
-On November 13, N-able outlined plans for HF3. The vendor intends to remove Legacy API permanently and harden authentication and communication for Agents, Probes and appliances to reduce the risk of agent impersonation. Check the release notes for the build and its scope when HF3 ships.
+On November 13, N-able outlined plans for HF3. The vendor intends to remove Legacy API permanently and harden authentication and communication for Agents, Probes and appliances to reduce the risk of agent impersonation. N-able says the agent impersonation it describes requires an existing foothold on an endpoint. Check the release notes for the build and its scope when HF3 ships.
