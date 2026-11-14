@@ -79,25 +79,25 @@ SEAL’s November 4 report records six iOS wallet-compromise reports and about $
 
 | Address or transaction hash | Role in Bitquery’s report |
 | --- | --- |
-| `TUYFAa8hHjeEW6bPqBJ4v3RjQR2uKM1Svk` | Fee wallet, first money 5 October |
-| `TNJPXRWEptdSzbC1pYGp8suyTao4qddJe6` | Collector in the cpa.rip report |
-| `TEDjNzXWsTrRcHmRnGPPqGRmqCmrA1vvGZ` | Biggest collector, 974,487 USDT |
-| `TXgDHFfNia3PmJKM5u5U35ePDku7TUV6Xo` | First collector, 5 October |
-| `TEdbrs5teWWyzAtP639fRAX2yKNPCSMqJe` | Last collector, 3 to 4 November |
-| `FF1625CB54E87A93E5051C53EB8999AEDE30C81E7B7FA5DA474681E44D085967` | The 519,093 USDT drain |
-| `TWUPpTF63yevhZ55eoN6CbDodZzgp856n4` | Shared wallet, JustLend route |
-| `TZ7soEw5nn5mvC9k5pNszB74261Hjotfbf` | Where that trail stops |
-| `TMXawuHt4RoYUQ9pynNsyzqpTxxxLKZHsY` | CCE Cash hot wallet (our label) |
-| `TX5XiRXdyz7sdFwF5mnhT1QoGCpbkncpke` | NEAR Intents hot wallet (our label) |
-| `TXsDYB9ovFEFg4cja6gn1t1tpmrnSbYhHA` | Butter Network bridge (our label) |
-| `TU4vEruvZwLLkSfV9bNw12EJTPvNr7Pvaa` | Bybit hot wallet (our label) |
-| `TJtEySoVuAkk3xwXghLgrUFVKSMq9JkE18` | HitBTC hot wallet (our label) |
-| `TSUYvQ5tdd3DijCD1uGunGLpftHuSZ12sQ` | USDD mint contract (our label) |
-| `0x007147f598748749486041f5798b0b1379e13097` | Ethereum hub, paid a deBridge receiver |
-| `0x3579c70e5d8cfbb0f5303029a1eb8fb903360ea5` | Ethereum and BNB Chain collector |
-| `0xbece605be3abdfa57fc36f52bdb139a52e22c93d` | deBridge receiver on Ethereum |
-| `TS9BPC4zvtxbQNRHdahnQ3GqQajdo5BkBN` | First new TRON address after LI.FI |
-| `TXPryvpXUqruHnx4hbgXrDYKN8wTkfMq73` | Wallet held since 2021, drained 7 November |
-| `TJCY7r7shYmy3yWncGB9MvwWa8QS6du2C5` | Biggest new collector, 7 November |
-| `0cd0f9f1a5526f222f74fd3c50879e260b78b2c61c90bb5bbe58d5a753ad618b` | The 601,752 USDT theft |
-| `0x774a59948c17dc159727601c411113b838e1bbee` | Ethereum wallet that got it over USDT0 |
+| `TUYFAa8hHjeEW6bPqBJ4v3RjQR2uKM1Svk` | Fee payer, funded October 5 |
+| `TNJPXRWEptdSzbC1pYGp8suyTao4qddJe6` | Collector in the published iPhone case |
+| `TEDjNzXWsTrRcHmRnGPPqGRmqCmrA1vvGZ` | Largest collector in the initial dataset (974,487 USDT) |
+| `TXgDHFfNia3PmJKM5u5U35ePDku7TUV6Xo` | October 5 collector |
+| `TEdbrs5teWWyzAtP639fRAX2yKNPCSMqJe` | Final collector in the initial November 3–4 interval |
+| `FF1625CB54E87A93E5051C53EB8999AEDE30C81E7B7FA5DA474681E44D085967` | Transaction moving 519,093 USDT |
+| `TWUPpTF63yevhZ55eoN6CbDodZzgp856n4` | Shared address on the JustLend route |
+| `TZ7soEw5nn5mvC9k5pNszB74261Hjotfbf` | Endpoint of the JustLend trace |
+| `TMXawuHt4RoYUQ9pynNsyzqpTxxxLKZHsY` | CCE Cash hot wallet, per Bitquery |
+| `TX5XiRXdyz7sdFwF5mnhT1QoGCpbkncpke` | NEAR Intents hot wallet, per Bitquery |
+| `TXsDYB9ovFEFg4cja6gn1t1tpmrnSbYhHA` | Butter Network bridge, per Bitquery |
+| `TU4vEruvZwLLkSfV9bNw12EJTPvNr7Pvaa` | Bybit hot wallet, per Bitquery |
+| `TJtEySoVuAkk3xwXghLgrUFVKSMq9JkE18` | HitBTC hot wallet, per Bitquery |
+| `TSUYvQ5tdd3DijCD1uGunGLpftHuSZ12sQ` | USDD mint contract, per Bitquery |
+| `0x007147f598748749486041f5798b0b1379e13097` | Ethereum hub that paid into deBridge |
+| `0x3579c70e5d8cfbb0f5303029a1eb8fb903360ea5` | Collector on Ethereum and BNB Chain |
+| `0xbece605be3abdfa57fc36f52bdb139a52e22c93d` | Ethereum recipient on the deBridge route |
+| `TS9BPC4zvtxbQNRHdahnQ3GqQajdo5BkBN` | First new TRON address on the LI.FI route |
+| `TXPryvpXUqruHnx4hbgXrDYKN8wTkfMq73` | Wallet active since 2021, emptied November 7 |
+| `TJCY7r7shYmy3yWncGB9MvwWa8QS6du2C5` | Largest of the new November 7 collectors |
+| `0cd0f9f1a5526f222f74fd3c50879e260b78b2c61c90bb5bbe58d5a753ad618b` | Transaction moving about 601,752 USDT |
+| `0x774a59948c17dc159727601c411113b838e1bbee` | Recipient on Ethereum via USDT0 |
