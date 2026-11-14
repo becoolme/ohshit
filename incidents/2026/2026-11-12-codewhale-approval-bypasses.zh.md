@@ -12,6 +12,9 @@ cves:
 fixed:
   - product: CodeWhale
 timeline:
+  - date: 2026年7月16日
+    title: CodeWhale 发布 0.9.0
+    body: 发布标签包含维护者后来在两项公告中指明的修复提交。
   - date: 2026年11月12日
     title: 维护者公开两项审批绕过公告
     body: 两项公告均列明 0.8.67 及更早版本受影响，0.9.0 已修复。
@@ -27,6 +30,8 @@ sources:
     says: 列出受影响的软件包、修复版本及间接提示注入的复现过程。
   - name: CodeWhale 自动化任务公告
     says: 说明省略 auto_approve 的影响及定时任务执行 Shell 的额外条件。
+  - name: CodeWhale 0.9.0 发布记录
+    says: 记录修复版本的发布日期。
 ---
 
 在默认交互式 Agent 配置下，仓库、Issue 或抓取页面中由攻击者控制的文本可诱导 CodeWhale 调用 Shell 工具。CodeWhale 根据命令名称将部分搜索命令判为只读。报告者证明，这些命令支持可启动其他程序的参数，能以 Agent 进程权限执行并跳过审批提示。
