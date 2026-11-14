@@ -21,6 +21,9 @@ fixed:
   - product: CodeWhale
     version: 0.9.0
 timeline:
+  - date: Jul 16, 2026
+    title: CodeWhale releases 0.9.0
+    body: The release tag contains the fix commit the maintainers later identify in both advisories.
   - date: Nov 12, 2026
     title: Maintainers publish two approval bypass advisories
     body: Both advisories list releases through 0.8.67 as affected and 0.9.0 as fixed.
@@ -40,6 +43,10 @@ sources:
     url: https://github.com/codewhale-hq/Codewhale/security/advisories/GHSA-8hp3-xxrg-v9c8
     primary: true
     says: Documents omitted auto_approve and the additional condition for recurring shell execution.
+  - name: CodeWhale 0.9.0 release
+    url: https://github.com/codewhale-hq/Codewhale/releases/tag/v0.9.0
+    primary: true
+    says: Records the patched release date.
 ---
 
 In the default interactive Agent profile, attacker-controlled text in a repository, issue or fetched page can steer CodeWhale into calling its shell tool. CodeWhale treated certain search commands as read-only based on their names. The reporter demonstrated that flags accepted by those commands could launch programs with the agent process’s privileges and skip the approval prompt.
