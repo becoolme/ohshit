@@ -32,6 +32,8 @@ checklist:
   hint: 商家应核对账户中的活跃用户和会话，并检查 11 月 8 日至 9 日前后的出货数据导出或地址变更。通过公告所列的 cs@openlogi.com 向 OPENLOGI 报告异常。
 - title: 核查日东纺订单时段
   hint: 将 2026 年 4 月 8 日至 11 月 8 日购买 nekoPro 尿检套装的记录与公告比对。通过 nekopro-contact@nittobogrp.com 向日东纺核实联系或影响范围。
+- title: 按商户公告核实订单
+  hint: United Arrows 海外站点、Brave group 或 SMOKEY SUNDAY 的收件人可比对商户公告和 4 月 8 日至 11 月 8 日的订单，再通过商户官方渠道核实可疑联系。
 sources:
 - name: OPENLOGI 事件公告
   says: 确认数据被窃、出货时段、数据字段、遏制措施和仓库运营状态。

@@ -40,6 +40,8 @@ checklist:
   hint: For merchant accounts, verify expected active users and sessions, and check shipment exports or address changes around November 8–9. Report unexplained activity to OPENLOGI at cs@openlogi.com, as listed in its notice.
 - title: Check the Nittobo order window
   hint: Compare your nekoPro urine test kit purchases from April 8 through November 8, 2026 against the notice. Confirm any contact or scope with Nittobo at nekopro-contact@nittobogrp.com.
+- title: Check your order against the merchant notice
+  hint: Recipients from United Arrows international stores, Brave group or SMOKEY SUNDAY can compare shipments against the merchant notices and April 8 to November 8 window. Verify unexpected contact through the merchant’s official channel.
 sources:
 - name: OPENLOGI incident notice
   says: Confirms extraction, the shipment window, data fields, containment and continued warehouse operations.
