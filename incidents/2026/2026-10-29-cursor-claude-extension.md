@@ -6,7 +6,7 @@ level: 4
 tags: [Cursor, Claude Code, supply chain]
 summary: Cursor says a key exposed at Fireworks let an attacker copy historical coding-agent traces, then reach internal tools and publish tampered Claude Code 2.1.312 and 2.1.313 builds via Cursor’s extension cache. Cursor has notified affected customers and says the incident is contained.
 splash: Notified Cursor users and teams, and macOS or Windows users who installed the tampered 2.1.312 or 2.1.313 builds from Cursor.
-wipe: Isolate affected hosts, clean up persistence, assess rebuilding and rotate keys listed in Cursor’s notice from a trusted device.
+wipe: Isolate affected hosts, remove persistence, assess rebuilding and rotate host-accessible credentials and any notified keys from a trusted device.
 inTheWild: yes
 inTheWildNote: Cursor confirms malicious distribution, not successful remote access on every host.
 cves: []
@@ -28,7 +28,7 @@ checklist:
   - title: Remove persistence and rotate credentials
     hint: Preserve evidence and isolate hosts showing execution. Use Cursor’s linked remediate-macos.sh as the affected user, or remediate-windows.ps1 in administrator PowerShell, after reviewing the scripts. Verify cleanup succeeds; assess rebuilding before reuse. Rotate accessible credentials and sessions from a trusted machine. Uninstalling alone does not remove standalone persistence.
   - title: Rotate the specific credentials listed in your notice
-    hint: Check Cursor’s in-app notice or verify the email through a known Cursor channel. Team admins should use the affected-key list to revoke and replace keys at each issuer and review usage before revocation. Escalate suspected misuse to security@cursor.com.
+    hint: Check Cursor’s in-app notice or verify the email through a known Cursor channel. Team admins should use the affected-key list to revoke and replace keys at each issuer and review logs for use between exposure and revocation. Escalate suspected misuse to security@cursor.com.
 sources:
   - name: Cursor security notice and complete IoC tables
     url: https://cursor.com/blog/claude-code-extension-security-notice
@@ -46,11 +46,11 @@ sources:
     says: Traces the Fireworks key, data exposure, cache injection, customer notifications and containment.
 ---
 
-The modified package was not developed by Anthropic. Cursor’s notice identifies macOS arm64 and Windows x64 packages. SSH-service activation generally requires administrator rights, so remote login often failed; SSH keys, persistence and host-data reporting still require investigation. Scope is the identified distribution, not every Claude Code installation. L4 reflects a confirmed developer-tool supply-chain compromise.
+Cursor says it took the attacker’s server offline. The modified package was not developed by Anthropic. Cursor’s notice identifies macOS arm64 and Windows x64 packages. SSH-service activation generally requires administrator rights, so remote login often failed; SSH keys, persistence and host-data reporting still require investigation. Scope is the identified distribution, not every Claude Code installation. L4 reflects a confirmed developer-tool supply-chain compromise.
 
 Anthropic's Felix Rieseberg says its systems and employee laptops were not compromised in this incident. David Dworken says 2.1.313 was never released through Open VSX, the Microsoft VS Code Marketplace or Anthropic's official hosts; Anthropic skipped to 2.1.314 to distinguish its next release. These statements narrow distribution scope; they do not remove cleanup requirements for the malicious Cursor package.
 
-**Scope correction:** Cursor’s October 30 update expands the earlier 2.1.313-only notice to include malicious 2.1.312 packages from its marketplace. Recheck both versions against the revised vendor hash tables; the version number alone does not make an official-channel 2.1.312 package malicious. The earlier 5,000-user upper bound is not restated in the revised notice.
+**Scope correction:** Cursor’s October 30 update expands the earlier 2.1.313-only notice to include malicious 2.1.312 packages from its marketplace. Recheck both versions against the revised vendor hash tables; the version number alone does not make an official-channel 2.1.312 package malicious. The October 30 revision omitted the earlier 5,000-user upper bound; the November 13 investigation restates it.
 
 ### November 13 investigation
 
