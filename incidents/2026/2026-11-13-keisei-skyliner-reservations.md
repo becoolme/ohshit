@@ -26,11 +26,11 @@ checklist:
 - title: Verify messages and contact Keisei directly
   hint: Use the notice on Keisei’s website or call its incident desk at 090-3248-4609. Avoid links requesting passwords or payment details in unexpected refund notices.
 - title: Check ticket and refund instructions
-  hint: For paid Ticketless or face-recognition Skyliner tickets, the November 12 notice says to buy a replacement at a ticket window or machine and tell station staff about the earlier purchase. Keisei said it would process refunds later, with the timing depending on the payment card.
+  hint: For paid Ticketless or face-recognition Skyliner tickets, the November 12 notice says to buy a replacement at a ticket window or machine and tell station staff about the earlier purchase. Keisei said it would process refunds later, and said credit card refunds may take time to appear.
 sources:
 - name: Keisei incident notice
   says: Confirms unauthorized access, gives the upper bound and lists the potentially exposed fields.
-  url: https://new-www.keisei.co.jp/cms/files/keisei/MASTER/0110/OVIfkjTf.pdf
+  url: https://new-www.keisei.co.jp/cms/files/keisei/MASTER/0110/zDQUntkx.pdf
   primary: true
 - name: Keisei ticketing notice in English
   says: Lists suspended services and instructions for passengers who already paid.
@@ -38,4 +38,4 @@ sources:
   primary: true
 ---
 
-The possibly affected fields are user IDs, passwords, names in kana, phone numbers and email addresses. Keisei describes the passwords as encrypted but gives no storage details. The estimate is an upper bound on records. Keisei has not published a confirmed extraction count or the entry point.
+The possibly affected fields are user IDs, passwords, names in kana, phone numbers and email addresses. Keisei describes the passwords as encrypted but gives no storage details. The estimate is an upper bound on records. Keisei has not published a confirmed extraction count or the entry point. Station windows and ticket machines continue selling Skyliner tickets.
