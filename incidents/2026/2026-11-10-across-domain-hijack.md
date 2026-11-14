@@ -1,11 +1,12 @@
 ---
 title: Across domain takeover exposed visitors to a wallet drainer
-summary: Across says a registrar social-engineering attack redirected its website to a wallet drainer. Bitquery estimates about $348,000 taken from nine wallets on five chains. Across regained control and pledged to cover affected users.
+summary: Across says a registrar social-engineering attack redirected its website to a wallet drainer. Bitquery revised its estimate from about $348,000 to $402,000 across nine wallets on five chains. Across regained control and pledged to cover affected users.
 splash: Visitors who connected a wallet or signed an approval, message or transaction on the compromised Across frontend on November 10.
 wipe: From a trusted wallet interface, revoke suspicious approvals on each affected chain and report transaction hashes to Across.
 inTheWildNote: Across confirmed the takeover. Bitquery traced transfers during the phishing window.
 level: 4
 date: '2026-11-10'
+updated: 2026-11-14
 tags:
 - Across
 - wallet drainer
@@ -21,13 +22,16 @@ timeline:
 - date: Nov 11, 2026
   title: Bitquery verifies its tracing figures
   body: It attributes about $348,000 across nine wallets based on the timing and shared recipient split.
+- date: Nov 12, 2026
+  title: Bitquery revises its loss estimate to about $402,000
+  body: The researchers added a previously missed transfer of 26.38 ETH worth about $54,000 at transfer time from a wallet already in the count.
 checklist:
 - title: Check every connected wallet and chain
   hint: Open Revoke.cash directly and load the wallet used on Across. Select each network, search by the spenders below, and check direct approvals and Permit2 allowances. Revoke matching rows, confirm the on-chain transactions with the network’s gas token, then verify zero or removed allowances. Unused signed permits may be invisible. If you signed during the incident, Across recommends moving remaining assets to a fresh wallet after revoking visible approvals. Direct transfers are final.
 - title: Preserve evidence and report through official channels
   hint: Save wallet addresses, timestamps, chain names and transaction hashes. Initiate contact through the verified Across account named in the notice. Keep recovery phrases and private keys private and ignore unsolicited recovery offers.
 - title: Correlate tracing indicators
-  hint: Bitquery’s address record lists 13 wallet addresses and two transaction hashes. The reported recipient pair is 0x2846e69d3298e99eddf2fd8116e952844da11fde and 0x0c7c656126aa62625fdd8051eb69dc14aee8d37b. The complete address and transaction record appears below. Check full addresses and event logs. A match alone does not establish compromise.
+  hint: Bitquery’s address record lists 15 wallet addresses and three transaction hashes. The reported recipient pair is 0x2846e69d3298e99eddf2fd8116e952844da11fde and 0x0c7c656126aa62625fdd8051eb69dc14aee8d37b. The complete address and transaction record appears below. Check full addresses and event logs. A match alone does not establish compromise.
 sources:
 - name: Across initial notice, public copy
   says: Reproduces the official account’s registrar, containment and API/integration scope statement and links its follow-up approval guidance.
@@ -46,14 +50,16 @@ sources:
   url: https://teapawt.org/AcrossProtocol/status/2120324818385912082
   primary: true
 - name: Bitquery original on-chain investigation
-  says: Explains wallet attribution, valuation, fee-wallet distinction, and limitations.
+  says: Explains wallet attribution, valuation and the fee-wallet distinction, and documents the additional ETH route in its November 12 update.
   url: https://bitquery.io/investigations/across-protocol-domain-hijack
   primary: true
 ---
 
 The official [initial notice](https://x.com/AcrossProtocol/status/2120278803318489362) says the registrar attack gave a third party control of the domain. Across says its API and third-party integration users were outside the affected scope, although the team temporarily took the frontend and API offline during containment. The [restoration notice](https://x.com/AcrossProtocol/status/2120324818385912082) pledges to make affected users whole. The [user action notice](https://teapawt.org/AcrossProtocol/status/2120278805084295328) explains how to revoke permissions and report affected wallets. The notices provide no completed compensation or final victim total.
 
-Bitquery identified transfers between 19:02 and 21:53 UTC on Ethereum, Arbitrum, Base, BNB Chain and Optimism, with about $348,000 valued at transfer time. Its estimate uses a common 80/20 split and excludes transfers outside its data or method, including unpriced tokens in the dollar figure. A separate $294,000 figure matches the fee wallet balance, which includes older proceeds. Neither amount establishes the number of people affected or a compromise of the bridge contracts.
+Bitquery initially identified transfers between 19:02 and 21:53 UTC on Ethereum, Arbitrum, Base, BNB Chain and Optimism, with about $348,000 valued at transfer time. Its estimate uses a common 80/20 split and excludes transfers outside its data or method, including unpriced tokens in the dollar figure. A separate $294,000 figure matches the fee wallet balance, which includes older proceeds. Neither amount establishes the number of people affected or a compromise of the bridge contracts.
+
+**November 12 revision.** Bitquery raised its estimate to $401,900 after identifying a separate transfer of 26.38 ETH, worth about $54,000. It originated from a wallet already in the count. A collector kept 5%, and about ten minutes later the payout address sent 20.95 ETH to the main recipient. The researchers used those links and the overlap with the original transfers to attribute the ETH sweep. The count remains nine wallets on five chains. The estimate values transfers when they occurred and excludes tokens without a market price. Compensation remains unverified.
 
 Bitquery’s reported addresses and transaction hashes, in report order. Addresses include downstream services and are evidence for correlation.
 
@@ -70,8 +76,11 @@ G47n6dbUor1WFweLvKPrUi5beW4yjRoFG3cJZU6a4uSa
 2K7fueB3tqYBb5Z2Ubnnpf2rF3sJr1fJDKXtsocTAWmk
 5HQZd9ovzAF1TLnHRAq1zcSnXC9HAp3EwhoxMHvo8rxB
 0xbca05d20dbb271fd607e69fdc8d955be3bfc8120
+0x3ef438c34ce51a697a24247fe033c4562c94f0fd
+0xa0e6c7d79b74d1a6d366dd11309b6faafda05ac5
 3EQ9Rqrtvco4nKmskv2jQRXvWKkpUGfAQs
 0x2610f11fd3cde7113f83e7137853972ba98d8360b3d91eed6d5807f947a8bd38
+0xdd40b19abb1a00862aa443dc1d674b80c08a9b084094236bffce747243ad7f0e
 0x19c5460db37f5cc2bde6f8f644892a5348a1519d2aa97f720091e982134a8ae1
 ```
 
