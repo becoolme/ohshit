@@ -4,7 +4,7 @@ level: 4
 date: '2026-11-14'
 tags: [Kava Lend, DeFi, Lending pools]
 ecosystems: [crypto]
-summary: Kava confined the incident to Kava Lend. Bitquery traced 55.2 million KAVA borrowed through repeated loans against inflated BUSD collateral and estimated about $2.1 million in sale proceeds on BNB Chain.
+summary: Kava says the incident was confined to Kava Lend. Bitquery traced 55.2 million KAVA borrowed through repeated loans against inflated BUSD collateral and estimated about $2.1 million in sale proceeds on BNB Chain.
 splash: Kava Lend users, especially KAVA lenders, and users whose transfers depend on paused exchanges or the Axelar bridge.
 wipe: Pause new Kava Lend deposits and borrowing, record your positions and check official notices before moving assets across chains.
 inTheWild: 'yes'
