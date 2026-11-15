@@ -6,7 +6,7 @@ tags: [Perl, JSON, CPAN, memory safety]
 ecosystems: [perl]
 summary: CPANSec disclosed seven JSON::XS vulnerabilities fixed in 4.05. Malformed JSON can exhaust memory or the stack, and specific incremental parsing and tagged serialization paths can mishandle memory. Update services that parse or encode untrusted data.
 splash: Perl applications using JSON::XS before 4.05. Exposure varies with incremental parsing, malformed input, and tagged values.
-wipe: Upgrade JSON::XS to 4.05 or a verified vendor backport, redeploy Perl workers, and verify the module loaded in production.
+wipe: Upgrade JSON::XS to 4.05 or later, or use a verified vendor backport, redeploy Perl workers, and verify the module loaded in production.
 inTheWild: unknown
 cves:
   - id: CVE-2026-124536
@@ -23,7 +23,7 @@ cves:
     description: Before 4.05, rejection of a malformed long string can leave memory allocated for the already-decoded portion.
   - id: CVE-2026-129113
     name: Incremental skip corrupts the buffer length
-    description: From 4.0_00 to before 4.05, incr_skip can remove bytes beyond the end of the buffer after a top-level number.
+    description: From 4.0_00 to before 4.05, after a malformed top-level number, incr_skip can use a stale offset beyond the end of the buffer and underflow its length.
   - id: CVE-2026-129114
     name: One-byte heap write past the buffer
     description: From 3.04 to before 4.05, appending a one-byte chunk during incremental parsing can write one byte beyond the heap buffer.
