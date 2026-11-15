@@ -28,7 +28,7 @@ checklist:
 - title: Check each transfer route before sending
   hint: Check the exchange’s KAVA deposit and withdrawal notices and the current status of the intended bridge. Kava paused Axelar withdrawals. Use official support channels for transfers already in flight and ignore unsolicited recovery offers.
 - title: Correlate suspected exploit transactions
-  hint: Start with the Kava wallets kava1uzx5924cqsutcw365ajs8kkc3rr4vtlyzms255 and kava1v2s266sll8ca5xrs06swmsc00nwwt7u77eufk4 and BNB Chain seller 0x37d732914f86cc6eb1e87419e3046a739f011042. Use Bitquery’s full address and transaction record for the other roles and routes. Match network, timestamp and role. A match alone cannot establish ownership or compromise.
+  hint: Start with the Kava wallets kava1uzx5924cqsutcw365ajs8kkc3rr4vtlyzms255 and kava1v2s266sll8ca5xrs06swmsc00nwwt7u77eufk4 and BNB Chain seller 0x37d732914f86cc6eb1e87419e3046a739f011042. Use Bitquery’s full record of 22 addresses, transaction hashes and the Relay order ID for the other roles and routes. Match network, timestamp and role. A match alone cannot establish ownership or compromise.
 sources:
 - name: Kava’s scope update via X’s public embed
   url: https://publish.x.com/oembed?omit_script=true&url=https%3A%2F%2Fx.com%2FKAVA_CHAIN%2Fstatus%2F2121574325765476462
@@ -49,6 +49,6 @@ sources:
 
 Bitquery found that the attackers put a nearly empty BUSD market in a state where its interest calculation divided by a tiny positive supply. The supply index grew about 243,000-fold in three minutes. One wallet recycled the available BUSD into a second wallet’s account as collateral. The second wallet borrowed KAVA against those deposits. Repeated liquidations closed the debts after the first wallet had withdrawn the available BUSD, leaving little or none for the liquidation to seize. This is Bitquery’s reconstruction. Kava’s technical findings and any patched version were still pending.
 
-Bitquery counts **55.2 million KAVA borrowed** across 127 loans and **53.9 million KAVA retained** after repayments to other borrowers, worth approximately **$3.7 million** at the pre-sale price. Its estimate of approximately **$2.1 million** measures the proceeds from sales on BNB Chain. The **612,416 USDT** order that Relay blocked is part of the traced proceeds. Kava had not published a final loss or repayment figure in the sources reviewed.
+Bitquery counts **55.2 million KAVA borrowed** across 127 loans and **53.9 million KAVA retained** after repaying other users’ loans, worth approximately **$3.7 million** at the pre-sale price. Its estimate of approximately **$2.1 million** measures the proceeds from sales on BNB Chain. The **612,416 USDT** order that Relay blocked is part of the traced proceeds. Kava had not published a final loss or repayment figure in the sources reviewed.
 
 Kava treated the Axelar suspension as a precaution. The assets in the sale reconstruction crossed through LayerZero. A bridge pause alone does not identify the exploit path or the status of customer balances.
