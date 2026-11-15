@@ -23,6 +23,9 @@ timeline:
 - date: 2026年11月13日
   title: Brave group 和 TSI 公布各自的影响范围
   body: Brave group 确认旗下出货数据外泄，并列出可能涉及的店铺。TSI 确认涉及 SMOKEY SUNDAY。
+- date: 2026年11月14日
+  title: BATTEN Store 公布可能受影响的出货范围
+  body: 商户正在核查 4 月 8 日至 11 月 8 日向 OPENLOGI 申请出货的记录。
 checklist:
 - title: 独立核实配送消息
   hint: 通过订单页面或承运商的既有渠道核实物流进度、地址变更和配送费用。忽略主动发来的链接和附件，不要回复凭据、个人信息或付款。
@@ -49,6 +52,8 @@ sources:
   says: 确认旗下部分出货数据外泄，列出可能涉及的店铺，并说明已重置凭据。
 - name: TSI Holdings 客户公告
   says: 确认 SMOKEY SUNDAY 客户资料包含在外泄数据中。
+- name: BATTEN Store 客户公告
+  says: 说明可能受影响的出货记录和字段，并请客户向 OPENLOGI 咨询。
 ---
 
 OPENLOGI 称，被窃记录包含收件人姓名、地址、电话、已登记的电子邮箱，以及商品名称、数量等详情。OPENLOGI 不存储信用卡号。上述出货申请时段用于界定调查范围，平台尚未公布受影响记录数或人数。
@@ -58,3 +63,5 @@ HUMAN MADE 称，OPENLOGI 封锁了攻击来源，限制了来自日本境外的
 **日东纺客户公告。** 日东纺称，4 月 8 日至 11 月 8 日在其网店购买 nekoPro 尿检套装的客户，其姓名、地址、电子邮箱、电话号码及商品信息可能暴露。公告排除信用卡资料，称未接到滥用报告。日东纺称受影响系统的修复已完成，相关订单已恢复出库。商家确认可能受影响的客户后将逐一联系。可通过 nekopro-contact@nittobogrp.com 向日东纺核实范围。
 
 **新增商户公告。** United Arrows 确认其两个海外站点 United Arrows Global Online 和 TABAYA United Arrows 的出货资料涉及外泄，并排除日本国内官方网店。相关客户可联系 privacy-support@united-arrows.co.jp。Brave group 确认旗下部分出货资料被带走，已重置凭据，并在公告中列出可能受影响的 11 个店铺。TSI Holdings 确认其旗下由 OPENLOGI 发货的 SMOKEY SUNDAY 订单涉及外泄，并排除旗下其他品牌及网店。三份公告均未给出受影响人数。
+
+BATTEN Store 称，4 月 8 日至 11 月 8 日通过 OPENLOGI 申请出货的部分订单可能受影响。可能涉及收件人姓名、地址、电话号码、电子邮箱和商品详情，信用卡数据不在范围内。商户正与 OPENLOGI 核查影响范围。客户可按公告比对订单，通过商户或承运商核实意外收到的配送消息。BATTEN 请客户通过 cs@openlogi.com 咨询。

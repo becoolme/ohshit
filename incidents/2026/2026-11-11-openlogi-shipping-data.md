@@ -6,7 +6,7 @@ wipe: Verify delivery messages through the seller or carrier. Merchants should r
 inTheWildNote: OPENLOGI confirms unauthorized access and extraction of shipping data.
 level: 4
 date: '2026-11-11'
-updated: 2026-11-14
+updated: 2026-11-15
 tags:
 - OPENLOGI
 - logistics
@@ -31,6 +31,9 @@ timeline:
 - date: Nov 13, 2026
   title: Brave group and TSI identify affected merchant records
   body: Brave group confirms theft of group shipment data and lists potentially affected stores. TSI confirms that SMOKEY SUNDAY was affected.
+- date: Nov 14, 2026
+  title: BATTEN Store identifies potentially affected shipments
+  body: The merchant is checking shipments requested from OPENLOGI between April 8 and November 8.
 checklist:
 - title: Verify delivery messages independently
   hint: Use the order page or an established carrier channel to verify tracking, address changes and delivery fees. Ignore unsolicited links and attachments, and avoid providing credentials, personal details or payment in response.
@@ -71,6 +74,10 @@ sources:
   url: https://www.tsi-holdings.com/topics/topics_detail004919.html
   primary: true
   says: Confirms that SMOKEY SUNDAY customer data was included in the extraction.
+- name: BATTEN Store customer notice
+  url: https://store.battengirls.com/blogs/newstopics/202611info
+  primary: true
+  says: Identifies potentially affected shipments and fields and directs inquiries to OPENLOGI.
 ---
 
 OPENLOGI says the extracted records include recipient names, addresses, phone numbers, email addresses where registered, and product details such as names and quantities. OPENLOGI does not store credit card numbers. The shipment request window identifies records under investigation. The provider has not published the number of affected records or people.
@@ -80,3 +87,5 @@ HUMAN MADE says OPENLOGI blocked the attack source, restricted access from outsi
 **Nittobo customer notice.** Nittobo says customers who bought the nekoPro urine test kit on its online store between April 8 and November 8 may have had names, addresses, email addresses, phone numbers and product information exposed. It excludes credit card information and reports no known misuse. Nittobo says work to fix the affected system was complete and dispatch had resumed for these orders. It plans individual notifications as it identifies potentially affected customers. For a scope check, contact Nittobo at nekopro-contact@nittobogrp.com.
 
 **Additional merchant notices.** United Arrows confirmed exposure involving its international storefronts United Arrows Global Online and TABAYA United Arrows. It excluded its domestic official online store. Customers can contact privacy-support@united-arrows.co.jp. Brave group confirmed extraction of some group shipment data, reset credentials and named 11 potentially affected stores in its notice. TSI Holdings confirmed exposure of SMOKEY SUNDAY orders shipped through OPENLOGI and excluded the rest of its brands and online stores. The three notices did not give a count of affected people.
+
+BATTEN Store says some of its shipments requested through OPENLOGI from April 8 through November 8 may be affected. It lists recipient names, addresses, phone numbers, email addresses and product details as potentially involved, and excludes card data. The merchant is working with OPENLOGI to establish scope. Customers can compare their orders with the notice and verify unexpected shipping messages through the store or carrier. BATTEN directs incident inquiries to cs@openlogi.com.
