@@ -6,7 +6,7 @@ wipe: Review vendor notices and exposed data. Revoke and rotate credentials incl
 inTheWildNote: Fireworks and Notion confirmed unauthorized access to affected customer data.
 level: 4
 date: '2026-11-09'
-updated: 2026-11-14
+updated: 2026-11-15
 tags:
 - AI
 - SaaS
@@ -28,6 +28,12 @@ timeline:
 - date: Nov 12, 2026
   title: Notion customer RECEPTIONIST describes its own possible exposure
   body: The company identified information about 53 people outside the company and employee data in the affected records. It plans individual emails and a regulatory report.
+- date: Nov 12, 2026
+  title: Interactive reports up to six potentially affected business contacts
+  body: The scope covers some Notion AI conversations from October 5–22. The company is contacting those people and says it reported the incident to Japan’s Personal Information Protection Commission.
+- date: Nov 13, 2026
+  title: LegalOn finds customer information in some affected conversations
+  body: The company is reviewing October 5–23 records and plans individual notifications to affected customers and business partners. It confirmed the information was present in the records and is still assessing possible disclosure.
 - date: Nov 13, 2026
   title: Notion reports action on exposed API keys
   body: Notion says it revoked exposed Notion API keys on November 11 and reported exposed third-party keys to their issuers on November 12.
@@ -41,6 +47,8 @@ checklist:
   hint: If notified, a workspace owner can open the sidebar, select ? and then Security incident review to review and export affected transcripts. Share the review link with affected members. Treat affected chats as exposed and rotate passwords, API keys and other credentials they contain.
 - title: Verify RECEPTIONIST notices through the company
   hint: The company says individual notices will come from @receptionist.co.jp. For an unexpected message, verify through pr@receptionist.co.jp as published in the November 12 filing. Watch for impersonation using inquiry details.
+- title: Verify individual Interactive or LegalOn notices
+  hint: Verify unexpected messages through Interactive’s official website or LegalOn’s official contact form, using the Other inquiries option for LegalOn. Avoid suspicious links or attachments and keep passwords and verification codes private. LegalOn says customers need no changes to its product settings.
 sources:
 - name: Fireworks November 9 bulletin
   says: Describes the October cloud-provider intrusion, data categories, mitigation and ongoing investigation.
@@ -62,6 +70,14 @@ sources:
   says: Connects the potential exposure to a contractor’s use of Notion and documents the temporary Sankei iD suspension and restoration.
   url: https://www.sankei.jp/wp-content/uploads/2026/11/%E5%BD%93%E7%A4%BE%E3%81%AE%E5%8F%96%E5%BC%95%E5%85%88%E3%81%8C%E5%88%A9%E7%94%A8%E3%81%99%E3%82%8B%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%83%84%E3%83%BC%E3%83%AB%E3%81%A7%E3%81%AE%E4%B8%8D%E6%AD%A3%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%81%8A%E3%82%88%E3%81%B3%E7%94%A3%E7%B5%8CiD%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E3%81%AE%E4%B8%80%E6%99%82%E5%81%9C%E6%AD%A2%EF%BC%88%E7%8F%BE%E5%9C%A8%E3%81%AF%E5%86%8D%E9%96%8B%EF%BC%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6.pdf
   primary: true
+- name: Interactive November 12 notice
+  says: Describes its Notion AI transcript window, maximum of six business contacts and completed report to the privacy regulator.
+  url: https://www.inta.co.jp/news/42090/
+  primary: true
+- name: LegalOn November 13 notice
+  says: Gives the affected workspace scope, customer information categories, exclusions and notification plan.
+  url: https://legalontech.jp/11330/
+  primary: true
 ---
 
 Fireworks says an October 23 incident at its R&D cloud host enabled access to its development machines on October 24. Its investigation found affected resource metadata and billing details, including addresses, payment history, balances and credit usage. Fireworks says payment card numbers were outside scope. It temporarily disabled self-serve dataset uploads and downloads for Batch Inference and dataset-based training. It reports no detected impact to Inference, Training SDK or Nexus in its investigation to date.
@@ -71,6 +87,10 @@ Notion says it disconnected from Fireworks by November 3 following a notificatio
 In its November 11 notice, Japanese security company LRM says Notion notified it the day before. The company is reviewing a subset of its October 5–24 Insights records and found names of business contacts in the text. It is notifying those contacts individually and reports no system credentials in its reviewed records. That finding applies to LRM’s records. Other notified workspace owners should review their own exports, notify people whose information appears, and rotate any exposed credentials. LRM says its own services were outside the intrusion. The record count and whether outsiders obtained LRM’s records remain under investigation.
 
 RECEPTIONIST says Notion notified it on November 10. Its November 12 filing identifies records from October 5–23 containing information about **53 people outside the company**, plus employee information. Depending on the person, the records may include names, company names, phone numbers, email addresses and inquiry details. The company excludes credit card and bank account information from those records. It is treating the records as exposed while it has yet to establish that a third party obtained them. The company plans individual emails and a report to Japan's Personal Information Protection Commission and reports no known misuse. RECEPTIONIST says its own services and customer data stored in them were outside this incident.
+
+Interactive says names, job titles or parts of meeting notes for up to six business contacts were in potentially exposed Notion AI conversations from October 5–22. It excludes addresses, phone numbers, card information, passwords and Job Antenna applicants’ data. The company says it is contacting the individuals, has reported the incident to Japan’s Personal Information Protection Commission and has seen no misuse.
+
+LegalOn says it received notice and the affected records from Notion on November 11. Its November 13 statement confirms that some conversations in the October 5–23 scope contain customer information, potentially including company names, contact names or email addresses. It is reviewing the scope and preparing individual notifications and required regulatory reports. It says customer data stored in its own products and services, such as contracts, and login credentials for those products were outside the incident. External disclosure and the affected-person count remain undetermined.
 
 Notion’s update confirms it found API keys in affected messages. It revoked exposed Notion API keys it found on November 11 and reported the third-party API keys it found to their issuers on November 12. A report to an issuer does not establish revocation. Workspace owners should verify revocation with each issuer, replace the keys and check usage logs between exposure and revocation.
 
