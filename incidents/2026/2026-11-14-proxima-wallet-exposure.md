@@ -4,7 +4,7 @@ level: 4
 date: '2026-11-14'
 tags: [Proxima, Solana, Wallet security]
 ecosystems: [crypto]
-summary: Proxima reported a security breach affecting wallets created, imported or exported through its trading app during the preceding 15 days. It estimated $200,000–$250,000 in affected funds and promised to reimburse affected SOL balances.
+summary: Proxima reported a breach that may have exposed wallets created, imported or exported through its trading app during the preceding 15 days. It estimated $200,000–$250,000 in affected funds and promised to reimburse affected SOL balances.
 splash: Wallets created, imported or exported through Proxima in the 15 days before the November 14 notice.
 wipe: Stop deposits and automated activity on potentially exposed addresses, save transaction records and verify any reimbursement directly in Proxima.
 inTheWild: 'yes'
@@ -31,7 +31,7 @@ sources:
 - name: Proxima co-founder’s November 14 follow-up via X’s public embed
   url: https://publish.x.com/oembed?omit_script=true&url=https%3A%2F%2Fx.com%2F0xTheo__%2Fstatus%2F2121579940671844400
   primary: true
-  says: Authenticates the post and shows the SigNoz attribution. The full text on wallet scope and reimbursement is in the next source.
+  says: Shows the original post and the team’s SigNoz attribution. The full text on wallet scope and reimbursement is in the next source.
 - name: Public copy of Proxima’s follow-up
   url: https://teapawt.org/0xTheo__/status/2121579940671844400
   says: Preserves the complete text of the same Proxima statement.
