@@ -24,7 +24,7 @@ checklist:
 - title: 确认受影响订单并通知客户
   hint: 联系 support@goqsystem.com 获取受影响订单的下载说明。与自己的订单记录比对时，涵盖下单人和收件人。保留相关访问和导出日志，参考第二份公告链接的日本个人信息保护委员会指引，协调通知和报告。
 - title: 核对店铺和仓储集成状态
-  hint: 恢复处理前查看平台的 API 状态页，按对应合作方的说明处理标为需要操作的服务。乐天市场商户应核实 API 授权并更新许可密钥，再导入遗漏订单并核对库存错误。BASE 商户应在开发者账户中删除原 GoQSystem 应用后重新配置。STORES 商户应分别为订单管理和库存集成重新获取刷新令牌。GoQ Logi 集成暂停期间，请直接通过 Amazon Seller Central 处理 FBA 出货。
+  hint: 恢复处理前查看平台的 API 状态页，按对应合作方的说明处理标为需要操作的服务。乐天市场商户应核实 API 授权并更新许可密钥，再导入遗漏订单并核对库存错误。BASE 商户应在开发者账户中删除原 GoQSystem 应用后重新配置。STORES 商户应分别为订单管理和库存集成重新获取刷新令牌。GoQ Logi 的 FBA 集成暂停期间，请直接通过 Amazon Seller Central 处理 FBA 出货。
 - title: 独立核实配送和账户消息
   hint: 在原订单页面或通过承运商核实陌生的配送或付款请求。商户登录时从书签打开后台，确认主机名为 order.goqsystem.com。如果在仿冒网站输入过密码，请通过官方后台尽快更改，并联系 support@goqsystem.com。
 sources:
