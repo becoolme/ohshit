@@ -19,7 +19,7 @@ checklist:
 - title: 在未修补的监听器上禁用 HTTP/2
   hint: 升级需推迟时，从实际生效的 Protocols 设置中移除 h2 和 h2c，或停用 mod_http2。检查配置后重新加载，验证直连和代理请求均无法与受影响监听器协商 HTTP/2，并测试必要业务。此措施降低 HTTP/2 漏洞暴露，其他两个受影响模块仍需升级。
 - title: 核对 Ubuntu 软件包或 Red Hat 勘误
-  hint: 在 Ubuntu 上运行 dpkg-query -W apache2 apache2-bin，将结果与当前发行版对应的 USN-9090-1 版本比较。20.04 LTS 的修复通过 Ubuntu Pro 提供。Red Hat 用户按 CVE 记录选择与产品和更新通道匹配的勘误，。在 RHEL 9 或 10 上运行 rpm -q mod_http2，将已安装的软件包版本与适用勘误比较。更新后重启或重新部署，再确认运行实例。
+  hint: 在 Ubuntu 上运行 dpkg-query -W apache2 apache2-bin，将结果与当前发行版对应的 USN-9090-1 版本比较。20.04 LTS 的修复通过 Ubuntu Pro 提供。Red Hat 用户按 CVE 记录选择与产品和更新通道匹配的勘误。在 RHEL 9 或 10 上运行 rpm -q mod_http2，将已安装的软件包版本与适用勘误比较。更新后重启或重新部署，再确认运行实例。
 sources:
 - name: Apache 2.4.71 安全公告
   says: 列出三个 CVE、受影响版本及发版日期。
