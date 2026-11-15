@@ -47,7 +47,7 @@ checklist:
 - title: 对照厂商的 Legacy API 指标排查
   hint: '检查到 157.20.241[.]16（TCP 8080、19202–19418）、139.99.69[.]109:10128 和 79.76.51[.]56:39100 的出站流量。在 157.20.241[.]16:8080 上查找 /jup.sh、/xvgz、/xmrig.tgz、/ob/cronhit?h=jup_start_<rig>&persist=<method> 和 /ob/fcheck。将命中项与历史配置和主机活动关联，单项命中不能证明已失陷。'
 - title: 盘点其他 Axis 1.x 部署并应用对应产品的修复
-  hint: 独立部署可迁至仍受支持的 SOAP 引擎，或使用应用 Apache 补丁的 Axis 构建。Confluence Data Center 9.2 可升级至 9.2.28，或迁至仍受支持的 10.x 或更高版本。暂时无法升级时，在 Further Configuration 取消勾选 Remote API (XML-RPC & SOAP)，保存后确认 /plugins/servlet/soap-axis1/confluenceservice-v2 返回 403。先测试依赖该接口的脚本、自动化和插件，再检查曾暴露的实例是否存在入侵迹象。
+  hint: 独立部署可迁至仍受支持的 SOAP 引擎，或使用应用 Apache 补丁的 Axis 构建。Confluence Data Center 9.2 可升级至 9.2.28，或迁至仍受支持的 10.x 或更高版本。暂时无法升级时，先在非生产环境测试依赖该接口的脚本、自动化和插件。以管理员身份打开 General Configuration → Further Configuration（/admin/viewspacesconfig.action），点击 Edit，取消勾选 Remote API (XML-RPC & SOAP) 并保存。设置立即生效，无需重启。确认 /plugins/servlet/soap-axis1/confluenceservice-v2 返回 403，再检查曾暴露的实例是否存在入侵迹象。
 sources:
 - says: 记录测试服务器构建、SOAP 端点、root 攻击链及 Legacy API 前提。
 - says: 记录测试构建、设备标识符，以及 Windows Agent 和 Probe 攻击链各自的利用前提。
