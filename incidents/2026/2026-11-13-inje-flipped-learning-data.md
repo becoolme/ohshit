@@ -23,7 +23,7 @@ checklist:
     hint: Save the messages, caller numbers and transaction details. In South Korea contact the police at 112 or your financial institution to request a payment hold where appropriate. The university also lists the privacy reporting service at 118.
 sources:
   - name: Inje University breach notice
-    url: https://cms.inje.ac.kr/animalhealth/community/injescholarship.do?boardIdx=29009&mode=view
+    url: https://cms.inje.ac.kr/animalhealth/community/injenotice.do?mode=view&boardIdx=29009
     primary: true
     says: Lists the record count and fields, dates the ministry alert, describes containment and gives lookup and reporting instructions.
 ---
