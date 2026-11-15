@@ -27,7 +27,7 @@ checklist:
 - title: Disable HTTP/2 on unpatched listeners
   hint: Where an update must wait, remove h2 and h2c from the effective Protocols settings or disable mod_http2. Check configuration and reload; verify that neither direct nor proxied requests negotiate HTTP/2 with the affected listener. Test required traffic. This reduces exposure to the HTTP/2 flaw; the other two modules still require the update if affected.
 - title: Verify the Ubuntu package or Red Hat erratum
-  hint: On Ubuntu, run dpkg-query -W apache2 apache2-bin and compare the results with the USN-9090-1 versions for your release. The 20.04 LTS fix requires Ubuntu Pro. On Red Hat, select the erratum for your product and update channel from its CVE record. Check the separate mod_http2 package on RHEL 9 or 10. Restart or redeploy after patching and verify the running instance.
+  hint: On Ubuntu, run dpkg-query -W apache2 apache2-bin and compare the results with the USN-9090-1 versions for your release. The 20.04 LTS fix requires Ubuntu Pro. On Red Hat, select the erratum for your product and update channel from its CVE record. On RHEL 9 or 10, use rpm -q mod_http2 for the installed package and compare its release with the applicable erratum. Restart or redeploy after patching and verify the running instance.
 sources:
 - name: Apache 2.4.71 security advisories
   says: Lists the three CVEs, affected versions and release date.
