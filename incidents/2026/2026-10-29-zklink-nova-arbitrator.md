@@ -1,6 +1,6 @@
 ---
 date: 2026-10-29
-updated: 2026-11-02
+updated: 2026-11-15
 title: zkLink reports emergency containment after Nova bridge exploit; researchers trace a second wave
 level: 4
 tags:
@@ -31,11 +31,14 @@ timeline:
   - date: Oct 29, 2026
     title: zkLink reports suspended block production and emergency contract patches
     body: The public original embed confirms these measures; the following withdrawal-related sentence is truncated. No safe restart or independently verified patch is established by the visible text.
+  - date: Nov 10, 2026
+    title: PublicAML traces proceeds to three Ethereum wallets
+    body: At 17:33 UTC, PublicAML records about 705,309 DAI held across three addresses after November 9 transfers. The observation does not establish a freeze or reimbursement.
 checklist:
   - title: Avoid new exposure while containment is unresolved
     hint: The project reports suspended block production and emergency patches, but the readable notice does not verify patch effectiveness or a safe restart. As a precaution, avoid new deposits or transfers through the affected Nova bridge until official status and contract scope are clarified. Do not assume a working interface or successful deposit means reserves are safe.
   - title: Preserve custody and transaction evidence
-    hint: Record your deposit transaction hashes, source chain, asset, amount and destination wallet. SlowMist’s visible original post identifies Arbitrator.claimMessage and transient finalizeMessageHash as the suspected fault; it does not provide a complete readable address/hash list in the embed. Do not use inferred attacker addresses as a complete detection list or test the flaw against live contracts. A match alone is not proof of compromise.
+    hint: Record your deposit transaction hashes, source chain, asset, amount and destination wallet. SlowMist’s visible original post identifies Arbitrator.claimMessage and transient finalizeMessageHash as the suspected fault; it does not provide a complete readable address/hash list in the embed. PublicAML traces funds to 0xa5be3ee19a993aeaf6185d3d9a06128d372a90a6, 0xe6578a2a2b17c6aa043c9d83d6e6a0024b1522aa and 0x44f32242e54699d3bcce65460336b4bb33c4d5cf. Check the full research ledger and labels. Do not test the flaw against live contracts. A match alone is not proof of compromise.
   - title: Verify recovery notices before signing
     hint: Use the project’s established official website and verified announcement channels to check containment and any recovery instructions. The notice read does not establish a refund process or completed reimbursement; reject unsolicited claim pages and never share seed phrases. Do not infer that funds on every named chain were stolen.
   - title: Review the full research ledger and test containment
@@ -60,6 +63,10 @@ sources:
     url: https://parapetlabs.net/blog/zklink-nova-exploit-post-mortem/
     primary: true
     says: Replays the exploit on a fork, traces the original drain and four-chain second wave, and provides full address/transaction references. Its unpatched-status assessment is explicitly as of October29 around 10:00 UTC.
+  - name: PublicAML original Ethereum proceeds tracing
+    url: https://publicaml.org/zklink-nova-hack/
+    primary: true
+    says: Reports the November 9 transfers and gives the three destination wallets and November 10 balances.
 ---
 
 The vendor acknowledgment establishes a real exploit, supporting L4. SlowMist attributes the failure to Arbitrator.claimMessage retaining transient message state without a fresh authenticated callback. That is a research assessment, not a published vendor post-mortem. Parapet Labs now supplies a readable original technical report: a publicly callable whitelisted relayer, a privileged call to a caller-selected target and reusable transient validation state combined to allow forged withdrawal roots without privileged access.
@@ -69,3 +76,5 @@ SlowMist estimates about $783,100. This is an early researcher estimate, unverif
 Parapet estimates about $743,000 for the original Ethereum drain at exploit-time prices, then reports a separate second wave taking about 24.76 ETH plus token inventories on Optimism, Base, Blast and Mantle. Do not add these unlike units to SlowMist’s earlier estimate or call any one figure the final total. Parapet assesses Linea’s different executor as outside this specific vector; its historical balance and exposure table is not a current reserve audit.
 
 The vendor’s October 29 follow-up reports suspended Nova block production and emergency-patched affected contracts. Its visible public embed cuts off during the withdrawal-related measure, so the complete withdrawal scope and later conditions are not established here. Parapet’s assessment that contracts remained unpatched is dated around 10:00 UTC that day; it does not test the vendor’s subsequent patch claim. Neither a safe reopening time nor recovery payments are verified. The precaution against adding bridge exposure is editorial containment advice derived from the vendor’s ongoing-exploit warning, not a claim that the project has ordered a specific withdrawal procedure.
+
+**November 10 tracing:** PublicAML followed proceeds from the original Ethereum drain through swaps and three relays. It reports a combined balance of approximately **705,309 DAI** across the three recipient wallets at **17:33 UTC on November 10**. That is an address balance at a stated time. It neither establishes a final cross-chain loss nor shows that anyone froze or returned the assets.
