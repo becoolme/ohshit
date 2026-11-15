@@ -13,7 +13,7 @@ timeline:
   body: "11 月 12 日的统计记录了自 9 月 4 日起观测到的 26 个受影响站点，其中两个相关主机也出现在 CartJacked 的附录中。"
 - date: 2026年11月14日
   title: Ohey 记录 RTCGnaw 合约跳转变化
-  body: 一个 BNB Smart Chain 测试网合约改为指向以太坊 Sepolia 上的载荷合约。
+  body: Ohey 将 BNB Smart Chain 测试网合约指向 Sepolia 载荷合约的路由记录标注为 11 月 14 日。
 - date: 2026年11月15日
   title: Ohey 更新 RTCGnaw 观测范围
   body: 累计仍观测到 26 个站点，其中 17 个在过去 30 天内匹配。研究人员每天读取 16 个相关合约。
@@ -26,15 +26,17 @@ checklist:
 - title: 恢复可信结账并处置用户暴露
   hint: 用可信代码重建，移除注入资源，调查入口及异常账户，轮换相关管理及部署凭据，核验外发请求后再开放。遵循支付服务商的事件指引。若在确认受影响的结账页输入过银行卡资料，请通过可信渠道联系发卡行。
 - title: "排查支付流量中的 RTCGnaw"
-  hint: "查阅 Ohey 公布的完整浏览器指标和全部 16 个跟踪合约。网络指标包括 systmshield[.]com · threatblck[.]com · defendsstm[.]com · guardsstm[.]com · contentprotectiongate[.]com · cdn[.]api-middle-connect[.]com/metrics · tawoauth[.]com/chat · scomper[.]store/sslsocket · mouseflow[.]nexus/connection · woocompay[.]com/assets · wpguarding[.]com/system · api[.]cloudservicecon[.]com · cloud[.]protectionflare[.]com · 185[.]141[.]27[.]56:3479 · 103[.]141[.]13[.]26:3479 · app[.]dinkfoundry[.]com。检查已部署 JavaScript 中的 0xe2179b8e、0xd62aa7b8、__S_INITED 和 __OWE_EARLY，并检查结账流量中的 WebRTC 数据通道及带 p 和 t 的图片请求，再结合报告列出的脚本特征和支付日志核对。信标载荷按敏感数据处理，确认失陷前需有其他证据印证。在已部署脚本中检查由 Blob 启动的 Worker 是否接收 nodes、contractAddress 和 functionSelector。检查 /api/bundle/ WebSocket 请求及发往 /api/events 的信标。"
+  hint: "查阅 Ohey 公布的完整浏览器指标和全部 16 个跟踪合约。网络指标包括 systmshield[.]com · threatblck[.]com · defendsstm[.]com · guardsstm[.]com · contentprotectiongate[.]com · cdn[.]api-middle-connect[.]com/metrics · tawoauth[.]com/chat · scomper[.]store/sslsocket · mouseflow[.]nexus/connection · woocompay[.]com/assets · wpguarding[.]com/system · api[.]cloudservicecon[.]com · cloud[.]protectionflare[.]com · 185[.]141[.]27[.]56:3479 · 103[.]141[.]13[.]26:3479 · app[.]dinkfoundry[.]com · authwic[.]com（历史） · blanautch[.]com（历史）。检查已部署 JavaScript 中的 0xe2179b8e、0xd62aa7b8、__S_INITED 和 __OWE_EARLY，并检查结账流量中的 WebRTC 数据通道及带 p 和 t 的图片请求，再结合报告列出的脚本特征和支付日志核对。信标载荷按敏感数据处理，确认失陷前需有其他证据印证。在已部署脚本中检查由 Blob 启动的 Worker 是否接收 nodes、contractAddress 和 functionSelector。检查 /api/bundle/ WebSocket 请求及发往 /api/events 的信标。"
 sources:
 - name: Guardio Labs CartJacked 报告
   says: 提供爬取样本估算、实际访问检查、受控测试卡抓取及指标。
 - says: "记录了观测到的站点、虚假结账行为、重叠的基础设施及指标。"
+- name: Ohey EtherHiding 合约跟踪页
+  says: 列出按链区分的 RTCGnaw 合约路由及目的地历史。
 ---
 
 这是多起实际观察到的攻击活动。约 12,200 家是根据 Common Crawl 10 月约 238 万家商店样本校正后的估算。63 家来自用 10 月样本代码运行的隔离测试，衡量测试资料被抓取，不能用来计算客户损失。Guardio 记录了伪造输入框替换正规支付框架、通过外部主机或浏览器存储收集资料，以及将命令复制到剪贴板的伪造验证提示。部分工具包会对已登录管理员隐藏伪造表单，应以访客身份测试。
 
 Ohey 截至 11 月 12 日观测到自 9 月 4 日起共有 26 个站点提供 RTCGnaw 脚本，其中 16 个出现在此前 30 天内。这批观测与 Guardio 的爬取估算和受控测试分别统计。两份报告列出了两个相同的主机。观测到的脚本从链上合约加载载荷，目标包括 WooCommerce 和 Magento 店铺。Ohey 在不同店铺记录到了仿 Stripe 和仿 Poynt 的表单。窃取脚本可收集银行卡和账单资料，显示伪造的付款失败提示，随后暂停 15 分钟。用户重试时可能通过正常流程付款。排查时将用户报告的失败与支付处理商的交易记录对照，并检查 WebRTC 数据通道，或部分变种所用的带 p 和 t 参数的图片信标。
 
-**11 月 15 日更新。** Ohey 的滚动观测从 16 个增至 17 个站点，累计仍为 26 个。该数字表示研究人员发现了脚本，未统计被窃卡片或确认损失。研究人员还在一个 PrestaShop 站点发现了两阶段加载器。脚本启动一个 Blob Worker 读取 BNB Smart Chain 测试网合约，再从 Sepolia 获取下一阶段代码。Ohey 将该跳转的合约变更日期列为 11 月 14 日，并记录 Sepolia 合约指向 app[.]dinkfoundry[.]com。
+**11 月 15 日更新。** Ohey 的滚动观测从 16 个增至 17 个站点，累计仍为 26 个。该数字表示研究人员发现了脚本，未统计被窃卡片或确认损失。研究人员还在一个 PrestaShop 站点发现了两阶段加载器。脚本启动一个 Blob Worker 读取 BNB Smart Chain 测试网合约，再从 Sepolia 获取下一阶段代码。Ohey 将该路由记录标注为 11 月 14 日。BNB Smart Chain 测试网合约 `0x3596a5d8fdd13763482de91a4ca74b7dbcbd98f9` 指向 Sepolia 合约 `0xf7baf5d244086fb305588f1de192e3ae7203e70c`，后者列出的目的地是 app[.]dinkfoundry[.]com。
