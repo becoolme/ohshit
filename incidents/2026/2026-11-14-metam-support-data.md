@@ -11,6 +11,9 @@ timeline:
   - date: Nov 12, 2026
     title: Coinone learns of unauthorized access to MetaM servers
     body: Coinone dates the unauthorized access and its notification from the contractor to November 12. It moved outsourced support to email and blocked access paths.
+  - date: Nov 13, 2026
+    title: MetaM reports the incident to KISA
+    body: MetaM’s reproduced notice dates its report to the Korea Internet and Security Agency to November 13.
   - date: Nov 14, 2026
     title: MetaM announces exposure in some outsourced support systems
     body: The public reproduction of the notice describes unauthorized viewing or removal of phone numbers and conversations and an ongoing scope investigation.
@@ -23,7 +26,7 @@ checklist:
   - title: Review logins, orders and withdrawal addresses
     hint: In the official app, open Deposits/Withdrawals → Address book management, or on the website open Deposits/Withdrawals → Withdrawal address book. If you see an unauthorized login, order or withdrawal attempt, use Account lock in the same security or personal-information menu and report it through Coinone’s notice.
   - title: Verify incident follow-up through known channels
-    hint: Open the exchange or other service’s official site for notices. Coinone says it never asks by phone, text or email for a password, OTP, verification code, transfer or change of wallet address. Ignore unsolicited links and attachments. Save suspicious messages and transaction details and contact your financial institution if money was moved.
+    hint: Open the exchange or other service’s official site for notices. Coinone says it never asks by phone, text or email for a password, OTP, verification code, transfer or change of wallet address. Ignore unsolicited links and attachments. Save suspicious messages and transaction details and contact your financial institution if money was moved. Coinone’s notice lists 118 for KISA privacy reports and 1332 for South Korea’s Financial Supervisory Service.
   - title: Scope contractor access if your organization uses MetaM
     hint: Ask MetaM which support environments and record types were affected. Preserve support, identity and network logs, revoke credentials present in exposed conversations, and coordinate individual notifications with the vendor after confirming scope.
 sources:
