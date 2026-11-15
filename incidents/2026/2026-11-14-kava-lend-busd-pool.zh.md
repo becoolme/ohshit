@@ -1,7 +1,7 @@
 ---
 title: Kava Lend 遭利用，协议借贷池中绝大部分 KAVA 被转出
 tags: [Kava Lend, DeFi, 借贷池]
-summary: Kava 确认事件限于 Kava Lend。Bitquery 追踪到攻击者以虚增的 BUSD 抵押品反复借出 5,520 万枚 KAVA，并估计在 BNB Chain 上出售所得约为 210 万美元。
+summary: Kava 称事件限于 Kava Lend。Bitquery 追踪到攻击者以虚增的 BUSD 抵押品反复借出 5,520 万枚 KAVA，并估计在 BNB Chain 上出售所得约为 210 万美元。
 splash: Kava Lend 用户，尤其是出借 KAVA 的用户，以及转账依赖已暂停服务的交易所或 Axelar 跨链桥的用户。
 wipe: 暂停在 Kava Lend 新增存款或借款，记录现有仓位，跨链转账前查看官方公告。
 inTheWildNote: Kava 确认事件。Bitquery 追踪了借款和后续出售。
