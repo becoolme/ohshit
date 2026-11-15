@@ -1,7 +1,7 @@
 ---
 title: Apache Shiro discloses LDAP login and authorization bypasses
 level: 3
-date: 2026-11-14
+date: 2026-11-13
 tags: [Apache Shiro, Java, LDAP, authentication]
 ecosystems: [java]
 summary: Apache disclosed eight Shiro flaws. With LDAP authentication caching enabled, an attacker who knows a previously authenticated username can log in with any password. Other flaws affect authorization annotations, session handling and optional integrations. Upgrade to 3.0.2 or later.
@@ -14,24 +14,31 @@ cves:
     name: LDAP authentication cache bypass
     description: In Shiro through 3.0.0, a known username with cached authentication can log in with any password when DefaultLdapRealm or JndiLdapRealm uses authentication caching and the permissive default matcher.
   - id: CVE-2026-74763
+    score: 6.3
     name: Authorization annotations skipped
-    description: Through 3.0.1, interface annotations can be skipped in Guice, AspectJ, CDI and Jakarta EE integrations. Class and superclass annotations can also be skipped with Guice or AspectJ.
+    description: Through 3.0.1, interface annotations can be skipped in Guice, AspectJ, CDI and Jakarta EE integrations. Class and superclass annotations can also be skipped with Guice or AspectJ. The affected CDI and Jakarta EE modules start at 2.0.0-alpha-0.
   - id: CVE-2026-114737
+    score: 2.3
     name: Case-sensitive filter matching
     description: In 3.0.1, a manually created ShiroFilterFactoryBean can miss protected static paths on a case-insensitive filesystem. The Shiro Spring starter-created bean is outside this case.
   - id: CVE-2026-129347
+    score: 2.3
     name: Empty password matches an empty credential
     description: Through 3.0.1, DefaultPasswordService and SimpleCredentialsMatcher can authenticate an empty submitted password for an account with an empty stored credential.
   - id: CVE-2026-129320
+    score: 2.1
     name: Unescaped principal tag output
-    description: Through 3.0.1, the Jakarta Pages and Jakarta Faces principal tags can render script when the application uses the tag with an untrusted principal value.
+    description: Through 3.0.1, applications using the Jakarta Pages or Jakarta Faces principal tag can render script from an untrusted principal value. The affected Jakarta Faces module starts at 2.0.0-alpha-0.
   - id: CVE-2026-129348
+    score: 2.3
     name: Stale file-backed realm permissions
     description: Through 3.0.1, reloading a file-backed PropertiesRealm can leave deleted users and previous permissions in effect.
   - id: CVE-2026-88019
+    score: 6.0
     name: Unsafe saved-form replay
-    description: From 2.0.0-alpha through 3.0.1, Jakarta EE integration with form saving enabled (the default) can weaken cookie attributes or send replayed form data and cookies to an untrusted host.
+    description: From 2.0.0-alpha-0 through 3.0.1, Jakarta EE integration with form saving enabled (the default) can weaken cookie attributes or send replayed form data and cookies to an untrusted host.
   - id: CVE-2026-74762
+    score: 5.9
     name: Remember-me session fixation
     description: Through 3.0.0, restoring a remembered user can retain the session ID and accept URL session IDs even with URL rewriting disabled. Remember-me must be enabled.
 fixed:
@@ -40,8 +47,10 @@ fixed:
 timeline:
   - date: Nov 8, 2026
     title: Apache announces Shiro 3.0.2
+  - date: Nov 13, 23:28 UTC
+    title: First bulletin carries the static-path filter advisory
   - date: Nov 14, 2026
-    title: Apache maintainer posts the eight advisories
+    title: The other seven advisories follow on the mailing list
 checklist:
   - title: Disable vulnerable LDAP caching immediately
     hint: Find DefaultLdapRealm and JndiLdapRealm in Shiro configuration. Set authenticationCachingEnabled to false and clear old authentication cache entries. If caching must stay enabled, use a matcher that verifies cached credentials, such as SimpleCredentialsMatcher, and test that an incorrect password is rejected after a valid login.
@@ -64,7 +73,7 @@ sources:
     primary: true
   - name: November 14 oss-security archive
     url: https://www.openwall.com/lists/oss-security/2026/11/14/
-    says: Lists the eight announcements posted by the Apache maintainer.
+    says: Links all eight advisories. The first message’s UTC header is dated November 13.
     primary: true
 ---
 
