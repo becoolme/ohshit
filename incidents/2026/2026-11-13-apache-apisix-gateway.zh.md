@@ -7,7 +7,7 @@ cves:
   - name: 路径规范化差异导致身份验证绕过
     description: 从 0.9 到 3.19.0，当未认证路由和受保护路由共享上游，且上游不归并编码后的点路径段时，未认证路由可暴露受保护路径。
   - name: 跳过或降级身份验证时可伪造身份
-    description: 从 3.18.0 到 3.19.0，若 strict 为 false 且转发请求头与令牌请求头不同，无令牌的 jwe-decrypt 请求可向上游传递调用方提供的值。启用降级且认证服务不可用时，forward-auth 也可能传递伪造值。
+    description: 从 3.18.0 到 3.19.0，若 strict 为 false 且 forward_header 与令牌请求头不同，无令牌的 jwe-decrypt 请求可向上游传递调用方提供的值。启用 allow_degradation 且认证服务不可用时，forward-auth 也可能传递伪造值。
   - name: 认证回退时保留 Wolf 身份请求头
     description: 从 3.8.0 到 3.19.0，multi-auth 从 wolf-rbac 回退至另一个成功的认证器时，可能保留调用方提供的 Wolf 身份请求头。信任这些请求头的上游受影响。
   - name: Keycloak 部分授权绕过
@@ -29,7 +29,7 @@ timeline:
     body: 公告列出受影响版本及各项配置前提。
 checklist:
   - title: 升级网关并迁移受影响配置
-    hint: 将所有网关实例升级至 3.20.0 或更新版本，按发布说明检查路由变更。部署前将自定义 wolf-rbac header_prefix 从 Consumer 移至 Route 或 Service，包括 multi-auth 条目。确认相应 Consumer 已设置 appid，并移除 mcp-bridge 配置。
+    hint: 将所有网关实例升级至 3.20.0 或更新版本，按发布说明检查路由变更。部署前将自定义 wolf-rbac header_prefix 从 Consumer 移至 Route 或 Service，包括 multi-auth 条目。确认相应 Consumer 已设置 appid。部署前移除 mcp-bridge 配置。
   - title: 检查路由和双向 TLS 边界
     hint: 找出与认证路由共享上游的公开路由。修复前可要求上游执行授权，或限制公开路由。在预发布环境用编码点路径段和斜杠测试受保护路由，并验证无证书请求被拒绝。核查 skip_mtls_uri_regex 豁免。
   - title: 测试身份和权限拒绝路径
@@ -45,4 +45,4 @@ sources:
     says: 核实路由触发前提、版本范围和 CVSS 4.0 评分。
 ---
 
-路径规范化漏洞可让请求在网关匹配未认证路由，却在上游解析到受保护路径。两条路由必须共享上游，且上游对编码点路径段的处理符合 Apache 公告中的条件。其他绕过取决于对应插件或 TLS 选项。Apache 公告未报告在野利用。由于漏洞影响网关访问控制，本批评为 L3。
+路径规范化漏洞可让请求在网关匹配未认证路由，却在上游解析到受保护路径。两条路由必须共享上游，且上游对编码点路径段的处理符合 Apache 公告中的条件。其他绕过取决于对应插件或 TLS 选项。Apache 公告未报告在野利用。由于漏洞影响网关访问控制，本批漏洞定为 L3。
