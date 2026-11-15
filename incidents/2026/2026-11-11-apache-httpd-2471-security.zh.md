@@ -8,6 +8,9 @@ timeline:
 - date: 2026年11月11日
   title: Apache 发布 2.4.71 及三个漏洞的修复
   body: 上游公告将 CVE-2026-119618 定为严重，mod_md 和 mod_vhost_alias 的修复随同发版。
+- date: 2026年11月12日
+  title: Canonical 与 Red Hat 公布发行版修复指引
+  body: Canonical 列出五个涉及 HTTP/2 漏洞的 Ubuntu 发行版及修复软件包。Red Hat 说明了 RHEL 9、RHEL 10 和 JBoss Core Services 1 的影响范围及更新指引。
 checklist:
 - title: 清点正在运行的 HTTP/2 配置
   hint: 使用 httpd -v 或 apache2 -v、软件包管理器和 httpd -M 或 apache2ctl -M。检查各虚拟主机和可直连源站监听器实际使用的 Protocols 设置，包括 TLS 上的 h2 和 h2c。另行检查独立安装的 mod_h2。
@@ -15,6 +18,8 @@ checklist:
   hint: 源码构建升级至 httpd 2.4.71 或更高版本。发行版软件包按供应商公告核对确切修复版本。将受影响的独立模块替换为受支持的修复构建，随后检查配置、重启或重新部署服务，并核对实际运行的程序及模块。
 - title: 在未修补的监听器上禁用 HTTP/2
   hint: 升级需推迟时，从实际生效的 Protocols 设置中移除 h2 和 h2c，或停用 mod_http2。检查配置后重新加载，验证直连和代理请求均无法与受影响监听器协商 HTTP/2，并测试必要业务。此措施降低 HTTP/2 漏洞暴露，其他两个受影响模块仍需升级。
+- title: 核对 Ubuntu 软件包或 Red Hat 勘误
+  hint: 在 Ubuntu 上运行 dpkg-query -W apache2 apache2-bin，将结果与当前发行版对应的 USN-9090-1 版本比较。20.04 LTS 的修复通过 Ubuntu Pro 提供。Red Hat 用户按 CVE 记录选择与产品和更新通道匹配的勘误，并在 RHEL 9 或 10 上核对独立的 mod_http2 软件包。更新后重启或重新部署，再确认运行实例。
 sources:
 - name: Apache 2.4.71 安全公告
   says: 列出三个 CVE、受影响版本及发版日期。
@@ -24,6 +29,10 @@ sources:
   says: 独立仓库已归档，维护者指引用户转向 Apache httpd。
 - name: Red Hat CVE-2026-119618 分析
   says: 说明 HTTP/2 可达这一前提及线程安全缺陷。
+- name: Canonical USN-9090-1 安全公告
+  says: 列出 Ubuntu 修复版本，并明确 HTTP/2 漏洞涉及哪些发行版。
+- name: Red Hat RHSB-2026-017 安全公告
+  says: 说明受影响的 Red Hat 产品及独立 mod_http2 软件包。
 cves:
 - name: HTTP/2 堆内存破坏
   description: mod_http2 的 assign_headers() 存在竞态，可能导致远程代码执行。
@@ -33,8 +42,16 @@ cves:
   description: 模块可能覆写栈中的一个字节。
 fixed:
 - product: Apache HTTP Server
+- product: Ubuntu 26.10 的 apache2 软件包
+- product: Ubuntu 26.04 LTS 的 apache2 软件包
+- product: Ubuntu 24.04 LTS 的 apache2 软件包
+- product: Ubuntu 22.04 LTS 的 apache2 软件包
+- product: Ubuntu 20.04 LTS 的 apache2 软件包
+  status: 需要 Ubuntu Pro
 ---
 
 CVE-2026-119618 是 HTTP/2 请求头处理中的竞态。能访问受影响 HTTP/2 监听器的远程客户端可触发内存破坏，进而可能在服务器进程中执行代码。Apache 列出的范围为 httpd 2.4.55 至 2.4.70、独立 mod_h2 2.0.8 至 2.0.42。Red Hat 指出，启用 h2 或 h2c 的服务器存在该漏洞的暴露面。独立项目已归档，请使用 Apache httpd 随附的修复模块，或由下游供应商确认已修复的构建。
 
 同批还修复了 2.4.30 至 2.4.70 的 mod_md 子进程崩溃漏洞，以及 2.4.69 和 2.4.70 的 mod_vhost_alias 单字节栈覆写漏洞，暴露取决于各自模块。下游回移补丁后版本号仍可能较旧，请按供应商公告核对实际软件包版本。
+
+Canonical 的 USN-9090-1 将 CVE-2026-119618 的修复回移到上表所列的五个 Ubuntu 发行版。该公告也为更早的 Ubuntu 版本提供其他漏洞的修复，其中不包括这项 HTTP/2 漏洞。Red Hat 将 RHEL 9、RHEL 10 和 JBoss Core Services 1 列为直接受影响产品，并提供按产品和更新通道区分的修复指引。
