@@ -2,7 +2,7 @@
 title: AllUnited registration form flaw exposed club member data and credentials
 level: 4
 date: '2026-11-10'
-updated: '2026-11-13'
+updated: '2026-11-15'
 tags: [AllUnited, SaaS, data breach]
 summary: AllUnited says an attacker used a club registration form to reach a server and copy membership data, including IBANs and credentials. The provider fixed the flaw and announced a password reset. It has not published a count of affected individuals.
 splash: Clubs, federations and communities using AllUnited, including their members, administrators and website registrants.
@@ -28,6 +28,9 @@ timeline:
 - date: Nov 13, 2026
   title: AllUnited sets weekend approval and final filing arrangements
   body: Organizations can accept the confirmation email by November 16 at 07:00 local time. AllUnited plans the final filing for Monday and weekend notices where requested and authorized.
+- date: Nov 14, 2026
+  title: AllUnited restores its KNGU integration
+  body: The Dutch gymnastics federation’s integration is active again. Member registrations, cancellations and edits made during the outage will flow through on the next sync.
 checklist:
 - title: Reset passwords from a trusted address
   hint: Open the official club portal or ClubApp directly and request a reset. Use the latest reset email you requested and check spam if needed. Change any reused password on other services and enable MFA where available. Contact the official support desk if a reset does not arrive; never send your password.
@@ -35,11 +38,13 @@ checklist:
   hint: Independently confirm requests for fees, bank changes or codes with the club using contact details you already trust. Watch for tailored phishing using addresses, birth dates or IBANs and report suspicious activity to the club or bank.
 - title: Verify reporting and member notification arrangements
   hint: Open AllUnited’s incident page. The provider says organizations that accepted the confirmation email before 19:00 local time on November 13 will be included in the joint filing. Others can accept by 07:00 local time on November 16. Have an authorized board member use the official form and select whether AllUnited should notify affected people. Watch for the email from info@allunited.nl and accept as instructed. Avoid duplicate submissions. The previously stated direct-filing cutoff was November 13 at 19:15 local time. If a cutoff was missed or inclusion is unclear, check next steps with AllUnited and the Dutch Data Protection Authority. Confirm filing and notifications separately, including former members and other affected contacts. Retain the filing reference and use the affected-member selection in the Relations wizard.
+- title: Check the next KNGU synchronization
+  hint: AllUnited says gymnastics clubs do not need to re-enter changes made during the outage. After the next scheduled transfer, reconcile member registrations, cancellations and edits against your club records and contact AllUnited support about discrepancies.
 sources:
 - name: AllUnited incident timeline and FAQ
   url: https://www.allunited.nl/artikelen/datalek/
   primary: true
-  says: Confirms the entry point, data copied, password handling and the November 13 reporting extension and federation API status.
+  says: Confirms the entry point, data copied, password handling and the November 13 reporting extension and November 14 KNGU restoration.
 - name: AllUnited Customer Care Center notice
   url: https://support.allunited.nl/support/solutions/articles/103000425650-beveiligingsincident-allunited-wat-er-is-gebeurd-en-wat-je-moet-doen
   primary: true
@@ -55,3 +60,5 @@ AllUnited says an attacker exploited its software through a club website registr
 Administrative records included names, emails, phone numbers and passwords the provider describes as encrypted. AllUnited says the attacker also obtained information about how that protection worked. Unchanged temporary passwords were stored in readable form. Member records could include addresses, dates of birth, contact details, IBANs and free-text notes. Website registrations included contact and birth details and IBANs. The fields vary by record. The Dutch cricket association says the records of all players in its AllUnited system were copied and that it reported the breach to the regulator. AllUnited said hundreds of organizations authorized a joint filing by November 12; that is not a count of individuals. The published notices do not establish account takeovers or financial losses.
 
 The November 13 evening update clarifies that authorization requires accepting the confirmation email. AllUnited says organizations that accepted before 19:00 local time that day will be included. The remaining organizations can accept by 07:00 local time on November 16. AllUnited plans to file the final report on Monday and send weekend notices where organizations both authorized and requested them. The update does not establish that filing or notification has finished.
+
+On November 14, AllUnited said its connection to KNGU had resumed. For gymnastics clubs, membership changes made during the interruption will be included in the next synchronization. This update concerns KNGU. The status of the remaining disabled federation links and completion of the regulator filing still need confirmation.
