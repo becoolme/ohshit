@@ -2,14 +2,14 @@
 title: Binance preliminary report details signing-service intrusion and revises funding figures
 level: 4
 date: 2026-10-29
-updated: 2026-11-13
+updated: 2026-11-15
 tags:
   - Binance
   - crypto
   - investigation
 ecosystems:
   - crypto
-summary: Binance reports signing-service intrusion and EIP-7702 abuse. The FBI attributes the theft to TraderTraitor. Binance says it covered affected assets and published a 198-token reserve snapshot. Its proof, final review and full withdrawals are pending. DOJ reports over $2.7bn frozen, with over $1.2bn authorized for seizure or restraint.
+summary: Binance reports signing-service intrusion and EIP-7702 abuse. The FBI attributes it to TraderTraitor. Binance reports asset coverage, a proof for the 198-token reserve snapshot and withdrawals reopened on 87 networks. Full withdrawals and final review remain pending. DOJ reports over $2.7bn frozen, with over $1.2bn authorized for seizure or restraint.
 splash: Binance.com withdrawal users; Aave reports a precautionary freeze of DAO-operated V3/V4 markets
 wipe: Follow official updates, inspect account activity, and use Binance's account-lock procedure if you find unauthorized actions
 inTheWild: yes
@@ -160,13 +160,19 @@ timeline:
   - date: Nov 12, 2026
     title: Binance says it completed coverage of affected assets
     body: The exchange reports more than $6.34 billion committed and a new reserve snapshot covering 198 tokens. Proof generation and the phased reopening of withdrawals continue.
+  - date: Nov 14, 2026
+    title: Binance reports withdrawals restored on 87 networks
+    body: Binance targets the end of the following week for the remaining networks and assets. Check availability for the exact asset and network.
+  - date: Nov 14, 2026
+    title: Binance says the November 12 reserve proof is ready
+    body: Binance says users can now verify their asset backing for the snapshot covering 198 tokens.
   - date: Nov 1, 06:00–09:00 UTC (scheduled)
     title: First withdrawal phase is planned
 
 
 checklist:
   - title: Use official channels and reject recovery messages
-    hint: Open Binance through your existing bookmark or official app and check its announcements for deposit and withdrawal restoration. The November 1 notice schedules the first withdrawal phase for 06:00–09:00 UTC; check your exact asset/network pair on the withdrawal or network-status page. The subsequent official update names Bitcoin as the first batch; a later update confirms Ethereum withdrawals for USDC, USDT and ETH, and BSC withdrawals for USDC, USDT and BNB. Later original posts also confirm XRP on XRP; ETH and USDC on Base; DOGE on DOGE; ETH, USDT and USDC on Optimism; ZEC on ZEC; USDT and GRAM on TON; and SUI on SUI. The linked intermediate updates also confirm ARB, ETH, USDT and USDC on Arbitrum; TRX and USDT on TRX; SOL, USDT and USDC on Solana; POL, USDT and USDC on Polygon; and AVAX, USDT and USDC on Avalanche C-Chain. Verify the exact pair live; these statements do not establish that every asset on these networks is available. Binance says future withdrawals use new wallets in its updated reserve-address list. Verify destination addresses and device security; congestion remains possible. The notice advises retrying later if needed. Verify unsolicited communications with Binance Verify or official support. Do not share passwords or 2FA codes, follow recovery links, or send money to purported support agents. Update 8 announces more pairs from November 5 04:00 UTC on ETH, BSC, Base, TRX, MATIC and SUI. Use its exact table and check the selected pair live; listing an asset does not mean all its networks are open. Deposits remain open, and delays/retries may occur during rollout. Binance confirmed HYPE and APT withdrawals reopened on November 8. Check the live page for the network and asset you intend to use.
+    hint: Open Binance through your existing bookmark or official app and check its announcements for deposit and withdrawal restoration. The November 1 notice schedules the first withdrawal phase for 06:00–09:00 UTC; check your exact asset/network pair on the withdrawal or network-status page. The subsequent official update names Bitcoin as the first batch; a later update confirms Ethereum withdrawals for USDC, USDT and ETH, and BSC withdrawals for USDC, USDT and BNB. Later original posts also confirm XRP on XRP; ETH and USDC on Base; DOGE on DOGE; ETH, USDT and USDC on Optimism; ZEC on ZEC; USDT and GRAM on TON; and SUI on SUI. The linked intermediate updates also confirm ARB, ETH, USDT and USDC on Arbitrum; TRX and USDT on TRX; SOL, USDT and USDC on Solana; POL, USDT and USDC on Polygon; and AVAX, USDT and USDC on Avalanche C-Chain. Verify the exact pair live; these statements do not establish that every asset on these networks is available. Binance says future withdrawals use new wallets in its updated reserve-address list. Verify destination addresses and device security; congestion remains possible. The notice advises retrying later if needed. Verify unsolicited communications with Binance Verify or official support. Do not share passwords or 2FA codes, follow recovery links, or send money to purported support agents. Update 8 announces more pairs from November 5 04:00 UTC on ETH, BSC, Base, TRX, MATIC and SUI. Use its exact table and check the selected pair live; listing an asset does not mean all its networks are open. Deposits remain open, and delays/retries may occur during rollout. Binance confirmed HYPE and APT withdrawals reopened on November 8. Binance reported that withdrawals reopened on 87 networks that week. Check the exact asset and network in the official app’s withdrawal screen or on the network-status page before submitting.
   - title: Inspect your own account and respond to unauthorized activity
     hint: Review Security and Account Activity for unfamiliar logins, transactions or security-setting changes. If found, Binance instructs users to disable the account and contact official support. In the app, its guide uses Account Info → Security → Manage Account → Disable Account. Read the consequences before confirming; reopening may require support. This account control does not fix a possible exchange-wallet compromise.
   - title: Check Aave status before planning deposits or borrowing
@@ -407,6 +413,18 @@ sources:
     url: https://www.binance.com/bapi/composite/v1/public/cms/article/detail/query?articleCode=0729ad59cde74700b4eaa96c33441e71
     says: The publication timestamp falls on November 12 UTC. The release carries a November 13 dateline.
     primary: true
+  - name: Binance official Chinese channel withdrawal update
+    url: https://www.binance.com/en-ZA/square/post/388048263277085
+    says: Reports 87 networks reopened for withdrawals that week and a target for the remaining networks and assets.
+    primary: true
+  - name: Binance November 14 recovery announcement
+    url: https://www.binance.com/en/square/post/388043506977136
+    says: Lists the reopened networks, the remaining rollout target, and retry guidance.
+    primary: true
+  - name: Binance November 14 reserve proof update
+    url: https://publish.twitter.com/oembed?url=https%3A%2F%2Ftwitter.com%2Fbinance%2Fstatus%2F2121557669618339988
+    says: Binance states that the zero-knowledge proof is complete. Public X embed of the original post.
+    primary: true
 ---
 
 Binance’s initial notice said it had not confirmed an impact on user funds. The exchange then edited that notice to state that user funds are safe, and subsequently said withdrawals would resume after the security issue is fully resolved. These are the vendor’s statements, not an independently audited reserve or loss assessment. No resumption time or technical containment report was supplied in those notices. The withdrawal notice does not specify affected networks or withdrawal routes; do not infer that every Binance product is affected. Those earlier notices supported L3 because they acknowledged disruption without confirming the suspected theft.
@@ -488,3 +506,7 @@ In a companion analysis, Bitquery estimates that by **November 6 at 10:00 UTC**,
 **November 12 law enforcement update.** DOJ says US government and private-sector efforts froze over **$2.7 billion** in stolen assets. It has court authorization to seize or restrain over **$1.2 billion** within that total. Tracing, freezing, seizure and forfeiture efforts continue. The announcement gives no confirmation of returned funds or additional customer payments. Binance’s earlier blocked-asset and replacement-funding figures retain their separate scopes. The same announcement covers the [separate FaceStealer campaign](/incidents/facestealer-video-lures/).
 
 **November 12 UTC reserve update.** Binance says it completed coverage of the impacted assets and committed more than **$6.34 billion** from part of SAFU, surplus Futures insurance funds and company treasury. It sourced tokens through market and OTC purchases and pledged to restore SAFU to about **$1 billion**. The earlier 95% and 98% notices describe previous stages. The November 12 **00:00 UTC** reserve snapshot covers **198 tokens**, with a full zero-knowledge proof expected to take approximately **40–50 hours**. Check the matching snapshot in the official reserve portal once its proof is available. Withdrawals still reopen in phases, so confirm your exact asset and network before relying on a transfer. Binance says affected tokens it no longer supports will be handled through its delisting process. The coverage figure is Binance’s account of replacement funding. Law-enforcement seizure and restraint figures track the stolen assets separately.
+
+**November 14 withdrawal update.** Binance says it reopened withdrawals on **87 networks** that week and aims to reopen the remaining networks and assets by the end of the following week. Check the exact asset and network in the app’s withdrawal screen or on the [official network status page](https://www.binance.com/en/network). Binance advises waiting briefly and retrying if a withdrawal does not go through during the rollout. Restored withdrawals do not establish that stolen assets were returned.
+
+**November 14 reserve proof update.** Binance separately says the zero-knowledge proof was generated for the November 12 00:00 UTC snapshot covering 198 tokens. Use Wallet → Verification in the official app or website and select the matching date to check inclusion of your balance. Verification speaks to that snapshot and its covered assets. It does not establish current reserves, return of stolen assets, or full withdrawal availability.
