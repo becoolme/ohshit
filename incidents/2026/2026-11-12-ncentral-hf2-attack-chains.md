@@ -40,6 +40,9 @@ timeline:
 - date: Nov 13, 2026
   title: N-able outlines Legacy API removal and endpoint hardening for HF3
   body: The vendor plans to remove Legacy API permanently and strengthen authentication and communication for Agents, Probes and appliances.
+- date: Nov 13, 2026
+  title: Italy’s CSIRT reports active exploitation of the Apache Axis flaw
+  body: The alert documents exploitation of CVE-2026-90436 and recommends migrating from unsupported Axis 1.x or applying Apache’s source patch. It does not identify which downstream products were observed under attack.
 checklist:
 - title: Disable Legacy API and restrict exposure now
   hint: At the system level, open Administration → Mail and Network Settings → Network Security → Legacy APIs and verify that the deprecated APIs are disabled. Restrict appliance access from untrusted networks. Preserve required Agent and Probe access through controlled paths and verify managed devices
@@ -54,6 +57,8 @@ checklist:
   hint: Hosted customers should update Agents and Probes per N-able guidance. The vendor applied temporary server-side protections. On-premises customers should verify Legacy API is disabled and continue the HF2 and endpoint updates. N-able disabled the hosted Intune integration and attempted to deactivate it for on-premises customers using it. N-able says support will contact customers where it could not deactivate the integration. Check restoration guidance with support.
 - title: Hunt using the vendor’s Legacy API indicators
   hint: 'Review outbound traffic to 157.20.241[.]16 (TCP 8080 and 19202–19418), 139.99.69[.]109:10128 and 79.76.51[.]56:39100. On 157.20.241[.]16:8080, look for /jup.sh, /xvgz, /xmrig.tgz, /ob/cronhit?h=jup_start_<rig>&persist=<method> and /ob/fcheck. Correlate matches with past configuration and host activity. A match alone does not establish compromise.'
+- title: Inventory other Axis 1.x deployments and apply product-specific fixes
+  hint: For standalone deployments, migrate to a supported SOAP engine or use a build with Apache’s source patch. Upgrade Confluence Data Center 9.2 to 9.2.28 or move to a supported 10.x or later release. If you cannot upgrade yet, clear Remote API (XML-RPC & SOAP) in Further Configuration and save. Verify that /plugins/servlet/soap-axis1/confluenceservice-v2 returns 403. Test dependent scripts, automations and add-ons first, then investigate previously exposed instances for compromise.
 sources:
 - name: Researcher’s 4EverAble2Shell report
   url: https://raw.githubusercontent.com/MSPNightmare/CVEs/ac2c37497f5d19639ec2f9a996a5c186a43dd8d7/0-Days/N-Central%20N-Able/4EverAble2Shell/README.md
@@ -103,7 +108,15 @@ sources:
   url: https://www.n-able.com/blog/n-able-vulnerability-remediation-update
   primary: true
   says: Outlines planned Legacy API removal and stronger authentication and communication for Agents, Probes and appliances in HF3.
-updated: 2026-11-14
+- name: CSIRT Italia alert (public republication by CSIRT Toscana)
+  url: https://csirt.regione.toscana.it/apache-axis-rilevato-sfruttamento-in-rete-della-cve-2026-90436-al02-261113-csirt-ita/
+  primary: true
+  says: Reports in-the-wild exploitation of the Axis flaw and gives migration or manual patch guidance for standalone deployments.
+- name: Atlassian Confluence Data Center advisory
+  url: https://confluence.atlassian.com/security/cve-2026-90436-remote-code-execution-in-confluence-data-center-1874560038.html
+  primary: true
+  says: Documents the Remote API prerequisite, fixed release and steps to verify the temporary mitigation.
+updated: 2026-11-15
 cves:
 - id: CVE-2026-90436
   name: Apache Axis SOAP class instantiation
@@ -121,3 +134,7 @@ The server chain uses Apache Axis CVE-2026-90436 to execute commands as the N-ce
 **Vendor response update.** N-able applied temporary protections to hosted environments and asks on-premises customers to verify that Legacy API is disabled. The November 13 download and callback indicators apply to customers who have not disabled Legacy API. Review historical exposure as well. The vendor is still assessing and remediating the incident and does not name a fixed build for the new chains in this update.
 
 On November 13, N-able outlined plans for HF3. The vendor intends to remove Legacy API permanently and harden authentication and communication for Agents, Probes and appliances to reduce the risk of agent impersonation. N-able says the agent impersonation it describes requires an existing foothold on an endpoint. Check the release notes for the build and its scope when HF3 ships.
+
+**Other Axis deployments.** On November 13, Italy’s CSIRT reported active exploitation of CVE-2026-90436 and gave no downstream product names for its observations. Apache says Axis 1.x parses the SOAP fault before service-level authentication handlers run. Remote code execution requires a suitable class on the classpath. For standalone Axis 1.x, migrate to a supported SOAP engine or apply Apache’s source patch. N-central customers should follow the vendor’s guidance above.
+
+Atlassian says affected Confluence Data Center installations are exposed only when Remote API (XML-RPC & SOAP) is enabled. Confluence 9.2.28 fixes the issue. Confluence 10.0 removed the feature, and Atlassian Cloud is unaffected. Atlassian’s advisory provides no confirmation of attacks against Confluence instances.
