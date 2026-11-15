@@ -33,9 +33,9 @@ checklist:
   - title: 立即关闭有风险的 LDAP 缓存
     hint: 在 Shiro 配置中查找 DefaultLdapRealm 和 JndiLdapRealm。将 authenticationCachingEnabled 设为 false，并清除旧的身份验证缓存。如果必须保留缓存，请使用 SimpleCredentialsMatcher 等能校验缓存凭据的匹配器，并测试成功登录一次后，错误密码是否仍被拒绝。
   - title: 升级并测试受保护的路由和方法
-    hint: 用 Maven 或 Gradle 盘点运行时依赖，将 Shiro 模块统一升级至 3.0.2 或更新版本。用无权限账户验证授权。升级前可将授权注解直接加在实现方法上。应用自行创建过滤器 bean 时，还要用不同大小写访问受保护的静态路径。
+    hint: 用 Maven 或 Gradle 盘点运行时依赖，将 Shiro 模块统一升级至 3.0.2 或更新版本。用无权限账户验证授权。升级前可将授权注解直接加在实现方法上。如果应用自行创建 ShiroFilterFactoryBean，且静态文件位于不区分大小写的文件系统上，升级前调用 setCaseInsensitive(true)，并用不同大小写访问受保护的路径。
   - title: 核查会话和账户变更
-    hint: 验证恢复记住的用户时会话 ID 是否更换。检查删除用户或收紧权限是否生效、空凭据是否被拒绝，以及保存的表单是否仅向预期主机重放。升级前，撤销访问权限后重启使用文件 Realm 的应用，并用 org.apache.shiro.form-resubmit-host 与 org.apache.shiro.form-resubmit-port 限制表单重放目标。发现异常登录时，保留应用、代理及 LDAP 日志，并使相关会话失效。
+    hint: 验证恢复记住的用户时会话 ID 是否更换。检查删除用户或收紧权限是否生效、空凭据是否被拒绝，以及保存的表单是否仅向预期主机重放。升级前，拒绝空密码，在渲染前校验不可信的身份主体值，并在更改文件型 PropertiesRealm 的访问权限后重启应用。通过 org.apache.shiro.form-resubmit-host 和 org.apache.shiro.form-resubmit-port 系统属性限制表单重放目标。发现异常登录时，保留应用、代理及 LDAP 日志，并使相关会话失效。
 sources:
   - name: Apache Shiro 安全报告
     says: 列出 8 个漏洞的配置前提、受影响版本和修复。
@@ -49,4 +49,4 @@ sources:
 
 CVE-2026-129349 要求应用开启 LDAP 身份验证缓存，且目标用户此前成功登录过。随后命中缓存时会跳过 LDAP 绑定，受影响身份域的默认匹配器会直接接受提交的密码。Apache 给出的 CVSS 4.0 评分为 9.1。公告未报告在野攻击。
 
-Shiro 3.0.1 首次修复 LDAP 和记住登录漏洞，其余 6 项需要 3.0.2。Apache 开源项目只为最新发行分支提供全部安全修复，仍在使用 1.x 或 2.x 的应用需要安排迁移。Shiro 是广泛使用的身份验证库，严重绕过需要特定配置和缓存登录，本批评为 L3。
+Shiro 3.0.1 首次修复 LDAP 和记住登录漏洞，其余 6 项需要 3.0.2。Apache 开源项目只为最新发行分支提供全部安全修复，仍在使用 1.x 或 2.x 的应用需要安排迁移。Shiro 是广泛使用的身份验证库，严重绕过需要特定配置和缓存登录，本批漏洞定为 L3。
