@@ -26,7 +26,7 @@ timeline:
   body: LIFULL and Kintetsu Real Estate give account-level estimates. Nippon Pet Food reports reissue of credentials for its LINE integration.
 - date: Nov 14, 2026
   title: Keihan Holdings reports scope across four subsidiaries
-  body: The group lists potentially affected LINE followers and other customer data by account and warns that counts can overlap.
+  body: The group lists potentially affected LINE followers and other customer data by account and warns that counts can overlap. Cable TV separately confirms exposure of its LINE profile and survey data.
 checklist:
 - title: Confirm exposure and containment for your tenant
   hint: Use support@sonicmoov.com or a known Sonicmoov support channel. Ask which tenant data and integrations were involved, whether vendor sessions and cloud permissions were revoked, and which integration credentials have been replaced.
@@ -83,4 +83,4 @@ Keihan Holdings published upper bounds by account. Potential exposure at Keihan 
 
 LIFULL confirmed that data from its LIFULL HOME’S member LINE account was taken. It gave an upper bound of 2,479 people as of November 12. The profile fields include display names, profile-image URLs and LINE user IDs. It was still checking status messages. Among those 2,479 people, campaign shipping records included 313 names, 761 email addresses and 422 addresses, with possible overlap. LIFULL began contacting affected people who could receive messages from that account on November 13. Kintetsu Real Estate identified up to 3,716 follower records and up to 137 records containing address or gender for the Paradis Gakuenmae account.
 
-Nippon Pet Food confirmed exposure involving its Beauty Pro LINE account, including profile details and some contact, prize delivery and survey data. It says credentials used to connect its LINE account were reissued and that notifications would begin on November 13. Cable TV’s November 14 notice identified LINE profile and survey information and directed inquiries to Sonicmoov at support@sonicmoov.com. Verify any notification through the affected organization’s established channel.
+Nippon Pet Food confirmed exposure involving its Beauty Pro LINE account, including profile details and some contact, prize delivery and survey data. It says credentials used to connect its LINE account were reissued and that notifications would begin on November 13. Cable TV’s November 14 notice identified LINE profile and survey information and directed inquiries to Sonicmoov at support@sonicmoov.com. The notices from Nippon Pet Food and Cable TV include former followers who blocked or removed the accounts. Verify any notification through the affected organization’s established channel.
