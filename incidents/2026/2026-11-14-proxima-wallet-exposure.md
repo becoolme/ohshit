@@ -15,7 +15,7 @@ timeline:
   body: Co-founder Theo estimates $200,000–$250,000 in affected funds, under 5% of total funds.
 - date: Nov 14, 2026
   title: Proxima narrows wallet scope and describes the refund plan
-  body: The team identifies a 15-day window, says it made some transfers to secure funds in fresh wallets and promises to reimburse affected SOL balances after reopening.
+  body: The team identifies a 15-day window, says it made some transfers to secure funds in fresh wallets and promises to reimburse affected SOL balances when the app reopens.
 checklist:
 - title: Stop using potentially exposed addresses
   hint: Review wallets created, imported or exported through Proxima during the stated window. Stop new deposits and automated strategies on those addresses. When the app is available, check My Wallet for the Compromised label. If you control an exposed key elsewhere, move assets you can still access to an independently generated wallet from a trusted device.
@@ -28,10 +28,10 @@ sources:
   url: https://publish.x.com/oembed?omit_script=true&url=https%3A%2F%2Fx.com%2F0xTheo__%2Fstatus%2F2121495544203755809
   primary: true
   says: Reports the SigNoz link and estimates $200,000–$250,000 in affected funds, under 5% of total funds.
-- name: Proxima co-founder’s November 14 follow-up
-  url: https://x.com/0xTheo__/status/2121579940671844400
+- name: Proxima co-founder’s November 14 follow-up via X’s public embed
+  url: https://publish.x.com/oembed?omit_script=true&url=https%3A%2F%2Fx.com%2F0xTheo__%2Fstatus%2F2121579940671844400
   primary: true
-  says: Describes the limited wallet window, protective transfers, the SOL refund plan and the intended account label. Full statement read in the linked public copy.
+  says: Authenticates the post and shows the SigNoz attribution. The full text on wallet scope and reimbursement is in the next source.
 - name: Public copy of Proxima’s follow-up
   url: https://teapawt.org/0xTheo__/status/2121579940671844400
   says: Preserves the complete text of the same Proxima statement.
