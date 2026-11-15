@@ -86,6 +86,6 @@ Previdian 在传感器上记录了两次利用尝试。Huntback 随后在诱捕�
 
 11 月 13 日，N-able 公布了 HF3 计划。厂商拟永久移除 Legacy API，并加强 Agent、Probe 和设备的认证与通信，以降低 Agent 冒用风险。N-able 表示，其描述的 Agent 冒用需要攻击者已在终端上取得立足点。HF3 发布后，核对发布说明中的构建号及修复范围。
 
-**其他 Axis 部署。** 意大利 CSIRT 在 11 月 13 日报告 CVE-2026-90436 正被在野利用，未说明所观察到的下游产品。Apache 指出，Axis 1.x 会在服务级认证处理器运行前解析 SOAP Fault。如果类路径中有可利用的类，攻击者可远程执行代码。独立部署可迁至受支持的 SOAP 引擎，或应用 Apache 的源代码补丁。N-central 用户应遵循上文的厂商指引。
+**其他 Axis 部署。** 意大利 CSIRT 在 11 月 13 日报告 CVE-2026-90436 正被在野利用，未说明所观察到的下游产品。Apache 将 Axis 1.x 至 1.4 列为受影响版本。引擎会在服务级认证处理器运行前解析 SOAP Fault。如果类路径中有可利用的类，攻击者可远程执行代码。独立部署可迁至受支持的 SOAP 引擎，或应用源代码补丁后重新构建。N-central 用户应遵循上文的厂商指引。[Apache 补丁](https://github.com/apache/axis-axis1-java/commit/41f3b4e8d04e310ca81f86b92630ab2c11d608bd)
 
-Atlassian 表示，只有启用了 Remote API (XML-RPC & SOAP) 的受影响 Confluence Data Center 实例才会暴露。9.2.28 已修复该问题，10.0 移除了该功能，Atlassian Cloud 不受影响。Atlassian 的公告没有确认 Confluence 实例遭利用。
+Atlassian 将修复前启用了 Remote API (XML-RPC & SOAP) 的 Confluence Data Center 1.x 至 9.x 列为受影响版本。9.2.28 已修复该问题，10.0 移除了该功能，Atlassian Cloud 不受影响。Atlassian 的公告没有确认 Confluence 实例遭利用。
