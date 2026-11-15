@@ -29,7 +29,7 @@ checklist:
 - title: Identify affected orders and notify customers
   hint: Ask support@goqsystem.com how to download your affected order list. Include buyers and delivery recipients when reconciling the list with your own order records. Preserve related access and export logs, and coordinate notices and reporting using Japan’s Personal Information Protection Commission guidance linked in the second notice.
 - title: Verify storefront and warehouse integrations
-  hint: Check the vendor’s API status page before resuming processing. Follow the partner-specific instructions for any service that requires action. For Rakuten, verify the API approval and refresh the license key, then recover missed orders via data import and reconcile inventory errors.
+  hint: Check the vendor’s API status page before resuming processing. Follow the partner-specific instructions for any service that requires action. For Rakuten, verify the API approval and refresh the license key, then import missed orders and reconcile inventory errors. For BASE, remove the old GoQSystem app in the developer account and set it up again. For STORES, obtain fresh refresh tokens for order management and inventory separately. Use Amazon Seller Central directly for FBA shipments while the GoQ Logi integration is suspended.
 - title: Verify delivery and account messages independently
   hint: Check unfamiliar delivery or payment requests in the original order page or through the carrier. For merchant logins, open your bookmark and confirm the host is order.goqsystem.com. If you entered a password on a lookalike, change it promptly through the genuine console and contact support@goqsystem.com.
 sources:
@@ -51,7 +51,7 @@ sources:
   says: Lists genuine login domains and steps for reporting or responding to lookalikes.
 ---
 
-GoQSystem centralizes order processing for online merchants. The intruder exploited a vulnerability in a contact form in the provider’s system. GoQSystem traced the incident to its own contact form. Its reports give no further exploit details. The provider removed the form and says admin-console IP restrictions will remain in effect while it validates security.
+GoQSystem centralizes order processing for online merchants. GoQSystem traced the intrusion to a vulnerability in its contact form. Its reports give no further exploit details. The provider removed the form and says admin-console IP restrictions will remain in effect while it validates security.
 
 The stolen data includes buyer and recipient names, addresses, phone numbers, email addresses and order details. The affected orders include records from before the November 10–11 intrusion. GoQSystem does not hold credit card data and excluded it from the leak. The November 13 totals count companies, orders and individuals separately. The provider planned to send affected merchants download instructions on November 14–15.
 
