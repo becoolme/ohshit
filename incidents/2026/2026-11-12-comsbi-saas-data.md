@@ -8,6 +8,7 @@ tags:
 - LINE
 - Data breach
 date: '2026-11-12'
+updated: 2026-11-15
 level: 4
 inTheWild: 'yes'
 timeline:
@@ -20,6 +21,9 @@ timeline:
 - date: Nov 13, 2026
   title: Tokyo Tatemono and Human Adjust disclose their scope
   body: Tokyo Tatemono confirms exposure involving up to 490 people. Human Adjust reports two potential exposure categories, up to 58,510 service users and up to 116,518 LINE followers.
+- date: Nov 13, 2026
+  title: LIFULL, Kintetsu Real Estate and Nippon Pet Food identify affected LINE accounts
+  body: LIFULL and Kintetsu Real Estate give account-level estimates. Nippon Pet Food reports reissue of credentials for its LINE integration.
 - date: Nov 14, 2026
   title: Keihan Holdings reports scope across four subsidiaries
   body: The group lists potentially affected LINE followers and other customer data by account and warns that counts can overlap.
@@ -51,6 +55,22 @@ sources:
   says: Lists affected LINE accounts, upper bounds by data category and possible double counting.
   url: https://www.keihan.co.jp/corporate/info/release/assets/261114_keihan-holdings.pdf
   primary: true
+- name: LIFULL customer notice
+  url: https://lifull.com/news/51097/
+  primary: true
+  says: Identifies the affected LINE account, profile and shipping fields, counts and individual notifications.
+- name: Kintetsu Real Estate customer notice
+  url: https://www.kintetsu-re.co.jp/r/pdf/261113.pdf
+  primary: true
+  says: Gives separate upper bounds for LINE followers and other user records for Paradis Gakuenmae.
+- name: Nippon Pet Food customer notice
+  url: https://www.npf.co.jp/news/detail/33
+  primary: true
+  says: Names the affected account and gives data categories, credential reissue and notification details.
+- name: Cable TV customer notice
+  url: https://www.cc9.jp/news/13680/
+  primary: true
+  says: Identifies follower registration and survey data and gives the incident contact.
 ---
 
 The compromised Sonicmoov accounts could administer multiple customers. How the attacker obtained the credentials remains under investigation. Sonicmoov says affected fields varied by customer and included names, phone numbers, email addresses, postal addresses, birth dates and gender. LINE follower data included display names, profile images, status messages and system-assigned LINE user IDs, which differ from the LINE IDs people choose for friend search. The SaaS does not store credit card data.
@@ -60,3 +80,7 @@ Tokyo Tatemono’s notice applies to registered members of its Nihonbashi buildi
 Sonicmoov says this compromise affected the SaaS environment. Its separately hosted Enterprise Infrastructure had its own earlier incident and credential response; Sonicmoov explicitly excludes it from this SaaS incident. For the SaaS, Sonicmoov says it restricted bulk data access and plans mandatory two-step authentication and source restrictions for the admin interface. Its notice does not confirm completion of every LINE credential rotation.
 
 Keihan Holdings published upper bounds by account. Potential exposure at Keihan Railway’s fan account covers 26,914 follower profiles. Kyoto Tower Sando lists 90,550 follower profiles and nine people’s names or addresses. Hirakata Mall lists 46,957 follower profiles and 35,025 people’s birth dates or gender. Keihan Department Store lists 51,223 follower profiles and 28,000 people’s other personal details. THE THOUSAND KYOTO and Kyoto Century Hotel together list 8,742 follower profiles and 1,298 people’s other personal details. Keihan says the counts can overlap both across accounts and between data categories within an account.
+
+LIFULL confirmed that data from its LIFULL HOME’S member LINE account was taken. It gave an upper bound of 2,479 people as of November 12. The profile fields include display names, profile-image URLs and LINE user IDs. It was still checking status messages. Among those 2,479 people, campaign shipping records included 313 names, 761 email addresses and 422 addresses, with possible overlap. LIFULL began contacting affected people who could receive messages from that account on November 13. Kintetsu Real Estate identified up to 3,716 follower records and up to 137 records containing address or gender for the Paradis Gakuenmae account.
+
+Nippon Pet Food confirmed exposure involving its Beauty Pro LINE account, including profile details and some contact, prize delivery and survey data. It says credentials used to connect its LINE account were reissued and that notifications would begin on November 13. Cable TV’s November 14 notice identified LINE profile and survey information and directed inquiries to Sonicmoov at support@sonicmoov.com. Verify any notification through the affected organization’s established channel.
