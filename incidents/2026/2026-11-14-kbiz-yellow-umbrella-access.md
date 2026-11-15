@@ -23,11 +23,11 @@ checklist:
   hint: Save the sender, message and time. Use the published KBIZ contact to report suspected harm. In South Korea, the privacy infringement reporting service can also be reached on 118.
 sources:
 - name: KBIZ Yellow Umbrella incident notice
-  url: https://www.8899.or.kr/ct/view/AA03234?menuId=C100101010&ptwtDetlDvCd=CUNTC10
+  url: https://www.8899.or.kr/ct/view/AA03234?ptwtDetlDvCd=CUNTC10&menuId=C100101010
   primary: true
   says: Identifies the November 11 access, suspected data fields, notifications, containment steps and public inquiry channels.
 ---
 
-Yellow Umbrella is a mutual-aid program for small businesses and individual business owners. Its operator, the Korea Federation of SMEs (KBIZ), lists names, the first seven digits of resident registration numbers, mobile numbers, home addresses, home phone numbers, email addresses, and text or email opt-in status among the fields potentially viewed. Only some fields may apply to a given person. KBIZ says the remaining registration-number digits are stored using a method it describes as irreversible.
+Yellow Umbrella (노란우산) is a mutual-aid program for small businesses and individual business owners. Its operator, the Korea Federation of SMEs (KBIZ), lists names, the first seven digits of resident registration numbers, mobile numbers, home addresses, home phone numbers, email addresses, and text or email opt-in status among the fields potentially viewed. Only some fields may apply to a given person. KBIZ says the remaining registration-number digits are stored using a method it describes as irreversible.
 
 The operator says it restricted access to the affected inquiry screen and will follow up individually and on its website when it verifies whether records were accessed or disclosed. The notice gives neither a victim count nor a confirmed exfiltration total.
