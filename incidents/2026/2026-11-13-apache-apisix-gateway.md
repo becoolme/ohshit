@@ -15,7 +15,7 @@ cves:
   - id: CVE-2026-124679
     score: 7.8
     name: Forged identity on skipped or degraded authentication
-    description: From 3.18.0 through 3.19.0, tokenless jwe-decrypt requests can pass a caller-supplied value if strict is false and the forward header differs from the token header. A forward-auth request can do likewise if degradation is enabled and the auth service is unavailable.
+    description: From 3.18.0 through 3.19.0, tokenless jwe-decrypt requests can pass a caller-supplied value if strict is false and forward_header differs from the token header. A forward-auth request can do likewise if allow_degradation is enabled and the auth service is unavailable.
   - id: CVE-2026-124666
     score: 6.4
     name: Wolf identity headers survive authentication fallback
@@ -49,7 +49,7 @@ timeline:
     body: The notices identify affected releases and specific configuration prerequisites.
 checklist:
   - title: Upgrade the gateway and migrate affected settings
-    hint: Roll 3.20.0 or later across the gateway fleet. Review the release notes for route changes. In particular, move custom wolf-rbac header_prefix settings from Consumers to Routes or Services, including multi-auth entries. Ensure affected Consumers set appid and remove any mcp-bridge configuration before deploying.
+    hint: Roll 3.20.0 or later across the gateway fleet. Review the release notes for route changes. In particular, move custom wolf-rbac header_prefix settings from Consumers to Routes or Services, including multi-auth entries. Ensure affected Consumers set appid. Remove any mcp-bridge configuration before deploying.
   - title: Check route and mTLS boundaries
     hint: Find public routes sharing upstreams with authenticated routes. Require upstream authorization or restrict the public route until patched. Test encoded dot segments and encoded slashes against protected routes in staging, including certificate-free requests that should fail. Review skip_mtls_uri_regex exemptions.
   - title: Test identity and permission failures
