@@ -24,7 +24,7 @@ checklist:
 - title: 发起转账前检查对应线路
   hint: 查阅交易所的 KAVA 充值提现公告，核对拟使用的跨链桥状态。Kava 已暂停 Axelar 提现。已发起的转账请通过官方客服查询，忽略主动发来的资产追回邀约。
 - title: 关联疑似利用交易
-  hint: 先核对 Kava 钱包 kava1uzx5924cqsutcw365ajs8kkc3rr4vtlyzms255 和 kava1v2s266sll8ca5xrs06swmsc00nwwt7u77eufk4，以及 BNB Chain 上的出售地址 0x37d732914f86cc6eb1e87419e3046a739f011042。其余角色和路径见 Bitquery 完整地址和交易清单。核对网络、时间和角色，单一命中不能证明归属或失陷。
+  hint: 先核对 Kava 钱包 kava1uzx5924cqsutcw365ajs8kkc3rr4vtlyzms255 和 kava1v2s266sll8ca5xrs06swmsc00nwwt7u77eufk4，以及 BNB Chain 上的出售地址 0x37d732914f86cc6eb1e87419e3046a739f011042。其余角色和路径见 Bitquery 完整清单，共 22 项，含地址、交易哈希及 Relay 订单编号。核对网络、时间和角色，单一命中不能证明归属或失陷。
 sources:
 - name: Kava 的范围更新（X 官方公开嵌入）
   says: 确认事件限于 Kava Lend，说明发生跨链和出售，并排除无限增发。
