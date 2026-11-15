@@ -6,7 +6,7 @@ wipe: Contain suspect runs, revoke compromised tokens, rotate reachable secrets 
 inTheWildNote: StepSecurity observed execution. WebdriverIO recorded unauthorized bot commits.
 level: 4
 date: '2026-11-11'
-updated: 2026-11-14
+updated: 2026-11-15
 tags:
 - GitHub Actions
 - CI/CD
@@ -34,6 +34,9 @@ timeline:
 - date: Nov 12, 2026
   title: SafeDep publishes malicious commit counts and affected releases
   body: The report counts about 8,100 public repositories that received malicious commits and identifies redock v1.0.282 as another release containing the payload.
+- date: Nov 12, 21:35 UTC
+  title: Endor Labs reports 8,926 repositories with payload evidence
+  body: The updated inventory counts repositories with malicious commits. More than 829 repositories had postinstall hooks added.
 - date: Nov 13, 2026
   title: Mate Security publishes additional campaign evidence
   body: The researchers document the October trials, distinguish deleted runs from started jobs and identify the first AWS session name.
@@ -80,6 +83,10 @@ sources:
   says: Lists versions 3.14.2, 3.14.3 and 3.14.4 as flagged.
   url: https://packagist.org/packages/digitalelvis/neuronai-studio/filter-lists/malware/
   primary: true
+- name: Endor Labs repository investigation
+  url: https://www.endorlabs.com/learn/github-actions-supply-chain-attack-targeting-ci-secrets-at-scale
+  primary: true
+  says: Counts repositories with payload evidence and identifies postinstall hooks, registry packages and the difference between probes and malicious commits.
 ---
 
 The campaign requires a valid token with repository write access and a path to execute the code. It modifies an existing workflow, creates a new workflow, appends to a script CI already calls, or adds a hidden script and hooks it into an npm lifecycle or build/test command. Workflow variants can explicitly pass secrets to the script. Script variants can read runner memory and credential stores when the job has access. Cloud escalation depends on the runner’s credentials and the permissions and trust attached to them. Required-check forgery exists in the payload but was disabled in the samples StepSecurity examined.
@@ -115,6 +122,10 @@ The report documents HTTP delivery in the observed configuration and notes Teleg
 ### SafeDep’s November 12 repository investigation
 
 SafeDep identified about 8,100 public repositories that received malicious commits between November 10 at 12:46 UTC and November 12 at 04:36 UTC. Its search covered public default branches and excluded repositories that only received probes. This count does not show where the payload ran or credentials were sent. SafeDep also checked published releases from injected repositories in npm, the Go module proxy and Packagist and found no payload outside the three packages above. Its review did not cover PyPI or other registries.
+
+### Endor Labs’ November 12 repository inventory
+
+Endor Labs lists **8,926 repositories with payload evidence** in its 21:35 UTC update. Its report says postinstall hooks were added to **more than 829 repositories**. These are counts of changes observed in repositories. They do not establish execution or credential theft in each repository. Compare the inventory with your repository and inspect the cited commits, including `package.json` and the referenced shell script, before investigating whether a developer install or CI job ran the hook. The Endor Labs and SafeDep inventories cover overlapping activity and should not be added together.
 
 ### Mate Security’s November 13 follow-up
 
