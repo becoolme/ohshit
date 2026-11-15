@@ -1,6 +1,6 @@
 ---
 title: TradeWaltz confirms theft of 130 trade documents after contractor key abuse
-summary: TradeWaltz says an attacker abused an administrative access key stored on a compromised contractor server. The provider confirmed the theft of 130 trade documents and notified identified customers. Production and training remain offline after TradeWaltz dropped its planned November 16 restart.
+summary: TradeWaltz says an attacker abused an administrative access key stored on a compromised contractor server. The provider confirmed the theft of 130 trade documents and notified identified customers. Production and training remain offline, with the planned November 16 restart postponed.
 splash: TradeWaltz customers with documents in production or training, both breached through an abused administrative key.
 wipe: Verify any notice with TradeWaltz and review exposed documents and related trade instructions.
 inTheWildNote: TradeWaltz confirms unauthorized access and acquisition of 130 trade documents.
@@ -46,4 +46,4 @@ The provider first disclosed the intrusion and service suspension on November 10
 
 In its November 12 update, the company says 130 trade documents were taken and that the documents included names and initials. The number describes documents. It has not published a distinct count of people or customers. The provider completed individual contact with identified affected customers. TradeWaltz for Grain Importers and TradeWaltz for Export Documentary remained available. In its tenth notice, on November 13, the company says it finished identifying the affected data and started recovery on November 12.
 
-In report 13, dated November 16 in Japan, TradeWaltz says recovery work and security checks are still underway. The company says it cannot reopen production and training as planned that day. It plans to announce the restart date and time in a further update on November 16. Check the incident notice for confirmation before retrying submissions.
+In report 13, dated November 16 in Japan, TradeWaltz says recovery work and security checks are still underway. The company no longer expects production and training to reopen that day. It plans to announce the restart date and time in a further update on November 16. Check the incident notice for confirmation before retrying submissions.
