@@ -32,6 +32,9 @@ timeline:
 - date: 2026年11月13日
   title: N-able 公布 HF3 的 Legacy API 移除和端点加固计划
   body: 厂商计划永久移除 Legacy API，并加强 Agent、Probe 和设备之间的认证与通信。
+- date: 2026年11月13日
+  title: 意大利 CSIRT 报告 Apache Axis 漏洞在野利用
+  body: 通报记录了针对 CVE-2026-90436 的在野利用，建议迁离已停止支持的 Axis 1.x，或手动应用 Apache 补丁。通报未指明所观察到的下游产品。
 checklist:
 - title: 立即关闭 Legacy API 并限制暴露
   hint: 在系统级打开 Administration → Mail and Network Settings → Network Security → Legacy APIs，确认已停用旧版 API。限制不可信网络访问设备，通过受控路径保留 Agent 和 Probe 所需的连接，并确认受管设备仍能报到。
@@ -43,6 +46,8 @@ checklist:
   hint: 托管客户按 N-able 指引更新 Agent 和 Probe，厂商已部署临时服务端防护。自管客户核实 Legacy API 已禁用，并继续执行 HF2 和端点更新。N-able 暂停托管环境的 Intune 集成，并尝试暂停已启用该集成的自管环境。若无法暂停自管环境中的集成，N-able 支持团队会联系客户。请通过支持团队核实恢复安排。
 - title: 对照厂商的 Legacy API 指标排查
   hint: '检查到 157.20.241[.]16（TCP 8080、19202–19418）、139.99.69[.]109:10128 和 79.76.51[.]56:39100 的出站流量。在 157.20.241[.]16:8080 上查找 /jup.sh、/xvgz、/xmrig.tgz、/ob/cronhit?h=jup_start_<rig>&persist=<method> 和 /ob/fcheck。将命中项与历史配置和主机活动关联，单项命中不能证明已失陷。'
+- title: 盘点其他 Axis 1.x 部署并应用对应产品的修复
+  hint: 独立部署可迁至仍受支持的 SOAP 引擎，或使用应用 Apache 补丁的 Axis 构建。Confluence Data Center 9.2 可升级至 9.2.28，或迁至仍受支持的 10.x 或更高版本。暂时无法升级时，在 Further Configuration 取消勾选 Remote API (XML-RPC & SOAP)，保存后确认 /plugins/servlet/soap-axis1/confluenceservice-v2 返回 403。先测试依赖该接口的脚本、自动化和插件，再检查曾暴露的实例是否存在入侵迹象。
 sources:
 - says: 记录测试服务器构建、SOAP 端点、root 攻击链及 Legacy API 前提。
 - says: 记录测试构建、设备标识符，以及 Windows Agent 和 Probe 攻击链各自的利用前提。
@@ -60,6 +65,10 @@ sources:
   says: 公布 Legacy API 相关指标及托管和自管环境分别应采取的措施。
 - name: N-able 漏洞修复进展
   says: 说明 HF3 计划移除 Legacy API，并加强 Agent、Probe 和设备的认证与通信。
+- name: 意大利 CSIRT 预警（托斯卡纳 CSIRT 公开转载）
+  says: 报告 Axis 漏洞的在野利用，并给出独立部署的迁移或手动打补丁建议。
+- name: Atlassian Confluence Data Center 公告
+  says: 说明 XML-RPC 和 SOAP 远程 API 这一利用前提、修复版本及禁用该接口的验证步骤。
 cves:
 - name: Apache Axis SOAP 类实例化
   description: 可达的 Axis 1.x SOAP 路径允许未认证调用者实例化类。在 N-central 中，已披露的服务器链要求启用 Legacy API，并利用另一处缺陷提权至 root。
@@ -76,3 +85,7 @@ Previdian 在传感器上记录了两次利用尝试。Huntback 随后在诱捕�
 **厂商处置更新。** N-able 已在托管环境部署临时防护，并要求自管客户确认 Legacy API 已禁用。11 月 13 日的下载和回连指标适用于未禁用 Legacy API 的客户。应同时核查历史暴露。厂商仍在评估和处置，尚未在这份更新中公布新攻击链的修复版本。
 
 11 月 13 日，N-able 公布了 HF3 计划。厂商拟永久移除 Legacy API，并加强 Agent、Probe 和设备的认证与通信，以降低 Agent 冒用风险。N-able 表示，其描述的 Agent 冒用需要攻击者已在终端上取得立足点。HF3 发布后，核对发布说明中的构建号及修复范围。
+
+**其他 Axis 部署。** 意大利 CSIRT 在 11 月 13 日报告 CVE-2026-90436 正被在野利用，未说明所观察到的下游产品。Apache 指出，Axis 1.x 会在服务级认证处理器运行前解析 SOAP Fault。如果类路径中有可利用的类，攻击者可远程执行代码。独立部署可迁至受支持的 SOAP 引擎，或应用 Apache 的源代码补丁。N-central 用户应遵循上文的厂商指引。
+
+Atlassian 表示，只有启用了 Remote API (XML-RPC & SOAP) 的受影响 Confluence Data Center 实例才会暴露。9.2.28 已修复该问题，10.0 移除了该功能，Atlassian Cloud 不受影响。Atlassian 的公告没有确认 Confluence 实例遭利用。
