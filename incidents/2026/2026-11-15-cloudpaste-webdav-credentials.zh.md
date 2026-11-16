@@ -12,7 +12,7 @@ timeline:
   title: 较早的报告披露同一接口的访问控制缺陷
   body: 报告描述未经授权读取文件及绕过分享密码的问题。
 - date: 11月15日 02:57 UTC
-  title: 研究人员公布 WebDAV 凭据泄露的复现
+  title: 研究人员在项目跟踪器披露 WebDAV 凭据泄露
   body: 测试实例回传存储凭据，研究人员用这些凭据读取了未分享的文件。
 - date: 11月16日 00:00 UTC
   title: VulnCheck 发布 CVE-2026-129494
@@ -27,6 +27,8 @@ checklist:
 sources:
 - name: Wu Yulun 的 CloudPaste 复现报告
   says: 记录公开 WebDAV 分享、直连上游请求，以及如何重用响应中的存储凭据。
+- name: 研究人员在 CloudPaste 问题跟踪器的披露
+  says: 记录研究人员公开报告凭据泄露并链接复现的时间。
 - name: VulnCheck CVE 记录
   says: 列出受影响版本范围及 CVSS 4.0 评分 8.7。
 - name: 较早的代理链接访问控制报告

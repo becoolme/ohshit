@@ -18,7 +18,7 @@ timeline:
   title: An earlier report identifies access-control flaws in the same endpoint
   body: It describes unauthorized file reads and a share-password bypass.
 - date: Nov 15, 02:57 UTC
-  title: Researcher publishes reproduction of WebDAV credential exposure
+  title: Researcher reports WebDAV credential exposure in the project tracker
   body: A test deployment returned the storage credentials and the researcher used them to read an unshared file.
 - date: Nov 16, 00:00 UTC
   title: VulnCheck publishes CVE-2026-129494
@@ -35,6 +35,10 @@ sources:
   url: https://vul.yulun.ac.cn/zh-CN/20261115/cloudpaste/
   primary: true
   says: Documents the public WebDAV share, direct upstream request and reuse of the returned storage credentials.
+- name: Researcher disclosure in the CloudPaste issue tracker
+  url: https://github.com/ling-drag0n/CloudPaste/issues/223
+  primary: true
+  says: Records when the researcher publicly reported the credential exposure and linked the reproduction.
 - name: VulnCheck CVE record
   url: https://cveawg.mitre.org/api/cve/CVE-2026-129494
   primary: true
