@@ -20,7 +20,7 @@ cves:
     description: "Someone with release write access can delete another attachment's stored file if they know its UUID."
   - name: "Protected file pattern bypass"
     id: CVE-2026-123638
-    description: "A writer can bypass protected file patterns using names Git quotes during matching."
+    description: "A writer can bypass protected file patterns because Gitea matched names against Git's quoted output."
   - name: "Cross-repository review context leak"
     id: CVE-2026-126338
     description: "A signed-in user with a review ID can copy diff context from a repository they cannot read."
@@ -29,7 +29,7 @@ cves:
     description: "A crafted issue reference to attacker-controlled content can run script when another user hovers over it."
   - name: "Workflow trust survives repository transfer"
     id: CVE-2026-118535
-    description: "A transferred workflow source can still run in former owner repositories with their Actions secrets and token."
+    description: "After a repository registered as an owner-scoped workflow source is transferred, the new owner can modify workflows that still run with the former owner's repository secrets and token."
   - name: "Unlimited TOTP attempts"
     id: CVE-2026-123002
     description: "An attacker who already knows an account password can repeatedly guess its six-digit TOTP."
@@ -44,7 +44,7 @@ cves:
     description: "Shared routes could expose issue or pull request data to users with only the other permission. Earlier releases covered some API routes."
   - name: "Actions approval satisfies required review"
     id: CVE-2026-128365
-    description: "In an affected organization, a user who can change review requests can make an Actions approval count toward required approvals."
+    description: "In the organization that owns team ID 2, a user who can change review requests can make an Actions approval count toward required approvals."
   - name: "Write access during repository provisioning"
     id: CVE-2026-129337
     description: "A user with read access can push over HTTP before a migration, fork or template-created repository has its hooks."
@@ -77,7 +77,7 @@ timeline:
     body: The maintenance release closes the initialization race, restricts repository search output and repairs other access control and workflow issues.
 checklist:
   - title: Upgrade the Gitea instance
-    hint: Back up the database, configuration and repositories. Use the official update procedure for your deployment, restart the service and verify the running version with gitea --version inside the service environment.
+    hint: Back up the database, configuration and repositories. Follow Gitea’s upgrade procedure for your deployment, restart the service and verify the running version with gitea --version inside the service environment.
   - title: Review possible exposure through repository search
     hint: On installations that ran 28.0.0 through 28.3.0, check proxy logs for unusual GET /repo/search use if logs are available. Identify owners of visible repositories with a commit status and reset passwords that may have been exposed. Ask owners to change reused passwords on other services.
   - title: Investigate suspect hooks and workflows
@@ -101,8 +101,10 @@ sources:
     says: "Shows when a transferred source can access secrets in consuming workflows."
 ---
 
-The initialization race, CVE-2026-125423, needs repository creation and push rights, automatic initialization with the default README, and a server layout where a crafted symlink can resolve to a writable Git hook. Successful execution has the operating system permissions of the Gitea service. The maintainer reproduced the issue on 28.3.0, 28.2.0, 1.27.1 and 1.25.5. Turning off user-defined Git hooks alone does not close this path.
+The initialization race, CVE-2026-125423, needs repository creation and push rights, automatic initialization with the default README, and a server layout where a crafted symlink can resolve to a writable Git hook. Successful execution has the operating system permissions of the Gitea service. The advisory documents reproduction on 28.3.0, 28.2.0, 1.27.1 and 1.25.5. Turning off user-defined Git hooks alone does not close this path.
 
-The repository search leak, CVE-2026-123006, affects 28.0.0 through 28.3.0. Access requires a signed-in account and a visible repository with a commit status. The exposed password material can support offline guessing. The source does not establish which accounts, if any, were targeted.
+The repository search leak, CVE-2026-123006, affects 28.0.0 through 28.3.0. Access requires a signed-in account and a visible repository with a commit status. The advisory demonstrates the exposure through public repositories with a commit status. The material includes hashes, salts, and primary email addresses and can support offline password guessing. The source does not establish which accounts, if any, were targeted.
+
+The [official upgrade documentation](https://docs.gitea.com/installation/upgrade-from-gitea) covers deployment-specific steps. If you suspect service account command execution, preserve evidence, isolate the affected instance, and rotate exposed credentials from a trusted system before restoring service.
 
 The 28.4.0 binaries also use Go 1.27.4 for the HTTP server fix already covered in the [Go November advisory](/incidents/go-november-security/). Some Gitea fixes shipped earlier. The RubyGems index fix first shipped in 28.3.0, and parts of the issue and pull request authorization fix shipped in 28.2.0 and 28.3.0. Upgrade to the full release to pick up the remaining fixes.
