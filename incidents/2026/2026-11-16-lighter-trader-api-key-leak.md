@@ -21,7 +21,7 @@ timeline:
     body: The operator attributed the incident to one trader’s account and said the protocol and smart contracts were unaffected.
 checklist:
   - title: Revoke suspected API credentials and pause affected trading automation
-    hint: Use Lighter’s API key inventory to identify the affected key. Replace a signing key using Lighter’s API key integration guide or contact support if you cannot invalidate it. Revoke affected read-only tokens separately and update your bots and secret stores.
+    hint: Use Lighter’s API key inventory to identify the affected key. Use Lighter’s ChangePubKey flow to replace the affected signing key at its existing index with L1 authorization. Verify the old key no longer works or contact support. Revoke affected read-only tokens separately and update your bots and secret stores.
   - title: Review account and integration activity
     hint: Preserve trade, order, transfer and withdrawal history and relevant bot logs. Check for unfamiliar activity and key changes, and report suspicious records to Lighter through its official channels.
   - title: Verify service recovery before retrying withdrawals
@@ -39,6 +39,10 @@ sources:
     url: https://docs.lighter.xyz/api/api-keys
     says: Documents API key inspection and separate revocation for read-only tokens.
     primary: true
+  - name: Lighter API key integration guide
+    url: https://docs.lighter.xyz/developers/integration-guides/api-keys
+    says: Explains key registration and which requests also require L1 authorization.
+    primary: true
   - name: DeFi Prime report with links to Lighter’s notices
     url: https://defiprime.com/lighter-pauses-withdrawals-after-api-key-leak
     says: Reports the planned contract upgrade and the withdrawal reopening target.
@@ -50,4 +54,6 @@ sources:
 
 Lighter attributed the incident to a leaked API key for one trader’s account. The operator described its activation of Guardian mode on its smart contract as a precaution. The announcement did not explain how the key was exposed, how it was used, or how that access led to the withdrawal. Lighter said its protocol and smart contracts were unaffected. The operator planned a contract upgrade and aimed to reopen withdrawals on November 16. The cited updates do not confirm either had been completed.
 
-Bitquery traced an Ethereum withdrawal of about 10.39 million USDC and a subsequent swap into ETH. The observed withdrawal amount does not establish the aggregate loss. Lighter did not confirm reports of a second affected trader account or provide an aggregate loss figure in the cited updates.
+Lighter’s documentation says an API key alone can make a secure withdrawal back to the account’s originating L1 address. Fast withdrawals and transfers to another L1 owner also require L1 authorization. The operator’s explanation did not identify which path was used.
+
+Bitquery traced an Ethereum withdrawal of about 10.39 million USDC to `0xb3fffca23d4444ee73349825acd84f7b5020e387` and a subsequent swap into ETH. Its report links to the transaction and downstream addresses. The observed withdrawal amount does not establish the aggregate loss. Lighter did not confirm reports of a second affected trader account or provide an aggregate loss figure in the cited updates.
