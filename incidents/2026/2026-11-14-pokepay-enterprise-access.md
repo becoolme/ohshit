@@ -17,7 +17,7 @@ timeline:
     body: Pocket Change restores Enterprise service while it continues securing external integrations. Fuku App and Hokupay restore payments separately. Kita Ward reports possible exposure of merchant application data.
   - date: Nov 16, 2026
     title: Hokupay reopens more top-up options
-    body: Kita Ward reports that card and convenience-store top-ups are available again. Direct bank-account top-ups remain paused in that update.
+    body: Kita Ward reports that credit-card and convenience-store top-ups are available again. Direct bank-account top-ups remain paused in that update.
 checklist:
   - title: Check the status of your own payment app
     hint: Use the app or issuer's official notice before retrying payments or top-ups. Check transaction history and balance first to avoid submitting an unresolved payment twice.
@@ -48,6 +48,6 @@ sources:
     primary: true
 ---
 
-Pocket Change uses Pokepay Enterprise to support electronic money programs run by other organizations. The company paused the platform after detecting unauthorized access on November 14. Fuku App and the University of Tokyo Co-op reported outages. Pocket Change continued adding safeguards for external integrations when the platform reopened, and each issuer published its own recovery status.
+Pocket Change uses Pokepay Enterprise to support electronic money programs run by other organizations. The company paused the platform after detecting unauthorized access on November 14. Fuku App and the University of Tokyo Co-op reported outages. Pocket Change continued adding safeguards for external integrations when the platform reopened, and the issuers published their own recovery status. Fuku App reported that credit-card and Seven Bank ATM top-ups resumed, with BankPay direct bank-account top-ups still paused.
 
 Kita Ward says a third party may have obtained Hokupay merchant applications containing a representative’s date of birth, address, phone number and email address, along with the merchant’s payout bank account details. The ward is investigating the scope. Fuku App said it had not confirmed a leak of its users’ personal information. The notices did not establish the intrusion path or report confirmed financial losses.
