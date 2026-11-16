@@ -21,7 +21,7 @@ checklist:
   - title: Identify hardware configurations exposed to physical access
     hint: Inventory exact device models, firmware and TPM type. Verify the board and flash configuration with the OEM. On Linux on AMD, read AMD SPI Replay protections in fwupdmgr security or check rpmc_spirom_available and rpmc_production_enabled when present. Missing attributes are inconclusive.
   - title: Replace short numeric PINs and enforce longer minimums
-    hint: The researchers recommend increasing numeric PIN length by at least two digits. For the four- and six-digit examples, use at least six digits for Windows Hello and eight for BitLocker TPM+PIN. Set separate PIN policies and check existing PINs. Confirm BitLocker recovery keys are available before changing startup PINs.
+    hint: The researchers recommend increasing numeric PIN length by at least two digits. For the four- and six-digit examples, use at least six digits for Windows Hello and eight for BitLocker TPM+PIN. In Group Policy, use System > PIN Complexity > Minimum PIN length for Windows Hello for Business and Windows Components > BitLocker Drive Encryption > Operating System Drives > Configure minimum PIN length for startup for BitLocker. Check existing PINs and confirm recovery keys are available before changing startup PINs.
   - title: Protect devices and verify OEM remediation
     hint: Restrict physical access to devices and investigate suspected board tampering. Track OEM advisories for the exact board and firmware configuration. Continue using long PINs while waiting for a verified fix.
 sources:
