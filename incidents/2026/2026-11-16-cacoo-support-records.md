@@ -30,7 +30,7 @@ checklist:
   - title: Check payment or account requests through a known channel
     hint: Avoid links and attachments in unexpected messages that cite this breach. Contact Nulab directly about a support request and verify unexpected card activity in your issuer’s app or with the number on the card.
   - title: Check the status before restarting Cacoo workflows
-    hint: Use [Nulab’s Cacoo maintenance entry](https://nulab.statuspal.io/incidents/411742?lang=en) to confirm service recovery. Once Nulab announces reopening, verify access to the boards and integrations your team uses before resuming queued work.
+    hint: Use the Cacoo maintenance entry linked in the sources to confirm service recovery. Once Nulab announces reopening, verify access to the boards and integrations your team uses before resuming queued work.
 sources:
   - name: Nulab’s initial Cacoo security notice
     url: https://nulab.com/ja/info/20261116_cacoo_01/
@@ -44,8 +44,12 @@ sources:
     url: https://nulab.com/ja/info/20261116_cacoo_backlog/
     says: Explains environment separation and what Nulab had found about customer access in other services.
     primary: true
+  - name: Cacoo maintenance status
+    url: https://nulab.statuspal.io/incidents/411742
+    says: Tracks the service outage and records its start at 09:45 UTC.
+    primary: true
 ---
 
-The attacker used Nulab credentials to reach the production environment of Cacoo, its online whiteboard and diagramming service. Nulab disabled the credentials, blocked the source of the attack and began replacing related credentials. Nulab is working with external specialists to determine how the credentials were obtained and what else the attacker could access. The service had no confirmed reopening time at the November 16 disclosure.
+The attacker used Nulab credentials to reach the production environment of Cacoo, its online whiteboard and diagramming service. Nulab disabled the credentials, blocked the source of the attack and began replacing related credentials. Nulab is working with external specialists to determine how the credentials were obtained and what else the attacker could access. The service had no confirmed reopening time at the November 16 disclosure. Nulab said it had stepped up monitoring across its services.
 
 The approximately 792 affected support records included names, email addresses, phone numbers and addresses. Some included the last four digits of a credit card. This is a preliminary count of records. Nulab did not give a count of unique people, and its notice did not establish exposure of full card numbers or board contents. In a same-day update, Nulab said it had begun contacting affected customers and had filed its report with Japan’s Personal Information Protection Commission.
