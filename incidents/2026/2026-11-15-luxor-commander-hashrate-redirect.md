@@ -22,7 +22,7 @@ checklist:
     hint: Luxor reported normal Commander operation and said users did not need to take action. Confirm any new instructions with Luxor before applying changes.
 sources:
   - name: Luxor Technology disclosure
-    url: https://x.com/luxor/status/2122018094914601464
+    url: https://publish.twitter.com/oembed?omit_script=true&url=https%3A%2F%2Fx.com%2Fluxor%2Fstatus%2F2122018094914601464
     says: Confirms the unauthorized redirect, affected account scope, patch, restoration steps and compensation commitment.
     primary: true
   - name: CryptoCompass report with Luxor’s full public statement
@@ -32,4 +32,4 @@ sources:
 
 Luxor’s internal monitoring detected that mining equipment managed through Commander had been pointed at another pool without authorization. Luxor said just over a dozen client accounts were affected for a limited period and reported that no data was leaked or exfiltrated from its systems. Its notice did not describe the initial access method or name fixed versions.
 
-Luxor said it patched Commander within two hours, started restoring machines to their original pool settings and would compensate each affected client for redirected hashrate as if mining had continued normally. It reported normal Commander operation and said users did not need to take action. The disclosure did not quantify aggregate losses or confirm that reimbursements had been paid.
+Luxor said it patched Commander within two hours, started restoring machines to their original pool settings and would compensate each affected client for redirected hashrate as if mining had continued normally. It reported normal Commander operation and said users did not need to take action. Luxor said it would publish a postmortem. The disclosure did not quantify aggregate losses or confirm that reimbursements had been paid.
