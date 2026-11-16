@@ -16,7 +16,7 @@ checklist:
   - title: 识别可能被物理接触的硬件配置
     hint: 盘点准确的设备型号、固件和 TPM 类型，并向整机厂商核实主板和闪存配置。AMD 设备可在 Linux 上查看 fwupdmgr security 的 AMD SPI Replay protections，或读取可用的 rpmc_spirom_available 和 rpmc_production_enabled。缺少这些属性时无法据此判定。
   - title: 更换较短的数字 PIN 并提高最低长度
-    hint: 研究人员建议至少增加两位数字。对应论文中的四位和六位示例，Windows Hello 至少设为六位，BitLocker TPM+PIN 至少设为八位。分别设置两项 PIN 策略并检查现有 PIN。更改启动 PIN 前先确认可以取得 BitLocker 恢复密钥。
+    hint: 研究人员建议至少增加两位数字。对应论文中的四位和六位示例，Windows Hello 至少设为六位，BitLocker TPM+PIN 至少设为八位。在组策略中，分别使用 System > PIN Complexity > Minimum PIN length 设置 Windows Hello for Business，以及 Windows Components > BitLocker Drive Encryption > Operating System Drives > Configure minimum PIN length for startup 设置 BitLocker。检查现有 PIN，更改启动 PIN 前先确认可以取得恢复密钥。
   - title: 保护设备并核实整机厂商的修复
     hint: 限制设备的物理访问，调查可疑的主板篡改。按准确的主板和固件配置跟踪整机厂商公告。在确认修复前继续使用较长的 PIN。
 sources:
