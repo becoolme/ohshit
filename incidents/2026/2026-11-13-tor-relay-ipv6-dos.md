@@ -7,7 +7,7 @@ summary: The Tor Project says a flood of client circuits affected most relay ope
 splash: Operators of Tor relays on older releases, especially relays receiving abusive client traffic over IPv6.
 wipe: Upgrade relays to Tor 0.4.9.17 or later promptly. The Tor Project requires no extra configuration after the upgrade.
 inTheWild: 'yes'
-inTheWildNote: Tor confirmed an ongoing circuit flood and released an emergency mitigation.
+inTheWildNote: Tor confirmed an ongoing relay DDoS and released an emergency mitigation.
 fixed:
   - { product: Tor, version: 0.4.9.17 }
 timeline:
@@ -37,6 +37,6 @@ sources:
     primary: true
 ---
 
-During an ongoing distributed denial-of-service attack, a large volume of client circuits overloaded relays across the Tor network. The November release addresses a weakness in how the relay tracks IPv6 clients for its denial-of-service defenses. Before the change, the relay tracked each IPv6 address separately, so traffic from many addresses within one /64 received separate accounting. Version 0.4.9.17 groups that traffic by prefix. The Tor Project tracks the change as TROVE-2026-031.
+During an ongoing distributed denial-of-service attack, a large volume of client circuits overloaded relays across the Tor network. The November release addresses a weakness in how the relay tracks IPv6 clients for its denial-of-service defenses. Before the change, the relay tracked each IPv6 address separately, so traffic from many addresses within one /64 received separate accounting. Version 0.4.9.17 groups that traffic by prefix. The Tor Project tracks the change as TROVE-2026-031. The announcement confirms the circuit flood and leaves open which techniques the attackers used.
 
 The Tor Project was still evaluating further defenses when it published the release. In the same release, it removed the bastet directory authority's keys over a possible compromise. The changelog does not confirm that those keys were compromised or link their removal to the circuit flood.
