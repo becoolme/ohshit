@@ -18,9 +18,9 @@ timeline:
     body: Zodiac says a custom policy authorized the action and it found no contract vulnerability. Safe says one multisig was affected and no owner signed the transaction.
 checklist:
   - title: Remove suspected role access and suspend related automation
-    hint: From a trusted device, use the modifier owner’s authority to remove the member’s active assignments. If you cannot safely constrain the module, coordinate the required Safe owner approvals to disable it. Check other Safes that reused the same member key or policy.
+    hint: From a trusted device, use the modifier owner’s authority to remove the member’s active assignments. If you cannot safely constrain the module, coordinate the required Safe owner approvals to disable it. Confirm the on-chain change took effect. Check other Safes that reused the same member key or policy.
   - title: Verify which permissions let the transaction execute
-    hint: Save transaction receipts and trace the enabled modules, role members, allowed targets, functions and parameter conditions. Review module executions and token approvals. Inspect owner changes separately from module activity.
+    hint: Save transaction receipts and trace the enabled modules, role members, allowed targets, functions and parameter conditions. Inspect the receiving address and module against expected policy. An address match alone does not establish ownership or compromise. Review module executions and token approvals. Inspect owner changes separately from module activity.
   - title: Test narrower permissions before restoring operations
     hint: Replace affected member keys, scope the allowed recipients and amounts, and simulate both allowed and prohibited calls. Verify the applied policy on-chain before restarting bots.
 sources:
