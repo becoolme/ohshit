@@ -12,7 +12,7 @@ timeline:
   title: npm 记录 1.5.0 发布
 - date: 11月16日 00:14 UTC
   title: GitHub 发布恶意软件公告
-  body: npm 保留发布时间，但已从可安装版本列表中移除该版本，当前 latest 标签指向 1.4.0。
+  body: npm 保留发布时间。可安装版本列表已不再列出该版本，当前 latest 标签指向 1.4.0。
 checklist:
 - title: 找出受影响的构建
   hint: 在 npm、pnpm 和 Yarn 锁文件、仓库日志、软件物料清单和产物元数据中查找 @univerjs-pro/sheets-pivot-chart 1.5.0。检查 CI、自定义 Worker 产物和间接安装。锁文件命中应继续调查，单凭命中无法证明代码已经执行。
