@@ -2,7 +2,7 @@
 title: Apify confirms unauthorized account access and exposure of some customer data
 level: 4
 date: '2026-11-11'
-updated: '2026-11-14'
+updated: '2026-11-17'
 tags:
 - Apify
 - SaaS
@@ -32,6 +32,9 @@ timeline:
 - date: Nov 13, 16:36 UTC
   title: Apify reports changes to token storage and internal controls
   body: Apify says it now stores API tokens only as hashes and has tightened network access between internal services and strengthened internal authentication.
+- date: Nov 16, 17:54 UTC
+  title: Apify closes suspected entry point and moves to monitoring
+  body: Apify rotated more internal credentials, found no evidence of additional unauthorized access and plans a preliminary report by November 20.
 checklist:
 - title: Check Apify’s notice for your account
   hint: Verify the notification through official Apify support if needed. Follow the account-specific instructions and record which data or credentials the notice identifies. If none has arrived, monitor for a later notice while the investigation continues.
@@ -41,6 +44,8 @@ checklist:
   hint: In Apify Console, go to Settings → Login & Privacy (Security & Privacy for organizations) and set General resource access to Restricted. Check each storage resource’s share settings for overrides, and test dependent workflows with a valid token that has access.
 - title: Reconnect private GitHub repositories
   hint: Open an Actor built from GitHub in Apify, choose Change provider, select GitHub and authorize once per account and organization. Reconnect other integrations when prompted and verify scheduled runs.
+- title: Store new API tokens when they are issued
+  hint: New tokens are visible only at creation. Save them in your secret manager. If you lose one, create a replacement, update dependent systems and delete the lost token.
 sources:
 - name: Apify security incident updates
   url: https://status.apify.com/incidents/sxd1dj5j6749
@@ -57,3 +62,5 @@ Apify says an unauthorized third party reached parts of its internal systems and
 Apify cut off the access path, added monitoring, rotated critical internal secrets and revoked some third-party OAuth connections as a precaution. The company says it has found no evidence that those connections provided the attack path. Actors built from private GitHub repositories may need reauthorization. Apify said it would rotate affected user tokens and notify users when it identifies them. The company plans to publish a postmortem after remediation.
 
 On November 13, Apify said the investigation was ongoing and that it had switched to storing only API token hashes. The company recommends restricting storage access for all customers because anyone with the storage ID can read a resource while access is open. This is a precaution; Apify has not identified open storage as the route used in the intrusion. Verify incident messages through Apify Support and do not share passwords, two-factor codes or payment details.
+
+On November 16, Apify said it had fixed the most likely entry point and hardened each stage of the attack path on November 11–13. It extended hashing and encryption, further restricted privileged access and rotated more internal credentials. The investigation continues and Apify reports no evidence of additional unauthorized access.
