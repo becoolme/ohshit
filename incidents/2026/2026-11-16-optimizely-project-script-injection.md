@@ -35,6 +35,9 @@ timeline:
   - date: Nov 17, 06:30 UTC
     title: Researchers publish follow-up evidence
     body: Hudson Rock and Ohey document earlier captures and later mobile stages. The follow-up also reports Optimizely’s statement identifying the account signup flow.
+  - date: Nov 17, 07:00 UTC
+    title: Bitquery estimates likely victim payments
+    body: Its on-chain review separates likely victim payments from observed wallet inflows tied to a swap.
 checklist:
   - title: Pause affected snippets and preserve evidence
     hint: Check Project JavaScript, experiment custom code, deployed snippets and customer-hosted copies. Save known bad responses, hashes and timestamps before removing the code. Compare each deployed copy to a trusted baseline and check CDN or site caches after cleanup.
@@ -47,7 +50,7 @@ checklist:
   - title: Review exposed sessions and payments
     hint: Invalidate exposed non-HttpOnly session tokens and rotate affected secrets. Identify card data entered into first-party fields on affected pages and coordinate response and notifications with your payment processor. Confirm what was actually accessible from those pages.
   - title: Check transactions and update affected visitor devices
-    hint: Verify crypto destinations against a trusted address and contact your wallet provider or exchange about an unexpected transfer. If you entered card details in an affected first-party form, review card activity and ask your issuer about protective steps. Install the latest security update available for your iPhone or iPad.
+    hint: Verify crypto destinations against a trusted address and contact your wallet provider or exchange about an unexpected transfer. Save the transaction hash, destination and timestamp for that report. If you entered card details in an affected first-party form, review card activity and ask your issuer about protective steps. Install the latest security update available for your iPhone or iPad.
 sources:
   - name: Optimizely official security incident status
     url: https://status.optimizely.com/incidents/ftw0fh9wx43z
@@ -73,6 +76,10 @@ sources:
     url: https://www.infostealers.com/article/beyond-optimizely-malicious-scripts-traced-across-four-web-services/
     says: Documents dated archive captures and distinguishes observed mobile payloads from proven exploitation.
     primary: true
+  - name: Bitquery on-chain follow-up
+    url: https://bitquery.io/investigations/optimizely-hack
+    says: Estimates likely victim payments after separating wallet inflows tied to a swap, and flags one uncertain payment.
+    primary: true
   - name: Apple security releases
     url: https://support.apple.com/en-us/100100
     says: Lists released security updates and their device availability.
@@ -81,9 +88,11 @@ sources:
 
 Report URI found injected code in the Project JavaScript portion of Optimizely Web snippets. That code runs on pages that include the snippet, whether it is loaded from the Optimizely CDN or a customer host. The team observed remote, encoded and inline loaders. Optimizely confirmed exploitation of an Experimentation vulnerability and told BleepingComputer it was in the account signup flow. It has not described the bug’s mechanics.
 
-The payload could swap cryptocurrency destinations and send page screenshots and cookies readable by JavaScript to the attacker. Card capture targeted values accessible to the page, such as first-party card fields. Report URI says the code could not read card fields isolated in a cross-origin payment iframe. On iPhones and iPads, the loaders used operating-system-dependent paths. Report URI identified Coruna and DarkSword and observed only fingerprinting in the iOS 26 path it examined. In a follow-up, Hudson Rock reports that Ohey retrieved a later DarkSword stage containing code to upload a Keychain database and other files. A test request identifying itself as iOS 26.3 reached another loader and worker, but the chain’s own log marked the route as nonfunctional. Neither finding establishes that a visitor’s device was compromised.
+The payload could swap cryptocurrency destinations and send page screenshots and cookies readable by JavaScript to the attacker. Card capture targeted values accessible to the page, such as first-party card fields. Report URI says the code could not read card fields isolated in a cross-origin payment iframe. On iPhones and iPads, the loaders used operating-system-dependent paths. Report URI identified Coruna and DarkSword and observed only fingerprinting in the iOS 26 path it examined. In a follow-up, Hudson Rock reports that Ohey retrieved a later DarkSword stage containing code to upload a Keychain database and other files. A request sent with an iOS 26.3 user agent reached another loader and worker, but the chain’s own log marked the route as nonfunctional. Neither finding establishes that a visitor’s device was compromised.
 
 Report URI’s 19:24–19:59 UTC sweep found 186 affected snippets among 1,611 checked. Its full investigation identified **188 altered snippets across 178 organizations**. These are sample counts and do not establish how many visitors lost data or assets. The researchers also observed transfers to wallets associated with the payload. Those transfers do not establish total visitor losses or the volume of any card or cookie theft. Their 21:52 UTC recheck found one remaining altered snippet in the measured set. A later clean response does not resolve exposure that occurred before cleanup.
+
+On November 17, Bitquery estimated about $2,260 across 19 likely victim payments on November 16, or about $2,210 excluding one ambiguous transfer. It traced much of the roughly $7,040 in earlier observed wallet inflows to a swap rather than direct payments from visitors. These are estimates based on the timing and paths of transfers to the eight known addresses. They do not establish each sender’s intent or account for card theft or losses outside the sampled wallets.
 
 Hudson Rock recovered a malicious minute-ly response in addition to the Optimizely scripts. Ohey’s archived captures show poisoned Kissmetrics and StorifyMe responses on November 13, before the Optimizely captures. Those observations do not show continuous delivery between dates. All three loaded the earlier webshell[.]lol injector. The research confirms the served code and leaves the entry methods for those three providers undetermined. Optimizely’s containment statement applies to its own service.
 
