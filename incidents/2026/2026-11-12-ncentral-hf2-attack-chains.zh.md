@@ -1,9 +1,9 @@
 ---
-title: 新攻击链可影响 N-central HF2 服务器和 Windows 受管终端
+title: Apache Axis 漏洞已被用于攻击 N-central 和 Confluence Data Center
 summary: Huntback 报告有 21 台 N-central 服务器遭 4EverAble2Shell 利用后运行矿工，其中 19 台使用 2026.4.1.26 HF2。服务器链需要启用 Legacy API。另行公开的 Windows Agent 和 Probe 攻击路径有各自的前提。Rapid7 还在 Confluence Data Center 中发现了对同一 Axis 漏洞的利用。
 splash: 启用 Legacy API 且可访问的 N-central HF2、启用 Remote API 的受影响 Confluence Data Center，以及满足条件的 Windows Agent 或 Probe。
 wipe: 部署 N-central HF3 和 Confluence 修复，限制不受信网络访问，并调查此前暴露的服务器和受管理端点。
-inTheWildNote: Huntback 报告服务器攻击链已在野利用。Windows 攻击路径的在野利用仍待确认。
+inTheWildNote: Huntback 和 Rapid7 报告了服务器攻击。Windows 攻击路径的在野利用仍待确认。
 timeline:
 - date: 2026年11月12日
   title: 研究者发布新的服务器及 Windows 终端攻击链
@@ -92,7 +92,7 @@ Agent2Shell 报告另行记录了 Windows 攻击路径。Reactive 路径需要�
 
 Previdian 在传感器上记录了两次利用尝试。Huntback 随后在诱捕系统上记录了完整攻击链，其最后一步是安装 XMRig。研究人员按矿工名称中的 IP，将 21 个刚提交份额的矿工与可访问的 N-central 生产服务器关联，其中 19 台报告的构建是 2026.4.1.26。这是 Huntback 根据矿池遥测和服务器响应得出的结论，支持将服务器链的在野利用定为 L4。它既未给出受影响组织或下游设备的数量，也未证实 Windows 链已在野利用。
 
-服务器链首先利用 Apache Axis 的 CVE-2026-90436，以 N-central 服务账户执行命令，再利用特权辅助程序提权。Apache 的公告说明 Axis 1.x 已停止维护。N-central 的完整受影响版本范围和这两条新攻击路径的修复构建仍待确认。升级至 HF3，并继续实施网络和配置控制。若证据显示攻击者取得 root，应将设备视为完全失陷，调查其管理的终端是否有未授权活动，并从可信系统恢复。
+服务器链首先利用 Apache Axis 的 CVE-2026-90436，以 N-central 服务账户执行命令，再利用特权辅助程序提权。Apache 的公告说明 Axis 1.x 已停止维护。N-central 的完整受影响版本范围仍待确认。HF3 封锁 Legacy API 路径；Windows 路径需另行更新 Agent 和 Probe。升级至 HF3，并继续实施网络和配置控制。若证据显示攻击者取得 root，应将设备视为完全失陷，调查其管理的终端是否有未授权活动，并从可信系统恢复。
 
 **厂商处置更新。** N-able 已在托管环境部署临时防护，并要求自管客户确认 Legacy API 已禁用。11 月 13 日的下载和回连指标适用于未禁用 Legacy API 的客户。应同时核查历史暴露。厂商仍在评估和处置，尚未在这份更新中公布新攻击链的修复版本。
 
@@ -100,6 +100,6 @@ Previdian 在传感器上记录了两次利用尝试。Huntback 随后在诱捕�
 
 **其他 Axis 部署。** 意大利 CSIRT 在 11 月 13 日报告 CVE-2026-90436 正被在野利用，未说明所观察到的下游产品。Apache 将 Axis 1.x 至 1.4 列为受影响版本。引擎会在服务级认证处理器运行前解析 SOAP Fault。如果类路径中有可利用的类，攻击者可远程执行代码。独立部署可迁至受支持的 SOAP 引擎，或应用源代码补丁后重新构建。N-central 用户应遵循上文的厂商指引。[Apache 补丁](https://github.com/apache/axis-axis1-java/commit/41f3b4e8d04e310ca81f86b92630ab2c11d608bd)
 
-Atlassian 将修复前启用了 Remote API (XML-RPC & SOAP) 的 Confluence Data Center 1.x 至 9.x 列为受影响版本。9.2.28 已修复该问题，10.0 移除了该功能，Atlassian Cloud 不受影响。Rapid7 在 11 月 16 日的报告中披露，11 月 13 日在一个客户环境中发现了对 Confluence Data Center 的实际利用。其报告未给出更广泛的受害数量或影响。
+Atlassian 将修复前启用了 Remote API (XML-RPC & SOAP) 的 Confluence Data Center 1.x 至 9.x 列为受影响版本。从 3.0 起，新安装实例默认关闭 Remote API。9.2.28 已修复该问题，10.0 移除了该功能，Atlassian Cloud 不受影响。Rapid7 在 11 月 16 日的报告中披露，11 月 13 日在一个客户环境中发现了对 Confluence Data Center 的实际利用。其报告未给出更广泛的受害数量或影响。
 
 N-able 于 11 月 16 日发布 HF3，永久禁用 Legacy API，并列出 CVE-2026-129271 至 CVE-2026-129287 共 17 项修复。发布说明仍将除 Take Control 外的远程控制列为停用。服务器升级后也要更新所有 Agent 和 Probe，较旧端点仍可能遭冒用。

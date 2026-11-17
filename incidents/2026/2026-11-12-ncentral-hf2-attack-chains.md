@@ -1,5 +1,5 @@
 ---
-title: New N-central attack chains reach HF2 servers and Windows managed endpoints
+title: Apache Axis attacks reach N-central and Confluence Data Center
 date: '2026-11-12'
 level: 4
 tags:
@@ -11,7 +11,7 @@ summary: Huntback reports 21 N-central servers mining after 4EverAble2Shell expl
 splash: N-central HF2 with Legacy API, vulnerable Confluence Data Center with Remote API, and certain Windows Agents or Probes
 wipe: Apply N-central HF3 and the Confluence fix, restrict appliance access and investigate previously exposed servers and endpoints.
 inTheWild: 'yes'
-inTheWildNote: Huntback reports exploitation of the server chain. Windows paths remain unconfirmed.
+inTheWildNote: Huntback and Rapid7 report server attacks. Windows paths remain unconfirmed.
 timeline:
 - date: Nov 12, 2026
   title: Researcher posts new server and Windows endpoint chains
@@ -48,7 +48,7 @@ timeline:
   body: Server build 2026.4.1.39 permanently blocks Legacy APIs. Hosted and on-premises customers both need to update their Agents and Probes to 2026.4.1 HF3.
 - date: Nov 16, 2026
   title: Rapid7 reports exploitation against Confluence in a customer environment
-  body: Rapid7 detected the attack on November 13 and published four associated IP addresses.
+  body: Rapid7 detected exploitation against Confluence on November 13 and published four associated IP addresses.
 checklist:
 - title: Disable Legacy API and restrict exposure now
   hint: At the system level, open Administration → Mail and Network Settings → Network Security → Legacy APIs and verify that the deprecated APIs are disabled. Restrict appliance access from untrusted networks. Preserve required Agent and Probe access through controlled paths and verify managed devices
@@ -144,7 +144,7 @@ The separate Agent2Shell report documents Windows paths. The Reactive path needs
 
 Previdian recorded two attempts against sensors. Huntback later captured the full chain against its decoys, ending in an attempt to install XMRig. It matched the IP addresses encoded in the names of 21 recently active miners to live N-central production servers. Nineteen reported build 2026.4.1.26. This is Huntback’s assessment from mining-pool telemetry and server responses. It supports L4 for in-the-wild exploitation of the server chain. The observations establish neither a count of affected organizations or downstream devices nor exploitation of the Windows chain.
 
-The server chain uses Apache Axis CVE-2026-90436 to execute commands as the N-central service account, then abuses a privileged helper to reach root. Apache says Axis 1.x has reached end of life. The full affected-version range for N-central and fixed builds for these new paths remain unverified. Upgrade to HF3 and keep the network and configuration controls in place. Evidence of root access warrants treating the appliance as fully compromised, investigating managed endpoints for unauthorized activity and restoring from trusted systems.
+The server chain uses Apache Axis CVE-2026-90436 to execute commands as the N-central service account, then abuses a privileged helper to reach root. Apache says Axis 1.x has reached end of life. The full affected-version range for N-central remains unverified. HF3 blocks the Legacy API path; the Windows paths require separate Agent and Probe updates. Upgrade to HF3 and keep the network and configuration controls in place. Evidence of root access warrants treating the appliance as fully compromised, investigating managed endpoints for unauthorized activity and restoring from trusted systems.
 
 **Vendor response update.** N-able applied temporary protections to hosted environments and asks on-premises customers to verify that Legacy API is disabled. The November 13 download and callback indicators apply to customers who have not disabled Legacy API. Review historical exposure as well. The vendor is still assessing and remediating the incident and does not name a fixed build for the new chains in this update.
 
@@ -152,6 +152,6 @@ On November 13, N-able outlined plans for HF3. The vendor intends to remove Lega
 
 **Other Axis deployments.** On November 13, Italy’s CSIRT reported active exploitation of CVE-2026-90436 and gave no downstream product names for its observations. Apache lists Axis 1.x through 1.4 as affected. The engine parses the SOAP fault before service-level authentication handlers run. Remote code execution requires a suitable class on the classpath. For standalone Axis 1.x, migrate to a supported SOAP engine or build with the source patch. N-central customers should follow the vendor’s guidance above. [Apache patch](https://github.com/apache/axis-axis1-java/commit/41f3b4e8d04e310ca81f86b92630ab2c11d608bd)
 
-Atlassian lists Confluence Data Center versions 1.x through 9.x as affected before the fix when Remote API (XML-RPC & SOAP) is enabled. Confluence 9.2.28 fixes the issue. Confluence 10.0 removed the feature, and Atlassian Cloud is unaffected. Rapid7 reported on November 16 that it detected exploitation against Confluence Data Center in a customer environment on November 13. Its report does not establish a broader victim count or impact.
+Atlassian lists Confluence Data Center versions 1.x through 9.x as affected before the fix when Remote API (XML-RPC & SOAP) is enabled. The Remote API setting has been off by default on new installations since 3.0. Confluence 9.2.28 fixes the issue. Confluence 10.0 removed the feature, and Atlassian Cloud is unaffected. Rapid7 reported on November 16 that it detected exploitation against Confluence Data Center in a customer environment on November 13. Its report does not establish a broader victim count or impact.
 
 The November 16 HF3 release permanently disables the legacy APIs and lists 17 fixes, CVE-2026-129271 through CVE-2026-129287. The release notes still list remote control other than Take Control as disabled. Update all Agents and Probes even after the server upgrade because older endpoints remain susceptible to impersonation.
