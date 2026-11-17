@@ -32,7 +32,7 @@ checklist:
   - title: Review exposed sessions and payments
     hint: Invalidate exposed non-HttpOnly session tokens and rotate affected secrets. Identify card data entered into first-party fields on affected pages and coordinate response and notifications with your payment processor. Confirm what was actually accessible from those pages.
   - title: Check transactions and update affected visitor devices
-    hint: Verify crypto destinations against a trusted address and contact your wallet provider or exchange about an unexpected transfer. Contact your card issuer if you entered card details on an affected page and notice suspicious activity. Install the latest security update available for your iPhone or iPad.
+    hint: Verify crypto destinations against a trusted address and contact your wallet provider or exchange about an unexpected transfer. If you entered card details in an affected first-party form, review card activity and ask your issuer about protective steps. Install the latest security update available for your iPhone or iPad.
 sources:
   - name: Report URI technical investigation
     url: https://blog.report-uri.com/worlds-largest-brands-infected-with-malware-via-optimizely/
@@ -46,6 +46,6 @@ sources:
 
 Report URI found injected code in the Project JavaScript portion of Optimizely Web snippets. That code runs on pages that include the snippet, whether it is loaded from the Optimizely CDN or a customer host. The team observed remote, encoded and inline loaders. It has not determined how the attacker gained write access to the projects.
 
-The payload could swap cryptocurrency destinations and send page screenshots and cookies readable by JavaScript to the attacker. Card capture targeted values accessible to the page, such as first-party card fields. Report URI says the code could not read card fields isolated in a cross-origin payment iframe. On iPhones and iPads, the loaders used device-dependent paths that included Coruna and DarkSword. Contact with a loader does not establish successful exploitation.
+The payload could swap cryptocurrency destinations and send page screenshots and cookies readable by JavaScript to the attacker. Card capture targeted values accessible to the page, such as first-party card fields. Report URI says the code could not read card fields isolated in a cross-origin payment iframe. On iPhones and iPads, the loaders used operating-system-dependent paths. Report URI identified Coruna and DarkSword and observed only fingerprinting in the iOS 26 path it examined. A request to one of the loaders does not show whether an exploit succeeded.
 
 Report URI’s 19:24–19:59 UTC sweep found 186 affected snippets among 1,611 checked. Its full investigation identified **188 altered snippets across 178 organizations**. These are sample counts and do not establish how many visitors lost data or assets. The researchers also observed transfers to wallets associated with the payload. Those transfers do not establish total visitor losses or the volume of any card or cookie theft. Their 21:52 UTC recheck found one remaining altered snippet in the measured set. A later clean response does not resolve exposure that occurred before cleanup.
