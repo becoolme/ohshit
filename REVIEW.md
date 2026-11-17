@@ -36,9 +36,11 @@ standalone deployment commands, manually trigger deployment workflows or publish
   or substantively updated within 14 UTC days, qualifying L3 incidents within seven days, and carried
   unresolved cases. Each needs an actual source check, UTC check time, latest source-update date/time and
   a concrete comparison outcome. "Already covered", "deduped" or "resolved" alone is not evidence that
-  follow-up happened. Read incident detail pages and postmortems, including items omitted from the PR,
-  to catch missing updates. Complete missing checks and add verified changes before declaring the run
-  complete, respecting other open PRs' ownership. For a run without a PR, this record belongs in run notes.
+  follow-up happened. Read incident detail pages and postmortems to catch missing updates. Record any
+  unchecked or blocked items in the separate follow-up backlog in the run notes, with the reason and
+  next action. Summarize them in the PR description when a PR exists. Respect other open PRs' ownership.
+  Follow-up gaps for incidents outside the current PR carry forward to the next run independently of
+  merge. Resolve any material findings that affect the current PR during its review.
 
 ## 2. Check the facts against the sources
 
@@ -134,9 +136,10 @@ any missing rule that could prevent the mistake recurring (see step 8).
 
 ## 7. Merge after review and checks
 
-1. Confirm both review rounds are complete and all findings are resolved. `npm test` and `npm run build`
-   must pass; wait for the `build` CI check and every other required check on the latest reviewed commit
-   to pass. Never merge on red or pending, bypass checks, or use administrator overrides.
+1. Confirm both review rounds are complete and all findings on the current PR are resolved. Require
+   passing `npm test` and `npm run build`, plus a passing `build` CI check and every other required check
+   on the latest reviewed commit. Proceed automatically once these conditions are met. Never merge on red
+   or pending, bypass checks, or use administrator overrides.
 2. Merging onto `main` may trigger the configured Cloudflare automatic deployment; the user explicitly
    authorizes this behavior. Do not hold an otherwise ready PR because of that integration. Do not run
    standalone deployment commands, manually trigger deployment workflows or publish releases.

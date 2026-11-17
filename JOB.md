@@ -73,8 +73,7 @@ discover.
 
 ### Mandatory follow-up of recent serious incidents
 
-Discovery and follow-up are separate duties. On **every run**, build and check a watchlist before deciding
-there is nothing to publish:
+Discovery and follow-up are separate duties. On **every run**, build the watchlist and work through it:
 
 - Include every existing **L4/L5 incident disclosed or substantively updated in the last 14 UTC days**.
   Also include L3 incidents from the last seven days with an ongoing investigation, disputed scope,
@@ -95,10 +94,13 @@ there is nothing to publish:
   `blocked`, or `occupied by PR #…`). Record access failures and the next evidence to seek. An inaccessible
   source is **blocked**, not evidence of no change. Respect the existing open-PR ownership rule; record
   verified new facts for that PR without opening a duplicate or taking it over.
-- Include the watchlist and compact per-incident outcomes in the PR description when a PR exists. With
-  no substantive changes, keep the record outside the repository and create no empty PR. A run cannot
-  claim follow-up complete if any required incident was not checked; record the gap for the next run and
-  report it when user action is needed under the existing notification rules.
+- Keep a separate follow-up backlog in the run notes outside the repository. Include a compact summary
+  in the PR description when a PR exists. Carry forward unchecked or blocked incidents with the reason
+  and the next source or action to try. Report the gap when user action is needed and claim full coverage
+  only after every required check has been made. With no substantive changes, create no PR.
+- An outstanding check for an incident outside the current PR does not delay that PR's review or merge.
+  Resolve any material finding that affects the current PR, including evidence from historical follow-up,
+  before merging it.
 
 ## 2. Dedup: is it already here?
 
@@ -229,15 +231,17 @@ If an `incidents/<yyyy-mm-dd>` PR from an earlier run is still open, don't stack
   omissions and regressions in round two. Fix findings on the PR branch and keep English and Chinese in sync.
 - Record each round's findings, fixes and validation in the PR description. Two rounds are a minimum,
   not permission to leave findings unresolved; recheck every subsequent fix before merging.
-- Automatically merge only when no blocking issues remain, `npm test` and `npm run build` pass, and
-  the latest reviewed commit passes the `build` CI check and every other required check. Match that
-  commit SHA when merging; never bypass failed or pending checks or force-push.
+- Automatically merge as soon as both review rounds are complete, all findings on the current PR are
+  resolved, `npm test` and `npm run build` pass, and the latest reviewed commit passes the `build` CI check
+  and every other required check. Match that commit SHA when merging. Never bypass failed or pending checks
+  or force-push.
 - The user authorizes reviewed merges to update `main` and trigger the configured Cloudflare automatic
   deployment. This integration must not block an otherwise ready merge. Do not run standalone deployment
   commands, manually trigger deployment workflows or publish a release.
 - Use rebase merge and delete the event branch, then safely fast-forward local `main` and verify CI on
   the resulting main commit. If main CI fails, report the failure; do not manually deploy or rewrite main.
-- If a key claim cannot be verified, findings remain unresolved, or a required check fails, leave the PR
-  unmerged and report. Do not automatically take over PRs from earlier runs without user authorization.
+- If a key claim in the current PR cannot be verified, its findings remain unresolved, or a required check
+  fails, leave the PR unmerged and report. Do not automatically take over PRs from earlier runs without
+  user authorization.
 - With no substantive changes, stay quiet. Otherwise notify after review and merge are complete, or
   when a failure or unresolved issue needs attention.
