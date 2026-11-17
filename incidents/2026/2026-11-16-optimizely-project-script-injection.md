@@ -1,5 +1,5 @@
 ---
-title: "Malicious Optimizely project scripts reached sites at 178 organizations"
+title: "Report URI finds malicious Optimizely scripts at 178 organizations"
 level: 4
 date: 2026-11-16
 tags: [Optimizely, JavaScript, supply chain, skimmer, iOS]
@@ -26,7 +26,7 @@ checklist:
   - title: Pause affected snippets and preserve evidence
     hint: Check Project JavaScript, experiment custom code, deployed snippets and customer-hosted copies. Save known bad responses, hashes and timestamps before removing the code. Compare each deployed copy to a trusted baseline and check CDN or site caches after cleanup.
   - title: Secure Optimizely project write access and verify cleanup
-    hint: Review project users, roles, changes, API tokens and integrations. Remove unauthorized access and rotate exposed credentials. Check for newly injected inline and encoded loaders. Apply and test a restrictive Content Security Policy for script and outbound connections, and confirm clean responses from each host.
+    hint: Review project users, roles, changes, API tokens and integrations. Remove unauthorized access and rotate exposed credentials. Check for newly injected inline and encoded loaders. Enforce a tested Content Security Policy with narrow script-src and connect-src allowlists and reporting. Remove unsafe-eval where feasible. Confirm clean responses from each host even if the CDN is on the allowlist.
   - title: Hunt for the network indicators and assess exposure
     hint: "Review DNS, proxy, CSP and browser logs for these 12 domains and three IPs, including subdomains where applicable. Defanged domains are 1688360[.]cc, 5vobauua3ojpklx[.]icu, eil786npto9u5bq[.]icu, l7bcsnwc7nzr3uo[.]icu, webshell[.]lol, linkforge[.]cc, je4ft3gn8vxudum[.]icu, q1ls1ho9x7wsxlu[.]icu, ios-hack[.]icu, p55abnw2pnsz0bo[.]icu, 1y69gy2mdzaltz1[.]icu and gm38duxoihbmy5o[.]icu. IPs are 136.113.106.136, 34.96.213.201 and 34.87.36.58. See Report URI for the full paths, script markers, two hashes and eight wallet addresses. A match alone does not prove compromise."
   - title: Review exposed sessions and payments
@@ -48,4 +48,4 @@ Report URI found injected code in the Project JavaScript portion of Optimizely W
 
 The payload could swap cryptocurrency destinations and send page screenshots and cookies readable by JavaScript to the attacker. Card capture targeted values accessible to the page, such as first-party card fields. Report URI says the code could not read card fields isolated in a cross-origin payment iframe. On iPhones and iPads, the loaders used device-dependent paths that included Coruna and DarkSword. Contact with a loader does not establish successful exploitation.
 
-The researchers found **188 altered snippets across 178 organizations** in their investigation. These are sample counts and do not establish how many visitors lost data or assets. The researchers also observed transfers to wallets associated with the payload. Those transfers do not establish total visitor losses or the volume of any card or cookie theft. Their 21:52 UTC recheck found one remaining altered snippet in the measured set. A later clean response does not resolve exposure that occurred before cleanup.
+Report URI’s 19:24–19:59 UTC sweep found 186 affected snippets among 1,611 checked. Its full investigation identified **188 altered snippets across 178 organizations**. These are sample counts and do not establish how many visitors lost data or assets. The researchers also observed transfers to wallets associated with the payload. Those transfers do not establish total visitor losses or the volume of any card or cookie theft. Their 21:52 UTC recheck found one remaining altered snippet in the measured set. A later clean response does not resolve exposure that occurred before cleanup.
