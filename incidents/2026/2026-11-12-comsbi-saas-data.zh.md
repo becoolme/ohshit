@@ -23,6 +23,9 @@ timeline:
 - date: 2026年11月14日
   title: 京阪控股公布旗下四家公司的范围
   body: 公告分别列出 LINE 好友资料及其他资料的可能影响人数上限，并提示同一人可能重复计入。Cable TV 另行确认其 LINE 资料和问卷数据外泄。
+- date: 2026年11月16日
+  title: Sonicmoov 开设 COMSBI 查询表单
+  body: 可能受影响的用户可通过官方公告链接的表单联系公司。
 checklist:
 - title: 核实租户的影响范围及遏制措施
   hint: 通过 support@sonicmoov.com 或已知的 Sonicmoov 支持渠道，确认涉及哪些租户数据和集成、厂商会话和云权限是否已撤销，以及哪些集成凭据已更换。
@@ -31,6 +34,8 @@ checklist:
 - title: 通过已知可信渠道核实消息
   hint: 如果关注了受影响的 LINE 账号或收到通知，通过已知联系方式向该机构核实异常消息、电话、链接或附件。Sonicmoov 表示不会索要密码或凭据。
 sources:
+- name: Sonicmoov COMSBI 查询表单公告
+  says: 提供可能受影响用户使用的专用表单。
 - name: Sonicmoov SaaS 事件公告
   says: 确认入侵路径、数据类别、遏制措施及仍在进行的凭据轮换。
 - name: 东京建物客户通知
@@ -62,3 +67,5 @@ Sonicmoov 称本次入侵发生在 SaaS 环境。独立部署的企业版基础�
 LIFULL 确认旗下 LIFULL HOME’S 会员 LINE 账号的数据外泄。截至 11 月 12 日，可能受影响人数上限为 2,479 人。涉及字段包括显示名、头像 URL 和 LINE 用户 ID，状态消息仍在核查。这 2,479 人中，活动奖品寄送记录还涉及 313 人的姓名、761 人的电子邮箱和 422 人的地址，各项可能重叠。LIFULL 于 11 月 13 日向日本个人信息保护委员会报告，并陆续通过该 LINE 账号通知能够接收消息的受影响用户。无法接收消息的用户可通过 LIFULL 公告链接的隐私咨询表单核实。近铁不动产称，Paradis Gakuenmae 账号涉及最多 3,716 条好友资料和最多 137 条包含地址或性别的记录。
 
 日本宠物食品确认旗下 Beauty Pro LINE 账号涉及外泄，包括资料字段及部分联系方式、奖品寄送和问卷数据。公司称该账号的集成凭据已重新签发，计划从 11 月 13 日起陆续通知。Cable TV 在 11 月 14 日的公告中列出 LINE 资料及问卷信息，并请用户通过 support@sonicmoov.com 向 Sonicmoov 咨询。日本宠物食品与 Cable TV 的公告均涵盖曾屏蔽或移除官方账号的好友。请通过受影响机构的既有渠道核实收到的通知。
+
+可能受影响的用户可通过 [Sonicmoov 11 月 16 日公告](https://sonicmoov.com/news/92uaoo64n)链接的表单查询。

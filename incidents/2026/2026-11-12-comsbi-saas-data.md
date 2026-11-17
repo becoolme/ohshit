@@ -8,7 +8,7 @@ tags:
 - LINE
 - Data breach
 date: '2026-11-12'
-updated: 2026-11-15
+updated: 2026-11-17
 level: 4
 inTheWild: 'yes'
 timeline:
@@ -27,6 +27,9 @@ timeline:
 - date: Nov 14, 2026
   title: Keihan Holdings reports scope across four subsidiaries
   body: The group lists potentially affected LINE followers and other customer data by account and warns that counts can overlap. Cable TV separately confirms exposure of its LINE profile and survey data.
+- date: Nov 16, 2026
+  title: Sonicmoov opens a COMSBI inquiry form
+  body: Potentially affected users can contact the company via the form linked from its official notice.
 checklist:
 - title: Confirm exposure and containment for your tenant
   hint: Use support@sonicmoov.com or a known Sonicmoov support channel. Ask which tenant data and integrations were involved, whether vendor sessions and cloud permissions were revoked, and which integration credentials have been replaced.
@@ -35,6 +38,10 @@ checklist:
 - title: Verify messages through a channel you already trust
   hint: If you follow an affected LINE account or receive a notice, verify unusual messages, calls, links or attachments with the organization using a known contact. Sonicmoov says it will not ask for your password or credentials.
 sources:
+- name: Sonicmoov COMSBI contact form announcement
+  url: https://sonicmoov.com/news/92uaoo64n
+  says: Links to a dedicated form for potentially affected users.
+  primary: true
 - name: Sonicmoov SaaS incident notice
   says: Confirms the entry path, affected data categories, containment and ongoing credential rotation.
   url: https://sonicmoov.com/news/5ttj9ndzh
@@ -84,3 +91,5 @@ Keihan Holdings published upper bounds by account. Potential exposure at Keihan 
 LIFULL confirmed that data from its LIFULL HOME’S member LINE account was taken. It gave an upper bound of 2,479 people as of November 12. The profile fields include display names, profile-image URLs and LINE user IDs. It was still checking status messages. Among those 2,479 people, campaign shipping records included 313 names, 761 email addresses and 422 addresses, with possible overlap. On November 13, LIFULL reported the incident to Japan’s Personal Information Protection Commission and began contacting affected people who could receive messages from that LINE account. If you cannot receive those messages, use the privacy inquiry form linked from LIFULL’s notice. Kintetsu Real Estate identified up to 3,716 follower records and up to 137 records containing address or gender for the Paradis Gakuenmae account.
 
 Nippon Pet Food confirmed exposure involving its Beauty Pro LINE account, including profile details and some contact, prize delivery and survey data. It says credentials used to connect its LINE account were reissued and that notifications would begin on November 13. Cable TV’s November 14 notice identified LINE profile and survey information and directed inquiries to Sonicmoov at support@sonicmoov.com. The notices from Nippon Pet Food and Cable TV include former followers who blocked or removed the accounts. Verify any notification through the affected organization’s established channel.
+
+Sonicmoov’s [November 16 announcement](https://sonicmoov.com/news/92uaoo64n) links a form for potentially affected users to ask about the incident.
