@@ -6,7 +6,7 @@ wipe: Install httpd 2.4.71 or a verified vendor backport. Disable HTTP/2 where t
 inTheWildNote: Apache published fixes. The sources reviewed do not confirm real-world exploitation.
 level: 3
 date: '2026-11-11'
-updated: '2026-11-15'
+updated: '2026-11-17'
 tags:
 - Apache HTTP Server
 - HTTP/2
@@ -19,6 +19,9 @@ timeline:
 - date: Nov 12, 2026
   title: Canonical and Red Hat publish distribution guidance
   body: Canonical lists fixed packages for five Ubuntu releases affected by the HTTP/2 flaw. Red Hat identifies affected RHEL 9, RHEL 10 and JBoss Core Services 1 products and describes their update paths.
+- date: Nov 16, 2026
+  title: Axis publishes a workaround for affected network devices
+  body: Axis lists AXIS OS 6.50.5.10 and later, recommends temporarily disabling both forms of HTTP/2 and says firmware fixes are in development.
 checklist:
 - title: Inventory the running HTTP/2 configuration
   hint: Use httpd -v or apache2 -v, the package manager, and httpd -M or apache2ctl -M. Check effective Protocols settings for every virtual host and direct origin listener, including h2 over TLS and h2c. Check separately for an externally installed mod_h2.
@@ -28,6 +31,8 @@ checklist:
   hint: Where an update must wait, remove h2 and h2c from the effective Protocols settings or disable mod_http2. Check configuration and reload; verify that neither direct nor proxied requests negotiate HTTP/2 with the affected listener. Test required traffic. This reduces exposure to the HTTP/2 flaw; the other two modules still require the update if affected.
 - title: Verify the Ubuntu package or Red Hat erratum
   hint: On Ubuntu, run dpkg-query -W apache2 apache2-bin and compare the results with the USN-9090-1 versions for your release. The 20.04 LTS fix requires Ubuntu Pro. On Red Hat, select the erratum for your product and update channel from its CVE record. On RHEL 9 or 10, use rpm -q mod_http2 to identify the installed package and compare its release with the applicable erratum. Restart or redeploy after patching and verify the running instance.
+- title: Mitigate affected Axis network devices
+  hint: Use the device’s Plain config settings to turn both System.HTTP2.AllowH2 and System.HTTP2.AllowH2c off. Save, verify both are disabled and test required traffic. Check Axis release notes for your device and firmware track for the Apache 2.4.71 update before restoring the settings.
 sources:
 - name: Apache 2.4.71 security advisories
   says: Lists the three CVEs, affected versions and release date.
@@ -52,6 +57,10 @@ sources:
 - name: Red Hat RHSB-2026-017
   says: Identifies affected Red Hat products and the separate mod_http2 package.
   url: https://access.redhat.com/security/vulnerabilities/RHSB-2026-017
+  primary: true
+- name: Axis security advisory for CVE-2026-119618
+  says: Lists affected AXIS OS versions and the HTTP/2 settings to disable while firmware fixes are in development.
+  url: https://www.axis.com/dam/public/permalink/294609/cve-2026-119618pdf-en-US_294609.pdf
   primary: true
 cves:
 - name: HTTP/2 heap corruption
@@ -84,3 +93,5 @@ CVE-2026-119618 is a race in the HTTP/2 header handling code. A remote client th
 Apache also fixed a mod_md child-process crash affecting 2.4.30 through 2.4.70 and a mod_vhost_alias one-byte stack overwrite affecting 2.4.69 and 2.4.70. These flaws depend on their respective modules. A downstream backport can retain an older-looking version number, so verify the package release against its advisory.
 
 Canonical’s USN-9090-1 backports the CVE-2026-119618 fix to the five Ubuntu releases in the table. The bulletin also provides fixes for other CVEs on older Ubuntu releases. Those older releases are outside the scope of this HTTP/2 flaw. Red Hat lists RHEL 9, RHEL 10 and JBoss Core Services 1 as directly affected and provides fixes and guidance by product and update channel.
+
+Axis says CVE-2026-119618 can give a remote unauthenticated attacker administrative access to affected Axis network devices running AXIS OS 6.50.5.10 or later. Its November 16 advisory says it knows of no exploitation in its products and gives a workaround while fixes are in development. Upstream Apache’s fixed release is 2.4.71. For Axis hardware, check the firmware release notes for the applicable model and track.
