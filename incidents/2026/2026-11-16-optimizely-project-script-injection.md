@@ -23,6 +23,9 @@ timeline:
   - date: Nov 16, 21:52 UTC
     title: One of the 188 known affected snippets still contains the code
     body: Report URI found one remaining affected snippet in its recheck. The result covers the measured set at that time.
+  - date: Nov 16, 23:11 UTC
+    title: The last known altered Optimizely snippet tests clean
+    body: Report URI said in its November 17 update that every affected file it tracked returned clean content by this check.
   - date: Nov 16, 22:47 UTC
     title: Report URI publishes its technical investigation
     body: The researchers describe the payload, affected snippets and containment checks. How the attacker gained project write access remains unresolved.
@@ -90,7 +93,7 @@ Report URI found injected code in the Project JavaScript portion of Optimizely W
 
 The payload could swap cryptocurrency destinations and send page screenshots and cookies readable by JavaScript to the attacker. Card capture targeted values accessible to the page, such as first-party card fields. Report URI says the code could not read card fields isolated in a cross-origin payment iframe. On iPhones and iPads, the loaders used operating-system-dependent paths. Report URI identified Coruna and DarkSword and observed only fingerprinting in the iOS 26 path it examined. In a follow-up, Hudson Rock reports that Ohey retrieved a later DarkSword stage containing code to upload a Keychain database and other files. A request sent with an iOS 26.3 user agent reached another loader and worker, but the chain’s own log marked the route as nonfunctional. Neither finding establishes that a visitor’s device was compromised.
 
-Report URI’s 19:24–19:59 UTC sweep found 186 affected snippets among 1,611 checked. Its full investigation identified **188 altered snippets across 178 organizations**. These are sample counts and do not establish how many visitors lost data or assets. The researchers also observed transfers to wallets associated with the payload. Those transfers do not establish total visitor losses or the volume of any card or cookie theft. Their 21:52 UTC recheck found one remaining altered snippet in the measured set. A later clean response does not resolve exposure that occurred before cleanup.
+Report URI’s 19:24–19:59 UTC sweep found 186 affected snippets among 1,611 checked. Its full investigation identified **188 altered snippets across 178 organizations**. These are sample counts and do not establish how many visitors lost data or assets. The researchers also observed transfers to wallets associated with the payload. Those transfers do not establish total visitor losses or the volume of any card or cookie theft. Their 21:52 UTC recheck found one remaining altered snippet in the measured set. In its November 17 update, Report URI said all tracked affected files were clean by 23:11 UTC on November 16. Its November 17 checks also found that 1688360[.]cc stopped resolving after a registrar hold, webshell[.]lol went on hold, eil786npto9u5bq[.]icu no longer resolved to an IP address and 5vobauua3ojpklx[.]icu still resolved but did not respond. These observations do not resolve exposure before cleanup or verify customer-hosted copies.
 
 On November 17, Bitquery estimated about $2,260 across 19 likely victim payments on November 16, or about $2,210 excluding one ambiguous transfer. It traced much of the roughly $7,040 in earlier observed wallet inflows to a swap rather than direct payments from visitors. These are estimates based on the timing and paths of transfers to the eight known addresses. They do not establish each sender’s intent or account for card theft or losses outside the sampled wallets.
 
