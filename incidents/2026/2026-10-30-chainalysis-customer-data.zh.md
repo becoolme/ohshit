@@ -4,8 +4,8 @@ tags:
 - Chainalysis
 - SaaS
 - 数据泄露
-summary: Chainalysis 已暂停 Reactor、Data Solutions、Chain（Beta）及 Rapid，Academy、Knowledge Base 及部分 Hexagate 功能可能受影响，管理门户功能已恢复，KYT 存在功能例外。KYT 和 Address Screening 的其他功能继续运行。客户用户 ID、姓名、邮箱及组织角色已遭访问；尚无调查内容、明文密码、MFA 密钥或会话令牌遭访问的证据。
-splash: Chainalysis 客户：四项产品暂停，Academy 和 Hexagate 可能受影响，KYT 存在例外；身份数据影响范围仍在调查
+summary: Chainalysis 已恢复 Reactor、Data Solutions 和 iAPI，并为不在批准网络内的 Reactor 用户加入邮箱验证。Rapid 和 Academy 仍不可用。已确认遭访问的客户资料包括用户 ID、姓名、邮箱和组织角色。
+splash: Chainalysis 客户及其安全团队，包括通过批准网络外部访问 Reactor 的用户。
 wipe: 启用双因素认证，审查异常登录或重置提示，获取本组织受影响记录明细
 inTheWildNote: Chainalysis 确认系统、工具及客户身份数据遭未授权访问。
 cves: []
@@ -40,13 +40,22 @@ timeline:
 - date: 11月4日 08:28 UTC
   title: Knowledge Base 访问也受影响
   body: Chainalysis 将知识库纳入持续安全维护的影响范围，仍在恢复系统。这是可用性更新，并非确认更多资料遭访问。
+- date: 11 月 7 日 19:31 UTC
+  title: 恢复 Reactor、KYT 和 Address Screening
+  body: 公司逐步恢复客户访问。
+- date: 11 月 10–11 日
+  title: 恢复 Data Solutions、客户管理门户和 iAPI
+  body: 公司分别公布恢复进展。
+- date: 11 月 14 日 11:59 UTC
+  title: Reactor 加入邮箱验证
+  body: 从批准网络外访问时，先通过邮箱验证，再登录产品。Rapid 和 Academy 仍不可用。
 checklist:
 - title: 启用双因素认证
   hint: 若组织尚未启用，向现有 Chainalysis 客户经理寻求协助。遇到异常认证或密码重置提示，先通过日常登录入口核实，再作回应。
 - title: 确认本组织的暴露范围
   hint: 跟进厂商直接发送的客户更新，并索取承诺提供的记录明细。谨慎对待陌生资产追回或招聘消息，通过既有联系人核实发件人，不要依赖消息中的链接。
 - title: 按具体产品安排中断应对
-  hint: 依赖 Reactor、Data Solutions、Chain（Beta）或 Rapid 前，查看官方安全维护事件页并向客户经理核实。部分 Hexagate 监控可能受影响；KYT 和 Address Screening 其他功能运行正常，但 KYT 的 Graph preview 及 Reactor 集成除外。登录也可能出现问题。11 月 3 日 14:30 UTC 的更新还提醒 Academy 培训平台可能无法访问；维护持续，尚无恢复期限。将可疑活动报告给 IT 或安全团队，并遵循既有流程。 11 月 3 日 17:00 UTC，官方称将视情况为受影响的认证或考试增加时间、延长期限。通过既有客户经理确认自己考试的具体安排，不要假定所有截止时间自动顺延。 11 月 3 日 19:56 UTC 更新还称 Customer Admin Portal 部分功能可能暂时不可用；23:05 UTC，公司确认此前受影响的门户功能已恢复；通过事件详情和既有客户经理核实剩余限制，这不代表服务或安全处置全部完成。11 月 4 日 08:28 UTC 更新还指出 Knowledge Base 访问受影响；文档不可用时，通过既有支持渠道或客户经理获取帮助。
+  hint: 参考 https://www.chainalysis.com/key-rotation/ 重设密码并重新生成 API 密钥。依赖 Reactor、Data Solutions、Chain（Beta）或 Rapid 前，查看官方安全维护事件页并向客户经理核实。部分 Hexagate 监控可能受影响；KYT 和 Address Screening 其他功能运行正常，但 KYT 的 Graph preview 及 Reactor 集成除外。登录也可能出现问题。11 月 3 日 14:30 UTC 的更新还提醒 Academy 培训平台可能无法访问；维护持续，尚无恢复期限。将可疑活动报告给 IT 或安全团队，并遵循既有流程。 11 月 3 日 17:00 UTC，官方称将视情况为受影响的认证或考试增加时间、延长期限。通过既有客户经理确认自己考试的具体安排，不要假定所有截止时间自动顺延。 11 月 3 日 19:56 UTC 更新还称 Customer Admin Portal 部分功能可能暂时不可用；23:05 UTC，公司确认此前受影响的门户功能已恢复；通过事件详情和既有客户经理核实剩余限制，这不代表服务或安全处置全部完成。11 月 4 日 08:28 UTC 更新还指出 Knowledge Base 访问受影响；文档不可用时，通过既有支持渠道或客户经理获取帮助。
 sources:
 - name: Chainalysis 原始通告及完整客户邮件
 - name: BleepingComputer 报道及公司回应
@@ -67,3 +76,5 @@ sources:
 **11 月 3 日 23:05 UTC 恢复：** 此前受影响的 Customer Admin Portal 功能已恢复。同一原始更新明确表示更广安全维护继续，事件亦将 Rapid Lookup 与 Reactor 并列为受影响组件。这不代表全部产品恢复，不改变 KYT 例外，也未完成资料范围调查。此前考试安排及凭据防范要求仍适用。
 
 **11 月 4 日文档访问更新：** 08:28 UTC，公司将 Knowledge Base 访问纳入维护影响范围。文档不可用时，通过既有支持渠道或客户经理获取帮助；这不能证明更多资料暴露或服务已全部恢复。
+
+最新登入及凭据恢复指引见[官方状态页](https://status.chainalysis.com/incidents/wpnnvwyvcnkz)。按公司指引[重设密码并重新生成 API 密钥](https://www.chainalysis.com/key-rotation/)。从批准网络外访问 Reactor 时会先后遇到邮箱验证和产品登录。
