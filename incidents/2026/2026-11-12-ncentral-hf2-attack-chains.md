@@ -8,7 +8,7 @@ tags:
 - RMM
 - Windows
 summary: Huntback reports 21 N-central servers mining after 4EverAble2Shell exploitation, including 19 on 2026.4.1.26 HF2. The server chain requires Legacy API. Separately disclosed Windows Agent and Probe paths have their own prerequisites. Rapid7 detected exploitation of the same Axis flaw in Confluence Data Center.
-splash: Reachable N-central HF2 with Legacy API enabled, affected Confluence Data Center with Remote API enabled, and certain Windows Agents or Probes
+splash: N-central HF2 with Legacy API, vulnerable Confluence Data Center with Remote API, and certain Windows Agents or Probes
 wipe: Apply N-central HF3 and the Confluence fix, restrict appliance access and investigate previously exposed servers and endpoints.
 inTheWild: 'yes'
 inTheWildNote: Huntback reports exploitation of the server chain. Windows paths remain unconfirmed.
@@ -58,7 +58,6 @@ checklist:
     at the end of its report, including /tmp/.xvd, /var/tmp/.xvd, xvd.service and the jline.internal.TerminalLineSettings SOAP class. A match alone does not establish compromise.
 - title: Track separate fixes for the appliance and Windows chains
   hint: Upgrade on-premises servers to 2026.4.1.39. N-able upgrades hosted servers. All customers must upgrade Agents and Probes to 2026.4.1 HF3. Once they reconnect, review Inactive Assets for unexpected agents. Use the incident response steps below for confirmed compromise and downstream exposure.
-    and managed systems, revoke exposed credentials and restore from verified clean systems.
 - title: Check temporary protections and Intune status for your deployment
   hint: Hosted customers should update Agents and Probes per N-able guidance. The vendor applied temporary server-side protections. For HF3 rollout, verify Legacy API access has been removed from dependent integrations. N-able disabled the hosted Intune integration and attempted to deactivate it for on-premises customers using it. N-able says support will contact customers where it could not deactivate the integration. Check restoration guidance with support.
 - title: Hunt using the vendor’s Legacy API indicators
