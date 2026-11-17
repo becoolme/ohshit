@@ -23,6 +23,9 @@ timeline:
   - date: Nov 16, 18:31 UTC
     title: Lighter resumes deposits and withdrawals
     body: Lighter’s official announcement says both returned to normal after its Security Council disabled Guardian mode.
+  - date: Nov 16, 20:03 UTC
+    title: Lighter stops returning transaction signatures
+    body: The official API channel says Sig and L1Sig now return empty strings and directs integrators to track transactions by hash and status.
 checklist:
   - title: Revoke suspected API credentials and pause affected trading automation
     hint: Use Lighter’s API key inventory to identify the affected key. Use Lighter’s ChangePubKey flow to replace the affected signing key at its existing index with L1 authorization. Verify the old key no longer works or contact support. Revoke affected read-only tokens separately and update your bots and secret stores.
@@ -30,6 +33,8 @@ checklist:
     hint: Preserve trade, order, transfer and withdrawal history and relevant bot logs. Check for unfamiliar activity and key changes, and report suspicious records to Lighter through its official channels.
   - title: Verify service recovery before retrying withdrawals
     hint: Check Lighter’s official updates for confirmation. Treat unsolicited recovery links and requests for private keys or seed phrases as phishing.
+  - title: Update transaction tracking for empty signature fields
+    hint: Treat Sig and L1Sig inside transaction info as empty strings. Check tx, txFromL1TxHash, txs, accountTxs, blockTxs, block, blocks and account WebSocket consumers. Identify transactions by hash and inspect status. Test reconciliation and retry handling before resuming automation.
 sources:
   - name: Lighter deposit and withdrawal restoration announcement
     url: https://t.me/lighter_announcements/484
@@ -58,6 +63,10 @@ sources:
     url: https://www.bitquery.io/investigations/lighter-hack
     says: Traces the observed USDC withdrawal and later movements. The transfer is evidence of an observed amount.
     primary: true
+  - name: Lighter transaction response update
+    url: https://t.me/s/lighter_api_updates/202
+    says: Confirms empty Sig and L1Sig fields and describes the affected responses and tracking guidance.
+    primary: true
 ---
 
 Lighter attributed the incident to a leaked API key for one trader’s account. The operator described its activation of Guardian mode on its smart contract as a precaution. The announcement did not explain how the key was exposed, how it was used, or how that access led to the withdrawal. Lighter said its protocol and smart contracts were unaffected. The operator planned a contract upgrade and aimed to reopen withdrawals on November 16. The subsequent official update confirms deposit and withdrawal recovery.
@@ -67,3 +76,5 @@ Lighter’s documentation says an API key alone can make a secure withdrawal bac
 Bitquery traced an Ethereum withdrawal of about 10.39 million USDC to `0xb3fffca23d4444ee73349825acd84f7b5020e387` and a subsequent swap into ETH. Its report links to the transaction and downstream addresses. The observed withdrawal amount does not establish the aggregate loss. Lighter did not confirm reports of a second affected trader account or provide an aggregate loss figure in the cited updates.
 
 At 18:31 UTC on November 16, Lighter said deposits and withdrawals had returned to normal after its Security Council disabled Guardian mode. Check your account and network before retrying. The restoration notice gives no aggregate recovered amount or pool-creation status.
+
+Lighter’s API channel announced on November 16 that transaction responses now return empty strings in the `Sig` and `L1Sig` fields inside `info`. This applies to transaction and block endpoints and account WebSocket channels. Integrators should track transactions by `hash` and check their state with `status`, as directed by the official update.
