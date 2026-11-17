@@ -9,7 +9,7 @@ tags:
 - Personal information
 summary: PLAID confirmed exposure of 79,249 KARTE account email addresses, external integration credentials, and some customer-imported data. The shutdown affected all projects from November 13. PLAID began sending the affected imported data to customers who requested it. It has not given a restart date.
 splash: All KARTE projects, including web and app tracking, content delivery, Message campaigns, Datahub workflows and the administration console.
-wipe: Revoke affected integration credentials, check PLAID’s notice for your project and reconcile interrupted jobs before retrying them.
+wipe: Revoke affected integration credentials, verify PLAID’s project notice, and save logs and reconcile interrupted jobs before retrying.
 inTheWildNote: PLAID confirms the attacker exploited a server vulnerability and read data.
 timeline:
 - date: Nov 13, 2026 05:44 UTC
