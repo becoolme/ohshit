@@ -40,7 +40,7 @@ timeline:
   body: 服务端构建号 2026.4.1.39，永久封锁 Legacy API。托管和自管客户都须将 Agent 和 Probe 更新至 2026.4.1 HF3。
 - date: 2026年11月16日
   title: Rapid7 披露在客户环境中观察到针对 Confluence 的利用
-  body: Rapid7 于 11 月 13 日在客户环境中发现针对启用了相关接口的 Confluence Data Center 的利用，并在报告中公布了四个关联 IP。
+  body: Rapid7 于 11 月 13 日在客户环境中发现针对 Confluence Data Center 的利用，并在报告中公布了四个关联 IP。
 checklist:
 - title: 立即关闭 Legacy API 并限制暴露
   hint: 在系统级打开 Administration → Mail and Network Settings → Network Security → Legacy APIs，确认已停用旧版 API。限制不可信网络访问设备，通过受控路径保留 Agent 和 Probe 所需的连接，并确认受管设备仍能报到。

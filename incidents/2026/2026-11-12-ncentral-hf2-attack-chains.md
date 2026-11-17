@@ -8,7 +8,7 @@ tags:
 - RMM
 - Windows
 summary: Huntback reports 21 N-central servers mining after 4EverAble2Shell exploitation, including 19 on 2026.4.1.26 HF2. The server chain requires Legacy API. Separately disclosed Windows Agent and Probe paths have their own prerequisites. Rapid7 detected exploitation of the same Axis flaw in Confluence Data Center.
-splash: N-central HF2 with Legacy API, vulnerable Confluence Data Center with Remote API, and certain Windows Agents or Probes
+splash: Reachable N-central HF2 with Legacy API, affected Confluence with Remote API, and certain Windows Agents or Probes
 wipe: Apply N-central HF3 and the Confluence fix, restrict appliance access and investigate previously exposed servers and endpoints.
 inTheWild: 'yes'
 inTheWildNote: Huntback and Rapid7 report server attacks. Windows paths remain unconfirmed.
@@ -124,7 +124,7 @@ sources:
   primary: true
   says: Reports in-the-wild exploitation of the Axis flaw and gives migration or manual patch guidance for standalone deployments.
 - name: Atlassian Confluence Data Center advisory
-  url: https://confluence.atlassian.com/security/cve-2026-90436-remote-code-execution-in-confluence-data-center-1874560038.html
+  url: https://confluence.atlassian.com/security/cve-2026-90436-remote-code-execution-in-confluence-data-center-and-server-1874560038.html
   primary: true
   says: Documents the Remote API prerequisite, fixed release and steps to verify the temporary mitigation.
 - name: Rapid7 report on Confluence exploitation
