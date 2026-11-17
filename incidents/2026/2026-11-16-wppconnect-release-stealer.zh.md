@@ -1,7 +1,7 @@
 ---
 title: WPPConnect 发布物携带窃取凭据和 WhatsApp 会话的代码
 tags: [WPPConnect, npm, Docker, 供应链]
-summary: WPPConnect 的发布流水线将恶意代码发到两个 npm 软件包、一个 GitHub 夜间构建和 Docker 镜像。代码会收集进程凭据和 WhatsApp 会话数据并发送到 Telegram 机器人。npm 的 latest 标签已回退。
+summary: WPPConnect 的发布流水线将恶意代码发到两个 npm 软件包、一个 GitHub 夜间构建和 Docker 镜像。代码会收集进程凭据和 WhatsApp 会话数据并发送到 Telegram 机器人。该库在 npm 的 latest 标签已回退。
 splash: 运行受影响的 WhatsApp 自动化库、服务端、夜间构建或容器镜像的主机。
 wipe: 锁定此前的 npm 版本并核验镜像摘要。从干净制品重建，轮换可被读取的凭据并撤销关联的 WhatsApp 会话。
 inTheWildNote: 研究人员确认公开发布物包含恶意代码，受影响主机数未知。
@@ -22,15 +22,15 @@ timeline:
   body: 标签为 2.10.82 和 2.10.83 的 Docker 镜像含有载荷。npm 于 03:09 UTC 发布服务端 2.10.82。
 - date: 11月16日 04:00 UTC
   title: 研究人员公开报告两个 npm 版本
-  body: 公开 Issue 发布后不久，项目的默认分支被强制推送。npm 回退 latest 标签，并废弃两个受影响版本。
+  body: 公开 Issue 发布后不久，项目的默认分支被强制推送。两个受影响的 npm 版本均被标记为废弃。该库的 latest 标签回到 2.4.0，服务端 2.10.82 从未被标为 latest。
 - date: 2026年11月17日
   title: GitHub 发布两条恶意软件公告
   body: GitHub 列出受影响的 npm 版本。Docker 镜像和夜间构建制品应另行核查。
 checklist:
 - title: 停止受影响进程并找出具体制品
-  hint: 检查锁文件、已安装模块、发布物下载记录及本地或已部署的容器摘要。查找 npm 2.4.1 和 2.10.82、Docker 2.10.82 和 2.10.83，以及受影响时段的夜间构建。另按 StepSecurity 的报告核查 2.4.3 和相关流水线制品。
+  hint: 检查锁文件、已安装模块、发布物下载记录及本地或已部署的容器摘要。查找 npm 2.4.1 和 2.10.82、Docker 2.10.82 和 2.10.83，以及 11 月 15 日 22:35 UTC 至 11 月 16 日 03:53 UTC 获取的库夜间构建。另按 StepSecurity 的报告核查 2.4.3 和相关流水线制品。
 - title: 用此前版本重建并锁定间接依赖
-  hint: 使用库版本 2.4.0 和服务端版本 2.10.81。若 @wppconnect-team/wppconnect 是间接依赖，使用 npm override 锁定，从可信基线重新生成锁文件，并在 CI 验证解析后的版本。使用 Docker 时，按研究报告核验 2.10.81 的已知干净摘要，避免依赖浮动标签。
+  hint: 使用库版本 2.4.0 和服务端版本 2.10.81。若 @wppconnect-team/wppconnect 是间接依赖，使用 npm override 锁定，从可信基线重新生成锁文件，并在 CI 验证解析后的版本。使用 Docker 时，确认 2.10.81 的摘要为 sha256:7c882ee934a5663a107b5f5a0382bfd8b1fb95150cd21ab35cd8ff9cea70d1f8，避免依赖浮动标签。
 - title: 轮换凭据并撤销 WhatsApp 会话
   hint: 在干净主机上轮换曾出现在进程环境和工作目录配置中的凭据，审查相关账号活动。退出受影响的 WhatsApp 已关联设备，使旧会话数据失效，干净重建完成后再重新配对。
 - title: 排查已知收集和上传指标
