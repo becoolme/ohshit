@@ -32,7 +32,7 @@ checklist:
   - title: 排查网络指标并评估暴露
     hint: "在 DNS、代理、CSP 和浏览器日志中排查以下 12 个域名和三个 IP，适用时包括子域。去活化域名为 1688360[.]cc、5vobauua3ojpklx[.]icu、eil786npto9u5bq[.]icu、l7bcsnwc7nzr3uo[.]icu、webshell[.]lol、linkforge[.]cc、je4ft3gn8vxudum[.]icu、q1ls1ho9x7wsxlu[.]icu、ios-hack[.]icu、p55abnw2pnsz0bo[.]icu、1y69gy2mdzaltz1[.]icu 和 gm38duxoihbmy5o[.]icu。IP 为 136.113.106.136、34.96.213.201 和 34.87.36.58。完整路径、脚本标记、两个哈希和八个钱包地址见 Report URI 报告。仅凭匹配无法确认失陷。"
   - title: 检查相关第三方组件是否加载同一脚本
-    hint: 盘点公开页面引用的 minute-ly、Kissmetrics 和 StorifyMe 组件。查阅 Hudson Rock 的指标表，取得受影响的脚本路径、归档响应哈希和载荷指标。将保存的响应与可信版本比较，隔离确认遭篡改的资源。
+    hint: 盘点公开页面引用的 minute-ly、Kissmetrics 和 StorifyMe 组件。在保存的响应中搜索 webshell[.]lol/get.js。Hudson Rock 的指标表列出 16 个归档的供应商响应及其哈希，以及八个移动端载荷阶段的哈希。将响应与可信版本比较，隔离确认遭篡改的资源。仅凭匹配无法确认失陷。
   - title: 排查暴露的会话和支付
     hint: 使暴露的非 HttpOnly 会话令牌失效，轮换受影响的秘密。核实受影响页面内第一方字段曾接收哪些银行卡数据，并与支付处理商协调响应和通知。确认这些页面实际可读取的数据。
   - title: 核对交易并更新受影响访客的设备
