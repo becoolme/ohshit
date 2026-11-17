@@ -4,7 +4,7 @@ date: 2026-11-14
 updated: 2026-11-17
 level: 4
 tags: [data breach, customer support, South Korea, crypto]
-summary: Coinone confirms an attacker accessed its support contractor MetaM’s servers and viewed or took customer support records. Fields varied by conversation and could include identity details or passwords supplied to support. Coinone found no indications of direct access to its account, trading or wallet systems. Mega MGC Coffee separately confirms 30 exposed mobile phone numbers.
+summary: Coinone says an attacker accessed MetaM’s servers and viewed or took support records. Fields varied and could include identity details or passwords shared with support. Coinone found no indication of direct access to its account, trading or wallet systems. Mega MGC Coffee separately confirms 30 exposed mobile phone numbers.
 splash: Customers whose conversations were stored on affected MetaM systems, including Coinone customers who contacted support
 wipe: Change passwords shared with support, review account activity and withdrawal addresses, and verify incident messages independently.
 inTheWild: yes
