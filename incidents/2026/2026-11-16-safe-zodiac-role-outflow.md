@@ -25,8 +25,8 @@ checklist:
     hint: From a trusted device, use the modifier owner’s authority to remove the member’s active assignments. If you cannot safely constrain the module, coordinate the required Safe owner approvals to disable it. Confirm the on-chain change took effect. Check other Safes that reused the same member key or policy.
   - title: Verify which permissions let the transaction execute
     hint: Save transaction receipts and trace the enabled modules, role members, allowed targets, functions and parameter conditions. Inspect the receiving address and module against expected policy. An address match alone does not establish ownership or compromise. Review module executions and token approvals. Inspect owner changes separately from module activity.
-  - title: Revoke unneeded token allowances before refunding a Safe
-    hint: Check on-chain allowances for USDC and syrupUSDC to the ParaSwap spender used in the transaction. Revoke approvals the Safe no longer needs and verify they are zero. For remaining routes, limit amounts, executors and recipients, and simulate each route before moving assets back.
+  - title: Revoke unneeded token allowances before moving assets back to a Safe
+    hint: On each token contract, read the original Safe’s allowance to the exact ParaSwap spender shown in the transaction trace. Revoke approvals the Safe no longer needs and verify they are zero. For remaining routes, limit amounts, executors and recipients, and simulate each route before moving assets back.
   - title: Test narrower permissions before restoring operations
     hint: Replace affected member keys, scope the allowed recipients and amounts, and simulate both allowed and prohibited calls. Verify the applied policy on-chain before restarting bots.
 sources:
