@@ -4,7 +4,7 @@ level: 4
 date: '2026-11-16'
 tags: [WPPConnect, npm, Docker, supply chain]
 ecosystems: [node]
-summary: Malicious WPPConnect code shipped through its release pipeline in two npm packages, a GitHub nightly and Docker images. It collects process secrets and WhatsApp session data for a Telegram bot. npm rolled back its latest tags.
+summary: Malicious WPPConnect code shipped through its release pipeline in two npm packages, a GitHub nightly and Docker images. It collects process secrets and WhatsApp session data for a Telegram bot. The library’s npm latest tag was rolled back.
 splash: Hosts that ran the affected WhatsApp automation library, server, nightly or container images.
 wipe: Pin the prior npm versions and verify image digests. Rebuild from clean artifacts, rotate accessible secrets and revoke linked WhatsApp sessions.
 inTheWild: 'yes'
@@ -28,15 +28,15 @@ timeline:
   body: Docker images tagged 2.10.82 and 2.10.83 contain the payload. npm publishes server 2.10.82 at 03:09 UTC.
 - date: Nov 16, 04:00 UTC
   title: Researcher publicly reports both npm releases
-  body: The project’s default branches were force-pushed shortly after the issues opened. npm moved the latest tags back and deprecated the two affected versions.
+  body: The project’s default branches were force-pushed shortly after the issues opened. Both affected npm versions were deprecated. The library’s latest tag returned to 2.4.0. The server’s 2.10.82 was never tagged latest.
 - date: Nov 17, 2026
   title: GitHub publishes two malware advisories
   body: GitHub lists the affected npm versions. These remain separately identifiable from the Docker and nightly artifacts.
 checklist:
 - title: Stop affected processes and identify the exact artifacts
-  hint: Check lockfiles, installed modules, release downloads and local or deployed container digests. Look for npm 2.4.1 and 2.10.82, Docker 2.10.82 and 2.10.83, and nightlies from the affected window. Also check 2.4.3 and related pipeline artifacts as described in StepSecurity’s report.
+  hint: Check lockfiles, installed modules, release downloads and local or deployed container digests. Look for npm 2.4.1 and 2.10.82, Docker 2.10.82 and 2.10.83, and library nightlies obtained between November 15 22:35 UTC and November 16 03:53 UTC. Also check 2.4.3 and related pipeline artifacts as described in StepSecurity’s report.
 - title: Rebuild using the earlier releases and pin transitive dependencies
-  hint: Use library 2.4.0 and server 2.10.81. Set an npm override for @wppconnect-team/wppconnect if it is transitive, recreate the lockfile from a trusted baseline and verify the resolved versions in CI. If using Docker, verify the known-good digest for 2.10.81 in the research report instead of trusting a floating tag.
+  hint: Use library 2.4.0 and server 2.10.81. Set an npm override for @wppconnect-team/wppconnect if it is transitive, recreate the lockfile from a trusted baseline and verify the resolved versions in CI. If using Docker, verify that 2.10.81 matches sha256:7c882ee934a5663a107b5f5a0382bfd8b1fb95150cd21ab35cd8ff9cea70d1f8 instead of trusting a floating tag.
 - title: Rotate secrets and revoke WhatsApp sessions
   hint: From a clean host, rotate secrets present in the process environment and working-directory configuration. Review activity for the affected accounts. Log out the affected WhatsApp linked devices, invalidate stored session data and re-pair only after the clean rebuild.
 - title: Hunt for known collection and upload indicators
