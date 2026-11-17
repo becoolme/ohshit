@@ -17,7 +17,7 @@ timeline:
     body: LEGOLAND Korea identifies the types of records viewed and says the exact scope remains under investigation. SEA LIFE Busan separately published a notice describing the same categories.
 checklist:
   - title: Ask the venue to verify your exposure and pass status
-    hint: Open the venue’s official website and use the contact details in its notice. Ask what information was affected and whether your pass barcode needs to be replaced. Report any unexpected pass activity and avoid sharing a barcode screenshot in public.
+    hint: Open the venue’s official notice and verify the listed contact before writing to privacy_notice@legoland.com or privacy_notice@busanaquarium.com. Ask what information was affected and whether your pass barcode needs to be replaced. Report any unexpected pass activity and avoid sharing a barcode screenshot in public.
   - title: Verify messages that mention your pass or booking
     hint: Confirm requests through the venue’s official support channel, especially messages that use your contact details and ask for a verification code or payment. Avoid unsolicited links and attachments. Save suspicious messages so the venue can investigate.
   - title: Check tenant exposure if your organization uses Accesso
@@ -33,6 +33,6 @@ sources:
     says: Confirms that the aquarium was also notified about access to annual pass records and gives its own customer contact.
 ---
 
-The venues use Accesso’s ticketing system for visitor reservations. They say an unauthorized party viewed some annual pass records containing names, encrypted dates of birth, addresses, email addresses, phone numbers and pass barcodes. The notices report the birth dates were stored encrypted. Investigators are still assessing their exposure and had found no evidence that credit card or bank account details were exposed.
+The venues use Accesso’s ticketing system for visitor reservations. They say an unauthorized party viewed some annual pass records containing names, encrypted dates of birth, addresses, email addresses, phone numbers and pass barcodes. The birth dates were encrypted at rest. The notices say those fields are still being assessed and report no evidence of exposure of credit card or bank account details.
 
-According to the venues, Accesso removed the vulnerable endpoint, blocked the source addresses and tightened security rules. The exact time of the underlying access, number of people affected and which individual records left the system remain under investigation. The venues’ notices cover their own customers. They do not give impact figures for Accesso’s other customers.
+According to the venues, Accesso removed the vulnerable endpoint, blocked the source addresses and tightened security rules. The exact time of the underlying access, number of people affected and which customers’ data was taken remain under investigation. The venues’ notices cover their own customers. They do not give impact figures for Accesso’s other customers.
