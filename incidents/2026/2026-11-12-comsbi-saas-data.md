@@ -30,6 +30,9 @@ timeline:
 - date: Nov 16, 2026
   title: Sonicmoov opens a COMSBI inquiry form
   body: Potentially affected users can contact the company via the form linked from its official notice.
+- date: Nov 16, 2026
+  title: Nissin Foods confirms LINE profile and prize delivery data were taken
+  body: The notice lists 1,374,157 LINE profile records. The 543 prize-winner records are within that affected group. Nissin began notifying reachable users through its official account.
 checklist:
 - title: Confirm exposure and containment for your tenant
   hint: Use support@sonicmoov.com or a known Sonicmoov support channel. Ask which tenant data and integrations were involved, whether vendor sessions and cloud permissions were revoked, and which integration credentials have been replaced.
@@ -37,6 +40,8 @@ checklist:
   hint: Coordinate credential reissue and invalidation with Sonicmoov for affected integrations. Verify that only expected credentials work, review outbound messages and integration changes, and preserve access and delivery logs. Notify affected users through established channels.
 - title: Verify messages through a channel you already trust
   hint: If you follow an affected LINE account or receive a notice, verify unusual messages, calls, links or attachments with the organization using a known contact. Sonicmoov says it will not ask for your password or credentials.
+- title: Verify a Nissin campaign notice through the official channel
+  hint: Nissin is contacting users it can reach via its LINE account @nissin_campaign. If you cannot receive LINE messages or get a suspicious request, use the contact form linked from Nissin’s notice. Nissin says it will never request passwords or verification codes for this response.
 sources:
 - name: Sonicmoov COMSBI contact form announcement
   url: https://sonicmoov.com/news/92uaoo64n
@@ -78,6 +83,10 @@ sources:
   url: https://www.cc9.jp/news/13680/
   primary: true
   says: Identifies follower registration and survey data and gives the incident contact.
+- name: Nissin Foods customer notice
+  url: https://cdn.nissin.com/gr-documents/attachments/news_posts/13997/07e7740722022791/original/20261116-3.pdf
+  primary: true
+  says: Confirms the two overlapping data categories, individual notifications and restart of applications on a separate system.
 ---
 
 The compromised Sonicmoov accounts could administer multiple customers. How the attacker obtained the credentials remains under investigation. Sonicmoov says affected fields varied by customer and included names, phone numbers, email addresses, postal addresses, birth dates and gender. LINE follower data included display names, profile images, status messages and system-assigned LINE user IDs, which differ from the LINE IDs people choose for friend search. The SaaS does not store credit card data.
@@ -93,3 +102,5 @@ LIFULL confirmed that data from its LIFULL HOME’S member LINE account was take
 Nippon Pet Food confirmed exposure involving its Beauty Pro LINE account, including profile details and some contact, prize delivery and survey data. It says credentials used to connect its LINE account were reissued and that notifications would begin on November 13. Cable TV’s November 14 notice identified LINE profile and survey information and directed inquiries to Sonicmoov at support@sonicmoov.com. The notices from Nippon Pet Food and Cable TV include former followers who blocked or removed the accounts. Verify any notification through the affected organization’s established channel.
 
 Sonicmoov’s [November 16 announcement](https://sonicmoov.com/news/92uaoo64n) links a form for potentially affected users to ask about the incident.
+
+Nissin Foods confirmed that COMSBI held 1,374,157 affected LINE profiles for its campaign account, including display names, system-assigned user IDs, profile-image URLs and status messages where set. This included people who never entered the campaign and some who had blocked the account. The same group includes 543 winners whose names, name readings, postal codes, addresses and phone numbers were taken. The two counts describe overlapping records for one customer. Nissin began individual LINE notifications on November 16 where delivery was possible. After finding no unauthorized access or leak on its separate Cup Noodle points platform, it resumed applications there in phases that day.
