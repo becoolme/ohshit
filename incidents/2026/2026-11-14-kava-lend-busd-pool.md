@@ -26,6 +26,9 @@ timeline:
 - date: Nov 16, 2026
   title: Kava confirms amount taken and planned governance vote
   body: Kava confirms about 53.9 million KAVA was taken. The exploit is blocked, some funds were frozen, and permanent retirement of new lending and borrowing requires a governance vote.
+- date: Nov 16, 18:29 UTC
+  title: Governance proposal 223 enters voting
+  body: It would set all current Kava Lend borrowing caps to zero and restore the USD 10 minimum-borrow parameter so existing borrowers can make partial repayments under the normal minimum-debt rule.
 checklist:
 - title: Pause new exposure and record existing positions
   hint: Review deposits, debts, collateral and withdrawal history in the official Kava app. Save the relevant wallet addresses, transaction hashes and times. Follow Kava’s official incident updates before opening new positions or acting on recovery instructions.
@@ -33,6 +36,8 @@ checklist:
   hint: Check the exchange’s KAVA deposit and withdrawal notices and the current status of the intended bridge. Kava paused Axelar withdrawals. Use official support channels for transfers already in flight and ignore unsolicited recovery offers.
 - title: Correlate suspected exploit transactions
   hint: Start with the Kava wallets kava1uzx5924cqsutcw365ajs8kkc3rr4vtlyzms255 and kava1v2s266sll8ca5xrs06swmsc00nwwt7u77eufk4 and BNB Chain seller 0x37d732914f86cc6eb1e87419e3046a739f011042. Use Bitquery’s full record of 22 addresses, transaction hashes and the Relay order ID for the other roles and routes. Match network, timestamp and role. A match alone cannot establish ownership or compromise.
+- title: Check the on-chain vote before acting on proposed changes
+  hint: Look up proposal 223 and verify its status and the live market settings. The vote is scheduled to end November 23 at 18:29 UTC. Follow official instructions for repayments and any later wind-down steps for existing positions.
 sources:
 - name: Kava’s scope update via X’s public embed
   url: https://publish.x.com/oembed?omit_script=true&url=https%3A%2F%2Fx.com%2FKAVA_CHAIN%2Fstatus%2F2121574325765476462
@@ -53,6 +58,10 @@ sources:
   url: https://medium.com/@Kava_Chain/hard-lend-security-incident-579888f8dd73
   says: Confirms amount taken and bridged, partial freezing, and the planned proposal.
   primary: true
+- name: Kava chain governance record for proposal 223
+  url: https://api.kava.io/cosmos/gov/v1/proposals/223
+  primary: true
+  says: Records the voting period and executable changes to borrowing caps and the minimum-borrow parameter.
 ---
 
 Bitquery found that the attackers put a nearly empty BUSD market in a state where its interest calculation divided by a tiny positive supply. The supply index grew about 243,000-fold in three minutes. One wallet recycled the available BUSD into a second wallet’s account as collateral. The second wallet borrowed KAVA against those deposits. Repeated liquidations closed the debts after the first wallet had withdrawn the available BUSD, leaving little or none for the liquidation to seize. This is Bitquery’s reconstruction. Kava subsequently confirmed the accounting vulnerability and said the exploit was blocked.
@@ -61,4 +70,4 @@ Bitquery counts **55.2 million KAVA borrowed** across 127 loans and **53.9 milli
 
 Kava treated the Axelar suspension as a precaution. The assets in the sale reconstruction crossed through LayerZero. A bridge pause alone does not identify the exploit path or the status of customer balances.
 
-Kava confirms about 49.2 million KAVA was bridged to BNB Chain through LayerZero. The underlying chain continued operating and the exploit created no KAVA. The amount frozen and any restitution remain unconfirmed. The planned permanent halt to new lending and borrowing requires a seven-day governance vote. Follow official governance and recovery notices for instructions for existing positions.
+Kava confirms about 49.2 million KAVA was bridged to BNB Chain through LayerZero. The underlying chain continued operating and the exploit created no KAVA. The amount frozen and any restitution remain unconfirmed. The planned permanent halt to new lending and borrowing requires a seven-day governance vote. On-chain proposal 223 covers the narrower step of freezing borrowing across current markets and restoring the USD 10 minimum-borrow parameter. Voting is open. The payload does not retire deposits or settle restitution. Follow official governance and recovery notices for instructions for existing positions.
