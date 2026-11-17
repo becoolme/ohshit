@@ -3,7 +3,7 @@ title: EGL Tours discloses unauthorized access to customer data through a vendor
 level: 3
 date: '2026-11-16'
 tags: [EGL Tours, Third-party vendor, Data breach]
-summary: EGL Holdings says an unauthorized person entered a technology vendor’s back-office system and viewed some customer data. The company is checking whether identity and travel document numbers were among the exposed data.
+summary: EGL Holdings says an unauthorized person entered a technology vendor’s back-office system and viewed some customer data. Data that may have been viewed includes identity card and travel document numbers.
 splash: EGL Tours customers whose data was accessible through the affected vendor’s back-office system.
 wipe: Verify notices through EGL Tours directly, ask which fields were exposed and report suspected identity misuse to the relevant authority.
 inTheWild: 'yes'
@@ -20,7 +20,7 @@ timeline:
   body: EGL reports containment, strengthened monitoring and restored operation. It says it reported the incident to Hong Kong Police and the Privacy Commissioner.
 checklist:
 - title: Confirm whether your booking details were affected
-  hint: Contact EGL Tours using its official website contact information or a channel from your original booking. Ask what fields were viewed and how EGL will notify affected customers. Verify unexpected requests for document scans, payments or one-time codes before responding.
+  hint: Contact EGL Tours via its official enquiry line (+852 3692 0888) or a known channel from your original booking. Ask what fields were viewed and how EGL will notify affected customers. Verify unexpected requests for document scans, payments or one-time codes before responding.
 - title: Respond if you see signs of identity misuse
   hint: Keep notices and suspicious messages. If someone uses your ID or travel document details without permission, report it to the police and contact the issuing authority for instructions.
 sources:
