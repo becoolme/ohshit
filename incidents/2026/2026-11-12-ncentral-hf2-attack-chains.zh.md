@@ -1,6 +1,6 @@
 ---
 title: 新攻击链可影响 N-central HF2 服务器和 Windows 受管终端
-summary: Huntback 报告有 21 台 N-central 服务器遭 4EverAble2Shell 利用后运行矿工，其中 19 台使用 2026.4.1.26 HF2。服务器链需要启用 Legacy API。另行公开的 Windows Agent 和 Probe 攻击路径有各自的前提。 Rapid7 还在 Confluence Data Center 中发现了对同一 Axis 漏洞的利用。
+summary: Huntback 报告有 21 台 N-central 服务器遭 4EverAble2Shell 利用后运行矿工，其中 19 台使用 2026.4.1.26 HF2。服务器链需要启用 Legacy API。另行公开的 Windows Agent 和 Probe 攻击路径有各自的前提。Rapid7 还在 Confluence Data Center 中发现了对同一 Axis 漏洞的利用。
 splash: 启用 Legacy API 且可访问的 N-central HF2、启用 Remote API 的受影响 Confluence Data Center，以及满足条件的 Windows Agent 或 Probe。
 wipe: 部署 N-central HF3 和 Confluence 修复，限制不受信网络访问，并调查此前暴露的服务器和受管理端点。
 inTheWildNote: Huntback 报告服务器攻击链已在野利用。Windows 攻击路径的在野利用仍待确认。
@@ -79,11 +79,11 @@ sources:
   says: 报告 Axis 漏洞的在野利用，并给出独立部署的迁移或手动打补丁建议。
 - name: Atlassian Confluence Data Center 公告
   says: 说明 XML-RPC 和 SOAP 远程 API 这一利用前提、修复版本及禁用该接口的验证步骤。
+- name: Rapid7 对 Confluence 实际利用的报告
+  says: 记录了客户环境中的实际利用和四个相关 IP。
 cves:
 - name: Apache Axis SOAP 类实例化
   description: 可达的 Axis 1.x SOAP 路径允许未认证调用者实例化类。在 N-central 中，已披露的服务器链要求启用 Legacy API，并利用另一处缺陷提权至 root。
-- name: Rapid7 对 Confluence 实际利用的报告
-  says: 记录了客户环境中的实际利用和四个相关 IP。
 ---
 
 [先前披露 Able2Shell 的研究者](/zh/incidents/ncentral-able2shell/) 又公开了在 N-central Appliance 2026.4.1.26 HF2 上测试的新攻击链。服务器测试中，启用 Legacy API 后，攻击者可以访问 SOAP 端点。攻击链先以设备服务账户执行命令，再借特权辅助程序取得 root 权限。
