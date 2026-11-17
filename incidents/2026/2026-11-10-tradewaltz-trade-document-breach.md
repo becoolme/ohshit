@@ -6,7 +6,7 @@ wipe: Verify any notice with TradeWaltz and review exposed documents and related
 inTheWildNote: TradeWaltz confirms unauthorized access and acquisition of 130 trade documents.
 level: 4
 date: '2026-11-10'
-updated: '2026-11-15'
+updated: 2026-11-17
 tags:
 - TradeWaltz
 - third party
@@ -28,6 +28,9 @@ timeline:
 - date: Nov 16, 2026
   title: TradeWaltz postpones reopening
   body: The company says recovery work is ongoing and the production and training environments remain offline. A new restart time is pending.
+- date: Nov 17, 2026
+  title: TradeWaltz report 15 moves the recovery target to November 18
+  body: Production and training both remain suspended. Confirm the actual reopening before resubmitting records.
 checklist:
 - title: Verify notices and identify affected files
   hint: Use the established TradeWaltz help desk or account contact. Confirm document identifiers and fields with the provider, and compare them with your own shipment and document records. Preserve notices and suspicious requests.
@@ -47,3 +50,5 @@ The provider first disclosed the intrusion and service suspension on November 10
 In its November 12 update, the company says 130 trade documents were taken and that the documents included names and initials. The number describes documents. It has not published a distinct count of people or customers. The provider completed individual contact with identified affected customers. TradeWaltz for Grain Importers and TradeWaltz for Export Documentary remained available. In its tenth notice, on November 13, the company says it finished identifying the affected data and started recovery on November 12.
 
 In report 13, dated November 16 in Japan, TradeWaltz says recovery work and security checks are still underway. The company no longer expects production and training to reopen that day. It plans to announce the restart date and time in a further update on November 16. Check the incident notice for confirmation before retrying submissions.
+
+Report 15 gives November 18 as the next reopening target for the production and training environments, both still suspended when the notice was published. Check the official notice for confirmation and reconcile earlier submissions before retrying.
