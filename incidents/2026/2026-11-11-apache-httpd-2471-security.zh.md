@@ -24,7 +24,7 @@ checklist:
 - title: 核对 Ubuntu 软件包或 Red Hat 勘误
   hint: 在 Ubuntu 上运行 dpkg-query -W apache2 apache2-bin，将结果与当前发行版对应的 USN-9090-1 版本比较。20.04 LTS 的修复通过 Ubuntu Pro 提供。Red Hat 用户按 CVE 记录选择与产品和更新通道匹配的勘误。在 RHEL 9 或 10 上运行 rpm -q mod_http2，将已安装的软件包版本与适用勘误比较。更新后重启或重新部署，再确认运行实例。
 - title: 缓解受影响的 Axis 网络设备
-  hint: 在设备的 Plain config 设置中关闭 System.HTTP2.AllowH2 和 System.HTTP2.AllowH2c。保存后确认两项均已关闭，并测试业务流量。恢复设置前，按设备型号和固件分支查阅 Axis 发行说明，确认固件已更新至 Apache 2.4.71。
+  hint: 在设备上进入 System → Plain config，找到 System.HTTP2.AllowH2 和 System.HTTP2.AllowH2c，关闭两项并保存。必要时刷新页面或重启设备，再核实设置并测试业务流量。等 Axis 发行说明确认你的型号和固件分支包含修复后，再恢复 HTTP/2。
 sources:
 - name: Apache 2.4.71 安全公告
   says: 列出三个 CVE、受影响版本及发版日期。

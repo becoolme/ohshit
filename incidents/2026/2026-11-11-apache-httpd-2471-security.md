@@ -32,7 +32,7 @@ checklist:
 - title: Verify the Ubuntu package or Red Hat erratum
   hint: On Ubuntu, run dpkg-query -W apache2 apache2-bin and compare the results with the USN-9090-1 versions for your release. The 20.04 LTS fix requires Ubuntu Pro. On Red Hat, select the erratum for your product and update channel from its CVE record. On RHEL 9 or 10, use rpm -q mod_http2 to identify the installed package and compare its release with the applicable erratum. Restart or redeploy after patching and verify the running instance.
 - title: Mitigate affected Axis network devices
-  hint: Use the device’s Plain config settings to turn both System.HTTP2.AllowH2 and System.HTTP2.AllowH2c off. Save, verify both are disabled and test required traffic. Check Axis release notes for your device and firmware track for the Apache 2.4.71 update before restoring the settings.
+  hint: On the device, open System → Plain config and find System.HTTP2.AllowH2 and System.HTTP2.AllowH2c. Disable both and save. Refresh or restart if needed, then verify the settings and test required traffic. Restore HTTP/2 only after Axis release notes confirm that your model and firmware track include the fix.
 sources:
 - name: Apache 2.4.71 security advisories
   says: Lists the three CVEs, affected versions and release date.
