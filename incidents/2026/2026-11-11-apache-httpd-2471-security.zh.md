@@ -11,6 +11,9 @@ timeline:
 - date: 2026年11月12日
   title: Canonical 与 Red Hat 公布发行版修复指引
   body: Canonical 列出五个涉及 HTTP/2 漏洞的 Ubuntu 发行版及修复软件包。Red Hat 说明了 RHEL 9、RHEL 10 和 JBoss Core Services 1 的影响范围及更新指引。
+- date: 2026年11月16日
+  title: Axis 公布受影响网络设备的临时缓解措施
+  body: Axis 列出 AXIS OS 6.50.5.10 及之后版本，建议暂时禁用两种 HTTP/2 连接方式，并表示正在开发固件修复。
 checklist:
 - title: 清点正在运行的 HTTP/2 配置
   hint: 使用 httpd -v 或 apache2 -v、软件包管理器和 httpd -M 或 apache2ctl -M。检查各虚拟主机和可直连源站监听器实际使用的 Protocols 设置，包括 TLS 上的 h2 和 h2c。另行检查独立安装的 mod_h2。
@@ -20,6 +23,8 @@ checklist:
   hint: 升级需推迟时，从实际生效的 Protocols 设置中移除 h2 和 h2c，或停用 mod_http2。检查配置后重新加载，验证直连和代理请求均无法与受影响监听器协商 HTTP/2，并测试必要业务。此措施降低 HTTP/2 漏洞暴露，其他两个受影响模块仍需升级。
 - title: 核对 Ubuntu 软件包或 Red Hat 勘误
   hint: 在 Ubuntu 上运行 dpkg-query -W apache2 apache2-bin，将结果与当前发行版对应的 USN-9090-1 版本比较。20.04 LTS 的修复通过 Ubuntu Pro 提供。Red Hat 用户按 CVE 记录选择与产品和更新通道匹配的勘误。在 RHEL 9 或 10 上运行 rpm -q mod_http2，将已安装的软件包版本与适用勘误比较。更新后重启或重新部署，再确认运行实例。
+- title: 缓解受影响的 Axis 网络设备
+  hint: 在设备的 Plain config 设置中关闭 System.HTTP2.AllowH2 和 System.HTTP2.AllowH2c。保存后确认两项均已关闭，并测试业务流量。恢复设置前，按设备型号和固件分支查阅 Axis 发行说明，确认固件已更新至 Apache 2.4.71。
 sources:
 - name: Apache 2.4.71 安全公告
   says: 列出三个 CVE、受影响版本及发版日期。
@@ -33,6 +38,8 @@ sources:
   says: 列出 Ubuntu 修复版本，并明确 HTTP/2 漏洞涉及哪些发行版。
 - name: Red Hat RHSB-2026-017 安全公告
   says: 说明受影响的 Red Hat 产品及独立 mod_http2 软件包。
+- name: Axis CVE-2026-119618 安全公告
+  says: 列出受影响的 AXIS OS 版本，以及固件修复发布前需要关闭的 HTTP/2 设置。
 cves:
 - name: HTTP/2 堆内存破坏
   description: mod_http2 的 assign_headers() 存在竞态，可能导致远程代码执行。
@@ -55,3 +62,5 @@ CVE-2026-119618 是 HTTP/2 请求头处理中的竞态。能访问受影响 HTTP
 同批还修复了 2.4.30 至 2.4.70 的 mod_md 子进程崩溃漏洞，以及 2.4.69 和 2.4.70 的 mod_vhost_alias 单字节栈覆写漏洞，暴露取决于各自模块。下游回移补丁后版本号仍可能较旧，请按供应商公告核对实际软件包版本。
 
 Canonical 的 USN-9090-1 将 CVE-2026-119618 的修复回移到上表所列的五个 Ubuntu 发行版。该公告也为更早的 Ubuntu 版本提供其他漏洞的修复，其中不包括这项 HTTP/2 漏洞。Red Hat 将 RHEL 9、RHEL 10 和 JBoss Core Services 1 列为直接受影响产品，并提供按产品和更新通道区分的修复指引。
+
+Axis 表示，CVE-2026-119618 可让未经认证的远程攻击者获得受影响设备的管理员权限，范围包括运行 AXIS OS 6.50.5.10 及之后版本的网络设备。11 月 16 日的公告称，Axis 尚未发现自家产品遭到利用，并提供了固件修复发布前的缓解措施。Apache 上游修复版本为 2.4.71。Axis 硬件用户应按设备型号和固件分支查阅发行说明。
