@@ -9,7 +9,7 @@ cves:
 - name: 流水线作业授权竞态
   description: 在特定竞态条件下，已登录用户可能访问受保护的 CI/CD 变量和资源。
 - name: 工作区授权绕过
-  description: 拥有必要权限的已登录用户可能通过接入的 GitLab Agent 读取其他命名空间的 Kubernetes Secret。
+  description: 拥有较高权限（CVSS PR:H）的已登录用户可能通过接入的 GitLab Agent 读取其他命名空间的 Kubernetes Secret。
 - name: Wiki 跨站脚本
   description: 已登录用户可注入 JavaScript，当其他用户访问 Wiki 页面时执行。
 - name: Error Tracking 跨站脚本
@@ -41,4 +41,4 @@ sources:
 
 流水线授权竞态影响 GitLab CE/EE 9.3 起且低于 19.3.9 的版本、低于 19.4.8 的 19.4 分支，以及低于 19.5.6 的 19.5 分支。GitLab 表示，特定条件下，已登录用户可能访问受保护的 CI/CD 变量和资源。厂商公告未公布触发竞态的具体条件。
 
-工作区漏洞影响 GitLab CE/EE 17.6 起至对应修复版本之前的版本，并要求集群通过 GitLab Agent for Kubernetes 接入。Wiki 和 Error Tracking 漏洞分别从 CE/EE 17.2 和 16.1 开始受影响，直至对应的修复版本。这两处脚本注入都要求攻击者已登录，且有用户查看受影响页面。GitLab 公告列出了该批补丁中的其余修复。
+工作区漏洞影响 GitLab CE/EE 17.6 起至对应修复版本之前的版本，并要求集群通过 GitLab Agent for Kubernetes 接入。Wiki 和 Error Tracking 漏洞分别从 CE/EE 17.2 和 16.1 开始受影响，直至对应的修复版本。这两处脚本注入都要求攻击者已登录，且有用户查看受影响页面。GitLab 公告列出了该批补丁中的其余修复。参照 [GitLab 升级路径指南](https://docs.gitlab.com/update/upgrade_paths/) 确认从当前版本升级时必须经过哪些版本。

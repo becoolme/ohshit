@@ -16,7 +16,7 @@ cves:
 - id: CVE-2026-97187
   score: 7.6
   name: Workspace authorization bypass
-  description: An authenticated user with the required privileges may read Kubernetes Secrets from other namespaces through a connected GitLab agent.
+  description: An authenticated user with high privileges (CVSS PR:H) may read Kubernetes Secrets from other namespaces through a connected GitLab agent.
 - id: CVE-2026-105739
   score: 8.7
   name: Wiki cross-site scripting
@@ -56,4 +56,4 @@ sources:
 
 The pipeline authorization race affects GitLab CE/EE from 9.3 before 19.3.9, on 19.4 before 19.4.8, and on 19.5 before 19.5.6. GitLab says an authenticated user could access protected CI/CD variables and resources under certain conditions. It has not published the precise race trigger in the advisory.
 
-The workspace flaw affects GitLab CE/EE from 17.6 up to the applicable fixed release, and requires a cluster connected through the GitLab agent for Kubernetes. The wiki and Error Tracking flaws affect CE/EE starting at 17.2 and 16.1 respectively, up to the applicable fixed releases. In both script-injection cases an attacker must be authenticated and a user must view an affected page. GitLab’s release notes list the other fixes in this batch.
+The workspace flaw affects GitLab CE/EE from 17.6 up to the applicable fixed release, and requires a cluster connected through the GitLab agent for Kubernetes. The wiki and Error Tracking flaws affect CE/EE starting at 17.2 and 16.1 respectively, up to the applicable fixed releases. In both script-injection cases an attacker must be authenticated and a user must view an affected page. GitLab’s release notes list the other fixes in this batch. Use the [GitLab upgrade path guide](https://docs.gitlab.com/update/upgrade_paths/) to identify required stops from your installed version.
