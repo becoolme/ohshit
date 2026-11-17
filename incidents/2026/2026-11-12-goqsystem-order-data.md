@@ -4,7 +4,7 @@ summary: An intruder exploited a vulnerability in GoQSystem’s contact form and
 splash: Buyers and recipients whose orders were held in the affected GoQSystem merchant accounts. Older orders are also in scope.
 wipe: Get your affected orders from GoQSystem, notify customers through known channels and verify partner integrations before resuming normal processing.
 date: '2026-11-12'
-updated: 2026-11-15
+updated: 2026-11-17
 level: 4
 tags: [GoQSystem, SaaS, Ecommerce, Data breach]
 inTheWild: 'yes'
@@ -25,11 +25,14 @@ timeline:
 - date: Nov 15, 2026
   title: GoQSystem warns of impersonation
   body: The provider publishes its genuine domains and says it has no confirmed cases of harm from lookalike sites at the time of the notice.
+- date: Nov 17, 2026
+  title: BASE API integration returns
+  body: GoQSystem says no further steps are required for BASE merchants. Rakuten and STORES still require action, and the GoQ Logi FBA integration remains paused.
 checklist:
 - title: Identify affected orders and notify customers
   hint: Ask support@goqsystem.com how to download your affected order list. Include buyers and delivery recipients when reconciling the list with your own order records. Preserve related access and export logs, and coordinate notices and reporting using Japan’s Personal Information Protection Commission guidance linked in the second notice.
 - title: Verify storefront and warehouse integrations
-  hint: Check the vendor’s API status page before resuming processing. Follow the partner-specific instructions for any service that requires action. For Rakuten, verify the API approval and refresh the license key, then import missed orders and reconcile inventory errors. For BASE, remove the old GoQSystem app in the developer account and set it up again. For STORES, obtain fresh refresh tokens for order management and inventory separately. Use Amazon Seller Central directly for FBA shipments while GoQ Logi’s FBA integration is suspended.
+  hint: Check the vendor’s API status page before resuming processing. Follow the partner-specific instructions for any service that requires action. For Rakuten, verify the API approval and refresh the license key, then import missed orders and reconcile inventory errors. For STORES, obtain fresh refresh tokens for order management and inventory separately. Use Amazon Seller Central directly for FBA shipments while GoQ Logi’s FBA integration is suspended.
 - title: Verify delivery and account messages independently
   hint: Check unfamiliar delivery or payment requests in the original order page or through the carrier. For merchant logins, open your bookmark and confirm the host is order.goqsystem.com. If you entered a password on a lookalike, change it promptly through the genuine console and contact support@goqsystem.com.
 sources:
@@ -56,3 +59,5 @@ GoQSystem centralizes order processing for online merchants. GoQSystem traced th
 The stolen data includes buyer and recipient names, addresses, phone numbers, email addresses and order details. The affected orders include records from before the November 10–11 intrusion. GoQSystem does not hold credit card data and excluded it from the leak. The November 13 totals count companies, orders and individuals separately. The provider planned to send affected merchants download instructions on November 14–15.
 
 The first notice reported no further intrusion or known misuse at that time. The later impersonation warning gives no evidence of an active fake-site campaign. Buyers and recipients can verify whether their order was affected through the merchant’s established contact channel.
+
+Follow the current partner API status. For BASE merchants, GoQSystem now says there are no further actions. Rakuten merchants should update their license key, and STORES merchants should reissue refresh tokens for order management and inventory. Handle pending GoQ Logi FBA requests in Amazon Seller Central while the integration remains paused.
