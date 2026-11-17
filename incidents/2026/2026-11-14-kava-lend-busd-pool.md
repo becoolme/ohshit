@@ -2,6 +2,7 @@
 title: Kava Lend exploit drains most of the protocol’s KAVA lending pool
 level: 4
 date: '2026-11-14'
+updated: '2026-11-17'
 tags: [Kava Lend, DeFi, Lending pools]
 ecosystems: [crypto]
 summary: Kava says the incident was confined to Kava Lend. Bitquery traced 55.2 million KAVA borrowed through repeated loans against inflated BUSD collateral and estimated about $2.1 million in sale proceeds on BNB Chain.
@@ -22,6 +23,9 @@ timeline:
 - date: Nov 14, 16:20 UTC
   title: Bitquery observes a failed Relay order
   body: Relay showed a blocked order for 612,416 USDT with no payout. The record showed a possible return to the sender. Recovery by Kava or users was unverified.
+- date: Nov 16, 2026
+  title: Kava confirms amount taken and planned governance vote
+  body: Kava confirms about 53.9 million KAVA was taken. The exploit is blocked, some funds were frozen, and permanent retirement of new lending and borrowing requires a governance vote.
 checklist:
 - title: Pause new exposure and record existing positions
   hint: Review deposits, debts, collateral and withdrawal history in the official Kava app. Save the relevant wallet addresses, transaction hashes and times. Follow Kava’s official incident updates before opening new positions or acting on recovery instructions.
@@ -45,10 +49,16 @@ sources:
 - name: The Block’s reconstruction
   url: https://www.theblock.co/news/defi/2026-11-14-kava-lend-loses-roughly-3-8-million-to-hack-sending-kava-token-down-nearly-40-440350
   says: Reviews on-chain data, links the relevant source code and reproduces Kava’s exchange precautions.
+- name: Kava November 16 containment and recovery report
+  url: https://medium.com/@Kava_Chain/hard-lend-security-incident-579888f8dd73
+  says: Confirms amount taken and bridged, partial freezing, and the planned proposal.
+  primary: true
 ---
 
-Bitquery found that the attackers put a nearly empty BUSD market in a state where its interest calculation divided by a tiny positive supply. The supply index grew about 243,000-fold in three minutes. One wallet recycled the available BUSD into a second wallet’s account as collateral. The second wallet borrowed KAVA against those deposits. Repeated liquidations closed the debts after the first wallet had withdrawn the available BUSD, leaving little or none for the liquidation to seize. This is Bitquery’s reconstruction. Kava’s technical findings and any patched version were still pending.
+Bitquery found that the attackers put a nearly empty BUSD market in a state where its interest calculation divided by a tiny positive supply. The supply index grew about 243,000-fold in three minutes. One wallet recycled the available BUSD into a second wallet’s account as collateral. The second wallet borrowed KAVA against those deposits. Repeated liquidations closed the debts after the first wallet had withdrawn the available BUSD, leaving little or none for the liquidation to seize. This is Bitquery’s reconstruction. Kava subsequently confirmed the accounting vulnerability and said the exploit was blocked.
 
-Bitquery counts **55.2 million KAVA borrowed** across 127 loans and **53.9 million KAVA retained** after repaying other users’ loans, worth approximately **$3.7 million** at the pre-sale price. Its estimate of approximately **$2.1 million** measures the proceeds from sales on BNB Chain. The **612,416 USDT** order that Relay blocked is part of the traced proceeds. Kava had not published a final loss or repayment figure in the sources reviewed.
+Bitquery counts **55.2 million KAVA borrowed** across 127 loans and **53.9 million KAVA retained** after repaying other users’ loans, worth approximately **$3.7 million** at the pre-sale price. Its estimate of approximately **$2.1 million** measures the proceeds from sales on BNB Chain. The **612,416 USDT** order that Relay blocked is part of the traced proceeds. Kava subsequently confirmed the amount taken. Final restitution is undecided.
 
 Kava treated the Axelar suspension as a precaution. The assets in the sale reconstruction crossed through LayerZero. A bridge pause alone does not identify the exploit path or the status of customer balances.
+
+Kava confirms about 49.2 million KAVA was bridged to BNB Chain through LayerZero. The underlying chain continued operating and the exploit created no KAVA. The amount frozen and any restitution remain unconfirmed. The planned permanent halt to new lending and borrowing requires a seven-day governance vote. Follow official governance and recovery notices for instructions for existing positions.
