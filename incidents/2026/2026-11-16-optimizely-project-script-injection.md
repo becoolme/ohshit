@@ -23,12 +23,12 @@ timeline:
   - date: Nov 16, 21:52 UTC
     title: One of the 188 known affected snippets still contains the code
     body: Report URI found one remaining affected snippet in its recheck. The result covers the measured set at that time.
-  - date: Nov 16, 23:11 UTC
-    title: The last known altered Optimizely snippet tests clean
-    body: Report URI said in its November 17 update that every affected file it tracked returned clean content by this check.
   - date: Nov 16, 22:47 UTC
     title: Report URI publishes its technical investigation
     body: The researchers describe the payload, affected snippets and containment checks. How the attacker gained project write access remains unresolved.
+  - date: Nov 16, 23:11 UTC
+    title: The last known altered Optimizely snippet tests clean
+    body: Report URI said in its November 17 update that every affected file it tracked returned clean content by this check.
   - date: Nov 16, 2026
     title: Hudson Rock documents related script delivery through other providers
     body: Hudson Rock and Ohey verified malicious responses from minute-ly, Kissmetrics and StorifyMe that loaded the same earlier injector.

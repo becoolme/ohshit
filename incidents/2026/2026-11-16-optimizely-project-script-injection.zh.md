@@ -18,12 +18,12 @@ timeline:
   - date: 11月16日 21:52 UTC
     title: 已知的 188 个受影响片段中仍有一个包含恶意代码
     body: Report URI 复查时发现仍有一个片段受影响。该结果仅覆盖当时复查的样本。
-  - date: 11 月 16 日 23:11 UTC
-    title: 最后一个已知遭篡改的 Optimizely 片段复查正常
-    body: Report URI 在 11 月 17 日更新中表示，截至此次复查，所追踪的受影响文件均已返回干净内容。
   - date: 11月16日 22:47 UTC
     title: Report URI 发布技术调查
     body: 研究人员披露载荷、受影响片段及清理核查。攻击者如何取得项目写权限仍未确定。
+  - date: 11 月 16 日 23:11 UTC
+    title: 最后一个已知遭篡改的 Optimizely 片段复查正常
+    body: Report URI 在 11 月 17 日更新中表示，截至此次复查，所追踪的受影响文件均已返回干净内容。
   - date: 2026年11月16日
     title: Hudson Rock 记录经其他服务商分发的相关脚本
     body: Hudson Rock 和 Ohey 验证了 minute-ly、Kissmetrics 和 StorifyMe 的恶意响应，三者均加载了同一个早期注入脚本。
