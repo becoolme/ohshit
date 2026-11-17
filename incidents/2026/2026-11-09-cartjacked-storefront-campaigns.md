@@ -6,7 +6,7 @@ wipe: Inspect storefront and checkout as a guest, contain suspect scripts and ve
 inTheWildNote: Guardio observed live malicious code and reproduced card capture with test data.
 level: 4
 date: '2026-11-09'
-updated: '2026-11-15'
+updated: '2026-11-17'
 tags:
 - e-commerce
 - skimming
@@ -25,6 +25,9 @@ timeline:
 - date: Nov 15, 2026
   title: Ohey updates the observed RTCGnaw scope
   body: The cumulative count stays at 26 sites. Ohey matched 17 sites in the past 30 days and reads 16 related contracts daily.
+- date: Nov 16, 2026
+  title: Ohey updates the RTCGnaw match count
+  body: Researchers matched 27 sites in their full dataset and 18 sites in the past 30 days.
 checklist:
 - title: Inspect and contain payment-page modifications
   hint: Compare production themes, plugins, inline scripts and third-party assets to known-good versions. Test payment as a guest in an isolated browser with test data. If you find a skimmer, preserve page, network and deploy evidence, suspend affected checkout and coordinate with your payment processor.
@@ -55,3 +58,5 @@ This is a set of observed campaigns. The figure of roughly 12,200 comes from an 
 Ohey’s November 12 snapshot counted 26 sites serving RTCGnaw since September 4, including 16 in the previous 30 days. This is a separate set of observations from Guardio’s crawl and controlled tests. Two hosts appear in both reports. The observed scripts used payloads loaded from blockchain contracts and targeted WooCommerce and Magento stores. Ohey recorded fake forms styled as Stripe and Poynt on separate stores. The skimmer can collect card and billing data, display a fake decline and then stay quiet for 15 minutes. The customer may complete the genuine checkout on retry. During triage, compare reported declines with the processor’s transaction records and look for WebRTC data channels or, in some variants, image beacons with p and t parameters.
 
 **November 15 update.** Ohey’s rolling count rose from 16 to 17 sites, with 26 sites observed in total. These are sites where researchers matched script code. The count gives no measure of stolen cards or confirmed losses. The researchers also observed a two-stage loader on a PrestaShop store. It used a Blob worker to read a BNB Smart Chain testnet contract, then loaded the next stage from Sepolia. Ohey dates the routing record to November 14. BNB Smart Chain testnet contract `0x3596a5d8fdd13763482de91a4ca74b7dbcbd98f9` points to Sepolia contract `0xf7baf5d244086fb305588f1de192e3ae7203e70c`, which lists app[.]dinkfoundry[.]com as its destination.
+
+Ohey’s November 16 count includes 27 matched sites, 18 of them matched in the past 30 days. Ohey still reads 16 related contracts daily. These observations cannot establish how many payment records were captured or how much money was lost.
