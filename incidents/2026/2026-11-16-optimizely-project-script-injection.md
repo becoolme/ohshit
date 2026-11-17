@@ -37,7 +37,7 @@ checklist:
   - title: Hunt for the network indicators and assess exposure
     hint: "Review DNS, proxy, CSP and browser logs for these 12 domains and three IPs, including subdomains where applicable. Defanged domains are 1688360[.]cc, 5vobauua3ojpklx[.]icu, eil786npto9u5bq[.]icu, l7bcsnwc7nzr3uo[.]icu, webshell[.]lol, linkforge[.]cc, je4ft3gn8vxudum[.]icu, q1ls1ho9x7wsxlu[.]icu, ios-hack[.]icu, p55abnw2pnsz0bo[.]icu, 1y69gy2mdzaltz1[.]icu and gm38duxoihbmy5o[.]icu. IPs are 136.113.106.136, 34.96.213.201 and 34.87.36.58. See Report URI for the full paths, script markers, two hashes and eight wallet addresses. A match alone does not prove compromise."
   - title: Check related third-party widgets for the same loader
-    hint: Inventory minute-ly, Kissmetrics and StorifyMe on public pages. Use Hudson Rock’s IOC tables for affected script paths, archived response hashes and payload indicators. Compare saved responses with known-good versions and quarantine confirmed altered assets.
+    hint: Inventory minute-ly, Kissmetrics and StorifyMe on public pages. Search saved responses for webshell[.]lol/get.js. Hudson Rock’s IOC tables list 16 archived vendor responses with hashes and eight mobile-stage hashes. Compare responses with known-good versions and quarantine confirmed altered assets. A match alone does not prove compromise.
   - title: Review exposed sessions and payments
     hint: Invalidate exposed non-HttpOnly session tokens and rotate affected secrets. Identify card data entered into first-party fields on affected pages and coordinate response and notifications with your payment processor. Confirm what was actually accessible from those pages.
   - title: Check transactions and update affected visitor devices
