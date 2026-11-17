@@ -9,7 +9,7 @@ tags:
 - Personal information
 summary: PLAID confirmed exposure of 79,249 KARTE account email addresses, external integration credentials, and some customer-imported data. The shutdown affected all projects from November 13. PLAID began sending the affected imported data to customers who requested it. It has not given a restart date.
 splash: All KARTE projects, including web and app tracking, content delivery, Message campaigns, Datahub workflows and the administration console.
-wipe: Check Plaid’s notice for your project, preserve integration logs and reconcile interrupted jobs before retrying them.
+wipe: Revoke affected integration credentials, check PLAID’s notice for your project and reconcile interrupted jobs before retrying them.
 inTheWildNote: PLAID confirms the attacker exploited a server vulnerability and read data.
 timeline:
 - date: Nov 13, 2026 05:44 UTC
@@ -34,7 +34,7 @@ checklist:
 - title: Revoke affected external integration credentials
   hint: Revoke affected secrets or access tokens on the connected service, review unexpected calls, and reissue and verify credentials using PLAID’s guidance.
 - title: Confirm your project’s exposure
-  hint: Follow the incident status and verify any email through your existing Plaid support channel. Ask for the affected project IDs, fields, time range and any required changes to integration credentials. If you imported customer records, ask how to request the affected data through your established PLAID support channel.
+  hint: Follow the KARTE incident status. Through your existing PLAID support channel, verify any email and ask for affected project IDs, fields, time ranges and credentials. If you imported customer records, ask how to request the affected data through that same channel.
 - title: Preserve logs and reconcile failed jobs
   hint: Save available application, integration and delivery logs. Check downstream records for partially delivered KARTE Message mail or Datahub transfers. Prevent duplicate side effects by replaying only missing work after recovery.
 - title: Validate recovery
