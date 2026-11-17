@@ -1,5 +1,5 @@
 ---
-title: "Researchers take over Kokoro's Hugging Face publisher account through a reusable domain"
+title: "Researchers take over Kokoro's Hugging Face publisher account through domain registration"
 level: 3
 date: 2026-11-16
 tags: [AI, supply-chain, account-takeover]
@@ -13,7 +13,7 @@ inTheWildNote: "Research demonstration. Hertz says the modified weights were nev
 timeline:
   - date: Nov 16, 2026
     title: Hertz publishes the account-takeover demonstration
-    body: The disclosure says the account is secured and nothing was leaked, changed or uploaded.
+    body: The researchers say they secured the account and uploaded no modified weights.
 checklist:
   - title: Pin the model revision used in production
     hint: "Inventory direct and transitive Kokoro model downloads. With hf_hub_download or snapshot_download, set revision to a reviewed full-length commit hash, rather than relying on the default main branch. Retain the approved weights and their hashes for comparison."

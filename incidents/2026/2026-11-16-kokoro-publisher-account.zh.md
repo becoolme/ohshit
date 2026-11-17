@@ -9,7 +9,7 @@ inTheWildNote: "研究演示。Hertz 表示修改后的权重从未上传。"
 timeline:
   - date: 2026 年 11 月 16 日
     title: Hertz 发布账号接管演示
-    body: 披露称账号已受到保护，未泄露、修改或上传任何内容。
+    body: 研究人员表示已保护账号，未上传修改后的权重。
 checklist:
   - title: 固定生产环境使用的模型修订
     hint: "盘点直接和间接的 Kokoro 模型下载。使用 hf_hub_download 或 snapshot_download 时，将 revision 设为已审核的完整提交哈希，避免依赖默认的 main 分支。保留获批权重及其哈希，便于比较。"
