@@ -23,6 +23,9 @@ timeline:
   - date: Nov 16, 22:47 UTC
     title: Report URI publishes its technical investigation
     body: The researchers describe the payload, affected snippets and containment checks. How the attacker gained project write access remains unresolved.
+  - date: Nov 16, 2026
+    title: Hudson Rock documents related script delivery through other providers
+    body: Hudson Rock and Ohey verified malicious responses from minute-ly, Kissmetrics and StorifyMe that loaded the same earlier injector.
   - date: Nov 17, 01:02 UTC
     title: Optimizely confirms patch and code removal
     body: The vendor says it took steps to secure affected accounts and moved to monitoring.
@@ -33,6 +36,8 @@ checklist:
     hint: Review project users, roles, changes, API tokens and integrations. Remove unauthorized access and rotate exposed credentials. Check for newly injected inline and encoded loaders. Enforce a tested Content Security Policy with narrow script-src and connect-src allowlists and reporting. Remove unsafe-eval where feasible. Confirm clean responses from each host even if the CDN is on the allowlist.
   - title: Hunt for the network indicators and assess exposure
     hint: "Review DNS, proxy, CSP and browser logs for these 12 domains and three IPs, including subdomains where applicable. Defanged domains are 1688360[.]cc, 5vobauua3ojpklx[.]icu, eil786npto9u5bq[.]icu, l7bcsnwc7nzr3uo[.]icu, webshell[.]lol, linkforge[.]cc, je4ft3gn8vxudum[.]icu, q1ls1ho9x7wsxlu[.]icu, ios-hack[.]icu, p55abnw2pnsz0bo[.]icu, 1y69gy2mdzaltz1[.]icu and gm38duxoihbmy5o[.]icu. IPs are 136.113.106.136, 34.96.213.201 and 34.87.36.58. See Report URI for the full paths, script markers, two hashes and eight wallet addresses. A match alone does not prove compromise."
+  - title: Check related third-party widgets for the same loader
+    hint: Inventory minute-ly, Kissmetrics and StorifyMe on public pages. Use Hudson Rock’s IOC tables for affected script paths, archived response hashes and payload indicators. Compare saved responses with known-good versions and quarantine confirmed altered assets.
   - title: Review exposed sessions and payments
     hint: Invalidate exposed non-HttpOnly session tokens and rotate affected secrets. Identify card data entered into first-party fields on affected pages and coordinate response and notifications with your payment processor. Confirm what was actually accessible from those pages.
   - title: Check transactions and update affected visitor devices
@@ -46,6 +51,14 @@ sources:
     url: https://blog.report-uri.com/worlds-largest-brands-infected-with-malware-via-optimizely/
     says: Provides captured snippets, timings, observed behavior, sample counts, indicators and response steps.
     primary: true
+  - name: Hudson Rock and Ohey script analysis
+    url: https://www.infostealers.com/article/poisoned-scripts-on-bbc-zoom-and-other-major-websites-linked-to-iphone-exploit-loaders/
+    says: Documents malicious responses served by four providers, with archived captures and hashes.
+    primary: true
+  - name: Amirul Cyber OPTIMJACK research
+    url: https://amirulcyber.com/2026/11/16/optimjack-optimizely-skimmer/
+    says: Documents captured browser request chains and payload behavior used to identify affected scripts.
+    primary: true
   - name: Apple security releases
     url: https://support.apple.com/en-us/100100
     says: Lists released security updates and their device availability.
@@ -57,5 +70,7 @@ Report URI found injected code in the Project JavaScript portion of Optimizely W
 The payload could swap cryptocurrency destinations and send page screenshots and cookies readable by JavaScript to the attacker. Card capture targeted values accessible to the page, such as first-party card fields. Report URI says the code could not read card fields isolated in a cross-origin payment iframe. On iPhones and iPads, the loaders used operating-system-dependent paths. Report URI identified Coruna and DarkSword and observed only fingerprinting in the iOS 26 path it examined. A request to one of the loaders does not show whether an exploit succeeded.
 
 Report URI’s 19:24–19:59 UTC sweep found 186 affected snippets among 1,611 checked. Its full investigation identified **188 altered snippets across 178 organizations**. These are sample counts and do not establish how many visitors lost data or assets. The researchers also observed transfers to wallets associated with the payload. Those transfers do not establish total visitor losses or the volume of any card or cookie theft. Their 21:52 UTC recheck found one remaining altered snippet in the measured set. A later clean response does not resolve exposure that occurred before cleanup.
+
+Hudson Rock recovered a malicious minute-ly response in addition to the Optimizely scripts. Ohey’s archived captures also show affected Kissmetrics and StorifyMe responses. All three loaded the earlier webshell[.]lol injector. The research confirms the served code and leaves the entry methods for those three providers undetermined. Optimizely’s containment statement applies to its own service.
 
 Optimizely says it patched the vulnerability, removed injected code from affected projects and took steps to secure affected accounts. Its status is monitoring. Verify deployed copies and caches, inspect logs for the pre-cleanup period, and review session and payment exposure where applicable.
