@@ -7,9 +7,9 @@ tags:
 - N-central
 - RMM
 - Windows
-summary: Huntback reports 21 N-central servers mining after 4EverAble2Shell exploitation, including 19 on 2026.4.1.26 HF2. The server chain requires Legacy API. Separately disclosed Windows Agent and Probe paths have their own prerequisites.
-splash: Reachable N-central HF2 with Legacy API enabled, and connected Windows Agents or Probes meeting the disclosed conditions
-wipe: Disable Legacy API, restrict untrusted appliance access, review server and endpoint logs, and track fixes for both paths.
+summary: Huntback reports 21 N-central servers mining after 4EverAble2Shell exploitation, including 19 on 2026.4.1.26 HF2. The server chain requires Legacy API. Separately disclosed Windows Agent and Probe paths have their own prerequisites. Rapid7 detected exploitation of the same Axis flaw in Confluence Data Center.
+splash: Reachable N-central HF2 with Legacy API enabled, affected Confluence Data Center with Remote API enabled, and certain Windows Agents or Probes
+wipe: Apply N-central HF3 and the Confluence fix, restrict appliance access and investigate previously exposed servers and endpoints.
 inTheWild: 'yes'
 inTheWildNote: Huntback reports exploitation of the server chain. Windows paths remain unconfirmed.
 timeline:
@@ -46,6 +46,9 @@ timeline:
 - date: Nov 16, 2026
   title: N-able releases HF3
   body: Server build 2026.4.1.39 permanently blocks Legacy APIs. Hosted and on-premises customers both need to update their Agents and Probes to 2026.4.1 HF3.
+- date: Nov 16, 2026
+  title: Rapid7 reports exploitation against Confluence in a customer environment
+  body: Rapid7 detected the attack on November 13 and published four associated IP addresses.
 checklist:
 - title: Disable Legacy API and restrict exposure now
   hint: At the system level, open Administration → Mail and Network Settings → Network Security → Legacy APIs and verify that the deprecated APIs are disabled. Restrict appliance access from untrusted networks. Preserve required Agent and Probe access through controlled paths and verify managed devices
@@ -62,6 +65,8 @@ checklist:
   hint: 'Review outbound traffic to 157.20.241[.]16 (TCP 8080 and 19202–19418), 139.99.69[.]109:10128 and 79.76.51[.]56:39100. On 157.20.241[.]16:8080, look for /jup.sh, /xvgz, /xmrig.tgz, /ob/cronhit?h=jup_start_<rig>&persist=<method> and /ob/fcheck. Correlate matches with past configuration and host activity. A match alone does not establish compromise.'
 - title: Inventory other Axis 1.x deployments and apply product-specific fixes
   hint: For standalone deployments, migrate to a supported SOAP engine or use a build with Apache’s source patch. Upgrade Confluence Data Center 9.2 to 9.2.28 or move to a supported 10.x or later release. If you cannot upgrade yet, test dependent scripts, automations and add-ons in a non-production environment. As an administrator, open General Configuration → Further Configuration (/admin/viewspacesconfig.action), select Edit, clear Remote API (XML-RPC & SOAP), and save. The change takes effect immediately without a restart. Verify that /plugins/servlet/soap-axis1/confluenceservice-v2 returns 403 and investigate previously exposed instances for compromise.
+- title: Investigate previously exposed Confluence Data Center instances
+  hint: Preserve reverse proxy and Confluence access logs and correlate unexpected SOAP endpoint requests with unusual child processes from the application. Check 192.238.253[.]176, 5.133.47[.]243, 163.182.68[.]109 and 104.13.106[.]166. A match alone does not prove compromise, and no match does not rule it out.
 sources:
 - name: N-able HF3 release notes
   url: https://status.n-able.com/2026/11/16/n-central-2026-4-hf3-release-notes/
@@ -123,6 +128,10 @@ sources:
   url: https://confluence.atlassian.com/security/cve-2026-90436-remote-code-execution-in-confluence-data-center-1874560038.html
   primary: true
   says: Documents the Remote API prerequisite, fixed release and steps to verify the temporary mitigation.
+- name: Rapid7 report on Confluence exploitation
+  url: https://www.rapid7.com/blog/post/etr-rapid7-detected-exploitation-of-cve-2026-90436-against-atlassian-confluence-data-center-n-able-n-central-also-exploited
+  primary: true
+  says: Documents exploitation in a customer environment and four associated IP addresses.
 updated: 2026-11-17
 cves:
 - id: CVE-2026-90436
@@ -136,7 +145,7 @@ The separate Agent2Shell report documents Windows paths. The Reactive path needs
 
 Previdian recorded two attempts against sensors. Huntback later captured the full chain against its decoys, ending in an attempt to install XMRig. It matched the IP addresses encoded in the names of 21 recently active miners to live N-central production servers. Nineteen reported build 2026.4.1.26. This is Huntback’s assessment from mining-pool telemetry and server responses. It supports L4 for in-the-wild exploitation of the server chain. The observations establish neither a count of affected organizations or downstream devices nor exploitation of the Windows chain.
 
-The server chain uses Apache Axis CVE-2026-90436 to execute commands as the N-central service account, then abuses a privileged helper to reach root. Apache says Axis 1.x has reached end of life. The full affected-version range for N-central and fixed builds for these new paths remain unverified. Keep the earlier HF2 update in place and apply the network and configuration controls. Evidence of root access warrants treating the appliance as fully compromised, investigating managed endpoints for unauthorized activity and restoring from trusted systems.
+The server chain uses Apache Axis CVE-2026-90436 to execute commands as the N-central service account, then abuses a privileged helper to reach root. Apache says Axis 1.x has reached end of life. The full affected-version range for N-central and fixed builds for these new paths remain unverified. Upgrade to HF3 and keep the network and configuration controls in place. Evidence of root access warrants treating the appliance as fully compromised, investigating managed endpoints for unauthorized activity and restoring from trusted systems.
 
 **Vendor response update.** N-able applied temporary protections to hosted environments and asks on-premises customers to verify that Legacy API is disabled. The November 13 download and callback indicators apply to customers who have not disabled Legacy API. Review historical exposure as well. The vendor is still assessing and remediating the incident and does not name a fixed build for the new chains in this update.
 
@@ -144,6 +153,6 @@ On November 13, N-able outlined plans for HF3. The vendor intends to remove Lega
 
 **Other Axis deployments.** On November 13, Italy’s CSIRT reported active exploitation of CVE-2026-90436 and gave no downstream product names for its observations. Apache lists Axis 1.x through 1.4 as affected. The engine parses the SOAP fault before service-level authentication handlers run. Remote code execution requires a suitable class on the classpath. For standalone Axis 1.x, migrate to a supported SOAP engine or build with the source patch. N-central customers should follow the vendor’s guidance above. [Apache patch](https://github.com/apache/axis-axis1-java/commit/41f3b4e8d04e310ca81f86b92630ab2c11d608bd)
 
-Atlassian lists Confluence Data Center versions 1.x through 9.x as affected before the fix when Remote API (XML-RPC & SOAP) is enabled. Confluence 9.2.28 fixes the issue. Confluence 10.0 removed the feature, and Atlassian Cloud is unaffected. Atlassian’s advisory provides no confirmation of attacks against Confluence instances.
+Atlassian lists Confluence Data Center versions 1.x through 9.x as affected before the fix when Remote API (XML-RPC & SOAP) is enabled. Confluence 9.2.28 fixes the issue. Confluence 10.0 removed the feature, and Atlassian Cloud is unaffected. Rapid7 reported on November 16 that it detected exploitation against Confluence Data Center in a customer environment on November 13. Its report does not establish a broader victim count or impact.
 
 The November 16 HF3 release permanently disables the legacy APIs and lists 17 fixes, CVE-2026-129271 through CVE-2026-129287. The release notes still list remote control other than Take Control as disabled. Update all Agents and Probes even after the server upgrade because older endpoints remain susceptible to impersonation.
