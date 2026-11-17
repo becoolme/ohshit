@@ -44,11 +44,11 @@ timeline:
     body: The researcher demonstrates container root from a view-only session and from the conditional WOPI entry.
 checklist:
   - title: Upgrade Document Server and check the running version
-    hint: Check the runtime package or image and your integration’s compatibility. Back up persistent data and retain the configured mounts and secrets. Follow the vendor's update guide for your edition, confirm the running version, and test viewing, editing and saving with a restricted user.
+    hint: Check the runtime package or image and your integration’s compatibility. Back up persistent data and retain the configured mounts and secrets. Follow the vendor's update guide for your edition, confirm the running version, and test that a restricted user can view only what was shared and that authorized users can still edit and save.
   - title: Limit exposure until upgrade
     hint: Disable WOPI if unused. If required, restrict WOPI sources to known integrations and use egress controls to prevent the server reaching untrusted sources. Limit public access and external sharing on unpatched servers. These measures do not fix the view-only token path.
   - title: Investigate suspicious access before rebuilding or rotating secrets
-    hint: Preserve container, reverse proxy, integration and host logs. Look for unexpected document build or WOPI requests, changes to runtime.json, unusual callback destinations and shells launched by the document service or its cache helper. A match alone does not establish compromise. If compromise is suspected, isolate the workload, check the host and mounted data, rebuild from a clean image and rotate exposed JWT keys and integration credentials before restoring access.
+    hint: Preserve container, reverse proxy, integration and host logs. Look for unexpected requests to /docbuilder or the WOPI launch endpoint, changes to runtime.json, unusual callback destinations and shells launched by the document service or its cache helper. A match alone does not establish compromise. If compromise is suspected, isolate the workload, check the host and mounted data, rebuild from a clean image and rotate exposed JWT keys and integration credentials before restoring access.
 sources:
   - name: Rapid7 coordinated disclosure and technical analysis
     url: https://www.rapid7.com/blog/post/ve-from-view-only-access-to-container-root-five-vulnerabilities-in-onlyoffice-docs-fixed/
