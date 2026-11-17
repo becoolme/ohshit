@@ -1,10 +1,11 @@
 ---
 title: "Report URI finds malicious Optimizely scripts at 178 organizations"
+updated: 2026-11-17
 level: 4
 date: 2026-11-16
 tags: [Optimizely, JavaScript, supply chain, skimmer, iOS]
 summary: >-
-  Report URI found malicious Project JavaScript in 188 Optimizely Web snippets used by 178 organizations. The code replaced crypto addresses, targeted card fields and delivered iOS exploit loaders. The access path and total impact remain unknown.
+  Report URI found malicious Project JavaScript in 188 Optimizely Web snippets used by 178 organizations. The code replaced crypto addresses, targeted card fields and delivered iOS exploit loaders. The vendor confirmed exploitation of an Experimentation vulnerability and says it removed injected code. Total visitor impact remains unknown.
 splash: "Visitors to pages that loaded a modified Optimizely Web snippet, including customer-hosted copies of the snippet."
 wipe: "Remove or quarantine altered snippets, secure project write access, and review payments, wallets and exposed sessions."
 inTheWild: yes
@@ -22,6 +23,9 @@ timeline:
   - date: Nov 16, 22:47 UTC
     title: Report URI publishes its technical investigation
     body: The researchers describe the payload, affected snippets and containment checks. How the attacker gained project write access remains unresolved.
+  - date: Nov 17, 01:02 UTC
+    title: Optimizely confirms patch and code removal
+    body: The vendor says it took steps to secure affected accounts and moved to monitoring.
 checklist:
   - title: Pause affected snippets and preserve evidence
     hint: Check Project JavaScript, experiment custom code, deployed snippets and customer-hosted copies. Save known bad responses, hashes and timestamps before removing the code. Compare each deployed copy to a trusted baseline and check CDN or site caches after cleanup.
@@ -34,6 +38,10 @@ checklist:
   - title: Check transactions and update affected visitor devices
     hint: Verify crypto destinations against a trusted address and contact your wallet provider or exchange about an unexpected transfer. If you entered card details in an affected first-party form, review card activity and ask your issuer about protective steps. Install the latest security update available for your iPhone or iPad.
 sources:
+  - name: Optimizely official security incident status
+    url: https://status.optimizely.com/incidents/ftw0fh9wx43z
+    says: Confirms exploitation of an Experimentation vulnerability, patching, payload removal and account protection steps.
+    primary: true
   - name: Report URI technical investigation
     url: https://blog.report-uri.com/worlds-largest-brands-infected-with-malware-via-optimizely/
     says: Provides captured snippets, timings, observed behavior, sample counts, indicators and response steps.
@@ -44,8 +52,10 @@ sources:
     primary: true
 ---
 
-Report URI found injected code in the Project JavaScript portion of Optimizely Web snippets. That code runs on pages that include the snippet, whether it is loaded from the Optimizely CDN or a customer host. The team observed remote, encoded and inline loaders. It has not determined how the attacker gained write access to the projects.
+Report URI found injected code in the Project JavaScript portion of Optimizely Web snippets. That code runs on pages that include the snippet, whether it is loaded from the Optimizely CDN or a customer host. The team observed remote, encoded and inline loaders. Optimizely later confirmed exploitation of an Experimentation vulnerability. The technical details remain undisclosed.
 
 The payload could swap cryptocurrency destinations and send page screenshots and cookies readable by JavaScript to the attacker. Card capture targeted values accessible to the page, such as first-party card fields. Report URI says the code could not read card fields isolated in a cross-origin payment iframe. On iPhones and iPads, the loaders used operating-system-dependent paths. Report URI identified Coruna and DarkSword and observed only fingerprinting in the iOS 26 path it examined. A request to one of the loaders does not show whether an exploit succeeded.
 
 Report URI’s 19:24–19:59 UTC sweep found 186 affected snippets among 1,611 checked. Its full investigation identified **188 altered snippets across 178 organizations**. These are sample counts and do not establish how many visitors lost data or assets. The researchers also observed transfers to wallets associated with the payload. Those transfers do not establish total visitor losses or the volume of any card or cookie theft. Their 21:52 UTC recheck found one remaining altered snippet in the measured set. A later clean response does not resolve exposure that occurred before cleanup.
+
+Optimizely says it patched the vulnerability, removed injected code from affected projects and took steps to secure affected accounts. Its status is monitoring. Verify deployed copies and caches, inspect logs for the pre-cleanup period, and review session and payment exposure where applicable.
