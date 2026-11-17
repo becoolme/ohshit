@@ -11,10 +11,10 @@ inTheWildNote: The vendor confirmed unauthorized access and a data leak.
 timeline:
 - date: Nov 2, 2026
   title: i Cubed Systems detects suspicious access
-  body: The vendor blocked the observed access route, investigated the cause and scope, and began contacting affected customers.
+  body: The vendor blocked the observed access route and began investigating the cause and scope.
 - date: Nov 16, 2026
   title: The vendor publicly confirms the leak
-  body: CLOMO MDM stayed online. The vendor increased monitoring and reported no further unauthorized access through the same route.
+  body: The vendor had begun contacting affected customers. CLOMO MDM stayed online under increased monitoring, and the vendor reported no further unauthorized access through the same route.
 checklist:
 - title: Check the registered administrator inbox
   hint: Ask your CLOMO system administrator to check the registered address. Verify any notice through the contact form linked from the vendor FAQ. Ask for the affected data and actions specific to your organization. The vendor currently requests no action from customers it has not contacted.
