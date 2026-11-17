@@ -6,7 +6,7 @@ wipe: Review vendor notices and exposed data. Revoke and rotate credentials incl
 inTheWildNote: Fireworks and Notion confirmed unauthorized access to affected customer data.
 level: 4
 date: '2026-11-09'
-updated: 2026-11-15
+updated: 2026-11-17
 tags:
 - AI
 - SaaS
@@ -40,6 +40,9 @@ timeline:
 - date: Nov 14, 2026
   title: Sankei Shimbun reports a possible exposure and restores Sankei iD
   body: The publisher paused its membership service on November 13 and restored it the next morning after safety checks.
+- date: Nov 16, 2026
+  title: LayerX reports potentially exposed Notion AI records
+  body: LayerX identified 2,070 instances of business contact information and 133 instances of recruiting information. Sales records are still under review.
 checklist:
 - title: Review the data named in Fireworks notices
   hint: Use your incident notice or the contact listed on the security bulletin. Identify affected datasets, model material, metadata or billing records. Revoke and rotate exposed secrets at their issuers and review associated activity.
@@ -50,6 +53,10 @@ checklist:
 - title: Verify individual Interactive or LegalOn notices
   hint: Verify unexpected messages through Interactive’s official website or LegalOn’s official contact form, using the Other inquiries option for LegalOn. Avoid suspicious links or attachments and keep passwords and verification codes private. LegalOn says customers need no changes to its product settings.
 sources:
+- name: LayerX downstream notice
+  url: https://layerx.co.jp/news/202611161636/
+  says: Describes the record categories, period and customer notification process.
+  primary: true
 - name: Fireworks November 9 bulletin
   says: Describes the October cloud-provider intrusion, data categories, mitigation and ongoing investigation.
   url: https://fireworks.ai/security/bulletins/october-2026-security-incident-update
@@ -97,3 +104,5 @@ Notion’s update confirms it found API keys in affected messages. It revoked ex
 Sankei Shimbun says a contractor used Notion on one of its projects and reported that information about Sankei’s systems might have been exposed through Fireworks. Sankei suspended its membership service, Sankei iD, on November 13 and resumed it on November 14 after checking its safety. The notice does not confirm external disclosure, access to member records or an affected count. Use the [official Sankei iD inquiry form](https://id.sankei.jp/inquiry.html) to verify unexpected messages about the incident.
 
 [Cursor’s separate downstream incident](/incidents/cursor-claude-extension/) involved a key that Cursor had issued to Fireworks. Cursor’s investigation explains how the exposed key led to copying historical traces and eventually to the tampered extension builds.
+
+LayerX says the potential exposure covered some of its October 5–24 Notion AI inputs and responses, including business contacts and recruiting candidates. It reported the incident to Japan’s privacy regulator and says it will notify people individually as needed. It excludes its Bakuraku and Ai Workforce systems and their data from this intrusion.

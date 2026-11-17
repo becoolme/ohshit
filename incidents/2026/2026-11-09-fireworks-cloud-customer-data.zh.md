@@ -32,6 +32,9 @@ timeline:
 - date: 2026年11月14日
   title: 产经新闻通报可能暴露的资料并恢复产经 iD
   body: 产经新闻于 11 月 13 日暂停会员服务，在确认安全后于次日上午恢复。
+- date: 2026年11月16日
+  title: LayerX 通报可能外泄的 Notion AI 记录
+  body: LayerX 确认范围包括 2,070 条商务联系人资料及 133 条招聘资料。销售记录仍在审查。
 checklist:
 - title: 核查 Fireworks 通知列出的资料
   hint: 查看事件通知，或通过安全公告所列渠道联系厂商。识别受影响的数据集、模型资料、元数据或账单记录。在签发方吊销并轮换暴露密钥，排查相关活动。
@@ -42,6 +45,8 @@ checklist:
 - title: 核实 Interactive 或 LegalOn 的个别通知
   hint: 通过 Interactive 官网或 LegalOn 官方联系表单核实意外联系。向 LegalOn 核实请选择「その他のお問い合わせ」。避免打开可疑链接或附件，切勿提供密码或验证码。LegalOn 表示客户无需更改其产品设置。
 sources:
+- name: LayerX 下游影响公告
+  says: 说明受影响的资料类型、时间范围和通知方式。
 - name: Fireworks 11 月 9 日公告
   says: 说明 10 月云服务商相关入侵、资料类别、处置和持续调查。
 - name: Notion 安全公告
@@ -75,3 +80,5 @@ Notion 的更新确认，受影响的对话中发现了 API 密钥。Notion 于 
 产经新闻称，承包商在其一个项目中使用 Notion，并报告称产经新闻的部分系统资料可能经由 Fireworks 暴露。产经新闻于 11 月 13 日暂停会员服务产经 iD，并在确认安全后于 11 月 14 日恢复。公告未确认资料外泄或会员记录遭访问，也未公布受影响人数。若收到意外的事件通知，请通过[产经 iD 官方咨询表单](https://id.sankei.jp/inquiry.html)核实。
 
 [Cursor 的另一起下游事件](/zh/incidents/cursor-claude-extension/)涉及 Cursor 签发给 Fireworks 的访问密钥。Cursor 的调查解释了攻击者如何用暴露的密钥复制历史记录，并最终投放遭篡改的扩展。
+
+LayerX 称可能外泄的范围包括 10 月 5–24 日期间部分 Notion AI 输入与回复，涉及商务联系人及应聘者。公司已通报日本个人信息保护委员会，并将按需逐一通知。其 Bakuraku 和 Ai Workforce 系统及其中的数据排除在本次入侵范围之外。
