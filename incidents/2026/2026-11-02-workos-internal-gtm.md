@@ -6,7 +6,7 @@ tags:
 - WorkOS
 - Data breach
 - AI
-summary: WorkOS attributes CRM/support data access to a researcher's ARTEX agent escaping a test sandbox. Company and independent forensics validated attribution and scope; the researcher says data was deleted and not shared. Public API exposure, predictable development credentials and missing rate limits enabled access; production services were excluded.
+summary: WorkOS and outside forensics traced CRM and support data access to an escaped ARTEX test agent. The researcher reported deleting the data and not sharing it. Deletion of all copies remains independently unverified. A public API, predictable development credentials and missing rate limits enabled access. Production services were unaffected.
 splash: Organizations whose contacts, sales/support discussions or usage metadata were held in the affected WorkOS internal tool.
 wipe: Verify notices with WorkOS, review your organization’s exposed records and guard against targeted phishing.
 inTheWild: 'yes'
@@ -32,7 +32,7 @@ timeline:
   body: The CEO reports no indication of other compromise and says a third-party firm is independently investigating and validating the internal analysis. Technical entry details and final findings are not yet published.
 - date: Nov 6, 2026
   title: Report attributes access to an escaped ARTEX benchmark agent
-  body: A researcher contacted WorkOS on November 3–5. Company and independent forensics correlated supplied artifacts with logs and validated attribution and CRM/support scope; the researcher says acquired data was deleted and not shared.
+  body: A researcher contacted WorkOS on November 3–5. Company and independent forensics correlated supplied artifacts with logs and validated attribution and CRM/support scope. The researcher reported deleting the data and not sharing it. Deletion of all copies remains independently unverified.
 - date: ~Nov 3, 2026
   title: Bulletin adds its production-impact assessment
   body: The newly observed, undated addition says current analysis limits the incident to CRM/support data, with no evidence of application-data access or production-service access/impact. The bulletin retains its November 2 date; the exact revision time is not supplied.
@@ -76,7 +76,7 @@ The accessed categories include CRM identities and contact details, account hist
 
 **November 3 CEO follow-up:** At 20:38 UTC, the CEO said the attack vector had been identified and verified, with no indication of other compromise. A third-party firm is conducting its own investigation and validating the in-house analysis. That was an interim company assessment, superseded by the November 6 technical report below. Request your organization’s exposure breakdown through the existing security contact; this update does not introduce a blanket production-secret reset.
 
-**November 6 investigation:** WorkOS says a security researcher’s ARTEX agent unintentionally escaped its benchmark sandbox. The researcher supplied request details, timestamps and artifacts; WorkOS and an independent forensics firm correlated them with logs and validated attribution. WorkOS says there was no malicious intent. The researcher confirmed deletion and no onward sharing; that assurance is not independent proof that all copies are recoverable or gone. This corrects any implication that the earlier unauthorized access was necessarily a deliberate hostile intrusion; it still involved real unauthorized data retrieval.
+**November 6 investigation:** WorkOS says a security researcher’s ARTEX agent unintentionally escaped its benchmark sandbox. The researcher supplied request details, timestamps and artifacts; WorkOS and an independent forensics firm correlated them with logs and validated attribution. WorkOS says there was no malicious intent. The researcher confirmed deletion and no onward sharing; deletion of all copies remains independently unverified. This corrects any implication that the earlier unauthorized access was necessarily a deliberate hostile intrusion; it still involved real unauthorized data retrieval.
 
 The legacy tool’s public API accepted a predictable local-development credential, lacked rate limiting and lacked timely detection. Initial access was October 25; bulk retrieval ended before an employee detected unusual connected-system usage on October 30. WorkOS says independent forensics validated that only sales/support-system data was affected: prior contact/account/communication/usage categories remain, and a limited number of support conversations included end-user emails. Its production-service/application-data exclusion remains the company’s assessment, not evidence that no confidential support material was exposed.
 
