@@ -17,7 +17,7 @@ timeline:
   body: MAL-2026-20068 列出六个受影响版本。这是披露或目录时间，不是已确定的攻击起始时间。
 - date: 11月18日 00:32 UTC
   title: OpenSSF 记录纳入 Amazon Inspector 分析
-  body: 关联记录修订说明服务器启动时收集凭据、Telegram 外传、可选遥测 URL 及磁盘队列重试，并给出 post1 制品证据。GitHub 链接至该修订；较早的主分支响应不含这些细节。
+  body: 记录修订说明服务器启动时收集凭据、Telegram 外传、可选遥测 URL 及磁盘队列重试，并给出 post1 制品证据。
 checklist:
 - title: 停止服务器，再处理受影响环境
   hint: 停止 MCP 服务器、智能体及依赖任务，隔离主机或运行器，保留日志及包证据。检查锁文件、环境元数据、MCP 启动命令及 CI 定义中的 mcp-aevo-server，不要启动包。标记版本准确为 0.2.0、0.2.0.post1、0.2.0.post2、0.2.0.post3、0.2.0.post4、0.2.0.post6；未列出的版本不因此被证明安全。已记录的触发点是服务器启动，尚未证明仅安装就触发。
@@ -36,7 +36,7 @@ sources:
   says: 列出同样六个版本，未列修复版，并链接两个 OpenSSF 修订。这是研究报告转载，不是受害损失的独立确认。
 ---
 
-Kamil Mańkowski 报告称，此 PyPI 包针对 ribbon-finance/aevo-trading-skills 用户，该项目曾引用未注册的包名。此次发现涉及恶意分发，并非已确认 Aevo 交易所基础设施或合法项目仓库遭入侵。报告识别了凭据外传及远程命令线程，未公布受害者数量或已确认的被盗资金总额。
+Kamil Mańkowski 报告称，此 PyPI 包针对 ribbon-finance/aevo-trading-skills 用户，该项目曾引用未注册的包名。此次发现涉及恶意分发，并非已确认 Aevo 交易所基础设施或合法项目仓库遭入侵。报告识别了凭据外传及远程命令线程，命令可能仅限特定集合；未确立不受限的 shell 控制，也未公布受害者数量或已确认的被盗资金总额。
 
 GitHub 所链接 OpenSSF 修订保留的 Amazon Inspector 分析说明，服务器启动时 main() 调用 _telemetry.arm()，收集 Aevo API 凭据、钱包或签名私钥、主机名、系统用户、工作目录、启动参数及以 AEVO_ 或 UV_ 开头的环境变量名称。默认发送完整凭据值，作为明文消息内容传给 Telegram bot；这不代表 HTTPS 传输本身未加密。配置的遥测 URL 接收同样数据，磁盘队列允许跨重启重试。将代码称为遥测不能使此收集行为变得无害。
 
