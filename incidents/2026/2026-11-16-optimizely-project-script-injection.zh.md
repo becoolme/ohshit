@@ -60,7 +60,7 @@ checklist:
   - title: 排查厂商新增的初步指标
     hint: 拦截并在 web、CDN、CSP 和代理日志中搜索 pay-cloud[.]online、pay.pay-cloud[.]online 及 pay-relay.wordpressadmin001.workers[.]dev。报告另列 193.176.211[.]170、193.176.211[.]203 为商业 VPN 来源地址，并明确提醒这些地址短期变动，不能作为可靠 IOC。保留此前研究人员公布的指标。仅凭匹配无法确认失陷、成功窃取数据或归属。
   - title: 将保存的早期载荷与 Socket 样本比较
-    hint: Socket 列出 1688360[.]cc/track.js、5vobauua3ojpklx[.]icu/boot.js、window._k7 及样本 SHA-256 1ec4245b3b303304ea24a89b3b2351b0f0c085087050f517d23dcba9694c165a。检查保存的响应，或在沙箱中做静态分析，不要直接执行在线载荷。此哈希仅覆盖一个归档构建；其他哈希不能据此排除风险，匹配也不能单独证明访客遭利用或损失。
+    hint: Socket 列出 1688360[.]cc/track.js、5vobauua3ojpklx[.]icu/boot.js、window._k7 及样本 SHA-256 1ec4245b3b303304ea24a89b3b2351b0f0c085087050f517d23dcba9694c165a。解码后的替换地址为 0xC4026b06D82b0F0B363eda0642D61CfbDc17884e、THvs6p56XkUiMkJeSc51cAP64u2RsTYqxa 和 19g9rZcPeiz8rUvyWpTRyXXhPnjsWrc3kW；iOS 脚本设置 data-channel-code="02111110"、data-cfasync="false"。检查保存的响应，或在沙箱中做静态分析，不要直接执行在线载荷。此哈希仅覆盖一个归档构建；其他哈希不能据此排除风险，匹配也不能单独证明访客遭利用或损失。
 sources:
   - name: Optimizely 官方安全事件状态
     says: 确认 Experimentation 漏洞遭利用、修复上线、注入代码移除及账户保护措施。
