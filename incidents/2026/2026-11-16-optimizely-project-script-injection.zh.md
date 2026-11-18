@@ -39,6 +39,9 @@ timeline:
   - date: 2026年11月17日
     title: Optimizely 发布初步客户调查报告
     body: 厂商说明注册流程冒充用户的机制，以及 11 月 16 日 16:10 UTC 修复、16:53 UTC 吊销会话与令牌的时间。其给出的清理完成时间为 22:24 UTC，并公布额外指标、撤回普遍禁用片段的建议。最终取证仍未完成。
+  - date: 2026年11月17日
+    title: Netskope 发布客户子集的流量观察
+    body: 遥测包括片段清理后由浏览器缓存页面发出的请求，以及共享基础设施更早的出现记录。许多请求被拦截或来自不受利用链支持的设备，请求数不是利用成功数。
   - date: 2026年11月18日
     title: Socket 发布归档早期载荷的静态分析
     body: 11 月 16 日 08:08:15 UTC 的捕获样本包含钱包地址替换器和 iOS 加载器，没有后续构建中的窃卡模块。Socket 公布样本哈希，并指出其时间早于所报告的 08:10 首次构建时间，差异尚未解释。
@@ -61,6 +64,8 @@ checklist:
     hint: 拦截并在 web、CDN、CSP 和代理日志中搜索 pay-cloud[.]online、pay.pay-cloud[.]online 及 pay-relay.wordpressadmin001.workers[.]dev。报告另列 193.176.211[.]170、193.176.211[.]203 为商业 VPN 来源地址，并明确提醒这些地址短期变动，不能作为可靠 IOC。保留此前研究人员公布的指标。仅凭匹配无法确认失陷、成功窃取数据或归属。
   - title: 将保存的早期载荷与 Socket 样本比较
     hint: Socket 列出 1688360[.]cc/track.js、5vobauua3ojpklx[.]icu/boot.js、window._k7 及样本 SHA-256 1ec4245b3b303304ea24a89b3b2351b0f0c085087050f517d23dcba9694c165a。解码后的替换地址为 0xC4026b06D82b0F0B363eda0642D61CfbDc17884e、THvs6p56XkUiMkJeSc51cAP64u2RsTYqxa 和 19g9rZcPeiz8rUvyWpTRyXXhPnjsWrc3kW；iOS 脚本设置 data-channel-code="02111110"、data-cfasync="false"。检查保存的响应，或在沙箱中做静态分析，不要直接执行在线载荷。此哈希仅覆盖一个归档构建；其他哈希不能据此排除风险，匹配也不能单独证明访客遭利用或损失。
+  - title: 区分缓存页面请求、设备暴露与利用成功
+    hint: Netskope 列出 1688360[.]cc、5vobauua3ojpklx[.]icu、eil786npto9u5bq[.]icu、l7bcsnwc7nzr3uo[.]icu、webshell[.]lol、je4ft3gn8vxudum[.]icu、q1ls1ho9x7wsxlu[.]icu、ios-hack[.]icu；IP 为 136.113.106[.]136、34.96.213[.]201、34.87.36[.]58；track.js 哈希为 814a963c0da480e2449d9b6664480156e1cd6d731014117401bf635badec3a0f、f7b84b9a94f749f8ced3f0112d0a66894e8bbc3b4aa5592021d1b8976a9bad40。保留此前完整指标集，将浏览器和出站日志与设备系统、策略结果及已保存内容关联，再评估输入卡片或复制钱包地址的行为。桌面设备访问 iOS 端点不能证明设备遭利用，匹配本身也不能证明失陷。Netskope 正将 v8hub[.]xyz 作为线索调查，尚未确认属于该套件。
 sources:
   - name: Optimizely 官方安全事件状态
     says: 确认 Experimentation 漏洞遭利用、修复上线、注入代码移除及账户保护措施。
@@ -82,6 +87,8 @@ sources:
     says: 说明注册流程冒充机制、厂商初步时间线及指标、排除的产品、客户取证请求，以及更新后的重新启用与凭据处置建议。最终取证仍未完成。
   - name: Socket 归档载荷分析
     says: 静态解码 08:08:15 UTC 的归档捕获，公布样本哈希与标记，并区分其中的地址替换和 iOS 模块与后续窃卡构建。捕获时间与首次构建时间的差异仍未解释。
+  - name: Netskope 原始客户子集遥测分析
+    says: 报告共享基础设施更早的出现及后续缓存页面请求，区分设备流量与利用，并将 v8hub.xyz 保留为未确认的调查线索。
 ---
 
 Report URI 在 Optimizely Web 片段的 Project JavaScript 部分发现注入代码。无论片段由 Optimizely CDN 提供，还是由客户自行托管，代码都会在引用该片段的页面上运行。研究人员观察到远程、编码和内联加载器。Optimizely 确认 Experimentation 漏洞遭利用，并向 BleepingComputer 说明漏洞位于账户注册流程，其 11 月 17 日初步报告说明，该漏洞让新账户通过公开信息及反复猜测邮箱地址冒充已有管理员用户，无需窃取或使用其密码。厂商称没有 Optimizely 管理员账户被攻破。
@@ -103,3 +110,5 @@ Optimizely 将 Feature Experimentation、SDK 和旧版 Full Stack 排除在已�
 
 
 Socket 的 11 月 18 日分析识别了一份于 11 月 16 日 08:08:15 UTC 捕获的 track.js 归档响应，大小为 19,513 字节。静态解码发现钱包地址替换器和 iOS 加载器，没有后续版本中描述的窃卡模块。这与后续窃卡观察并不矛盾，也不能说明所有实际分发的构建行为完全相同。归档捕获时间早于所报告的 08:10 首次构建时间；Socket 表示，其与所报告的 26 个构建之间的关系仍未确认。分析没有执行样本，不能证明 iOS 利用成功或存在额外访客损失。
+
+Netskope 的 11 月 17 日原始分析覆盖其获得授权的客户子集，报告最早于 9 月 12 日观察到 webshell[.]lol 流量、11 月 10 日观察到 iOS 路由域名流量。这些是基础设施出现记录，不能证明 Optimizely 在这些日期已经失陷，也不能证明所有更早流量有同一入口。其于 11 月 17 日 11:38 UTC 观察到最后一次来自浏览器缓存页面的 1688360[.]cc 请求，因此清理后出现该请求不一定代表 CDN 重新分发了投毒响应。访问利用域名的请求主要来自桌面设备；所见 iOS 设备几乎都运行 iOS 27，Netskope 表示公开利用链并不针对该版本。这些发现不能确定移动端利用成功、新增访客损失总数，或其客户子集以外均受保护。

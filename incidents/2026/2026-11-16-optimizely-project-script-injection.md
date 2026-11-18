@@ -44,6 +44,9 @@ timeline:
   - date: Nov 17, 2026
     title: Optimizely publishes its preliminary customer investigation report
     body: The vendor describes signup-flow impersonation, a 16:10 UTC fix and 16:53 UTC session/token revocation on November 16. It gives 22:24 UTC as cleanup completion, publishes additional indicators and withdraws the general disable-snippet advice. Final forensics remain pending.
+  - date: Nov 17, 2026
+    title: Netskope publishes customer-subset traffic observations
+    body: Its telemetry includes requests after snippet cleanup from browser-cached pages and earlier sightings of shared infrastructure. Requests, many blocked or from unsupported device types, are not counts of successful exploitation.
   - date: Nov 18, 2026
     title: Socket publishes static analysis of an archived early payload
     body: The November 16 08:08:15 UTC capture contains a wallet clipper and iOS loader, without the card-skimming module found in later builds. Socket publishes its sample hash and flags an unresolved difference from the reported 08:10 first-build time.
@@ -66,6 +69,8 @@ checklist:
     hint: Block and search web, CDN, CSP and proxy logs for pay-cloud[.]online, pay.pay-cloud[.]online and pay-relay.wordpressadmin001.workers[.]dev. The report also lists 193.176.211[.]170 and 193.176.211[.]203 as commercial VPN source addresses, explicitly warning they are ephemeral and unreliable as IOCs. Retain the earlier researcher indicators too. A match alone does not establish compromise, successful data capture or attribution.
   - title: Compare preserved early payloads with Socket's sample
     hint: Socket lists 1688360[.]cc/track.js, 5vobauua3ojpklx[.]icu/boot.js, window._k7 and sample SHA-256 1ec4245b3b303304ea24a89b3b2351b0f0c085087050f517d23dcba9694c165a. Its decoded replacement addresses are 0xC4026b06D82b0F0B363eda0642D61CfbDc17884e, THvs6p56XkUiMkJeSc51cAP64u2RsTYqxa and 19g9rZcPeiz8rUvyWpTRyXXhPnjsWrc3kW; the iOS script sets data-channel-code="02111110" and data-cfasync="false". Check saved responses or sandboxed static analysis, not live execution. This hash covers one archived build only; a different hash does not clear another build, and a match alone does not establish visitor exploitation or loss.
+  - title: Separate cached-page requests and device exposure from successful exploitation
+    hint: Netskope lists 1688360[.]cc, 5vobauua3ojpklx[.]icu, eil786npto9u5bq[.]icu, l7bcsnwc7nzr3uo[.]icu, webshell[.]lol, je4ft3gn8vxudum[.]icu, q1ls1ho9x7wsxlu[.]icu and ios-hack[.]icu; IPs 136.113.106[.]136, 34.96.213[.]201 and 34.87.36[.]58; track.js hashes 814a963c0da480e2449d9b6664480156e1cd6d731014117401bf635badec3a0f and f7b84b9a94f749f8ced3f0112d0a66894e8bbc3b4aa5592021d1b8976a9bad40. Preserve the earlier full indicator sets. Match browser/egress logs to device OS, policy result and saved content, then assess card entry or copied wallet addresses. Contact to an iOS endpoint from a desktop does not prove device exploitation, and a match alone does not prove compromise. Netskope is investigating v8hub[.]xyz as a lead; membership in the kit is unconfirmed.
 sources:
   - name: Optimizely official security incident status
     url: https://status.optimizely.com/incidents/ftw0fh9wx43z
@@ -107,6 +112,10 @@ sources:
     url: https://socket.dev/blog/optimizely-supply-chain-attack
     says: Statically decodes the 08:08:15 UTC archive capture, publishes its sample hash and markers, and distinguishes its clipper/iOS modules from later card-skimming builds. The capture-versus-first-build timing remains unresolved.
     primary: true
+  - name: Netskope original customer-subset telemetry analysis
+    url: https://threatlabs.netskope.com/blog/2026/11/optimizely-snippet-compromise
+    primary: true
+    says: Reports earlier shared-infrastructure sightings and later cached-page requests, separates device traffic from exploitation and treats v8hub.xyz as an unconfirmed investigative lead.
 ---
 
 Report URI found injected code in the Project JavaScript portion of Optimizely Web snippets. That code runs on pages that include the snippet, whether it is loaded from the Optimizely CDN or a customer host. The team observed remote, encoded and inline loaders. Optimizely confirmed exploitation of an Experimentation vulnerability and told BleepingComputer it was in the account signup flow. Its November 17 preliminary report says the signup flaw let new accounts impersonate existing administrator users using public information and repeated email guesses, without stealing or using their passwords. The vendor says no Optimizely administrator account was breached.
@@ -128,3 +137,5 @@ Optimizely excludes Feature Experimentation, SDKs and legacy Full Stack from the
 
 
 Socket's November 18 analysis identifies a 19,513-byte archived track.js response captured at 08:08:15 UTC on November 16. Its static decoding found a wallet clipper and an iOS loader, without the card-skimming module described in later versions. This does not contradict the later card-skimmer observations or establish that every served build had identical behavior. The archive capture precedes the reported 08:10 first-build time; Socket says the relationship to the 26 reported builds remains unconfirmed. The analysis did not execute the sample and does not establish successful iOS exploitation or additional visitor losses.
+
+Netskope's November 17 original analysis covers an authorized subset of its customers. It reports webshell[.]lol traffic as early as September 12 and iOS-router traffic on November 10; these are infrastructure sightings, not proof that Optimizely was compromised on those dates or that all earlier traffic shared an entry vector. It observed a final 1688360[.]cc request at 11:38 UTC on November 17 from browser-cached pages, so such a request need not imply a fresh poisoned CDN response after cleanup. Most exploit-domain requests came from desktops; nearly all observed iOS devices were on iOS 27, which the published chains did not target according to Netskope. These findings do not establish successful mobile exploitation, new visitor-loss totals or universal protection outside that customer subset.
