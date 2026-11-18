@@ -3,7 +3,7 @@ title: Contabo 披露内部系统遭未授权访问，重置全部 VNC 密码
 summary: Contabo 确认部分内部基础设施遭未授权访问，已重置全部 VNC 密码并轮换内部凭据。调查仍在进行，尚未证实客户服务器遭入侵或个人数据泄露。
 splash: 需要复查服务器、账户及远程控制台访问权限的 Contabo 客户。
 wipe: 复查访问和凭据、启用 MFA、关闭不使用的 VNC，并保留服务器异常活动证据。
-inTheWildNote: Contabo 确认内部系统遭未授权访问；对客户的具体影响仍在调查。
+inTheWildNote: Contabo 确认内部系统遭入侵；对客户的具体影响仍在调查。
 timeline:
   - date: 11月13日 14:29 UTC
     title: 厂商所报访问窗口开始
