@@ -65,7 +65,7 @@ checklist:
   - title: Check the vendor's additional preliminary indicators
     hint: Block and search web, CDN, CSP and proxy logs for pay-cloud[.]online, pay.pay-cloud[.]online and pay-relay.wordpressadmin001.workers[.]dev. The report also lists 193.176.211[.]170 and 193.176.211[.]203 as commercial VPN source addresses, explicitly warning they are ephemeral and unreliable as IOCs. Retain the earlier researcher indicators too. A match alone does not establish compromise, successful data capture or attribution.
   - title: Compare preserved early payloads with Socket's sample
-    hint: Socket lists 1688360[.]cc/track.js, 5vobauua3ojpklx[.]icu/boot.js, window._k7 and sample SHA-256 1ec4245b3b303304ea24a89b3b2351b0f0c085087050f517d23dcba9694c165a. Check saved responses or sandboxed static analysis, not live execution. This hash covers one archived build only; a different hash does not clear another build, and a match alone does not establish visitor exploitation or loss.
+    hint: Socket lists 1688360[.]cc/track.js, 5vobauua3ojpklx[.]icu/boot.js, window._k7 and sample SHA-256 1ec4245b3b303304ea24a89b3b2351b0f0c085087050f517d23dcba9694c165a. Its decoded replacement addresses are 0xC4026b06D82b0F0B363eda0642D61CfbDc17884e, THvs6p56XkUiMkJeSc51cAP64u2RsTYqxa and 19g9rZcPeiz8rUvyWpTRyXXhPnjsWrc3kW; the iOS script sets data-channel-code="02111110" and data-cfasync="false". Check saved responses or sandboxed static analysis, not live execution. This hash covers one archived build only; a different hash does not clear another build, and a match alone does not establish visitor exploitation or loss.
 sources:
   - name: Optimizely official security incident status
     url: https://status.optimizely.com/incidents/ftw0fh9wx43z
