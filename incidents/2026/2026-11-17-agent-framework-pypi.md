@@ -2,6 +2,7 @@
 title: Microsoft's agent-framework PyPI releases steal cloud and CI credentials at Python startup
 level: 4
 date: 2026-11-17
+updated: 2026-11-18
 tags: [Microsoft, PyPI, supply chain, credentials]
 ecosystems: [python]
 summary: Malicious agent-framework 1.26.1 and 1.26.2 wheels install Python startup hooks that collect secrets and request cloud/CI identity tokens. Microsoft confirms both versions were removed. Remove hooks before running pip, restore the clean 1.26.0 release and respond to credential exposure.
@@ -25,6 +26,9 @@ timeline:
   - date: Nov 17, 21:35 UTC
     title: Researcher reports both versions removed
     body: The issue's status update says PyPI is back to 1.26.0; a Microsoft maintainer also confirms removal. Cached wheels and mirrors can still distribute the malware.
+  - date: Nov 18, 2026
+    title: Revised analysis leaves the publishing identity unconfirmed
+    body: StepSecurity's revised main analysis does not establish the account, credential or initial access vector. An older flow summary on the same page still carries the account claim; it is not a verified identity finding.
 checklist:
   - title: Find exposure without starting the affected Python
     hint: Inspect requirements, lockfiles, build logs, images and site-packages from November 17 20:35 UTC onward with shell tools. Look for agent_framework-1.26.1.dist-info or agent_framework-1.26.2.dist-info and the payload files listed below. Do not begin with python, pip list or pip uninstall; normal startup evaluates the hook.
@@ -48,7 +52,7 @@ sources:
   - name: StepSecurity static analysis
     url: https://www.stepsecurity.io/blog/microsoft-agent-framework-pypi-package-compromised
     primary: true
-    says: Independently analyzes the wheels and reports a new publishing account. Continued publisher access after the first removal does not establish that access is still valid now.
+    says: Analyzes the wheels; its revised main text leaves the account and credential unestablished, while an older flow summary retains the earlier account claim. Re-publication after the first removal does not establish current access.
   - name: PyPI agent-framework release metadata
     url: https://pypi.org/pypi/agent-framework/json
     primary: true
@@ -57,9 +61,9 @@ sources:
 
 This is a compromise of the published Python meta-package, not evidence that every Agent Framework component or Microsoft's source repository was modified. Researchers found malware in two official PyPI wheels, and a Microsoft maintainer confirmed their removal. The confirmed malicious distribution warrants L4. The reviewed sources do not provide a verified count of affected installations or stolen credentials.
 
-The installed .pth files execute import statements during normal Python startup in the environment where they are installed. No Agent Framework import is needed, and starting pip can trigger the collector. Separate virtual environments are not automatically infected merely because they use the same Python executable. The payload reads accessible environment variables, credential files and other processes' environments, requests Azure managed-identity and Azure DevOps tokens, and in 1.26.2 also attempts GitHub Actions OIDC requests. These requests require the corresponding identity, permissions or token-request variables; installing the package does not grant arbitrary cloud access. A detached child may outlive the job that started it.
+The installed .pth files execute import statements during normal Python startup in the environment where they are installed. No Agent Framework import is needed, and starting pip can trigger the collector. Separate virtual environments are not automatically infected merely because they use the same Python executable. The payload reads accessible environment variables, credential files and other processes' environments, attempts to obtain Azure managed-identity and Azure DevOps tokens, and in 1.26.2 also makes GitHub Actions OIDC requests. These requests require the corresponding identity, permissions or token-request variables; installing the package does not grant arbitrary cloud access. Static collection code does not prove successful token issuance, cloud access or completed exfiltration on a particular host. A detached child may outlive the job that started it, depending on runner and container cleanup.
 
-The likely publishing-access compromise remains under investigation. StepSecurity reports a newly created maintainer account; Upwind leaves the exact credential route unresolved. Do not infer a wider Microsoft compromise or an attacker identity from those observations. Endor's initial report still describes 1.26.2 as latest, but the later Microsoft confirmation and current PyPI metadata establish that both malicious releases were removed. That does not clean installed environments or prove the publishing access has been revoked.
+The likely publishing-access compromise remains under investigation. Earlier StepSecurity text reported a newly created maintainer account. Its revised main analysis says the available evidence does not establish the specific account, credential, initial access vector or uploader identity, although an older flow summary on the same page retains the account claim. That identity claim remains unverified; Upwind also leaves the exact credential route unresolved. Do not infer a wider Microsoft compromise or an attacker identity from those observations. Endor's initial report still describes 1.26.2 as latest, but the later Microsoft confirmation and current PyPI metadata establish that both malicious releases were removed. That does not clean installed environments or prove the publishing access has been revoked.
 
 Published malicious SHA-256 indicators are listed in full. The clean 1.26.0 initializer shares its hash with the restored initializer in malicious 1.26.2, so that clean file alone cannot clear an environment.
 
