@@ -1,6 +1,6 @@
 ---
 title: "Report URI finds malicious Optimizely scripts at 178 organizations"
-updated: 2026-11-17
+updated: 2026-11-18
 level: 4
 date: 2026-11-16
 tags: [Optimizely, JavaScript, supply chain, skimmer, iOS]
@@ -41,11 +41,14 @@ timeline:
   - date: Nov 17, 07:00 UTC
     title: Bitquery estimates likely victim payments
     body: Its on-chain review separates likely victim payments from observed wallet inflows tied to a swap.
+  - date: Nov 17, 2026
+    title: Optimizely publishes its preliminary customer investigation report
+    body: The vendor describes signup-flow impersonation, a 16:10 UTC fix and 16:53 UTC session/token revocation on November 16. It gives 22:24 UTC as cleanup completion, publishes additional indicators and withdraws the general disable-snippet advice. Final forensics remain pending.
 checklist:
   - title: Pause affected snippets and preserve evidence
     hint: Check Project JavaScript, experiment custom code, deployed snippets and customer-hosted copies. Save known bad responses, hashes and timestamps before removing the code. Compare each deployed copy to a trusted baseline and check CDN or site caches after cleanup.
   - title: Secure Optimizely project write access and verify cleanup
-    hint: Review project users, roles, changes, API tokens and integrations. Remove unauthorized access and rotate exposed credentials. Verify affected project sessions and tokens are invalidated, and reissue only the credentials your integrations need. Check for newly injected inline and encoded loaders. Enforce a tested Content Security Policy with narrow script-src and connect-src allowlists and reporting. Remove unsafe-eval where feasible. Confirm clean responses from each host even if the CDN is on the allowlist.
+    hint: Review project users, roles, changes, API tokens and integrations. The November 17 vendor report says impersonated users’ sessions and tokens were already revoked and does not require blanket password or API-token resets. Remove unauthorized access and rotate only credentials independently found exposed. Downstream visitor-session exposure still needs assessment. Check for newly injected inline and encoded loaders. Enforce a tested Content Security Policy with narrow script-src and connect-src allowlists and reporting. Remove unsafe-eval where feasible. Confirm clean responses from each host even if the CDN is on the allowlist.
   - title: Hunt for the network indicators and assess exposure
     hint: "Review DNS, proxy, CSP and browser logs for these 12 domains and three IPs, including subdomains where applicable. Defanged domains are 1688360[.]cc, 5vobauua3ojpklx[.]icu, eil786npto9u5bq[.]icu, l7bcsnwc7nzr3uo[.]icu, webshell[.]lol, linkforge[.]cc, je4ft3gn8vxudum[.]icu, q1ls1ho9x7wsxlu[.]icu, ios-hack[.]icu, p55abnw2pnsz0bo[.]icu, 1y69gy2mdzaltz1[.]icu and gm38duxoihbmy5o[.]icu. IPs are 136.113.106.136, 34.96.213.201 and 34.87.36.58. See Report URI for the full paths, script markers, two hashes and eight wallet addresses. A match alone does not prove compromise."
   - title: Check related third-party widgets for the same loader
@@ -54,6 +57,10 @@ checklist:
     hint: Invalidate exposed non-HttpOnly session tokens and rotate affected secrets. Identify card data entered into first-party fields on affected pages and coordinate response and notifications with your payment processor. Confirm what was actually accessible from those pages.
   - title: Check transactions and update affected visitor devices
     hint: Verify crypto destinations against a trusted address and contact your wallet provider or exchange about an unexpected transfer. Save the transaction hash, destination and timestamp for that report. If you entered card details in an affected first-party form, review card activity and ask your issuer about protective steps. Install the latest security update available for your iPhone or iPad.
+  - title: Request customer-specific evidence and restore legitimate code
+    hint: Ask your Customer Success Manager or support@optimizely.com for affected-project confirmation, per-site windows and change logs. The vendor permits re-enabling cleaned Web Experimentation, while sensitive-input pages without experiments should remove it. Feature Experimentation, SDKs and legacy Full Stack need no changes under this report. If original Project JavaScript was replaced, ask Support to restore it. Preserve web/CDN/WAF/CSP and payment/fraud logs covering at least November 16; assess notification duties with your advisers.
+  - title: Check the vendor's additional preliminary indicators
+    hint: Block and search web, CDN, CSP and proxy logs for pay-cloud[.]online, pay.pay-cloud[.]online and pay-relay.wordpressadmin001.workers[.]dev. The report also lists 193.176.211[.]170 and 193.176.211[.]203 as commercial VPN source addresses, explicitly warning they are ephemeral and unreliable as IOCs. Retain the earlier researcher indicators too. A match alone does not establish compromise, successful data capture or attribution.
 sources:
   - name: Optimizely official security incident status
     url: https://status.optimizely.com/incidents/ftw0fh9wx43z
@@ -87,9 +94,13 @@ sources:
     url: https://support.apple.com/en-us/100100
     says: Lists released security updates and their device availability.
     primary: true
+  - name: Optimizely November 17 preliminary customer incident report
+    url: https://pages.optimizely.com/rs/947-RKE-048/images/Security%20Incident%20Report%20-%20Optimizely%20Web%20Experimentation%20-%20Nov%2017%202026.pdf
+    says: Gives signup-flow impersonation details, preliminary vendor timings and indicators, product exclusions, customer evidence requests and revised re-enablement/credential guidance. Final forensics remain pending.
+    primary: true
 ---
 
-Report URI found injected code in the Project JavaScript portion of Optimizely Web snippets. That code runs on pages that include the snippet, whether it is loaded from the Optimizely CDN or a customer host. The team observed remote, encoded and inline loaders. Optimizely confirmed exploitation of an Experimentation vulnerability and told BleepingComputer it was in the account signup flow. It has not described the bug’s mechanics.
+Report URI found injected code in the Project JavaScript portion of Optimizely Web snippets. That code runs on pages that include the snippet, whether it is loaded from the Optimizely CDN or a customer host. The team observed remote, encoded and inline loaders. Optimizely confirmed exploitation of an Experimentation vulnerability and told BleepingComputer it was in the account signup flow. Its November 17 preliminary report says the signup flaw let new accounts impersonate existing administrator users using public information and repeated email guesses, without stealing or using their passwords. The vendor says no Optimizely administrator account was breached.
 
 The payload could swap cryptocurrency destinations and send page screenshots and cookies readable by JavaScript to the attacker. Card capture targeted values accessible to the page, such as first-party card fields. Report URI says the code could not read card fields isolated in a cross-origin payment iframe. On iPhones and iPads, the loaders used operating-system-dependent paths. Report URI identified Coruna and DarkSword and observed only fingerprinting in the iOS 26 path it examined. In a follow-up, Hudson Rock reports that Ohey retrieved a later DarkSword stage containing code to upload a Keychain database and other files. A request sent with an iOS 26.3 user agent reached another loader and worker, but the chain’s own log marked the route as nonfunctional. Neither finding establishes that a visitor’s device was compromised.
 
@@ -100,3 +111,8 @@ On November 17, Bitquery estimated about $2,260 across 19 likely victim payments
 Hudson Rock recovered a malicious minute-ly response in addition to the Optimizely scripts. Ohey’s archived captures show poisoned Kissmetrics and StorifyMe responses on November 13, before the Optimizely captures. Those observations do not show continuous delivery between dates. All three loaded the earlier webshell[.]lol injector. The research confirms the served code and leaves the entry methods for those three providers undetermined. Optimizely’s containment statement applies to its own service.
 
 Optimizely says it patched the vulnerability, removed injected code from affected projects and ended active sessions, revoked tokens and reset access for affected Optimizely accounts, according to its statement to BleepingComputer. Its status is monitoring. Downstream site operators still need to assess and address exposure of their own users’ sessions. Verify deployed copies and caches, inspect logs for the pre-cleanup period, and review session and payment exposure where applicable.
+
+
+The vendor's preliminary timeline puts first account creation at 00:37 UTC and first malicious project code at 07:51 UTC on November 16. It records detection at 13:34, blocking at Cloudflare at 16:06, the signup fix at 16:10, session/token revocation at 16:53 and cleanup completion at 22:24 UTC. The 07:51 first-write claim is later than Report URI's 04:21 captured injection; the reviewed sources do not reconcile that difference. Retain both and request a customer-specific window rather than narrowing log review to the vendor window alone. Cleanup completion and the later independent clean-response check are different observations.
+
+Optimizely excludes Feature Experimentation, SDKs and legacy Full Stack from the identified scope, but says the impersonated users could access whatever Experimentation data their privileges allowed. It says customer passwords were not exposed, does not require general password/API-token resets and permits cleaned Web Experimentation snippets to be re-enabled. Its report says some original Project JavaScript was replaced, so code restoration can require Support. These vendor statements do not erase potential downstream browser exposure, establish visitor loss totals or settle the entry methods at the other script providers. Mandiant-assisted forensics, final root-cause analysis and the final indicator list remain pending.
