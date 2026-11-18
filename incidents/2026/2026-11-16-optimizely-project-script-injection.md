@@ -44,6 +44,9 @@ timeline:
   - date: Nov 17, 2026
     title: Optimizely publishes its preliminary customer investigation report
     body: The vendor describes signup-flow impersonation, a 16:10 UTC fix and 16:53 UTC session/token revocation on November 16. It gives 22:24 UTC as cleanup completion, publishes additional indicators and withdraws the general disable-snippet advice. Final forensics remain pending.
+  - date: Nov 18, 2026
+    title: Socket publishes static analysis of an archived early payload
+    body: The November 16 08:08:15 UTC capture contains a wallet clipper and iOS loader, without the card-skimming module found in later builds. Socket publishes its sample hash and flags an unresolved difference from the reported 08:10 first-build time.
 checklist:
   - title: Pause affected snippets and preserve evidence
     hint: Check Project JavaScript, experiment custom code, deployed snippets and customer-hosted copies. Save known bad responses, hashes and timestamps before removing the code. Compare each deployed copy to a trusted baseline and check CDN or site caches after cleanup.
@@ -61,6 +64,8 @@ checklist:
     hint: Ask your Customer Success Manager or support@optimizely.com for affected-project confirmation, per-site windows and change logs. The vendor permits re-enabling cleaned Web Experimentation, while sensitive-input pages without experiments should remove it. Feature Experimentation, SDKs and legacy Full Stack need no changes under this report. If original Project JavaScript was replaced, ask Support to restore it. Preserve web/CDN/WAF/CSP and payment/fraud logs covering at least November 16; assess notification duties with your advisers.
   - title: Check the vendor's additional preliminary indicators
     hint: Block and search web, CDN, CSP and proxy logs for pay-cloud[.]online, pay.pay-cloud[.]online and pay-relay.wordpressadmin001.workers[.]dev. The report also lists 193.176.211[.]170 and 193.176.211[.]203 as commercial VPN source addresses, explicitly warning they are ephemeral and unreliable as IOCs. Retain the earlier researcher indicators too. A match alone does not establish compromise, successful data capture or attribution.
+  - title: Compare preserved early payloads with Socket's sample
+    hint: Socket lists 1688360[.]cc/track.js, 5vobauua3ojpklx[.]icu/boot.js, window._k7 and sample SHA-256 1ec4245b3b303304ea24a89b3b2351b0f0c085087050f517d23dcba9694c165a. Check saved responses or sandboxed static analysis, not live execution. This hash covers one archived build only; a different hash does not clear another build, and a match alone does not establish visitor exploitation or loss.
 sources:
   - name: Optimizely official security incident status
     url: https://status.optimizely.com/incidents/ftw0fh9wx43z
@@ -98,6 +103,10 @@ sources:
     url: https://pages.optimizely.com/rs/947-RKE-048/images/Security%20Incident%20Report%20-%20Optimizely%20Web%20Experimentation%20-%20Nov%2017%202026.pdf
     says: Gives signup-flow impersonation details, preliminary vendor timings and indicators, product exclusions, customer evidence requests and revised re-enablement/credential guidance. Final forensics remain pending.
     primary: true
+  - name: Socket archived payload analysis
+    url: https://socket.dev/blog/optimizely-supply-chain-attack
+    says: Statically decodes the 08:08:15 UTC archive capture, publishes its sample hash and markers, and distinguishes its clipper/iOS modules from later card-skimming builds. The capture-versus-first-build timing remains unresolved.
+    primary: true
 ---
 
 Report URI found injected code in the Project JavaScript portion of Optimizely Web snippets. That code runs on pages that include the snippet, whether it is loaded from the Optimizely CDN or a customer host. The team observed remote, encoded and inline loaders. Optimizely confirmed exploitation of an Experimentation vulnerability and told BleepingComputer it was in the account signup flow. Its November 17 preliminary report says the signup flaw let new accounts impersonate existing administrator users using public information and repeated email guesses, without stealing or using their passwords. The vendor says no Optimizely administrator account was breached.
@@ -116,3 +125,6 @@ Optimizely says it patched the vulnerability, removed injected code from affecte
 The vendor's preliminary timeline puts first account creation at 00:37 UTC and first malicious project code at 07:51 UTC on November 16. It records detection at 13:34, blocking at Cloudflare at 16:06, the signup fix at 16:10, session/token revocation at 16:53 and cleanup completion at 22:24 UTC. The 07:51 first-write claim is later than Report URI's 04:21 captured injection; the reviewed sources do not reconcile that difference. Retain both and request a customer-specific window rather than narrowing log review to the vendor window alone. Cleanup completion and the later independent clean-response check are different observations.
 
 Optimizely excludes Feature Experimentation, SDKs and legacy Full Stack from the identified scope, but says the impersonated users could access whatever Experimentation data their privileges allowed. It says customer passwords were not exposed, does not require general password/API-token resets and permits cleaned Web Experimentation snippets to be re-enabled. Its report says some original Project JavaScript was replaced, so code restoration can require Support. These vendor statements do not erase potential downstream browser exposure, establish visitor loss totals or settle the entry methods at the other script providers. Mandiant-assisted forensics, final root-cause analysis and the final indicator list remain pending.
+
+
+Socket's November 18 analysis identifies a 19,513-byte archived track.js response captured at 08:08:15 UTC on November 16. Its static decoding found a wallet clipper and an iOS loader, without the card-skimming module described in later versions. This does not contradict the later card-skimmer observations or establish that every served build had identical behavior. The archive capture precedes the reported 08:10 first-build time; Socket says the relationship to the 26 reported builds remains unconfirmed. The analysis did not execute the sample and does not establish successful iOS exploitation or additional visitor losses.
