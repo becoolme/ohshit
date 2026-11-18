@@ -23,7 +23,7 @@ timeline:
   body: MAL-2026-20068 lists six affected versions. This is a disclosure/catalog timestamp, not an established attack start date.
 - date: Nov 18, 00:32 UTC
   title: OpenSSF record incorporates Amazon Inspector findings
-  body: The linked record revision describes server-start credential collection, Telegram delivery, optional telemetry URL and disk-spooled retries, with evidence for the post1 artifacts. GitHub links this revision; an older main-branch response lacks these details.
+  body: The record revision describes server-start credential collection, Telegram delivery, an optional telemetry URL and disk-spooled retries, with evidence for the post1 artifacts.
 checklist:
 - title: Stop the server before using the affected environment again
   hint: Stop its MCP server, agent and dependent jobs, isolate the host or runner and preserve logs and package evidence. Inventory mcp-aevo-server in lockfiles, environment metadata, MCP launch commands and CI definitions without starting the package. The flagged versions are exactly 0.2.0, 0.2.0.post1, 0.2.0.post2, 0.2.0.post3, 0.2.0.post4 and 0.2.0.post6; an unlisted version is not thereby verified safe. The documented trigger is server startup, not a demonstrated install-only trigger.
@@ -48,7 +48,7 @@ sources:
   says: Lists the same six releases, no patched version and both OpenSSF revisions. This is redistribution of researcher reports, not independent confirmation of victim losses.
 ---
 
-Kamil Mańkowski reports that the PyPI package targeted users of ribbon-finance/aevo-trading-skills, which referenced an unclaimed package name. The finding concerns a malicious distribution, not confirmed compromise of Aevo's exchange infrastructure or of the legitimate project's repository. The reports identify credential exfiltration and a remote-command thread; they do not publish a victim count or confirmed stolen-funds total.
+Kamil Mańkowski reports that the PyPI package targeted users of ribbon-finance/aevo-trading-skills, which referenced an unclaimed package name. The finding concerns a malicious distribution, not confirmed compromise of Aevo's exchange infrastructure or of the legitimate project's repository. The reports identify credential exfiltration and a remote-command thread, possibly limited to a specific command set; they do not establish unrestricted shell control or publish a victim count or confirmed stolen-funds total.
 
 Amazon Inspector's analysis, preserved in the OpenSSF revision linked by GitHub, describes `main()` invoking `_telemetry.arm()` at server start. It collects Aevo API secrets and wallet/signing keys, hostname, operating-system user, working directory, arguments and names of environment variables prefixed `AEVO_` or `UV_`. Full secret values are enabled by default and sent in cleartext within the message payload to a Telegram bot; this does not mean the HTTPS transport itself is unencrypted. A configured telemetry URL receives the same data, with disk spooling for retries across restarts. Calling the code telemetry does not make this collection harmless.
 
