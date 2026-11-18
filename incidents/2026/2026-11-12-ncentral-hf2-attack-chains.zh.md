@@ -41,6 +41,9 @@ timeline:
 - date: 2026年11月16日
   title: Rapid7 披露在客户环境中观察到针对 Confluence 的利用
   body: Rapid7 于 11 月 13 日在客户环境中发现针对 Confluence Data Center 的利用，并在报告中公布了四个关联 IP。
+- date: 2026年11月18日
+  title: CISA 将 Apache Axis 纳入 KEV
+  body: CVE-2026-90436 被列为已遭利用，要求取证排查，并为美国联邦文职行政机构（FCEB）设定 11 月 21 日处置期限。
 checklist:
 - title: 立即关闭 Legacy API 并限制暴露
   hint: 在系统级打开 Administration → Mail and Network Settings → Network Security → Legacy APIs，确认已停用旧版 API。限制不可信网络访问设备，通过受控路径保留 Agent 和 Probe 所需的连接，并确认受管设备仍能报到。
@@ -56,6 +59,8 @@ checklist:
   hint: 独立部署可迁至仍受支持的 SOAP 引擎，或使用应用 Apache 补丁的 Axis 构建。Confluence Data Center 9.2 可升级至 9.2.28，或迁至仍受支持的 10.x 或更高版本。暂时无法升级时，先在非生产环境测试依赖该接口的脚本、自动化和插件。以管理员身份打开 General Configuration → Further Configuration（/admin/viewspacesconfig.action），点击 Edit，取消勾选 Remote API (XML-RPC & SOAP) 并保存。设置立即生效，无需重启。确认 /plugins/servlet/soap-axis1/confluenceservice-v2 返回 403，再检查曾暴露的实例是否存在入侵迹象。
 - title: 排查曾暴露的 Confluence Data Center
   hint: 保全反向代理和 Confluence 访问日志，查看 SOAP 端点的异常请求，并与应用进程启动意外子进程的记录交叉核对。排查 192.238.253[.]176、5.133.47[.]243、163.182.68[.]109 和 104.13.106[.]166。命中不等于失陷，未命中也不能排除。
+- title: 将取证排查纳入 Axis 响应
+  hint: CISA 要求对 CVE-2026-90436 开展取证排查。针对曾暴露的部署保全并检查证据，同时按产品指引修复。KEV 的 11 月 21 日期限适用于 FCEB 机构，其他组织也应优先处理已确认遭利用的漏洞。
 sources:
 - name: N-able HF3 发布说明
   says: 给出修复构建号、Agent 和 Probe 升级要求及已知限制。
@@ -81,6 +86,8 @@ sources:
   says: 说明 XML-RPC 和 SOAP 远程 API 这一利用前提、修复版本及禁用该接口的验证步骤。
 - name: Rapid7 对 Confluence 实际利用的报告
   says: 记录了客户环境中的实际利用和四个相关 IP。
+- name: CISA 已知遭利用漏洞目录
+  says: 11 月 18 日新增 Axis 条目，要求取证排查，并为 FCEB 设定 11 月 21 日处置期限。
 cves:
 - name: Apache Axis SOAP 类实例化
   description: 可达的 Axis 1.x SOAP 路径允许未认证调用者实例化类。在 N-central 中，已披露的服务器链要求启用 Legacy API，并利用另一处缺陷提权至 root。

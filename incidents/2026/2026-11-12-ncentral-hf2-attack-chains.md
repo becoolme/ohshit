@@ -49,6 +49,9 @@ timeline:
 - date: Nov 16, 2026
   title: Rapid7 reports exploitation against Confluence in a customer environment
   body: Rapid7 detected exploitation against Confluence on November 13 and published four associated IP addresses.
+- date: Nov 18, 2026
+  title: CISA adds Apache Axis to KEV
+  body: CVE-2026-90436 is listed as exploited, with forensic triage required and a November 21 remediation deadline for FCEB agencies.
 checklist:
 - title: Disable Legacy API and restrict exposure now
   hint: At the system level, open Administration → Mail and Network Settings → Network Security → Legacy APIs and verify that the deprecated APIs are disabled. Restrict appliance access from untrusted networks. Preserve required Agent and Probe access through controlled paths and verify managed devices
@@ -66,6 +69,8 @@ checklist:
   hint: For standalone deployments, migrate to a supported SOAP engine or use a build with Apache’s source patch. Upgrade Confluence Data Center 9.2 to 9.2.28 or move to a supported 10.x or later release. If you cannot upgrade yet, test dependent scripts, automations and add-ons in a non-production environment. As an administrator, open General Configuration → Further Configuration (/admin/viewspacesconfig.action), select Edit, clear Remote API (XML-RPC & SOAP), and save. The change takes effect immediately without a restart. Verify that /plugins/servlet/soap-axis1/confluenceservice-v2 returns 403 and investigate previously exposed instances for compromise.
 - title: Investigate previously exposed Confluence Data Center instances
   hint: Preserve reverse proxy and Confluence access logs and correlate unexpected SOAP endpoint requests with unusual child processes from the application. Check 192.238.253[.]176, 5.133.47[.]243, 163.182.68[.]109 and 104.13.106[.]166. A match alone does not prove compromise, and no match does not rule it out.
+- title: Include forensic triage in the Axis response
+  hint: CISA marks CVE-2026-90436 for forensic triage. Preserve and examine evidence from previously exposed deployments alongside product-specific remediation. The November 21 KEV deadline applies to FCEB agencies; other organizations should prioritize the confirmed exploitation.
 sources:
 - name: N-able HF3 release notes
   url: https://status.n-able.com/2026/11/16/n-central-2026-4-hf3-release-notes/
@@ -131,7 +136,11 @@ sources:
   url: https://www.rapid7.com/blog/post/etr-rapid7-detected-exploitation-of-cve-2026-90436-against-atlassian-confluence-data-center-n-able-n-central-also-exploited
   primary: true
   says: Documents exploitation in a customer environment and four associated IP addresses.
-updated: 2026-11-17
+- name: CISA Known Exploited Vulnerabilities catalog
+  url: https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json
+  primary: true
+  says: November 18 Axis addition requires forensic triage and sets a November 21 FCEB remediation deadline.
+updated: 2026-11-18
 cves:
 - id: CVE-2026-90436
   name: Apache Axis SOAP class instantiation
