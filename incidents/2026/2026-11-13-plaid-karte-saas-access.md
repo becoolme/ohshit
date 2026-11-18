@@ -33,6 +33,9 @@ timeline:
 - date: Nov 17, 2026
   title: Shueisha describes notification outages and credential revocation
   body: The publisher suspended member-data links and revoked integration keys. Member-data impact remains under review; no connected-service intrusion or secondary harm was confirmed, and no delivery restart date was given.
+- date: Nov 17, 2026
+  title: Shimamura confirms two categories of exposed records
+  body: The retailer reports about seven million member records and 50,000 family records. These are category counts, not a cross-customer unique-person total; confirmed fields and unconfirmed categories differ.
 - date: Nov 18, 2026
   title: Mitsubishi UFJ Trust and Banking confirms its downstream data exposure
   body: The bank reports approximately 230,000 records across two customer categories, with transformed membership identifiers and limited attributes. It excludes banking credentials and account numbers and says its own systems were not intruded upon. This is not a new count of unique victims.
@@ -47,6 +50,8 @@ checklist:
   hint: Wait for Plaid’s restart instructions before resuming workflows. Verify tracking, deliveries and integrations on a limited set of jobs first, then confirm the expected recipients and results.
 - title: Follow the notice for the downstream service you actually use
   hint: Mitsubishi UFJ Trust and Banking will contact affected customers individually. Verify messages through the bank's established channels or its published incident contact (0120-304-560, weekdays during the hours in its notice, November 18–December 11). The bank says it never requests PINs or passwords by email, SMS or telephone. Shueisha users should check the publisher's delivery notices; missing newsletters, restock pushes or convenience-store payment reminders do not establish whether a payment or order deadline changed. That last check is general workflow guidance, not a declared extension.
+- title: Use Shimamura's current guidance without inventing a reset requirement
+  hint: Shimamura says no special customer procedure is required and that it cannot confirm an individual's exposure through inquiries. Use its official member contact page (login required) if needed, follow updates and avoid unsolicited links or requests for passwords/authentication codes. Do not turn its unconfirmed member-number/email/LINE-ID exposure into a claim that those fields leaked, or promise that risk is zero.
 sources:
 - name: Plaid incident notice
   says: Confirms detected third-party access and the all-project shutdown.
@@ -76,6 +81,10 @@ sources:
   url: https://plaid.co.jp/notice/202611181600/
   primary: true
   says: Continues requested-data delivery and recipient identification; there is still no restart estimate.
+- name: Shimamura November 17 first disclosure
+  url: https://www.shimamura.gr.jp/assets-c/uploads/release20261117_Informationleak.pdf
+  primary: true
+  says: Confirms member and family record categories, separates known exposure from fields not confirmed leaked and data not held in KARTE, and gives customer guidance.
 ---
 
 PLAID says an attacker exploited a server vulnerability to steal connection credentials, read data from certain databases and take over a PLAID account to access the administration console. The 79,249 figure counts account email addresses. Counts for external integration credentials and imported records remain under investigation. Personal information in imports depends on what each customer uploaded. The shutdown affected all projects, and the investigation assesses data exposure by customer.
@@ -85,3 +94,5 @@ At 11:53 UTC on November 17, PLAID said it had begun sending the affected subset
 Mitsubishi UFJ Trust and Banking's November 18 notice reports about 230,000 exposed records across two customer categories. Fields include transformed online-banking membership identifiers, gender and an email-registration flag; the latter is not an email address. Some customers who also use the bank's official LINE account have its user-identification number and survey attributes (gender, age and prefecture) included. The bank excludes names, addresses, birth dates, phone numbers, email addresses, account numbers, PINs and passwords. It says these records alone cannot directly identify an individual or authorize online banking or transactions; no asset or transaction impact was confirmed. Its own systems were not breached. These are bank-reported records, not a verified unique-person count, and must not be added to PLAID's separate account-email figure.
 
 Shueisha's November 17 notice says newsletters, restock notifications and convenience-store prepayment reminders remained disrupted. It revoked integration credentials and stopped sharing member data with KARTE. It was still assessing member-data impact and had confirmed neither unauthorized access at connected services nor secondary harm. It says it had not entrusted card information to KARTE; this exclusion applies to Shueisha's data, not every KARTE customer. PLAID's November 18 16:00 JST notice still gives no restart estimate.
+
+Shimamura's November 17 first notice confirms about seven million member records containing birth dates, gender, prefecture and postal codes, plus about 50,000 registered-family records containing children's birth year/month. It had not established leakage of member numbers, email addresses or LINE IDs as of that notice, and says KARTE did not hold names, telephone numbers, detailed street/building addresses, card data or member-login passwords. It reported no confirmed misuse. These are two retailer-reported categories; overlap and unique-person totals across them and other customers are not established. Do not combine them with the bank's records or PLAID's administrative-account emails into a total victim count.
