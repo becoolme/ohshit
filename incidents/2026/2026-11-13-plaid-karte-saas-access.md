@@ -36,9 +36,15 @@ timeline:
 - date: Nov 17, 2026
   title: Shimamura confirms two categories of exposed records
   body: The retailer reports about seven million member records and 50,000 family records. These are category counts, not a cross-customer unique-person total; confirmed fields and unconfirmed categories differ.
+- date: Nov 17, 2026
+  title: Morisawa confirms exposure of purchaser records
+  body: Morisawa reports 23,957 records with names, email addresses and user IDs for some Morisawa Fonts purchasers since May 2023; the detailed scope remains under investigation.
 - date: Nov 18, 2026
   title: Mitsubishi UFJ Trust and Banking confirms its downstream data exposure
   body: The bank reports approximately 230,000 records across two customer categories, with transformed membership identifiers and limited attributes. It excludes banking credentials and account numbers and says its own systems were not intruded upon. This is not a new count of unique victims.
+- date: Nov 18, 2026
+  title: MeetsMore separates KARTE exposure from its own earlier intrusion
+  body: Its KARTE notice reports 60,000 people with personal contact fields and 3,398,469 with only member identifiers and prefectures. This is separate from its November 16 disclosure about an attack on MeetsMore itself.
 checklist:
 - title: Revoke affected external integration credentials
   hint: Revoke affected secrets or access tokens on the connected service, review unexpected calls, and reissue and verify credentials using PLAID’s guidance.
@@ -52,6 +58,8 @@ checklist:
   hint: Mitsubishi UFJ Trust and Banking will contact affected customers individually. Verify messages through the bank's established channels or its published incident contact (0120-304-560, weekdays during the hours in its notice, November 18–December 11). The bank says it never requests PINs or passwords by email, SMS or telephone. Shueisha users should check the publisher's delivery notices; missing newsletters, restock pushes or convenience-store payment reminders do not establish whether a payment or order deadline changed. That last check is general workflow guidance, not a declared extension.
 - title: Use Shimamura's current guidance without inventing a reset requirement
   hint: Shimamura says no special customer procedure is required and that it cannot confirm an individual's exposure through inquiries. Use its official member contact page https://www.shop-shimamura.com/common/contact/entry/?bk=0 (login required) if needed, follow updates and avoid unsolicited links or requests for passwords/authentication codes. Do not turn its unconfirmed member-number/email/LINE-ID exposure into a claim that those fields leaked, or promise that risk is zero.
+- title: Check Morisawa and MeetsMore notices separately
+  hint: Morisawa plans individual notices; avoid suspicious email links and attachments. MeetsMore began notices from no-reply@meetsmore.com and provides a contact form in its KARTE notice. Verify messages through the official page. MeetsMore says this KARTE exposure requires no password change; its separate account-intrusion notice has different reset instructions.
 sources:
 - name: Plaid incident notice
   says: Confirms detected third-party access and the all-project shutdown.
@@ -85,6 +93,14 @@ sources:
   url: https://www.shimamura.gr.jp/assets-c/uploads/release20261117_Informationleak.pdf
   primary: true
   says: Confirms member and family record categories, separates known exposure from fields not confirmed leaked and data not held in KARTE, and gives customer guidance.
+- name: Morisawa November 17 customer notice
+  url: https://www.morisawa.co.jp/about/news/19310
+  primary: true
+  says: Confirms 23,957 purchaser records, fields and exclusions, continued service, planned individual notices and phishing precautions.
+- name: MeetsMore November 18 KARTE notice
+  url: https://company.meetsmore.com/page/notice-20261118-karte
+  primary: true
+  says: Gives two affected-person categories, credential revocation and customer guidance; explicitly separates this breach from its own system intrusion disclosed November 16.
 ---
 
 PLAID says an attacker exploited a server vulnerability to steal connection credentials, read data from certain databases and take over a PLAID account to access the administration console. The 79,249 figure counts account email addresses. Counts for external integration credentials and imported records remain under investigation. Personal information in imports depends on what each customer uploaded. The shutdown affected all projects, and the investigation assesses data exposure by customer.
@@ -96,3 +112,7 @@ Mitsubishi UFJ Trust and Banking's November 18 notice reports about 230,000 expo
 Shueisha's November 17 notice says newsletters, restock notifications and convenience-store prepayment reminders remained disrupted. It revoked integration credentials and stopped sharing member data with KARTE. It was still assessing member-data impact and had confirmed neither unauthorized access at connected services nor secondary harm. It says it had not entrusted credit-card information to KARTE; this exclusion applies to Shueisha's data, not every KARTE customer. PLAID's November 18 16:00 JST notice still gives no restart estimate.
 
 Shimamura's November 17 first notice confirms about seven million member records containing birth dates, gender, prefecture and postal codes, plus about 50,000 registered-family records containing children's birth year/month. It had not established leakage of member numbers, email addresses or LINE IDs as of that notice, and says KARTE did not hold names, telephone numbers, detailed street/building addresses, credit-card data or member-login passwords. It reported no confirmed misuse. These are two retailer-reported categories; overlap and unique-person totals across them and other customers are not established. Do not combine them with the bank's records or PLAID's administrative-account emails into a total victim count.
+
+Morisawa's November 17 notice confirms 23,957 records containing names, email addresses and user IDs for some customers who purchased through the Morisawa Fonts service site from May 2023 onward. Detailed customer scope and other data remain under investigation. Credit-card information and login passwords were not handled in KARTE and are excluded. Morisawa reported no confirmed misuse, said font-service use was unaffected and planned individual notifications.
+
+MeetsMore's November 18 KARTE notice reports 60,000 people with one or more of name, email, telephone or birth date, and 3,398,469 with only member identifiers and prefectures. Passwords, cards, detailed addresses and LINE IDs are excluded; identifiers alone cannot log in. It revoked affected integration credentials on November 13, stopped KARTE data sharing and began individual notices November 18. No related intrusion into its own systems or secondary harm was confirmed. ProOne does not use KARTE. This is separate from the [MeetsMore system intrusion disclosed November 16](/incidents/meetsmore-schedule-data-theft/), with different causes, paths and data. Do not combine these downstream figures with other KARTE counts.
