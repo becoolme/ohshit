@@ -55,20 +55,20 @@ cves:
     name: ssl_preread routing-policy bypass
     description: A malformed ClientHello can forge preread variables and reach an unintended backend when routing trusts those values. nginx.org lists 1.15.2–1.31.8.
 fixed:
-  - product: nginx stable1.30.x
+  - product: nginx stable 1.30.x
     branch: "1.30"
     version: 1.30.7
     status: Upstream stable release
-  - product: nginx mainline1.31.x
+  - product: nginx mainline 1.31.x
     branch: "1.31"
     version: 1.31.9
     status: Upstream mainline release
-  - product: NGINX Plus37.0 maintenance line
+  - product: NGINX Plus 37.0 maintenance line
     version: 37.0.8.1
-    status: Batch target;37.0.7.1 fixes only some findings
-  - product: NGINX Plus37.1+ maintenance line
+    status: Batch target; 37.0.7.1 fixes only some findings
+  - product: NGINX Plus 37.1+ maintenance line
     version: 37.3.0.1
-    status: Batch target;37.2.0.1 fixes only some findings
+    status: Batch target; 37.2.0.1 fixes only some findings
   - product: Older upstream branches and Plus R33–R36
     version: none
     status: No complete fixed release established here; migrate or verify a supported vendor backport
@@ -78,23 +78,23 @@ timeline:
     body: This is a coordinated-disclosure milestone, not the public disclosure date.
   - date: Nov 18, 2026
     title: Public disclosure and OSS releases
-    body: nginx publishes1.30.7 and1.31.9. F5 CNA records and researcher reports describe the new batch.
+    body: nginx publishes 1.30.7 and 1.31.9. F5 CNA records and researcher reports describe the new batch.
   - date: Nov 18, 2026
     title: CERT-EU urges prioritized patching
     body: Researcher demonstrations do not establish real-world exploitation.
 checklist:
   - title: Inventory the actual binary, package and configuration
-    hint: "Use nginx -v, nginx -V and nginx -T to inspect version, modules and effective listeners/configuration. Distribution backports can keep an old upstream version string: check the full installed package against the distribution advisory. Inventory proxy/appliance/container copies too; do not assume an image tag proves its binary is patched. No interactive version checker is provided because Plus and distro versions require vendor-specific interpretation."
+    hint: "Use nginx -v, nginx -V and nginx -T to inspect version, modules and effective listeners/configuration. Distribution backports can keep an old upstream version string: check the full installed package against the distribution advisory. Inventory proxy/appliance/container copies too; do not assume an image tag proves its binary is patched."
   - title: Install the complete fix for the line you run
-    hint: OSS stable:1.30.7; mainline:1.31.9. For the listed Plus lines, target37.0.8.1 or37.3.0.1 after confirming the vendor product/branch. Plus37.0.7.1 and37.2.0.1 already fix123633 and123640, but leave other batch bugs; the TLS-loop record separately lists37.2.1.1. Older/eol products need vendor guidance. Follow the package restart or supported executable-upgrade procedure and confirm no vulnerable master/workers remain. Merely installing a new file or reloading configuration does not replace the old executable.
+    hint: OSS stable: 1.30.7; mainline: 1.31.9. For the listed Plus lines, target 37.0.8.1 or 37.3.0.1 after confirming the vendor product/branch. Plus 37.0.7.1 and 37.2.0.1 already fix 123633 and 123640, but leave other batch bugs; the TLS-loop record separately lists 37.2.1.1. Older/eol products need vendor guidance. Follow the package restart or supported executable-upgrade procedure and confirm no vulnerable master/workers remain. Merely installing a new file or reloading configuration does not replace the old executable.
   - title: Disable HTTP/2 temporarily on every exposed shared listener
-    hint: For1.25.1+, set http2 off in affected server blocks and remove legacy http2 listen parameters; older versions require removal of the listen parameter. Run nginx -t, reload, confirm HTTP/2 is no longer negotiated and verify HTTPS still works. A failed connection is not proof of mitigation. Native gRPC/other HTTP/2-only clients may break. Close or restart lingering old workers; existing connections retain old configuration. This covers123007/123633 only.
+    hint: For 1.25.1+, set http2 off in affected server blocks and remove legacy http2 listen parameters; older versions require removal of the listen parameter. Run nginx -t, reload, confirm HTTP/2 is no longer negotiated and verify HTTPS still works. A failed connection is not proof of mitigation. Native gRPC/other HTTP/2-only clients may break. Close or restart lingering old workers; existing connections retain old configuration. This covers 123007/123633 only.
   - title: Cover the other three memory-safety paths
-    hint: For121810 remove affected QUIC listeners, set http3 off, clear advertised Alt-Svc and confirm no relevant UDP listener remains. For123634 avoid variable proxy hostnames and SSI/mirror subrequests; fixed upstream groups remove the tested request-time DNS path. mirror_request_body on alone is not a fix, and disabling mirror alone misses SSI. For113425 restrict every mail-proxy listener to trusted networks or loopback while patching; valid mail credentials are not required. Validate/reload and retire old sessions/workers; plan the service interruption.
+    hint: For 121810 remove affected QUIC listeners, set http3 off, clear advertised Alt-Svc and confirm no relevant UDP listener remains. For 123634 avoid variable proxy hostnames and SSI/mirror subrequests; fixed upstream groups remove the tested request-time DNS path. mirror_request_body on alone is not a fix, and disabling mirror alone misses SSI. For 113425 restrict every mail-proxy listener to trusted networks or loopback while patching; valid mail credentials are not required. Validate/reload and retire old sessions/workers; plan the service interruption.
   - title: Review the TLS, stream and capture-specific bugs too
-    hint: "For120967 require client certificates in the default server on the shared socket, or give the protected stream server its own address/port. For123640 replace ssl_preread-based trust/routing with TLS termination, configured certificates and ssl_server_name-based routing; preserve backend TLS settings as needed. For125283 use named captures without reusing them across regexes. For120993 disable PROXYv2/use v1 or disable both session tickets and cache; F5 excludes BoringSSL/AWS-LC builds for that bug. No workaround is listed for118899: prioritize patching that TLS1.3 listener. Each workaround is CVE-specific, not whole-batch protection."
+    hint: "For 120967 require client certificates in the default server on the shared socket, or give the protected stream server its own address/port. For 123640 replace ssl_preread-based trust/routing with TLS termination, configured certificates and ssl_server_name-based routing; preserve backend TLS settings as needed. For 125283 use named captures without reusing them across regexes. For 120993 disable PROXYv2/use v1 or disable both session tickets and cache; F5 excludes BoringSSL/AWS-LC builds for that bug. No workaround is listed for 118899: prioritize patching that TLS 1.3 listener. Each workaround is CVE-specific, not whole-batch protection."
   - title: Correlate logs and process execution before declaring compromise
-    hint: Review configured error logs (commonly /var/log/nginx/error.log) for worker exits, signal11/segfault and core dumps. Correlate long-lived high-inbound/low-outbound connections, repeated TLS connections and bytes received that greatly exceed logged request lengths. Xint gives an optional h2_hunt format and /var/log/nginx/h2-hunt.log; adding it now cannot reconstruct old traffic. Review auditd execve/execveat records by worker UID and parent PID for unexpected /bin/sh, /bin/bash or other programs; same-UID applications and crashes can be legitimate. A match alone does not prove compromise; absence of newly enabled logs does not clear earlier activity.
+    hint: Review configured error logs (commonly /var/log/nginx/error.log) for worker exits, signal 11/segfault and core dumps. Correlate long-lived high-inbound/low-outbound connections, repeated TLS connections and bytes received that greatly exceed logged request lengths. Xint gives an optional h2_hunt format and /var/log/nginx/h2-hunt.log; adding it now cannot reconstruct old traffic. Review auditd execve/execveat records by worker UID and parent PID for unexpected /bin/sh, /bin/bash or other programs; same-UID applications and crashes can be legitimate. A match alone does not prove compromise; absence of newly enabled logs does not clear earlier activity.
 sources:
   - name: nginx.org security advisories
     url: https://nginx.org/en/security_advisories.html
@@ -102,15 +102,15 @@ sources:
     primary: true
   - name: nginx mainline release notes
     url: https://nginx.org/en/CHANGES
-    says: November18 release1.31.9 lists all ten fixes.
+    says: November 18 release 1.31.9 lists all ten fixes.
     primary: true
   - name: nginx stable release notes
     url: https://nginx.org/en/CHANGES-1.30
-    says: November18 release1.30.7 lists nine fixes; stable PROXYv2 scope differs in the CNA record.
+    says: November 18 release 1.30.7 lists nine fixes; stable PROXYv2 scope differs in the CNA record.
     primary: true
   - name: nginx downloads
     url: https://nginx.org/en/download.html
-    says: Lists1.31.9 mainline and1.30.7 stable as released.
+    says: Lists 1.31.9 mainline and 1.30.7 stable as released.
     primary: true
   - name: Wiz original HTTP/2 research
     url: https://www.wiz.io/blog/nginx-http2-rce-vulnerabilities
@@ -120,7 +120,7 @@ sources:
     url: https://xint.io/blog/nginx2root-remote-code-execution
     says: Five independent nginx attack paths, tested configuration ranges, exposure checks and mitigations. Host-root demonstration also needs a separate Linux kernel flaw.
     primary: true
-  - name: CERT-EU advisory2026-022
+  - name: CERT-EU advisory 2026-022
     url: https://cert.europa.eu/publications/security-advisories/2026-022/
     says: Five RCE-capable findings; no in-the-wild exploitation reported; prioritizes internet-facing deployments.
     primary: true
@@ -131,45 +131,45 @@ sources:
   - name: F5 CNA record CVE-2026-123007
     url: https://cveawg.mitre.org/api/cve/CVE-2026-123007
     primary: true
-    says: Vendor-authored prerequisites, evaluated version ranges, CVSS3.1/4.0 and workarounds. End-of-support versions are not evaluated.
+    says: Vendor-authored prerequisites, evaluated version ranges, CVSS 3.1/4.0 and workarounds. End-of-support versions are not evaluated.
   - name: F5 CNA record CVE-2026-123633
     url: https://cveawg.mitre.org/api/cve/CVE-2026-123633
     primary: true
-    says: Vendor-authored prerequisites, evaluated version ranges, CVSS3.1/4.0 and workarounds. End-of-support versions are not evaluated.
+    says: Vendor-authored prerequisites, evaluated version ranges, CVSS 3.1/4.0 and workarounds. End-of-support versions are not evaluated.
   - name: F5 CNA record CVE-2026-121810
     url: https://cveawg.mitre.org/api/cve/CVE-2026-121810
     primary: true
-    says: Vendor-authored prerequisites, evaluated version ranges, CVSS3.1/4.0 and workarounds. End-of-support versions are not evaluated.
+    says: Vendor-authored prerequisites, evaluated version ranges, CVSS 3.1/4.0 and workarounds. End-of-support versions are not evaluated.
   - name: F5 CNA record CVE-2026-123634
     url: https://cveawg.mitre.org/api/cve/CVE-2026-123634
     primary: true
-    says: Vendor-authored prerequisites, evaluated version ranges, CVSS3.1/4.0 and workarounds. End-of-support versions are not evaluated.
+    says: Vendor-authored prerequisites, evaluated version ranges, CVSS 3.1/4.0 and workarounds. End-of-support versions are not evaluated.
   - name: F5 CNA record CVE-2026-113425
     url: https://cveawg.mitre.org/api/cve/CVE-2026-113425
     primary: true
-    says: Vendor-authored prerequisites, evaluated version ranges, CVSS3.1/4.0 and workarounds. End-of-support versions are not evaluated.
+    says: Vendor-authored prerequisites, evaluated version ranges, CVSS 3.1/4.0 and workarounds. End-of-support versions are not evaluated.
   - name: F5 CNA record CVE-2026-118899
     url: https://cveawg.mitre.org/api/cve/CVE-2026-118899
     primary: true
-    says: Vendor-authored prerequisites, evaluated version ranges, CVSS3.1/4.0 and workarounds. End-of-support versions are not evaluated.
+    says: Vendor-authored prerequisites, evaluated version ranges, CVSS 3.1/4.0 and workarounds. End-of-support versions are not evaluated.
   - name: F5 CNA record CVE-2026-120993
     url: https://cveawg.mitre.org/api/cve/CVE-2026-120993
     primary: true
-    says: Vendor-authored prerequisites, evaluated version ranges, CVSS3.1/4.0 and workarounds. End-of-support versions are not evaluated.
+    says: Vendor-authored prerequisites, evaluated version ranges, CVSS 3.1/4.0 and workarounds. End-of-support versions are not evaluated.
   - name: F5 CNA record CVE-2026-125283
     url: https://cveawg.mitre.org/api/cve/CVE-2026-125283
     primary: true
-    says: Vendor-authored prerequisites, evaluated version ranges, CVSS3.1/4.0 and workarounds. End-of-support versions are not evaluated.
+    says: Vendor-authored prerequisites, evaluated version ranges, CVSS 3.1/4.0 and workarounds. End-of-support versions are not evaluated.
   - name: F5 CNA record CVE-2026-120967
     url: https://cveawg.mitre.org/api/cve/CVE-2026-120967
     primary: true
-    says: Vendor-authored prerequisites, evaluated version ranges, CVSS3.1/4.0 and workarounds. End-of-support versions are not evaluated.
+    says: Vendor-authored prerequisites, evaluated version ranges, CVSS 3.1/4.0 and workarounds. End-of-support versions are not evaluated.
   - name: F5 CNA record CVE-2026-123640
     url: https://cveawg.mitre.org/api/cve/CVE-2026-123640
     primary: true
-    says: Vendor-authored prerequisites, evaluated version ranges, CVSS3.1/4.0 and workarounds. End-of-support versions are not evaluated.
+    says: Vendor-authored prerequisites, evaluated version ranges, CVSS 3.1/4.0 and workarounds. End-of-support versions are not evaluated.
 ---
 
-This is the November18 batch, distinct from the [October nginx release](/incidents/nginx-oct-2026/). All displayed scores use F5’s CVSS3.1 values; its five memory-safety records also score9.2 under CVSS4.0. nginx.org labels those findings major or medium rather than using the same scoring vocabulary. L3 reflects widely deployed software and demonstrated exploitation without reported real-world attacks. The nginx bugs run code as a worker, not automatically as host root: Xint’s root/container-escape demonstration also chains a separate Linux SCTP vulnerability.
+This is the November 18 batch, distinct from the [October nginx release](/incidents/nginx-oct-2026/). All displayed scores use F5’s CVSS 3.1 values; its five memory-safety records also score 9.2 under CVSS 4.0. nginx.org labels those findings major or medium rather than using the same scoring vocabulary. L3 reflects widely deployed software and demonstrated exploitation without reported real-world attacks. The nginx bugs run code as a worker, not automatically as host root: Xint’s root/container-escape demonstration also chains a separate Linux SCTP vulnerability.
 
-Keep source boundaries visible. F5 says RCE requires ASLR disabled or bypassed; Wiz demonstrates a bypass, so enabled ASLR is not a sufficient mitigation. The resolver/mail historical start versions differ between upstream ranges and Xint’s tested paths; do not treat the narrower tested range as a safe-version list. F5’s121810 record contains a malformed1.25.09 lower bound; nginx.org and the researcher identify1.25.0. For120993, the CNA additionally flags stable1.30.6, while the upstream advisory lists only mainline and stable release notes omit that item; upgrade rather than declaring stable unaffected. No victim count or campaign-specific malicious network indicators are established by these sources.
+Keep source boundaries visible. F5 says RCE requires ASLR disabled or bypassed; Wiz demonstrates a bypass, so enabled ASLR is not a sufficient mitigation. The resolver/mail historical start versions differ between upstream ranges and Xint’s tested paths; do not treat the narrower tested range as a safe-version list. F5’s 121810 record contains a malformed 1.25.09 lower bound; nginx.org and the researcher identify 1.25.0. For 120993, the CNA additionally flags stable 1.30.6, while the upstream advisory lists only mainline and stable release notes omit that item; upgrade rather than declaring stable unaffected. No victim count or campaign-specific malicious network indicators are established by these sources.
