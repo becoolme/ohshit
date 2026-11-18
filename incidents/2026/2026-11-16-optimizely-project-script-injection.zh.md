@@ -65,7 +65,7 @@ checklist:
   - title: 将保存的早期载荷与 Socket 样本比较
     hint: Socket 列出 1688360[.]cc/track.js、5vobauua3ojpklx[.]icu/boot.js、window._k7 及样本 SHA-256 1ec4245b3b303304ea24a89b3b2351b0f0c085087050f517d23dcba9694c165a。解码后的替换地址为 0xC4026b06D82b0F0B363eda0642D61CfbDc17884e、THvs6p56XkUiMkJeSc51cAP64u2RsTYqxa 和 19g9rZcPeiz8rUvyWpTRyXXhPnjsWrc3kW；iOS 脚本设置 data-channel-code="02111110"、data-cfasync="false"。检查保存的响应，或在沙箱中做静态分析，不要直接执行在线载荷。此哈希仅覆盖一个归档构建；其他哈希不能据此排除风险，匹配也不能单独证明访客遭利用或损失。
   - title: 区分缓存页面请求、设备暴露与利用成功
-    hint: Netskope 列出 1688360[.]cc、5vobauua3ojpklx[.]icu、eil786npto9u5bq[.]icu、l7bcsnwc7nzr3uo[.]icu、webshell[.]lol、je4ft3gn8vxudum[.]icu、q1ls1ho9x7wsxlu[.]icu、ios-hack[.]icu；IP 为 136.113.106[.]136、34.96.213[.]201、34.87.36[.]58；track.js 哈希为 814a963c0da480e2449d9b6664480156e1cd6d731014117401bf635badec3a0f、f7b84b9a94f749f8ced3f0112d0a66894e8bbc3b4aa5592021d1b8976a9bad40。保留此前完整指标集，将浏览器和出站日志与设备系统、策略结果及已保存内容关联，再评估输入卡片或复制钱包地址的行为。桌面设备访问 iOS 端点不能证明设备遭利用，匹配本身也不能证明失陷。Netskope 正将 v8hub[.]xyz 作为线索调查，尚未确认属于该套件。
+    hint: Netskope 列出 1688360[.]cc、5vobauua3ojpklx[.]icu、eil786npto9u5bq[.]icu、l7bcsnwc7nzr3uo[.]icu、webshell[.]lol、je4ft3gn8vxudum[.]icu、q1ls1ho9x7wsxlu[.]icu、ios-hack[.]icu；IP 为 136.113.106[.]136、34.96.213[.]201、34.87.36[.]58；track.js 哈希为 814a963c0da480e2449d9b6664480156e1cd6d731014117401bf635badec3a0f、f7b84b9a94f749f8ced3f0112d0a66894e8bbc3b4aa5592021d1b8976a9bad40。保留此前完整指标集，在网页访问控制中拦截已确认的攻击域名和 IP；评估经过测试的 Newly Registered Domain/Security Risk URL 过滤，以及无法拦截时的浏览器隔离。优先检查访问过端点且运行 iOS 18 或 26 的 iPhone/iPad，但不能将系统版本当作失陷证据。将浏览器和出站日志与设备系统、策略结果及已保存内容关联，再评估输入卡片或复制钱包地址的行为。桌面设备访问 iOS 端点不能证明设备遭利用，匹配本身也不能证明失陷。Netskope 正将 v8hub[.]xyz 作为线索调查，尚未确认属于该套件。
 sources:
   - name: Optimizely 官方安全事件状态
     says: 确认 Experimentation 漏洞遭利用、修复上线、注入代码移除及账户保护措施。
