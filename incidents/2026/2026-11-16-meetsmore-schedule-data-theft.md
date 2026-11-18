@@ -4,7 +4,7 @@ date: '2026-11-16'
 level: 4
 tags: [Data breach, Account takeover, SaaS]
 summary: MeetsMore reports 201 account intrusions followed by exploitation of a scheduling feature, potentially exposing up to 366,850 records. It patched the flaw November 12 and forced affected accounts to reset passwords. Its separate KARTE exposure has different data and guidance.
-splash: MeetsMore customers and providers whose account or scheduled-request information was exposed; ProOne is excluded.
+splash: MeetsMore customers and providers with accessed accounts or potentially exposed scheduled-request records; ProOne is excluded.
 wipe: Follow affected-account reset instructions, replace reused passwords and reissue meeting links registered inside MeetsMore.
 inTheWild: 'yes'
 inTheWildNote: MeetsMore confirms unauthorized logins and exploitation of its scheduling feature.
@@ -41,6 +41,6 @@ sources:
 
 MeetsMore says an attacker used an accessed account to exploit its provider-availability feature on November 11–12. Up to 366,850 scheduling records may have leaked: addresses, phone numbers, member/request identifiers, internally registered meeting URLs and, for linked external calendars, event titles only. Names, emails, passwords and cards are excluded from this feature leak, not from every possible view through an accessed account.
 
-The preceding 201 account intrusions could expose requester profiles, request history and messages, or provider profiles, messages, schedules and customer details. MeetsMore suspects credentials obtained elsewhere; it found no evidence of credentials leaking from its own systems. It confirmed neither profile changes, sent messages nor payment operations. No related misuse or secondary harm was confirmed as of disclosure. ProOne runs separately and is unaffected.
+The preceding 201 account intrusions could expose requesters' registered names, emails and phone numbers, request history including addresses, and messages. Provider accounts could expose profiles, messages, schedules and associated customers' names, addresses and requests. MeetsMore suspects credentials obtained elsewhere; it found no evidence of credentials leaking from its own systems. It confirmed neither profile changes, sent messages nor payment operations. No related misuse or secondary harm was confirmed as of disclosure. ProOne runs separately and is unaffected.
 
 The vendor patched the server-side flaw; it published neither technical exploit details nor a customer-installable version. The record limit, login attempts and accessed accounts are different measures. Active exploitation and the disclosed data scope warrant the severity rating. This is separate from the [KARTE breach](/incidents/plaid-karte-saas-access/); do not apply that notice's no-reset guidance to accounts reset in this incident.
