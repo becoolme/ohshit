@@ -36,11 +36,14 @@ timeline:
   - date: 11 月 17 日 07:00 UTC
     title: Bitquery 估算疑似受害者付款
     body: 链上复查将疑似受害者付款与兑换交易产生的钱包流入区分开来。
+  - date: 2026年11月17日
+    title: Optimizely 发布初步客户调查报告
+    body: 厂商说明注册流程冒充用户的机制，以及 11 月 16 日 16:10 UTC 修复、16:53 UTC 吊销会话与令牌的时间。其给出的清理完成时间为 22:24 UTC，并公布额外指标、撤回普遍禁用片段的建议。最终取证仍未完成。
 checklist:
   - title: 暂停使用受影响片段并保全证据
     hint: 检查 Project JavaScript、实验自定义代码、已部署片段和客户自行托管的副本。移除恶意代码前保存异常响应、哈希和时间戳。将每份已部署副本与可信基线比较，清理后检查 CDN 或网站缓存。
   - title: 保护 Optimizely 项目写权限并确认清理结果
-    hint: 检查项目用户、角色、变更、API 令牌和集成。移除未经授权的访问权限，轮换暴露凭据。确认受影响项目的会话和令牌已失效，仅为集成签发仍需使用的凭据。检查新注入的内联或编码加载器。测试并实施内容安全策略，收紧 script-src 和 connect-src 的允许列表并开启报告。可行时移除 unsafe-eval。即使 CDN 在允许列表中，也要确认每个主机返回干净内容。
+    hint: 检查项目用户、角色、变更、API 令牌和集成。厂商 11 月 17 日报告表示，被冒充用户的会话与令牌已被吊销，不要求统一重置密码或 API 令牌。移除未经授权的访问权限，仅对另行确认已暴露的凭据进行轮换。下游访客会话暴露仍需评估。检查新注入的内联或编码加载器。测试并实施内容安全策略，收紧 script-src 和 connect-src 的允许列表并开启报告。可行时移除 unsafe-eval。即使 CDN 在允许列表中，也要确认每个主机返回干净内容。
   - title: 排查网络指标并评估暴露
     hint: "在 DNS、代理、CSP 和浏览器日志中排查以下 12 个域名和三个 IP，适用时包括子域。去活化域名为 1688360[.]cc、5vobauua3ojpklx[.]icu、eil786npto9u5bq[.]icu、l7bcsnwc7nzr3uo[.]icu、webshell[.]lol、linkforge[.]cc、je4ft3gn8vxudum[.]icu、q1ls1ho9x7wsxlu[.]icu、ios-hack[.]icu、p55abnw2pnsz0bo[.]icu、1y69gy2mdzaltz1[.]icu 和 gm38duxoihbmy5o[.]icu。IP 为 136.113.106.136、34.96.213.201 和 34.87.36.58。完整路径、脚本标记、两个哈希和八个钱包地址见 Report URI 报告。仅凭匹配无法确认失陷。"
   - title: 检查相关第三方组件是否加载同一脚本
@@ -49,6 +52,10 @@ checklist:
     hint: 使暴露的非 HttpOnly 会话令牌失效，轮换受影响的秘密。核实受影响页面内第一方字段曾接收哪些银行卡数据，并与支付处理商协调响应和通知。确认这些页面实际可读取的数据。
   - title: 核对交易并更新受影响访客的设备
     hint: 将加密货币转账的目的地址与可信地址核对，发现异常转账时联系钱包提供商或交易所，并保留交易哈希、目的地址和时间戳以便报备。如果在受影响的第一方表单输入过银行卡资料，请查看交易记录并向发卡机构咨询保护措施。为 iPhone 或 iPad 安装设备可用的最新安全更新。
+  - title: 获取客户专属证据并恢复合法代码
+    hint: 向客户成功经理或 support@optimizely.com 获取受影响项目确认、各网站暴露窗口及变更日志。厂商允许重新启用已清理的 Web Experimentation，但未运行实验的敏感输入页面应移除片段。按此报告，Feature Experimentation、SDK 和旧版 Full Stack 无需变更。原始 Project JavaScript 被替换时，请 Support 协助恢复。保留至少覆盖 11 月 16 日的 web/CDN/WAF/CSP 及支付和欺诈监测日志，并与顾问评估通知义务。
+  - title: 排查厂商新增的初步指标
+    hint: 拦截并在 web、CDN、CSP 和代理日志中搜索 pay-cloud[.]online、pay.pay-cloud[.]online 及 pay-relay.wordpressadmin001.workers[.]dev。报告另列 193.176.211[.]170、193.176.211[.]203 为商业 VPN 来源地址，并明确提醒这些地址短期变动，不能作为可靠 IOC。保留此前研究人员公布的指标。仅凭匹配无法确认失陷、成功窃取数据或归属。
 sources:
   - name: Optimizely 官方安全事件状态
     says: 确认 Experimentation 漏洞遭利用、修复上线、注入代码移除及账户保护措施。
@@ -66,9 +73,11 @@ sources:
     says: 从钱包流入中区分与兑换有关的交易，估算疑似受害者付款，并指出其中一笔归属不明。
   - name: Apple 安全发布
     says: 列出已发布的安全更新和适用设备。
+  - name: Optimizely 11 月 17 日初步客户事件报告
+    says: 说明注册流程冒充机制、厂商初步时间线及指标、排除的产品、客户取证请求，以及更新后的重新启用与凭据处置建议。最终取证仍未完成。
 ---
 
-Report URI 在 Optimizely Web 片段的 Project JavaScript 部分发现注入代码。无论片段由 Optimizely CDN 提供，还是由客户自行托管，代码都会在引用该片段的页面上运行。研究人员观察到远程、编码和内联加载器。Optimizely 确认 Experimentation 漏洞遭利用，并向 BleepingComputer 说明漏洞位于账户注册流程，尚未披露漏洞的技术机制。
+Report URI 在 Optimizely Web 片段的 Project JavaScript 部分发现注入代码。无论片段由 Optimizely CDN 提供，还是由客户自行托管，代码都会在引用该片段的页面上运行。研究人员观察到远程、编码和内联加载器。Optimizely 确认 Experimentation 漏洞遭利用，并向 BleepingComputer 说明漏洞位于账户注册流程，其 11 月 17 日初步报告说明，该漏洞让新账户通过公开信息及反复猜测邮箱地址冒充已有管理员用户，无需窃取或使用其密码。厂商称没有 Optimizely 管理员账户被攻破。
 
 载荷可替换加密货币收款地址，并向攻击者发送网页截图和 JavaScript 可读取的 Cookie。窃卡代码针对页面能够读取的内容，例如第一方银行卡字段。Report URI 表示，该代码无法读取隔离在跨源支付 iframe 中的银行卡字段。针对 iPhone 和 iPad，加载器按操作系统版本选择不同路径。Report URI 识别出 Coruna 和 DarkSword，并在所检查的 iOS 26 路径上只观察到设备指纹采集。Hudson Rock 在后续调查中记录，Ohey 取得了 DarkSword 的后续阶段，代码可上传钥匙串数据库及其他文件。一个使用 iOS 26.3 用户代理字符串发出的请求抵达另一条路径的加载器和 worker，但攻击链自身的日志将该路径标记为不可用。这些证据均无法证明访客设备已失陷。
 
@@ -79,3 +88,8 @@ Bitquery 于 11 月 17 日估算，11 月 16 日有 19 笔疑似受害者付款�
 除 Optimizely 脚本外，Hudson Rock 还取得了 minute-ly 的恶意响应。Ohey 的归档样本显示，Kissmetrics 和 StorifyMe 早在 11 月 13 日就返回了恶意脚本，比 Optimizely 的样本更早。这些证据无法说明期间是否一直在分发恶意脚本。这三家服务的响应均加载了此前的 webshell[.]lol 注入脚本。研究证实了实际返回的代码，这三家服务的初始入侵方式尚未确定。Optimizely 公布的遏制措施只涉及自家服务。
 
 Optimizely 表示已修复漏洞，移除了受影响项目中的注入代码，并在给 BleepingComputer 的声明中表示已终止受影响的 Optimizely 账户的活跃会话、吊销令牌并重置访问权限。其状态页将事件列为监控中。下游网站仍需自行评估并处置本网站访客的会话暴露。请核查实际部署的脚本和缓存、审阅清理前日志，并按暴露情况处置访客会话及支付风险。
+
+
+厂商初步时间线将 11 月 16 日首次创建账户的时间记为 00:37 UTC，首次向项目写入恶意代码记为 07:51 UTC。其记录的后续时间为：13:34 发现活动，16:06 在 Cloudflare 拦截，16:10 修复注册漏洞，16:53 吊销会话与令牌，22:24 UTC 完成清理。07:51 首次写入的说法晚于 Report URI 捕获注入的 04:21；已阅读来源没有解释这一差异。应保留两者，并索取客户专属暴露窗口，不能仅依据厂商窗口收窄日志复查。厂商清理完成与后续独立复查返回干净响应是不同观察。
+
+Optimizely 将 Feature Experimentation、SDK 和旧版 Full Stack 排除在已确认影响范围之外，但表示被冒充用户可访问其权限所允许的 Experimentation 数据。厂商称客户密码未暴露，不要求普遍重置密码或 API 令牌，并允许重新启用已清理的 Web Experimentation 片段。报告称部分原始 Project JavaScript 被替换，因此恢复代码可能需要 Support 协助。这些厂商说明不能消除潜在的下游浏览器暴露，也不能确定访客损失总额或其他脚本服务商的入侵方式。Mandiant 协助开展的取证、最终根因分析及最终指标列表仍未完成。
