@@ -2,7 +2,7 @@
 title: 恶意 mcp-aevo-server 包窃取 Aevo 凭据及钱包私钥
 tags: [PyPI, 恶意软件, MCP, 加密资产]
 summary: 研究人员发现六个恶意 mcp-aevo-server 版本，利用未被注册的 PyPI 包名针对 Aevo 交易工具用户。分析发现凭据外传及远程命令功能。未公布修复版或已确认的受害、损失总量；应停止服务器，并从干净系统替换暴露的凭据。
-splash: 运行了所列 mcp-aevo-server 版本的主机或 CI 任务，尤其是环境中含 Aevo API 凭据或钱包私钥的实例。
+splash: 运行所列 mcp-aevo-server 版本的主机或 CI 任务；环境中有 Aevo 凭据或钱包密钥时风险尤高。
 wipe: 停止并隔离受影响服务器，通过干净工具移除恶意包、重建环境，吊销 API 凭据并替换暴露的钱包密钥。
 inTheWildNote: 已识别恶意发布版本；实际受害者执行情况及损失尚未量化。
 cves:

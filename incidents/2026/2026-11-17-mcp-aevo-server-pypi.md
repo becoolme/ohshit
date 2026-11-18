@@ -5,7 +5,7 @@ level: 3
 tags: [PyPI, Malware, MCP, Cryptocurrency]
 ecosystems: [python]
 summary: Researchers identify six malicious mcp-aevo-server releases targeting users of Aevo trading tools through an unclaimed PyPI name. Analysis finds credential theft and remote-command functionality. No patched release or confirmed victim/loss total is reported; stop the server and replace exposed secrets from a clean system.
-splash: Hosts or CI jobs that ran the listed mcp-aevo-server releases, especially with Aevo API credentials or wallet private keys in their environment.
+splash: Hosts or CI jobs running listed mcp-aevo-server releases, especially those with Aevo credentials or wallet keys in the environment.
 wipe: Stop and isolate the affected server, remove the package from clean tooling, rebuild, and revoke API credentials and replace exposed wallet keys.
 inTheWild: unknown
 inTheWildNote: Malicious releases are identified; actual victim executions and losses are not quantified.
