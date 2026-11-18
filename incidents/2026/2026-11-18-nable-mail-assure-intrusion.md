@@ -23,7 +23,7 @@ timeline:
     title: N-able confirms a security incident
     body: The vendor identifies unauthorized access to one server, disables UI/API access and says the incident is unrelated to N-central.
   - date: Nov 18, 20:18 UTC
-    title: Partners receive environment-specific instructions
+    title: N-able confirms partner-specific communications
     body: Mail flow and filtering continue. UI, APIs, quarantine and logging remain offline; N-able asks partners without its email to contact Technical Support.
 checklist:
   - title: Obtain the instructions for your environment

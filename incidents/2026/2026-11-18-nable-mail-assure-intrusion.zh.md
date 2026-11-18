@@ -15,7 +15,7 @@ timeline:
     title: N-able 确认安全事件
     body: 厂商确认一台服务器遭未授权访问，停用界面和 API，并说明与 N-central 事件无关。
   - date: 11月18日 20:18 UTC
-    title: 合作伙伴收到针对各自环境的指引
+    title: N-able 确认已向合作伙伴发送指引
     body: 邮件收发和过滤继续，界面、API、隔离区及日志仍停用。N-able 要求未收到邮件的合作伙伴联系技术支持。
 checklist:
   - title: 获取适用于自身环境的处置指引
