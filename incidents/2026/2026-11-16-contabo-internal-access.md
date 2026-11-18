@@ -10,7 +10,7 @@ summary: Contabo confirms unauthorized access to part of its internal infrastruc
 splash: Contabo customers reviewing server, account and remote-console access after the provider’s internal intrusion.
 wipe: Review access and credentials, enable MFA, disable unused VNC access and preserve evidence of suspicious server activity.
 inTheWild: yes
-inTheWildNote: Contabo confirms unauthorized internal access; downstream customer impact remains under review.
+inTheWildNote: Contabo confirms internal intrusion; downstream customer impact is still under review.
 timeline:
   - date: Nov 13, 14:29 UTC
     title: Reported access window begins
