@@ -42,7 +42,7 @@ checklist:
 - title: Upgrade the deployed application and verify its running version
   hint: Inventory Roller WARs and deployed instances. Back up configuration and data, read the 6.1.7 release notes, obtain the release from Apache's download page and verify its published signature/checksum. Replace the deployed application, restart and confirm the running version; minimum fix 6.1.6, current recommended release 6.1.7. These deployment checks do not replace incident investigation.
 - title: Apply a server-side workaround if upgrading must wait
-  hint: In the deployed WEB-INF/web.xml set enabledForExtensions to false, or remove the /roller-services/xmlrpc servlet mapping, then restart Roller. The latter removes XML-RPC service. Test from the network path users actually reach; blocking or disabling only an administration UI checkbox is insufficient on vulnerable versions. Keep the workaround until the upgrade is verified.
+  hint: In the deployed WEB-INF/web.xml set enabledForExtensions to false, or remove the /roller-services/xmlrpc servlet mapping, then restart Roller. The latter removes XML-RPC service. Test from the network path users actually reach; turning XML-RPC off only in the administration UI is insufficient on vulnerable versions. Keep the workaround until the upgrade is verified.
 - title: Review exposure and investigate suspicious execution
   hint: Preserve available proxy, servlet-container and host logs; examine requests to /roller-services/xmlrpc alongside unexpected Java child processes, files or outbound connections. Apache's cited warning supplies no attacker IPs, domains or hashes. These are general behavioral checks, not published attack signatures; a request or anomaly alone does not prove compromise. If compromise is suspected, isolate and investigate the host and rotate exposed secrets from a clean system; patching alone does not remove persistence.
 sources:
@@ -70,6 +70,14 @@ sources:
   url: https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/129xxx/CVE-2026-129448.json
   primary: true
   says: Apache's description confirms exploitation; the November 17 CISA ADP SSVC enrichment instead says exploitation none. This is not a KEV listing.
+- name: Apache CNA record for the earlier 6.1.5 disclosure
+  url: https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/82xxx/CVE-2026-82384.json
+  primary: true
+  says: Records the September 28 CVE publication date, 6.1.5 scope, 9.8 score and common endpoint fix; the original mailing-list notice was earlier.
+- name: CISA KEV official JSON feed
+  url: https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json
+  primary: true
+  says: The November 17 17:53 UTC catalog checked November 18 contains neither Roller identifier. Catalog absence does not disprove Apache's exploitation report.
 ---
 
 The November 17 warning newly covers Roller 4.0.0–6.1.4 and reports active exploitation. Apache explicitly links it to the same XML-RPC vulnerability publicly disclosed for 6.1.5 on September 25. These identifiers describe one issue, not two independent attack paths or two victim totals. The original flaw and the 6.1.6 patch are not new in November.
