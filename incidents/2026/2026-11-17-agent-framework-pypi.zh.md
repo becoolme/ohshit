@@ -22,13 +22,13 @@ checklist:
   - title: 在不启动受影响 Python 的情况下排查暴露
     hint: 用 shell 工具检查 11 月 17 日 20:35 UTC 之后的 requirements、锁文件、构建日志、镜像及 site-packages。查找 agent_framework-1.26.1.dist-info、agent_framework-1.26.2.dist-info 和下列载荷文件。不要先运行 python、pip list 或 pip uninstall，正常启动会执行钩子。
   - title: 隔离主机，先移除钩子再重新安装
-    hint: 保留文件、进程列表和出站日志，然后隔离环境。在调用 pip 之前，用 shell 工具从受影响的 site-packages 移除 agent_framework_meta.pth、af_runtime_diag.pth 和 af_runtime_diag.py。_AF_TEL=1 可临时阻止这两个已知载荷运行。重新安装干净的 1.26.0 还必须替换 agent_framework_meta/__init__.py 并移除 agent_framework_meta/_telemetry.py；只删钩子会留下 1.26.1 的显式导入触发路径。优先重建干净镜像或环境，并处理已脱离父进程的收集程序。
+    hint: 保留文件、进程列表和出站日志，然后隔离环境。在调用 pip 之前，用 shell 工具从受影响的 site-packages 移除 agent_framework_meta.pth、af_runtime_diag.pth 和 af_runtime_diag.py。_AF_TEL=1 可临时阻止这两个已知载荷运行。重新安装干净的 1.26.0 还必须替换 agent_framework_meta/__init__.py 并移除 agent_framework_meta/_telemetry.py；只删钩子会留下 1.26.1 的显式导入触发路径。原地清理时，还要移除匹配载荷的 __pycache__ 条目和恶意 dist-info 目录。优先重建干净镜像或环境；保全证据后，终止已确认脱离父进程的收集程序。
   - title: 恢复已验证的干净版本并清除分发缓存
     hint: 在重建环境中固定 agent-framework==1.26.0，并在包代理中拦截 1.26.1 和 1.26.2。干净 wheel 的 SHA-256 为 14267ec8e6929c139015f8ec918adc638a71c7656901413426bb30ab199b6d71。使用 pip --require-hashes 时，应为完整依赖集合生成哈希。清除 pip/uv 缓存、CI 缓存及内部镜像中的恶意 wheel；不能只依赖不固定版本的升级或 PyPI 下架。
   - title: 处置凭据与工作负载身份暴露
     hint: 若安装后运行过 Python，应将该进程能够读取或请求的凭据视为暴露。从干净系统轮换环境变量与文件中的秘密、Azure CLI 缓存、npm/PyPI/Docker/git/Hugging Face 凭据、云与模型密钥及 Azure DevOps 服务连接。检查联合身份凭据和托管身份角色分配，临时移除不安全权限并审阅 Entra 登录与活动日志。运行器凭据文件可读时，重新注册自托管运行器。已签发访问令牌可能在过期前继续有效。若导出了 ACTIONS_RUNTIME_TOKEN，应检查 Actions 缓存和产物写入；普通 run 步骤默认不会暴露该令牌。
   - title: 使用完整端点与已公布样本排查
-    hint: 搜索发往 webhook[.]site/d381fd80-ec62-42ad-8f5c-d1b15103c9bb?t=telemetry 的 POST、User-Agent af-runtime-diagnostics/1 和 runtime-diagnostics/1，以及下列七个恶意 SHA-256。另查 _AF_TEL=1、脱离父进程的 Python 子进程和对 /proc/*/environ 的读取。关联异常 OIDC 请求及对合法 Azure 元数据端点 169.254.169.254/metadata/identity/oauth2/token 的集中请求；令牌请求可能使用 Python-urllib/3.x。端点创建来源 IP 18.142.122[.]94 只能说明托管位置，不能识别攻击者或受害者。仅凭域名、IP 或标记匹配无法确认失陷或成功外传；webhook.site 也有合法用途。
+    hint: 搜索发往 webhook[.]site/d381fd80-ec62-42ad-8f5c-d1b15103c9bb?t=telemetry 的 POST、User-Agent af-runtime-diagnostics/1 和 runtime-diagnostics/1，以及下列七个恶意 SHA-256。另查 _AF_TEL=1、脱离父进程的 Python 子进程和对 /proc/*/environ 的读取。关联异常 OIDC 请求及对合法 Azure 元数据端点 169.254.169.254/metadata/identity/oauth2/token 的集中请求；令牌请求可能使用 Python-urllib/3.x。端点由 18.142.122[.]94 使用 curl/8.19.0 创建；这只提供基础设施背景，不能识别攻击者或受害者。仅凭域名、IP 或标记匹配无法确认失陷或成功外传；webhook.site 也有合法用途。
 sources:
   - name: Upwind 原始报告与微软维护者确认
     says: 记录发布时间、两个载荷、先移除钩子的清理顺序、缓存与产物风险，以及微软维护者对两版下架的确认。具体发布凭据仍未确定。
