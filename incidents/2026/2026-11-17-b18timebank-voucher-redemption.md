@@ -15,9 +15,6 @@ timeline:
   - date: Nov 17, 2026
     title: Blockaid reports an ongoing exploit
     body: The security firm attributes about 404,540 USDC withdrawn in one transaction to redemption of signed level-reward vouchers.
-  - date: Nov 18, 2026
-    title: 0xCERT republishes the alert and precautionary guidance
-    body: Its secondary summary still lacks a project-confirmed root cause, fix or containment statement.
 checklist:
   - title: Avoid new exposure while containment is unverified
     hint: 0xCERT recommends no deposits or contract interaction until B18TimeBank confirms containment. Follow the project’s official channels for a validated recovery plan; this is not a withdrawal or recovery transaction instruction.
