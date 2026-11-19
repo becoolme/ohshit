@@ -42,6 +42,9 @@ timeline:
 - date: Nov 17, 2026
   title: Morisawa confirms exposure of purchaser records
   body: Morisawa reports 23,957 records with names, email addresses and user IDs for some Morisawa Fonts purchasers since May 2023; the detailed scope remains under investigation.
+- date: Nov 17, 2026
+  title: JINS confirms downstream exposure with an account-count ceiling
+  body: The issuer reports up to approximately 18.29 million registered accounts potentially affected; this is not a verified number of leaked accounts or unique people. Passwords and credit-card data are excluded.
 - date: Nov 18, 2026
   title: Mitsubishi UFJ Trust and Banking confirms its downstream data exposure
   body: The bank reports approximately 230,000 records across two customer categories, with transformed membership identifiers and limited attributes. It excludes banking credentials and account numbers and says its own systems were not intruded upon. This is not a new count of unique victims.
@@ -51,6 +54,9 @@ timeline:
 - date: Nov 18, 2026
   title: DHC confirms approximately 19.11 million customer records leaked
   body: Its notice lists seven information categories, excludes online-shop passwords and payment-card details, and describes integration-credential revocation and planned individual notifications.
+- date: Nov 18, 2026
+  title: MUFG Bank confirms approximately 6.5 million limited-attribute records
+  body: Fields are gender, age and region. The bank excludes identifying/contact information, says its own systems were not intruded upon and plans individual notices. This is distinct from Mitsubishi UFJ Trust and Banking's disclosure.
 checklist:
 - title: Revoke affected external integration credentials
   hint: Revoke affected secrets or access tokens on the connected service, review unexpected calls, and reissue and verify credentials using PLAID’s guidance.
@@ -68,6 +74,10 @@ checklist:
   hint: Morisawa plans individual notices; avoid suspicious email links and attachments. MeetsMore began notices from no-reply@meetsmore.com and provides a contact form in its KARTE notice. Verify messages through the official page. MeetsMore says this KARTE exposure requires no password change; its separate account-intrusion notice has different reset instructions.
 - title: Use DHC's dedicated contacts and verify notification messages
   hint: DHC plans individual notices through its existing customer contact details. Use the notice's dedicated line 0120-087-370 (09:00–17:00, including weekends and holidays) or customer consultation line 0120-575-391 (09:00–17:00, excluding Sundays and holidays); the PDF does not state a timezone. Do not open suspicious DHC-themed email links or attachments or enter personal details or passwords through them.
+- title: Follow JINS's issuer notice without treating the ceiling as confirmed loss
+  hint: Check the November 17 issuer disclosure and later official JINS updates for your data categories. Do not reply to suspicious emails, open their links or attachments, or enter IDs, passwords or card information through them. JINS disconnected its KARTE data link on November 13; that does not recover data already copied.
+- title: Use MUFG Bank's own inquiry and security channels
+  hint: The bank's dedicated incident line is 0120-322-250, weekdays 09:00–17:00 from November 18 through December 18; the notice gives no timezone. Delete unsolicited emails/SMS or end unexpected calls without responding. If you entered a password or PIN on a fake bank site or gave it to a third party, contact the bank through https://www.bk.mufg.jp/info/security/toiawase.html . The Trust bank's separate hotline is not this bank's incident channel.
 sources:
 - name: Plaid incident notice
   says: Confirms detected third-party access and the all-project shutdown.
@@ -113,6 +123,14 @@ sources:
   url: https://dhc-corporate.co.jp/cms_dH8vjpRq/wp-content/uploads/2026/11/2d7a589cb5008fbc262624582782444f.pdf
   primary: true
   says: Confirms approximately 19.11 million customer records, seven information categories and exclusions, revoked integration credentials, planned regulatory reporting and individual contacts, and two inquiry lines.
+- name: JINS Holdings November 17 original exchange disclosure
+  url: https://www2.jpx.co.jp/disc/30460/140120261117582109.pdf
+  primary: true
+  says: Confirms downstream JINS exposure, lists eight fields and exclusions, defines approximately 18.29 million as a maximum registered-account population, and dates data-link disconnection and vendor notification.
+- name: MUFG Bank November 18 original customer notice
+  url: https://www.bk.mufg.jp/news/news2026/pdf/news1118.pdf
+  primary: true
+  says: Confirms about 6.5 million records with three attributes, excludes identification/contact data and intrusion into the bank's systems, and supplies a distinct dedicated inquiry line and security-response channel.
 ---
 
 PLAID says an attacker exploited a server vulnerability to steal connection credentials, read data from certain databases and take over a PLAID account to access the administration console. The 79,249 figure counts account email addresses. Counts for external integration credentials and imported records remain under investigation. Personal information in imports depends on what each customer uploaded. The shutdown affected all projects, and the investigation assesses data exposure by customer.
@@ -132,3 +150,7 @@ Morisawa's November 17 notice confirms 23,957 records containing names, email ad
 MeetsMore's November 18 KARTE notice reports 60,000 people with one or more of name, email, telephone or birth date, and 3,398,469 with only member identifiers and prefectures. Passwords, cards, detailed addresses and LINE IDs are excluded; identifiers alone cannot log in. It revoked affected integration credentials on November 13, stopped KARTE data sharing and began individual notices November 18. No related intrusion into its own systems or secondary harm was confirmed. ProOne does not use KARTE. This is separate from the [MeetsMore system intrusion disclosed November 16](/incidents/meetsmore-schedule-data-theft/), with different causes, paths and data. Do not combine these downstream figures with other KARTE counts.
 
 DHC's November 18 notice confirms approximately 19.11 million customer records leaked through KARTE. Listed information comprises names, email addresses, birth dates, ages, gender, member IDs and newsletter-delivery preferences. Online-shop login passwords and payment-card details are excluded. DHC learned of the incident on November 13 and says it invalidated integration credentials. It reports no confirmed resulting misuse, plans joint reporting with PLAID to Japan's Personal Information Protection Commission and plans individual customer notifications. Neither process is described as completed. The figure is DHC's record count, not a confirmed number of unique people or a total across KARTE customers; do not add it to PLAID's account-email or other customers' counts.
+
+JINS Holdings' November 17 disclosure confirms exposure of some JINS member data. Its approximately 18.29 million figure is the maximum potentially affected registered-account population, not the established number of stolen accounts or people. Listed fields are member IDs, email, surname only, birth date, age, gender, postal code and prefecture only. Passwords and credit-card information are excluded; fields and counts remain under investigation. JINS disconnected data sharing on November 13, received PLAID's exposure confirmation on November 15 and investigated scope internally on November 16. Do not expand surname/prefecture into full names or street addresses.
+
+MUFG Bank's November 18 notice confirms approximately 6.5 million records containing gender, age and region (prefecture or designated city). It excludes names, street addresses, phone numbers, email and other identifying/contact information, reports no confirmed resulting misuse and says its own systems were not intruded upon. It received scope details on November 17 and plans individual notification. This is MUFG Bank, a different entity and dataset from Mitsubishi UFJ Trust and Banking's approximately 230,000 records above; neither figure establishes compromised banking accounts or a combined unique-person total.
