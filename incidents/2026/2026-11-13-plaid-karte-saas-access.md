@@ -1,13 +1,13 @@
 ---
 title: PLAID confirms KARTE data theft and suspends all projects
 date: '2026-11-13'
-updated: '2026-11-18'
+updated: '2026-11-19'
 level: 4
 inTheWild: 'yes'
 tags:
 - Data breach
 - Personal information
-summary: PLAID confirmed exposure of 79,249 KARTE account email addresses, external integration credentials, and some customer-imported data. The shutdown affected all projects from November 13. PLAID began sending the affected imported data to customers who requested it. It has not given a restart date.
+summary: PLAID confirmed exposure of 79,249 KARTE account emails, integration credentials and some imported data. DHC confirms about 19.11 million customer records, a separate count. All projects shut down November 13. PLAID is sending affected imports to requesting customers; no restart date is set.
 splash: All KARTE projects, including web and app tracking, content delivery, Message campaigns, Datahub workflows and the administration console.
 wipe: Revoke affected integration credentials, verify PLAID’s project notice, and save logs and reconcile interrupted jobs before retrying.
 inTheWildNote: PLAID confirms the attacker exploited a server vulnerability and read data.
@@ -21,6 +21,9 @@ timeline:
 - date: Nov 14, 2026 12:05 UTC
   title: Plaid continues investigating
   body: Plaid still gives no restart time.
+- date: Nov 15, 01:37 UTC
+  title: PLAID reports network isolation has contained further access
+  body: The vendor says the affected environment has been disconnected and new unauthorized access and ongoing data outflow have stopped. This is a containment statement, not a service restart or recovery of copied data.
 - date: Nov 16, 2026
   title: PLAID confirms data exposure and entry path
   body: Exposed data includes KARTE account email addresses, external integration credentials and some customer imports. Numbers for the last two categories remain under investigation.
@@ -45,6 +48,9 @@ timeline:
 - date: Nov 18, 2026
   title: MeetsMore separates KARTE exposure from its own earlier intrusion
   body: Its KARTE notice reports 60,000 people with personal contact fields and 3,398,469 with only member identifiers and prefectures. This is separate from its November 16 disclosure about an attack on MeetsMore itself.
+- date: Nov 18, 2026
+  title: DHC confirms approximately 19.11 million customer records leaked
+  body: Its notice lists seven information categories, excludes online-shop passwords and payment-card details, and describes integration-credential revocation and planned individual notifications.
 checklist:
 - title: Revoke affected external integration credentials
   hint: Revoke affected secrets or access tokens on the connected service, review unexpected calls, and reissue and verify credentials using PLAID’s guidance.
@@ -60,6 +66,8 @@ checklist:
   hint: Shimamura says no special customer procedure is required and that it cannot confirm an individual's exposure through inquiries. Use its official member contact page https://www.shop-shimamura.com/common/contact/entry/?bk=0 (login required) if needed, follow updates and avoid unsolicited links or requests for passwords/authentication codes. Do not turn its unconfirmed member-number/email/LINE-ID exposure into a claim that those fields leaked, or promise that risk is zero.
 - title: Check Morisawa and MeetsMore notices separately
   hint: Morisawa plans individual notices; avoid suspicious email links and attachments. MeetsMore began notices from no-reply@meetsmore.com and provides a contact form in its KARTE notice. Verify messages through the official page. MeetsMore says this KARTE exposure requires no password change; its separate account-intrusion notice has different reset instructions.
+- title: Use DHC's dedicated contacts and verify notification messages
+  hint: DHC plans individual notices through its existing customer contact details. Use the notice's dedicated line 0120-087-370 (09:00–17:00, including weekends and holidays) or customer consultation line 0120-575-391 (09:00–17:00, excluding Sundays and holidays); the PDF does not state a timezone. Do not open suspicious DHC-themed email links or attachments or enter personal details or passwords through them.
 sources:
 - name: Plaid incident notice
   says: Confirms detected third-party access and the all-project shutdown.
@@ -101,9 +109,15 @@ sources:
   url: https://company.meetsmore.com/page/notice-20261118-karte
   primary: true
   says: Gives two affected-person categories, credential revocation and customer guidance; explicitly separates this breach from its own system intrusion disclosed November 16.
+- name: DHC November 18 customer notice
+  url: https://dhc-corporate.co.jp/cms_dH8vjpRq/wp-content/uploads/2026/11/2d7a589cb5008fbc262624582782444f.pdf
+  primary: true
+  says: Confirms approximately 19.11 million customer records, seven information categories and exclusions, revoked integration credentials, planned regulatory reporting and individual contacts, and two inquiry lines.
 ---
 
 PLAID says an attacker exploited a server vulnerability to steal connection credentials, read data from certain databases and take over a PLAID account to access the administration console. The 79,249 figure counts account email addresses. Counts for external integration credentials and imported records remain under investigation. Personal information in imports depends on what each customer uploaded. The shutdown affected all projects, and the investigation assesses data exposure by customer.
+
+In its November 15 01:37 UTC status update, PLAID said network isolation of the affected environment was complete and had stopped new unauthorized access and continuing data outflow. That is the vendor's containment assessment. It does not establish that copied data was recovered, that every downstream credential was revoked or that service had restarted. The November 19 status update still gives no restart estimate.
 
 At 11:53 UTC on November 17, PLAID said it had begun sending the affected subset of imported customer data to companies that had requested it. The statement covers data such as imports through KARTE’s linked tables. PLAID was still identifying affected records and customers and planning further notifications. It gave no service restart date.
 
@@ -116,3 +130,5 @@ Shimamura's November 17 first notice confirms about seven million member records
 Morisawa's November 17 notice confirms 23,957 records containing names, email addresses and user IDs for some customers who purchased through the Morisawa Fonts service site from May 2023 onward. Detailed customer scope and other data remain under investigation. Credit-card information and login passwords were not handled in KARTE and are excluded. Morisawa reported no confirmed misuse, said font-service use was unaffected and planned individual notifications.
 
 MeetsMore's November 18 KARTE notice reports 60,000 people with one or more of name, email, telephone or birth date, and 3,398,469 with only member identifiers and prefectures. Passwords, cards, detailed addresses and LINE IDs are excluded; identifiers alone cannot log in. It revoked affected integration credentials on November 13, stopped KARTE data sharing and began individual notices November 18. No related intrusion into its own systems or secondary harm was confirmed. ProOne does not use KARTE. This is separate from the [MeetsMore system intrusion disclosed November 16](/incidents/meetsmore-schedule-data-theft/), with different causes, paths and data. Do not combine these downstream figures with other KARTE counts.
+
+DHC's November 18 notice confirms approximately 19.11 million customer records leaked through KARTE. Listed information comprises names, email addresses, birth dates, ages, gender, member IDs and newsletter-delivery preferences. Online-shop login passwords and payment-card details are excluded. DHC learned of the incident on November 13 and says it invalidated integration credentials. It reports no confirmed resulting misuse, plans joint reporting with PLAID to Japan's Personal Information Protection Commission and plans individual customer notifications. Neither process is described as completed. The figure is DHC's record count, not a confirmed number of unique people or a total across KARTE customers; do not add it to PLAID's account-email or other customers' counts.
