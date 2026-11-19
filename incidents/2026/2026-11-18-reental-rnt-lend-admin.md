@@ -39,3 +39,5 @@ sources:
 Privileged upgrades made RNT Lend’s USDT0/USDC markets drainable, according to Blockaid and Bitquery. Bitquery attributes $454,825 to two bots and about $499,877 to the keyholder; rounded subtotals need not sum exactly. Its $49.34M property-token valuation uses pool prices, and those tokens were clawed back—not an additional permanent loss.
 
 Bitquery cannot establish whether the key was stolen or used by an insider. Its November 18 snapshot is not a current restoration guarantee. Confirmed malicious upgrades and fund removal support L4; a project postmortem and final accounting remain outstanding.
+
+The expanded $954,703 total remains unverified by a second source or Reental; treat it as Bitquery’s estimate.
