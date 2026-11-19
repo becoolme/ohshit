@@ -2,7 +2,7 @@
 title: Microsoft's agent-framework PyPI releases steal cloud and CI credentials at Python startup
 level: 4
 date: 2026-11-17
-updated: 2026-11-18
+updated: 2026-11-19
 tags: [Microsoft, PyPI, supply chain, credentials]
 ecosystems: [python]
 summary: Malicious agent-framework 1.26.1 and 1.26.2 wheels install Python startup hooks that collect secrets and request cloud/CI identity tokens. Microsoft confirms both versions were removed. Remove hooks before running pip, restore the clean 1.26.0 release and respond to credential exposure.
@@ -29,6 +29,9 @@ timeline:
   - date: Nov 18, 2026
     title: Revised analysis leaves the publishing identity unconfirmed
     body: StepSecurity's revised main analysis does not establish the account, credential or initial access vector. An older flow summary on the same page still carries the account claim; it is not a verified identity finding.
+  - date: Nov 18, 14:00 UTC
+    title: Wiz assesses an ESRP credential path and analyzes captured uploads
+    body: Its investigation points to a client certificate/private key and identifies three distinct victim exfiltration cases in the captured sample, not a complete victim count.
 checklist:
   - title: Find exposure without starting the affected Python
     hint: Inspect requirements, lockfiles, build logs, images and site-packages from November 17 20:35 UTC onward with shell tools. Look for agent_framework-1.26.1.dist-info or agent_framework-1.26.2.dist-info and the payload files listed below. Do not begin with python, pip list or pip uninstall; normal startup evaluates the hook.
@@ -40,6 +43,8 @@ checklist:
     hint: If Python ran after installation, treat credentials it could read or request as exposed. From a clean system rotate environment/file secrets, Azure CLI caches, npm/PyPI/Docker/git/Hugging Face credentials, cloud/model keys and Azure DevOps service connections. Review federated credentials and managed-identity role assignments, temporarily remove unsafe access and inspect Entra sign-in/activity logs. Re-register self-hosted runners with readable credential files. Issued access tokens may remain usable until expiry. Review Actions cache/artifact writes if ACTIONS_RUNTIME_TOKEN was exported; these tokens are not exposed to ordinary run steps by default.
   - title: Hunt using the full endpoint and published artifacts
     hint: Search for POSTs to webhook[.]site/d381fd80-ec62-42ad-8f5c-d1b15103c9bb?t=telemetry, User-Agents af-runtime-diagnostics/1 and runtime-diagnostics/1, and the seven malicious SHA-256 hashes below. Also inspect _AF_TEL=1, detached Python children and reads of /proc/*/environ. Correlate unusual OIDC requests and bursts to the legitimate Azure metadata endpoint 169.254.169.254/metadata/identity/oauth2/token; Python-urllib/3.x can appear on token requests. The endpoint was created from 18.142.122[.]94 using curl/8.19.0; this is infrastructure context, not an attacker or victim identity. A domain, IP or marker match alone does not establish compromise or successful exfiltration; webhook.site is also used legitimately.
+  - title: Interpret captured uploads without clearing other exposed hosts
+    hint: Wiz lists _telemetry.py SHA-1 0a013e4724c4437cf9b177def1d988113e167539. Its observed tooling markers /tmp/cairn_pkg, CAIRN_ESRP_PROBE2 and pi_glm53 are context, not actor attribution. An endpoint HTTP 200 indicates acceptance; 410/429 suggests rejection. Missing captured data does not clear exposure or replace credential response.
 sources:
   - name: Upwind original report and Microsoft maintainer confirmation
     url: https://github.com/microsoft/agent-framework/issues/10411
@@ -57,15 +62,21 @@ sources:
     url: https://pypi.org/pypi/agent-framework/json
     primary: true
     says: At the November 18 check the latest release is 1.26.0, its wheel hash matches the known-clean artifact, and 1.26.1/1.26.2 are absent from the release map.
+  - name: Wiz original investigation and November 18 update
+    url: https://www.wiz.io/blog/malicious-version-of-microsofts-agent-framework-published-to-pypi
+    primary: true
+    says: Assesses the ESRP publishing path and analyzes captured uploads; does not establish initial credential theft or a global victim total.
 ---
 
-This is a compromise of the published Python meta-package, not evidence that every Agent Framework component or Microsoft's source repository was modified. Researchers found malware in two official PyPI wheels, and a Microsoft maintainer confirmed their removal. The confirmed malicious distribution warrants L4. The reviewed sources do not provide a verified count of affected installations or stolen credentials.
+This is a compromise of the published Python meta-package, not evidence that every Agent Framework component or Microsoft's source repository was modified. Researchers found malware in two official PyPI wheels, and a Microsoft maintainer confirmed their removal. The confirmed malicious distribution warrants L4. A verified total of affected installations or stolen credentials is still unavailable.
 
 The installed .pth files execute import statements during normal Python startup in the environment where they are installed. No Agent Framework import is needed, and starting pip can trigger the collector. Separate virtual environments are not automatically infected merely because they use the same Python executable. The payload reads accessible environment variables, credential files and other processes' environments, attempts to obtain Azure managed-identity and Azure DevOps tokens, and in 1.26.2 also makes GitHub Actions OIDC requests. These requests require the corresponding identity, permissions or token-request variables; installing the package does not grant arbitrary cloud access. Static collection code does not prove successful token issuance, cloud access or completed exfiltration on a particular host. A detached child may outlive the job that started it, depending on runner and container cleanup.
 
 The likely publishing-access compromise remains under investigation. Earlier StepSecurity text reported a newly created maintainer account. Its revised main analysis says the available evidence does not establish the specific account, credential, initial access vector or uploader identity, although an older flow summary on the same page retains the account claim. That identity claim remains unverified; Upwind also leaves the exact credential route unresolved. Do not infer a wider Microsoft compromise or an attacker identity from those observations. Endor's initial report still describes 1.26.2 as latest, but the later Microsoft confirmation and current PyPI metadata establish that both malicious releases were removed. That does not clean installed environments or prove the publishing access has been revoked.
 
 Published malicious SHA-256 indicators are listed in full. The clean 1.26.0 initializer shares its hash with the restored initializer in malicious 1.26.2, so that clean file alone cannot clear an environment.
+
+**November 19 follow-up:** Wiz's November 18 update assesses that a client certificate and private key for Microsoft's Engineering System Release Pipeline (ESRP) were compromised. It reports a rejected publishing attempt from AWS followed by success from Microsoft-owned IP space; neither location identifies the actor. Initial credential theft and Microsoft confirmation of this assessment remain unresolved. Wiz's single-source analysis of 50 captured requests separates four attacker-side requests, 29 apparent sandboxes/scans/tests and 17 requests representing three victim exfiltration cases. This is not an independently verified or exhaustive victim total: collection was limited and later requests could be rejected. The existing cleanup, rollback and credential-response steps still apply.
 
 | Artifact | SHA-256 |
 | --- | --- |
