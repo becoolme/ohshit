@@ -1,6 +1,7 @@
 ---
 title: N-able confirms Mail Assure and SpamExperts Hosted Cloud server intrusion
 date: 2026-11-18
+updated: 2026-11-19
 level: 4
 tags:
   - N-able
@@ -25,6 +26,9 @@ timeline:
   - date: Nov 18, 20:18 UTC
     title: N-able confirms partner-specific communications
     body: Mail flow and filtering continue. UI, APIs, quarantine and logging remain offline; N-able asks partners without its email to contact Technical Support.
+  - date: Nov 19, 00:01 UTC
+    title: N-able starts testing remediation measures
+    body: Some measures are in testing while others remain in progress. Dashboard, quarantine, logging, mailbox synchronization and API access must pass security validation in a controlled environment before returning online; portal and API access remain disabled.
 checklist:
   - title: Obtain the instructions for your environment
     hint: Check for N-able’s direct Mail Assure/SpamExperts partner email. Its November 18 update says the required action depends on the environment; contact N-able Technical Support if you did not receive it.
@@ -50,3 +54,5 @@ At 03:05 UTC on November 18, N-able said it had no evidence at that time that cu
 The 20:18 UTC update says inbound and outbound mail flow and filtering have continued throughout. The management portal, APIs, quarantine and logging remain offline while restoration is validated. Earlier updates also identify mailbox synchronization among supporting services being restored. These availability statements do not establish tenant-mailbox compromise.
 
 N-able says it has emailed partners about their environments and whether action is needed. Partners who did not receive that communication should contact Technical Support. A publicly reposted message describes more specific credential actions, but those details have not been verified against a readable original vendor communication here; obtain your own instructions directly. L4 reflects vendor-confirmed unauthorized access at a hosted email-service provider, with downstream scope still under investigation.
+
+At 00:01 UTC on November 19, N-able reported that it had begun testing some remediation measures while work on others continued. It requires security validation in a controlled environment before bringing back the dashboard, quarantine, logging, mailbox synchronization or API access. Mail flow and filtering continue normally; portal and API access remain disabled during testing. This is remediation progress, not a restoration announcement or a final impact assessment.
