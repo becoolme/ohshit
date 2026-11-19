@@ -46,6 +46,9 @@ timeline:
   - date: 2026年11月18日
     title: CERT-EU 要求优先修补
     body: 研究人员的演示不能证明已发生真实攻击。
+  - date: 2026年11月18日
+    title: Xint 说明独立的 SCTP 主机提权链
+    body: 研究展示获得 worker 代码执行后，利用内核漏洞提权并逃逸容器；同时为不使用 SCTP 的主机提供临时模块加载限制。
 checklist:
   - title: 盘点实际二进制、软件包及配置
     hint: 使用 nginx -v、nginx -V 和 nginx -T 查看版本、模块及生效监听器和配置。发行版回补可能保留旧上游版本号，应将完整软件包版本与发行版公告核对。也要盘点代理、设备及容器副本，不要只凭镜像标签判定已修复。
@@ -57,6 +60,8 @@ checklist:
     hint: 121810：移除受影响 QUIC 监听器、设置 http3 off、清除 Alt-Svc 广告并确认相关 UDP 监听器已停止。123634：避开含变量的代理主机名及 SSI/mirror 子请求，使用固定 upstream 组去除已测试的请求期 DNS 路径；仅设置 mirror_request_body on 不是修复，仅禁用 mirror 会漏掉 SSI。113425：修补期间将所有邮件代理监听器限制在可信网络或回环地址；攻击不要求有效邮件凭据。验证、重载并结束旧会话及 worker，提前安排服务中断。
   - title: 同时复查 TLS、stream 和捕获变量问题
     hint: 120967：在共享套接字的默认服务器要求客户端证书，或让受保护 stream 服务器使用独立地址及端口。123640：将依赖 ssl_preread 的信任和路由改为终止 TLS、配置证书及基于 ssl_server_name 路由，按需保留后端 TLS 设置。125283：改用命名捕获且不要跨正则复用。120993：关闭 PROXYv2、改用 v1，或同时关闭会话票据和缓存；F5 将 BoringSSL/AWS-LC 构建排除在此漏洞之外。118899 未列临时方案，应优先修补对应 TLS 1.3 监听器。每个方案只针对对应 CVE，不能保护整个批次。
+  - title: 处理独立的 Linux SCTP 提权路径
+    hint: 对不使用 SCTP 的 Linux 主机，Xint 建议在等待内核修复期间，将 install sctp /bin/false 写入 /etc/modprobe.d/ 下的 .conf 文件。这只阻止通过 modprobe 加载，不会卸载已加载模块，也不能禁用内置于内核的 SCTP。检查主机内核配置及已加载模块；若 SCTP 已可用或业务需要它，应遵循内核厂商的处置指引。不要盲目中断依赖 SCTP 的业务。更新 nginx 不会修复主机内核，仅更新容器镜像也不会替换它。
   - title: 结合日志及进程执行判断是否遭入侵
     hint: 查看配置中的错误日志（常见位置 /var/log/nginx/error.log），排查 worker 退出、signal 11、segfault 及 core dump。结合持续高入站低出站连接、重复 TLS 连接、接收字节远超已记录请求长度等迹象。Xint 提供可选 h2_hunt 格式及 /var/log/nginx/h2-hunt.log；现在添加无法还原旧流量。按 worker UID 和父 PID 复查 auditd 的 execve/execveat，寻找异常 /bin/sh、/bin/bash 等程序；同 UID 的应用及崩溃也可能正常。命中本身不能证明入侵，新启用日志没有记录也不能排除更早活动。
 sources:
@@ -71,7 +76,7 @@ sources:
   - name: Wiz 原始 HTTP/2 研究
     says: 展示绕过 ASLR 的代码执行、HTTP/2 前提、Plus 不同修复及缓解和重载核查。
   - name: Xint 原始 nginx2root 研究
-    says: 说明五条独立 nginx 路径、测试配置范围、暴露检查及缓解；主机 root 演示还依赖独立 Linux 内核漏洞。
+    says: 说明五条 nginx 路径及缓解，以及独立 SCTP 内核链、主机和容器前提与 modprobe 限制的适用边界。
   - name: CERT-EU 2026-022 公告
     says: 说明五项可导致代码执行的问题，尚未报告在野利用，建议优先处理外部部署。
   - name: nginx 进程控制文档
@@ -101,3 +106,5 @@ sources:
 这是 11月18日的新批次，与[十月 nginx 发行](/zh/incidents/nginx-oct-2026/)不同。展示的分数均采用 F5 的 CVSS 3.1；其五项内存安全记录在 CVSS 4.0 下还评为 9.2。nginx.org 使用 major 或 medium 等级，不能混作同一种评分。因软件部署广泛、研究人员已展示利用，但尚未报告真实攻击，定为 L3。nginx 漏洞以 worker 权限执行代码，不会自动获得主机 root；Xint 的 root 及容器逃逸演示还串联了独立的 Linux SCTP 漏洞。
 
 应保留来源边界。F5 称代码执行要求关闭或绕过 ASLR；Wiz 已展示绕过，因此开启 ASLR 不能单独作为缓解。解析器及邮件漏洞的上游历史起始版本与 Xint 测试路径不同，不能把较窄测试范围当成安全版本清单。F5 的 121810 记录写有格式异常的 1.25.09 下界，nginx.org 和研究人员给出 1.25.0。120993 的 CNA 还将稳定版 1.30.6 列为受影响，而上游公告只列主线，稳定版发行说明也未列此项；应升级，不要断言稳定版不受影响。这些来源未确立受害者数量或攻击活动专属的恶意网络指标。
+
+**11月19日更正：** 此前检查清单覆盖了 nginx 处置，但遗漏了 Xint 11月18日研究中的独立 SCTP 路径。Xint 将该内核漏洞追溯至 Linux 4.15，并展示从 nginx worker 获得主机 root，包括从 Docker 容器内发起。是否可触达取决于主机内核、可用模块及容器限制，不能据此断言所有 Linux 主机或容器均可被利用。报告称在内核补丁发布前保留大部分复现细节，未给出内核 CVE 或修复后的内核版本。新增的模块加载限制适用于不需要 SCTP 的主机，是具有上述限制的临时措施；应分别处理 nginx 与主机内核的修复。

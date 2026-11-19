@@ -1,6 +1,7 @@
 ---
 title: nginx November batch fixes HTTP/2 RCE paths and eight other flaws
 date: 2026-11-18
+updated: 2026-11-19
 level: 3
 tags:
   - nginx
@@ -82,6 +83,9 @@ timeline:
   - date: Nov 18, 2026
     title: CERT-EU urges prioritized patching
     body: Researcher demonstrations do not establish real-world exploitation.
+  - date: Nov 18, 2026
+    title: Xint explains the separate SCTP host-root chain
+    body: Its research demonstrates kernel privilege escalation and container escape after worker-level execution, and gives an interim module-loading restriction for hosts that do not use SCTP.
 checklist:
   - title: Inventory the actual binary, package and configuration
     hint: "Use nginx -v, nginx -V and nginx -T to inspect version, modules and effective listeners/configuration. Distribution backports can keep an old upstream version string: check the full installed package against the distribution advisory. Inventory proxy/appliance/container copies too; do not assume an image tag proves its binary is patched."
@@ -93,6 +97,8 @@ checklist:
     hint: For 121810 remove affected QUIC listeners, set http3 off, clear advertised Alt-Svc and confirm no relevant UDP listener remains. For 123634 avoid variable proxy hostnames and SSI/mirror subrequests; fixed upstream groups remove the tested request-time DNS path. mirror_request_body on alone is not a fix, and disabling mirror alone misses SSI. For 113425 restrict every mail-proxy listener to trusted networks or loopback while patching; valid mail credentials are not required. Validate/reload and retire old sessions/workers; plan the service interruption.
   - title: Review the TLS, stream and capture-specific bugs too
     hint: "For 120967 require client certificates in the default server on the shared socket, or give the protected stream server its own address/port. For 123640 replace ssl_preread-based trust/routing with TLS termination, configured certificates and ssl_server_name-based routing; preserve backend TLS settings as needed. For 125283 use named captures without reusing them across regexes. For 120993 disable PROXYv2/use v1 or disable both session tickets and cache; F5 excludes BoringSSL/AWS-LC builds for that bug. No workaround is listed for 118899: prioritize patching that TLS 1.3 listener. Each workaround is CVE-specific, not whole-batch protection."
+  - title: Address the separate Linux SCTP escalation path
+    hint: On Linux hosts that do not use SCTP, Xint recommends placing install sctp /bin/false in a .conf file under /etc/modprobe.d/ while awaiting a kernel fix. This blocks loading through modprobe only; it neither unloads an already loaded module nor disables built-in SCTP. Check the host kernel configuration and loaded modules, and follow the kernel vendor's remediation if SCTP is already available or required. Do not interrupt SCTP-dependent workloads blindly. Updating nginx does not patch the host kernel, and a container image update alone does not replace it.
   - title: Correlate logs and process execution before declaring compromise
     hint: Review configured error logs (commonly /var/log/nginx/error.log) for worker exits, signal 11/segfault and core dumps. Correlate long-lived high-inbound/low-outbound connections, repeated TLS connections and bytes received that greatly exceed logged request lengths. Xint gives an optional h2_hunt format and /var/log/nginx/h2-hunt.log; adding it now cannot reconstruct old traffic. Review auditd execve/execveat records by worker UID and parent PID for unexpected /bin/sh, /bin/bash or other programs; same-UID applications and crashes can be legitimate. A match alone does not prove compromise; absence of newly enabled logs does not clear earlier activity.
 sources:
@@ -118,7 +124,7 @@ sources:
     primary: true
   - name: Xint original nginx2root research
     url: https://xint.io/blog/nginx2root-remote-code-execution
-    says: Five independent nginx attack paths, tested configuration ranges, exposure checks and mitigations. Host-root demonstration also needs a separate Linux kernel flaw.
+    says: Five nginx attack paths and mitigations; the separate SCTP kernel chain, host/container prerequisites and limits of its modprobe restriction.
     primary: true
   - name: CERT-EU advisory 2026-022
     url: https://cert.europa.eu/publications/security-advisories/2026-022/
@@ -173,3 +179,5 @@ sources:
 This is the November 18 batch, distinct from the [October nginx release](/incidents/nginx-oct-2026/). All displayed scores use F5’s CVSS 3.1 values; its five memory-safety records also score 9.2 under CVSS 4.0. nginx.org labels those findings major or medium rather than using the same scoring vocabulary. L3 reflects widely deployed software and demonstrated exploitation without reported real-world attacks. The nginx bugs run code as a worker, not automatically as host root: Xint’s root/container-escape demonstration also chains a separate Linux SCTP vulnerability.
 
 Keep source boundaries visible. F5 says RCE requires ASLR disabled or bypassed; Wiz demonstrates a bypass, so enabled ASLR is not a sufficient mitigation. The resolver/mail historical start versions differ between upstream ranges and Xint’s tested paths; do not treat the narrower tested range as a safe-version list. F5’s 121810 record contains a malformed 1.25.09 lower bound; nginx.org and the researcher identify 1.25.0. For 120993, the CNA additionally flags stable 1.30.6, while the upstream advisory lists only mainline and stable release notes omit that item; upgrade rather than declaring stable unaffected. No victim count or campaign-specific malicious network indicators are established by these sources.
+
+**Correction, November 19:** The earlier checklist covered nginx remediation but omitted the separate SCTP path in Xint's November 18 research. Xint traces that kernel bug to Linux 4.15 and demonstrates host-root access from an nginx worker, including from a Docker container. Reachability depends on the host kernel, available modules and container restrictions; this does not establish that every Linux host or container is exploitable. The report withholds most reproduction details pending a kernel patch and does not identify a kernel CVE or fixed kernel version. The added module-loading restriction is an interim measure for hosts that do not need SCTP, with the limitations stated above; keep nginx and host-kernel remediation separate.
