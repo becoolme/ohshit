@@ -21,6 +21,9 @@ timeline:
 - date: Nov 14, 2026 12:05 UTC
   title: Plaid continues investigating
   body: Plaid still gives no restart time.
+- date: Nov 14, 2026
+  title: SOMPO Himawari restores its official LINE functions
+  body: Its later customer guide reports communication blocking and credential invalidation, and restoration of LINE functions. This is not restoration of KARTE as a whole.
 - date: Nov 15, 01:37 UTC
   title: PLAID reports network isolation has contained further access
   body: The vendor says the affected environment has been disconnected and new unauthorized access and ongoing data outflow have stopped. This is a containment statement, not a service restart or recovery of copied data.
@@ -57,6 +60,12 @@ timeline:
 - date: Nov 18, 2026
   title: MUFG Bank confirms approximately 6.5 million limited-attribute records
   body: Fields are gender, age and region. The bank excludes identifying/contact information, says its own systems were not intruded upon and plans individual notices. This is distinct from Mitsubishi UFJ Trust and Banking's disclosure.
+- date: Nov 18, 2026
+  title: Mitsubishi UFJ Morgan Stanley Securities confirms category-data exposure
+  body: About 280,000 Online Trade records contain gender and age-band codes; identifying/contact information and account credentials are excluded.
+- date: Nov 19, 2026
+  title: SOMPO Himawari confirms two separate service datasets
+  body: MY Himawari has 60,000 records and aruku has 260,000, with different fields. Individual notification is planned for November 24–December 4.
 checklist:
 - title: Revoke affected external integration credentials
   hint: Revoke affected secrets or access tokens on the connected service, review unexpected calls, and reissue and verify credentials using PLAID’s guidance.
@@ -78,6 +87,10 @@ checklist:
   hint: Check the November 17 issuer disclosure and later official JINS updates for your data categories. Do not reply to suspicious emails, open their links or attachments, or enter IDs, passwords or card information through them. JINS disconnected its KARTE data link on November 13; that does not recover data already copied.
 - title: Use MUFG Bank's own inquiry and security channels
   hint: The bank's dedicated incident line is 0120-322-250, weekdays 09:00–17:00 from November 18 through December 18; the notice gives no timezone. Delete unsolicited emails/SMS or end unexpected calls without responding. If you entered a password or PIN on a fake bank site or gave it to a third party, contact the bank through https://www.bk.mufg.jp/info/security/toiawase.html . The Trust bank's separate hotline is not this bank's incident channel.
+- title: Use the securities firm's separate incident contact
+  hint: Mitsubishi UFJ Morgan Stanley Securities plans individual email or other notices. Its dedicated line is 0120-99-3840, weekdays 09:00–17:00 excluding holidays, November 18–December 11; the PDF gives no timezone. Avoid suspicious links, attachments and requests for personal information. This is a different firm and hotline from either MUFG bank above.
+- title: Follow SOMPO Himawari's notification and recovery guidance
+  hint: Notices are planned for November 24–December 4 and will not request password resets or account information. Do not provide PINs, passwords, card numbers or authentication codes, transfer money or operate an ATM on an unsolicited caller's instructions. Delete suspicious messages without opening links. The dedicated line is 0120-113-029, weekdays 09:00–18:00 and weekends/holidays 10:00–17:00; no timezone is stated. The guide says delayed points will be credited automatically after recovery, including past qualifying activity; no recovery date is promised.
 sources:
 - name: Plaid incident notice
   says: Confirms detected third-party access and the all-project shutdown.
@@ -131,6 +144,18 @@ sources:
   url: https://www.bk.mufg.jp/news/news2026/pdf/news1118.pdf
   primary: true
   says: Confirms about 6.5 million records with three attributes, excludes identification/contact data and intrusion into the bank's systems, and supplies a distinct dedicated inquiry line and security-response channel.
+- name: Mitsubishi UFJ Morgan Stanley Securities November 18 notice
+  url: https://www.mumss.com/company/news/000023203.pdf
+  primary: true
+  says: Confirms approximately 280,000 category-data records, exclusions, stopped data sharing, planned individual notices and a separate inquiry line.
+- name: SOMPO Himawari November 19 breach disclosure
+  url: https://www.himawari-life.co.jp/-/media/himawari/files/company/news/2026/a-02-2026-11-19.pdf?la=ja-JP
+  primary: true
+  says: Confirms separate MY Himawari and aruku datasets, specific fields, exclusions and planned notification dates.
+- name: SOMPO Himawari November 19 customer and service guide
+  url: https://www.himawari-life.co.jp/-/media/himawari/files/company/topics/2026/a-01-2026-11-19.pdf?la=ja-JP
+  primary: true
+  says: Gives containment, service-specific recovery, automatic points credit, notification safeguards and a dedicated support line.
 ---
 
 PLAID says an attacker exploited a server vulnerability to steal connection credentials, read data from certain databases and take over a PLAID account to access the administration console. The 79,249 figure counts account email addresses. Counts for external integration credentials and imported records remain under investigation. Personal information in imports depends on what each customer uploaded. The shutdown affected all projects, and the investigation assesses data exposure by customer.
@@ -154,3 +179,9 @@ DHC's November 18 notice confirms approximately 19.11 million customer records l
 JINS Holdings' November 17 disclosure confirms exposure of some JINS member data. Its approximately 18.29 million figure is the maximum potentially affected registered-account population, not the established number of stolen accounts or people. Listed fields are member IDs, email, surname only, birth date, age, gender, postal code and prefecture only. Passwords and credit-card information are excluded; fields and counts remain under investigation. JINS disconnected data sharing on November 13, received PLAID's exposure confirmation on November 15 and investigated scope internally on November 16. Do not expand surname/prefecture into full names or street addresses.
 
 MUFG Bank's November 18 notice confirms approximately 6.5 million records containing gender, age and region (prefecture or designated city). It excludes names, street addresses, phone numbers, email and other identifying/contact information, reports no confirmed resulting misuse and says its own systems were not intruded upon. It received scope details on November 17 and plans individual notification. This is MUFG Bank, a different entity and dataset from Mitsubishi UFJ Trust and Banking's approximately 230,000 records above; neither figure establishes compromised banking accounts or a combined unique-person total.
+
+Mitsubishi UFJ Morgan Stanley Securities' November 18 notice confirms about 280,000 Online Trade records containing numeric gender and age-band classifications. It excludes names, addresses, birth dates, phone numbers, email, account numbers and passwords. The firm says its own systems were not intruded upon, stopped KARTE data sharing and reports no trading impact. It received scope details November 17 and plans individual notices. These records belong to a third, distinct MUFG entity; do not combine the figures into a unique-person total.
+
+SOMPO Himawari Life's November 19 disclosure confirms 60,000 MY Himawari records with internal management IDs and email-consent flags, and 260,000 aruku records with internal IDs plus optionally entered birth dates and gender. Internal IDs are not login IDs or email addresses. It excludes names, addresses, phone/email, policy/account numbers, payment-card data, PINs and login passwords; aruku health data such as steps/weight is also excluded. Records deleted on withdrawal before November 13 are excluded. The insurer reports no intrusion into its own systems or confirmed resulting misuse or contract/transaction impact. These are separate service-record counts, not an established combined unique-person total.
+
+The insurer's customer guide says LINE functions recovered November 14, while MY Himawari app health buttons, achievement messages and immediate points credit remain affected; aruku step counting works but banners are paused. Other basic services continue. Data links were blocked and credentials invalidated November 14. This limited LINE recovery is not a KARTE restart or completed notification; individual emails are planned for November 24–December 4.
