@@ -29,6 +29,9 @@ timeline:
   - date: Nov 19, 00:01 UTC
     title: N-able starts testing remediation measures
     body: Some measures are in testing while others remain in progress. Dashboard, quarantine, logging, mailbox synchronization and API access must pass security validation in a controlled environment before returning online; portal and API access remain disabled.
+  - date: Nov 19, 04:01 UTC
+    title: N-able continues platform hardening alongside remediation testing
+    body: Investigation and testing continue while additional security hardening is applied. Mail filtering operates normally; portal and API access remain disabled as a precaution.
 checklist:
   - title: Obtain the instructions for your environment
     hint: Check for N-able’s direct Mail Assure/SpamExperts partner email. Its November 18 update says the required action depends on the environment; contact N-able Technical Support if you did not receive it.
@@ -56,3 +59,5 @@ The 20:18 UTC update says inbound and outbound mail flow and filtering have cont
 N-able says it has emailed partners about their environments and whether action is needed. Partners who did not receive that communication should contact Technical Support. A publicly reposted message describes more specific credential actions, but those details have not been verified against a readable original vendor communication here; obtain your own instructions directly. L4 reflects vendor-confirmed unauthorized access at a hosted email-service provider, with downstream scope still under investigation.
 
 At 00:01 UTC on November 19, N-able reported that it had begun testing some remediation measures while work on others continued. It requires security validation in a controlled environment before bringing back the dashboard, quarantine, logging, mailbox synchronization or API access. Mail flow and filtering continue normally; portal and API access remain disabled during testing. This is remediation progress, not a restoration announcement or a final impact assessment.
+
+At 04:01 UTC on November 19, N-able reported additional platform hardening alongside remediation testing and the continuing investigation. Filtering remains normal and portal/API access remains disabled; this update does not announce restoration or a final impact assessment.
