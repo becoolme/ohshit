@@ -23,7 +23,7 @@ timeline:
     body: StepSecurity 修订后的正文未确定具体账户、凭据或初始入口。同页较早的流程摘要仍保留账户说法，不能视为已验证的身份结论。
   - date: 11月18日 14:00 UTC
     title: Wiz 评估 ESRP 凭据路径并分析已采集上传
-    body: 调查指向客户端证书及私钥，并在采集样本中识别出三起不同受害者的数据外传，不能视为完整受害者总数。
+    body: 调查指向客户端证书及私钥，并在采集样本中识别出三起独立的受害者数据外传案例，不能视为完整受害者总数。
 checklist:
   - title: 在不启动受影响 Python 的情况下排查暴露
     hint: 用 shell 工具检查 11 月 17 日 20:35 UTC 之后的 requirements、锁文件、构建日志、镜像及 site-packages。查找 agent_framework-1.26.1.dist-info、agent_framework-1.26.2.dist-info 和下列载荷文件。不要先运行 python、pip list 或 pip uninstall，正常启动会执行钩子。

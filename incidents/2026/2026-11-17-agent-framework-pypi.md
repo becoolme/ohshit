@@ -31,7 +31,7 @@ timeline:
     body: StepSecurity's revised main analysis does not establish the account, credential or initial access vector. An older flow summary on the same page still carries the account claim; it is not a verified identity finding.
   - date: Nov 18, 14:00 UTC
     title: Wiz assesses an ESRP credential path and analyzes captured uploads
-    body: Its investigation points to a client certificate/private key and identifies three distinct victim exfiltration cases in the captured sample, not a complete victim count.
+    body: Its investigation points to a client certificate/private key and identifies three distinct cases of victim-data exfiltration in the captured sample, not a complete victim count.
 checklist:
   - title: Find exposure without starting the affected Python
     hint: Inspect requirements, lockfiles, build logs, images and site-packages from November 17 20:35 UTC onward with shell tools. Look for agent_framework-1.26.1.dist-info or agent_framework-1.26.2.dist-info and the payload files listed below. Do not begin with python, pip list or pip uninstall; normal startup evaluates the hook.
