@@ -20,7 +20,7 @@ cves:
   - id: CVE-2026-123892
     score: 7.2
     name: SDDC Manager authenticated command injection
-    description: An authenticated attacker can execute arbitrary commands on the appliance.
+    description: An authenticated attacker with high privileges can execute arbitrary commands on the appliance.
   - id: CVE-2026-123893
     score: 6.7
     name: SDDC Manager local privilege escalation
@@ -45,7 +45,7 @@ timeline:
     body: The five-issue advisory ships fixes. GTIG's report is dated November 19 and describes forensic evidence from early September; exploitation is not inferred from a PoC or a compiler timestamp.
   - date: Nov 20, 2026
     title: Broadcom revises the advisory
-    body: Revision 0009.1 lists vCenter 7.0 as affected and directs extended-support customers to Support. The current FAQ also warns about upgrade compatibility and Windows Guest Alias prerequisites.
+    body: Revision 0009.1 clarifies the affected VMware Tools versions. The current matrix lists vCenter 7.0 as affected and directs extended-support customers to Support; the FAQ also warns about upgrade compatibility and Windows Guest Alias prerequisites.
 checklist:
   - title: Patch each affected component through its supported upgrade path
     hint: Read VMSA-2026-0009.1 and check vCenter's Summary tab or PowerCLI DefaultVIServer.Version/Build. Apply 9.1.1.0200, 9.0.2.0200 or 8.0 U3m; VCF 5.x uses KB 88287 and SDDC Manager 5.2.5. Telco deployments use KB 463116; vCenter 7.0 extended-support customers must contact Broadcom. These vCenter updates cannot use Quick Patch. Check interoperability and Back-in-Time restrictions before changing an in-progress upgrade; integrated appliances need their vendor's qualified guidance.
@@ -82,7 +82,7 @@ Mandiant found BONESAW used against a vCenter server in early September, even th
 
 In the investigated intrusion, an earlier BeyondTrust compromise led through internal Linux appliances to vCenter. BONESAW stole the directory database and STS signing material and created SSO administrator access. SAWSNAKE used signing material for forged SAML authentication; subsequent activity reached ESXi hosts and extracted data from guest disks, including Active Directory database and registry material. This observed chain does not make BeyondTrust access a prerequisite for the vCenter bug. GTIG attributes the operation to ARMORY CASTLE, a suspected PRC-nexus actor formerly tracked as UNC5221; the report does not establish a victim count. L4 reflects confirmed real exploitation of a virtualization control plane, rather than demonstrated internet-wide compromise.
 
-The same Broadcom advisory covers three separate SDDC Manager flaws and a Windows Tools flaw. The SDDC issues require authentication, with administrative privileges required for the local escalation. The Tools issue requires access to a local privileged process and Guest Alias mapping; it stays inside the Windows VM. Neither these flaws nor the vCenter flaw is described by Broadcom as a guest-to-host VM escape. ESX itself is not affected by this advisory, although the investigated attacker reached hosts after compromising the management plane. No exploitation of the other four CVEs is established by the GTIG account.
+The same Broadcom advisory covers three separate SDDC Manager flaws and a Windows Tools flaw. The SDDC SQL issue requires an authenticated low-privilege role; the command-injection vector requires high privileges, and the local escalation requires administrative privileges. The Tools issue requires access to a local privileged process and Guest Alias mapping; it stays inside the Windows VM. Neither these flaws nor the vCenter flaw is described by Broadcom as a guest-to-host VM escape. ESX itself is not affected by this advisory, although the investigated attacker reached hosts after compromising the management plane. No exploitation of the other four CVEs is established by the GTIG account.
 
 Use the exact product builds above, rather than a generic three-part version checker. The 9.1 SDDC SQL/command fixes first shipped in 9.1.0.0 and its local-escalation fix in 9.1.1.0; the current recommended cumulative build is 9.1.1.0200. This does not mean that vCenter 9.1.1.0 fixes its distinct authentication bypass. Broadcom lists no public vCenter 7.0 fixed build and advises extended-support customers to request support; older out-of-support versions should be presumed affected, not treated as safe because they are absent from the matrix.
 

@@ -10,7 +10,7 @@ cves:
   - name: SDDC Manager SQL 注入
     description: 已认证攻击者可通过特制 SQL 对数据库进行未授权读写。
   - name: SDDC Manager 认证后命令注入
-    description: 已认证攻击者可在设备上执行任意命令。
+    description: 具有高权限的已认证攻击者可在设备上执行任意命令。
   - name: SDDC Manager 本地提权
     description: 在 SDDC Manager 上具有管理员权限的攻击者可提升至 root。
   - name: Windows VMware Tools SAML 签名绕过
@@ -32,7 +32,7 @@ timeline:
     body: 包含五个漏洞的公告提供修复。GTIG 原文日期为 11 月 19 日，描述了 9 月上旬的取证证据；在野利用判断不依赖 PoC 或编译时间戳。
   - date: 2026年11月20日
     title: Broadcom 修订公告
-    body: 0009.1 修订版将 vCenter 7.0 列为受影响版本，要求扩展支持客户联系支持团队。当前 FAQ 还提示升级兼容性及 Windows Guest Alias 前提。
+    body: 0009.1 修订版澄清了受影响的 VMware Tools 版本。当前矩阵将 vCenter 7.0 列为受影响版本，要求扩展支持客户联系支持团队；FAQ 还提示升级兼容性及 Windows Guest Alias 前提。
 checklist:
   - title: 按支持的升级路径修复各组件
     hint: 阅读 VMSA-2026-0009.1，在 vCenter 的 Summary 页或 PowerCLI DefaultVIServer.Version/Build 中核对版本。应用 9.1.1.0200、9.0.2.0200 或 8.0 U3m；VCF 5.x 按 KB 88287 操作并将 SDDC Manager 升至 5.2.5。Telco 部署按 KB 463116 处理；vCenter 7.0 扩展支持客户须联系 Broadcom。这些 vCenter 更新不支持 Quick Patch。正在升级的环境应先核对互操作兼容性和 Back-in-Time 限制；集成设备须遵循其厂商验证过的指导。
@@ -60,7 +60,7 @@ Mandiant 发现 BONESAW 在 9 月上旬已被用于攻击一台安装了 7 月 C
 
 在调查的入侵中，攻击者先攻破 BeyondTrust，再经内部 Linux 设备进入 vCenter。BONESAW 窃取目录数据库和 STS 签名材料并建立 SSO 管理员访问。SAWSNAKE 用签名材料伪造 SAML 认证；后续活动进入 ESXi 主机，从客体磁盘提取数据，包括 Active Directory 数据库和注册表材料。这条已观察到的攻击链不意味着利用 vCenter 漏洞必须先获得 BeyondTrust 访问。GTIG 将行动归因于疑似与中国有关的 ARMORY CASTLE，该组织此前称为 UNC5221；报告未给出受害者数量。L4 反映虚拟化控制平面已遭真实利用，不代表已证实互联网范围的大规模失陷。
 
-同一 Broadcom 公告还覆盖三个独立的 SDDC Manager 漏洞和一个 Windows Tools 漏洞。SDDC 漏洞需要认证，本地提权还要求管理员权限。Tools 漏洞要求访问本地特权进程并配置 Guest Alias 映射，提权范围限于 Windows VM。Broadcom 没有将这些漏洞或 vCenter 漏洞描述为从客体逃逸到宿主机。ESX 本身不受本公告影响，但调查中的攻击者在控制管理面后进入了主机。GTIG 的调查未证实另外四个 CVE 已遭利用。
+同一 Broadcom 公告还覆盖三个独立的 SDDC Manager 漏洞和一个 Windows Tools 漏洞。SDDC SQL 漏洞要求已认证的低权限角色；命令注入利用向量要求高权限，本地提权要求管理员权限。Tools 漏洞要求访问本地特权进程并配置 Guest Alias 映射，提权范围限于 Windows VM。Broadcom 没有将这些漏洞或 vCenter 漏洞描述为从客体逃逸到宿主机。ESX 本身不受本公告影响，但调查中的攻击者在控制管理面后进入了主机。GTIG 的调查未证实另外四个 CVE 已遭利用。
 
 应使用上表中的精确产品构建，不宜套用通用三段版本检查器。9.1 分支的 SDDC SQL／命令注入修复最早在 9.1.0.0 提供，本地提权修复在 9.1.1.0 提供；当前推荐累积构建为 9.1.1.0200。这不意味着 vCenter 9.1.1.0 修复了其独立的认证绕过。Broadcom 未列出公开 vCenter 7.0 修复构建，要求扩展支持客户申请支持；更旧的停止维护版本应假定受影响，不能因矩阵未列出就视为安全。
 
