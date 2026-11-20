@@ -18,7 +18,7 @@ timeline:
   title: Initial investigation confirms the incident
 - date: Nov 19, 2026
   title: Commission publicly confirms the campaign
-  body: Several applications were taken down as a precaution and most have been restored; CERT-EU and the European Data Protection Supervisor are involved.
+  body: Several applications were taken down as a precaution and most have been restored; the Commission is in close contact with CERT-EU and the European Data Protection Supervisor.
 checklist:
 - title: Verify the status of the service you use
   hint: Check the responsible Commission service’s official notices before resuming sensitive exchanges; use approved alternatives during interruptions. This is general precautionary guidance.
