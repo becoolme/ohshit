@@ -9,7 +9,7 @@ tags:
 ecosystems:
 - linux
 summary: CVE-2026-99312 breaks guest isolation on unpatched AMD KVM hosts with nested virtualization enabled. Researchers demonstrated host-memory reads and writes; no malicious exploitation is reported. Patch the host kernel or disable nesting.
-splash: Unpatched AMD KVM hosts with nesting enabled and an attacker controlling a guest or able to create KVM VMs.
+splash: Unpatched AMD KVM hosts with nesting enabled and an attacker with guest root or permission to create KVM VMs.
 wipe: 'Run a fixed host kernel: 7.3.5, 6.18.64 or 6.12.118 on those upstream branches; otherwise disable AMD nesting and verify it after reboot.'
 inTheWild: 'no'
 inTheWildNote: Research demonstration and provider reproduction; no reported malicious exploitation.
@@ -31,11 +31,13 @@ fixed:
   branch: '6.12'
   version: 6.12.118
   status: Fixed
+- product: Upstream Linux 5.15 / 6.1 / 6.6
+  version: none
+  status: No fixed upstream release verified; use mitigation or a vendor-confirmed backport
 mitigation:
   file: /etc/modprobe.d/kvm.conf
-  code: 'options kvm_amd nested=0
-
-    '
+  code: |
+    options kvm_amd nested=0
   note: Resolve existing module/boot options first. A file edit does not change the running module; schedule a host reboot and verify nesting is disabled.
 timeline:
 - date: Oct 21, 2026
@@ -93,6 +95,6 @@ An INIT reset while an AMD nested guest has paging disabled can leave the outer 
 
 DigitalOcean confirms a read-only mapping of about 127 GB of host RAM and a separate 32-byte chosen write on an isolated AMD server without other customers. Those are test measurements, not a customer breach total. Host code execution has not been publicly demonstrated. No public exploit code or malicious exploitation is reported; L3 reflects a demonstrated isolation failure in a mainstream hypervisor.
 
-The regression came from the CVE-2022-3344 fix. Upstream 6.1 and later and backports into 5.15.81/6.0.11 are affected until patched; distribution backports prevent a universal version cutoff. The table lists three verified upstream stable fixes, not every distribution build. As checked November 20, Debian bookworm/trixie security kernels remain vulnerable while sid 7.3.5-1 is fixed. Ubuntu's generic 20.04 kernel is not affected but its HWE 5.15 package is vulnerable; do not infer safety from the release name. Red Hat lists RHEL 9/10 fixes as deferred. Ubuntu now rates priority High, superseding the Medium snapshot in VirtFusion's November 19 page.
+The regression came from the CVE-2022-3344 fix. Upstream 6.1 and later and backports into 5.15.81/6.0.11 are affected until patched; distribution backports prevent a universal version cutoff. The table lists three verified upstream stable fixes and the older branches without a verified fixed release, not every distribution build. As checked November 20, Debian bookworm/trixie security kernels remain vulnerable while sid 7.3.5-1 is fixed. Ubuntu's generic 20.04 kernel is not affected but its HWE 5.15 package is vulnerable; do not infer safety from the release name. Red Hat lists RHEL 9/10 fixes as deferred. Ubuntu now rates priority High, superseding the Medium snapshot in VirtFusion's November 19 page.
 
 DigitalOcean says its fleet is addressed. Self-managed hosts still require the host fix or mitigation. There are no published detection indicators in these sources; a clean log search cannot establish that isolation held.
