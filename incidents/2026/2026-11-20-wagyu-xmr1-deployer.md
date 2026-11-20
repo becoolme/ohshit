@@ -3,7 +3,7 @@ title: Wagyu acknowledges XMR1 incident after deployer-account token transfers
 date: 2026-11-20
 level: 4
 tags: [Wagyu, XMR1, crypto, key compromise]
-summary: Wagyu's linked operator acknowledges an XMR1 hack and promises refunds after tokens left the deployer account and were sold. Bitquery estimates $13.51 million paid by 420 buying accounts; the figures remain provisional. The reported hosting/key-theft cause and completed compensation are not independently verified.
+summary: Wagyu's linked operator acknowledges an XMR1 hack and promises refunds after tokens left the deployer account and were sold. Bitquery estimates $13.51 million paid by 420 buying accounts; the figures remain provisional. The reported hosting/key-theft cause remains unverified, and completed compensation is not established.
 splash: Wagyu XMR1 holders and market makers; the same deployer also controls ZEC1 inventory, but no ZEC1 drain is established
 wipe: Verify Wagyu's incident and refund instructions through established channels; retain trade records and do not assume redemptions or refunds are complete.
 inTheWild: yes
