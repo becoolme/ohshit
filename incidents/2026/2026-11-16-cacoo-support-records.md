@@ -4,8 +4,8 @@ level: 4
 date: 2026-11-16
 updated: 2026-11-20
 tags: [Cacoo, SaaS, Data breach, Credentials]
-summary: Nulab revises confirmed stolen support records from about 792 to 765. Another 890 PayPal billing records and 310 internal-investigation records may have been exposed, some with credentials. The entry path involved video calls; Cacoo remains offline without a restart date.
-splash: Cacoo outage; 765 stolen support records, 890 possibly exposed legacy PayPal billing records and 310 internal-investigation records.
+summary: Nulab revises confirmed stolen support records from about 792 to 765. Another 890 PayPal billing records and 310 internal-investigation records may have been exposed; some of the 310 contain credentials. The entry path involved video calls; Cacoo remains offline without a restart date.
+splash: Cacoo outage; 765 stolen support records; possible exposure of 890 legacy PayPal billing and 310 internal-investigation records.
 wipe: Rotate credentials named in Nulab notices; verify messages through support, watch for phishing, and check status before resuming Cacoo work.
 inTheWild: 'yes'
 inTheWildNote: Nulab confirmed unauthorized access and theft of Cacoo support records.
