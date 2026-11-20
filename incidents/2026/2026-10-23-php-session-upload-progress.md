@@ -45,9 +45,8 @@ fixed:
   status: Unsupported upstream; older releases may also be affected. Use a maintained vendor backport or migrate.
 mitigation:
   file: php.ini
-  code: 'session.upload_progress.enabled=0
-
-    '
+  code: |
+    session.upload_progress.enabled=0
   note: Apply administratively before request parsing and restart workers. ini_set() is too late; check every pool, virtual host and CLI writer sharing the store.
 timeline:
 - date: Oct 23, 2026
