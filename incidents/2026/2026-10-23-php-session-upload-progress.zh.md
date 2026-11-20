@@ -1,37 +1,60 @@
 ---
-title: "PHP 披露尚未修复的会话上传进度 RCE，依赖罕见的序列化配置"
-headline: "紧急冲水后，还有一根罕见管道没堵上"
-tags: [PHP, RCE, 尚未修复]
-summary: "CVE-2026-115560 是额外的 PHP RCE 风险：上传进度开启，且应用在 session_start() 前将配置中的 php_binary 或 php_serialize 切换为 php。应关闭上传进度，等待下次常规修复。"
-splash: "上传进度开启，且在 session_start() 前用 ini_set() 将配置中的 php_binary/php_serialize 切换为 php"
-wipe: "设置 session.upload_progress.enabled=0，并保留 10月21日的 PHP2Shell 补丁。完整修复待发布"
-inTheWildNote: "PHP 的说明性公告未报告在野利用"
+title: PHP 修复会话序列化不匹配 RCE；共享存储的独立应用也可能受影响
+headline: 紧急冲水后，还有一根罕见管道没堵上
+tags:
+- PHP
+- RCE
+- 会话
+summary: PHP 已在 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36 修复 CVE-2026-115560。上传进度写入的会话可能被另一种序列化处理器解读为对象。共享会话存储的独立应用无需在运行时切换配置也可能受影响。显式开启上传进度后，仍须统一序列化格式。
+splash: 上传进度开启；共享会话以 php_binary/php_serialize 写入、以 php 读取；读取应用存在可用对象利用链
+wipe: 升级至 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36 或 8.6.0；保持上传进度关闭，或统一共享存储的全部读写方
+inTheWildNote: PHP 已公布复现细节，但未报告在野利用。
 cves:
-  - name: 运行时切换序列化处理器时的会话上传进度 RCE
-    description: "需要上传进度开启，且在 session_start() 前将配置中的 php_binary/php_serialize 在运行时改为 php。"
+- name: 会话序列化不匹配导致反序列化
+  description: 上传进度以 php_binary 或 php_serialize 写入的数据，在同一会话被按 php 格式读取时可能变为对象。RCE 需要可用对象利用链；运行时切换配置只是其中一种部署方式。
 fixed:
-  - product: PHP 会话上传进度
-    status: "计划在下次常规修复版本中解决；尚未公布受影响版本范围"
+- status: 已修复；显式开启上传进度后仍须统一序列化格式
+- status: 已修复；显式开启上传进度后仍须统一序列化格式
+- status: 已修复；显式开启上传进度后仍须统一序列化格式
+- status: 已修复；显式开启上传进度后仍须统一序列化格式
+- status: 已修复；显式开启上传进度后仍须统一序列化格式
+- product: PHP 8.1 及更早版本
+  status: 上游已停止维护；旧版本也可能受影响。使用持续维护的厂商回移补丁或迁移。
 mitigation:
-  note: "在服务器配置中应用并重启 worker；此前为 PHP2Shell 关闭此功能的，应保持关闭。"
+  note: 在请求解析前通过管理配置应用并重启 worker。ini_set() 已经太晚；检查共享存储的全部池、虚拟主机及 CLI 写入方。
 timeline:
-  - date: 2026年10月23日
-    title: PHP 发布风险说明及缓解措施
-    body: "完整公告及修复计划随常规版本发布；具体版本和严重性评分尚未说明。"
+- date: 2026年10月23日
+  title: PHP 发布风险说明及缓解措施
+  body: 完整公告及修复计划随常规版本发布；具体版本和严重性评分尚未说明。
+- date: 2026年11月19日
+  title: PHP 发布修复并扩大文档中的影响范围
+  body: 完整公告给出 CVSS 4.0 9.2，确认跨应用序列化不匹配也受影响。上传进度改为默认关闭，但显式开启的配置会覆盖新默认值。
 checklist:
-  - title: 为暴露的应用关闭上传进度
-    hint: "在服务器配置中设置 session.upload_progress.enabled=0 并重启 worker；已关闭的应保持关闭"
-  - title: 同时检查配置和会话初始化代码
-    hint: "查找 php_binary/php_serialize 设置，以及 session_start() 前的 ini_set('session.serialize_handler', 'php') 调用；从不在运行时切换的应用不受此路径影响"
-  - title: 保留 PHP2Shell 补丁并关注下次 PHP 发布
-    hint: "8.5.12 / 8.4.27 / 8.3.36 / 8.2.35 解决的是此前两个 CVE，不能替代这次新增的缓解措施"
+- title: 升级所有已部署的 PHP 运行时
+  hint: 安装 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36 或 8.6.0，重建镜像并重启 PHP-FPM / Apache worker。除 php -v 外，还要核对 Web 运行时；嵌入式产品使用厂商支持的回移补丁。
+- title: 不需要上传进度时保持关闭
+  hint: 在每个写入方的管理配置中设置 session.upload_progress.enabled=0。检查 php.ini、FPM 池、虚拟主机及应用覆盖配置：显式开启会覆盖修复后的默认值。不要依赖 ini_set() 或上传进度清理。
+- title: 审计共享会话存储的全部读写方
+  hint: 比较各应用、FPM 池、虚拟主机和 CLI 任务的 session.serialize_handler、session.save_path、会话 ID 及文件权限。若保留上传进度，更新后也必须让共享存储的全部读写方使用同一格式；独立池不等于存储隔离。
+- title: 隔离不同格式并迁移已有会话
+  hint: 需要不同格式的应用应使用独立存储。切换前迁移或使旧记录过期，不要用新序列化格式读取旧记录。
+- title: 保留此前的 PHP2Shell 修复
+  hint: 10月21日的 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35 解决的是此前两个 CVE，未修复此次序列化不匹配；应部署上列新版本。
 sources:
-  - name: PHP 10月23日风险说明
-    says: "需要罕见配置；下次常规修复发布前应关闭会话上传进度"
+- name: PHP 10月23日风险说明
+  says: 需要罕见配置；下次常规修复发布前应关闭会话上传进度
+- name: PHP 11月19日完整序列化不匹配公告
+  says: 受影响版本、CVSS 4.0 9.2、共享存储前提、已复现的命令执行及更新后的配置要求
+- name: PHP 11月19日版本及变更记录
+  says: 确认 8.2.36、8.3.37、8.4.28、8.5.13 和 8.6.0 包含修复
 ---
 
-这份公告独立于 10月21日已修复的两个 [PHP2Shell 漏洞](/zh/incidents/php2shell/)。PHP 认为所需配置在实践中很罕见，因此按较窄的暴露范围评为 L3。
+这与 10月21日修复的两个 [PHP2Shell 漏洞](/zh/incidents/php2shell/) 不同。PHP 广泛部署，完整公告也已演示代码执行，但利用依赖特定会话配置和应用对象利用链，因此维持 L3。该公告未确认在野利用。
 
-此路径需要同时满足：会话上传进度开启，配置中的 `session.serialize_handler` 为 `php_binary` 或 `php_serialize`，应用又在 `session_start()` 前通过 `ini_set()` 将其切换为 `php`。
+**根据 11月19日完整公告更正：** 此前条目称从不在运行时切换序列化处理器的应用不受影响，这一范围过窄。运行时切换只是其中一种方式：使用不同固定配置的独立应用、FPM 池、虚拟主机或 CLI 进程，如果共享会话存储、会话 ID 且有足够访问权限，同样可能产生不匹配。
 
-从不在运行时修改会话序列化处理器的应用，可以继续开启上传进度。完整的受影响版本范围、严重性评分和首个修复版本尚未公布。此前的 PHP2Shell 版本检查不能证明不受此问题影响。
+攻击者必须能向使用 `php_binary` 或 `php_serialize` 的环境提交 multipart 上传，且后续或并发读取方以 `php` 格式访问同一会话。RCE 还要求读取方具备合适的反序列化类。对于 `files` 处理器，共享目录、ID 和权限都很关键。此功能始于 PHP 5.4.0；`php_serialize` 写入变体需要 5.5.4 或更新版本。停止维护的旧版本也可能仍受影响。
+
+11月版本将上传进度改为默认关闭，并在功能开启时拒绝运行时修改会话设置，但不会强制统一不同配置的序列化格式。如果任一写入方显式重新开启上传进度，应统一能访问其会话的全部读写方，或隔离存储。必须在请求解析前关闭；应用内的 `ini_set()` 已经太晚。切换格式前应使旧记录过期或迁移。
+
+[PHP 11月安全版本批次](/zh/incidents/php-november-security/) 还修复了前提不同的其他问题。关闭上传进度不能替代这些更新。
