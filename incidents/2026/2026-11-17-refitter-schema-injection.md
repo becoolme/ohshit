@@ -43,3 +43,5 @@ sources:
 The advisory reproduces execution on two releases; it does not demonstrate every intermediate version. L3 reflects a public code-generation exploit.
 
 The independently read 2.4.0 template still interpolates `Discriminator` inside the `JsonPolymorphic` attribute without an escaping operation at that insertion. This corroborates the advisory’s source-level concern for that release, rather than claiming a new runtime reproduction. The code also loads NJsonSchema and NSwag template assemblies. Treat generated source as a trust boundary; a successful compile does not establish safety.
+
+Isolation is a general precaution, not a confirmed complete workaround.
