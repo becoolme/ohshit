@@ -10,7 +10,7 @@ summary: Japan’s Digital Agency confirms access by unintended parties to GSS s
 splash: Files uploaded to GSS file sharing for government agencies and external partners.
 wipe: Keep using approved alternatives; identify shared files and coordinate exposure checks with your agency contact.
 inTheWild: 'yes'
-inTheWildNote: Agency confirms unauthorized access; file leakage and personal-data scope remain uncertain.
+inTheWildNote: Agency confirms unauthorized access; leakage and personal-data scope remain uncertain.
 timeline:
 - date: Jul 30, 2026
   title: Start of the access period identified so far
