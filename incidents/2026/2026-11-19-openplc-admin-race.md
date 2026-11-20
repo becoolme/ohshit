@@ -42,4 +42,4 @@ sources:
   says: Confirms the existence-check race and publication date; does not establish real-world victims.
 ---
 
-The check and the account commit are not synchronized: competing requests can each observe that no user exists before a write completes. Reachability and execution timing matter; this is not evidence that every already configured PLC has been taken over. CISA identifies industrial deployment sectors, not a count of affected facilities. No public exploitation is reported in the advisory. L3 reflects a remotely reachable administrator-creation flaw in an industrial runtime.
+The check and the account commit are not synchronized: competing requests can each pass the existence check before the account write completes. Reachability and execution timing matter; this is not evidence that every already configured PLC has been taken over. CISA identifies industrial deployment sectors, not a count of affected facilities. No public exploitation is reported in the advisory. L3 reflects a remotely reachable administrator-creation flaw in an industrial runtime.
