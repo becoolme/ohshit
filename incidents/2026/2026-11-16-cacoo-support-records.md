@@ -29,8 +29,8 @@ timeline:
     title: Nulab revises the confirmed count and identifies two possible exposures
     body: The 792-record estimate becomes 765 confirmed support records. Another 890 billing records and 310 internal-investigation records were accessible; actual viewing or acquisition remains under investigation. Some of the latter contain credentials.
   - date: Nov 18, 2026
-    title: Video-call entry path disabled; Cacoo remains offline
-    body: Nulab traces the stolen company credentials to the video-call mechanism, stops that feature and applies countermeasures. Payment integration credentials are invalidated; replacement of other potentially exposed credentials continues. No reopening date is set.
+    title: Nulab reports the video-call entry path and continuing containment
+    body: Nulab reports that it traced the stolen company credentials to the video-call mechanism, stopped the feature and applied countermeasures. Payment integration credentials have been invalidated; replacement of other potentially exposed credentials continues. No reopening date is set.
 checklist:
   - title: Check notices for credentials in the newly identified records
     hint: Verify your individual notice through https://help-center.nulab.com/contact . The 310-record category includes credentials for some customers, not every Cacoo account. Follow the notice for affected credentials; as general precaution, revoke or rotate any exposed credential at its issuer and review associated access. The possibly stolen PayPal integration credential has been invalidated; that does not establish that all customer credentials have been replaced.
