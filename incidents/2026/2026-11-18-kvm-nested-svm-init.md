@@ -88,13 +88,13 @@ sources:
 - name: Red Hat assessment
   url: https://access.redhat.com/security/cve/cve-2026-99312
   primary: true
-  says: Moderate 5.6 assessment; AMD nesting prerequisite, mitigation and deferred RHEL 9/10 kernel fixes.
+  says: Current preliminary score 7.8; AMD nesting prerequisite and mitigation. The operator advisory still carries an older 5.6 snapshot.
 ---
 
 An INIT reset while an AMD nested guest has paging disabled can leave the outer VM using a freed page-table pointer. Reuse of that page lets a guest construct mappings into host physical memory. Intel's VMX handling does not take this path. The cloud demonstration required root in the guest; the Linux CNA also describes a non-root host user with KVM VM-creation access. This is not an unauthenticated internet endpoint.
 
 DigitalOcean confirms a read-only mapping of about 127 GB of host RAM and a separate 32-byte chosen write on an isolated AMD server without other customers. Those are test measurements, not a customer breach total. Host code execution has not been publicly demonstrated. No public exploit code or malicious exploitation is reported; L3 reflects a demonstrated isolation failure in a mainstream hypervisor.
 
-The regression came from the CVE-2022-3344 fix. Upstream 6.1 and later and backports into 5.15.81/6.0.11 are affected until patched; distribution backports prevent a universal version cutoff. The table lists three verified upstream stable fixes and the older branches without a verified fixed release, not every distribution build. As checked November 20, Debian bookworm/trixie security kernels remain vulnerable while sid 7.3.5-1 is fixed. Ubuntu's generic 20.04 kernel is not affected but its HWE 5.15 package is vulnerable; do not infer safety from the release name. Red Hat lists RHEL 9/10 fixes as deferred. Ubuntu now rates priority High, superseding the Medium snapshot in VirtFusion's November 19 page.
+The regression came from the CVE-2022-3344 fix. Upstream 6.1 and later and backports into 5.15.81/6.0.11 are affected until patched; distribution backports prevent a universal version cutoff. The table lists three verified upstream stable fixes and the older branches without a verified fixed release, not every distribution build. As checked November 20, Debian bookworm/trixie security kernels remain vulnerable while sid 7.3.5-1 is fixed. Ubuntu's generic 20.04 kernel is not affected but its HWE 5.15 package is vulnerable; do not infer safety from the release name. Check Red Hat’s current package status rather than assuming the operator advisory’s November 19 fix-deferred snapshot remains current. Ubuntu now rates priority High and Red Hat’s preliminary score is 7.8, superseding the Medium/5.6 snapshots in VirtFusion's November 19 page.
 
 DigitalOcean says its fleet is addressed. Self-managed hosts still require the host fix or mitigation. There are no published detection indicators in these sources; a clean log search cannot establish that isolation held.
