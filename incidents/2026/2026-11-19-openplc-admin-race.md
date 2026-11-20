@@ -30,7 +30,7 @@ checklist:
 - title: Reduce network exposure while patching
   hint: CISA recommends keeping control systems off the public internet, isolating control networks from business networks and placing remote devices behind firewalls. Restrict management access to trusted sources; maintain any required VPN and its endpoints. Segmentation does not fix the race.
 - title: Review administrator creation and investigate anomalies
-  hint: As a general response check, compare existing administrators with approved records and preserve available account-change/network logs before remediation. CISA provides no attack-specific IPs or signatures. Unexpected accounts need investigation; their absence does not prove no exposure. Report suspected malicious activity through your internal response process.
+  hint: As a general response check, compare existing administrators with approved records and preserve available account-change/network logs before remediation. CISA provides no attack-specific IPs or signatures. Unexpected accounts need investigation; their absence does not prove no exposure. Follow your internal response process and report suspected malicious activity findings to CISA for tracking and correlation.
 sources:
 - name: CISA ICSA-26-323-01 original advisory
   url: https://www.cisa.gov/news-events/ics-advisories/icsa-26-323-01
