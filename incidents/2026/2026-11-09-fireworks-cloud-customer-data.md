@@ -1,12 +1,12 @@
 ---
 title: Fireworks cloud intrusion exposed customer data including Notion AI transcripts
-summary: Fireworks disclosed a later intrusion through its R&D cloud provider and confirmed access to some customer datasets and incomplete weights. Notion found Insights chat transcripts for fewer than 1% of workspaces and notified affected customers.
-splash: Fireworks customers named in exposure notices and notified Notion workspaces with affected Insights transcripts.
+summary: Fireworks now says the cloud-host intrusion reached production and exposed account/billing data for all accounts created before October 30, plus some datasets, models or secrets. Notion reports Insights transcripts for fewer than 1% of workspaces; Infcurion identifies 232 personal-information records.
+splash: Fireworks accounts created before October 30; some customer datasets/models/secrets and notified Notion Insights workspaces.
 wipe: Review vendor notices and exposed data. Revoke and rotate credentials included in affected datasets or chats.
 inTheWildNote: Fireworks and Notion confirmed unauthorized access to affected customer data.
 level: 4
 date: '2026-11-09'
-updated: 2026-11-17
+updated: 2026-11-20
 tags:
 - AI
 - SaaS
@@ -43,6 +43,12 @@ timeline:
 - date: Nov 16, 2026
   title: LayerX reports potentially exposed Notion AI records
   body: LayerX identified 2,070 instances of business contact information and 133 instances of recruiting information. Sales records are still under review.
+- date: Nov 17, 2026
+  title: Fireworks separates two incidents and broadens the later scope
+  body: The cloud-host intrusion reached production; account and billing data for all accounts created before October 30 was accessed. Some customers also had datasets, models or secrets accessed. Fireworks calls both incidents contained and remediated; the second forensic investigation continues.
+- date: Nov 18, 2026
+  title: Infcurion identifies personal information in its Notion AI records
+  body: It reports 232 personal-information records, with business-partner information in sales material still under review. Individual notices are planned and a privacy-regulator report has been made.
 checklist:
 - title: Review the data named in Fireworks notices
   hint: Use your incident notice or the contact listed on the security bulletin. Identify affected datasets, model material, metadata or billing records. Revoke and rotate exposed secrets at their issuers and review associated activity.
@@ -52,6 +58,10 @@ checklist:
   hint: The company says individual notices will come from @receptionist.co.jp. For an unexpected message, verify through pr@receptionist.co.jp as published in the November 12 filing. Watch for impersonation using inquiry details.
 - title: Verify individual Interactive or LegalOn notices
   hint: Verify unexpected messages through Interactive’s official website or LegalOn’s official contact form, using the Other inquiries option for LegalOn. Avoid suspicious links or attachments and keep passwords and verification codes private. LegalOn says customers need no changes to its product settings.
+- title: Hunt using the complete vendor indicator categories
+  hint: 'Search Fireworks and third-party issuer logs as far back as retention allows. The vendor PDF lists 56 IPs: 49 alert/block egress IPs (141.148.43.50, 192.255.184.158, 130.61.45.127, 169.128.94.223, 207.244.233.138, 107.173.67.144, 142.249.130.148, 121.225.47.194, 180.111.130.132, 58.240.148.142, 183.213.133.12, 146.70.224.38, 146.70.224.113, 146.70.224.209, 170.62.100.234, 193.32.126.146, 80.66.197.113, 141.98.252.247, 134.209.82.225, 170.62.100.240, 170.62.100.236, 193.176.31.29, 31.169.53.59, 31.169.53.89, 31.169.53.47, 31.169.53.56, 88.214.21.66, 194.36.27.155, 185.209.196.171, 193.32.126.135, 193.32.126.178, 141.98.252.244, 185.209.199.80, 185.209.196.153, 147.78.241.134, 185.103.52.196, 185.209.196.135, 146.70.117.34, 45.129.59.47, 45.129.59.190, 185.195.233.170, 170.62.100.225, 170.62.100.107, 193.176.31.135, 193.176.31.138, 193.176.31.178, 147.78.241.245, 43.107.42.214, 85.203.54.115); 6 shared Cloudflare egress IPs for alerting only, not blanket blocking (104.28.243.187, 104.28.225.223, 104.28.193.223, 104.28.251.137, 104.28.211.188, 104.28.246.17); outbound destination 202.61.139.15 TCP 8777, POST /exfil. Also search curl/8.14.1, Python-urllib/3.14, python-requests/2.34.2, firectl-admin/1.7.x, grpc-python/1.84.0, Mozilla/5.0 hunt; names containing hunt/probe/jump; *__DUMP_B64; webhook.site; unexpected keys, users, service accounts, evaluators or jobs, and one-off model-list validation calls. See the full vendor PDF for context. A match is an investigation lead, not proof; no match does not clear exposure. Preserve logs/resources before deletion, revoke exposed credentials, and send timestamps, resource IDs and source IPs to security@fireworks.ai.'
+- title: Verify Infcurion notices without replying to suspicious messages
+  hint: Use https://infcurion.com/contact/ to verify unexpected messages. The company plans individual contacts and warns against unsolicited payment or password requests impersonating it or Notion. For exposed credentials, use the issuer-side revocation and activity checks above.
 sources:
 - name: LayerX downstream notice
   url: https://layerx.co.jp/news/202611161636/
@@ -85,6 +95,18 @@ sources:
   says: Gives the affected workspace scope, customer information categories, exclusions and notification plan.
   url: https://legalontech.jp/11330/
   primary: true
+- name: Fireworks November 17 scope and containment update
+  url: https://fireworks.ai/security-bulletins
+  says: Distinguishes two incidents, confirms later access to production and all pre-October30 accounts’ billing/account data, and attributes containment and forensic status.
+  primary: true
+- name: Fireworks customer indicator document
+  url: https://cdn.sanity.io/files/pv37i0yn/horizon/f0628d65bbfefd792b0ee89e71b91b476d6515b7.pdf
+  says: Undated document lists 56 IPs with different handling, user agents, naming/behavior indicators and preservation/rotation/contact instructions.
+  primary: true
+- name: Infcurion November 18 original issuer notice
+  url: https://kabuyoho-sls-disclose.ifis.co.jp/9cc/140120261117582347.pdf
+  says: Describes October5–24 Notion AI records, 232 personal-information records, sales-data uncertainty, completed regulatory reporting and planned individual notices.
+  primary: true
 ---
 
 Fireworks says an October 23 incident at its R&D cloud host enabled access to its development machines on October 24. Its investigation found affected resource metadata and billing details, including addresses, payment history, balances and credit usage. Fireworks says payment card numbers were outside scope. It temporarily disabled self-serve dataset uploads and downloads for Batch Inference and dataset-based training. It reports no detected impact to Inference, Training SDK or Nexus in its investigation to date.
@@ -106,3 +128,7 @@ Sankei Shimbun says a contractor used Notion on one of its projects and reported
 [Cursor’s separate downstream incident](/incidents/cursor-claude-extension/) involved a key that Cursor had issued to Fireworks. Cursor’s investigation explains how the exposed key led to copying historical traces and eventually to the tampered extension builds.
 
 LayerX says the potential exposure covered some of its October 5–24 Notion AI inputs and responses, including business contacts and recruiting candidates. It reported the incident to Japan’s privacy regulator and says it will notify people individually as needed. It excludes its Bakuraku and Ai Workforce systems and their data from this intrusion.
+
+Fireworks’ November 17 update separates an August 3–October 7 intrusion from the October 23–30 cloud-host incident. It says the latter reached part of production and exposed account and billing information for every account created before October 30, with datasets, models and/or secrets accessed for a smaller subset. This broadens the earlier November 9 description above; payment-card numbers remain excluded. Fireworks says both incidents are contained and remediated. Unit 42 completed the first investigation, while AprosSyber is investigating the second. Containment does not recover copied data or establish that every exposed third-party credential has been revoked.
+
+Infcurion’s November 18 filing says Notion notified it on November 13 that some Notion AI inputs and answers had been taken through Fireworks. The scope is some October 5–24 conversations containing 232 personal-information records about business contacts, applicants and employees, including names, phone numbers and email addresses; business-partner information within sales records is still being assessed. This is a record count, not an incident-wide unique-person total. Infcurion reports no observed misuse, says it has reported to Japan’s privacy regulator and plans individual contacts. Its own services and the information stored in them were outside this downstream incident. That exclusion must not be applied to [Infcurion’s separate Wallet Station intrusion](/incidents/infcurion-wallet-station/), disclosed November 20.
