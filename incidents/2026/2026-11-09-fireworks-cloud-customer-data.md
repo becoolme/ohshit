@@ -13,7 +13,7 @@ tags:
 - data breach
 inTheWild: 'yes'
 timeline:
-- date: Oct 9, 2026
+- date: Oct 10, 2026 05:00 UTC
   title: Fireworks publishes an earlier security bulletin
   body: Fireworks initially confirms access to stored secrets used in workflows including evaluation jobs.
 - date: Oct 23–24, 2026
@@ -129,6 +129,6 @@ Sankei Shimbun says a contractor used Notion on one of its projects and reported
 
 LayerX says the potential exposure covered some of its October 5–24 Notion AI inputs and responses, including business contacts and recruiting candidates. It reported the incident to Japan’s privacy regulator and says it will notify people individually as needed. It excludes its Bakuraku and Ai Workforce systems and their data from this intrusion.
 
-Fireworks’ November 17 update separates an August 3–October 7 intrusion from the October 23–30 cloud-host incident. It says the latter reached part of production and exposed account and billing information for every account created before October 30, with datasets, models and/or secrets accessed for a smaller subset. This broadens the earlier November 9 description above; payment-card numbers remain excluded. Fireworks says both incidents are contained and remediated. Unit 42 completed the first investigation, while AprosSyber is investigating the second. Containment does not recover copied data or establish that every exposed third-party credential has been revoked.
+Fireworks’ November 17 update separates an August 3–October 7 intrusion from the October 23–30 cloud-host incident. For the first, it now confirms that stolen Fireworks credentials and a service vulnerability enabled platform misuse and access to some customers’ secrets, model files and datasets, broadening the initial secrets-only findings. It says the latter reached part of production and exposed account and billing information for every account created before October 30, with datasets, models and/or secrets accessed for a smaller subset. This broadens the earlier November 9 description above; payment-card numbers remain excluded. Fireworks says both incidents are contained and remediated. Unit 42 completed the first investigation, while AprosSyber is investigating the second. Containment does not recover copied data or establish that every exposed third-party credential has been revoked.
 
 Infcurion’s November 18 filing says Notion notified it on November 13 that some Notion AI inputs and answers had been taken through Fireworks. The scope is some October 5–24 conversations containing 232 personal-information records about business contacts, applicants and employees, including names, phone numbers and email addresses; business-partner information within sales records is still being assessed. This is a record count, not an incident-wide unique-person total. Infcurion reports no observed misuse, says it has reported to Japan’s privacy regulator and plans individual contacts. Its own services and the information stored in them were outside this downstream incident. That exclusion must not be applied to [Infcurion’s separate Wallet Station intrusion](/incidents/infcurion-wallet-station/), disclosed November 20.
