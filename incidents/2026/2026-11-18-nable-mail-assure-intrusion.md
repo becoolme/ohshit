@@ -1,7 +1,7 @@
 ---
 title: N-able confirms Mail Assure and SpamExperts Hosted Cloud server intrusion
 date: 2026-11-18
-updated: 2026-11-19
+updated: 2026-11-20
 level: 4
 tags:
   - N-able
@@ -32,6 +32,9 @@ timeline:
   - date: Nov 19, 04:01 UTC
     title: N-able continues platform hardening alongside remediation testing
     body: Investigation and testing continue while additional security hardening is applied. Mail filtering operates normally; portal and API access remain disabled as a precaution.
+  - date: Nov 20, 17:45 UTC
+    title: N-able prepares for service restoration after validation progress
+    body: The vendor reports that key remediation and security validation have advanced. Mail flow/filtering remain normal; portal and API access stay disabled until restoration begins. No restoration completion or final data-impact finding is announced.
 checklist:
   - title: Obtain the instructions for your environment
     hint: Check for N-able’s direct Mail Assure/SpamExperts partner email. Its November 18 update says the required action depends on the environment; contact N-able Technical Support if you did not receive it.
@@ -61,3 +64,5 @@ N-able says it has emailed partners about their environments and whether action 
 At 00:01 UTC on November 19, N-able reported that it had begun testing some remediation measures while work on others continued. It requires security validation in a controlled environment before bringing back the dashboard, quarantine, logging, mailbox synchronization or API access. Mail flow and filtering continue normally; portal and API access remain disabled during testing. This is remediation progress, not a restoration announcement or a final impact assessment.
 
 At 04:01 UTC on November 19, N-able reported additional platform hardening alongside remediation testing and the continuing investigation. Filtering remains normal and portal/API access remains disabled; this update does not announce restoration or a final impact assessment.
+
+At 17:45 UTC on November 20, N-able said remediation and security validation had advanced and it was preparing to restore services. Portal and API access remain disabled until restoration begins; mail flow and filtering continue normally. This is a preparation milestone, not confirmation that supporting services recovered or that the investigation ended.
