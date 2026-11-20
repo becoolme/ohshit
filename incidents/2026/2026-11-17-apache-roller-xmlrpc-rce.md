@@ -1,6 +1,7 @@
 ---
 title: Apache expands exploited Roller XML-RPC RCE warning to older releases
 date: '2026-11-17'
+updated: '2026-11-20'
 level: 4
 tags: [Apache, RCE, XML-RPC]
 ecosystems: [java]
@@ -8,7 +9,7 @@ summary: Apache confirms active exploitation of Roller's XML-RPC deserialization
 splash: Network-reachable Apache Roller 4.0.0–6.1.5 XML-RPC endpoints; no login or non-default XML-RPC setting is required.
 wipe: Upgrade to 6.1.7 (minimum fix 6.1.6); otherwise disable extension types in web.xml or remove the XML-RPC servlet mapping, then restart.
 inTheWild: 'yes'
-inTheWildNote: Apache reports active exploitation; the CVE's CISA ADP enrichment still says none.
+inTheWildNote: Apache confirms exploitation; CISA added CVE-2026-129448 to KEV on November 20.
 cves:
 - id: CVE-2026-129448
   score: 9.8
@@ -38,6 +39,9 @@ timeline:
 - date: Nov 17, 11:02 UTC
   title: Apache expands scope and confirms exploitation
   body: CVE-2026-129448 covers 4.0.0–6.1.4 and identifies the same flaw as CVE-2026-82384. Apache does not give an attack start date, attacker identity or victim count.
+- date: Nov 20, 2026
+  title: CISA adds CVE-2026-129448 to KEV
+  body: The catalog requires action by November 23 for covered federal agencies and marks forensic triage as required; ransomware use is unknown.
 checklist:
 - title: Upgrade the deployed application and verify its running version
   hint: Inventory Roller WARs and deployed instances. Back up configuration and data, read the 6.1.7 release notes, obtain the release from Apache's download page and verify its published signature/checksum. Replace the deployed application, restart and confirm the running version; minimum fix 6.1.6, current recommended release 6.1.7. These deployment checks do not replace incident investigation.
@@ -69,7 +73,7 @@ sources:
 - name: Apache CNA record and CISA ADP enrichment
   url: https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/129xxx/CVE-2026-129448.json
   primary: true
-  says: Apache's description confirms exploitation; the November 17 CISA ADP SSVC enrichment instead says exploitation none. This is not a KEV listing.
+  says: Apache's description confirms exploitation; the SSVC assessment dated November 18 still says exploitation none. That stale enrichment is distinct from the November 20 KEV listing.
 - name: Apache CNA record for the earlier 6.1.5 disclosure
   url: https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/82xxx/CVE-2026-82384.json
   primary: true
@@ -77,11 +81,11 @@ sources:
 - name: CISA KEV official JSON feed
   url: https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json
   primary: true
-  says: The November 17 17:53 UTC catalog checked November 18 contains neither Roller identifier. Catalog absence does not disprove Apache's exploitation report.
+  says: The November 20 catalog adds CVE-2026-129448, with November 23 action due date and forensic triage required. Ransomware use is unknown; the earlier 6.1.5 identifier is not a separate newly listed flaw.
 ---
 
 The November 17 warning newly covers Roller 4.0.0–6.1.4 and reports active exploitation. Apache explicitly links it to the same XML-RPC vulnerability publicly disclosed for 6.1.5 on September 25. These identifiers describe one issue, not two independent attack paths or two victim totals. The original flaw and the 6.1.6 patch are not new in November.
 
 A reachable XML-RPC endpoint can parse vendor extension types before checking credentials or whether XML-RPC is enabled. An unauthenticated attacker can therefore reach unsafe deserialization without changing the default configuration. The patched endpoint rejects disabled-service requests before parsing and refuses extension types even when XML-RPC is enabled. Updating the JVM alone is not the Roller application fix.
 
-Apache's direct exploitation warning supports the severity rating. Its CVE record also contains a CISA ADP SSVC assessment marked as no exploitation, unlike the CNA description. The CISA KEV feed checked on November 18 contains neither identifier; absence from KEV does not negate Apache's report. The cited originals provide no campaign attribution, compromise count, start date or attacker indicators.
+Apache's direct exploitation warning supports the severity rating. Its CVE record also contains a CISA ADP SSVC assessment marked as no exploitation, unlike the CNA description. CISA subsequently added CVE-2026-129448 to KEV on November 20. Its November 23 action deadline applies to covered federal agencies, not a universal legal deadline. The entry requires forensic triage and lists ransomware use as unknown; it does not supply a victim total. The earlier November 18 catalog absence is superseded by this listing. The cited originals provide no campaign attribution, compromise count, start date or attacker indicators.
