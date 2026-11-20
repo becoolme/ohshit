@@ -33,6 +33,9 @@ timeline:
   - date: 2026年11月20日
     title: Broadcom 修订公告
     body: 0009.1 修订版澄清了受影响的 VMware Tools 版本。当前矩阵将 vCenter 7.0 列为受影响版本，要求扩展支持客户联系支持团队；FAQ 还提示升级兼容性及 Windows Guest Alias 前提。
+  - date: 2026年11月20日
+    title: CISA 将 vCenter 绕过漏洞纳入 KEV
+    body: CVE-2026-123890 的适用联邦机构处置期限为 11 月 23 日，并要求取证分诊。勒索软件利用情况未知；同一公告的另外四个 CVE 不属于此条目。
 checklist:
   - title: 按支持的升级路径修复各组件
     hint: 阅读 VMSA-2026-0009.1，在 vCenter 的 Summary 页或 PowerCLI DefaultVIServer.Version/Build 中核对版本。应用 9.1.1.0200、9.0.2.0200 或 8.0 U3m；VCF 5.x 按 KB 88287 操作并将 SDDC Manager 升至 5.2.5。Telco 部署按 KB 463116 处理；vCenter 7.0 扩展支持客户须联系 Broadcom。这些 vCenter 更新不支持 Quick Patch。正在升级的环境应先核对互操作兼容性和 Back-in-Time 限制；集成设备须遵循其厂商验证过的指导。
@@ -52,6 +55,8 @@ sources:
     says: 11 月 19 日的原始事件响应分析确认 9 月利用，描述 BONESAW 和横向移动，并发布排查指标及加固建议。
   - name: Broadcom Telco Cloud 修复指导
     says: 列出的 TCP/TCI 版本使用 vCenter 8.0 U3m；未列出或处于扩展支持的部署须联系支持团队。
+  - name: CISA KEV 官方 JSON 数据源
+    says: 11 月 20 日收录 CVE-2026-123890，期限为 11 月 23 日，要求取证分诊，勒索软件利用情况未知。
 ---
 
 CVE-2026-123890 允许能访问 vCenter 易受攻击的 Directory Service 的未认证攻击者获取管理员会话。GTIG 描述了 TCP 2012 上 SRP DCE/RPC 接口的会话密钥泄露。该会话可通过 Directory Service RPC 接口执行命令和获取文件。漏洞不要求启用 Enhanced Linked Mode。
@@ -65,3 +70,5 @@ Mandiant 发现 BONESAW 在 9 月上旬已被用于攻击一台安装了 7 月 C
 应使用上表中的精确产品构建，不宜套用通用三段版本检查器。9.1 分支的 SDDC SQL／命令注入修复最早在 9.1.0.0 提供，本地提权修复在 9.1.1.0 提供；当前推荐累积构建为 9.1.1.0200。这不意味着 vCenter 9.1.1.0 修复了其独立的认证绕过。Broadcom 未列出公开 vCenter 7.0 修复构建，要求扩展支持客户申请支持；更旧的停止维护版本应假定受影响，不能因矩阵未列出就视为安全。
 
 安排补丁时仍须保持紧迫性：FAQ 表示，vCenter 8.0 U3m 和 9.0.2.0200 会因 Back-in-Time 限制阻止升级到 VCF 9.1.1，预计在 9.1.2 恢复兼容。通过 Broadcom 和互操作矩阵核对支持的顺序。更新期间管理界面会不可用，运行中的工作负载继续运行；vCenter 离线时部分新增加密／密钥轮换操作不可用。补丁关闭入口，但先前窃取的签名密钥、凭据或客体数据仍需单独隔离和恢复处置。
+
+CISA 于 11 月 20 日将 CVE-2026-123890 纳入 KEV，补充此前的利用证据。11 月 23 日处置期限及取证分诊要求适用于相关联邦机构。这次收录不能证明独立的 SDDC Manager 或 Tools 漏洞也遭利用。

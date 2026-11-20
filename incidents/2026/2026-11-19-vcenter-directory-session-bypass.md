@@ -2,6 +2,7 @@
 title: VMware vCenter authentication bypass exploited before November patches
 level: 4
 date: 2026-11-19
+updated: 2026-11-20
 tags: [VMware, vCenter, zero-day, identity]
 summary: Mandiant found CVE-2026-123890 exploited in September to obtain vCenter administrator sessions and steal signing keys. Broadcom's November advisory fixes this and four separate SDDC Manager/Windows Tools flaws. Patching does not remove stolen credentials or persistence.
 splash: Unpatched vCenter reachable over its management network; separate SDDC Manager and Windows Tools prerequisites apply
@@ -46,6 +47,9 @@ timeline:
   - date: Nov 20, 2026
     title: Broadcom revises the advisory
     body: Revision 0009.1 clarifies the affected VMware Tools versions. The current matrix lists vCenter 7.0 as affected and directs extended-support customers to Support; the FAQ also warns about upgrade compatibility and Windows Guest Alias prerequisites.
+  - date: Nov 20, 2026
+    title: CISA adds the vCenter bypass to KEV
+    body: CVE-2026-123890 is listed with a November 23 action deadline for covered federal agencies and forensic triage required. Ransomware use is unknown; the other four advisory CVEs are not covered by this entry.
 checklist:
   - title: Patch each affected component through its supported upgrade path
     hint: Read VMSA-2026-0009.1 and check vCenter's Summary tab or PowerCLI DefaultVIServer.Version/Build. Apply 9.1.1.0200, 9.0.2.0200 or 8.0 U3m; VCF 5.x uses KB 88287 and SDDC Manager 5.2.5. Telco deployments use KB 463116; vCenter 7.0 extended-support customers must contact Broadcom. These vCenter updates cannot use Quick Patch. Check interoperability and Back-in-Time restrictions before changing an in-progress upgrade; integrated appliances need their vendor's qualified guidance.
@@ -74,6 +78,10 @@ sources:
     url: https://knowledge.broadcom.com/external/article/463116/vmware-telco-cloud-response-to-vmsa20260.html
     primary: true
     says: Listed TCP/TCI versions use vCenter 8.0 U3m; unlisted or extended-support deployments need Support guidance.
+  - name: CISA KEV official JSON feed
+    url: https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json
+    primary: true
+    says: November 20 addition of CVE-2026-123890, due November 23, forensic triage required and ransomware use unknown.
 ---
 
 CVE-2026-123890 lets an unauthenticated attacker who can reach vCenter's vulnerable Directory Service obtain an administrator session. GTIG describes a session-key disclosure in the SRP DCE/RPC interface on TCP 2012. The exposed session permits command execution and file retrieval through the Directory Service RPC interface. Enhanced Linked Mode is not required.
@@ -87,3 +95,5 @@ The same Broadcom advisory covers three separate SDDC Manager flaws and a Window
 Use the exact product builds above, rather than a generic three-part version checker. The 9.1 SDDC SQL/command fixes first shipped in 9.1.0.0 and its local-escalation fix in 9.1.1.0; the current recommended cumulative build is 9.1.1.0200. This does not mean that vCenter 9.1.1.0 fixes its distinct authentication bypass. Broadcom lists no public vCenter 7.0 fixed build and advises extended-support customers to request support; older out-of-support versions should be presumed affected, not treated as safe because they are absent from the matrix.
 
 Plan the patch without discarding its urgency: the FAQ says vCenter 8.0 U3m and 9.0.2.0200 block upgrades to VCF 9.1.1 because of Back-in-Time restrictions, with compatibility expected in 9.1.2. Check the supported sequence with Broadcom and the interoperability matrix. Management interfaces become unavailable during the update while running workloads continue; some new encryption/key-rotation operations are unavailable while vCenter is offline. Patching closes the entry point, but a prior theft of signing keys, credentials or guest data requires a separate containment and recovery response.
+
+CISA added CVE-2026-123890 to KEV on November 20, reinforcing the existing exploitation evidence. Its November 23 action deadline and forensic-triage requirement apply to covered federal agencies. This listing does not establish exploitation of the separate SDDC Manager or Tools vulnerabilities.
