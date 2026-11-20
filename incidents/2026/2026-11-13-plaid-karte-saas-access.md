@@ -1,7 +1,7 @@
 ---
 title: PLAID confirms KARTE data theft and suspends all projects
 date: '2026-11-13'
-updated: '2026-11-19'
+updated: '2026-11-20'
 level: 4
 inTheWild: 'yes'
 tags:
@@ -66,6 +66,9 @@ timeline:
 - date: Nov 19, 2026
   title: SOMPO Himawari confirms two separate service datasets
   body: MY Himawari has 60,000 records and aruku has 260,000, with different fields. Individual notification is planned for November 24–December 4.
+- date: Nov 19, 2026
+  title: Timee confirms employer-contact information exposure
+  body: Timee reports up to 226,662 employer contacts, excludes worker data and login credentials, and plans individual contacts. Its 227,561 management IDs are not a unique-person count.
 checklist:
 - title: Revoke affected external integration credentials
   hint: Revoke affected secrets or access tokens on the connected service, review unexpected calls, and reissue and verify credentials using PLAID’s guidance.
@@ -91,6 +94,8 @@ checklist:
   hint: Mitsubishi UFJ Morgan Stanley Securities plans individual email or other notices. Its dedicated line is 0120-99-3840, weekdays 09:00–17:00 excluding holidays, November 18–December 11; the PDF gives no timezone. Avoid suspicious links, attachments and requests for personal information. This is a different firm and hotline from either MUFG bank above.
 - title: Follow SOMPO Himawari's notification and recovery guidance
   hint: Notices are planned for November 24–December 4 and will not request password resets or account information. Do not provide PINs, passwords, card numbers or authentication codes, transfer money or operate an ATM on an unsolicited caller's instructions. Delete suspicious messages without opening links. The dedicated line is 0120-113-029, weekdays 09:00–18:00 and weekends/holidays 10:00–17:00; no timezone is stated. The guide says delayed points will be credited automatically after recovery, including past qualifying activity; no recovery date is promised.
+- title: Verify Timee employer-contact notices
+  hint: Use Timee’s published support form https://taimee.zendesk.com/hc/ja/requests/new to verify unexpected contacts. Avoid suspicious links or attachments; Timee and PLAID will not request service passwords or credentials by email/SMS. Worker data is excluded from this notice.
 sources:
 - name: Plaid incident notice
   says: Confirms detected third-party access and the all-project shutdown.
@@ -156,6 +161,10 @@ sources:
   url: https://www.himawari-life.co.jp/-/media/himawari/files/company/topics/2026/a-01-2026-11-19.pdf?la=ja-JP
   primary: true
   says: Gives containment, service-specific recovery, automatic points credit, notification safeguards and a dedicated support line.
+- name: Timee November 19 employer-contact notice
+  url: https://corp.timee.co.jp/news/detail-7442/
+  primary: true
+  says: Confirms employer-contact fields and different counts, excludes worker/login data, and supplies notification and phishing guidance.
 ---
 
 PLAID says an attacker exploited a server vulnerability to steal connection credentials, read data from certain databases and take over a PLAID account to access the administration console. The 79,249 figure counts account email addresses. Counts for external integration credentials and imported records remain under investigation. Personal information in imports depends on what each customer uploaded. The shutdown affected all projects, and the investigation assesses data exposure by customer.
@@ -185,3 +194,5 @@ Mitsubishi UFJ Morgan Stanley Securities' November 18 notice confirms about 280,
 SOMPO Himawari Life's November 19 disclosure confirms 60,000 MY Himawari records with internal management IDs and email-consent flags, and 260,000 aruku records with internal IDs plus optionally entered birth dates and gender. Internal IDs are not login IDs or email addresses. It excludes names, addresses, phone/email, policy/account numbers, payment-card data, PINs and login passwords; aruku health data such as steps/weight is also excluded. Records deleted on withdrawal before the November 13 shutdown are excluded. The insurer reports no intrusion into its own systems or confirmed resulting misuse or contract/transaction impact. These are separate service-record counts, not an established combined unique-person total.
 
 The insurer's customer guide says LINE functions recovered November 14, while MY Himawari app health buttons, achievement messages and immediate points credit remain affected; aruku step counting works but banners are paused. Other basic services continue. Data links were blocked and credentials invalidated November 14. This limited LINE recovery is not a KARTE restart or completed notification; individual emails are planned for November 24–December 4.
+
+Timee’s November 19 notice reports up to 226,662 employer contacts as of November 17: 226,662 email records, 93,862 surname-or-given-name records, 19,289 phone records and 227,561 customer-management IDs. One email can map to several IDs across establishments; these are not login IDs, and passwords/login credentials and job-seeker/worker data are excluded. Timee says its own systems were not intruded upon and reports no confirmed misuse. It plans to contact affected customers and applied on November 19 to join PLAID’s regulatory report; that is not a completed joint filing.
