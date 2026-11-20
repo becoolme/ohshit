@@ -114,7 +114,11 @@ sources:
   primary: true
 - name: Eole November 20 final downstream report
   url: https://www.eole.co.jp/news/release/2026/news_post908/
-  says: Identifies October5–24 information categories, completed November18 notifications, excluded credentials/cards and the limit that actual acquisition of each entry cannot be confirmed.
+  says: Confirms completed November18 notifications and links the detailed final report.
+  primary: true
+- name: Eole November 20 original issuer final report
+  url: https://kabuyoho-sls-disclose.ifis.co.jp/de1/140120261120584265.pdf
+  says: Identifies October5–24 information categories, excluded credentials/cards and the limit that actual acquisition of each entry cannot be confirmed.
   primary: true
 ---
 
