@@ -6,7 +6,7 @@ tags:
 - momo
 - data breach
 - e-commerce
-summary: Fubon Multimedia confirms unauthorized access to some mo店+ shipment data. It isolated affected systems and plans customer notifications. Its preliminary investigation excludes account passwords, card numbers and other payment information.
+summary: Fubon Multimedia confirms unauthorized access to some mo店+ shipment data. It isolated affected systems and plans customer notifications. Its preliminary investigation excludes member account names/passwords, card numbers and other payment information.
 splash: Customers whose mo店+ shipment data was accessed; affected counts and individual fields are undisclosed.
 wipe: Watch for official notifications; verify unexpected delivery or payment requests through known support channels.
 inTheWild: 'yes'
@@ -31,3 +31,5 @@ sources:
 ---
 
 The company says its main operating systems and e-commerce services continue normally and reports no material operational or financial impact so far. External forensic assistance is planned. These are preliminary company statements, not a completed investigation or confirmation that every momo customer was affected.
+
+L3 reflects confirmed customer-data access at a major retailer, without a proven mass leak.
