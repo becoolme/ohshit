@@ -10,7 +10,7 @@ summary: The Commission confirms a cyber campaign, temporary application shutdow
 splash: Commission applications temporarily taken offline; affected systems and data scope remain undisclosed.
 wipe: Use official service notices and approved alternatives; confirm restoration with the responsible service.
 inTheWild: 'yes'
-inTheWildNote: Commission confirms a detected campaign; data impact and full scope remain under investigation.
+inTheWildNote: Commission confirms the campaign; data impact and scope remain under investigation.
 timeline:
 - date: Oct 22, 2026
   title: Commission detects the incident
