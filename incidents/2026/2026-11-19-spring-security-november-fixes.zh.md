@@ -1,7 +1,7 @@
 ---
 title: Spring Security 修复条件性 SpEL 代码执行及另外五项安全漏洞
 summary: Spring Security 11 月 19 日公告修复六项漏洞，最严重的一项可在外部输入绑定到 ELRequestMatcher 属性时执行代码。其他问题涉及响应式认证、WebAuthn、RSocket、IP 规则及 OAuth2 密钥，具体暴露取决于功能和配置。
-splash: 使用受影响绑定、认证、RSocket、IP 匹配或客户端注册路径的 Spring Security 应用。
+splash: 将攻击者输入绑定到 ELRequestMatcher 属性的 Spring Security 应用；其他漏洞取决于所列功能及配置。
 wipe: 按所用版本线升级至厂商修复版；旧版本线补丁及四段式替代版本需要企业支持。
 inTheWildNote: 本次阅读的 Spring 公告未确认真实环境中的利用。
 cves:
