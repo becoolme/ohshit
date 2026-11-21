@@ -2,7 +2,7 @@
 title: Binance preliminary report details signing-service intrusion and revises funding figures
 level: 4
 date: 2026-10-29
-updated: 2026-11-15
+updated: 2026-11-21
 tags:
   - Binance
   - crypto
@@ -166,6 +166,9 @@ timeline:
   - date: Nov 14, 2026
     title: Binance says the November 12 reserve proof is ready
     body: Binance says users can now verify their asset backing for the snapshot covering 198 tokens.
+  - date: Nov 20, 12:00 UTC
+    title: Elliptic updates its tracing snapshot
+    body: The researcher reports about 488,000 ETH moved from five major addresses and at least 2,310 BTC entering coinjoins cumulatively; these are tracing estimates, not additional losses or recovered funds.
   - date: Nov 1, 06:00–09:00 UTC (scheduled)
     title: First withdrawal phase is planned
 
@@ -429,6 +432,10 @@ sources:
     url: https://www.binance.com/en/proof-of-reserves
     says: Shows how to select the snapshot on the website and verify inclusion with the account-specific record.
     primary: true
+  - name: Elliptic November 20 tracing snapshot
+    url: https://www.elliptic.co/insights/how-north-korea-is-laundering-the-6-4-billion-stolen-from-binance/
+    primary: true
+    says: Dated 12:00 UTC research snapshot distinguishes ETH transfers and cumulative first coinjoin entries from theft and recovery.
 ---
 
 Binance’s initial notice said it had not confirmed an impact on user funds. The exchange then edited that notice to state that user funds are safe, and subsequently said withdrawals would resume after the security issue is fully resolved. These are the vendor’s statements, not an independently audited reserve or loss assessment. No resumption time or technical containment report was supplied in those notices. The withdrawal notice does not specify affected networks or withdrawal routes; do not infer that every Binance product is affected. Those earlier notices supported L3 because they acknowledged disruption without confirming the suspected theft.
@@ -514,3 +521,5 @@ In a companion analysis, Bitquery estimates that by **November 6 at 10:00 UTC**,
 **November 14 withdrawal update.** Binance says it reopened withdrawals on **87 networks** that week and aims to reopen the remaining networks and assets by the end of the following week. Check the exact asset and network in the app’s withdrawal screen or on the [official network status page](https://www.binance.com/en/network). Binance advises waiting briefly and retrying if a withdrawal does not go through during the rollout. Restored withdrawals do not establish that stolen assets were returned.
 
 **November 14 reserve proof update.** Binance separately says the zero-knowledge proof was generated for the November 12 00:00 UTC snapshot covering 198 tokens. On the Binance website, use Wallet → Verification, select the matching date and use your Record ID or Merkle Leaf to verify that your balance is included. Verification speaks to that snapshot and its covered assets. It does not establish current reserves, return of stolen assets, or full withdrawal availability.
+
+**November 20 tracing snapshot (12:00 UTC).** Elliptic reports about 488,000 ETH moved since November 17 and at least 2,310 BTC ($149 million) first entering coinjoins cumulatively since November 1. It says the original 18,270 BTC remains stationary after its initial split; the mixed BTC was converted from other assets. These independently unverified tracing estimates do not establish new theft, cash-out, recovery or present wallet ownership. Earlier exchange replacement-funding and law-enforcement figures retain their separate scopes.
