@@ -7,7 +7,7 @@ tags:
 - Java
 - RCE
 summary: Spring Security’s November 19 advisories fix six flaws, led by code execution when external input is bound to an ELRequestMatcher property. Other issues affect reactive authentication, WebAuthn, RSocket, IP rules and OAuth2 secrets. Exposure depends on the feature and configuration.
-splash: Affected Spring Security applications using the vulnerable binding, authentication, RSocket, IP-matching or client-registration paths.
+splash: Spring Security apps binding attacker input to ELRequestMatcher properties; other flaws require the listed features/configuration.
 wipe: Upgrade to the vendor’s fixed release for your line; older fixes and four-part alternatives require enterprise support.
 inTheWild: unknown
 inTheWildNote: The reviewed Spring advisories do not establish real-world exploitation.
