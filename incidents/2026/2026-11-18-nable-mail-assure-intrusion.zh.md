@@ -5,42 +5,42 @@ splash: 美洲、亚太及欧洲的 Mail Assure 和 SpamExperts 托管云合作�
 wipe: 阅读针对自身环境的合作伙伴邮件；未收到时联系 N-able 支持，并通过官方事件页面跟踪安全恢复。
 inTheWildNote: N-able 确认托管环境中一台服务器遭未授权访问。
 timeline:
-- date: 2026年11月16日
-  title: N-able 起初按服务故障处理
-  body: 后续安全更新称，厂商当天曾向客户通报服务中断。
-- date: 11月17日 03:00 UTC
-  title: 公开事件记录开始
-  body: 管理界面及配套服务问题起初按运行故障调查。
-- date: 11月18日 03:05 UTC
-  title: N-able 确认安全事件
-  body: 厂商确认一台服务器遭未授权访问，停用界面和 API，并说明与 N-central 事件无关。
-- date: 11月18日 20:18 UTC
-  title: N-able 确认已向合作伙伴发送指引
-  body: 邮件收发和过滤继续，界面、API、隔离区及日志仍停用。N-able 要求未收到邮件的合作伙伴联系技术支持。
-- date: 11月19日 00:01 UTC
-  title: N-able 开始测试修复措施
-  body: 部分措施已进入测试，其余仍在推进。管理界面、隔离区、日志、邮箱同步及 API 恢复前均须通过受控环境中的安全验证；门户和 API 仍停用。
-- date: 11月19日 04:01 UTC
-  title: N-able 继续加固平台并测试修复
-  body: 调查与修复测试继续，同时增加安全加固。邮件过滤正常运行，门户及 API 仍预防性关闭。
-- date: 11月20日 17:45 UTC
-  title: N-able 在验证取得进展后准备恢复服务
-  body: 厂商表示关键修复及安全验证已有进展。邮件收发和过滤保持正常，门户及 API 在开始恢复前仍停用；未宣布恢复完成或最终数据影响结论。
-- date: 11月21日 23:44 UTC
-  title: 管理界面及 API 恢复访问
-  body: N-able 转入监控，服务分阶段恢复，并计划进行约一小时的主动稳定性监测。邮件收发与过滤正常，厂商承诺进一步向客户说明。
+  - date: 2026年11月16日
+    title: N-able 起初按服务故障处理
+    body: 后续安全更新称，厂商当天曾向客户通报服务中断。
+  - date: 11月17日 03:00 UTC
+    title: 公开事件记录开始
+    body: 管理界面及配套服务问题起初按运行故障调查。
+  - date: 11月18日 03:05 UTC
+    title: N-able 确认安全事件
+    body: 厂商确认一台服务器遭未授权访问，停用界面和 API，并说明与 N-central 事件无关。
+  - date: 11月18日 20:18 UTC
+    title: N-able 确认已向合作伙伴发送指引
+    body: 邮件收发和过滤继续，界面、API、隔离区及日志仍停用。N-able 要求未收到邮件的合作伙伴联系技术支持。
+  - date: 11月19日 00:01 UTC
+    title: N-able 开始测试修复措施
+    body: 部分措施已进入测试，其余仍在推进。管理界面、隔离区、日志、邮箱同步及 API 恢复前均须通过受控环境中的安全验证；门户和 API 仍停用。
+  - date: 11月19日 04:01 UTC
+    title: N-able 继续加固平台并测试修复
+    body: 调查与修复测试继续，同时增加安全加固。邮件过滤正常运行，门户及 API 仍预防性关闭。
+  - date: 11月20日 17:45 UTC
+    title: N-able 在验证取得进展后准备恢复服务
+    body: 厂商表示关键修复及安全验证已有进展。邮件收发和过滤保持正常，门户及 API 在开始恢复前仍停用；未宣布恢复完成或最终数据影响结论。
+  - date: 11月21日 23:44 UTC
+    title: 管理界面及 API 恢复访问
+    body: N-able 转入监控，服务分阶段恢复，并计划进行约一小时的主动稳定性监测。邮件收发与过滤正常，厂商承诺进一步向客户说明。
 checklist:
-- title: 获取适用于自身环境的处置指引
-  hint: 检查 N-able 直接发送的 Mail Assure/SpamExperts 合作伙伴邮件。11 月 18 日更新说明，是否需要操作取决于环境；未收到邮件时联系 N-able 技术支持。
-- title: 核实自身环境中各项功能的恢复状态
-  hint: N-able 于 11 月 21 日恢复管理界面和 API，但说明服务分阶段恢复。检查门户及 API，并向技术支持分别核实隔离区、日志和邮箱同步；该更新未明确确认所有配套功能均已恢复。
-- title: 与 N-central 响应分别处理
-  hint: N-able 明确表示两起事件无关。这些托管服务按 Mail Assure/SpamExperts 指引处置，已有 N-central 修复仍另行保留；N-central 升级并非厂商公布的本次托管事件修复。
+  - title: 获取适用于自身环境的处置指引
+    hint: 检查 N-able 直接发送的 Mail Assure/SpamExperts 合作伙伴邮件。11 月 18 日更新说明，是否需要操作取决于环境；未收到邮件时联系 N-able 技术支持。
+  - title: 核实自身环境中各项功能的恢复状态
+    hint: N-able 于 11 月 21 日恢复管理界面和 API，但说明服务分阶段恢复。检查门户及 API，并向技术支持分别核实隔离区、日志和邮箱同步；该更新未明确确认所有配套功能均已恢复。
+  - title: 与 N-central 响应分别处理
+    hint: N-able 明确表示两起事件无关。这些托管服务按 Mail Assure/SpamExperts 指引处置，已有 N-central 修复仍另行保留；N-central 升级并非厂商公布的本次托管事件修复。
 sources:
-- name: N-able 公开事件 202672
-  says: 确认服务器入侵、与 N-central 不同的范围、持续的邮件收发和合作伙伴通信。
-- name: N-able 事件 202672 公开仪表板数据
-  says: 公开状态页面使用的无需认证 JSON，明确给出 UTC 时区及完整更新历史。
+  - name: N-able 公开事件 202672
+    says: 确认服务器入侵、与 N-central 不同的范围、持续的邮件收发和合作伙伴通信。
+  - name: N-able 事件 202672 公开仪表板数据
+    says: 公开状态页面使用的无需认证 JSON，明确给出 UTC 时区及完整更新历史。
 ---
 
 N-able 的公开状态记录修正了先前的运行故障解释：Mail Assure 和 SpamExperts 托管云环境中一台服务器遭到未授权访问。厂商表示，这与 [N-central 事件](/zh/incidents/ncentral-hf2-attack-chains/) 无关。11 月 18 日确认安全事件，与此前的服务中断及状态记录中 11 月 17 日的开始时间不同。
