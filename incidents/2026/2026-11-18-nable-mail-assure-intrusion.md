@@ -8,7 +8,7 @@ tags:
   - SaaS
   - Email
   - Intrusion
-summary: N-able patched CVE-2026-134624 after its Mail Assure/SpamExperts Hosted Cloud intrusion, separate from N-central. Dashboard/API access returned November 21 in a phased recovery; mail flow/filtering continued. The vendor found no exploitation beyond one server after remediation; root cause and final data impact remain open.
+summary: N-able patched CVE-2026-134624 after its Mail Assure/SpamExperts Hosted Cloud intrusion, separate from N-central. Dashboard/API access returned November 21 in a phased recovery; mail flow/filtering continued. The vendor reports no evidence of exploitation beyond one server after remediation; root cause and final data impact remain open.
 splash: Hosted Cloud partners; older builds expose an LDAP relay-check SSRF to authenticated, high-privilege API users
 wipe: Confirm build 20261121.1943 or later with N-able, follow partner-specific actions, and validate each restored service and integration.
 inTheWild: yes
@@ -52,7 +52,7 @@ timeline:
     body: The vendor CNA identifies builds before 20261121.1943 and rates CVE-2026-134624 at CVSS 4.0 9.3, with high API privileges required.
   - date: Nov 22, 19:30 UTC
     title: N-able confirms remediation and engages independent forensics
-    body: The vendor says it found no exploitation beyond the initially identified hosted server after remediation and promises a root-cause analysis within two weeks. The investigation remains open.
+    body: The vendor says it found no evidence of exploitation beyond the initially identified hosted server after remediation and promises a root-cause analysis within two weeks. The investigation remains open.
   - date: Nov 23, 2026
     title: CISA adds CVE-2026-134624 to KEV
     body: Covered US federal agencies have a November 26 remediation deadline and forensic-triage requirements. This confirms exploitation of the flaw, without identifying the initial entry path of this hosted incident.
@@ -96,7 +96,7 @@ sources:
     says: Describes vendor-managed software updates on customer-owned Local Cloud hardware and the configurable weekly update schedule under Server > Settings.
 ---
 
-N-able’s public status record corrects its earlier operational explanation: unauthorized access occurred on one server in the Mail Assure and SpamExperts Hosted Cloud environment. The vendor says this is unrelated to the [N-central incident](/incidents/ncentral-hf2-attack-chains/). Its November 18 security confirmation is distinct from the earlier service disruption and the status record’s November 17 start time.
+N-able’s public status record corrects its earlier operational explanation: unauthorized access occurred on one server in the Mail Assure and SpamExperts Hosted Cloud environment. The public status record covers the Americas, APAC and Europe. The vendor says this is unrelated to the [N-central incident](/incidents/ncentral-hf2-attack-chains/). Its November 18 security confirmation is distinct from the earlier service disruption and the status record’s November 17 start time.
 
 At 03:05 UTC on November 18, N-able said it had no evidence at that time that customer data, including tenants’ mailboxes, had been compromised. This was a point-in-time investigation statement, not proof that no exposure occurred. Later updates continue the investigation. The November 22 CVE identifies a vulnerability, but the reviewed primary sources do not establish the initial entry path, victim count, credential-exposure inventory or final data impact.
 
@@ -111,7 +111,6 @@ At 04:01 UTC on November 19, N-able reported additional platform hardening along
 At 17:45 UTC on November 20, N-able said remediation and security validation had advanced and it was preparing to restore services. Portal and API access remain disabled until restoration begins; mail flow and filtering continue normally. This is a preparation milestone, not confirmation that supporting services recovered or that the investigation ended.
 
 At 23:44 UTC on November 21, N-able announced that dashboard and API access had returned and moved the incident to monitoring. It described phased service restoration and planned approximately an hour of active stability monitoring, while promising further customer communications. The update does not explicitly confirm that quarantine, logging and mailbox synchronization have all returned, nor provide a final data-impact assessment. The older outage statements above describe their respective dates, rather than the current dashboard/API status.
-
 
 N-able’s November 22 14:30 EST update says the identified vulnerability has been remediated and reports no evidence of exploitation beyond the initially identified hosted server since remediation. Independent DFIR is assisting; a fuller root-cause analysis is promised within two weeks. This is a bounded vendor finding, not a final clearance. It rounds dashboard/API restoration to November 21 23:45 UTC, while the status JSON records the announcement at 23:44:43 UTC; both refer to the same restoration, not two outages.
 
