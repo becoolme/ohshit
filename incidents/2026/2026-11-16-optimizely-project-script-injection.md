@@ -54,6 +54,9 @@ timeline:
   - date: Nov 18, 2026
     title: Socket publishes static analysis of an archived early payload
     body: The November 16 08:08:15 UTC capture contains a wallet clipper and iOS loader, without the card-skimming module found in later builds. Socket publishes its sample hash and flags an unresolved difference from the reported 08:10 first-build time.
+  - date: Nov 18, 14:49 UTC
+    title: Optimizely gives its customer-impact estimate
+    body: The vendor says fewer than 5% of its customers were impacted, every Web Experimentation customer was contacted and no other product was affected. This customer denominator is distinct from affected snippets, organizations or visitors.
   - date: Nov 24, 2026
     title: CISA adds the signup-flow vulnerability to KEV
     body: CISA tracks the exploited issue as CVE-2026-132224, flags forensic triage and gives covered US federal agencies a November 27 remediation due date.
@@ -154,3 +157,5 @@ Netskope's November 17 original analysis covers an authorized subset of its cust
 
 
 On November 24, CISA added the signup-flow issue to its Known Exploited Vulnerabilities catalog as **CVE-2026-132224**. The entry describes impersonation of existing customer users followed by Project JavaScript modification and browser execution through trusted hosted assets. It flags forensic triage and sets **November 27** as the remediation due date for covered US federal agencies. This formal exploitation listing does not establish a new attack wave, a new visitor count or additional losses; retain the earlier customer-specific cleanup and exposure guidance.
+
+Optimizely’s November 18 14:49 UTC status update says fewer than 5% of its customers were impacted and every Web Experimentation customer was contacted directly. It says no other product was affected and remediation was completed. This is the vendor’s customer-base estimate, not a measured visitor count or an independently reconciled denominator for Report URI’s snippet and organization counts. The statement does not establish a final downstream loss total.
