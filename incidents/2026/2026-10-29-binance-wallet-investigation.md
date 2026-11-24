@@ -2,14 +2,14 @@
 title: Binance preliminary report details signing-service intrusion and revises funding figures
 level: 4
 date: 2026-10-29
-updated: 2026-11-21
+updated: 2026-11-24
 tags:
   - Binance
   - crypto
   - investigation
 ecosystems:
   - crypto
-summary: Binance reports signing-service intrusion and EIP-7702 abuse. The FBI attributes the theft to TraderTraitor. Binance reports asset coverage, proof for its 198-token snapshot and withdrawals restored on 87 networks. Full withdrawals and final review are pending. DOJ reports over $2.7bn frozen, with over $1.2bn authorized for seizure or restraint.
+summary: Binance reports signing-service intrusion and EIP-7702 abuse; the FBI attributes the theft to TraderTraitor. Binance reports asset coverage, a 198-token reserve proof and withdrawals on 87 networks. DOJ has filed to forfeit over $1.1bn USDC and reports over $2.9bn frozen, seized and/or returned; the categories are not interchangeable.
 splash: Binance.com withdrawal users; Aave reports a precautionary freeze of DAO-operated V3/V4 markets
 wipe: Follow official updates, inspect account activity, and use Binance's account-lock procedure if you find unauthorized actions
 inTheWild: yes
@@ -169,6 +169,9 @@ timeline:
   - date: Nov 20, 12:00 UTC
     title: Elliptic updates its tracing snapshot
     body: The researcher reports about 488,000 ETH moved from five major addresses and at least 2,310 BTC entering coinjoins cumulatively; these are tracing estimates, not additional losses or recovered funds.
+  - date: Nov 23, 2026
+    title: DOJ files civil forfeiture claim over restrained USDC
+    body: The claim seeks over $1.1 billion USDC already subject to restraint. DOJ reports over $2.9 billion frozen, seized and/or returned across multiple sources; it does not allocate that total among those categories or announce a final forfeiture judgment.
   - date: Nov 1, 06:00–09:00 UTC (scheduled)
     title: First withdrawal phase is planned
 
@@ -436,6 +439,11 @@ sources:
     url: https://www.elliptic.co/insights/how-north-korea-is-laundering-the-6-4-billion-stolen-from-binance/
     primary: true
     says: Dated 12:00 UTC research snapshot distinguishes ETH transfers and cumulative first coinjoin entries from theft and recovery.
+  - name: DOJ November 23 civil forfeiture announcement
+    url: https://www.justice.gov/opa/pr/united-states-files-action-recover-more-1-billion-cryptocurrency-assets-stolen-north-korean
+    primary: true
+    says: Announces a civil claim over previously restrained USDC and a combined freezing, seizure and/or return figure; not a final forfeiture or repayment notice.
+
 ---
 
 Binance’s initial notice said it had not confirmed an impact on user funds. The exchange then edited that notice to state that user funds are safe, and subsequently said withdrawals would resume after the security issue is fully resolved. These are the vendor’s statements, not an independently audited reserve or loss assessment. No resumption time or technical containment report was supplied in those notices. The withdrawal notice does not specify affected networks or withdrawal routes; do not infer that every Binance product is affected. Those earlier notices supported L3 because they acknowledged disruption without confirming the suspected theft.
@@ -523,3 +531,6 @@ In a companion analysis, Bitquery estimates that by **November 6 at 10:00 UTC**,
 **November 14 reserve proof update.** Binance separately says the zero-knowledge proof was generated for the November 12 00:00 UTC snapshot covering 198 tokens. On the Binance website, use Wallet → Verification, select the matching date and use your Record ID or Merkle Leaf to verify that your balance is included. Verification speaks to that snapshot and its covered assets. It does not establish current reserves, return of stolen assets, or full withdrawal availability.
 
 **November 20 tracing snapshot (12:00 UTC).** Elliptic reports about 488,000 ETH moved since November 17 and at least 2,310 BTC ($149 million) first entering coinjoins cumulatively since November 1. It says the original 18,270 BTC remains stationary after its initial split; the mixed BTC was converted from other assets. These independently unverified tracing estimates do not establish new theft, cash-out, recovery or present wallet ownership. Earlier exchange replacement-funding and law-enforcement figures retain their separate scopes.
+
+
+**November 23 civil forfeiture filing.** DOJ says it filed a civil claim seeking over **$1.1 billion USDC** from the theft. The assets were already under a government-requested restraining order. This is progress in the forfeiture process, not an announcement of a final judgment or payment to customers. DOJ separately reports assisting in freezing, seizing and/or returning **over $2.9 billion** from multiple sources since the theft, without breaking that total into its component categories. Do not add the claim amount to that combined figure, or equate either with Binance’s replacement funding, final losses or customer compensation. Earlier November 12 figures describe the earlier reporting date. Full withdrawal availability and the final independent review remain unconfirmed in these sources.
