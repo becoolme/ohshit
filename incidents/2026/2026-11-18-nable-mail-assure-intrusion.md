@@ -11,7 +11,7 @@ tags:
 summary: N-able confirms server intrusion in Mail Assure and SpamExperts Hosted Cloud, separate from N-central. It restored dashboard and API access on November 21 while bringing services back in phases. Mail flow and filtering continued throughout; final data impact remains unestablished.
 splash: Mail Assure and SpamExperts Hosted Cloud partners across the Americas, APAC and Europe
 wipe: Read the partner-specific email, contact N-able support if it is missing, and track secure restoration on the official incident page.
-inTheWild: true
+inTheWild: 'yes'
 inTheWildNote: N-able confirms unauthorized access to a server in the hosted environment.
 timeline:
 - date: Nov 16, 2026
