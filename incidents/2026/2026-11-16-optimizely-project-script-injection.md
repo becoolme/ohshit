@@ -1,6 +1,6 @@
 ---
 title: "Report URI finds malicious Optimizely scripts at 178 organizations"
-updated: 2026-11-18
+updated: 2026-11-24
 level: 4
 date: 2026-11-16
 tags: [Optimizely, JavaScript, supply chain, skimmer, iOS]
@@ -10,6 +10,10 @@ splash: "Visitors to pages that loaded a modified Optimizely Web snippet, includ
 wipe: "Remove or quarantine altered snippets, secure project write access, and review payments, wallets and exposed sessions."
 inTheWild: yes
 inTheWildNote: "Report URI captured malicious production snippets and traced related wallet transfers."
+cves:
+  - id: CVE-2026-132224
+    name: Signup-flow control permits malicious Project JavaScript
+    description: The account signup flow permits impersonation of existing customer users and modification of Project JavaScript, distributing attacker code through Optimizely-hosted assets.
 timeline:
   - date: Nov 13, 2026
     title: Archived responses show related scripts before the Optimizely wave
@@ -50,6 +54,9 @@ timeline:
   - date: Nov 18, 2026
     title: Socket publishes static analysis of an archived early payload
     body: The November 16 08:08:15 UTC capture contains a wallet clipper and iOS loader, without the card-skimming module found in later builds. Socket publishes its sample hash and flags an unresolved difference from the reported 08:10 first-build time.
+  - date: Nov 24, 2026
+    title: CISA adds the signup-flow vulnerability to KEV
+    body: CISA tracks the exploited issue as CVE-2026-132224, flags forensic triage and gives covered US federal agencies a November 27 remediation due date.
 checklist:
   - title: Pause affected snippets and preserve evidence
     hint: Check Project JavaScript, experiment custom code, deployed snippets and customer-hosted copies. Save known bad responses, hashes and timestamps before removing the code. Compare each deployed copy to a trusted baseline and check CDN or site caches after cleanup.
@@ -116,6 +123,11 @@ sources:
     url: https://threatlabs.netskope.com/blog/2026/11/optimizely-snippet-compromise
     primary: true
     says: Reports earlier shared-infrastructure sightings and later cached-page requests, separates device traffic from exploitation and treats v8hub.xyz as an unconfirmed investigative lead.
+  - name: CISA Known Exploited Vulnerabilities catalog, November 24
+    url: https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json
+    primary: true
+    says: Lists CVE-2026-132224 for Optimizely Web Experimentation signup-flow impersonation and Project JavaScript modification; flags forensic triage with a November 27 due date.
+
 ---
 
 Report URI found injected code in the Project JavaScript portion of Optimizely Web snippets. That code runs on pages that include the snippet, whether it is loaded from the Optimizely CDN or a customer host. The team observed remote, encoded and inline loaders. Optimizely confirmed exploitation of an Experimentation vulnerability and told BleepingComputer it was in the account signup flow. Its November 17 preliminary report says the signup flaw let new accounts impersonate existing administrator users using public information and repeated email guesses, without stealing or using their passwords. The vendor says no Optimizely administrator account was breached.
@@ -139,3 +151,6 @@ Optimizely excludes Feature Experimentation, SDKs and legacy Full Stack from the
 Socket's November 18 analysis identifies a 19,513-byte archived track.js response captured at 08:08:15 UTC on November 16. Its static decoding found a wallet clipper and an iOS loader, without the card-skimming module described in later versions. This does not contradict the later card-skimmer observations or establish that every served build had identical behavior. The archive capture precedes the reported 08:10 first-build time; Socket says the relationship to the 26 reported builds remains unconfirmed. The analysis did not execute the sample and does not establish successful iOS exploitation or additional visitor losses.
 
 Netskope's November 17 original analysis covers an authorized subset of its customers. It reports webshell[.]lol traffic as early as September 12 and iOS-router traffic on November 10; these are infrastructure sightings, not proof that Optimizely was compromised on those dates or that all earlier traffic shared an entry vector. It observed a final 1688360[.]cc request at 11:38 UTC on November 17 from browser-cached pages, so such a request need not imply a fresh poisoned CDN response after cleanup. Most exploit-domain requests came from desktops; nearly all observed iOS devices were on iOS 27, which the published chains did not target according to Netskope. These findings do not establish successful mobile exploitation, new visitor-loss totals or universal protection outside that customer subset.
+
+
+On November 24, CISA added the signup-flow issue to its Known Exploited Vulnerabilities catalog as **CVE-2026-132224**. The entry describes impersonation of existing customer users followed by Project JavaScript modification and browser execution through trusted hosted assets. It flags forensic triage and sets **November 27** as the remediation due date for covered US federal agencies. This formal exploitation listing does not establish a new attack wave, a new visitor count or additional losses; retain the earlier customer-specific cleanup and exposure guidance.
