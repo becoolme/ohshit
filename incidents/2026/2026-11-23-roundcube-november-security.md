@@ -7,7 +7,7 @@ tags:
 - Webmail
 - Security updates
 summary: Roundcube 1.6.22 and 1.7.7 fix twelve security issues, including Sieve injection, content-filter bypasses and unsafe TLS fallback. Earlier spellcheck and ImageMagick mitigations need another fix. Version 1.6.22 is the final 1.6 release; move to 1.7 for future security updates.
-splash: Roundcube 1.6.x/1.7.x; individual issues depend on plugins, backends, PHP and crafted content.
+splash: Unpatched Roundcube 1.6.x/1.7.x; individual issues depend on plugins, backends, PHP and crafted content.
 wipe: Back up and upgrade to 1.7.7, or use final 1.6.22 while migrating promptly to 1.7.
 inTheWild: unknown
 inTheWildNote: The release announcements do not establish exploitation in the wild.
