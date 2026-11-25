@@ -114,7 +114,7 @@ timeline:
   body: GCP-2026-090 confirms patched runtimes are available and distinguishes automatic updates from rebuild/redeploy requirements. It identifies CVE-2026-126714 alongside the separately tracked CVE-2026-115560.
 checklist:
 - title: Deploy the security release for every runtime
-  hint: Install 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36 or 8.6.0, rebuild images and restart all PHP workers. Verify the effective web runtime, not only php -v. Obtain appliance-specific vendor updates rather than replacing embedded PHP manually.
+  hint: For self-managed PHP, install 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36 or 8.6.0, rebuild images and restart all PHP workers. Verify the effective web runtime, not only php -v. Obtain appliance-specific vendor updates rather than replacing embedded PHP manually.
 - title: Disable persistent backend connections while patching
   hint: For CVE-2026-129289, disable nginx fastcgi_keep_conn / Apache mod_proxy_fcgi enablereuse or equivalent FastCGI reuse. Restrict FPM/LSAPI listeners to trusted front ends. Reading input fully helps, but error paths make it insufficient as the only defense.
 - title: Close the fatal-backtrace paths on PHP 8.5
@@ -130,7 +130,7 @@ checklist:
 - title: Constrain outbound URLs and untrusted parsers
   hint: Normalize HTTPS/FTPS schemes to lowercase and validate every redirect, disabling automatic redirects if needed (128064). Allowlist outbound targets and enforce response-header limits at an egress proxy (127960). Restrict SOAP endpoints/trust WSDL; reject DTDs with encoding-aware parsing (129506), validate arraySize before SOAP decoding and avoid returning unvalidated arrays (15353). Avoid modern DOM saveXml on untrusted documents; saveHtml avoids that XML serializer where HTML output suffices (129501). Bound RFC3986 URI lengths far below 2 GiB before construction/resolution (129438). These measures do not replace the PHP update.
 - title: Check Google-managed runtime delivery
-  hint: App Engine standard PHP 8.2–8.5 and Cloud Run services/functions with automatic base image updates receive patches automatically; redeploy to refresh warm instances immediately. Verify the effective PHP version before retiring the temporary session.upload_progress.enabled=0 setting.
+  hint: App Engine standard PHP 8.2–8.5 receives patches automatically, as do Cloud Run services/functions with automatic base image updates enabled; redeploy to refresh warm instances immediately. Verify the effective PHP version before retiring the temporary session.upload_progress.enabled=0 setting.
 - title: Rebuild Google deployments that do not update automatically
   hint: Rebuild and redeploy App Engine flexible, custom containers, Cloud Run jobs/worker pools and patch-pinned deployments with a patched runtime; redeploy functions without automatic updates, including first-generation functions. PHP 7.2–8.1 has no upstream fix; migrate to a supported runtime. Keep applicable session mitigations until the running workload is patched.
 sources:
