@@ -38,7 +38,7 @@ timeline:
   body: joaosouz4dev reports library latest at 2.4.6 and 2.4.1 no longer listed. The member found no original indicators in a bounded artifact inspection, but could not verify the build source or the authenticated push identity.
 checklist:
 - title: Stop affected processes and identify the exact artifacts
-  hint: Check lockfiles, installed modules, release downloads and local or deployed container digests. Look for npm 2.4.1 and 2.10.82, Docker 2.10.82 and 2.10.83, and library nightlies obtained between November 15 22:35 UTC and November 16 03:53 UTC. Also check 2.4.3 and related pipeline artifacts as described in StepSecurity’s report.
+  hint: Check lockfiles, installed modules, release downloads and local or deployed container digests. Look for npm 2.4.1 and 2.10.82, Docker 2.10.82 and 2.10.83, and library nightlies obtained between November 15 22:35 UTC and November 16 03:53 UTC. Also check 2.4.3 and related pipeline artifacts; StepSecurity additionally recommends checking library 2.4.2 as a precaution, without establishing it as malicious.
 - title: Rebuild using the earlier releases and pin transitive dependencies
   hint: Use library 2.4.0 and server 2.10.81. Set an npm override for @wppconnect-team/wppconnect if it is transitive, recreate the lockfile from a trusted baseline and verify the resolved versions in CI. If using Docker, verify that 2.10.81 matches sha256:7c882ee934a5663a107b5f5a0382bfd8b1fb95150cd21ab35cd8ff9cea70d1f8 instead of trusting a floating tag.
 - title: Rotate secrets and revoke WhatsApp sessions
@@ -76,7 +76,7 @@ sources:
   says: Reports library removal and limited marker checks; build source, push identity and the access/publishing investigation remain unresolved.
 ---
 
-The module runs on import in the WhatsApp automation library and at startup in the server. It reads environment variables, files such as `.env` and `config.json`, and WhatsApp token files from the working directory. It looks up the host’s public IP, then attempts to send collected data to a Telegram bot. A server dependency range of `^2.3.6` for the library also allows a vulnerable install unless the resolved version is pinned.
+The module runs on import in the WhatsApp automation library and at startup in the server. It reads environment variables, files such as `.env` and `config.json`, and WhatsApp token files from the working directory. It looks up the host’s public IP, then attempts to send collected data to a Telegram bot. At the time of the malicious release, server 2.10.82’s `^2.3.6` library dependency could also resolve the malicious library unless pinned; the current registry state is described below.
 
 StepSecurity found that the library’s valid npm provenance pointed to the compromised build, while the later Git tag pointed to different source. It verified the two affected Docker images and a GitHub nightly artifact. The floating image tags `latest`, `2` and `2.10` pointed to the 2.10.83 image until 03:54 UTC on November 16. Treat the `main` tag before 07:31 UTC that day as unverified. Package pipeline logs also reference library 2.4.3 and server 2.10.83, which were absent from the npm registry metadata examined. Check locally cached artifacts even after the registry rollback.
 
