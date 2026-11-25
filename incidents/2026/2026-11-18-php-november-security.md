@@ -3,6 +3,7 @@ title: PHP November security releases fix conditional RCE, FPM request smuggling
 headline: Another set of pipes needs checking
 level: 3
 date: '2026-11-18'
+updated: '2026-11-25'
 tags:
 - PHP
 - RCE
@@ -105,6 +106,12 @@ timeline:
 - date: Nov 19, 2026
   title: PHP publishes security releases and detailed advisories
   body: Fixes arrive in 8.5.13, 8.4.28, 8.3.37 and 8.2.36; the new 8.6.0 also includes them.
+- date: Nov 21, 2026
+  title: Google publishes patched PHP runtime images
+  body: App Engine and Cloud Run release notes list 8.2.36 / 8.3.37 / 8.4.28 / 8.5.13; automatic delivery depends on the product and update policy, while other deployments require redeployment.
+- date: Nov 23, 2026
+  title: Google clarifies PHP patch delivery and session flaws
+  body: GCP-2026-090 confirms patched runtimes are available and distinguishes automatic updates from rebuild/redeploy requirements. It identifies CVE-2026-126714 alongside the separately tracked CVE-2026-115560.
 checklist:
 - title: Deploy the security release for every runtime
   hint: Install 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36 or 8.6.0, rebuild images and restart all PHP workers. Verify the effective web runtime, not only php -v. Obtain appliance-specific vendor updates rather than replacing embedded PHP manually.
@@ -122,6 +129,10 @@ checklist:
   hint: For 129538, set cgi.fix_pathinfo=0 only after checking routing compatibility, or correct and validate all script/PATH_INFO mappings. For 129292, disable full HTML status or use a consumer treating all fields as untrusted text; restricting operator access alone is incomplete.
 - title: Constrain outbound URLs and untrusted parsers
   hint: Normalize HTTPS/FTPS schemes to lowercase and validate every redirect, disabling automatic redirects if needed (128064). Allowlist outbound targets and enforce response-header limits at an egress proxy (127960). Restrict SOAP endpoints/trust WSDL; reject DTDs with encoding-aware parsing (129506), validate arraySize before SOAP decoding and avoid returning unvalidated arrays (15353). Avoid modern DOM saveXml on untrusted documents; saveHtml avoids that XML serializer where HTML output suffices (129501). Bound RFC3986 URI lengths far below 2 GiB before construction/resolution (129438). These measures do not replace the PHP update.
+- title: Check Google-managed runtime delivery
+  hint: App Engine standard PHP 8.2–8.5 and Cloud Run services/functions with automatic base image updates receive patches automatically; redeploy to refresh warm instances immediately. Verify the effective PHP version before retiring the temporary session.upload_progress.enabled=0 setting.
+- title: Rebuild Google deployments that do not update automatically
+  hint: Rebuild and redeploy App Engine flexible, custom containers, Cloud Run jobs/worker pools and patch-pinned deployments with a patched runtime; redeploy functions without automatic updates, including first-generation functions. PHP 7.2–8.1 has no upstream fix; migrate to a supported runtime. Keep applicable session mitigations until the running workload is patched.
 sources:
 - name: PHP November 18 advance notice and November 19 releases
   url: https://www.php.net/archive/2026.php
@@ -195,6 +206,26 @@ sources:
   url: https://github.com/php/php-src/security/advisories/GHSA-68fq-fh7h-f8gr
   says: Replacing a signed archive and changing its signature to a keyless digest can bypass its trusted sidecar public key. Loading the modified archive can execute code; independently protect the key.
   primary: true
+- name: Google Cloud GCP-2026-090, November 23 update
+  url: https://docs.cloud.google.com/support/bulletins#gcp-2026-090
+  says: Patched runtime availability, product-specific delivery, unsupported versions and the distinction between the two session CVEs.
+  primary: true
+- name: App Engine standard PHP November 21 release notes
+  url: https://docs.cloud.google.com/appengine/docs/standard/php-gen2/release-notes
+  says: Automatic PHP runtime patch delivery and redeployment to refresh warm instances.
+  primary: true
+- name: App Engine flexible PHP November 21 release notes
+  url: https://docs.cloud.google.com/appengine/docs/flexible/php/release-notes
+  says: Rebuild and redeploy before removing the temporary upload-progress mitigation.
+  primary: true
+- name: Cloud Run November 21 release notes
+  url: https://docs.cloud.google.com/run/docs/release-notes
+  says: Automatic base image updates versus custom containers, jobs, worker pools and deployments without automatic updates.
+  primary: true
+- name: Cloud Run functions November 21 release notes
+  url: https://docs.cloud.google.com/functions/docs/release-notes
+  says: Automatic delivery when enabled; otherwise redeploy functions to obtain the patched runtime.
+  primary: true
 ---
 
 This is the November release batch, first announced on November 18, rather than a second report of October’s [PHP2Shell incident](/incidents/php2shell/). It also includes the separately tracked [CVE-2026-115560 serializer mismatch](/incidents/php-session-upload-progress/), whose October disclosure date and existing URL are preserved. The CVE list here covers the 16 other advisories verified for this batch, without duplicating that identifier.
@@ -212,3 +243,5 @@ CVE-2026-129481 is another incomplete stale-state fix, in PHP 8.3–8.5 session 
 The remaining advisories cover interrupted file-session writes, signed-Phar downgrade, CGI path correction, modern DOM and SOAP parsing, status-page injection, outbound TLS scheme handling and oversized URI/HTTP-header processing. Their conditions and temporary measures are listed above. In particular, PHP-FPM and mod_php are outside the CGI PATH_INFO flaw; legacy DOMDocument is outside the modern DOM serializer flaw. Do not turn the presence of an extension into an assertion that every application is remotely exploitable.
 
 PHP’s current release notes and each advisory are the authority for availability. Some advisory prose still says to upgrade when available; the November 19 release announcements confirm the versions have shipped. The October PHP2Shell versions remain historically correct fixes for the original CVEs, but do not cover these newly published incomplete-fix paths.
+
+Google’s November 23 update covers this November session-file flaw and the separate October serializer mismatch; it does not merge their identities or establish exploitation. Managed-runtime patch availability is not proof that a pinned, custom or still-warm deployment is already running the fix. Disabling upload progress addresses the primary upload-progress route for CVE-2026-126714, but applications that independently put attacker-controlled data in file sessions still need the patch or a suitable session backend.
