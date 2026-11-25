@@ -6,7 +6,7 @@ tags:
 - LALIGA
 - data breach
 - shared platform
-summary: LALIGA confirms personal-data theft from a shared fan-services platform. CD Tenerife also confirms affected fans and individual email notifications, with official contact routes. The league reports November 16 containment; affected-user totals and the entry mechanism remain undisclosed.
+summary: LALIGA confirms personal-data theft from a shared fan-services platform. CD Tenerife also confirms affected fans and individual email notifications, with official contact routes. The league reports November 16 containment; affected-user totals and the entry mechanism remain undisclosed. Notices warn of phishing.
 splash: Registered users of the affected LALIGA fan-services platform and participating clubs; no complete affected-user list is public.
 wipe: Check your club's official notice, verify unexpected messages independently, and reject requests for passwords, codes or payments.
 inTheWild: 'yes'
