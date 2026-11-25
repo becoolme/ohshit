@@ -42,7 +42,7 @@ checklist:
   - title: 更换已启用的认证器并保存新恢复码
     hint: "在 https://hex.pm/dashboard/security 选择 Authenticator App → Setup New App，并用新条目生成的验证码完成验证。此操作生成新密钥和恢复码；确认并保存新恢复码。组织策略禁止关闭 2FA 时也可这样操作，通过 GitHub 注册且启用了 2FA 的用户同样适用。"
   - title: 重新认证 Hex 客户端
-    hint: "服务端已轮换会话及访问令牌签名密钥，用户被登出。执行 mix hex.user auth；使用 rebar3 的用户执行 rebar3 hex user auth。GitHub 注册用户也需要重新认证。求助时不要公开令牌或本地凭据文件内容。"
+    hint: "服务端已轮换会话及访问令牌签名密钥，用户被登出。执行 mix hex.user auth；使用 rebar3 的用户执行 rebar3 hex user auth。GitHub 注册用户也需要重新认证。若出现 Failed to exchange API key for OAuth token，维护者要求先用 mix hex.user whoami 收集诊断信息，再移除 ~/.hex/hex.config 并重新执行 mix hex.user auth。移除前保留受保护的备份，并记下自定义仓库设置；仅恢复已经核查的设置。求助时不要公开令牌或凭据文件内容。"
   - title: 使用官方仓库，并在签名更新发布后安装
     hint: "仅从 repo.hex.pm 获取包；检查本地和 CI 的仓库、镜像配置，签名密钥轮换完成前停用第三方镜像。关注官方事件报告和 Hex releases，确认新签名系统发布。相应版本可用后执行 mix local.hex --force，并更新使用中的 rebar3 或 Gleam。仅升级到目前已有的客户端，不能证明签名密钥已更换。"
   - title: 复查组织访问及私有包暴露情况
