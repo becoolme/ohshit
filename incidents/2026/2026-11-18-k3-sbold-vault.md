@@ -9,7 +9,7 @@ tags:
 summary: K3’s November 19 postmortem attributes the sBOLD drain to donation-inflated shares and a leftover router approval. It reports about 3.43M BOLD lost in 99 transactions. Liquity V2 and 1inch were not exploited. Recovery commitments are not confirmed repayments; the plan contains conflicting details.
 splash: Depositors in K3 Capital’s independent Ethereum sBOLD vault; Liquity V2 is separately scoped
 wipe: Do not deposit into sBOLD; retain position records and await K3’s verified remediation and recovery instructions.
-inTheWild: true
+inTheWild: 'yes'
 inTheWildNote: K3 confirms malicious activity and a pause; researchers report the vault drain.
 timeline:
 - date: Nov 18, 2026
