@@ -65,7 +65,7 @@ timeline:
   body: GCP-2026-090 确认已修复运行时可用，并区分自动更新与重建、重新发布要求；其中列出 CVE-2026-126714 以及单独追踪的 CVE-2026-115560。
 checklist:
 - title: 为每个运行时部署安全版本
-  hint: 安装 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36 或 8.6.0，重建镜像并重启全部 PHP worker。核对实际 Web 运行时，不要只看 php -v；设备使用对应厂商更新，不要手动替换嵌入式 PHP。
+  hint: 自管 PHP 应安装 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36 或 8.6.0，重建镜像并重启全部 PHP worker。核对实际 Web 运行时，不要只看 php -v；设备使用对应厂商更新，不要手动替换嵌入式 PHP。
 - title: 修复前关闭持久后端连接
   hint: 针对 CVE-2026-129289，关闭 nginx fastcgi_keep_conn、Apache mod_proxy_fcgi enablereuse 或等效 FastCGI 复用。FPM/LSAPI 监听器只允许可信前端访问。读完输入有帮助，但错误路径使其不足以作为唯一防线。
 - title: 关闭 PHP 8.5 的致命错误回溯路径
