@@ -11,7 +11,7 @@ summary: VMSA-2026-0011 fixes 23 flaws across VMware products, including network
 splash: Unpatched VMware management services, hosts and guests; Avi issues require authenticated or administrative access.
 wipe: Apply the product-specific matrix; update guest Tools separately and track the two ESX 9.0 pending fixes.
 inTheWild: unknown
-inTheWildNote: Reviewed vendor sources do not establish exploitation of this batch; older vCenter CVE differs.
+inTheWildNote: No exploitation established for this batch; the earlier vCenter CVE is distinct.
 cves:
 - id: CVE-2026-123903
   score: 9.8
@@ -188,4 +188,4 @@ Use the advisory’s response matrices over simplified FAQ summaries. ESX 9.0 st
 
 Avi 32.1.4 fixes all eight Avi CVEs. Its 31.2.3, 30.2.7 and 123926-specific hotfixes cover only the listed subsets. The FAQ extends 32.1.2-2p3 to 31.x for CVE-2026-123926, while the matrix explicitly lists 32.1.1–32.1.2; 31.x operators should confirm their upgrade path with Support instead of treating the hotfix as universal. Earlier 30.x and 22.x are unaffected by that one CVE, not by the entire batch.
 
-There is no batch-wide workaround. Despite the FAQ’s general wording, the advisory links KB 463535 for the two ESXi 8.x I/O filter RCEs; its full firewall procedure is reproduced in the checklist. Patching vCenter alone leaves ESX, desktop hypervisors and in-guest Tools outstanding. Already-patched vCenter 8.0 U3m need not be reinstalled, but vCenter 9.1 requires 9.1.2. VCF 5.x requires asynchronous component patching even if SDDC Manager is already 5.2.5. No generic version checker is supplied because product build identifiers, pending fixes and partial Avi coverage cannot be reduced to one safe threshold.
+There is no batch-wide workaround. Despite the FAQ’s general wording, the advisory links KB 463535 for the two ESXi 8.x I/O filter RCEs; its full firewall procedure is reproduced in the checklist. Patching vCenter alone leaves ESX, desktop hypervisors and in-guest Tools outstanding. Already-patched vCenter 8.0 U3m need not be reinstalled, but vCenter 9.1 requires 9.1.2. VCF 5.x requires asynchronous component patching even if SDDC Manager is already 5.2.5.

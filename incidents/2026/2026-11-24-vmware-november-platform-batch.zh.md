@@ -3,7 +3,7 @@ title: VMware 修复 23 个平台漏洞，包括 ESX 网络 RCE 及另一处 vCe
 summary: VMSA-2026-0011 覆盖 VMware 多个产品的 23 个漏洞，包括网络可达 ESX 即可利用的代码执行，以及新的 vCenter 认证绕过。其他漏洞分别需要客户机、备份仓库或管理员权限。ESX 9.0 的两个已有权限漏洞仍待补丁；所读来源未确认本批漏洞遭利用。
 splash: 未修补的 VMware 管理服务、宿主机及客户机；Avi 漏洞需要已认证或管理员访问。
 wipe: 按各产品修复矩阵更新，单独升级客户机 Tools，并跟踪 ESX 9.0 仍待修复的两个漏洞。
-inTheWildNote: 所读厂商来源未确认本批漏洞遭利用；此前 vCenter 漏洞是另一处问题。
+inTheWildNote: 未确认本批漏洞遭在野利用；此前 vCenter CVE 是另一处漏洞。
 cves:
 - name: vCenter 认证绕过
   description: 网络可达 vCenter 即可通过 Directory Service 获得未授权访问，无需 Enhanced Linked Mode。
@@ -86,7 +86,7 @@ sources:
 - says: Telco vCenter 8.0 U3m 适用范围、TCP 5.0.x／5.1.x 的 ESX 80U3m，以及未列版本的 Support 指引。
 ---
 
-Broadcom 在 11 月 24 日发布的 VMSA-2026-0011 是包含 23 个漏洞的新批次。vCenter 绕过 CVE-2026-123903 与此前已遭利用的 [CVE-2026-123890 事件](/zh/incidents/vcenter-directory-session-bypass/)不同。L3 基于广泛部署平台中的严重漏洞；所读来源未确认本批漏洞遭在野利用、受害数量或公开利用程序。不能将此前事件的利用状态套到这些 CVE 上。
+Broadcom 在 11 月 24 日发布的 VMSA-2026-0011 是包含 23 个漏洞的新批次。vCenter 绕过 CVE-2026-123903 与此前已遭利用的 [CVE-2026-123890 事件](/zh/incidents/vcenter-directory-session-bypass/) 不同。L3 基于广泛部署平台中的严重漏洞；所读来源未确认本批漏洞遭在野利用、受害数量或公开利用程序。不能将此前事件的利用状态套到这些 CVE 上。
 
 最紧急的路径需要网络访问 ESX 的 I/O 过滤服务或 vCenter 的 Directory Service，不需要先进入客户机，也不需要 Enhanced Linked Mode。其他路径各有前提：备份仓库访问、已控制的 vpxd 账户、客户机管理员或 VMX 权限、ESX root 权限，或 Avi 已认证／管理员访问。XHCI 代码执行在 ESX 中受 VMX 沙箱限制，Workstation／Fusion 则可能影响宿主机。这不代表已有组合这些漏洞的利用链演示。
 
@@ -94,4 +94,4 @@ Broadcom 在 11 月 24 日发布的 VMSA-2026-0011 是包含 23 个漏洞的新�
 
 Avi 32.1.4 修复全部八个 Avi CVE。31.2.3、30.2.7 及仅针对 123926 的热补丁只覆盖所列子集。FAQ 将 CVE-2026-123926 的 32.1.2-2p3 扩展至 31.x，但矩阵明确列出的范围是 32.1.1–32.1.2；31.x 运维人员应向 Support 核实升级路径，不能将热补丁视为通用修复。30.x 与 22.x 不受这一个 CVE 影响，不代表不受整批漏洞影响。
 
-没有覆盖整批漏洞的临时措施。尽管 FAQ 的措辞较笼统，正式公告仍为 ESXi 8.x 的两个 I/O 过滤 RCE 链接到 KB 463535；清单列出了完整防火墙流程。只修补 vCenter 会遗漏 ESX、桌面虚拟化产品及客户机内的 Tools。已更新至 vCenter 8.0 U3m 的实例无需重装，但 vCenter 9.1 需要 9.1.2。即使 SDDC Manager 已为 5.2.5，VCF 5.x 仍须异步修补各组件。产品构建编号、待修补漏洞及 Avi 局部覆盖无法归结为单一安全阈值，因此不提供通用版本检查器。
+没有覆盖整批漏洞的临时措施。尽管 FAQ 的措辞较笼统，正式公告仍为 ESXi 8.x 的两个 I/O 过滤 RCE 链接到 KB 463535；清单列出了完整防火墙流程。只修补 vCenter 会遗漏 ESX、桌面虚拟化产品及客户机内的 Tools。已更新至 vCenter 8.0 U3m 的实例无需重装，但 vCenter 9.1 需要 9.1.2。即使 SDDC Manager 已为 5.2.5，VCF 5.x 仍须异步修补各组件。
