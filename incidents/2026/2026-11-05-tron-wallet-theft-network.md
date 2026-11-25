@@ -2,12 +2,12 @@
 title: Research links TRON wallet thefts to a shared fee network; iPhone cause remains unproven across victims
 level: 4
 date: '2026-11-05'
-updated: '2026-11-14'
+updated: '2026-11-25'
 tags:
 - TRON
 - Wallet theft
 - Seed phrases
-summary: Bitquery’s November 12 update estimates at least 5.42M USDT taken from 454 TRON addresses through November 11, including 1.36M after November 4. PublicAML’s November 5–7 estimate covers overlapping activity. One theft matches a published iPhone account. The wider causes remain unknown.
+summary: Bitquery’s November 23 revision estimates at least 5.99M USDT taken from 535 TRON addresses through November 21, with 68 linked collectors. A third wave took $571K from 84 wallets. These are unverified research estimates; devices and causes remain unknown for most victims.
 splash: Self-custody wallets whose keys or seed phrases may be exposed; no platform-wide iPhone or Trust Wallet compromise is established.
 wipe: Use a trusted device and a new seed for exposed wallets; preserve evidence, report stolen transfers and keep mobile systems updated.
 inTheWild: 'yes'
@@ -23,8 +23,7 @@ timeline:
   body: Six reports account for about $127,000 in reported losses. Overlap with the Bitquery cluster is unknown.
 - date: Nov 5, 2026
   title: Bitquery publishes its investigation and correction
-  body: The fee wallet received its first money before becoming live 19 minutes later, correcting an earlier sequence. Other-chain valuations use October 25 closing prices; later transfers
-    and TON losses are outside its measured scope.
+  body: The fee wallet received its first money before becoming live 19 minutes later, correcting an earlier sequence. Other-chain valuations use October 25 closing prices; later transfers and TON losses are outside its measured scope.
 - date: Nov 6, 2026
   title: Trust Wallet publishes iOS safety guidance
   body: The company recommends current iOS and keeping recovery phrases and private keys out of phone notes and images. Its guidance gives no case-specific finding.
@@ -34,25 +33,23 @@ timeline:
 - date: Nov 12, 2026
   title: Bitquery expands its TRON dataset
   body: The revised analysis estimates at least 5.42M USDT across 454 TRON addresses through November 11. It attributes 1.36M USDT to activity after November 4.
+- date: Nov 23, 2026
+  title: Bitquery adds a third wave and revises cumulative estimates
+  body: The November 12–21 wave adds 13 collectors and 84 affected wallets, with $571K taken. The cumulative estimate is at least 5.99M USDT from 535 TRON addresses; repeated drains mean wave counts cannot simply be added.
 checklist:
 - title: Respond to suspected seed exposure across all chains
-  hint: From a trusted device, create a wallet with a new seed and secure any remaining assets on every chain using the exposed seed. Do not reuse an exposed seed on a reinstalled app.
-    Keep seed phrases out of phone photos, notes, screenshots and cloud backups. Install current mobile OS and wallet updates through official channels; this report does not establish
-    one universal vulnerable app or a new vendor-fixed version.
+  hint: From a trusted device, create a wallet with a new seed and secure any remaining assets on every chain using the exposed seed. Do not reuse an exposed seed on a reinstalled app. Keep seed phrases out of phone photos, notes, screenshots and cloud backups. Install current mobile OS and wallet updates through official channels; this report does not establish one universal vulnerable app or a new vendor-fixed version.
 - title: Preserve and report the theft record
-  hint: Keep wallet addresses, transaction hashes, times, amounts and device evidence. Promptly report through the established channels of Tether and any exchange that received the transfers;
-    freezing or recovery is not guaranteed. Unknown TRX top-ups followed by rapid outflows warrant investigation, but dust/address-poisoning and legitimate exchange sweeps also exist.
-    Never send seed phrases or fees to unsolicited recovery contacts.
+  hint: Keep wallet addresses, transaction hashes, times, amounts and device evidence. Promptly report through the established channels of Tether and any exchange that received the transfers; freezing or recovery is not guaranteed. Unknown TRX top-ups followed by rapid outflows warrant investigation, but dust/address-poisoning and legitimate exchange sweeps also exist. Never send seed phrases or fees to unsolicited recovery contacts.
 - title: Use the complete role-labelled address record
-  hint: 'Fee wallet TUYFAa8hHjeEW6bPqBJ4v3RjQR2uKM1Svk; matched-case collector TNJPXRWEptdSzbC1pYGp8suyTao4qddJe6; Ethereum hub 0x007147f598748749486041f5798b0b1379e13097. Use all 20 addresses and two transaction hashes in Bitquery’s updated record, with their stated roles. The record includes legitimate exchange, bridge and mint contracts and uncertain endpoints. Preserve transaction evidence and verify labels. A match alone cannot prove ownership, compromise or a common actor.'
+  hint: Fee wallet TUYFAa8hHjeEW6bPqBJ4v3RjQR2uKM1Svk; matched-case collector TNJPXRWEptdSzbC1pYGp8suyTao4qddJe6; Ethereum hub 0x007147f598748749486041f5798b0b1379e13097. Use all 23 addresses and two transaction hashes in Bitquery’s updated record, with their stated roles. The record includes legitimate exchange, bridge and mint contracts and uncertain endpoints. Preserve transaction evidence and verify labels. A match alone cannot prove ownership, compromise or a common actor.
 - title: Trace the additional November 5–7 collectors
   hint: PublicAML lists new collectors TJbCvACEpEMVwi2zYGXuoT2HSBnFLosVLz, TAgpYPQNdA9SCFfe2RgkaH8kkb7JZTaDcV and TJCY7r7shYmy3yWncGB9MvwWa8QS6du2C5. Its 35-address record also lists intermediaries, affected wallets and an unlabelled recipient. Check the stated roles before acting. A match alone cannot establish compromise or ownership.
 sources:
 - name: Bitquery original TRON and cross-chain investigation
   url: https://www.bitquery.io/investigations/iphone-wallet-drain-tron-usdt
   primary: true
-  says: November 5 analysis and November 12 update, with revised wallet-level estimates, cross-chain tracing, role-labelled addresses and attribution limits.
-    Figures are not independently confirmed.
+  says: November 5 investigation, November 12 and November 23 revisions, counting rules and role-labelled indicators. Latest estimates are not independently confirmed; device and app attribution remain limited.
 - name: Security Alliance incident-response roundup
   url: https://radar.securityalliance.org/seal-weekly-stats-28-oct-3-nov-2026/
   primary: true
@@ -101,3 +98,15 @@ SEAL’s November 4 report records six iOS wallet-compromise reports and about $
 | `TJCY7r7shYmy3yWncGB9MvwWa8QS6du2C5` | Largest of the new November 7 collectors |
 | `0cd0f9f1a5526f222f74fd3c50879e260b78b2c61c90bb5bbe58d5a753ad618b` | Transaction moving about 601,752 USDT |
 | `0x774a59948c17dc159727601c411113b838e1bbee` | Recipient on Ethereum via USDT0 |
+
+**November 23 revision.** Bitquery now estimates at least 5.99M USDT taken from 535 TRON addresses by 68 linked collectors between October 5 and November 21. Its newly measured November 12–21 wave involves 84 wallets, 13 collectors and $571K, including about $329K taken on November 20, 24 seconds after a fee top-up. It counted original victims behind 22 relay transfers rather than counting relays as extra victims. Four wallets across the investigation were drained again after receiving new funds. The totals overlap earlier reports, including PublicAML; do not add them together or equate addresses with people. These remain Bitquery’s unverified estimates, not a vendor-confirmed loss census.
+
+The researcher last observed the fee wallet paying for thefts on November 20 and traced thefts through November 21, with its data cutoff on the morning of November 23 UTC. This does not establish that the campaign has ended. The third wave counts USDT only, excludes untraced bridge inflows and other possible victims, and does not check final destinations beyond USDT0. The older separate estimate of at least $103K on eight other chains retains its October 25 valuation basis. A fee link does not establish one operator, the affected device or an app vulnerability. Bitquery discusses Confiant’s MoldyRoost report but has no wallet-address evidence linking that advertising campaign to these thefts. No platform-wide Trust Wallet compromise or common iPhone exploit is established.
+
+The expanded role-labelled record adds these three addresses; the earlier 20 addresses and two transaction hashes above remain relevant:
+
+| Address | Role in Bitquery’s November 23 record |
+| --- | --- |
+| `TEFY7DSapNYDtcZu84DzCpQh4Rhq6BuLB7` | Largest third-wave collector, November 20 |
+| `TF4JFYMYFoLTPpiJ2CMnmNMdZth754zz4A` | Relay used November 21 |
+| `TUAtYvYgHH72UYZbjdgXpcpynbPtCix6K5` | Third-wave exit to USDT0 |
