@@ -32,7 +32,7 @@ checklist:
 - title: 保留并报告盗币记录
   hint: 保留钱包地址、交易哈希、时间、金额和设备证据。通过 Tether 及接收资金交易所的既有渠道尽快报告；不保证冻结或追回。陌生 TRX 充值后迅速转出值得调查，但也存在粉尘／地址投毒及合法交易所归集。不要向陌生追回联系人提供助记词或付款。
 - title: 使用完整且标明角色的地址记录
-  hint: 手续费钱包 TUYFAa8hHjeEW6bPqBJ4v3RjQR2uKM1Svk；匹配案例的归集地址 TNJPXRWEptdSzbC1pYGp8suyTao4qddJe6；以太坊中枢 0x007147f598748749486041f5798b0b1379e13097。按各自角色核对 Bitquery 更新清单中的 20 个地址及两笔交易哈希。记录包含合法交易所、跨链桥、铸币合约及归属未知的终点。保留交易证据并核实标签。匹配本身不证明归属、入侵或同一攻击者。
+  hint: 手续费钱包 TUYFAa8hHjeEW6bPqBJ4v3RjQR2uKM1Svk；匹配案例的归集地址 TNJPXRWEptdSzbC1pYGp8suyTao4qddJe6；以太坊中枢 0x007147f598748749486041f5798b0b1379e13097。按各自角色核对 Bitquery 更新清单中的 23 个地址及两笔交易哈希。记录包含合法交易所、跨链桥、铸币合约及归属未知的终点。保留交易证据并核实标签。匹配本身不证明归属、入侵或同一攻击者。
 - title: 追踪 11 月 5 至 7 日新增归集地址
   hint: 新归集地址为 TJbCvACEpEMVwi2zYGXuoT2HSBnFLosVLz、TAgpYPQNdA9SCFfe2RgkaH8kkb7JZTaDcV 和 TJCY7r7shYmy3yWncGB9MvwWa8QS6du2C5。PublicAML 的 35 地址清单另列中转地址、受影响钱包及归属未明的接收方。按角色核对，不要将清单用于统一封锁。命中本身不证明失陷或归属。
 sources:
