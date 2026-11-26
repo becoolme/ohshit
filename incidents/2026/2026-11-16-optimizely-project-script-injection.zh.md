@@ -89,7 +89,7 @@ checklist:
   - title: 核对归档项目、恢复记录及登录页暴露
     hint: 包括仍在加载 cdn.optimizely.com 或 cdn-pci.optimizely.com 片段的退役网站；向客户成功经理提供项目 ID，索取准确窗口。检查项目 History 中由 Optimizely Support 标记的恢复，确认可信代码和归档状态。保留覆盖 11 月 13 日准备活动及 11 月 16 日代码投放的日志。若用户在事件期间通过 login.optimizely.com 登录，请向 Support 索取评估结果；CSP 当时仅报告，页面提供过恶意代码，尚不能据此确认数据被窃。恢复片段时先在预发布环境测试，再逐步扩展到低风险页面及关键流程。
   - title: 强化片段控制并设置独立停用开关
-    hint: 收紧代码编辑角色，通过 Opti ID 要求 SSO 和多因素认证，吊销无法解释用途的令牌；用 webhook 或定时 API 检查监测变更，在自动告警就绪前每周查 History。部署独立于 Optimizely 的停用开关并测试。先用 CSP 报告覆盖结账、登录和表单，再强制执行精确来源策略；connect-src 可限制数据外传，不能阻止页面内钱包地址替换。PCI CDN 在本次事件中也分发了恶意改动，不能替代变更控制。未经测试的敏感页面移除片段，卡片输入使用托管支付字段；会话 Cookie 设置 HttpOnly、Secure、SameSite=Lax。
+    hint: 收紧代码编辑角色，通过 Opti ID 要求 SSO 和多因素认证，吊销无法解释用途的令牌；用 webhook 或定时 API 检查监测变更，在自动告警就绪前每周查 History。部署独立于 Optimizely 的停用开关并测试。先用 CSP 报告覆盖结账、登录和表单，再强制执行精确来源策略；connect-src 可限制数据外传，不能阻止页面内钱包地址替换。PCI CDN 在本次事件中也分发了恶意改动，不能替代变更控制。未运行实验的敏感页面移除片段，卡片输入使用托管支付字段；会话 Cookie 设置 HttpOnly、Secure、SameSite=Lax。
 sources:
   - name: Optimizely 官方安全事件状态
     says: 确认 Experimentation 漏洞遭利用、修复上线、注入代码移除及账户保护措施。
