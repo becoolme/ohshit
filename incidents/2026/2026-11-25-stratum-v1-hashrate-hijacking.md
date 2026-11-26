@@ -4,7 +4,7 @@ level: 4
 date: '2026-11-25'
 tags: [crypto, mining, network hijacking]
 summary: Braiins reports attackers diverting miners' work through forged internet routes and unauthenticated Stratum V1 connections. Its November 20 episodes affected 1,050–1,600 sites each. Protect every primary and backup connection with verified Stratum V2 or TLS; a firmware upgrade alone is insufficient.
-splash: Miners using unauthenticated Stratum V1 over the internet, including plaintext backups or TLS without certificate validation.
+splash: Plain Stratum V1 or unverified TLS links, including backups; attackers must control the miner-to-pool network path.
 wipe: Authenticate every pool connection with Stratum V2 or validated TLS; use a protected local proxy for unsupported miners.
 inTheWild: 'yes'
 inTheWildNote: Braiins documents intercepted sessions and forged routes, without a pool-system breach.

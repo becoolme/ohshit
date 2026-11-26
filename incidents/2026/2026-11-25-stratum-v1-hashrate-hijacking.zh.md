@@ -1,7 +1,7 @@
 ---
 title: Braiins 确认路由劫持截走比特币矿机通过明文 Stratum V1 提交的算力
 summary: Braiins 报告，攻击者利用伪造互联网路由及缺乏身份验证的 Stratum V1 连接截走矿机算力，11 月 20 日每轮涉及 1,050–1,600 个站点。主连接与备用连接均须使用验证身份的 Stratum V2 或 TLS，单独升级固件不足以防护。
-splash: 通过互联网使用未经认证 Stratum V1 的矿机，包括明文备用连接及不校验证书的 TLS。
+splash: 使用明文 Stratum V1 或不验证证书的 TLS 连接（包括备用项）的矿机；攻击者须控制矿机到矿池的网络路径。
 wipe: 每个矿池连接均使用验证身份的 Stratum V2 或 TLS；不支持的矿机通过受保护本地代理接入。
 inTheWildNote: Braiins 记录了挖矿会话遭截获及伪造路由，矿池系统未遭入侵。
 cves: []
