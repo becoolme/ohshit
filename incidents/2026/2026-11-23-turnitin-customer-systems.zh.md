@@ -13,7 +13,7 @@ timeline:
   body: 大学 OIT 称未发现本校学生、教师、作业或其他数据暴露迹象，已加强 Canvas 集成监控；这不代表所有 Turnitin 客户的情况。
 - date: 11月25日 18:06 UTC
   title: Instructure 称内部调查暂无可疑活动证据
-  body: Instructure 称已完成内部排查，目前未发现可疑活动证据，将继续监控。这是其自身评估，不代表 Turnitin 已全面排除影响。
+  body: Instructure 称已开展内部排查，目前未发现可疑活动证据，将继续监控。这是其自身评估，不代表 Turnitin 已全面排除影响。
 checklist:
 - title: 索取针对本机构的影响评估
   hint: 通过既有 Turnitin 支持或客户联系人，询问本机构涉及的产品、数据类别、活动日期及是否需要特定处置。保存 11 月 23 日信函及后续回复；没有已公布的受影响人数可以证明本机构的暴露情况。
