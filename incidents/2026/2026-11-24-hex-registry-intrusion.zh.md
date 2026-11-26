@@ -10,6 +10,8 @@ oneLiner: "未认证请求提交伪造的 Elixir struct，错误报告检查这�
 cves:
   - name: 未认证 Erlang term 反序列化 RCE
     description: "hexpm 请求解析器在路由和认证之前接受攻击者控制的 struct 映射。Inspect 和 Enumerable 协议分派最终触达命令执行回调；CNA 给出 CVSS 4.0 10.0 分。"
+  - name: 伪造 DBConnection 流回调利用组件
+    description: "db_connection 从 1.1.0 至 2.10.3 之前版本可调用伪造流中的 :log 回调。利用要求下游组件解码不可信 struct 并枚举或检查结果，库本身不能单独被利用。CVSS 4.0 为 8.9 分。"
 fixed:
   - product: 托管 hex.pm 服务
     status: "18:31 UTC 前已全部部署补丁"
@@ -17,6 +19,8 @@ fixed:
     status: "部署此修复或包含它的构建"
   - product: 注册表签名密钥更换／新版 Hex 客户端
     status: "已公布计划；含新签名系统的版本仍待发布"
+  - product: db_connection 库加固
+    status: "封堵这条流回调利用路径；不修复不安全的下游解码器"
 timeline:
   - date: 2016年2月23日
     title: 请求解码器移除 struct 安全检查
@@ -36,6 +40,9 @@ timeline:
   - date: 2026年11月24日 13:48 UTC
     title: Hex 公布 CVE
     body: "事件报告日期为 11 月 24 日，确认实际利用，同时区分尚未证实的数据库读取和包篡改。"
+  - date: 2026年11月24日
+    title: DBConnection 发布针对攻击链中流回调的加固
+    body: "GHSA-gmmq-fw75-wq46 / CVE-2026-133555 影响 db_connection >=1.1.0 且 <2.10.3。公告明确要求存在不安全的下游解码器；仅安装该库不构成可利用入口。"
 checklist:
   - title: 修改已有 Hex 账户的密码
     hint: "自行打开 https://hex.pm，进入 Dashboard → Security。数据库可能暴露邮箱和 bcrypt 密码哈希；弱密码仍可能被猜出。仅通过 GitHub 注册的账户不需要重置一个并不存在的 Hex 密码。从未注册、仅下载公开包的用户没有账户凭据需要重置。"
@@ -51,6 +58,8 @@ checklist:
     hint: "部署提交 379b0a29bcc95164249f38ad7d772a37a8ff9533 或包含它的构建，替换全部 Web、worker 和任务服务器。检查所有路由上 Content-Type 为 application/vnd.hex+erlang 的未认证 POST，以及 Sentry、HTTP 错误记录、进程和云审计日志。利用链涉及 __struct__、Ecto.Query.DynamicExpr、DBConnection.Stream 及其 :log 回调；单个 500 响应或字符串命中不证明已被利用。若确认入侵，先保全证据，更换暴露的基础设施、会话及令牌密钥，用可信构建重建服务器，并单独评估注册表签名密钥轮换。"
   - title: 警惕冒充 Hex 的邮件，不要仅因哈希可能泄露而轮换全部 API 密钥
     hint: "核对链接指向 hex.pm，可疑邮件转交 security@hex.pm。Hex 表示 API 密钥是以 HMAC-SHA256 保存的随机 128 位值，不要求仅因这些哈希可能被读取就轮换 API 密钥。若其他证据表明密钥原值或使用已遭入侵，应吊销相应密钥。"
+  - title: 加固依赖，同时修复不安全的解码器
+    hint: "应用使用 db_connection 时，升级至 2.10.3 或更高版本，并核对 mix.lock 及实际部署版本。审计处理不可信输入、随后枚举或检查结果的 :erlang.binary_to_term/2 和 Plug.Crypto.non_executable_binary_to_term/2 路径；:safe 不会拒绝 struct。下游解码器也须修补，单独升级库后仍可能存在其他 struct 利用组件；它也不能替代 hexpm 服务端补丁或尚待完成的注册表签名更新。"
 sources:
   - name: Hex 事件报告
     says: "确认攻击、调查局限、凭据处置、待完成的注册表签名密钥更换，以及账户操作步骤。"
@@ -63,7 +72,10 @@ sources:
   - name: Hex 维护者在 Elixir Forum 的澄清
     says: "区分匿名包下载者和 GitHub 注册用户，说明客户端重新认证及新恢复码的操作。"
   - name: Hex 客户端发行记录
-    says: "核查时最新已发布版本为 11 月 6 日的 v2.7.0；未确认新签名系统已发布。"
+    says: "核查时最新已发布版本为 11 月 6 日的 v2.7.0；未确认新签名系统已发布。"  - name: DBConnection 维护者安全公告
+    says: "11 月 24 日发布；CVE-2026-133555 影响 >=1.1.0 且 <2.10.3，2.10.3 修复；要求存在不安全的下游解码器，不能单独被利用。"
+  - name: DBConnection 利用组件的 EEF CNA 记录
+    says: "确认相关攻击利用组件、前提及 CVSS 4.0 8.9 分，并关联解码器漏洞与库补丁。"
 ---
 
 Hex 于 **2026 年 11 月 24 日** 披露事件。攻击发生在前一天：**69 次恶意请求** 抵达仓库，攻击者在 **六台 Web 服务器** 上执行命令。评为 **L4**，因为软件仓库已遭实际入侵，服务端凭据和账户数据处于可被读取的范围内。目前没有证据证明恶意包已被分发，也不能据此声称 Elixir 应用发生全网入侵。
@@ -79,3 +91,5 @@ Hex 于 **2026 年 11 月 24 日** 披露事件。攻击发生在前一天：**6
 Hex 已替换基础设施凭据及会话、访问令牌签名密钥，用户因此需要重新登录。**注册表签名密钥是另一把密钥，在报告中仍属尚未轮换的例外。** 维护者正在准备新签名系统，预计随后几天发布相应客户端。应使用官方仓库并跟进发行公告；状态页显示正常，或安装一个此前已有的客户端版本，都不能证明轮换已经完成。
 
 账户用户应修改已有 Hex 密码、更换已启用的 2FA 并保存新恢复码，再重新认证客户端。GitHub 注册用户仍需完成后两项。仅下载公开包的匿名用户没有账户需要重置，但仍应遵循仓库及客户端更新建议。Hex 不要求仅因强随机 API 密钥的哈希可能泄露就统一更换所有 API 密钥；密钥原值暴露或出现可疑使用，则是应吊销密钥的另一个理由。
+
+攻击链中的 DBConnection 环节现有独立公告 **CVE-2026-133555 / GHSA-gmmq-fw75-wq46**，发表于 11 月 24 日，影响 **db_connection >=1.1.0 且 <2.10.3**，**2.10.3** 已加固。伪造的 `DBConnection.Stream` 或 `DBConnection.PrepareStream` 携带由攻击者选择的 `:log` 回调。维护者明确指出，该库不能单独被利用：应用或依赖须先将不可信 term 解码为 struct，再枚举或检查结果。升级该库会封堵这条利用路径，但若仍保留不安全解码器，其他 struct 可能提供替代利用组件。这是现有 Hex 攻击链中的一道防御，不代表出现另一宗仓库入侵。维护者论坛帖也要求 Ash 和 Flop 用户安装各自更新，参见 [Ash keyset 解码](/zh/incidents/ash-keyset-struct-injection/) 与 [Flop cursor 解码](/zh/incidents/flop-cursor-struct-rce/)。

@@ -3,6 +3,7 @@ title: "Hex.pm confirms command execution on six registry servers; account data 
 headline: "The package registry needs an account reset"
 level: 4
 date: 2026-11-24
+updated: 2026-11-26
 tags: [Hex, Elixir, Erlang, supply-chain, RCE]
 ecosystems: [elixir, erlang]
 summary: >-
@@ -18,6 +19,10 @@ cves:
     score: 10.0
     name: Unauthenticated Erlang-term deserialization RCE
     description: "The hexpm request parser accepted attacker-controlled struct maps before routing and authentication. Inspect and Enumerable protocol dispatch reached a command-execution callback; the CNA gives CVSS 4.0 10.0."
+  - id: CVE-2026-133555
+    score: 8.9
+    name: Forged DBConnection stream callback gadget
+    description: "db_connection 1.1.0 through versions before 2.10.3 can invoke a forged stream’s :log callback. Exploitation requires a downstream component to decode untrusted structs and enumerate or inspect them; the library alone is not exploitable. CVSS 4.0 8.9."
 fixed:
   - product: Hosted hex.pm service
     version: "2026-11-23"
@@ -28,6 +33,9 @@ fixed:
   - product: Registry signing-key replacement / new Hex client
     version: none
     status: "Announced; release with the new signing system pending"
+  - product: db_connection library hardening
+    version: "2.10.3"
+    status: "Closes this stream gadget; does not fix an unsafe downstream decoder"
 timeline:
   - date: Feb 23, 2016
     title: The request decoder loses its struct safety check
@@ -47,6 +55,9 @@ timeline:
   - date: Nov 24, 2026, 13:48 UTC
     title: Hex publishes the CVE
     body: "The incident report is dated November 24. It confirms exploitation but separates that from unproven database reads and package tampering."
+  - date: Nov 24, 2026
+    title: DBConnection publishes hardening for the stream callback used in the chain
+    body: "GHSA-gmmq-fw75-wq46 / CVE-2026-133555 covers db_connection >=1.1.0 and <2.10.3. Its advisory explicitly requires a downstream unsafe decoder; installing the library alone does not create an exploitable entry point."
 checklist:
   - title: Change the password on an existing Hex account
     hint: "Open https://hex.pm yourself and use Dashboard → Security. The database may have exposed email addresses and bcrypt password hashes; a weak password can still be guessed. GitHub-only accounts do not need an invented Hex password reset. Users who never registered and only fetch public packages have no account credentials to reset."
@@ -62,6 +73,8 @@ checklist:
     hint: "Deploy commit 379b0a29bcc95164249f38ad7d772a37a8ff9533 or a build containing it, replacing every web, worker and job server. Review unauthenticated POSTs with Content-Type application/vnd.hex+erlang on all routes, Sentry/HTTP error records, process and cloud audit logs. The chain uses __struct__, Ecto.Query.DynamicExpr, DBConnection.Stream and its :log callback; a 500 response or matching string alone does not prove exploitation. If compromised, preserve evidence, replace exposed infrastructure/session/token secrets and rebuild trusted servers; assess registry signing-key rotation separately."
   - title: Treat Hex-themed mail cautiously without rotating API keys solely for exposed hashes
     hint: "Check links lead to hex.pm and forward suspicious mail to security@hex.pm. Hex says API secrets are random 128-bit values stored as HMAC-SHA256 and does not require API-key rotation merely because those hashes may have been read. Revoke a key if other evidence shows its actual secret or use was compromised."
+  - title: Apply dependency hardening without leaving the unsafe decoder in place
+    hint: "If your application uses db_connection, update to 2.10.3 or later and confirm the resolved version in mix.lock and deployed builds. Audit :erlang.binary_to_term/2 and Plug.Crypto.non_executable_binary_to_term/2 paths that handle untrusted input before enumeration or inspection; :safe does not reject structs. Patch the downstream decoder as well. Other struct gadgets may remain after this library update, and it does not replace the hexpm server fix or pending registry-signing update."
 sources:
   - name: Hex incident report
     url: https://hex.pm/blog/security-incident-on-hexpm
@@ -86,7 +99,14 @@ sources:
   - name: Hex client releases
     url: https://github.com/hexpm/hex/releases
     primary: true
-    says: "Latest published release checked was v2.7.0, dated November 6; no new signing-system release was established."
+    says: "Latest published release checked was v2.7.0, dated November 6; no new signing-system release was established."  - name: DBConnection maintainer advisory
+    url: https://github.com/elixir-ecto/db_connection/security/advisories/GHSA-gmmq-fw75-wq46
+    primary: true
+    says: "November 24 publication; CVE-2026-133555, >=1.1.0 and <2.10.3, fixed in 2.10.3; requires an unsafe downstream decoder and is not independently exploitable."
+  - name: EEF CNA record for the DBConnection gadget
+    url: https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/133xxx/CVE-2026-133555.json
+    primary: true
+    says: "Confirms the related attack gadget, prerequisites and CVSS 4.0 8.9; links the decoder vulnerabilities and library fix."
 ---
 
 Hex disclosed the incident on **November 24, 2026**. The attack occurred the previous day: unauthenticated commands ran on **six web servers**, after **69 malicious requests** reached the registry. This merits **L4** because a package registry was actively compromised and server-side credentials and account data were within reach. No evidence establishes malicious package distribution or an internet-wide compromise of Elixir applications.
@@ -102,3 +122,5 @@ Database reads, environment-variable reads and shell commands were not logged. P
 Hex replaced infrastructure credentials and the keys used for sessions and access tokens, forcing users to sign in again. **The registry signing key is a different key and remained an exception in the report.** Maintainers were preparing a new signing system with client releases expected in the following days. Use the official repository and follow the release announcement; neither an operational status page nor installing an existing client release proves that rotation is complete.
 
 For account holders, change the Hex password if one exists, replace enabled 2FA and save its new recovery codes, then reauthenticate clients. GitHub sign-ups still need the latter steps. Anonymous users who only download public packages have no account reset to perform, but should follow the repository and client-update guidance. Hex does not require blanket API-key replacement solely for possible exposure of its strongly randomized API-key hashes; actual secret exposure or suspicious use is a separate reason to revoke one.
+
+The DBConnection hop now has its own advisory, **CVE-2026-133555 / GHSA-gmmq-fw75-wq46**, published November 24. It covers **db_connection >=1.1.0 and <2.10.3**, with hardening in **2.10.3**. A forged `DBConnection.Stream` or `DBConnection.PrepareStream` carries a `:log` callback selected by the attacker. The maintainers explicitly say the library is not exploitable alone: an application or dependency must first decode untrusted terms into structs and enumerate or inspect them. Upgrading this library closes this gadget, but other structs can provide alternative gadgets if the unsafe decoder remains. This is a defense within the existing Hex attack chain, not evidence of a separate registry intrusion. The maintainer’s forum post also directs Ash and Flop users to their separate updates; see [Ash keyset decoding](/incidents/ash-keyset-struct-injection/) and [Flop cursor decoding](/incidents/flop-cursor-struct-rce/).
