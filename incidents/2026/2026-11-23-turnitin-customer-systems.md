@@ -2,6 +2,7 @@
 title: Turnitin confirms unauthorized activity in customer-facing systems; data impact remains unknown
 level: 3
 date: '2026-11-23'
+updated: '2026-11-26'
 tags:
 - Turnitin
 - SaaS
@@ -20,6 +21,9 @@ timeline:
 - date: Nov 24, 2026
   title: CU Boulder publishes its local assessment and monitoring response
   body: University OIT reports no indication that its student, instructor, assignment or other university data was exposed and adds Canvas-integration monitoring. This does not establish the position for all Turnitin customers.
+- date: Nov 25, 18:06 UTC
+  title: Instructure reports no suspicious activity in its own investigation
+  body: Instructure says it investigated internally and currently has no evidence of anything suspicious, and will continue monitoring. This is its assessment, not an all-clear for Turnitin.
 checklist:
 - title: Request a scoped assessment for your institution
   hint: Use your existing Turnitin support or account contact to ask which products, data categories and activity dates concern your institution and whether a customer-specific action is required. Save the November 23 letter and later responses; no published affected-person count establishes your institution’s exposure.
@@ -36,6 +40,10 @@ sources:
   url: https://oit.colorado.edu/news/turnitin-security-incident
   primary: true
   says: 'November 24 local assessment: no indication of university data exposure, additional Canvas monitoring and no action required of its users at that time. Applies to its own environment.'
+- name: Instructure Trust Center Turnitin announcement
+  url: https://trust.instructure.com/
+  primary: true
+  says: November 25 at 18:06 UTC; internal investigation found no evidence of suspicious activity at that time, with monitoring continuing.
 ---
 
 
@@ -46,3 +54,5 @@ Turnitin says the referenced customer-facing systems do not collect government i
 Institutions can retain notices, identify their own dependencies and ask for a scoped assessment while the investigation continues. The precautionary checklist does not assert a compromised LMS, stolen API credentials or a need to stop using every Turnitin product. Avoid circulating alleged stolen submissions as proof.
 
 CU Boulder OIT said on November 24 that it had no indication its students’ or instructors’ information, assignments or other university data was exposed. It was contacting Turnitin to determine impact and added Canvas-integration monitoring. OIT told its users no action was required at that time and to continue submitting assignments as directed. This assessment applies to CU Boulder, not every institution, and does not establish that all Turnitin customer data was unaffected.
+
+Instructure’s November 25 announcement says its internal investigation currently shows no evidence of suspicious activity and monitoring continues. This narrows the available assessment for Instructure’s environment; it does not resolve the data scope inside Turnitin or establish that every connected institution was unaffected.
