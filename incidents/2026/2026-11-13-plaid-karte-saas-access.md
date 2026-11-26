@@ -1,14 +1,14 @@
 ---
 title: PLAID confirms KARTE data theft and suspends all projects
 date: '2026-11-13'
-updated: '2026-11-20'
+updated: '2026-11-26'
 level: 4
 inTheWild: 'yes'
 tags:
 - Data breach
 - Personal information
-summary: PLAID confirmed exposure of 79,249 KARTE account emails, integration credentials and some imported data. DHC confirms about 19.11 million customer records, a separate count. All projects shut down November 13. PLAID is sending affected imports to requesting customers; no restart date is set.
-splash: All KARTE projects, including web and app tracking, content delivery, Message campaigns, Datahub workflows and the administration console.
+summary: PLAID reports overlapping company counts for imported, analytics, cache and credential exposure, including former customers. Its 79,249 account emails and DHC's 19.11 million records are separate counts. All projects stopped November 13; requested-data delivery continues. Phased restart targets mid-January 2027, not a confirmed recovery date.
+splash: Current and former KARTE customer data and integration credentials; all tracking, delivery, Datahub and administration services.
 wipe: Revoke affected integration credentials, verify PLAID’s project notice, and save logs and reconcile interrupted jobs before retrying.
 inTheWildNote: PLAID confirms the attacker exploited a server vulnerability and read data.
 timeline:
@@ -69,15 +69,24 @@ timeline:
 - date: Nov 19, 2026
   title: Timee confirms employer-contact information exposure
   body: Timee reports up to 226,662 employer contacts, excludes worker data and login credentials, and plans individual contacts. Its 227,561 management IDs are not a unique-person count.
+- date: Nov 20, 2026
+  title: PLAID publishes revised scope and former-customer retention failure
+  body: Company counts are 570 for imported data, 487 for analytics, up to an estimated 409 for cache and 754 for integration credentials; they overlap. PLAID also confirms 45,816 sales/support contact records, separately from 79,249 account emails including Wicle. Former contracts are included because required deletion was missed.
+- date: Nov 20, 2026
+  title: Recovery target, data handover and billing measures announced
+  body: PLAID says its scope investigation finished by November 19, plans detailed customer-data handover from November 24 and independent validation before recovery, and waives applicable November and outage-period service fees. This does not establish completed handover, deletion or recovery.
+- date: Mid-January 2027 (target)
+  title: Phased service restart targeted after structural improvements
+  body: Announced November 20; not a committed date for full restoration. PLAID says it will announce changes to this target.
 checklist:
 - title: Revoke affected external integration credentials
   hint: Revoke affected secrets or access tokens on the connected service, review unexpected calls, and reissue and verify credentials using PLAID’s guidance.
 - title: Confirm your project’s exposure
-  hint: Follow the KARTE incident status. Through your existing PLAID support channel, verify any email and ask for affected project IDs, fields, time ranges and credentials. If you imported customer records, ask how to request the affected data through that same channel.
+  hint: Follow the dated November 20 report as well as the older status incident. Through your existing PLAID support channel or support+status@plaid.co.jp, verify any email and ask for affected project IDs, fields, time ranges and credentials across imports, analytics and cache. Former customers should ask too, even without a notice, because old contact details may be stale. Ask how to obtain your affected data and confirm actual handover; the November 24 date was a plan, not proof of delivery to everyone.
 - title: Preserve logs and reconcile failed jobs
   hint: Save available application, integration and delivery logs. Check downstream records for partially delivered KARTE Message mail or Datahub transfers. Prevent duplicate side effects by replaying only missing work after recovery.
 - title: Validate recovery
-  hint: Wait for Plaid’s restart instructions before resuming workflows. Verify tracking, deliveries and integrations on a limited set of jobs first, then confirm the expected recipients and results.
+  hint: Mid-January 2027 is a phased restart target, not present recovery or a full-service deadline. Wait for PLAID's actual restart instructions before resuming workflows. Verify tracking, deliveries and integrations on a limited set of jobs first, then confirm the expected recipients and results. Independent validation is planned; no completed validation report is established here.
 - title: Follow the notice for the downstream service you actually use
   hint: Mitsubishi UFJ Trust and Banking will contact affected customers individually. Verify messages through the bank's established channels or its published incident contact (0120-304-560, weekdays during the hours in its notice, November 18–December 11). The bank says it never requests PINs or passwords by email, SMS or telephone. Shueisha users should check the publisher's delivery notices; missing newsletters, restock pushes or convenience-store payment reminders do not establish whether a payment or order deadline changed. That last check is general workflow guidance, not a declared extension.
 - title: Use Shimamura's current guidance without inventing a reset requirement
@@ -96,6 +105,8 @@ checklist:
   hint: Notices are planned for November 24–December 4 and will not request password resets or account information. Do not provide PINs, passwords, card numbers or authentication codes, transfer money or operate an ATM on an unsolicited caller's instructions. Delete suspicious messages without opening links. The dedicated line is 0120-113-029, weekdays 09:00–18:00 and weekends/holidays 10:00–17:00; no timezone is stated. The guide says delayed points will be credited automatically after recovery, including past qualifying activity; no recovery date is promised.
 - title: Verify Timee employer-contact notices
   hint: Use Timee’s published support form https://taimee.zendesk.com/hc/ja/requests/new to verify unexpected contacts. Avoid suspicious links or attachments; Timee and PLAID will not request service passwords or credentials by email/SMS. Worker data is excluded from this notice.
+- title: Verify retention and fee handling through official support
+  hint: Ask PLAID for the affected former-contract data and its eventual deletion confirmation; the November 20 report says records are still preserved for recovery validation and will be deleted afterward, not already erased. Confirm the applicable November/outage-period fee waiver through your normal billing contact. End users can reach the official inquiry route at https://plaid.co.jp/notice/202611-faq/ . A fee waiver does not establish compensation for other losses.
 sources:
 - name: Plaid incident notice
   says: Confirms detected third-party access and the all-project shutdown.
@@ -165,11 +176,19 @@ sources:
   url: https://corp.timee.co.jp/news/detail-7442/
   primary: true
   says: Confirms employer-contact fields and different counts, excludes worker/login data, and supplies notification and phishing guidance.
+- name: PLAID November 20 investigation and recovery outlook
+  url: https://plaid.co.jp/news/20261120/
+  primary: true
+  says: Revises exposure to four overlapping company categories and sales/support contacts, corrects former-customer scope and deletion failures, and announces phased recovery target, handover plan, fee waiver and support channels.
 ---
 
-PLAID says an attacker exploited a server vulnerability to steal connection credentials, read data from certain databases and take over a PLAID account to access the administration console. The 79,249 figure counts account email addresses. Counts for external integration credentials and imported records remain under investigation. Personal information in imports depends on what each customer uploaded. The shutdown affected all projects, and the investigation assesses data exposure by customer.
+PLAID says an attacker exploited a server vulnerability to steal connection credentials, read data from certain databases and take over a PLAID account to access the administration console. The 79,249 figure counts account email addresses, including Wicle. Personal information in imports depends on what each customer uploaded. The shutdown affected all projects. Its November 20 report replaces the earlier unresolved company scope with the categories below; these are not counts of individual people.
 
-In its November 15 01:37 UTC status update, PLAID said network isolation of the affected environment was complete and had stopped new unauthorized access and continuing data outflow. That is the vendor's containment assessment. It does not establish that copied data was recovered, that every downstream credential was revoked or that service had restarted. The November 19 status update still gives no restart estimate.
+In its November 15 01:37 UTC status update, PLAID said network isolation of the affected environment was complete and had stopped new unauthorized access and continuing data outflow. That is the vendor's containment assessment. It does not establish that copied data was recovered, that every downstream credential was revoked or that service had restarted. The November 19 status update gave no restart estimate; the newer November 20 company report supplies the phased target below.
+
+**November 26 correction and follow-up:** The earlier entry missed PLAID's November 20 findings. PLAID reports imported-data exposure at 570 companies, analytics at 487, cache at an estimated maximum of 409 and integration credentials at 754. Categories overlap and must not be summed. Cache contents were overwritten and individual reads were not logged, so all possibly present cache data is treated as potentially exposed. A separate 45,816 sales/support contact records includes names and emails; do not add it to account emails or downstream record totals as unique victims.
+
+PLAID says its internal scope investigation finished by November 19, not that every notification or remediation was complete. It corrects its earlier current-customer wording: data from ended contracts remained because required deletion failed. Those records were still preserved for recovery validation, with deletion and notification to follow. It planned detailed handover from November 24. Structural improvements and third-party validation precede a targeted phased restart in mid-January 2027; this is not an actual restart or full-recovery commitment. Applicable November and outage-period KARTE charges are waived, with customer-specific details to follow; other damages are not covered by that statement.
 
 At 11:53 UTC on November 17, PLAID said it had begun sending the affected subset of imported customer data to companies that had requested it. The statement covers data such as imports through KARTE’s linked tables. PLAID was still identifying affected records and customers and planning further notifications. It gave no service restart date.
 
