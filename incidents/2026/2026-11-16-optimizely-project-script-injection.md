@@ -1,6 +1,6 @@
 ---
 title: "Report URI finds malicious Optimizely scripts at 178 organizations"
-updated: 2026-11-24
+updated: 2026-11-26
 level: 4
 date: 2026-11-16
 tags: [Optimizely, JavaScript, supply chain, skimmer, iOS]
@@ -18,6 +18,12 @@ timeline:
   - date: Nov 13, 2026
     title: Archived responses show related scripts before the Optimizely wave
     body: Later analysis identified poisoned Kissmetrics and StorifyMe responses from November 13. These captures establish when those responses were served, rather than when access began.
+  - date: Nov 13, 18:40 UTC
+    title: Revised vendor timeline records test-account creation
+    body: The November 25 account identifies preparatory activity here; the preliminary report had described November 16 at 00:37 UTC as first account creation.
+  - date: Nov 16, 01:20 UTC
+    title: Vendor records early test-code changes
+    body: Its revised timeline says a small set of projects received test code, one in production at 03:54 UTC; it now labels 07:51 UTC as the main attack starting.
   - date: Nov 16, 04:21 UTC
     title: Researchers record an altered Optimizely snippet
     body: Report URI’s earliest captured injection on an Optimizely snippet loaded the earlier webshell.lol injector on the BBC site.
@@ -60,6 +66,9 @@ timeline:
   - date: Nov 24, 2026
     title: CISA adds the signup-flow vulnerability to KEV
     body: CISA tracks the exploited issue as CVE-2026-132224, flags forensic triage and gives covered US federal agencies a November 27 remediation due date.
+  - date: Nov 25, 2026
+    title: Optimizely revises the timeline and details login-page exposure and restoration
+    body: The vendor reports restoring trusted project versions, re-archiving reopened projects and refreshed indicators. Its login page now enforces CSP after serving the code in report-only mode; sign-in impact remains under investigation and Mandiant’s final report is expected in a few weeks.
 checklist:
   - title: Pause affected snippets and preserve evidence
     hint: Check Project JavaScript, experiment custom code, deployed snippets and customer-hosted copies. Save known bad responses, hashes and timestamps before removing the code. Compare each deployed copy to a trusted baseline and check CDN or site caches after cleanup.
@@ -81,6 +90,12 @@ checklist:
     hint: Socket lists 1688360[.]cc/track.js, 5vobauua3ojpklx[.]icu/boot.js, window._k7 and sample SHA-256 1ec4245b3b303304ea24a89b3b2351b0f0c085087050f517d23dcba9694c165a. Its decoded replacement addresses are 0xC4026b06D82b0F0B363eda0642D61CfbDc17884e, THvs6p56XkUiMkJeSc51cAP64u2RsTYqxa and 19g9rZcPeiz8rUvyWpTRyXXhPnjsWrc3kW; the iOS script sets data-channel-code="02111110" and data-cfasync="false". Check saved responses or sandboxed static analysis, not live execution. This hash covers one archived build only; a different hash does not clear another build, and a match alone does not establish visitor exploitation or loss.
   - title: Separate cached-page requests and device exposure from successful exploitation
     hint: Netskope lists 1688360[.]cc, 5vobauua3ojpklx[.]icu, eil786npto9u5bq[.]icu, l7bcsnwc7nzr3uo[.]icu, webshell[.]lol, je4ft3gn8vxudum[.]icu, q1ls1ho9x7wsxlu[.]icu and ios-hack[.]icu; IPs 136.113.106[.]136, 34.96.213[.]201 and 34.87.36[.]58; track.js hashes 814a963c0da480e2449d9b6664480156e1cd6d731014117401bf635badec3a0f and f7b84b9a94f749f8ced3f0112d0a66894e8bbc3b4aa5592021d1b8976a9bad40. Preserve the earlier full indicator sets. Block confirmed campaign domains/IPs in web controls; assess tested Newly Registered Domain/Security Risk URL filtering and browser isolation where blocking is not feasible. Prioritize review of contacting iPhones/iPads on iOS 18 or 26 without treating OS version as evidence of compromise. Match browser/egress logs to device OS, policy result and saved content, then assess card entry or copied wallet addresses. Contact to an iOS endpoint from a desktop does not prove device exploitation, and a match alone does not prove compromise. Netskope is investigating v8hub[.]xyz as a lead; membership in the kit is unconfirmed.
+  - title: Repeat hunting with the revised vendor indicators
+    hint: The vendor asks customers who used only the November 17 list to search again. Retain earlier indicators and add IPs 34.8.47[.]29 and 103.107.197[.]171, users or invitations at fldubai[.]com, colleague-address +tag variants such as name+27@yourcompany.com, marker var TCODE=dec(T), string 1688360 and encoding aHR0cHM6Ly8xNjg4MzYwLmNjL3RyYWNrLmpz. Search Project JavaScript, experiment code, shared code and extensions for atob( loading an external script, and inspect unrecognized webhooks. The other domains and IPs in the revised table are retained above; see the original for the full table. Correlate with change history; a single match does not establish compromise.
+  - title: Verify archived projects, restored code and login-page exposure
+    hint: Include retired sites still loading cdn.optimizely.com or cdn-pci.optimizely.com snippets; give the project ID to your customer success manager for exact windows. Check History for restoration recorded as Optimizely Support and verify trusted code and archive state. Preserve logs covering November 13 preparation and November 16 code delivery. If users signed in at login.optimizely.com during the incident, ask Support for the impact assessment; its report-only CSP allowed the code to be served, without establishing data theft. Restore snippets through staging, low-risk pages and then key flows.
+  - title: Strengthen snippet controls and add an independent kill switch
+    hint: Limit code-editing roles, require SSO and multifactor sign-in through Opti ID, and revoke unexplained tokens; monitor changes using a webhook or scheduled API check, reviewing History weekly until alerts are available. Test a snippet kill switch independent of Optimizely. Use CSP reports to test checkout, login and forms, then enforce exact sources; connect-src can restrict exfiltration but cannot stop in-page wallet replacement. The PCI CDN also served malicious changes in this incident and does not replace change controls. Remove snippets from sensitive pages without experiments, use hosted payment fields, and mark session cookies HttpOnly, Secure and SameSite=Lax.
 sources:
   - name: Optimizely official security incident status
     url: https://status.optimizely.com/incidents/ftw0fh9wx43z
@@ -130,6 +145,10 @@ sources:
     url: https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json
     primary: true
     says: Lists CVE-2026-132224 for Optimizely Web Experimentation signup-flow impersonation and Project JavaScript modification; flags forensic triage with a November 27 due date.
+  - name: Optimizely November 25 public incident update
+    url: https://www.optimizely.com/field-notes/articles/web-experimentation-security-incident-update
+    primary: true
+    says: Revises early activity and session-termination timings, reports login-page exposure, restoration and refreshed indicators, and gives current response guidance; extra approval and native alerts remain planned and Mandiant’s final report is pending.
 
 ---
 
@@ -146,7 +165,7 @@ Hudson Rock recovered a malicious minute-ly response in addition to the Optimize
 Optimizely says it patched the vulnerability, removed injected code from affected projects and ended active sessions, revoked tokens and reset access for affected Optimizely accounts, according to its statement to BleepingComputer. Its status is monitoring. Downstream site operators still need to assess and address exposure of their own users’ sessions. Verify deployed copies and caches, inspect logs for the pre-cleanup period, and review session and payment exposure where applicable.
 
 
-The vendor's preliminary timeline puts first account creation at 00:37 UTC and first malicious project code at 07:51 UTC on November 16. It records detection at 13:34, blocking at Cloudflare at 16:06, the signup fix at 16:10, session/token revocation at 16:53 and cleanup completion at 22:24 UTC. The 07:51 first-write claim is later than Report URI's 04:21 captured injection; the reviewed sources do not reconcile that difference. Retain both and request a customer-specific window rather than narrowing log review to the vendor window alone. Cleanup completion and the later independent clean-response check are different observations.
+The vendor's preliminary timeline puts first account creation at 00:37 UTC and first malicious project code at 07:51 UTC on November 16. It records detection at 13:34, blocking at Cloudflare at 16:06, the signup fix at 16:10, session/token revocation at 16:53 and cleanup completion at 22:24 UTC. This was the preliminary account; the November 25 revision adds earlier test-code activity, discussed below. Retain the successive timelines and request a customer-specific window rather than narrowing log review to the main attack window alone. Cleanup completion and the later independent clean-response check are different observations.
 
 Optimizely excludes Feature Experimentation, SDKs and legacy Full Stack from the identified scope, but says the impersonated users could access whatever Experimentation data their privileges allowed. It says customer passwords were not exposed, does not require general password/API-token resets and permits cleaned Web Experimentation snippets to be re-enabled. Its report says some original Project JavaScript was replaced, so code restoration can require Support. These vendor statements do not erase potential downstream browser exposure, establish visitor loss totals or settle the entry methods at the other script providers. Mandiant-assisted forensics, final root-cause analysis and the final indicator list remain pending.
 
@@ -159,3 +178,10 @@ Netskope's November 17 original analysis covers an authorized subset of its cust
 On November 24, CISA added the signup-flow issue to its Known Exploited Vulnerabilities catalog as **CVE-2026-132224**. The entry describes impersonation of existing customer users followed by Project JavaScript modification and browser execution through trusted hosted assets. It flags forensic triage and sets **November 27** as the remediation due date for covered US federal agencies. This formal exploitation listing does not establish a new attack wave, a new visitor count or additional losses; retain the earlier customer-specific cleanup and exposure guidance.
 
 Optimizely’s November 18 14:49 UTC status update says fewer than 5% of its customers were impacted and every Web Experimentation customer was contacted directly. It says no other product was affected and remediation was completed. This is the vendor’s customer-base estimate, not a measured visitor count or an independently reconciled denominator for Report URI’s snippet and organization counts. The statement does not establish a final downstream loss total.
+
+
+In its November 25 update, Optimizely says it permanently disabled the legacy trial-signup path and removed impersonation. Its revised timeline dates test-account creation to November 13 at 18:40 UTC, describes November 16 at 00:37 UTC as probing the flaw, and adds test-code changes at 01:20 UTC, one in production at 03:54 UTC. It now describes 07:51 UTC as the main attack starting. This provides context for captures earlier than the former 07:51 claim, without independently reconciling every sample. The revision records termination of all attacker sessions at 16:52 UTC; the preliminary report recorded session/token revocation at 16:53 UTC. These are successive accounts, not one artificially precise combined timestamp.
+
+The vendor says the attacker reopened some archived projects. It has checked earlier versions for attack code, restored the last clean versions, re-archived reopened projects and retained change history. It says current snippets are clean, with no replacement snippet or blanket password/API-token reset needed. This restoration progress does not replace customer verification of hosted copies and caches. It says CSP blocked the code on www.optimizely.com, but login.optimizely.com served it while CSP was report-only. That page now enforces its policy; impact on people signing in during the incident remains under investigation.
+
+The vendor reports no evidence that data it holds was exfiltrated, no confirmed customer card or crypto losses and no reported infected device, while acknowledging it cannot observe what the code captured inside visitors’ browsers. Successful iOS/iPadOS exploitation remains under investigation. These statements do not disprove Bitquery’s likely-payment estimates or establish zero losses. The vendor says attempted Feature Experimentation setting changes were blocked. Refreshed indicators and implementation guidance are public; two-person custom-code approval and native change alerts remain planned, and the OWASP ASVS 5.0 Level 2 review is under way rather than a completed certification. Mandiant’s final report is expected in a few weeks and remains a follow-up item.
