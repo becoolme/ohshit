@@ -13,10 +13,18 @@ wipe: Remove public management access; verify defrost settings, use protected re
 inTheWild: 'yes'
 inTheWildNote: CERT-FR confirmed the earlier compromises; EU authorities confirm the November 1–2 wave.
 cves:
-- CVE-2025-41450
-- CVE-2023-25914
-- CVE-2023-25915
-- CVE-2026-129713
+- id: CVE-2025-41450
+  name: AK-SM8xxA improper authentication
+  description: Affects versions before 4.2. Danfoss's severity vector includes user interaction; CISA confirms exploitation, without mapping every retailer to this flaw.
+- id: CVE-2023-25914
+  name: AK-SM800A file traversal
+  description: Synacktiv reports unauthenticated file reads before 3.3; the CNA labels it authenticated. Password hashes could be read and cracked to obtain access. CISA confirms exploitation.
+- id: CVE-2023-25915
+  name: AK-SM800A authenticated command execution
+  description: Before 3.3, an authenticated attacker can execute commands as root; Synacktiv chains this with file traversal. CISA confirms exploitation.
+- id: CVE-2026-129713
+  name: AK-SM8xxA unauthenticated buffer overflow
+  description: Danfoss lists versions through 5.4.0 and plans a 5.5.x fix; memory corruption and potential code execution through unauthenticated HTTP/S POST. Not confirmed exploited in this wave.
 ecosystems:
 - industrial-control
 fixed:
@@ -121,12 +129,16 @@ sources:
   url: https://www.synacktiv.com/sites/default/files/2023-10/synacktiv-danfoss-sm800a-multiple-vulnerabilities.pdf
   primary: true
   says: Firmware before 3.3; unauthenticated file traversal can expose password hashes for cracking before authenticated root command execution.
+- name: DIVD CVE-2023-25914 CNA record
+  url: https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2023/25xxx/CVE-2023-25914.json
+  primary: true
+  says: Labels file traversal as authenticated, unlike the original researchers; agrees on firmware before 3.3.
 - name: Danfoss CVE-2025-41450 CNA record
-  url: https://www.cve.org/CVERecord?id=CVE-2025-41450
+  url: https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2025/41xxx/CVE-2025-41450.json
   primary: true
   says: AK-SM8xxA before 4.2; authentication-bypass severity vector includes user interaction.
 - name: Danfoss CVE-2026-129713 CNA record
-  url: https://www.cve.org/CVERecord?id=CVE-2026-129713
+  url: https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/129xxx/CVE-2026-129713.json
   primary: true
   says: Published November 20; unauthenticated CGI buffer overflow through 5.4.0, potential code execution and a planned 5.5.x fix, with network-isolation guidance.
 ---
@@ -147,4 +159,4 @@ Separately, Midnight Blue reported six unauthenticated stack overflows in AK-SM8
 
 On November 25, CISA added three earlier Danfoss vulnerabilities to its exploited-vulnerability catalog: **CVE-2025-41450** (improper authentication), **CVE-2023-25914** (path traversal allowing file reads) and **CVE-2023-25915** (OS command injection). This confirms exploitation of those vulnerabilities, not their use against every November retailer, and does not establish exploitation of CVE-2026-129713. CISA calls for remediation or discontinuing use if mitigations are unavailable. Its November 28 deadlines for the two 2023 CVEs and December 9 deadline for CVE-2025-41450 apply to covered US federal agencies; exposed operators should isolate immediately rather than wait for those dates.
 
-Synacktiv’s original report covers AK-SM800A firmware **before 3.3**: CVE-2023-25914 permits unauthenticated file traversal, including reading password hashes that could be cracked to obtain access, followed by **authenticated** root command execution through CVE-2023-25915. The catalog’s brief labels do not describe this complete chain. Danfoss’s CNA record puts CVE-2025-41450 in AK-SM8xxA **before 4.2** and its severity vector includes user interaction. These old patch thresholds do not address CVE-2026-129713 or make an internet-facing controller safe.
+Synacktiv’s original report covers AK-SM800A firmware **before 3.3**: CVE-2023-25914 permits unauthenticated file traversal, including reading password hashes that could be cracked to obtain access, followed by **authenticated** root command execution through CVE-2023-25915. The CNA labels CVE-2023-25914 as authenticated, whereas the discovering researchers explicitly demonstrate unauthenticated reads; this account follows their documented chain. Do not rely on login alone to protect the file interface. Danfoss’s CNA record puts CVE-2025-41450 in AK-SM8xxA **before 4.2** and its severity vector includes user interaction. These old patch thresholds do not address CVE-2026-129713 or make an internet-facing controller safe.
