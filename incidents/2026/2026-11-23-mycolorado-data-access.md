@@ -49,7 +49,7 @@ sources:
 updated: '2026-11-26'
 ---
 
-Colorado’s official FAQ confirms that an unauthorized user accessed platform data. The state is still determining whose information was affected and had not then published the data categories, cause, attacker identity or a confirmed record count. Its initial estimate concerned 50,000–150,000 individuals’ data; approximately 2.1 million registered users is the app’s overall user base, not a victim count. The confirmed intrusion, potential scale and digital-identity service disruption support L4 without treating every user as exposed.
+The earlier official FAQ confirmed unauthorized platform-data access while the state was still determining whose information was affected. At the November 24 update, it had not published data categories, cause, attacker identity or a confirmed record count. Its initial estimate concerned 50,000–150,000 individuals’ data; approximately 2.1 million registered users is the app’s overall user base, not a victim count. The confirmed intrusion, potential scale and digital-identity service disruption support L4 without treating every user as exposed.
 
 The November 24 outage update says teams are investigating and fixing the vulnerability before a safe return. No fixed app version or restoration deadline is supplied. The statement also says there is no current reason to believe it is part of a broader attack; that is the state’s assessment, not proof of attribution. Individual notifications and protective steps are promised once the scope is known.
 
