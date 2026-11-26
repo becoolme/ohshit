@@ -17,6 +17,9 @@ timeline:
 - date: 11月26日
   title: StepSecurity 公布更广泛的活动分析
   body: 报告相关加载器解码及五个历史服务端 IP，钱包数据截止 11 月 25 日 20:22 UTC。其更广泛的仓库数量在此未获独立证实。
+- date: 11月26日 11:45 UTC
+  title: CircuitVerse 合并桌面 CI 加固
+  body: PR #1591 以 43cf6b4c6fc71146d7bef824f218230975da7ff9 合并。fork PR 仍执行构建，但不再上传其产物，工作流权限降为 contents:read；这不说明终端感染范围，也不代表旧产物已安全。
 checklist:
 - title: 停止信任受影响构建产物并保留证据
   hint: '查看 CircuitVerse issue #1586 中十个恶意 PR 及十个工作流运行 ID；维护者已删除全部 40 个产物。停止使用留存或再分发副本，保留哈希和下载记录，调查执行过这些产物的设备。报告没有确认哪些终端用户下载过，也没有逐个独立分析所有安装包二进制。'
@@ -27,7 +30,7 @@ checklist:
 - title: 隔离已执行环境并替换暴露凭据
   hint: 确认执行后，隔离运行器或开发设备，保留进程命令行和日志，从干净设备吊销／替换暴露的 GitHub 令牌、OAuth 授权、SSH 密钥、npm 和云凭据。检查账户安全日志及其他可访问仓库是否被强推改写历史。删除可见钩子或一个进程不能排除后续后台阶段及编辑器持久化；确认感染的环境应重建后再信任。fork 令牌限制不能阻止代码执行。
 - title: 限制不可信 CI 并阻止产物发布
-  hint: '要求所有外部贡献者的 fork 工作流均经批准，而不只针对首次贡献者。不要在有特权的 pull_request_target 凭据环境中执行 PR 代码。仅从可信分支／release 发布安装包，降低令牌权限，强推后重新审查最新提交。CircuitVerse PR #1591 提议比较 head.repo.full_name 与 github.repository 来限制上传，并考虑 fork 已删除的情况；它仍未合并，不能当成已发布修复。未审查工作区应保持 VS Code Restricted Mode。仅禁用 npm 生命周期脚本不能阻止 build／dev／Jest／PostCSS 或打开文件夹时执行。'
+  hint: '要求所有外部贡献者的 fork 工作流均经批准，而不只针对首次贡献者。不要在有特权的 pull_request_target 凭据环境中执行 PR 代码。仅从可信分支／release 发布安装包，降低令牌权限，强推后重新审查最新提交。CircuitVerse 已于 11 月 26 日合并 PR #1591：上传条件比较 head.repo.full_name 与 github.repository，并考虑 fork 已删除的情况，权限降为 contents:read。应核查实际工作流是否具备等效控制；fork 构建仍会执行，单靠上传限制不能阻止载荷执行。未审查工作区应保持 VS Code Restricted Mode。仅禁用 npm 生命周期脚本不能阻止 build／dev／Jest／PostCSS 或打开文件夹时执行。'
 sources:
 - name: AsyncAPI 维护者事件索引
   says: 原始概览、被移除 PR、审批保护及有边界的已合并 PR 扫描；公开 gist 创建于 11 月 24 日。
@@ -35,17 +38,19 @@ sources:
   says: 静态解码、哈希、触发条件、以太坊查询及后台阶段；未连接服务端，也未确定下载阶段行为。
 - name: CircuitVerse 维护者确认
   says: 维护者确认加载器已执行、未发生所涉恶意合并、已删除 40 个产物，且未报告仓库密钥暴露。
-- name: CircuitVerse 工作流加固提案
-  says: 未合并 PR：将产物上传限制在可信分支／release，并降低权限。
+- name: CircuitVerse 已合并工作流加固
+  says: 11 月 26 日 11:45:24 UTC 合并；限制 fork PR 产物上传并降低权限，但保留 fork 构建。
 - name: Open Food Facts 事件及响应
   says: 四次失败的 CI 运行涉及恶意提交，是否到达加载器步骤未知。维护者称已轮换唯一可能有关的密钥。
 - name: StepSecurity 原始 PolinRider 研究
   says: 11 月 26 日技术分析、历史 C2 及完整指标、与假面试钱包的关联，以及未经独立证实的更广泛仓库测量。
+- name: CircuitVerse 加固合并提交
+  says: 合并后的工作流将 contents 权限降为 read，并按 PR 源仓库限制产物上传；没有跳过 fork 构建作业。
 ---
 
 11 月 24 日维护者披露的是 10 月 19 日 PR 活动。Eternity0207 账户本身也可能被盗；未签名提交及提交者名称变化不能证明实际控制人。这与 7 月 AsyncAPI npm 包失陷事件不同。恶意提交复用正常消息与日期，在数百个制表符后隐藏长 JavaScript 行。之后的干净最终 diff 不能抹去此前本地或 CI 执行的事实。
 
-AsyncAPI 要求 fork 工作流经批准，因此未运行载荷作业。CircuitVerse 维护者确认，其受影响 fork PR 的桌面构建 CI 执行了加载器，全部 40 个产物已删除，加固提案仍未合并。维护者称主分支及审查过的分支、包括该账户此前合并的 PR 均干净。原始扫描检查了该账户 217 个 PR 中的 145 个已合并 PR，未发现载荷；这是有范围限制的扫描，不是对所有历史文件版本的保证。安装包产物在暴露的运行器上构建，未有独立核实的终端感染人数或逐个二进制载荷结论。
+AsyncAPI 要求 fork 工作流经批准，因此未运行载荷作业。CircuitVerse 维护者确认，其受影响 fork PR 的桌面构建 CI 执行了加载器，全部 40 个产物已删除。11 月 26 日 11:45 UTC，PR #1591 以 `43cf6b4c6fc71146d7bef824f218230975da7ff9` 合并。其 `.github/workflows/tauri-build.yml` 将权限降为 `contents: read`，阻止 fork PR 上传产物，也处理 fork 删除后仓库对象为 null 的情况。fork PR 仍在四个平台执行构建；该变更限制发布，并不消除不可信代码执行，也不证明有人执行过旧产物或留存副本已安全。维护者称主分支及审查过的分支、包括该账户此前合并的 PR 均干净。原始扫描检查了该账户 217 个 PR 中的 145 个已合并 PR，未发现载荷；这是有范围限制的扫描，不是对所有历史文件版本的保证。安装包产物在暴露的运行器上构建，未有独立核实的终端感染人数或逐个二进制载荷结论。
 
 Open Food Facts 在四个恶意提交上运行了 CI，但四次均失败，报告不能确定 pnpm build 是否运行到 node api.js。其维护者轮换了一个通常不会被读取、但可能有关的密钥；预防性轮换不能证明密钥被盗。fork pull_request 作业的只读令牌及不提供仓库密钥限制了访问，但不能让任意构建代码变得安全。L4 基于 CircuitVerse CI 已确认的恶意执行，不代表整个软件仓库或 GitHub 平台已失陷。
 

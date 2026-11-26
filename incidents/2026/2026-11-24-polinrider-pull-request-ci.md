@@ -2,6 +2,7 @@
 title: PolinRider hidden in force-pushed pull requests ran in CircuitVerse CI; 40 installers withdrawn
 level: 4
 date: '2026-11-24'
+updated: '2026-11-26'
 tags:
 - Supply chain
 - GitHub Actions
@@ -26,6 +27,9 @@ timeline:
 - date: Nov 26, 2026
   title: StepSecurity publishes broader campaign analysis
   body: Reports decoding related loaders and five historical server IPs, with its wallet dataset cut off November 25 at 20:22 UTC. Its broader repository counts are not independently confirmed here.
+- date: Nov 26, 11:45 UTC
+  title: CircuitVerse merges desktop CI hardening
+  body: PR #1591 merges as 43cf6b4c6fc71146d7bef824f218230975da7ff9. Fork PRs still build, but their artifacts are not uploaded; workflow permissions drop to contents:read. This does not establish end-user infection scope or clear old artifacts.
 checklist:
 - title: Remove trust in the affected build artifacts and preserve evidence
   hint: 'Review CircuitVerse issue #1586 for the ten malicious PRs and ten workflow-run IDs; maintainers deleted all 40 artifacts. Stop using retained or redistributed copies from those runs, preserve hashes/download history and investigate any device that executed them. The reports do not establish which end users downloaded them or that each installer binary was independently analyzed.'
@@ -36,7 +40,7 @@ checklist:
 - title: Contain executed payloads and replace exposed credentials
   hint: If execution is confirmed, isolate the runner or developer device, preserve process command lines and logs, and use a clean device to revoke/replace exposed GitHub tokens, OAuth grants, SSH keys, npm and cloud credentials. Check the account security log and other reachable repositories for forced history rewrites. Removing the visible hook or one process does not rule out downloaded background stages or editor persistence; rebuild a confirmed infected environment before trusting it. Fork-token restrictions do not prevent code execution.
 - title: Gate untrusted CI and prevent artifact publication
-  hint: 'Require approval for all external contributors’ fork workflows, not only first-time contributors. Never run PR-head code with privileged pull_request_target secrets. Publish installers only from trusted branches/releases, reduce token permissions and re-review the latest push after a force-push. CircuitVerse PR #1591 proposes an upload gate comparing head.repo.full_name with github.repository, including deleted-fork safety; it remains open, not an already released fix. Keep VS Code Restricted Mode for unreviewed workspaces. Blocking npm lifecycle scripts alone does not stop build/dev/Jest/PostCSS or folder-open execution.'
+  hint: 'Require approval for all external contributors’ fork workflows, not only first-time contributors. Never run PR-head code with privileged pull_request_target secrets. Publish installers only from trusted branches/releases, reduce token permissions and re-review the latest push after a force-push. CircuitVerse merged PR #1591 on November 26: the upload gate compares head.repo.full_name with github.repository, including deleted-fork safety, and permissions are contents:read. Verify equivalent controls in your deployed workflow; fork builds still execute, so the upload gate alone does not prevent payload execution. Keep VS Code Restricted Mode for unreviewed workspaces. Blocking npm lifecycle scripts alone does not stop build/dev/Jest/PostCSS or folder-open execution.'
 sources:
 - name: AsyncAPI maintainer incident index
   url: https://gist.github.com/derberg/0b4b21fb0a33148c3a13ef3211414b33
@@ -50,10 +54,10 @@ sources:
   url: https://github.com/CircuitVerse/cv-frontend-vue/issues/1586
   primary: true
   says: Maintainer confirms loader ran, no affected malicious merge, deletion of 40 artifacts and no reported repository-secret exposure.
-- name: CircuitVerse proposed workflow hardening
+- name: CircuitVerse merged workflow hardening
   url: https://github.com/CircuitVerse/cv-frontend-vue/pull/1591
   primary: true
-  says: 'Open PR: restrict artifact upload to trusted branches/releases and lower permissions; not merged at verification.'
+  says: 'Merged November 26 at 11:45:24 UTC; restrict artifact uploads for fork PRs and lower permissions, while retaining fork builds.'
 - name: Open Food Facts incident and response
   url: https://github.com/openfoodfacts/openfoodfacts-explorer/issues/2267
   primary: true
@@ -62,11 +66,15 @@ sources:
   url: https://www.stepsecurity.io/blog/polinrider-malware-open-source-pull-requests
   primary: true
   says: November 26 technical analysis, historical C2/complete indicators, link to fake-interview wallets and broader unverified repository measurements.
+- name: CircuitVerse hardening merge commit
+  url: https://github.com/CircuitVerse/cv-frontend-vue/commit/43cf6b4c6fc71146d7bef824f218230975da7ff9
+  primary: true
+  says: Merged workflow diff changes contents permissions to read and gates artifact upload by the PR head repository; it does not skip fork build jobs.
 ---
 
 The November 24 maintainer disclosure covers an October 19 PR wave. The account Eternity0207 may itself have been compromised; unsigned commits and changed committer names do not establish who controlled it. This is distinct from July’s AsyncAPI npm-package compromise. The malicious commits reused legitimate messages/dates and hid long JavaScript lines after hundreds of tabs. A later clean final diff did not erase earlier local or CI execution.
 
-AsyncAPI required fork-workflow approval, so no payload jobs ran there. CircuitVerse’s maintainer confirms the loader ran in desktop-build CI across its affected fork PRs, and that all 40 artifacts were deleted. Its proposed hardening remains open. The maintainer says the main branch and reviewed branches, including the account’s previously merged PR, are clean. The original scan found no payload in 145 merged PRs across the account’s 217 PRs; this is a bounded scan, not a guarantee about every past file version. The installer artifacts were built on exposed runners; no independently verified end-user infection count or binary-by-binary payload finding is available.
+AsyncAPI required fork-workflow approval, so no payload jobs ran there. CircuitVerse’s maintainer confirms the loader ran in desktop-build CI across its affected fork PRs, and that all 40 artifacts were deleted. On November 26 at 11:45 UTC, PR #1591 was merged as `43cf6b4c6fc71146d7bef824f218230975da7ff9`. Its `.github/workflows/tauri-build.yml` lowers permissions to `contents: read` and prevents artifact uploads for fork PRs, including a deleted fork whose repository object is null. Fork PR builds still run on all four platforms; this change limits publication rather than eliminating untrusted-code execution. It does not establish that anyone executed the earlier artifacts or that retained copies are safe. The maintainer says the main branch and reviewed branches, including the account’s previously merged PR, are clean. The original scan found no payload in 145 merged PRs across the account’s 217 PRs; this is a bounded scan, not a guarantee about every past file version. The installer artifacts were built on exposed runners; no independently verified end-user infection count or binary-by-binary payload finding is available.
 
 Open Food Facts ran CI on four malicious commits, but all four runs failed and the report could not establish whether pnpm build reached node api.js. Its maintainer rotated a potentially relevant secret that normally was not read. That precaution does not prove theft. Fork pull_request jobs’ read-only token and lack of repository secrets limited access, but did not make arbitrary build code safe. L4 reflects confirmed malicious execution in CircuitVerse CI, not a proven registry-wide or GitHub-platform compromise.
 
