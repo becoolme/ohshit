@@ -2,7 +2,7 @@
 title: European supermarkets hit by a new wave of refrigeration-controller attacks
 level: 4
 date: '2026-11-02'
-updated: '2026-11-13'
+updated: '2026-11-26'
 tags:
 - OT
 - cold chain
@@ -12,6 +12,11 @@ splash: Internet-exposed refrigeration management; exact affected models in the 
 wipe: Remove public management access; verify defrost settings, use protected remote access and follow model-specific recovery
 inTheWild: 'yes'
 inTheWildNote: CERT-FR confirmed the earlier compromises; EU authorities confirm the November 1–2 wave.
+cves:
+- CVE-2025-41450
+- CVE-2023-25914
+- CVE-2023-25915
+- CVE-2026-129713
 ecosystems:
 - industrial-control
 fixed:
@@ -46,17 +51,23 @@ timeline:
 - date: Nov 10, 2026
   title: Sekoia publishes honeypot findings from the November wave
   body: Four honeypots blocked an unauthenticated attempt to rename an administrator account on November 1. Researchers did not capture a follow-on password reset request.
+- date: Nov 20, 2026
+  title: Danfoss publishes the new buffer-overflow CVE
+  body: Its CVE record identifies CVE-2026-129713 in AK-SM8xxA through 5.4.0, with a fix planned for 5.5.x. The planned release is not an available patch.
+- date: Nov 25, 2026
+  title: CISA adds three earlier Danfoss vulnerabilities to KEV
+  body: CVE-2025-41450, CVE-2023-25914 and CVE-2023-25915 are confirmed exploited. This does not identify which vulnerability affected each supermarket.
 checklist:
 - title: Isolate exposed management while preserving safe refrigeration
   hint: 'Follow CERT-FR: remove public IP exposure, coordinate with the refrigeration contractor and check insurance/monitoring obligations before cutting provider telemetry. Keep safe local operation under qualified supervision; do not turn off cooling blindly.'
 - title: Verify the complete controller configuration
   hint: Check defrost schedules, temperature settings, alarm thresholds and notification delivery, and remote-access permissions and user accounts against approved values. Check management and firewall logs for /xml.cgi requests from 178.83.226[.]215 or 37.16.75[.]128 and correlate with account or configuration changes. A match alone does not prove compromise. Have refrigeration and food-safety staff independently check temperatures and the safety of stored stock before returning it to sale.
 - title: Recover compromised controllers with the maintainer
-  hint: CERT-FR recommends restarting affected Danfoss equipment, or a factory reset if needed, then reconfiguring for service. Preserve available logs/configuration before destructive recovery when safe. A reset alone does not patch a vulnerability.
+  hint: CERT-FR recommends restarting affected Danfoss equipment, or a factory reset if needed, then reconfiguring for service. Preserve available logs/configuration before destructive recovery when safe. A reset alone does not patch a vulnerability. Midnight Blue warns that OS-level access could permit implants surviving reset or firmware updates, or destructive firmware changes; this is a research assessment of design risk, not evidence that such implants were found in this wave. Ask the manufacturer for integrity assessment and trusted recovery or replacement before reconnecting a suspected device.
 - title: Restore remote access through a protected network
   hint: Use a secure VPN or protected network. Source-IP filtering limited to the refrigeration provider is an emergency measure, not a durable fix. Check all controllers for public exposure, including those behind integrators’ 4G modems. A private APN is another option.
 - title: Apply model-specific hardening and replace unsupported equipment
-  hint: Install vendor firmware, change defaults and, for applicable Danfoss controllers, configure Strict security mode. Confirm the right procedure with the manufacturer. Strict mode still has a pre-authentication crash path, so keep network isolation in place. Keep unpatchable EOL systems off the public internet; factory reset leaves them open to reinfection.
+  hint: Install vendor firmware, change defaults and, for applicable Danfoss controllers, configure Strict security mode. Confirm the right procedure with the manufacturer. Danfoss lists CVE-2026-129713 as affecting AK-SM8xxA through 5.4.0 and plans a fix in 5.5.x; do not treat that planned version as released. Strict mode still has a pre-authentication crash path, so keep network isolation in place. Keep unpatchable EOL systems off the public internet; factory reset leaves them open to reinfection.
 sources:
 - name: CERT-FR CERTFR-2026-ALE-012
   url: https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/
@@ -102,6 +113,22 @@ sources:
   url: https://www.midnightblue.nl/blog/multiple-rce-danfoss-aksm800a
   primary: true
   says: Reports separate firmware flaws and a crash reproduced in Strict mode.
+- name: CISA Known Exploited Vulnerabilities catalog
+  url: https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json
+  primary: true
+  says: Adds CVE-2025-41450, CVE-2023-25914 and CVE-2023-25915 on November 25; exploitation confirmation is not a forensic mapping to every retailer.
+- name: Synacktiv original SM800A research
+  url: https://www.synacktiv.com/sites/default/files/2023-10/synacktiv-danfoss-sm800a-multiple-vulnerabilities.pdf
+  primary: true
+  says: Firmware before 3.3; unauthenticated file traversal can expose password hashes for cracking before authenticated root command execution.
+- name: Danfoss CVE-2025-41450 CNA record
+  url: https://www.cve.org/CVERecord?id=CVE-2025-41450
+  primary: true
+  says: AK-SM8xxA before 4.2; authentication-bypass severity vector includes user interaction.
+- name: Danfoss CVE-2026-129713 CNA record
+  url: https://www.cve.org/CVERecord?id=CVE-2026-129713
+  primary: true
+  says: Published November 20; unauthenticated CGI buffer overflow through 5.4.0, potential code execution and a planned 5.5.x fix, with network-isolation guidance.
 ---
 
 This is a new November wave, distinct from the French attacks covered by the October CERT-FR alert. Belga’s direct interview with Sabcobel describes attackers switching evaporators into defrost mode at Belgian supermarkets, including Delhaize, Carrefour and Spar. In a separate interview, Ahold Delhaize confirmed refrigeration disruption to Supermarket News. Broader country and store counts remain provisional; this article does not treat installer estimates as a final victim count or quantify losses.
@@ -116,4 +143,8 @@ The November 4 joint EU statement confirms a second wave on November 1–2 and d
 
 Sekoia blocked requests attempting to rename the administrator account on November 1. Its firmware analysis found that a rename could succeed without authentication and might be the first step in an account takeover. The honeypots did not see a follow-on password reset and cannot establish use of this technique on victims or exploitation of CVE-2025-41450. France’s November 9 attribution covers the October 11–12 attacks in France.
 
-Separately, Midnight Blue reported six unauthenticated stack overflows in AK-SM800A firmware through **5.3.2**. It demonstrated root code execution on **3.3.0**, and triggered a crash in a separate pre-authentication path with Strict mode enabled on **5.3.2**. Coordinated disclosure is ongoing and CVEs are pending; no evidence ties these six flaws to the observed attacks. Remove public access even if the controller is updated and Strict mode is enabled.
+Separately, Midnight Blue reported six unauthenticated stack overflows in AK-SM800A firmware through **5.3.2**. It demonstrated root code execution on **3.3.0**, and triggered a crash in a separate pre-authentication path with Strict mode enabled on **5.3.2**. The updated research now collectively identifies the six flaws as **CVE-2026-129713**, although its overview still says CVEs are pending. Danfoss’s November 20 CNA record covers AK-SM8xxA through **5.4.0**, describes unauthenticated HTTP/S POST-triggered memory corruption and potential code execution, and plans a fix in **5.5.x** without establishing an available patched release. No evidence ties these six flaws to the observed attacks. Remove public access even if the controller is updated and Strict mode is enabled.
+
+On November 25, CISA added three earlier Danfoss vulnerabilities to its exploited-vulnerability catalog: **CVE-2025-41450** (improper authentication), **CVE-2023-25914** (path traversal allowing file reads) and **CVE-2023-25915** (OS command injection). This confirms exploitation of those vulnerabilities, not their use against every November retailer, and does not establish exploitation of CVE-2026-129713. CISA calls for remediation or discontinuing use if mitigations are unavailable. Its November 28 deadlines for the two 2023 CVEs and December 9 deadline for CVE-2025-41450 apply to covered US federal agencies; exposed operators should isolate immediately rather than wait for those dates.
+
+Synacktiv’s original report covers AK-SM800A firmware **before 3.3**: CVE-2023-25914 permits unauthenticated file traversal, including reading password hashes that could be cracked to obtain access, followed by **authenticated** root command execution through CVE-2023-25915. The catalog’s brief labels do not describe this complete chain. Danfoss’s CNA record puts CVE-2025-41450 in AK-SM8xxA **before 4.2** and its severity vector includes user interaction. These old patch thresholds do not address CVE-2026-129713 or make an internet-facing controller safe.
