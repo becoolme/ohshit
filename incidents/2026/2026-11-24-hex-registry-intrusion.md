@@ -99,7 +99,8 @@ sources:
   - name: Hex client releases
     url: https://github.com/hexpm/hex/releases
     primary: true
-    says: "Latest published release checked was v2.7.0, dated November 6; no new signing-system release was established."  - name: DBConnection maintainer advisory
+    says: "Latest published release checked was v2.7.0, dated November 6; no new signing-system release was established."
+  - name: DBConnection maintainer advisory
     url: https://github.com/elixir-ecto/db_connection/security/advisories/GHSA-gmmq-fw75-wq46
     primary: true
     says: "November 24 publication; CVE-2026-133555, >=1.1.0 and <2.10.3, fixed in 2.10.3; requires an unsafe downstream decoder and is not independently exploitable."
