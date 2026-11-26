@@ -37,7 +37,7 @@ checklist:
     支持 Braiins OS 的硬件升级到 26.11 后，还须将每个矿池 URL 改成受保护地址。Braiins Pool 的 TLS 地址是 stratum+ssl://stratum.braiins.com:3443 及 :33443；部分固件使用 stratum+tls://。26.10 及更旧版本的所有条目应使用 Stratum V2。不能推断单独升级会修改原有矿池设置，也不能将其视为其他厂商固件的修复。
 - title: 依赖 TLS 前先用一台矿机验证证书拒绝行为
   hint: >-
-    按官方步骤保存设置、校准 NTP 时间，并在每次测试时只保留一个矿池条目。先确认真实 TLS 主机名可以挖矿，再测试主机名不匹配、自签名、错误主机名及过期证书。指引使用 badssl.com、self-signed.badssl.com、wrong.host.badssl.com 和 expired.badssl.com 的 443 端口作为良性测试服务器，不是攻击指标。成功建立 TLS 后的协议错误不等于拒绝证书。如果日志不足以判断或接受了无效证书，应改用 Stratum V2 或代理。结束后恢复受保护的主连接及备用项。
+    按官方步骤保存设置、校准 NTP 时间，并在每次测试时只保留一个矿池条目。先在同一局域网的电脑上按指引使用 OpenSSL／订阅请求验证 TLS 端点，再确认通过真实 TLS 主机名有份额被接受。每次修改 URL 后核实设置已生效；Whatsminer 每次更改后须重启，避免旧连接干扰结果。然后测试主机名不匹配、自签名、错误主机名及过期证书。指引使用 badssl.com、self-signed.badssl.com、wrong.host.badssl.com 和 expired.badssl.com 的 443 端口作为良性测试服务器，不是攻击指标。成功建立 TLS 后的协议错误不等于拒绝证书。如果日志不足以判断或接受了无效证书，应改用 Stratum V2 或代理。结束后恢复受保护的主连接及备用项。
 - title: 让不支持的矿机通过可信本地代理接入
   hint: >-
     从官方页面获取 Braiins SV2 Proxy 0.1.1 并核对公布的 SHA-256，先在带 systemd 的 Linux 或 Windows WSL2 上用少量矿机试运行。矿机到代理的明文连接只保留在可信局域网内，核实上游矿池密钥或 TLS 证书；自定义配置须开启仅允许加密且验证身份的矿池连接选项。备用项使用第二个受保护代理，不能明文直连互联网。保护管理界面，远程访问使用 SSH 隧道。
