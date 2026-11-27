@@ -31,7 +31,7 @@ fixed:
   status: 'Fixed build recorded in November 6 testing migration notice; current forky package is 3.3.7'
 - product: Ubuntu 26.10 APT
   version: 3.3.3ubuntu0.1
-  status: USN/CVE list fixed; blog responses vary between publishing and fixed. Verify the actual repository candidate.
+  status: USN, CVE page and current Canonical blog list fixed. Verify the actual repository candidate.
 - product: Ubuntu 26.04 LTS APT
   version: 3.2.1ubuntu0.1
   status: Standard security support
@@ -59,7 +59,7 @@ timeline:
   body: Debian lists fixed bookworm/trixie/unstable packages. Canonical describes the HTTP redirect/retry prerequisite; its public CVE page and CNA version records differ on release availability.
 - date: Nov 4, 2026
   title: Canonical publishes USN and updates Ubuntu availability
-  body: USN-8996-1 and the CVE page list eight fixed builds. The blog supplies Acquire::Retries=0 upgrade commands; responses during checks differ between publishing and fixed for 26.10, so verify the actual repository candidate.
+  body: USN-8996-1 and the CVE page list eight fixed builds. The blog supplies Acquire::Retries=0 upgrade commands; early checks differed between publishing and fixed for 26.10; the current blog lists fixed, and users should verify the actual repository candidate.
 - date: Nov 6, 2026
   title: Debian migration notice records fixed APT 3.3.6 in testing
   body: The notice records 3.3.6 replacing 3.3.5. This is the notice date, not an asserted exact migration time; testing-watch notifications are generated daily.
@@ -72,7 +72,7 @@ checklist:
 - title: Check HTTP sources, proxies and retry configuration
   hint: Review /etc/apt/sources.list, /etc/apt/sources.list.d/ and apt-config dump for HTTP repository URLs, proxies and Acquire::Retries. A non-zero value is required; 3 is the default starting with Debian 12 and Ubuntu 22.04. Older defaults do not imply safety if administrators enabled retries. Reduce exposure to untrusted network paths and use verified HTTPS repository/proxy endpoints where supported; never disable signature or TLS checks. Canonical now explicitly confirms that setting Acquire::Retries=0 prevents this retry path, including a malicious mirror; trusted HTTPS transport protects against an on-path attacker. HTTPS alone does not establish trust in a malicious mirror.
 - title: Use Canonical’s zero-retry Ubuntu upgrade path
-  hint: 'Canonical recommends sudo apt update && sudo apt upgrade -o Acquire::Retries=0. To target the APT source package instead: sudo apt update && sudo apt install -o Acquire::Retries=0 --only-upgrade ''?source-package(^apt$)''. Check all installed APT-source packages with apt list --installed ''?source-package(^apt$)'' and compare their full distribution versions with USN-8996-1. Ubuntu 20.04/18.04 need Pro/ESM; 16.04/14.04 also need the Legacy add-on. For 26.10, verify that 3.3.3ubuntu0.1 is actually offered: USN/CVE list fixed, while blog responses during checks differ between publishing and fixed. Use a trusted HTTPS mirror before patching where supported; do not disable verification.'
+  hint: 'Canonical recommends sudo apt update && sudo apt upgrade -o Acquire::Retries=0. To target the APT source package instead: sudo apt update && sudo apt install -o Acquire::Retries=0 --only-upgrade ''?source-package(^apt$)''. Check all installed APT-source packages with apt list --installed ''?source-package(^apt$)'' and compare their full distribution versions with USN-8996-1. Ubuntu 20.04/18.04 need Pro/ESM; 16.04/14.04 also need the Legacy add-on. For 26.10, verify that 3.3.3ubuntu0.1 is actually offered: USN, the CVE page and the current blog all list this build as fixed. Use a trusted HTTPS mirror before patching where supported; do not disable verification.'
 - title: Investigate suspicious package installations
   hint: Preserve APT/dpkg history, proxy/repository logs and package files around suspicious redirects or retries. Affected installs can execute package scripts as root; compare package provenance through trusted vendor records and investigate host persistence. No dedicated attack IoCs or victim total were verified; an unusual redirect alone does not prove compromise.
 sources:
@@ -95,7 +95,7 @@ sources:
 - name: Canonical APT remediation explanation
   url: https://ubuntu.com/blog/apt-vulnerability-fixes-available
   primary: true
-  says: Zero-retry upgrade commands, HTTPS mitigation and installed-source-package check; observed 26.10 responses differ between publishing and fixed, with the same 3.3.3ubuntu0.1 threshold.
+  says: Zero-retry upgrade commands, HTTPS mitigation and installed-source-package check; the current table lists Ubuntu 26.10 fixed in 3.3.3ubuntu0.1, resolving the earlier publishing/fixed discrepancy.
 - name: Debian testing migration notice for APT 3.3.6
   url: https://tracker.debian.org/news/1820074/apt-336-migrated-to-testing/
   primary: true
@@ -111,7 +111,7 @@ APT’s hard-link reuse during download redirects and retries lets a network-pat
 
 The attack needs an install/download with redirects, retries and a non-zero retry setting. Debian and Ubuntu defaults make newer releases exposed, but older releases can also be exposed under changed configuration. Canonical rates the flaw high; no actual exploitation or victim count is established.
 
-Debian’s tracker supplies the distribution fixes listed above. At our earlier check, Ubuntu still marked releases vulnerable and USN-8996-1 returned 404. **November 4 availability update:** the USN is now readable and the CVE page lists the eight Ubuntu fixes above. For 26.10, blog responses during these checks differed between publishing and fixed, while USN/CVE list 3.3.3ubuntu0.1 fixed. Verify the actual repository candidate and installed version; do not assume rollout has reached every mirror. Older releases require the indicated Pro/ESM and Legacy coverage.
+Debian’s tracker supplies the distribution fixes listed above. At our earlier check, Ubuntu still marked releases vulnerable and USN-8996-1 returned 404. **November 4 availability update:** the USN is now readable and the CVE page lists the eight Ubuntu fixes above. For 26.10, early blog responses differed between publishing and fixed. At the November 27 recheck, the current blog, USN and CVE page all list 3.3.3ubuntu0.1 as fixed. Verify the actual repository candidate and installed version; do not assume rollout has reached every mirror. Older releases require the indicated Pro/ESM and Legacy coverage.
 
 Canonical recommends disabling retries for the upgrade itself, including when defending against a malicious mirror. HTTPS to a trusted mirror protects against network-path manipulation; patching remains required. Snap installation uses a different system and is outside this APT flaw. The Debian mailing-list access challenge remains unresolved; no unread mailing-list content is used as evidence.
 
