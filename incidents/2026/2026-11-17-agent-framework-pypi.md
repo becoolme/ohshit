@@ -34,7 +34,7 @@ timeline:
     body: Its investigation points to a client certificate/private key and identifies three distinct cases of victim-data exfiltration in the captured sample, not a complete victim count.
   - date: Nov 18, 2026
     title: PyPI advisory records account review and remediation with Microsoft
-    body: PYSEC-2026-4388 says both releases were removed after PyPI Security worked with Microsoft to review project accounts and complete remediation. It does not identify the initial stolen credential or prove installed hosts were cleaned.
+    body: PYSEC-2026-4388 records removal of both releases and says PyPI Security worked with Microsoft to review project accounts and complete remediation; it does not give the order or time of those account-remediation steps. It does not identify the initial stolen credential or prove installed hosts were cleaned.
   - date: Nov 25, 2026
     title: Microsoft clarifies package scope and requires clean rebuilding
     body: The published Python meta-package was affected; repository code, other Python packages, .NET and Semantic Kernel were not. Repository access remains temporarily unavailable pending a safety determination, without a confirmed restoration timeline. Installed malicious versions require treating the environment as compromised, rotating reachable credentials, rebuilding and reviewing logs from November 17 onward; unaffected users should pin 1.26.0 or exact needed sub-packages.
