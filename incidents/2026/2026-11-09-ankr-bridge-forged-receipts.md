@@ -1,11 +1,12 @@
 ---
 title: Forged receipts unlock assets from Ankr’s Ethereum bridge
-summary: SlowMist reports five forged receipts used valid bridge signatures and referenced one earlier Optimism deposit. The Ethereum contract paid out five tokens. SlowMist estimates about $304,500. How the signatures were obtained remains under investigation.
-splash: Ankr’s Ethereum cross-chain bridge escrow and integrations relying on that withdrawal path.
-wipe: Pause affected routes where you control them, preserve signer and bridge records, and verify withdrawals against source-chain events.
-inTheWildNote: SlowMist and OAK report five withdrawals. Signing-key exposure remains unconfirmed.
+summary: Ankr Labs confirms forged-receipt exploitation and says only its own funds were affected, with staker funds safe. Its November 17 update reports bridge and staking pauses on Ethereum, Polygon and BNB Chain, new infrastructure and operator-key migration. SlowMist’s roughly $304,500 remains an estimate; no completion date is given.
+splash: Ankr’s Ethereum bridge escrow, dependent integrations and staking users on Ethereum, Polygon and BNB Chain.
+wipe: Follow official pause notices, preserve bridge and signer records, verify source events, and await confirmed reopening before retrying affected routes.
+inTheWildNote: Ankr Labs confirms bridge exploitation; how valid signatures were obtained is unresolved.
 level: 4
 date: '2026-11-09'
+updated: '2026-11-27'
 tags:
 - Ankr
 - bridge
@@ -21,13 +22,16 @@ timeline:
 - date: Nov 10, 2026
   title: OAK traces the Ethereum leg
   body: Its independent transaction trace corroborates the five releases.
+- date: Nov 17, 2026
+  title: Ankr Labs confirms service pauses and infrastructure changes
+  body: The operator says the bridge and staking on Ethereum, Polygon and BNB Chain have been paused since the exploit. Critical services are on new infrastructure and operators are moving to new keys. It says only Ankr Labs funds were affected and staker funds are safe. The bridge will remain paused until the fix is complete; staking reopening is promised without a firm date.
 checklist:
 - title: Contain bridge routes and reconcile source events
-  hint: If you operate an affected route, suspend or isolate withdrawals you control. Preserve relayer, signer and contract logs. Match each receipt’s recipient, token, amount and unique source event before resuming. Investigate how the signatures were produced and rotate keys if compromise is established.
+  hint: If you operate an affected route, suspend or isolate withdrawals you control. Preserve relayer, signer and contract logs. Match each receipt’s recipient, token, amount and unique source event before resuming. Investigate how the signatures were produced and rotate keys if compromise is established. Ankr Labs says its operators are moving to new keys and critical services have moved to new infrastructure; verify those changes and withdrawal validation before restoring a route. Key migration alone does not prove key theft or a completed fix.
 - title: Review the published transaction and address records
   hint: OAK lists 12 traced transfers plus the source event and related addresses. Compare the exact addresses 0x9A88Dd45AE846A979705c9cFdfD0f229e592D703, 0x119D250b82C1cf5345dF5912EFb4B1a4107a1Aa6, 0xc437DF90B37C1db6657339E31BfE54627f0e7181, 0x881d40237659c251811cec9c364ef91dc08d300c, 0x92b2a947551d780f94dda2ef7ec566accdbd796d, 0xd90e2f925da726b50c4ed8d0fb90ad053324f31b, 0x8290333cef9e6d528dd5618fb97a76f268f3edd4, 0x9846c1f06d2f0e7c4678aeea56eb826efe41bb9a. Use the transaction hashes below. OAK identifies 0x92bb1f958a8aeb971227fba643b18cee5abd796d as a lookalike used in spoofed zero-value events. Shared routers can appear in legitimate activity and a match alone does not establish compromise.
 - title: Verify operator guidance before bridging
-  hint: Check Ankr’s official channels before submitting or retrying a transfer on the affected route. Preserve existing transaction hashes and verify status with the operator. Ignore unsolicited refund links.
+  hint: Open Ankr Labs’ original November 17 update and check official channels for a later reopening notice before submitting or retrying affected transfers or staking operations on Ethereum, Polygon or BNB Chain. The update keeps the bridge paused until the fix is complete and gives no firm staking-unfreeze date. Preserve existing transaction hashes and verify the exact asset, network and route with the operator. Do not treat the promise of an imminent reopening or the statement that staker funds are safe as proof that access is restored. Ignore unsolicited refund, migration or unfreeze links, and never disclose a seed phrase or private key.
 sources:
 - name: SlowMist original technical alert, public copy
   says: Describes the forged receipts, valid signatures, reused source transaction and estimated amount.
@@ -37,9 +41,20 @@ sources:
   says: Corroborates five Ethereum withdrawals and documents evidence limits.
   url: https://onchainattack.org/document/examples/2026-11-ankr-ethereum-bridge-forged-signed-receipts-withdraw/
   primary: true
+- name: Ankr Labs original staking incident update
+  url: https://x.com/AnkrLabsTeam/status/2122758977910186482
+  primary: true
+  says: November 17 vendor statement confirms forged receipts reusing a redeemed Optimism deposit, says only Ankr Labs funds were affected, and reports multi-chain bridge/staking pauses, new infrastructure and operator-key migration. No firm reopening date or completed fix is announced.
+- name: Public copy of the same Ankr Labs update
+  url: https://teapaw.org/AnkrLabsTeam/status/2122758977910186482
+  says: Full readable copy of the same November 17 vendor statement; not an independent corroborating origin.
 ---
 
-SlowMist’s [original alert](https://x.com/SlowMist_Team/status/2119720284093890615) says the bridge accepted five receipts that changed the recipient, token and amount while referring to the same legitimate Optimism transaction. The receipts carried valid consensus signatures. OAK traced withdrawals of ankrETH, ANKR, ankrMATIC, aPOLb and aETHb to one recipient. The dollar figure is SlowMist’s estimate. OAK’s trace provides transaction corroboration and does not establish final net loss or prove signing-key theft. The reviewed material did not establish a vendor remediation, confirmed pause or reimbursement plan.
+SlowMist’s [original alert](https://x.com/SlowMist_Team/status/2119720284093890615) says the bridge accepted five receipts that changed the recipient, token and amount while referring to the same legitimate Optimism transaction. The receipts carried valid consensus signatures. OAK traced withdrawals of ankrETH, ANKR, ankrMATIC, aPOLb and aETHb to one recipient. The dollar figure is SlowMist’s estimate. OAK’s trace provides transaction corroboration and does not establish final net loss or prove signing-key theft. The original researcher reports did not establish a vendor remediation, confirmed pause or reimbursement plan. The later vendor statement below confirms pauses and containment work, but not a completed fix or reimbursement plan.
+
+On November 17, Ankr Labs confirmed that the Ethereum bridge accepted forged receipts referring to an Optimism deposit that had already been redeemed. The operator says only Ankr Labs funds were affected and staker funds are safe. This is a vendor statement about financial impact, not an independent reconciliation of every balance or a claim that users retain uninterrupted access. The roughly $304,500 figure remains SlowMist’s estimate, not a newly verified final loss total.
+
+The same update says the bridge and staking on Ethereum, Polygon and BNB Chain have been paused since the exploit. Critical services have moved to new infrastructure, and operators are moving to new keys. The bridge is to stay paused until the fix is complete. The promise that staking will reopen soon gives no firm date and is not confirmation of reopening. The reviewed official update does not explain how the valid signatures were obtained or publish a completed technical fix, final postmortem or reimbursement plan. Infrastructure and key changes alone do not prove signer-key theft. These November bridge facts are separate from Ankr’s earlier ankrFLOW/Flow incident.
 
 Published transaction hashes. The first is the legitimate Optimism source event reused by the forged receipts.
 
