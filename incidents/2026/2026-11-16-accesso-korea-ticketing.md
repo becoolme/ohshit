@@ -15,7 +15,7 @@ timeline:
     body: Both Korean venues say they learned that an unauthorized party had accessed the ticketing system.
   - date: Nov 15, 2026
     title: Japan receives Accesso’s intrusion report
-    body: The venue dates notification to November 15; its FAQ dates detection to that day, not the initial access.
+    body: The venue dates notification to November 15; its FAQ dates detection to that day but does not establish when initial access occurred.
   - date: Nov 16, 2026
     title: LEGOLAND Korea publishes a customer notice
     body: LEGOLAND Korea identifies the types of records viewed and says the exact scope remains under investigation. SEA LIFE Busan separately published a notice describing the same categories.
@@ -57,7 +57,7 @@ sources:
     primary: true
     says: Dates detection to November 15, without establishing first access.
   - name: Japan FAQ on expired passes
-    url: https://faq.legoland.jp/hc/ja-jp/articles/40749433097757
+    url: https://faq.legoland.jp/hc/ja-jp/articles/40749433097757-%E9%81%8E%E5%8E%BB%E3%81%AB%E3%83%AC%E3%82%B4%E3%83%A9%E3%83%B3%E3%83%89-%E3%82%B8%E3%83%A3%E3%83%91%E3%83%B3%E3%81%AE%E5%B9%B4%E9%96%93%E3%83%91%E3%82%B9%E3%83%9D%E3%83%BC%E3%83%88%E3%82%92%E6%8C%81%E3%81%A3%E3%81%A6%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F-%E6%9C%89%E5%8A%B9%E6%9C%9F%E9%96%93%E3%81%AF%E5%88%87%E3%82%8C%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99-%E4%BB%8A%E5%9B%9E%E3%81%AE%E3%83%81%E3%82%B1%E3%83%83%E3%83%88%E6%83%85%E5%A0%B1%E3%81%AE%E6%BC%8F%E6%B4%A9%E3%81%AE%E5%AF%BE%E8%B1%A1%E3%81%AB%E5%90%AB%E3%81%BE%E3%82%8C%E3%81%BE%E3%81%99%E3%81%8B
     primary: true
     says: Includes some expired passes; notifications continue.
   - name: Japan FAQ on entry checks
