@@ -217,7 +217,7 @@ checklist:
   - title: Test post-issuance session theft and reduce standing access
     hint: SEAL’s November 6 revision notes that short-lived sessions and binding at issuance do not stop repeated theft or in-place use on a compromised endpoint. Reduce standing permissions, separate scoped service identities and retire abandoned services. Remove standing local administrator access where feasible. Exercise repository/CI-administrator and token abuse in a controlled environment and verify alerts actually fire. Move toward reviewed pipeline-mediated production changes with scoped identities; defend that concentrated repository/CI path first. These are operator recommendations, not an exchange-wide reset instruction or proof Binance has implemented them.
   - title: Screen newly traced bitcoin payouts and Solana transfers
-    hint: For deposit screening, compare XRP-to-BTC payouts and coinjoin exposure against Elliptic’s dated labels and the FBI list. Check the route, timestamps and wallet context before escalating. A match alone cannot establish who controls an address. For Solana, also check the Privacy Cash transactions in Bitquery’s updated report and distinguish them from unrelated use of the mixer. Elliptic’s November 26 report says its customers can screen more than 33,000 linked addresses and also links a public blocklist at https://www.elliptic.co/binance-hack-2026-blocklist/. Consult the report and available screening data for the complete current indicators rather than relying on one historical address sample; its latest route is ETH through THORChain into BTC and then coinjoins coordinated by Kruw. A coordinator does not take custody, and use of any named service alone does not prove criminal involvement.
+    hint: For deposit screening, compare XRP-to-BTC payouts and coinjoin exposure against Elliptic’s dated labels and the FBI list. Check the route, timestamps and wallet context before escalating. A match alone cannot establish who controls an address. For Solana, also check the Privacy Cash transactions in Bitquery’s updated report and distinguish them from unrelated use of the mixer. Elliptic’s November 26 report says its customers can screen more than 33,000 linked addresses and also links a public blocklist at https://www.elliptic.co/binance-hack-2026-blocklist/. Consult the report and available screening data for the complete current indicators rather than relying on one historical address sample; its latest route is ETH through THORChain into BTC and then coinjoins coordinated by Kruw. A coordinator does not take custody, and use of any named service alone does not prove criminal involvement. Download the complete public CSV from https://data-cdn.elliptic.co/blocklists/binance-hack-blocklist.csv and refresh it regularly (the guide suggests hourly). It has one address per line without a header or chain label. Screen deposits/withdrawals and historical activity since October 29; lowercase 0x addresses and check them on every supported EVM chain, but preserve exact case for Bitcoin, Tron, Solana and XRP Ledger addresses. Absence from this incident-specific list does not establish low risk.
 sources:
   - name: Binance investigation notice
     url: https://x.com/binance/status/2115915708504900039
@@ -467,6 +467,11 @@ sources:
     url: https://www.binance.com/en/blog/compliance/4100322350300314528
     primary: true
     says: November 18 vendor report of an ADGM court order supporting asset recovery; full public original read through the web index after direct retrieval returned an empty 202. No new recovered amount is stated.
+
+  - name: Elliptic public Binance blocklist and screening instructions
+    url: https://www.elliptic.co/binance-hack-2026-blocklist/
+    primary: true
+    says: Provides the complete freely accessible CSV, regular-refresh guidance, October 29 lookback and chain-specific address matching; not a general sanctions or risk clearance.
 
 ---
 
