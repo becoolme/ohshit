@@ -2,11 +2,11 @@
 title: AllUnited registration form flaw exposed club member data and credentials
 level: 4
 date: '2026-11-10'
-updated: '2026-11-15'
+updated: '2026-11-27'
 tags: [AllUnited, SaaS, data breach]
-summary: AllUnited says an attacker used a club registration form to reach a server and copy membership data, including IBANs and credentials. The provider fixed the flaw and announced a password reset. It has not published a count of affected individuals.
+summary: AllUnited confirms a joint regulator filing for 478 clubs, further integration recovery and a November 30 reporting/notification fallback. Clubs notifying people themselves must also cover registrations without a contact number. The breach exposed membership data and credentials; the affected-person count remains unknown.
 splash: Clubs, federations and communities using AllUnited, including their members, administrators and website registrants.
-wipe: Reset AllUnited and reused passwords, verify payment requests, and coordinate member notifications through official channels.
+wipe: Reset reused passwords, confirm reporting before November 30, and notify both contact records and registrations without a contact number.
 inTheWild: 'yes'
 inTheWildNote: AllUnited confirms a software flaw was exploited and database records were copied.
 timeline:
@@ -31,20 +31,37 @@ timeline:
 - date: Nov 14, 2026
   title: AllUnited restores its KNGU integration
   body: The Dutch gymnastics federation’s integration is active again. Member registrations, cancellations and edits made during the outage will flow through on the next sync.
+- date: Nov 17, 2026
+  title: Atletiekunie and KNSB integrations resume
+  body: AllUnited says these links now work alongside KNHB and KNGU. Data exchange resumes when the interface runs.
+- date: Nov 18, 2026
+  title: AllUnited confirms a collective filing for 478 clubs
+  body: The provider says clubs that joined and accepted the confirmation are included. It reports an external investigation is still underway; 478 is an organization count, not a victim count.
+- date: Nov 20, 2026
+  title: Four integrations remain disabled
+  body: AllUnited lists KNLTB, KNZB, NTFU and Sportlink as still unavailable. An authentication error on these interfaces is expected while they are disabled.
+- date: Nov 24, 2026
+  title: AllUnited sets a November 30 fallback for reporting and notifications
+  body: Following a November 23 email requested by the Dutch Data Protection Authority, organizations that handled reporting or notifications themselves must confirm their actions and responsibility in writing before November 30. Without that confirmation, AllUnited says it will add the organization to its November 16 collective filing and start emailing members, former members and other contacts from November 30.
+- date: Nov 24, 2026
+  title: A second selection covers registrations missing from the contact list
+  body: AllUnited says the original affected-member selection omits registrations without a contact number, whose data may also be involved. Organizations sending notices themselves must use both selections; those that already mailed the first only need to mail the new one.
 checklist:
 - title: Reset passwords from a trusted address
   hint: Open the official club portal or ClubApp directly and request a reset. Use the latest reset email you requested and check spam if needed. Change any reused password on other services and enable MFA where available. Contact the official support desk if a reset does not arrive; never send your password.
 - title: Verify payment and account requests
   hint: Independently confirm requests for fees, bank changes or codes with the club using contact details you already trust. Watch for tailored phishing using addresses, birth dates or IBANs and report suspicious activity to the club or bank.
-- title: Verify reporting and member notification arrangements
-  hint: Open AllUnited’s incident page. The provider says organizations that accepted the confirmation email before 19:00 local time on November 13 will be included in the joint filing. Others can accept by 07:00 local time on November 16. Have an authorized board member use the official form and select whether AllUnited should notify affected people. Watch for the email from info@allunited.nl and accept as instructed. Avoid duplicate submissions. The previously stated direct-filing cutoff was November 13 at 19:15 local time. If a cutoff was missed or inclusion is unclear, check next steps with AllUnited and the Dutch Data Protection Authority. Confirm filing and notifications separately, including former members and other affected contacts. Retain the filing reference and use the affected-member selection in the Relations wizard.
-- title: Check the next KNGU synchronization
-  hint: AllUnited says gymnastics clubs do not need to re-enter changes made during the outage. After the next scheduled transfer, reconcile member registrations, cancellations and edits against your club records and contact AllUnited support about discrepancies.
+- title: Confirm reporting and notification arrangements before November 30
+  hint: Read the November 24 update on AllUnited’s incident page. If your organization filed with the Dutch Data Protection Authority or notified affected people itself, write to info@allunited.nl before November 30 confirming exactly what you did and that you take responsibility for it. Without written confirmation, AllUnited says it will add the organization to its November 16 collective filing and email members, former members and other contacts from November 30. Confirm filing and notification separately and retain your confirmation, consent and filing reference; inclusion does not prove every notice has been delivered. If arrangements or a missed deadline are unclear, contact AllUnited and the authority through official channels.
+- title: Include registrations that have no contact number
+  hint: If your organization sends its own notices, use both “Betrokken leden datalek” and “Gelekte inschrijvingen die geen relatie zijn”. In Relaties > Selectie wizard, open Selecties beheren > Selectie importeren, choose the latter selection, then Importeer > Bewaren. Ask your system administrator if Selecties beheren is missing. Back in Selectie wizard choose that selection > Verder > E-mail, write and check the message, then Versturen. If you already mailed the first selection, only the new selection needs another mailing. A relation/contact number here is an AllUnited record identifier, not a telephone number.
+- title: Reconcile restored integrations and track those still disabled
+  hint: The November 17 and 20 notices list KNHB, KNGU, Atletiekunie and KNSB as restored. Run the normal interface and reconcile registrations, cancellations and edits against club records; KNGU changes made during the outage should flow through without re-entry. Contact AllUnited support about discrepancies. KNLTB, KNZB, NTFU and Sportlink remain disabled in the November 20 update; authentication errors while disabled are expected. Check the latest official notice before treating an error as a new compromise or assuming all links are restored.
 sources:
 - name: AllUnited incident timeline and FAQ
   url: https://www.allunited.nl/artikelen/datalek/
   primary: true
-  says: Confirms the entry point, data copied, password handling and the November 13 reporting extension and November 14 KNGU restoration.
+  says: Confirms the breach and password handling; November 17–20 integration status, the 478-club filing, and November 24 reporting fallback and missing-registration notification steps. The dated updates supersede older FAQ entries on restored links.
 - name: AllUnited Customer Care Center notice
   url: https://support.allunited.nl/support/solutions/articles/103000425650-beveiligingsincident-allunited-wat-er-is-gebeurd-en-wat-je-moet-doen
   primary: true
@@ -59,6 +76,12 @@ AllUnited says an attacker exploited its software through a club website registr
 
 Administrative records included names, emails, phone numbers and passwords the provider describes as encrypted. AllUnited says the attacker also obtained information about how that protection worked. Unchanged temporary passwords were stored in readable form. Member records could include addresses, dates of birth, contact details, IBANs and free-text notes. Website registrations included contact and birth details and IBANs. The fields vary by record. The Dutch cricket association says the records of all players in its AllUnited system were copied and that it reported the breach to the regulator. AllUnited said hundreds of organizations authorized a joint filing by November 12; that is not a count of individuals. The published notices do not establish account takeovers or financial losses.
 
-The November 13 evening update clarifies that authorization requires accepting the confirmation email. AllUnited says organizations that accepted before 19:00 local time that day will be included. The remaining organizations can accept by 07:00 local time on November 16. AllUnited plans to file the final report on Monday and send weekend notices where organizations both authorized and requested them. The update does not establish that filing or notification has finished.
+The November 13 evening update clarifies that authorization requires accepting the confirmation email. AllUnited says organizations that accepted before 19:00 local time that day will be included. The remaining organizations can accept by 07:00 local time on November 16. AllUnited plans to file the final report on Monday and send weekend notices where organizations both authorized and requested them. That update did not establish that filing or notification had finished; later notices below confirm the collective filing and introduce new notification arrangements.
 
-On November 14, AllUnited said its connection to KNGU had resumed. For gymnastics clubs, membership changes made during the interruption will be included in the next synchronization. This update concerns KNGU. The status of the remaining disabled federation links and completion of the regulator filing still need confirmation.
+On November 14, AllUnited said its connection to KNGU had resumed. For gymnastics clubs, membership changes made during the interruption will be included in the next synchronization. On November 17, Atletiekunie and KNSB also resumed, alongside KNHB. The November 20 update still lists KNLTB, KNZB, NTFU and Sportlink as disabled. These dated notices supersede the older FAQ that still lists KNSB and Atletiekunie as unavailable; restored data exchange does not establish that the security investigation is complete.
+
+AllUnited’s November 18 update confirms a collective report for 478 clubs that joined and accepted its confirmation. This is a count of organizations represented in that filing, not a count of all affected organizations or individuals. The provider says it has reported to police and an external investigation remains underway. Its November 24 notice dates the collective filing to November 16.
+
+The November 24 update says a November 23 email, sent at the Dutch Data Protection Authority’s request, asks organizations that handled their own regulator report or notifications to confirm their actions and responsibility in writing to info@allunited.nl before November 30. If AllUnited receives no written confirmation before that date, it says it will add the organization to the collective report and start emailing its members, former members and other contacts from November 30. This is the provider’s announced fallback, not evidence that those future notices have already been delivered.
+
+A second November 24 notice corrects a gap in the original notification selection: “Betrokken leden datalek” only includes people with an AllUnited relation/contact number. Registrations not yet converted into contact records are excluded even though their data may be involved. Organizations handling notifications themselves must also import and email “Gelekte inschrijvingen die geen relatie zijn”. Those that already emailed the first group only need to notify the new group. Neither the new selection nor the filing count establishes a total number of affected people.
