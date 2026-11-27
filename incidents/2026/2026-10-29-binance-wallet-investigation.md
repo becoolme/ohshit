@@ -1,15 +1,15 @@
 ---
-title: Binance preliminary report details signing-service intrusion and revises funding figures
+title: Binance says October-incident withdrawal recovery is complete; routine network pauses remain
 level: 4
 date: 2026-10-29
-updated: 2026-11-24
+updated: 2026-11-27
 tags:
   - Binance
   - crypto
   - investigation
 ecosystems:
   - crypto
-summary: Binance reports signing-service intrusion/EIP-7702 abuse, asset coverage, a 198-token reserve proof and withdrawals on 87 networks; full withdrawals/final review remain unconfirmed. FBI attributes the theft to TraderTraitor. DOJ seeks over $1.1bn USDC in forfeiture; its over $2.9bn frozen/seized/returned total is not a repayment figure.
+summary: Binance says October-incident withdrawal recovery is complete; routine network maintenance can still pause transfers. Its signing-service/EIP-7702 report and 198-token reserve proof do not confirm a completed final review. FBI attributes theft to TraderTraitor. DOJ seeks over $1.1bn USDC; its over $2.9bn frozen/seized/returned total is not repayment.
 splash: Binance.com withdrawal users; Aave reports a precautionary freeze of DAO-operated V3/V4 markets
 wipe: Follow official updates, inspect account activity, and use Binance's account-lock procedure if you find unauthorized actions
 inTheWild: yes
@@ -166,17 +166,28 @@ timeline:
   - date: Nov 14, 2026
     title: Binance says the November 12 reserve proof is ready
     body: Binance says users can now verify their asset backing for the snapshot covering 198 tokens.
+  - date: Nov 18, 2026
+    title: Binance reports an ADGM court order supporting asset recovery
+    body: The vendor says the order provides a legal pathway where partners require one before releasing frozen assets. It gives no newly returned amount or completed recovery; legal tracing and recovery work continue.
   - date: Nov 20, 12:00 UTC
     title: Elliptic updates its tracing snapshot
     body: The researcher reports about 488,000 ETH moved from five major addresses and at least 2,310 BTC entering coinjoins cumulatively; these are tracing estimates, not additional losses or recovered funds.
   - date: Nov 23, 2026
     title: DOJ files civil forfeiture claim over restrained USDC
     body: The claim seeks over $1.1 billion USDC already subject to restraint. DOJ reports over $2.9 billion frozen, seized and/or returned across multiple sources; it does not allocate that total among those categories or announce a final forfeiture judgment.
+  - date: Nov 26, 2026
+    title: Binance declares incident-related withdrawal recovery complete
+    body: The exchange says the October-incident suspension is fully lifted. A small number of networks remain paused for separate routine maintenance or planned upgrades; check live network status. The notice does not announce a final independent review or newly returned stolen funds.
+  - date: Nov 26, 13:00 UTC
+    title: Elliptic updates ETH conversion and cumulative coinjoin estimates
+    body: The researcher estimates about 125,000 ETH swapped for about 3,470 BTC since November 17 and at least 6,330 BTC entering coinjoins cumulatively since November 1. The original 18,270 BTC remains stationary in its analysis. These independently unverified tracing estimates are not new losses, returned funds or confirmed cash-out.
   - date: Nov 1, 06:00–09:00 UTC (scheduled)
     title: First withdrawal phase is planned
 
 
 checklist:
+  - title: Check live network status after incident-related recovery
+    hint: Binance’s November 26 notice says the October-incident withdrawal suspension is fully lifted, while a small number of networks remain paused for routine maintenance or planned upgrades. Use the official app and https://www.binance.com/en/network to check the selected network before submitting; contact official support if needed. Never provide a password, 2FA code or seed phrase to anyone offering faster withdrawals, priority processing or transfers to a supposed Binance vault. The exchange repeats its asset-backing assurance; use its official reserve portal for the relevant snapshot rather than treating reopened withdrawals as proof of recovered stolen assets.
   - title: Use official channels and reject recovery messages
     hint: Open Binance through your existing bookmark or official app and check its announcements for deposit and withdrawal restoration. The November 1 notice schedules the first withdrawal phase for 06:00–09:00 UTC; check your exact asset/network pair on the withdrawal or network-status page. The subsequent official update names Bitcoin as the first batch; a later update confirms Ethereum withdrawals for USDC, USDT and ETH, and BSC withdrawals for USDC, USDT and BNB. Later original posts also confirm XRP on XRP; ETH and USDC on Base; DOGE on DOGE; ETH, USDT and USDC on Optimism; ZEC on ZEC; USDT and GRAM on TON; and SUI on SUI. The linked intermediate updates also confirm ARB, ETH, USDT and USDC on Arbitrum; TRX and USDT on TRX; SOL, USDT and USDC on Solana; POL, USDT and USDC on Polygon; and AVAX, USDT and USDC on Avalanche C-Chain. Verify the exact pair live; these statements do not establish that every asset on these networks is available. Binance says future withdrawals use new wallets in its updated reserve-address list. Verify destination addresses and device security; congestion remains possible. The notice advises retrying later if needed. Verify unsolicited communications with Binance Verify or official support. Do not share passwords or 2FA codes, follow recovery links, or send money to purported support agents. Update 8 announces more pairs from November 5 04:00 UTC on ETH, BSC, Base, TRX, MATIC and SUI. Use its exact table and check the selected pair live; listing an asset does not mean all its networks are open. Deposits remain open, and delays/retries may occur during rollout. Binance confirmed HYPE and APT withdrawals reopened on November 8. On November 14, Binance reported withdrawals reopened on 87 networks that week. Check the exact asset and network in the official app’s withdrawal screen or on the network-status page before submitting.
   - title: Inspect your own account and respond to unauthorized activity
@@ -206,7 +217,7 @@ checklist:
   - title: Test post-issuance session theft and reduce standing access
     hint: SEAL’s November 6 revision notes that short-lived sessions and binding at issuance do not stop repeated theft or in-place use on a compromised endpoint. Reduce standing permissions, separate scoped service identities and retire abandoned services. Remove standing local administrator access where feasible. Exercise repository/CI-administrator and token abuse in a controlled environment and verify alerts actually fire. Move toward reviewed pipeline-mediated production changes with scoped identities; defend that concentrated repository/CI path first. These are operator recommendations, not an exchange-wide reset instruction or proof Binance has implemented them.
   - title: Screen newly traced bitcoin payouts and Solana transfers
-    hint: For deposit screening, compare XRP-to-BTC payouts and coinjoin exposure against Elliptic’s dated labels and the FBI list. Check the route, timestamps and wallet context before escalating. A match alone cannot establish who controls an address. For Solana, also check the Privacy Cash transactions in Bitquery’s updated report and distinguish them from unrelated use of the mixer.
+    hint: For deposit screening, compare XRP-to-BTC payouts and coinjoin exposure against Elliptic’s dated labels and the FBI list. Check the route, timestamps and wallet context before escalating. A match alone cannot establish who controls an address. For Solana, also check the Privacy Cash transactions in Bitquery’s updated report and distinguish them from unrelated use of the mixer. Elliptic’s November 26 report says its customers can screen more than 33,000 linked addresses and also links a public blocklist at https://www.elliptic.co/binance-hack-2026-blocklist/. Consult the report and available screening data for the complete current indicators rather than relying on one historical address sample; its latest route is ETH through THORChain into BTC and then coinjoins coordinated by Kruw. A coordinator does not take custody, and use of any named service alone does not prove criminal involvement.
 sources:
   - name: Binance investigation notice
     url: https://x.com/binance/status/2115915708504900039
@@ -435,14 +446,27 @@ sources:
     url: https://www.binance.com/en/proof-of-reserves
     says: Shows how to select the snapshot on the website and verify inclusion with the account-specific record.
     primary: true
-  - name: Elliptic November 20 tracing snapshot
+  - name: Elliptic November 20 and November 26 tracing snapshots
     url: https://www.elliptic.co/insights/how-north-korea-is-laundering-the-6-4-billion-stolen-from-binance/
     primary: true
-    says: Dated 12:00 UTC research snapshot distinguishes ETH transfers and cumulative first coinjoin entries from theft and recovery.
+    says: November 20 12:00 UTC and November 26 13:00 UTC snapshots distinguish ETH transfers, conversion and cumulative first coinjoin entries from theft and recovery. The later report revises cumulative mixing and labels more than 33,000 addresses; figures and ownership attribution remain research estimates.
   - name: DOJ November 23 civil forfeiture announcement
     url: https://www.justice.gov/opa/pr/united-states-files-action-recover-more-1-billion-cryptocurrency-assets-stolen-north-korean
     primary: true
     says: Announces a civil claim over previously restrained USDC and a combined freezing, seizure and/or return figure; not a final forfeiture or repayment notice.
+
+  - name: Binance November 26 withdrawal recovery completion notice
+    url: https://www.binance.com/en/support/announcement/detail/95c463396a034f1ab3994814225e6d69
+    says: Says the October-incident withdrawal suspension is fully lifted; separate maintenance or upgrade pauses remain on a small number of networks. Direct page returned an empty 202; the complete public CMS copy below was read.
+  - name: Binance public CMS copy of the November 26 recovery notice
+    url: https://www.binance.com/bapi/composite/v1/public/cms/article/detail/query?articleCode=95c463396a034f1ab3994814225e6d69
+    primary: true
+    says: Complete vendor article with live-status guidance, repeated asset-backing assurance and phishing warnings; the same disclosure, not independent corroboration.
+
+  - name: Binance ADGM asset-recovery court-order announcement
+    url: https://www.binance.com/en/blog/compliance/4100322350300314528
+    primary: true
+    says: November 18 vendor report of an ADGM court order supporting asset recovery; full public original read through the web index after direct retrieval returned an empty 202. No new recovered amount is stated.
 
 ---
 
@@ -533,4 +557,13 @@ In a companion analysis, Bitquery estimates that by **November 6 at 10:00 UTC**,
 **November 20 tracing snapshot (12:00 UTC).** Elliptic reports about 488,000 ETH moved since November 17 and at least 2,310 BTC ($149 million) first entering coinjoins cumulatively since November 1. It says the original 18,270 BTC remains stationary after its initial split; the mixed BTC was converted from other assets. These independently unverified tracing estimates do not establish new theft, cash-out, recovery or present wallet ownership. Earlier exchange replacement-funding and law-enforcement figures retain their separate scopes.
 
 
-**November 23 civil forfeiture filing.** DOJ says it filed a civil claim seeking over **$1.1 billion USDC** from the theft. The assets were already under a government-requested restraining order. This is progress in the forfeiture process, not an announcement of a final judgment or payment to customers. DOJ separately reports assisting in freezing, seizing and/or returning **over $2.9 billion** from multiple sources since the theft, without breaking that total into its component categories. Do not add the claim amount to that combined figure, or equate either with Binance’s replacement funding, final losses or customer compensation. Earlier November 12 figures describe the earlier reporting date. Full withdrawal availability and the final independent review remain unconfirmed in these sources.
+**November 23 civil forfeiture filing.** DOJ says it filed a civil claim seeking over **$1.1 billion USDC** from the theft. The assets were already under a government-requested restraining order. This is progress in the forfeiture process, not an announcement of a final judgment or payment to customers. DOJ separately reports assisting in freezing, seizing and/or returning **over $2.9 billion** from multiple sources since the theft, without breaking that total into its component categories. Do not add the claim amount to that combined figure, or equate either with Binance’s replacement funding, final losses or customer compensation. Earlier November 12 figures describe the earlier reporting date. Those November 23 sources did not confirm full withdrawal restoration or a completed final independent review. The November 26 notice below updates the incident-related withdrawal status.
+
+
+**November 26 recovery completion.** Binance says recovery work is complete and the withdrawal suspension caused by the October security incident is fully lifted. It distinguishes a small number of networks paused for routine maintenance or planned upgrades from the completed withdrawal recovery. Check the selected network on the official status page; network-side delays and unrelated pauses can still occur. The vendor repeats that assets are fully backed and directs users to its reserve portal. This is a service-recovery statement and a vendor assurance, not a new accounting of stolen, frozen, seized, returned or reimbursed assets, or a final independent security review. Earlier staged-reopening figures remain the dated history. Binance warns against anyone requesting passwords, 2FA codes or seed phrases, offering faster withdrawals or priority processing, or directing assets into a supposed Binance vault; contact support only through official channels.
+
+
+**November 26 tracing snapshot (13:00 UTC).** Elliptic estimates that about **125,000 ETH** had been exchanged for about **3,470 BTC** since November 17, including about **69,000 ETH** exchanged for **1,890 BTC** after swaps resumed on November 23, through November 26 at 12:45 UTC. It reports at least **6,330 BTC ($389 million)** entering coinjoins cumulatively since November 1, including about 440 BTC that day through 12:33 UTC. This is a later cumulative snapshot than the November 20 figure above. Elliptic says the original **18,270 BTC** remains in the 19 addresses created on the theft night; the bitcoin being mixed was converted from other stolen assets. These independently unverified tracing estimates describe movement and conversion of existing proceeds, not additional theft, returned assets, customer compensation or confirmed cash-out. The report says current wallet controllers cannot be determined from on-chain data alone and finds no evidence that AI agents are making the laundering decisions.
+
+
+**November 18 legal recovery step, checked November 27.** Binance says it obtained an ADGM court order to support recovery of assets connected to the October incident. It explains that some issuers, exchanges or partners require a formal order before releasing or returning frozen assets. The announcement gives no newly returned amount or completed recovery and says the work will take time. This vendor account of a legal pathway must not be added to frozen, seized or repaid totals. The separate Arbitrum proposal’s public discussion includes delegates reporting on-chain votes on November 23–26; those votes do not establish final approval, execution or returned funds.
