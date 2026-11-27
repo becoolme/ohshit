@@ -48,7 +48,6 @@ checklist:
     hint: Use your existing official Allium bookmark to sign in and set a new password as instructed. Turn on multi-factor authentication. Review the direct customer notice and coordinate unusual activity with Allium support; do not infer that every stored credential or customer dataset was stolen.
   - title: Validate data dependencies and service recovery
     hint: Check status.allium.so and the full Explorer/API incident history before resuming jobs. Allium says all App functionality was restored November 20 at 16:19 UTC, superseding its earlier recovery-in-progress notice. Test public dashboard links, uploads, access to previously uploaded tables and dependent queries with your own data; the broad resolution does not separately document uploaded-table recovery. Assistant recovered November 2 at 16:22 UTC and MCP November 5 at 14:11 UTC. All-chain datashare delivery and historical verification were confirmed October 30, with that incident resolved November 2. Reconcile downstream jobs and the affected interval; a stale verified_until timestamp alone does not establish missing data. Report discrepancies through your existing Allium contact and keep following customer notices and the forensic report.
-
 sources:
   - name: Allium security statement
     url: https://www.allium.so/blog/allium-security-update-incident-response-and-platform-recovery/
@@ -66,6 +65,10 @@ sources:
     url: https://status.allium.so/incidents/fhl7h8hp4sfz
     primary: true
     says: November 2 at 11:22 EST restores Assistant; November 5 at 09:11 EST restores MCP for all users. The November 20 update at 11:19 EST reports all App functionality restored. It does not separately explain uploaded-table recovery or resolve customer-data impact.
+  - name: Allium original Explorer outage and security-reset history
+    url: https://status.allium.so/incidents/k2rmlts60g0l
+    primary: true
+    says: The October 28 update requires replacing revoked API keys and setting a new password, recommends MFA, and announces the original uploaded-data restriction. Later restoration is documented in the separate Explorer/API incident.
 ---
 
 Allium’s security statement acknowledges access to some systems and says affected customers were notified directly. It does not identify the entry point, enumerate accessed customer data or provide a victim count. L3 reflects a developer-facing data provider’s confirmed intrusion and credential-reset requirements; it does not assert a mass data leak.
