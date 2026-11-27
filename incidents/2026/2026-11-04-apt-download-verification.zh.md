@@ -17,7 +17,7 @@ fixed:
 - product: Debian testing forky APT
   status: 11 月 6 日测试分支迁移通知记录的修复构建；forky 当前包为 3.3.7
 - product: Ubuntu 26.10 APT
-  status: USN/CVE 列为已修复，但博客响应有正在发布及已修复两种；核实实际软件源候选包。
+  status: USN、CVE 页和当前 Canonical 博客均列为已修复；核实实际软件源候选包。
 - product: Ubuntu 26.04 LTS APT
   status: 标准安全支持
 - product: Ubuntu 24.04 LTS APT
@@ -38,7 +38,7 @@ timeline:
   body: Debian 列出 bookworm、trixie 及 unstable 修复包。Canonical 说明 HTTP 重定向和重试前提；其 CVE 页及 CNA 版本记录对修复是否已发布存在差异。
 - date: 2026年11月4日
   title: Canonical 发布 USN 并更新 Ubuntu 修复可用状态
-  body: USN-8996-1 及 CVE 页列出八个修复构建。博客给出 Acquire::Retries=0 升级命令，但核查时 26.10 响应有正在发布及已修复两种，须核实实际软件源候选包。
+  body: USN-8996-1 及 CVE 页列出八个修复构建。博客给出 Acquire::Retries=0 升级命令，早期核查时 26.10 响应有正在发布及已修复两种；当前博客已列为修复，用户仍须核实实际软件源候选包。
 - date: 2026年11月6日
   title: Debian 迁移通知记录修复版 APT 3.3.6 进入 testing
   body: 通知记录 3.3.6 替换 3.3.5。这是通知日期，不代表确切迁移时刻；testing-watch 通知每日生成。
@@ -51,7 +51,7 @@ checklist:
 - title: 检查 HTTP 源、代理及重试配置
   hint: 检查 /etc/apt/sources.list、/etc/apt/sources.list.d/ 及 apt-config dump 中的 HTTP 软件源、代理和 Acquire::Retries。漏洞要求该值非零；Debian 12 和 Ubuntu 22.04 起默认是 3。管理员启用重试后，旧版默认配置不能证明安全。减少不可信网络路径暴露，在支持时使用经核实的 HTTPS 软件源或代理，不能关闭签名或 TLS 检查。Canonical 现明确确认将 Acquire::Retries 设为 0 可阻止该重试路径，包括恶意镜像攻击；可信 HTTPS 传输可防网络路径攻击。HTTPS 本身不能让恶意镜像变可信。
 - title: 按 Canonical 禁用重试的路径升级 Ubuntu
-  hint: Canonical 建议 sudo apt update && sudo apt upgrade -o Acquire::Retries=0。若只更新 APT 源包：sudo apt update && sudo apt install -o Acquire::Retries=0 --only-upgrade '?source-package(^apt$)'。用 apt list --installed '?source-package(^apt$)' 核查全部已安装 APT 源包，并与 USN-8996-1 的完整发行版版本比较。Ubuntu 20.04/18.04 需 Pro/ESM，16.04/14.04 另需 Legacy 扩展。26.10 须核实软件源实际提供 3.3.3ubuntu0.1：USN/CVE 列为已修复，博客核查响应却有正在发布及已修复两种。在支持时，先改用可信 HTTPS 镜像再打补丁，不能关闭验证。
+  hint: Canonical 建议 sudo apt update && sudo apt upgrade -o Acquire::Retries=0。若只更新 APT 源包：sudo apt update && sudo apt install -o Acquire::Retries=0 --only-upgrade '?source-package(^apt$)'。用 apt list --installed '?source-package(^apt$)' 核查全部已安装 APT 源包，并与 USN-8996-1 的完整发行版版本比较。Ubuntu 20.04/18.04 需 Pro/ESM，16.04/14.04 另需 Legacy 扩展。26.10 须核实软件源实际提供 3.3.3ubuntu0.1：USN、CVE 页及当前博客均列该构建为已修复。在支持时，先改用可信 HTTPS 镜像再打补丁，不能关闭验证。
 - title: 调查可疑软件包安装
   hint: 保留可疑重定向或重试附近的 APT、dpkg 历史、代理及软件源日志和软件包文件。受影响安装可用 root 执行软件包脚本，应经可信厂商记录核查来源并排查主机持久化。尚未核实专用攻击指标或受害者总数，异常重定向本身不能证明入侵。
 sources:
@@ -64,7 +64,7 @@ sources:
 - name: Canonical USN-8996-1
   says: 11 月 4 日通知列出八个 Ubuntu 修复包及 ESM/Legacy 要求。
 - name: Canonical APT 处置说明
-  says: 禁用重试的升级命令、HTTPS 缓解及已安装源包检查；26.10 响应有正在发布及已修复两种，阈值均为 3.3.3ubuntu0.1。
+  says: 禁用重试的升级命令、HTTPS 缓解及已安装源包检查；当前表格列 Ubuntu 26.10 在 3.3.3ubuntu0.1 修复，消除了此前正在发布／已修复的差异。
 - name: Debian APT 3.3.6 测试分支迁移通知
   says: 11 月 6 日每日通知记录 testing 从 3.3.5 迁移至 3.3.6；邮件时间不代表确切迁移时刻。
 - name: Debian APT 3.3.7 测试分支迁移通知
@@ -75,7 +75,7 @@ APT 在下载重定向及重试时复用硬链接，使网络路径上的攻击�
 
 攻击要求安装或下载发生重定向、重试，且重试设置非零。较新 Debian 及 Ubuntu 的默认值使其暴露，旧版在更改配置后也可能暴露。Canonical 评为高危；尚未确立实际利用或受害者人数。
 
-Debian 跟踪页给出上表发行版修复。较早核查时，Ubuntu 仍将各版本标为受影响，USN-8996-1 返回 404。**11 月 4 日可用性更新：** USN 现已可读，CVE 页列出上表八个 Ubuntu 修复。26.10 博客在本次核查中出现正在发布及已修复两种响应，而 USN/CVE 均列 3.3.3ubuntu0.1 已修复。须核实实际软件源候选包及安装版本，不能假定每个镜像均已完成分发。旧版需要相应 Pro/ESM 及 Legacy 覆盖。
+Debian 跟踪页给出上表发行版修复。较早核查时，Ubuntu 仍将各版本标为受影响，USN-8996-1 返回 404。**11 月 4 日可用性更新：** USN 现已可读，CVE 页列出上表八个 Ubuntu 修复。26.10 博客在早期核查中曾出现正在发布及已修复两种响应。11 月 27 日复查时，当前博客、USN 及 CVE 页均列 3.3.3ubuntu0.1 已修复。须核实实际软件源候选包及安装版本，不能假定每个镜像均已完成分发。旧版需要相应 Pro/ESM 及 Legacy 覆盖。
 
 Canonical 建议在升级操作中禁用重试，也可防恶意镜像利用。连接可信镜像的 HTTPS 可防网络路径操纵，仍须安装补丁。Snap 安装使用另一套系统，不属于本 APT 漏洞。Debian 邮件列表访问挑战仍未解决，未使用未读邮件内容作为证据。
 
