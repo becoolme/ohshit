@@ -86,7 +86,7 @@ sources:
     says: Full post and nested maintenance announcement read in official RSS; site returns after the November 19 interruption, with loading controls and the same disabled features.
 ---
 
-If accessed, the user database could expose usernames, email addresses, IP addresses and password hashes. The operator warns that hashing does not fully protect weak or reused passwords. AO3 does not collect real names. The investigation has not established the entry point, affected-account count or database theft. L3 reflects a major platform’s confirmed security disruption, rather than a confirmed mass data leak.
+If accessed, the user database could expose usernames, email addresses, IP addresses and password hashes. The operator warns that hashing does not fully protect weak or reused passwords. AO3 does not collect real names. The operator says donor information is held in a separate system, is never linked to AO3 and was not exposed. The investigation has not established the entry point, affected-account count or database theft. L3 reflects a major platform’s confirmed security disruption, rather than a confirmed mass data leak.
 
 
 **November 6 update:** At that point, AO3 said restoration and changes to prevent future incidents were proceeding well and the original return estimate still applied. Some subscription/kudos notices queued before the October outage were sent during recovery; the operator confirms those messages are legitimate. The team says it is actively working to prevent drafts from being deleted. Those notices alone did not confirm reopening or completed draft preservation; the later notices below establish service recovery and preservation while leaving the database-exposure investigation unresolved.
