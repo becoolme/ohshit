@@ -13,7 +13,9 @@ fixed:
 - product: Debian 12 bookworm APT
   status: Debian 安全跟踪页列为已修复
 - product: Debian unstable APT
-  status: Debian 跟踪页列为已修复；forky 的 3.3.5 仍受影响
+  status: unstable 的首个修复构建；sid 当前包为 3.3.8
+- product: Debian testing forky APT
+  status: 11 月 6 日测试分支迁移通知记录的修复构建；forky 当前包为 3.3.7
 - product: Ubuntu 26.10 APT
   status: USN/CVE 列为已修复，但博客响应有正在发布及已修复两种；核实实际软件源候选包。
 - product: Ubuntu 26.04 LTS APT
@@ -37,9 +39,15 @@ timeline:
 - date: 2026年11月4日
   title: Canonical 发布 USN 并更新 Ubuntu 修复可用状态
   body: USN-8996-1 及 CVE 页列出八个修复构建。博客给出 Acquire::Retries=0 升级命令，但核查时 26.10 响应有正在发布及已修复两种，须核实实际软件源候选包。
+- date: 2026年11月6日
+  title: Debian 迁移通知记录修复版 APT 3.3.6 进入 testing
+  body: 通知记录 3.3.6 替换 3.3.5。这是通知日期，不代表确切迁移时刻；testing-watch 通知每日生成。
+- date: 2026年11月14日
+  title: Debian 迁移通知记录 APT 3.3.7 进入 testing
+  body: 后续通知记录 3.3.7 替换 3.3.6。安全跟踪页现列 forky 3.3.7 和 sid 3.3.8 已修复；不将 3.3.7 当作首个安全修复。
 checklist:
 - title: 盘点 APT 并安装本发行版修复
-  hint: 在主机、基础镜像及 CI runner 上检查 apt --version 和 apt-cache policy apt。Debian 13 需 3.0.4，Debian 12 需 2.6.2，unstable 列出 3.3.6。经可信管理网络及软件源更新 apt 和配套软件包。保留发行版后缀及回补补丁，不要给 Ubuntu 安装 Debian 软件包，也不要仅凭上游版本认定发行版构建已修复。
+  hint: 在主机、基础镜像及 CI runner 上检查 apt --version 和 apt-cache policy apt。Debian 13 需 3.0.4，Debian 12 需 2.6.2，unstable 的首个修复构建为 3.3.6。testing／forky 也已取得该修复构建，目前列出 3.3.7 已修复；sid 当前列出 3.3.8 已修复。经可信管理网络及软件源更新 apt 和配套软件包。保留发行版后缀及回补补丁，不要给 Ubuntu 安装 Debian 软件包，也不要仅凭上游版本认定发行版构建已修复。
 - title: 检查 HTTP 源、代理及重试配置
   hint: 检查 /etc/apt/sources.list、/etc/apt/sources.list.d/ 及 apt-config dump 中的 HTTP 软件源、代理和 Acquire::Retries。漏洞要求该值非零；Debian 12 和 Ubuntu 22.04 起默认是 3。管理员启用重试后，旧版默认配置不能证明安全。减少不可信网络路径暴露，在支持时使用经核实的 HTTPS 软件源或代理，不能关闭签名或 TLS 检查。Canonical 现明确确认将 Acquire::Retries 设为 0 可阻止该重试路径，包括恶意镜像攻击；可信 HTTPS 传输可防网络路径攻击。HTTPS 本身不能让恶意镜像变可信。
 - title: 按 Canonical 禁用重试的路径升级 Ubuntu
@@ -48,7 +56,7 @@ checklist:
   hint: 保留可疑重定向或重试附近的 APT、dpkg 历史、代理及软件源日志和软件包文件。受影响安装可用 root 执行软件包脚本，应经可信厂商记录核查来源并排查主机持久化。尚未核实专用攻击指标或受害者总数，异常重定向本身不能证明入侵。
 sources:
 - name: Debian 安全跟踪页
-  says: 列出 bookworm 2.6.2、trixie 3.0.4 及 unstable 3.3.6 已修复；forky 3.3.5 受影响。
+  says: 列出 bookworm 2.6.2、trixie 3.0.4 已修复，unstable 修复阈值为 3.3.6。当前包表列出 forky 3.3.7 和 sid 3.3.8 已修复，取代较早 forky 受影响的快照。
 - name: Canonical CVE 页面
   says: CVE 页现列出 Ubuntu 14.04–26.10 修复构建及 Pro/Legacy 要求，取代此前受影响状态。
 - name: Canonical 原始 CNA 记录
@@ -57,12 +65,19 @@ sources:
   says: 11 月 4 日通知列出八个 Ubuntu 修复包及 ESM/Legacy 要求。
 - name: Canonical APT 处置说明
   says: 禁用重试的升级命令、HTTPS 缓解及已安装源包检查；26.10 响应有正在发布及已修复两种，阈值均为 3.3.3ubuntu0.1。
+- name: Debian APT 3.3.6 测试分支迁移通知
+  says: 11 月 6 日每日通知记录 testing 从 3.3.5 迁移至 3.3.6；邮件时间不代表确切迁移时刻。
+- name: Debian APT 3.3.7 测试分支迁移通知
+  says: 11 月 14 日每日通知记录 testing 从 3.3.6 迁移至 3.3.7。
 ---
 
 APT 在下载重定向及重试时复用硬链接，使网络路径上的攻击者可导致安装其控制的未经验证的软件包。恶意镜像或代理属于已说明的威胁模型；这不代表软件包签名密钥或 Debian 仓库遭攻破。
 
 攻击要求安装或下载发生重定向、重试，且重试设置非零。较新 Debian 及 Ubuntu 的默认值使其暴露，旧版在更改配置后也可能暴露。Canonical 评为高危；尚未确立实际利用或受害者人数。
 
-Debian 跟踪页给出上表三个发行版修复。较早核查时，Ubuntu 仍将各版本标为受影响，USN-8996-1 返回 404。**11 月 4 日可用性更新：** USN 现已可读，CVE 页列出上表八个 Ubuntu 修复。26.10 博客在本次核查中出现正在发布及已修复两种响应，而 USN/CVE 均列 3.3.3ubuntu0.1 已修复。须核实实际软件源候选包及安装版本，不能假定每个镜像均已完成分发。旧版需要相应 Pro/ESM 及 Legacy 覆盖。
+Debian 跟踪页给出上表发行版修复。较早核查时，Ubuntu 仍将各版本标为受影响，USN-8996-1 返回 404。**11 月 4 日可用性更新：** USN 现已可读，CVE 页列出上表八个 Ubuntu 修复。26.10 博客在本次核查中出现正在发布及已修复两种响应，而 USN/CVE 均列 3.3.3ubuntu0.1 已修复。须核实实际软件源候选包及安装版本，不能假定每个镜像均已完成分发。旧版需要相应 Pro/ESM 及 Legacy 覆盖。
 
 Canonical 建议在升级操作中禁用重试，也可防恶意镜像利用。连接可信镜像的 HTTPS 可防网络路径操纵，仍须安装补丁。Snap 安装使用另一套系统，不属于本 APT 漏洞。Debian 邮件列表访问挑战仍未解决，未使用未读邮件内容作为证据。
+
+
+**测试分支跟进：** 较早快照将 forky 的 3.3.5 列为受影响。Debian 11 月 6 日 testing-watch 邮件记录从 3.3.5 迁移至修复版 3.3.6，11 月 14 日邮件记录随后迁移至 3.3.7。这些是每日通知的日期，不代表确切迁移时刻。安全跟踪页当前列出 forky 3.3.7、sid 3.3.8 已修复，同时仍以 3.3.6 作为 unstable 安全修复阈值。测试分支用户应通过自己的可信 Debian 软件源更新并核对实际安装包；本次更新不代表 3.3.7 是首个修复版本，也不改变 HTTP／重试前提。
