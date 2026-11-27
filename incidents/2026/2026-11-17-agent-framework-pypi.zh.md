@@ -34,13 +34,13 @@ checklist:
   - title: 在不启动受影响 Python 的情况下排查暴露
     hint: 用 shell 工具检查 11 月 17 日 20:35 UTC 之后的 requirements、锁文件、构建日志、镜像及 site-packages。查找 agent_framework-1.26.1.dist-info、agent_framework-1.26.2.dist-info 和下列载荷文件。不要先运行 python、pip list 或 pip uninstall，正常启动会执行钩子。
   - title: 隔离并重建，不要原地降级
-    hint: 保留文件、进程列表及出站日志，然后隔离环境，不要运行其中的 Python 或 pip。微软 11 月 25 日指引要求从干净镜像重建，移除受影响环境、镜像、缓存及镜像站／代理副本；原地降级不足以完成处置。弃用前的遏制阶段，可用可信 shell 工具识别 agent_framework_meta.pth、agent_framework_meta/_telemetry.py、af_runtime_diag.pth 和 af_runtime_diag.py，保全证据后终止已确认脱离父进程的收集程序。_AF_TEL=1 可暂时阻止两个已知载荷，但不代表清理完成。只删钩子仍会留下 agent_framework_meta/__init__.py 中 1.26.1 的显式导入触发路径；恶意 dist-info 及载荷 __pycache__ 也属于受影响环境。应重建，不要通过删除这些文件来宣称原环境已干净。
+    hint: 保留文件、进程列表及出站日志，然后隔离环境，不要运行其中的 Python 或 pip。微软 11 月 25 日指引要求从干净镜像重建，移除受影响环境、镜像、缓存及镜像站／代理副本；原地降级不足以完成处置。弃用前的遏制阶段，可用可信 shell 工具识别 agent_framework_meta.pth、agent_framework_meta/_telemetry.py、af_runtime_diag.pth 和 af_runtime_diag.py，保全证据后终止已确认脱离父进程的收集程序。两个已知载荷的进程继承 _AF_TEL=1 时会跳过新的收集；这不会停止已经运行的收集程序，也不代表清理完成。只删钩子仍会留下 agent_framework_meta/__init__.py 中 1.26.1 的显式导入触发路径；恶意 dist-info 及载荷 __pycache__ 也属于受影响环境。应重建，不要通过删除这些文件来宣称原环境已干净。
   - title: 恢复已验证的干净版本并清除分发缓存
     hint: 在重建环境中固定 agent-framework==1.26.0，并在包代理中拦截 1.26.1 和 1.26.2。干净 wheel 的 SHA-256 为 14267ec8e6929c139015f8ec918adc638a71c7656901413426bb30ab199b6d71。使用 pip --require-hashes 时，应为完整依赖集合生成哈希。清除 pip/uv 缓存、CI 缓存、内部镜像及产物代理中的恶意 wheel；不能只依赖不固定版本的升级或 PyPI 下架。若从未安装任一恶意版本，微软称只需固定 1.26.0 或所需子包的确切版本，并保持固定直至后续指引，无需其他操作。仓库不可用不代表项目已停止。
   - title: 处置凭据与工作负载身份暴露
     hint: 若安装过任一恶意版本，微软要求将主机、容器或 CI 任务按失陷处理，轮换环境可访问的所有凭据，包括包仓库及 Git 凭据、API 密钥和云／CI 身份，不要等待证明收集程序实际执行。从干净系统轮换环境变量与文件中的秘密、Azure CLI 缓存、npm/PyPI/Docker/git/Hugging Face 凭据、云与模型密钥及 Azure DevOps 服务连接。检查联合身份凭据和托管身份角色分配，临时移除不安全权限并审阅 Entra 登录与活动日志。运行器凭据文件可读时，重新注册自托管运行器。已签发访问令牌可能在过期前继续有效。若导出了 ACTIONS_RUNTIME_TOKEN，应检查 Actions 缓存和产物写入；普通 run 步骤默认不会暴露该令牌。检查 11 月 17 日起的云与 CI 审计日志，排查这些凭据的异常使用。
   - title: 使用完整端点与已公布样本排查
-    hint: 搜索发往 webhook[.]site/d381fd80-ec62-42ad-8f5c-d1b15103c9bb?t=telemetry 的 POST、User-Agent af-runtime-diagnostics/1 和 runtime-diagnostics/1，以及下列七个恶意 SHA-256。另查 _AF_TEL=1、脱离父进程的 Python 子进程和对 /proc/*/environ 的读取。关联异常 OIDC 请求及对合法 Azure 元数据端点 169.254.169.254/metadata/identity/oauth2/token 的集中请求；令牌请求可能使用 Python-urllib/3.x。端点由 18.142.122[.]94 使用 curl/8.19.0 创建；这只提供基础设施背景，不能识别攻击者或受害者。仅凭域名、IP 或标记匹配无法确认失陷或成功外传；webhook.site 也有合法用途。
+    hint: 搜索发往 webhook[.]site/d381fd80-ec62-42ad-8f5c-d1b15103c9bb?t=telemetry 的 POST、User-Agent af-runtime-diagnostics/1 和 runtime-diagnostics/1，以及下列七个恶意 SHA-256。另查 _AF_TEL=1、脱离父进程的 Python 子进程和对 /proc/*/environ 的读取。关联异常 OIDC 请求及对合法 Azure 元数据端点 169.254.169.254/metadata/identity/oauth2/token 的集中请求；令牌请求可能使用 Python-urllib/3.x。端点由 18.142.122[.]94 使用 curl/8.19.0 创建；这只提供基础设施背景，不能识别攻击者或受害者。包仓库日志还可能出现上传客户端 User-Agent RestSharp/106.13.0.0，只能说明声称使用的客户端，不能识别操作者。仅凭域名、IP、User-Agent 或标记匹配无法确认失陷或成功外传；webhook.site 也有合法用途。
   - title: 解读已采集上传时，不要据此排除其他暴露主机
     hint: Wiz 另列 _telemetry.py 的 SHA-1 为 0a013e4724c4437cf9b177def1d988113e167539。其观察到的工具标记 /tmp/cairn_pkg、CAIRN_ESRP_PROBE2 和 pi_glm53 只是背景，不能确定攻击者身份。端点返回 HTTP 200 表示接受上传；410/429 提示拒收。未发现已采集数据不能排除暴露，也不能替代凭据处置。
 sources:
