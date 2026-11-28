@@ -3,7 +3,7 @@ title: pCloud confirms Pass cyberattack and email exposure; vault-copy question 
 date: 2026-11-27
 level: 4
 tags: [pCloud, Password manager, Data breach]
-summary: pCloud confirms a contained attack on pCloud Pass exposed some users’ email addresses and triggered login attempts. It says stored passwords and notes remain protected and Cloud Storage was unaffected. The affected count, entry point and whether encrypted vaults were copied remain undisclosed.
+summary: pCloud confirms a contained attack on pCloud Pass exposed some users’ email addresses; login attempts generated notifications. It says stored passwords and notes remain protected and Cloud Storage was unaffected. The affected count, entry point and whether encrypted vaults were copied remain undisclosed.
 splash: pCloud Pass users whose email addresses were exposed; affected count and attack prerequisites are undisclosed
 wipe: Review account devices, secure unexpected account access, enable 2FA and distrust requests for master passwords or recovery words.
 inTheWild: yes
@@ -16,9 +16,9 @@ checklist:
   - title: Check unfamiliar-device alerts through the service directly
     hint: Open the pCloud site yourself. In Settings > Security > Logged devices, remove sessions you do not recognize. Preserve the alert, device name, IP and time, then contact support@pcloud.com about unexplained access; do not send master passwords or recovery words. A notification alone does not establish vault access.
   - title: Secure unexpected account access
-    hint: pCloud’s general login guidance recommends changing the pCloud account password after an unfamiliar login. Open my.pcloud.com > account avatar > Settings > Security, re-enter the current password and follow the password-change prompts. This is account protection, not a vendor-announced reset of every password stored in Pass.
+    hint: pCloud’s general login guidance recommends changing the pCloud account password after an unfamiliar login. Open my.pcloud.com > account avatar > Settings > Security, re-enter the current password and follow the prompts to choose a strong, unique password. This is account protection, not a vendor-announced reset of every password stored in Pass.
   - title: Enable two-factor authentication and retain recovery access
-    hint: In my.pcloud.com > Settings > Security, turn on Two-factor authentication, confirm your account password and configure SMS or an authenticator app. Complete the verification and save recovery codes securely. Existing 2FA users should retain it; this incident has not established a 2FA bypass.
+    hint: In my.pcloud.com > Settings > Security, turn on Two-factor authentication, confirm your account password, then enter a phone number for SMS or scan the authenticator QR code. Enter the resulting security code and save recovery codes securely. If you only use a social login and have no account password, first set one through the official login form’s Forgot password process. Existing 2FA users should retain it; this incident has not established a 2FA bypass.
   - title: Reject follow-up phishing
     hint: pCloud says it will never request your Master Password or recovery words by email, phone or chat. Do not supply them in response to an alert or an unsolicited support message; open the official service independently to investigate.
 sources:
@@ -36,7 +36,7 @@ sources:
     says: Explains 2FA setup, recovery codes and removal of suspicious logged devices; it does not establish how this attack worked.
 ---
 
-On November 27, the pCloud Team confirmed that a cyberattack against pCloud Pass exposed an unspecified, reportedly small number of users’ email addresses and led to login attempts. It says the attack was contained. This is a confirmed attack on a password-manager service, supporting L4; there is no published victim total or confirmed financial-loss figure.
+On November 27, the pCloud Team confirmed that a cyberattack against pCloud Pass exposed an unspecified, reportedly small number of users’ email addresses and was accompanied by login attempts. It says the attack was contained. This is a confirmed attack on a password-manager service, supporting L4; there is no published victim total or confirmed financial-loss figure.
 
 pCloud says stored passwords, notes and other Pass information remain protected by client-side encryption and the Master Password, and that its Cloud Storage service was unaffected. These are vendor statements, not an independent forensic clearance. The statement does not explicitly answer whether encrypted vault files were accessed or copied. Do not turn that omission into either a claim of vault theft or proof that no copies were taken.
 
