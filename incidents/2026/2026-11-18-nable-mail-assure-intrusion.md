@@ -1,14 +1,14 @@
 ---
 title: N-able confirms Mail Assure and SpamExperts Hosted Cloud server intrusion
 date: 2026-11-18
-updated: 2026-11-24
+updated: 2026-11-28
 level: 4
 tags:
   - N-able
   - SaaS
   - Email
   - Intrusion
-summary: N-able patched CVE-2026-134624 after its Mail Assure/SpamExperts Hosted Cloud intrusion, separate from N-central. Dashboard/API access returned November 21 in a phased recovery; mail flow/filtering continued. The vendor reports no evidence of exploitation beyond one server after remediation; root cause and final data impact remain open.
+summary: N-able patched CVE-2026-134624 after its Mail Assure/SpamExperts Hosted Cloud intrusion, separate from N-central. It reports all hosted services operational November 25 after phased recovery; mail flow continued. Its earlier finding was limited to one server after remediation; root cause and final data impact remain open.
 splash: Hosted Cloud partners; older builds expose an LDAP relay-check SSRF to authenticated, high-privilege API users
 wipe: Confirm build 20261121.1943 or later with N-able, follow partner-specific actions, and validate each restored service and integration.
 inTheWild: yes
@@ -56,13 +56,16 @@ timeline:
   - date: Nov 23, 2026
     title: CISA adds CVE-2026-134624 to KEV
     body: Covered US federal agencies have a November 26 remediation deadline and forensic-triage requirements. This confirms exploitation of the flaw, without identifying the initial entry path of this hosted incident.
+  - date: Nov 25, 22:00 UTC
+    title: N-able reports full hosted-service restoration
+    body: The public incident record moves to resolved and says all services are operational after restoration and monitoring. Outstanding customer issues go to Support; no root-cause report or final data-impact finding accompanies this update.
 checklist:
   - title: Confirm the corrected build for the deployment you actually use
     hint: Ask N-able to confirm build 20261121.1943 or later for MailAssure/SpamExperts. The November 22 statement confirms Hosted Cloud remediation; do not install an N-central hotfix for this service. For Local Cloud, check Server > Settings and the configured weekly software update schedule, then have support verify the running build and security-update delivery. Do not infer that a hosted rollout patched a separately managed deployment.
   - title: Obtain the instructions for your environment
     hint: Check for N-able’s direct Mail Assure/SpamExperts partner email. Its November 18 update says the required action depends on the environment; contact N-able Technical Support if you did not receive it.
   - title: Verify restored functions in your environment
-    hint: N-able restored dashboard and API access on November 21 but describes phased restoration. Check portal/API access and separately verify quarantine, logs and mailbox synchronization with Technical Support; the update does not explicitly confirm completion for every supporting function.
+    hint: N-able reports all Hosted Cloud services operational as of November 25 at 22:00 UTC. Test portal/API access, quarantine, logs and mailbox synchronization in your own environment; route remaining issues to Technical Support. Service recovery does not clear earlier exposure or replace the environment-specific security actions.
   - title: Revalidate privileged API integrations and LDAP connection checks
     hint: Inventory API users able to configure relay LDAP synchronization, verify their privileges and review unexpected internal destinations with N-able. Follow the environment-specific partner notice for any credential or token replacement, then test affected API/OAuth integrations and LDAP synchronization; the readable November 22 public statement does not enumerate which customer credentials were exposed or reset. Preserve relevant logs before changes and escalate suspicious activity to support; an unusual request alone is not proof of compromise.
   - title: Apply the KEV response requirements where they govern your organization
@@ -77,7 +80,7 @@ sources:
   - name: N-able public dashboard data for incident 202672
     url: https://uptime.n-able.com/api/v1/private/dashboard/event/202672/
     primary: true
-    says: Unauthenticated JSON used by the public status page; explicitly gives UTC timestamps and the full update history.
+    says: Unauthenticated JSON used by the public status page; gives UTC timestamps and full history, including the November 25 all-services-operational resolution. The operational resolution supplies no final forensic findings.
   - name: N-able November 22 Mail Assure incident update
     url: https://www.n-able.com/blog/mail-assure-incident-update
     primary: true
@@ -117,3 +120,5 @@ N-able’s November 22 14:30 EST update says the identified vulnerability has be
 The vendor-authored CVE record describes an LDAP synchronization connection check used when configuring a relay. Before build 20261121.1943, an authenticated API user can probe arbitrary internal hosts/ports and send crafted traffic to services there. Its CVSS 4.0 score is 9.3 and the vector requires high privileges. It does not itself establish unauthenticated access, code execution or mailbox theft. The Hosted Cloud breach finding and the software build boundary have different scopes; Local Cloud operators should verify applicability and actual patch delivery with support.
 
 CISA added CVE-2026-134624 to KEV on November 23. That is independent official confirmation that this flaw has been exploited, but it does not establish that it was the initial entry point into the single hosted server. The November 26 deadline and forensic-triage requirements apply to covered federal agencies; they are not a customer recovery-completion date.
+
+At 22:00 UTC on November 25, the public incident record moved to resolved and reported all Hosted Cloud services operational following restoration and monitoring. It directs outstanding customer issues to Support. This supersedes the earlier phased-recovery status: the older November 21 update alone did not confirm every supporting function, but the later notice reports full service restoration. The record’s older top-level description still mentions offline services; its dated resolution is the later operational update. Recovery does not establish a final data-impact assessment or complete the separately promised root-cause analysis.
