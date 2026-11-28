@@ -8,7 +8,7 @@ tags:
   - SaaS
   - Email
   - Intrusion
-summary: N-able patched CVE-2026-134624 after its Mail Assure/SpamExperts Hosted Cloud intrusion, separate from N-central. It reports all hosted services operational November 25; mail flow/filtering continued. The vendor reports no evidence beyond one server after remediation; root cause and final data impact remain open.
+summary: N-able patched CVE-2026-134624 after its Mail Assure/SpamExperts Hosted Cloud intrusion, separate from N-central. It reports all hosted services operational November 25; mail flow/filtering continued. The vendor reports no evidence of exploitation beyond one server after remediation; root cause and final data impact remain open.
 splash: Hosted Cloud partners; older builds expose an LDAP relay-check SSRF to authenticated, high-privilege API users
 wipe: Confirm build 20261121.1943 or later with N-able, follow partner-specific actions, and validate each restored service and integration.
 inTheWild: yes
