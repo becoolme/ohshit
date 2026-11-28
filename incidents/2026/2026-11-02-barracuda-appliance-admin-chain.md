@@ -2,7 +2,7 @@
 title: Barracuda ESG authentication bypass can combine with a root command-injection flaw
 level: 4
 date: '2026-11-02'
-updated: 2026-11-12
+updated: 2026-11-28
 tags:
 - edge device
 - auth bypass
@@ -11,7 +11,7 @@ summary: Barracuda disclosed an ESG configuration-import bypass and a timezone c
 splash: Reachable appliance admin interfaces; command injection alone requires an authenticated administrator
 wipe: Restrict admin access; install current firmware and verify the vendor patch for each appliance
 inTheWild: 'yes'
-inTheWildNote: CISA listed both Barracuda flaws in KEV on November 10.
+inTheWildNote: Barracuda reports exploitation at a small number of organizations; both flaws are in KEV.
 ecosystems:
 - barracuda
 cves:
@@ -54,6 +54,9 @@ timeline:
 - date: Nov 5, 19:30 UTC
   title: Barracuda corrects the ESG authentication requirement
   body: The vendor now explicitly says CVE-2026-116606 requires access to the administrative UI, not authentication. The timezone flaw still requires administrator access; product and patch scope are unchanged.
+- date: Nov 10, 02:00 UTC
+  title: Barracuda confirms exploitation affecting a small number of organizations
+  body: The vendor’s update is dated November 9 at 21:00 EST. It does not name victims, quantify the count or identify a specific chained attack.
 - date: Nov 10, 2026
   title: CISA adds CVE-2026-111560 and CVE-2026-116606 to KEV
   body: The catalog confirms known exploitation. The catalog due date for applicable U.S. federal civilian agencies is November 13, 2026. Follow vendor remediation and CISA BOD 26-04 forensic triage guidance.
@@ -70,7 +73,7 @@ sources:
 - name: Barracuda product advisory
   url: https://trust.barracuda.com/security/pre-authentication-authorization-bypass-command-injection
   primary: true
-  says: November 2 publication; six products, patch IDs and management-access guidance. The explicit November 5 14:30 EST correction resolves the earlier authentication-label conflict for CVE-2026-116606.
+  says: November 2 publication; six products, patch IDs and management-access guidance. The explicit November 5 14:30 EST correction resolves the earlier authentication-label conflict for CVE-2026-116606. The November 9 21:00 EST update confirms exploitation affecting a small number of organizations.
 - name: Mandiant MNDT-2026-0042
   url: https://raw.githubusercontent.com/mandiant/Vulnerability-Disclosures/master/2026/MNDT-2026-0042.md
   primary: true
@@ -91,6 +94,6 @@ Mandiant identifies the command-injection exposure as ESG through 9.4.0.27, ADC 
 
 The vendor originally labelled both vulnerabilities as requiring administrator authentication, contradicting its pre-authentication description and Mandiant’s ESG finding. At **19:30 UTC on November 5** (14:30 EST), Barracuda explicitly corrected CVE-2026-116606 to require **administrative-UI reachability, not authentication**. This resolves the label conflict, rather than identifying another flaw or attack. The timezone issue still requires administrator access. Treat reachability of the management service as exposure; an existing administrator login is not a dependable protection against the ESG chain.
 
-The patch identifiers above are copied from Barracuda, including BNADC-16586 for both ADC and WAF. The firmware range for one CVE does not establish a safe release for every product or replace patch verification. CISA subsequently confirmed known exploitation of both vulnerabilities, which warrants L4. The listing does not identify victims or establish that both flaws were chained in a specific attack.
+The patch identifiers above are copied from Barracuda, including BNADC-16586 for both ADC and WAF. The firmware range for one CVE does not establish a safe release for every product or replace patch verification. Barracuda’s November 9 update (21:00 EST, or November 10 at 02:00 UTC) reports exploitation affecting a small number of organizations, without a numeric victim count. CISA subsequently confirmed known exploitation of both vulnerabilities, which warrants L4. The listing does not identify victims or establish that both flaws were chained in a specific attack.
 
 The catalog confirms known exploitation. The catalog due date for applicable U.S. federal civilian agencies is November 13, 2026. Follow vendor remediation and CISA BOD 26-04 forensic triage guidance.
