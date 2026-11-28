@@ -21,7 +21,7 @@ timeline:
   body: The bank identifies a pre-login PDF-display flaw and 22 exposed requests from 10 corporate customers. It is individually explaining the exposure; restart awaits safety checks and consultation.
 checklist:
 - title: Confirm whether your bank’s service is affected
-  hint: Yamagata Bank’s Foreign Exchange WEB Service is suspended. Contact its International Business team at 023-634-7548 (notice hours: 09:00–17:00) for individual foreign-remittance handling and exposure notices. Neither notice publishes a customer-side patch, CVE or affected version.
+  hint: Yamagata Bank’s Foreign Exchange WEB Service is suspended. Contact its International Business team at 023-634-7548 (notice hours 09:00–17:00) for individual foreign-remittance handling and exposure notices. Neither notice publishes a customer-side patch, CVE or affected version.
 - title: Independently verify unexpected remittance requests
   hint: Do not respond to suspicious calls or emails. Use previously established bank and counterparty contacts to verify payment instructions, account changes or requests referencing remittance details; report suspected misuse to the bank.
 - title: Confirm provider remediation before restoring access
