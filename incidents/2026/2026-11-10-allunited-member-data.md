@@ -42,7 +42,7 @@ timeline:
   body: AllUnited lists KNLTB, KNZB, NTFU and Sportlink as still unavailable. An authentication error on these interfaces is expected while they are disabled.
 - date: Nov 23, 2026
   title: KNBB reports notifications, password resets and retention changes
-  body: The billiards federation says it notified members and former members, required new passwords, deleted former-member data older than two years and removed direct payment links from reminder invoices. These are KNBB’s actions, not completion of all clubs’ notifications.
+  body: The billiards federation says it notified members and former members, required new passwords, deleted records for people whose membership ended more than two years earlier and removed direct payment links from reminder invoices. These are KNBB’s actions, not completion of all clubs’ notifications.
 - date: Nov 24, 2026
   title: AllUnited sets a November 30 fallback for reporting and notifications
   body: Following a November 23 email requested by the Dutch Data Protection Authority, organizations that handled reporting or notifications themselves must confirm their actions and responsibility in writing before November 30. Without that confirmation, AllUnited says it will add the organization to its November 16 collective filing and start emailing members, former members and other contacts from November 30.
@@ -83,7 +83,7 @@ sources:
 - name: KNBB November 23 response update
   url: https://www.poolbiljarten.nl/update-datalek-all-united-wat-is-er-gebeurd-en-welke-stappen-zijn-genomen/
   primary: true
-  says: Reports member/former-member notifications, new passwords, regulator/police reports, a two-year former-member retention limit, deletion of older records and removal of direct payment links from reminder invoices. These statements apply to KNBB.
+  says: Reports member/former-member notifications, new passwords, regulator/police reports, a two-year former-member retention limit, deletion of records for people who left more than two years earlier and removal of direct payment links from reminder invoices. These statements apply to KNBB.
 ---
 
 AllUnited says an attacker exploited its software through a club website registration form on November 9. The attacker reached one server and copied database data for clubs and federations on the platform. The provider says it found and fixed the flaw on November 10. It did not identify a CVE or publish an affected software version.
@@ -104,4 +104,4 @@ AllUnited now reports clubs receiving phishing emails that impersonate a board m
 
 The linked AllUnited phishing guide gives fictional examples of club-payment, login-correction and bank impersonation messages. Its example names, amounts and sender address are not evidence of actual attacks or indicators to block. Members should open the club website independently, check statements for unfamiliar debits and contact their bank and Fraudehelpdesk immediately if they have already paid or supplied information. Ask the bank about reversing suspicious debits rather than following a purported “safe account” transfer request.
 
-A November 23 update on KNBB’s pool-billiards site reports its own response: current members were notified by email and its website, and former members through AllUnited email. It says passwords were changed, new passwords were required, reports were made to the regulator and police, former-member retention was limited to two years and older records were deleted. KNBB also removed direct iDEAL/Wero payment links from reminder invoices. These are that federation’s reported controls, not a universal two-year retention rule, proof that copied data was erased or proof that every AllUnited customer completed notification.
+A November 23 update on KNBB’s pool-billiards site reports its own response: current members were notified by email and its website, and former members through AllUnited email. It says passwords were changed, new passwords were required, reports were made to the regulator and police, former-member retention was limited to two years and records for people who left more than two years earlier were deleted. KNBB also removed direct iDEAL/Wero payment links from reminder invoices. These are that federation’s reported controls, not a universal two-year retention rule, proof that copied data was erased or proof that every AllUnited customer completed notification.
