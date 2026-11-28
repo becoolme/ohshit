@@ -1,6 +1,6 @@
 ---
 title: N-able 确认 Mail Assure 和 SpamExperts 托管云服务器遭入侵
-summary: N-able 在 Mail Assure/SpamExperts 托管云遭入侵后修复 CVE-2026-134624，事件与 N-central 无关。厂商称分阶段恢复后，所有托管服务已于 11 月 25 日正常运行，邮件收发始终继续。此前修复后的调查结论限于一台服务器；根因及最终数据影响仍未定。
+summary: N-able 在 Mail Assure/SpamExperts 托管云遭入侵后修复 CVE-2026-134624，事件与 N-central 无关。厂商称所有托管服务已于 11 月 25 日正常运行，邮件收发和过滤始终继续。厂商称修复后未发现初始服务器以外的利用证据；根因及最终数据影响仍未定。
 splash: 托管云合作伙伴；旧构建的 LDAP 中继连接检查允许已认证的高权限 API 用户发起 SSRF
 wipe: 向 N-able 确认运行 20261121.1943 或更高构建，按合作伙伴专属指引处置，并逐项验证恢复的服务及集成。
 inTheWildNote: N-able 确认服务器入侵；CISA 另将 CVE-2026-134624 列为已利用漏洞。
