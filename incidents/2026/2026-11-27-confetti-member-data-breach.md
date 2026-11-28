@@ -4,7 +4,7 @@ level: 4
 date: 2026-11-27
 tags: [data breach, ticketing, Japan]
 ecosystems: [confetti]
-summary: Confetti’s operator confirms member information escaped after unauthorized server access. Potential exposure includes former members, partial card details for some members and passwords for some Confetti Card members. Counts, full scope and password storage format remain under investigation.
+summary: Confetti’s operator confirms member information leaked after unauthorized server access. Potential exposure includes former members, partial card details for some members and passwords for some Confetti Card members. Counts and full scope remain under investigation; password storage format is unspecified.
 splash: Current and former Confetti members; payment fields and Confetti Card passwords affect subsets
 wipe: Follow operator notices, watch for impersonation and protect any reused password as a precaution
 inTheWild: 'yes'
@@ -12,7 +12,7 @@ inTheWildNote: Operator confirms unauthorized server access and member informati
 timeline:
 - date: Nov 26, 2026
   title: Suspicious access detected and investigation begins
-  body: The operator says it found indications that a third party may have obtained member data that day. Its approximate evening time has no stated timezone, so no UTC time is inferred.
+  body: After detecting suspicious access, the operator found indications that a third party may have obtained member data later that day.
 - date: Nov 27, 2026
   title: Operator confirms information outflow and publishes an initial scope
   body: Longrun Planning says it is switching affected servers and taking measures against the vulnerability used for access. Individual notifications will follow as findings are confirmed; counts and full impact remain under investigation.
@@ -34,7 +34,7 @@ sources:
 
 Longrun Planning, which operates the Japanese ticket service Confetti, confirms that a third party accessed its server and member information flowed outside the company. The November 27 initial notice says suspicious access was discovered on November 26. The entry point and authentication requirements are not explained, although the operator says it is taking measures against the vulnerability used for access.
 
-The notice combines information **confirmed to have leaked or potentially leaked**. Its broad member-information category covers **all members, including former members**: email addresses, login IDs, names, names in kana, telephone numbers, postal codes and dates of birth. For **some members**, it lists addresses, gender, partial credit-card numbers, card brands, expiry dates and cardholder names. For **some Confetti Card members**, it additionally lists passwords. These are separate scope groups; neither the subset payment data nor the passwords should be generalized to every member.
+The notice combines information **confirmed to have leaked or potentially leaked**. Its broad member-information category covers **all members, including former members**: email addresses, login IDs, names, names in kana, telephone numbers, postal codes and dates of birth. For **some members**, it lists addresses, gender, partial credit-card numbers, card brands, expiry dates and cardholder names. For **some Confetti Card members**, it additionally lists passwords. The fields involved depend on each customer’s registered information. These are separate scope groups; neither the subset payment data nor the passwords should be generalized to every member.
 
 The number of affected people or records, the final affected-customer scope and impact on information beyond the listed fields are still being checked. The notice does not identify the password storage format, confirm full card-number or PIN exposure, or quantify misuse. L4 reflects the confirmed intrusion and broad potential member-data scope, including payment and authentication fields; it is not a claim that every listed field for every member was stolen or that a published membership total equals the breach count.
 
